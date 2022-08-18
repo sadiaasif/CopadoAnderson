@@ -1,0 +1,23 @@
+<apex:page showHeader="false" sidebar="false" standardController="enxootr__Organization__c"
+           extensions="enxootr.ClearEnviromentController" lightningStylesheets="true">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!stats}" var="item">
+                <apex:column headerValue="{!$Label.enxootr__rundate}" value="{!item.rundate}"/>
+                <apex:column headerValue="{!$Label.enxootr__coverageelements}" value="{!item.noOfClassCoverage}"/>
+                <apex:column headerValue="{!$Label.enxootr__resultelements}" value="{!item.noOfnoOfTestResults}"/>
+                <apex:column headerValue="{!$Label.enxootr__actions}">
+                    <apex:commandButton value="{!$Label.enxootr__deletetestrun}" action="{!item.deleteRun}"/>
+                    <apex:commandButton value="{!$Label.enxootr__deletecoverage}" action="{!item.deleteCoverage}"/>
+                    <apex:commandButton value="{!$Label.enxootr__deleteresults}" action="{!item.deleteResults}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        {!$Label.enxootr__cleanenvironmentnote}
+        <apex:pageBlock title="{!$Label.enxootr__massdelete}">
+                {!$Label.enxootr__removetestsbefore}
+            <apex:inputField value="{!tr.enxootr__Last_Checked__c}"/>
+            <apex:commandButton value="{!$Label.enxootr__deletebybatch}" action="{!batchDelete}"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

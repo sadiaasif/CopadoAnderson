@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>Change_to_Not_Started</name>
+        <label>Change to Not Started</label>
+        <locationX>453</locationX>
+        <locationY>255</locationY>
+        <assignmentItems>
+            <assignToReference>Get_KT_OO.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Welcome_Calls</targetReference>
+        </connector>
+    </assignments>
+    <formulas>
+        <name>LineBreak</name>
+        <dataType>String</dataType>
+        <expression>BR()</expression>
+    </formulas>
+    <interviewLabel>Kelton Todd $300 Package {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Kelton Todd $300 Package - Welcome Call</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_KT_OO</name>
+        <label>Get KT Welcome Call</label>
+        <locationX>427</locationX>
+        <locationY>83</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Change_to_Not_Started</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Client__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Waiting on someone else</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subject</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Welcome Call - Kelton Todd $300 Package</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Welcome_Calls</name>
+        <label>Update Welcome Calls</label>
+        <locationX>436</locationX>
+        <locationY>432</locationY>
+        <inputReference>Get_KT_OO</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>63</locationY>
+        <connector>
+            <targetReference>Get_KT_OO</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AccId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CaseDescription</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OppId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

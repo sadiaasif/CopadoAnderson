@@ -1,0 +1,511 @@
+<apex:page docType="html-5.0" id="ptlSubscribeARBPage" controller="pymt.PtlSubscribeARBController"  cache="false"  sidebar="false" tabStyle="pymt__PaymentX__c" language="{!$CurrentPage.Parameters.lang}" title="{!$Label.pymt__SiteSubscribeARB_CheckoutHeading}">
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<script src="{!URLFOR($Resource.PaymentConnect, 'includes/tooltip/wz_tooltip.js')}"></script>
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitesitesubscribearb_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+      <apex:form id="mainForm" styleClass="pc_subscription_checkout_form"  >
+      <script>
+      // HTML5 validation fallback code - for Safari, ios and android devices
+      function hasHtml5Validation () {
+        return typeof document.createElement('input').checkValidity === 'function';
+      }
+
+      if (hasHtml5Validation()) {
+        $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+          if (!this.checkValidity()) {
+            e.preventDefault();
+            $j(this).addClass('invalid');
+            $j('#status').html('invalid');
+          } else {
+            $j(this).removeClass('invalid');
+            $j('#status').html('submitted');
+          }
+        });
+      }
+      // end HTML5 validation fallback code
+      </script>
+      <apex:outputPanel layout="none">
+
+      </apex:outputPanel>
+        <apex:outputPanel id="cardEntryPanel" >
+          <apex:pageMessages />
+          <apex:outputPanel rendered="{!showPageContents}">
+              <h1>{!$Label.pymt__SiteSubscribeARB_CheckoutHeading}</h1>
+              <h2>{!$Label.pymt__SiteSubscribeARB_SubscriptionSummaryHeading}</h2>
+                <apex:panelGrid columns="2" columnClasses="labelColumn,term_column" id="subscription_terms">
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionFor}:" />
+                    <apex:outputText value="{!profileName}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_Description}:" rendered="{!NOT(ISNULL(profileDescription))}" />
+                    <apex:outputText value="{!profileDescription}" rendered="{!NOT(ISNULL(profileDescription))}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_StartDate}:" />
+                    <apex:outputText value="{!startDateString}"/>
+
+
+                    <apex:outputText value="{!$Label.pymt__Label_TrialAmount}:"  rendered="{!NOT(ISNULL(trialTerms))}"/>
+                    <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(trialTerms))}">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!trialAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!trialTerms}"/>
+
+                    </apex:outputPanel>
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionAmount}:"/>
+                    <apex:outputPanel layout="inline">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!recurringAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!subscriptionTerms}"/>
+                    </apex:outputPanel>
+
+                </apex:panelGrid>
+
+
+              <apex:outputPanel id="nativeCheckoutPanel" >
+                <h2>{!$Label.pymt__SiteSubscribeARB_BillingInfoHeading}</h2>
+                <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeARB_BillingInfoInstructions == '-')}">
+                <p class="pc_billing_info_instructions">{!$Label.pymt__SiteSubscribeARB_BillingInfoInstructions}</p>
+                </apex:outputPanel>
+            <apex:outputPanel rendered="{!(paymentTypeOptionsSize > 1)}">
+            <apex:actionFunction action="{!paymentTypeChanged}" name="sendPaymentTypeToController"
+                    immediate="true" rerender="nativeCheckoutPanel, messages">
+                <apex:param name="pt" assignTo="{!selectedPaymentType}" value="" />
+            </apex:actionFunction>
+
+              <div class="pc_flex_form">
+
+              <div class="pc_flex_form_line_container">
+                  <div class="pc_flex_form_label_item">
+                      <apex:outputText value=""/>
+                  </div>
+                  <div class="pc_flex_form_required_flag_item">
+                      <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                  </div>
+
+                  <div class="pc_flex_form_field_item">
+                    <apex:selectRadio value="{!selectedPaymentType}" layout="lineDirection" style="white-space:nowrap;">
+                        <apex:selectOptions value="{!paymentTypeOptions}" />
+                        <apex:actionSupport event="onchange" action="{!nullAction}" rerender="nativeCheckoutPanel" status="formUpdateStatus" />
+                        <apex:actionSupport event="onchange" immediate="true" onsubmit="sendPaymentTypeToController(this.value);" rerender="none" status="formUpdateStatus" />
+                    </apex:selectRadio>
+                  </div>
+              </div>
+
+
+              </div><!-- end of flex form -->
+
+
+            </apex:outputPanel>
+
+            <apex:outputPanel id="billingContactPanel" rendered="{!NOT(selectedPaymentType == 'storedpaymentmethod')}" >
+
+                <div class="pc_flex_form">
+
+
+                <div class="pc_flex_form_line_container">
+                    <div class="pc_flex_form_label_item">
+                      <apex:outputText value="{!$Label.pymt__Label_FirstName}"/>
+                    </div>
+                    <div class="pc_flex_form_required_flag_item">
+                        <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                    </div>
+
+                    <div class="pc_flex_form_field_item">
+                        <apex:input type="text" required="true" id="billingfirstname" value="{!fnameOnCard}" />
+                    </div>
+                </div>
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_LastName}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" required="true" id="billinglastname" value="{!lnameOnCard}" />
+                       </div>
+                   </div>
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_StreetAddress}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" required="true" id="billingstreet" value="{!billingStreet}" styleClass="pc_long_input_field"/>
+                       </div>
+                   </div>
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_City}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" required="true" id="billingcity" value="{!billingCity}" />
+                       </div>
+                   </div>
+
+                <apex:ActionRegion id="stateCountryRegion">
+                 <div class="pc_flex_form_line_container">
+                     <div class="pc_flex_form_label_item">
+                         <apex:outputText value="{!$Label.pymt__Label_Country}"/>
+                     </div>
+                     <div class="pc_flex_form_required_flag_item">
+                         <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                     </div>
+
+                     <div class="pc_flex_form_field_item">
+                        <apex:selectList id="billingcountry" size="1" multiselect="false"
+                            value="{!billingcountry}" >
+                            <apex:actionSupport event="onchange" action="{!nullAction}" rerender="billingstate, billingstaterequired, billingContactPanel"/>
+                            <apex:selectOptions value="{!countryPicklistOptions}"/>
+                        </apex:selectList>
+                     </div>
+                 </div>
+
+                 <apex:outputPanel layout="block" styleclass="pc_flex_form_line_container"  rendered="{!hasStateOptions}">
+                     <div class="pc_flex_form_label_item">
+                         <apex:outputText value="{!$Label.pymt__Label_StateProvince}"/>
+                     </div>
+                     <div class="pc_flex_form_required_flag_item">
+                         <apex:image url="/s.gif" id="billingstaterequired" styleClass="{!If(hasStateOptions,'requiredFieldMarker','optionalFieldMarker')}"/>
+                     </div>
+
+                     <div class="pc_flex_form_field_item">
+                      <apex:selectList id="billingstate" multiselect="false"
+                      size="1" value="{!billingstate}" >
+                        <apex:selectOptions value="{!billingStateOptions}"/>
+                      </apex:selectList>
+
+                     </div>
+                 </apex:outputPanel>
+               </apex:actionRegion>
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_PostalCode}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" required="true"  id="billingpostalcode" value="{!billingPostalCode}" styleClass="pc_short_input_field"/>
+                       </div>
+                   </div>
+
+
+
+                </div><!-- end of flex form -->
+
+
+            </apex:outputPanel>
+
+            <apex:outputPanel id="cardCheckoutPanel" rendered="{!selectedPaymentType == 'creditcard'}" >
+                <script>paymentType = "creditcard";</script>
+
+
+                <div class="pc_flex_form">
+
+
+                <div class="pc_flex_form_line_container">
+                    <div class="pc_flex_form_label_item">
+                      <apex:outputText value="{!$Label.pymt__Label_CardType}"/>
+                    </div>
+                    <div class="pc_flex_form_required_flag_item">
+                        <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                    </div>
+
+                    <div class="pc_flex_form_field_item">
+                      <apex:outputPanel layout="inline">
+                          <apex:selectList size="1" id="cardTypeSelectList" multiselect="false" value="{!cardType}">
+                              <apex:selectOptions value="{!cardTypeOptions}" />
+                        </apex:selectList><img id="pc_accepted_card_logos" src="/s.gif"/><apex:repeat value="{!cardTypeOptions}" var="cardTypeName"><img id="pc_accepted_card_{!SUBSTITUTE(cardTypeName.value,' ','_')}" src="/s.gif"/></apex:repeat>
+                      </apex:outputPanel>
+                    </div>
+                </div>
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_CardNumber}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" html-pattern="[0-9]{13,16}" required="true"  html-autocomplete="off" styleclass="pc_long_input_field" id="ccNumber" value="{!creditCardNumber}" />
+                       </div>
+                   </div>
+
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_SecurityCode}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" required="true" html-autocomplete="off" styleclass="pc_short_input_field" id="cvvNumber" value="{!cardCode}" />
+                       </div>
+                   </div>
+
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="{!$Label.pymt__Label_CardExpiration}"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:outputPanel layout="inline">
+                          <apex:selectList id="expMonth" value="{!expirationMonth}" size="1">
+                              <apex:selectOptions value="{!expMonthOptions}" />
+                              </apex:selectList>
+                              &nbsp;
+                              <apex:selectList id="expYear" value="{!expirationYear}" size="1">
+                                  <apex:selectOptions value="{!expYearOptions}" />
+                              </apex:selectList>
+                          </apex:outputPanel>
+                       </div>
+                   </div>
+
+                   <apex:outputPanel layout="none" rendered="{!savePmtDetailsEnabled}">
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                            <apex:outputText value="" />
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="{!IF(requirePmtMethod,'requiredFieldMarker','optionalFieldMarker')}"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                        <apex:inputCheckbox value="{!storePaymentDetails}"  disabled="{!requirePmtMethod}"/>&nbsp; <apex:outputText value="{!$Label.pymt__Label_SavePaymentDetails}" />
+                       </div>
+                   </div>
+                   </apex:outputPanel>
+
+
+                </div><!-- end of flex form -->
+
+              </apex:outputPanel>
+
+            <apex:outputPanel id="paymentMethodCheckoutPanel" rendered="{!selectedPaymentType == 'storedpaymentmethod'}" >
+
+                <script>paymentType = "storedpaymentmethod";</script>
+
+
+
+                <apex:panelGrid columns="3" styleClass="pc_stored_pmt_method_table" columnClasses="labelColumn,requiredFieldMarkerColumn,fieldColumn">
+
+                    <apex:outputText value=""/>
+                    <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                    <apex:selectList size="1" id="paymentMethodSelectList"
+                            multiselect="false" value="{!selectedPaymentMethodId}">
+                            <apex:selectOptions value="{!paymentMethodOptions}" />
+                    </apex:selectList>
+
+                </apex:panelGrid>
+            </apex:outputPanel>
+
+
+            <apex:outputPanel id="echeckCheckoutPanel" rendered="{!selectedPaymentType == 'echeck'}" >
+
+                <script>paymentType = "echeck";</script>
+
+
+                <div class="pc_flex_form">
+
+
+                <div class="pc_flex_form_line_container">
+                    <div class="pc_flex_form_label_item">
+                        <apex:outputText value="Bank Name"/>
+                    </div>
+                    <div class="pc_flex_form_required_flag_item">
+                        <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                    </div>
+
+                    <div class="pc_flex_form_field_item">
+                        <apex:input type="text" required="true" styleClass="pc_medium_input_field"  id="bankname"
+                            value="{!bankName}" />
+                    </div>
+                </div>
+
+                  <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText >Account Type</apex:outputText>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:selectList size="1" id="accountTypeSelectList"
+                            multiselect="false" value="{!selectedBankAccountType}">
+                            <apex:selectOption itemValue="checking" itemLabel="Checking" />
+                            <apex:selectOption itemValue="businessChecking"
+                                itemLabel="Business Checking" />
+                            <apex:selectOption itemValue="savings" itemLabel="Savings" />
+                          </apex:selectList>
+                       </div>
+                   </div>
+
+                  <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="Name on Account"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:input type="text" required="true" styleClass="pc_medium_input_field"  id="bankaccountname"
+                            value="{!bankAccountName}" />
+                       </div>
+                   </div>
+
+                  <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="Account Number"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:outputPanel layout="none">
+                          <apex:input type="text" required="true" html-autocomplete="off" styleClass="pc_medium_input_field"  id="bankaccountnumber"
+                                  value="{!bankAccountNumber}" /><span id="pc_routing_number_img_wrapper" onmouseover="Tip('<img src=\'/s.gif\' id=\'pc_routing_number_tip\'/>', FOLLOWMOUSE, false, SHADOW, false, OFFSETX, 10 , OFFSETY, 10,  BGCOLOR, 'transparent' , BORDERCOLOR, 'transparent');" onmouseout="UnTip();"><img id="pc_routing_number_img" src="/s.gif"/></span>
+                          </apex:outputPanel>
+
+                       </div>
+                   </div>
+
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                          <apex:outputText value="Routing Number"/>
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                          <apex:outputPanel layout="none">
+                          <apex:input type="text" required="true" html-autocomplete="off" styleClass="pc_medium_input_field"  id="bankroutingnumber"
+                                  value="{!bankRoutingNumber}" />
+                          </apex:outputPanel>
+                       </div>
+                   </div>
+
+
+                   <apex:outputPanel layout="none" rendered="{!savePmtDetailsEnabled}">
+                   <div class="pc_flex_form_line_container">
+                       <div class="pc_flex_form_label_item">
+                            <apex:outputText value="" />
+                       </div>
+                       <div class="pc_flex_form_required_flag_item">
+                           <apex:image url="/s.gif" styleClass="{!IF(requirePmtMethod,'requiredFieldMarker','optionalFieldMarker')}"/>
+                       </div>
+
+                       <div class="pc_flex_form_field_item">
+                        <apex:inputCheckbox value="{!storePaymentDetails}"  disabled="{!requirePmtMethod}"/>&nbsp; <apex:outputText value="{!$Label.pymt__Label_SavePaymentDetails}" />
+                       </div>
+                   </div>
+                   </apex:outputPanel>
+
+
+                </div><!-- end of flex form -->
+
+            </apex:outputPanel>
+
+
+              </apex:outputPanel>
+
+
+              <apex:outputPanel id="buttons">
+              <div class="pc_button_container">
+                <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+                    <apex:commandButton id="createSubscription" value="{!$Label.pymt__SiteSubscribePRB_SubscribeButton}" status="formActionStatus"
+                            action="{!createSubscription}"  rerender="mainForm" />
+                    <apex:commandButton id="cancel" html-formnovalidate="true" immediate="true" value="{!$Label.pymt__SiteSubscribeARB_CancelButton}"
+                            action="{!cancelTransaction}"  rendered="{!(cancelURL<>null && NOT(ISNULL(cancelURL)))}"/>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+                    <input type="submit" style="display:none;" id="hiddenSubmit" name="hiddenSubmitInput"/>
+                    <apex:commandLink styleClass="css-button" onclick="if (!validateForm()) {return false;};" id="createSubscription2" value="{!$Label.pymt__SiteSubscribePRB_SubscribeButton}" status="formActionStatus"
+                            action="{!createSubscription}"  rerender="mainForm, formActionStatus, messages" />
+                    <apex:commandLink styleClass="css-button" id="cancel2" html-formnovalidate="true" immediate="true" value="{!$Label.pymt__SiteSubscribeARB_CancelButton}"
+                            action="{!cancelTransaction}"  rendered="{!(cancelURL<>null && NOT(ISNULL(cancelURL)))}"/>
+                    <script>
+                     function validateForm() {
+                       // for apex:commandLink which does not invoke HTML5 form validation automatically
+                       var form = document.getElementById('{!$Component.mainForm}');
+                       var submitBtn = document.getElementById('hiddenSubmit');
+                       if (form.checkValidity() == false) {
+                         submitBtn.click();  // force form to display validation messages.
+                         return false;
+                       }
+                       return true;
+                     }
+                     </script>
+                </apex:outputPanel>
+                <apex:actionStatus id="formActionStatus" onstart="disableSubmitButtons(true)" onstop="disableSubmitButtons(false)">
+                    <apex:facet name="start">
+                    <apex:outputPanel styleClass="pc_button_spinner_panel">&nbsp;
+                        <apex:image value="/s.gif"
+                            styleClass="pc_button_container_spinner" alt="" />
+                            &nbsp;Processing...
+                    </apex:outputPanel>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                      <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                    </apex:facet>
+                </apex:actionStatus>
+                <script>
+                function disableSubmitButtons(flag) {
+                   var submitBtn1 = document.getElementById('{!$Component.mainForm.createSubscription}');
+                   var submitBtn2 = document.getElementById('{!$Component.mainForm.createSubscription2}');
+                   if(submitBtn1 !== null) {
+                     submitBtn1.disabled = flag;
+                   }
+                   if(submitBtn2 !== null) {
+                     submitBtn2.disabled = flag;
+                   }
+                 }
+
+                </script>
+              </div>
+              </apex:outputPanel>
+            </apex:outputPanel>
+
+
+        </apex:outputPanel>
+
+      </apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:page>

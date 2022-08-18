@@ -1,0 +1,30 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" access="global" >
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="AuditFields" type="String[]" default="Name,Date_of_Last_Audit__c,Auditor__c,Account_Audit_Status__c,Account_Audit_Notes__c"/>
+	  <aura:attribute name="TeamFields" type="String[]" default="CAM_Pic__c,CSR_Pic__c,Assigned_CAM__c,Assigned_CSR__c,Senior_Advisor_Pic__c,Tax_Preparer_Pic__c,Senior_Advisor_Picklist__c,Tax_Preparer__c,Bookkeeper_Pic__c,Accounting_Coordinators__c,Bookkeeper_Picklist__c"/>
+        <lightning:tabset selectedTabId="AuditFields">
+        
+        <lightning:tab label="Audit Fields" id="AuditFields">
+	  
+          <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.AuditFields}"
+                                          columns="2"
+                                          
+                                           mode="view" />
+            </lightning:tab>
+             <lightning:tab label="Service Team" id="ServiceTeam">
+                    <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.TeamFields}"
+                                          columns="2"
+                                          
+                                           mode="view" />
+
+            </lightning:tab>
+    </lightning:tabset>
+</aura:component>

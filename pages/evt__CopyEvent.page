@@ -1,0 +1,76 @@
+<apex:page standardController="evt__Special_Event__c" extensions="evt.CopyEventController"   >
+<apex:sectionHeader title="Linvio Events" subtitle="Copy Event" description="This utility can be used to create 'deep' copies of existing events.  Options support the copy of related sessions, sponsors, fees, attendees and so on."/>
+<apex:form > 
+<apex:pageMessages id="messages"/>
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Cancel" action="{!cancelFromPage}"/>
+<apex:commandButton value="Copy" action="{!doCopyEvent}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockSection columns="1" >
+ 
+<apex:pageBlockSectionItem >
+<apex:outputText value="New Event Name"/>
+<apex:inputText value="{!newEvent.Name}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="Initial status of the new event record.  This value is set to 'Planned' by default.">
+<apex:outputText value="Initial Status"/>
+<apex:inputField value="{!newEvent.evt__Status__c}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="Start date and time for the new event record.">
+<apex:outputText value="Start Date"/>
+<apex:inputField value="{!newEvent.evt__Start__c}"/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!includeFees}" />&nbsp;Include Fees
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!includeSpeakers}" />&nbsp;Include Speakers
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!includeSessions}" />&nbsp;Include Sessions
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!includeAttendees}" />&nbsp;Include Attendees (Status will be set to "Invited")
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!includeEventProducts}" />&nbsp;Include Event Products
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!includeCustomFieldMappings}" />&nbsp;Include Custom Field Mappings
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</apex:pageblock>
+
+</apex:form>
+</apex:page>

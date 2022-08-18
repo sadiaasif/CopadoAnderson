@@ -1,0 +1,63 @@
+<aura:component  controller="AddCardinfoComponenentCtrl">
+    <aura:attribute name="oppId" type="Id"/> 
+    <aura:attribute name="objectName" type="String" default="opportunity"/>
+    <aura:attribute name="fieldName" type="Boolean"  default="Type"/>
+    <aura:attribute name="label" type="String"  default="Type"/>
+    <aura:attribute name="value" type="String" default="Type"/>
+    <aura:attribute name="Selectedid" type="Id" default="Type"/>
+    <aura:attribute name="OpportunityFields" type="List" default="ChargentSFA__Billing_Address__c,ChargentSFA__Card_Name__c,ChargentSFA__Billing_City__c,ChargentSFA__Payment_Method__c,ChargentSFA__Card_Type__c ,ChargentSFA__Billing_State__c,ChargentSFA__Card_Number__c,ChargentSFA__Billing_Zip__c,ChargentSFA__Card_Month__c,ChargentSFA__Billing_Country__c,ChargentSFA__Card_Year__c,ChargentSFA__Tokenization__c,ChargentSFA__Card_Security__c"/>
+    <aura:attribute name="onblur" type="Aura.Action" description="The action triggered when the element releases focus."/>
+    <aura:attribute name="onfocus" type="Aura.Action" description="The action triggered when the element receives focus."/>
+    <aura:attribute name="onchange" type="Aura.Action" description="The action triggered when a value attribute changes."/>
+    <aura:attribute name="options" type="List" description="The picklist options to choose from. Populated during component initialization."/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMessage" type="String"  default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--  <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>-->
+    <!--create a component attributs --> 
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.showError}">
+        <!-- Show the message to ui -->
+        <div class="slds-notify slds-notify_toast slds-theme_error">
+            <span class="slds-assistive-text">ERROR</span>
+            <div class="slds-notify__content">
+                <h5 class="slds-text-heading_small slds-align_absolute-center">Error Message </h5>
+                <br/>
+                <p class="slds-align_absolute-center">{!v.errorMessage}</p>
+            </div>
+        </div>
+    </aura:if>
+    <lightning:select aura:id="picklistV" name="picklistSelect"
+                      label="{!v.label}"
+                      value="{!v.value}"
+                      onchange="{!c.handleCompanyOnChange}"
+                      >
+        <option value="">--None--</option>
+        
+        <aura:iteration var="opt" items="{!v.options}">
+            <option value="{!opt.value}">{!opt.label}</option>
+        </aura:iteration>
+        
+    </lightning:select>
+    <br/>
+    <ui:button  aura:Id="ContactField" label="Update" disabled="{!or(empty(v.value),v.value=='Type')}" press="{!c.savecontact}" class="slds-button slds-button--neutral"/>
+    <lightning:recordForm aura:id="OpportunityTable" 
+                          recordId="{!v.oppId}"
+                          objectApiName="Opportunity"
+                          
+                          fields="{!v.OpportunityFields}"
+                          columns="2"
+                          
+                          mode="view"   />
+    
+</aura:component>

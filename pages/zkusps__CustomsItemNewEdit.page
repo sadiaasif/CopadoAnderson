@@ -1,0 +1,99 @@
+<apex:page tabStyle="zkusps__CustomsItem__c" standardController="zkusps__CustomsItem__c" extensions="zkusps.CustomsItemController" sidebar="true">
+    
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+    
+    <apex:sectionHeader title="USPS Customs Item Edit"  subtitle="New USPS Customs Item" rendered="{!NOT(IsEditMode)}"/>
+    <apex:sectionHeader title="USPS Customs Item Edit"  subtitle="Edit USPS Customs Item" rendered="{!IsEditMode}"/>
+    
+    <apex:form >
+        
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+            
+                $j(document).ready(function() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                });
+            </script>
+        </apex:outputPanel>
+        
+        
+        <apex:pageBlock id="customsItemPageBlock" mode="detail">
+        
+            <!-- Messages -->
+            <apex:outputPanel id="customsItemPageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+            
+            
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveCustomsItem}" value="Save"/>
+                <apex:commandButton action="{!backToPreviousPage}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+            
+            
+            <!-- Customs Items Details Section -->
+            <apex:pageBlockSection id="customsItemDetailsSection" columns="1" collapsible="false" title="Customs Item Details">
+                <!-- Name -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Customs Item Name"/>
+                    <apex:inputField value="{!CustomsItem.Name}"/>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Description -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Description"/>
+                    <apex:inputField value="{!CustomsItem.zkusps__description__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Country of Origin -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Country of Origin"/>
+                    <apex:selectList value="{!SelectedCountryOfOrigin}" size="1" multiselect="false">
+                        <apex:selectOptions value="{!CountryOfOriginOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Quantity -->
+                <apex:inputField value="{!CustomsItem.zkusps__quantity__c}"/>
+                
+            </apex:pageBlockSection>
+                
+            <!-- Weight Section -->
+            <apex:pageBlockSection id="customsItemWeightSection" columns="1" collapsible="false" title="Customs Item Weight">
+                <!-- Explain Required -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:outputText styleClass="inputFieldRequiredText" value="*Pounds or Ounces required"/>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Weight Pounds -->
+                <apex:inputField value="{!CustomsItem.zkusps__weightPounds__c}"/>
+                
+                <!-- Weight Ounces -->
+                <apex:inputField value="{!CustomsItem.zkusps__weightOunces__c}"/>
+                
+            </apex:pageBlockSection>
+            
+            <!-- Value Section -->
+            <apex:pageBlockSection id="customsItemValueSection" columns="1" collapsible="false" title="Customs Item Value">
+                <!-- Value -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Value per Unit (USD)"/>
+                    <apex:inputField value="{!CustomsItem.zkusps__value__c}"/>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+            
+            <!-- HS Tariff Section -->
+            <apex:pageBlockSection id="hsTariffSection" columns="1" collapsible="false" title="HS Tariff Number">
+                <!-- HS Tariff Number -->
+                <apex:inputField value="{!CustomsItem.zkusps__hsTariffNumber__c}"/>
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

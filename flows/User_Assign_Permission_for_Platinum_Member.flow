@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Validation</name>
+        <label>Validation</label>
+        <locationX>208</locationX>
+        <locationY>92</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Permission_Set_Assignment</targetReference>
+            </connector>
+            <label>User Not Null</label>
+        </rules>
+    </decisions>
+    <interviewLabel>User - Assign Permission for Platinum Member {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>User - Assign Permission for Platinum Member</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Permission_Set_Assignment</name>
+        <label>Create Permission Set Assignment</label>
+        <locationX>460</locationX>
+        <locationY>92</locationY>
+        <inputAssignments>
+            <field>AssigneeId</field>
+            <value>
+                <elementReference>UserID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PermissionSetId</field>
+            <value>
+                <stringValue>0PS0B0000005TFz</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PermissionSetAssignment</object>
+    </recordCreates>
+    <startElementReference>Validation</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>UserID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

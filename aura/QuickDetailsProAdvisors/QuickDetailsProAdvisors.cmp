@@ -1,0 +1,21 @@
+<aura:component controller="getAlertMessage" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="quickDetailFields" type="String[]" default="Original_Campaign_Source__c,E_Mail__c,Strategy_URL__c,rrpu__Alert_Message__c"/>
+    <aura:attribute name="alertmessage" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.getAlertMessage}"/>
+    
+    <lightning:recordForm id="AccountQuickDetailsForm"
+                         recordId="{!v.recordId}"
+                         objectApiName="Account"
+                         fields="{!v.quickDetailFields}"
+                         columns="2"
+                         mode="view"
+                         onload="{!c.showToast}"
+                          > </lightning:recordForm>
+
+
+    
+    
+</aura:component>

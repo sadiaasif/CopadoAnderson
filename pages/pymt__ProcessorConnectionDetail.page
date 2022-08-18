@@ -1,0 +1,1125 @@
+<apex:page docType="html-5.0" standardcontroller="pymt__Processor_Connection__c" extensions="pymt.ProcessorConnectionDetail" sidebar="false">
+<style>
+.pageBlockSubtext {
+    padding:12px 15px 15px 15px;
+}
+.pageBlockSectionWrapperFrame {
+    margin-left:15px;
+    margin-right:15px;
+    padding:10px;
+    border:solid 1px #e0e0e0;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.pageBlockNotesBox {
+    background: #e6f2ff;
+    padding:0px 10px 10px 10px;
+    border: 1px solid #6699FF;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+</style>
+<apex:variable value="{!processorConnection}" var="proc"/>
+<apex:form >
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Processor Connection: {!pymt__Processor_Connection__c.name}"/>
+<apex:pageMessages />
+
+
+<!-- Authnet detail -->
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'Authorize_Net'}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editRecord}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Save Changes" action="{!saveRecord}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode == true}"/>
+<apex:commandButton value="AuthNet Transaction Import"  action="{!authNetTransImportPage}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Test Relay Script" action="{!testRelayScript}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!NOT(ISBLANK(retURL))}" />
+
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="" collapsible="false">
+
+<apex:inputField value="{!proc.name}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.name}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputField value="{!proc.recordtypeid}" />
+
+<apex:outputField value="{!proc.pymt__PaymentConnect_Setup__c}" />
+
+<apex:outputField value="{!proc.pymt__Processor_Id__c}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Default_Currency__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!defaultCurrencyOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Default_Currency__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Account_Type__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!accountTypeOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Account_Type__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Card types to display in the payment terminals supporting this processor connection.  If left blank, the default list of card types will be displayed.">
+<apex:outputLabel value="Enabled Card Types"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="5" multiselect="true" value="{!selectedCardTypeOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!enabledCardTypeOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Enabled_Card_Types__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Test_Mode__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Test_Mode__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Indicates this connection is the default connection to use inside of Salesforce (when not otherwise specified for an operation). Use the Sites settings to determine the default processor for Sites web pages.">
+<apex:outputLabel value="Default Connection"/>
+<apex:outputPanel layout="none">
+  <apex:inputField value="{!proc.pymt__Default_Connection__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Default_Connection__c}" rendered="{!NOT(editMode)}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__AuthNet_Enable_Echecks__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__AuthNet_Enable_Echecks__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!NOT(editMode)}"/>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection collapsible="false" columns="1">
+  <apex:inputField value="{!proc.pymt__Description__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Description__c}" rendered="{!NOT(editMode)}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Relay Script Configuration" collapsible="false">
+
+<apex:inputField value="{!proc.pymt__Relay_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Id__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__AuthNet_Direct_Response_Delim__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__AuthNet_Direct_Response_Delim__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Direct_Response_Encaps__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Direct_Response_Encaps__c}" rendered="{!NOT(editMode)}"/>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Silent Post Notification Handling" collapsible="false">
+
+<apex:inputfield value="{!proc.pymt__Verify_Notifications__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Verify_Notifications__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Auto_Create_Contacts__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Contacts__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="String used for MD5 hash when verifying silent post notifications from AuthNet.  This value is also set in your AuthNet merchant account configuration settings.">
+<apex:outputLabel value="MD5 Hash Value"/>
+<apex:outputPanel layout="none">
+<apex:inputfield value="{!keychain.pymt__Verification_Code__c}" rendered="{!(editMode)}"/>
+<apex:outputText value="{!IF(keychain.pymt__Verification_Code__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Auto_Create_Account__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!autoCreateAccountOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Account__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__External_Transactions__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__External_Transactions__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Default_Account__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Default_Account__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Determines which methods should be used to auto-attach inbound payments to Contacts and Opportunities in Salesforce.">
+<apex:outputLabel value="Auto Attach"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="3" multiselect="true" value="{!selectedAutoAttachOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!autoAttachOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Auto_Attach__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputfield value="{!proc.pymt__Auto_Create_Cart_Items__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Cart_Items__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Orphaned_Payments__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Orphaned_Payments__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Auto_Attach_Products__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Attach_Products__c}" rendered="{!NOT(editMode)}"/>
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="API Credentials" collapsible="false">
+
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Login Id"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!keychain.pymt__Username__c}"  rendered="{!editMode}"/>
+<apex:outputText value="{!keychain.pymt__Username__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputfield value="{!proc.pymt__Custom_Gateway_URL__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Custom_Gateway_URL__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="Transaction Key"/>
+<apex:outputPanel layout="none">
+<apex:inputSecret value="{!keychain.pymt__Key__c}"  redisplay="true"  rendered="{!(editMode)}"/>
+<apex:outputText value="{!IF(keychain.pymt__Key__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+<!-- ACHWorks detail -->
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'ACHWorks'}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editRecord}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Save" action="{!saveRecord}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!NOT(ISBLANK(retURL))}" />
+
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="" collapsible="false">
+
+<apex:inputField value="{!proc.name}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.name}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputField value="{!proc.recordtypeid}" />
+
+<apex:outputField value="{!proc.pymt__PaymentConnect_Setup__c}" />
+
+<apex:outputField value="{!proc.pymt__Processor_Id__c}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Default_Currency__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!defaultCurrencyOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Default_Currency__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Account_Type__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!accountTypeOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Account_Type__c}" rendered="{!NOT(editMode)}"/>
+
+
+
+<apex:inputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!NOT(editMode)}"/>
+
+
+<apex:inputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Indicates this connection is the default connection to use inside of Salesforce (when not otherwise specified for an operation). Use the Sites settings to determine the default processor for Sites web pages.">
+<apex:outputLabel value="Default Connection"/>
+<apex:outputPanel layout="none">
+  <apex:inputField value="{!proc.pymt__Default_Connection__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Default_Connection__c}" rendered="{!NOT(editMode)}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection collapsible="false" columns="1">
+  <apex:inputField value="{!proc.pymt__Description__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Description__c}" rendered="{!NOT(editMode)}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="API Credentials" collapsible="false">
+
+
+			<apex:pageBlockSectionItem helpText="Alpha-numeric user ID furnished by ACHWorks to the merchant.">
+				<apex:outputlabel value="Company"/>
+				<apex:outputPanel layout="none">
+				<apex:inputText value="{!keychain.pymt__Username__c}"  rendered="{!editMode}"/>
+				<apex:outputText value="{!keychain.pymt__Username__c}" rendered="{!NOT(editMode)}"/>
+				</apex:outputPanel>
+			</apex:pageBlockSectionItem>
+
+
+            <apex:pageBlockSectionItem helpText="Name of the company sending ACHWorks transactions. Typically name of owner of account, or abbreviation thereof.">
+                <apex:outputLabel value="Originator Name"/>
+                <apex:outputPanel layout="none">
+                <apex:outputField value="{!keychain.pymt__OriginatorName__c}" rendered="{!NOT(editMode)}"/>
+                <apex:inputField value="{!keychain.pymt__OriginatorName__c}" rendered="{!(editMode)}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="SSS"/>
+                <apex:outputPanel layout="none">
+                <apex:outputField value="{!keychain.pymt__SSS__c}" rendered="{!NOT(editMode)}"/>
+                <apex:inputField value="{!keychain.pymt__SSS__c}" rendered="{!(editMode)}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="LocID"/>
+                <apex:outputPanel layout="none">
+                <apex:outputField value="{!keychain.pymt__LocId__c}" rendered="{!NOT(editMode)}"/>
+                <apex:inputField value="{!keychain.pymt__LocId__c}" rendered="{!(editMode)}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Account Set"/>
+                <apex:outputPanel layout="none">
+                <apex:outputField value="{!keychain.pymt__AccountSet__c}" rendered="{!NOT(editMode)}"/>
+                <apex:inputField value="{!keychain.pymt__AccountSet__c}" rendered="{!(editMode)}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+			<apex:pageBlockSectionItem >
+			<apex:outputlabel value="Company Key"/>
+			<apex:outputPanel layout="none">
+			<apex:inputSecret value="{!keychain.pymt__Key__c}"  redisplay="true"  rendered="{!(editMode)}"/>
+			<apex:outputText value="{!IF(keychain.pymt__Key__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+			</apex:outputPanel>
+			</apex:pageBlockSectionItem>
+
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Use Test Server"/>
+                <apex:outputPanel layout="none">
+                <apex:outputField value="{!proc.pymt__Test_Mode__c}" rendered="{!NOT(editMode)}"/>
+                <apex:inputField value="{!proc.pymt__Test_Mode__c}" rendered="{!(editMode)}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+
+
+</apex:pageBlockSection>
+
+
+
+
+</apex:pageBlock><!-- end ACHWorks detail -->
+
+<!-- eWay detail -->
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'eWay'}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editRecord}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Save" action="{!saveRecord}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!NOT(ISBLANK(retURL))}" />
+
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="" collapsible="false">
+
+<apex:inputField value="{!proc.name}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.name}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputField value="{!proc.recordtypeid}" />
+
+<apex:outputField value="{!proc.pymt__PaymentConnect_Setup__c}" />
+
+<apex:outputField value="{!proc.pymt__Processor_Id__c}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Default_Currency__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!defaultCurrencyOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Default_Currency__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Account_Type__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!accountTypeOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Account_Type__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Card types to display in the payment terminals supporting this processor connection.  If left blank, the default list of card types will be displayed.">
+<apex:outputLabel value="Enabled Card Types"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="5" multiselect="true" value="{!selectedCardTypeOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!enabledCardTypeOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Enabled_Card_Types__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Test_Mode__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Test_Mode__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Indicates this connection is the default connection to use inside of Salesforce (when not otherwise specified for an operation). Use the Sites settings to determine the default processor for Sites web pages.">
+<apex:outputLabel value="Default Connection"/>
+<apex:outputPanel layout="none">
+  <apex:inputField value="{!proc.pymt__Default_Connection__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Default_Connection__c}" rendered="{!NOT(editMode)}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection collapsible="false" columns="1">
+  <apex:inputField value="{!proc.pymt__Description__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Description__c}" rendered="{!NOT(editMode)}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="API Credentials" collapsible="false">
+
+<apex:inputfield value="{!keychain.pymt__Merchant_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!keychain.pymt__Merchant_Id__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Username"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!keychain.pymt__Username__c}" rendered="{!editMode}"/>
+<apex:outputText value="{!keychain.pymt__Username__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Key"/>
+<apex:outputPanel layout="none">
+<apex:inputSecret value="{!keychain.pymt__Key__c}"  redisplay="true"  rendered="{!editMode}"/>
+<apex:outputText value="{!IF(keychain.pymt__Key__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Password"/>
+<apex:outputPanel layout="none">
+<apex:inputSecret value="{!keychain.pymt__Password__c}"  redisplay="true"  rendered="{!editMode}"/>
+<apex:outputText value="{!IF(keychain.pymt__Password__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+<!-- PayPal detail -->
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'PayPal'}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editRecord}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Save" action="{!saveRecord}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Test Relay Script" action="{!testRelayScript}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!NOT(ISBLANK(retURL))}" />
+
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="" collapsible="false">
+
+<apex:inputField value="{!proc.name}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.name}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputField value="{!proc.recordtypeid}" />
+
+<apex:outputField value="{!proc.pymt__PaymentConnect_Setup__c}" />
+
+<apex:outputField value="{!proc.pymt__Processor_Id__c}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Default_Currency__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!defaultCurrencyOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Default_Currency__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Account_Type__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!accountTypeOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Account_Type__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Card types to display in the payment terminals supporting this processor connection.  If left blank, the default list of card types will be displayed.">
+<apex:outputLabel value="Enabled Card Types"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="5" multiselect="true" value="{!selectedCardTypeOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!enabledCardTypeOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Enabled_Card_Types__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Test_Mode__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Test_Mode__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Reference Transactions (and Billing Agreements) are PayPal's payment method tokenization feature.">
+<apex:outputLabel value="Reference Transactions Enabled"/>
+<apex:outputPanel layout="none">
+<apex:inputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Indicates this connection is the default connection to use inside of Salesforce (when not otherwise specified for an operation). Use the Sites settings to determine the default processor for Sites web pages.">
+<apex:outputLabel value="Default Connection"/>
+<apex:outputPanel layout="none">
+  <apex:inputField value="{!proc.pymt__Default_Connection__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Default_Connection__c}" rendered="{!NOT(editMode)}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection collapsible="false" columns="1">
+  <apex:inputField value="{!proc.pymt__Description__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Description__c}" rendered="{!NOT(editMode)}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Relay Script Configuration" collapsible="false">
+
+<apex:inputField value="{!proc.pymt__Relay_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Id__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!NOT(editMode)}"/>
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Instant Payment Notification (IPN) Handling" collapsible="false">
+
+<apex:inputfield value="{!proc.pymt__Verify_Notifications__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Verify_Notifications__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Auto_Create_Contacts__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Contacts__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Auto_Create_Account__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!autoCreateAccountOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Account__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__External_Transactions__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__External_Transactions__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Default_Account__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Default_Account__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Determines which methods should be used to auto-attach inbound payments to Contacts and Opportunities in Salesforce.">
+<apex:outputLabel value="Auto Attach"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="3" multiselect="true" value="{!selectedAutoAttachOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!autoAttachOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Auto_Attach__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputfield value="{!proc.pymt__Auto_Create_Cart_Items__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Cart_Items__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Orphaned_Payments__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Orphaned_Payments__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Auto_Attach_Products__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Attach_Products__c}" rendered="{!NOT(editMode)}"/>
+
+</apex:pageBlockSection>
+<apex:pageBlockSection title="API Credentials" collapsible="false">
+
+<apex:inputfield value="{!keychain.pymt__Merchant_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!keychain.pymt__Merchant_Id__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Username"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!keychain.pymt__Username__c}" rendered="{!editMode}"/>
+<apex:outputText value="{!keychain.pymt__Username__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Signature"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!keychain.pymt__Key__c}" rendered="{!(editMode)}"/>
+<apex:outputText value="{!IF(keychain.pymt__Key__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="API Password"/>
+<apex:outputPanel layout="none">
+<apex:inputSecret value="{!keychain.pymt__Password__c}" redisplay="true" rendered="{!editMode}"/>
+<apex:outputText value="{!IF(keychain.pymt__Password__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+<!-- Stripe detail -->
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'Stripe'}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editRecord}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Save" action="{!saveRecord}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!NOT(ISBLANK(retURL))}" />
+
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="" collapsible="false">
+
+<apex:inputField value="{!proc.name}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.name}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputField value="{!proc.recordtypeid}" />
+
+<apex:outputField value="{!proc.pymt__PaymentConnect_Setup__c}" />
+
+<apex:outputField value="{!proc.pymt__Processor_Id__c}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Default_Currency__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!defaultCurrencyOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Default_Currency__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Account_Type__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!accountTypeOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Account_Type__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Card types to display in the payment terminals supporting this processor connection.  If left blank, the default list of card types will be displayed.">
+<apex:outputLabel value="Enabled Card Types"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="5" multiselect="true" value="{!selectedCardTypeOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!enabledCardTypeOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Enabled_Card_Types__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Test_Mode__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Test_Mode__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Tokenized_Card_Service_Enabled__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Indicates this connection is the default connection to use inside of Salesforce (when not otherwise specified for an operation). Use the Sites settings to determine the default processor for Sites web pages.">
+<apex:outputLabel value="Default Connection"/>
+<apex:outputPanel layout="none">
+  <apex:inputField value="{!proc.pymt__Default_Connection__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Default_Connection__c}" rendered="{!NOT(editMode)}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection collapsible="false" columns="1">
+  <apex:inputField value="{!proc.pymt__Description__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Description__c}" rendered="{!NOT(editMode)}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Relay Script Configuration" collapsible="false">
+
+<apex:inputField value="{!proc.pymt__Relay_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Id__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!NOT(editMode)}"/>
+
+</apex:pageBlockSection>
+
+
+<apex:pageBlockSection title="API Credentials" collapsible="false">
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="Live Publishable Key"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!keychain.pymt__Live_Publishable_Key__c}" rendered="{!editMode}"/>
+<apex:outputText value="{!keychain.pymt__Live_Publishable_Key__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="Test Publishable Key"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!keychain.pymt__Test_Publishable_Key__c}" rendered="{!editMode}"/>
+<apex:outputText value="{!keychain.pymt__Test_Publishable_Key__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="Live Secret Key"/>
+<apex:outputPanel layout="none">
+<apex:inputSecret value="{!keychain.pymt__Live_Secret_Key__c}" redisplay="true" rendered="{!editMode}"/>
+<apex:outputText value="{!IF(keychain.pymt__Live_Secret_Key__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputlabel value="Test Secret Key"/>
+<apex:outputPanel layout="none">
+<apex:inputSecret value="{!keychain.pymt__Test_Secret_Key__c}"  redisplay="true" rendered="{!editMode}"/>
+<apex:outputText value="{!IF(keychain.pymt__Test_Secret_Key__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+<!-- WorldPay detail -->
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'WorldPay'}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editRecord}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Save" action="{!saveRecord}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Test Relay Script" action="{!testRelayScript}" rendered="{!editMode == false}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode == true}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!NOT(ISBLANK(retURL))}" />
+
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="" collapsible="false">
+
+<apex:inputField value="{!proc.name}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.name}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputField value="{!proc.recordtypeid}" />
+
+<apex:outputField value="{!proc.pymt__PaymentConnect_Setup__c}" />
+
+<apex:outputField value="{!proc.pymt__Processor_Id__c}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Default_Currency__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!defaultCurrencyOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Default_Currency__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Account_Type__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!accountTypeOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Account_Type__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Card types to display in the payment terminals supporting this processor connection.  If left blank, the default list of card types will be displayed.">
+<apex:outputLabel value="Enabled Card Types"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="5" multiselect="true" value="{!selectedCardTypeOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!enabledCardTypeOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Enabled_Card_Types__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Assigned_to_Terminal__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Site_Checkout__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!siteCheckoutOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Site_Checkout__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputField value="{!proc.pymt__Test_Mode__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Test_Mode__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Salesforce_Checkout__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!salesforceCheckoutOptions}"/>
+</apex:selectList>
+<apex:outputField value="{!proc.pymt__Salesforce_Checkout__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:outputText value="" />
+
+<apex:inputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!(editMode)}"/>
+<apex:outputField value="{!proc.pymt__Category_Split_Name__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Indicates this connection is the default connection to use inside of Salesforce (when not otherwise specified for an operation). Use the Sites settings to determine the default processor for Sites web pages.">
+<apex:outputLabel value="Default Connection"/>
+<apex:outputPanel layout="none">
+  <apex:inputField value="{!proc.pymt__Default_Connection__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Default_Connection__c}" rendered="{!NOT(editMode)}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:outputText value=""/>
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection collapsible="false" columns="1">
+  <apex:inputField value="{!proc.pymt__Description__c}" rendered="{!(editMode)}"/>
+  <apex:outputField value="{!proc.pymt__Description__c}" rendered="{!NOT(editMode)}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Relay Script Configuration" collapsible="false">
+
+<apex:inputField value="{!proc.pymt__Relay_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Id__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Relay_Script__c}" rendered="{!NOT(editMode)}"/>
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Inbound Notification Handling" collapsible="false">
+
+<apex:inputfield value="{!proc.pymt__Verify_Notifications__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Verify_Notifications__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Auto_Create_Contacts__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Contacts__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Pass code to use when verifying transaction notifications from WorldPay.">
+<apex:outputLabel value="Payment Response"/>
+<apex:outputPanel layout="none">
+<apex:inputfield value="{!keychain.pymt__Verification_Code__c}" rendered="{!(editMode)}"/>
+<apex:outputText value="{!IF(keychain.pymt__Verification_Code__c == '',' ','******')}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:selectList size="1" multiselect="false" value="{!proc.pymt__Auto_Create_Account__c}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!autoCreateAccountOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Auto_Create_Account__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__External_Transactions__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__External_Transactions__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:inputfield value="{!proc.pymt__Default_Account__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Default_Account__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem helpText="Determines which methods should be used to auto-attach inbound payments to Contacts and Opportunities in Salesforce.">
+<apex:outputLabel value="Auto Attach"/>
+<apex:outputPanel layout="none">
+<apex:selectList size="3" multiselect="true" value="{!selectedAutoAttachOptions}" rendered="{!(editMode)}">
+<apex:selectOptions value="{!autoAttachOptions}"/>
+</apex:selectList>
+<apex:outputfield value="{!proc.pymt__Auto_Attach__c}" rendered="{!NOT(editMode)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+<apex:inputfield value="{!proc.pymt__Orphaned_Payments__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Orphaned_Payments__c}" rendered="{!NOT(editMode)}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+
+
+<apex:pageBlockSection title="API Credentials" collapsible="false">
+
+
+<apex:inputfield value="{!proc.pymt__Installation_Id__c}" rendered="{!(editMode)}"/>
+<apex:outputfield value="{!proc.pymt__Installation_Id__c}" rendered="{!NOT(editMode)}"/>
+
+
+
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+</apex:form>
+
+<apex:pageBlock title="" mode="maindetail" rendered="{!proc.RecordType.DeveloperName == 'ACHWorks'}">
+<apex:form >
+<apex:pageBlock title="Batch Processing Scheduled ACH Payments" mode="maindetail" >
+<div class="pageBlockSubtext">
+<div class="pageBlockNotesBox">
+<p>The PaymentConnect ACHWorks integration enables scheduled batch processing of ACH payments in Salesforce.  The following two scripts must be run in order to send ACH processing requests to the ACH network, and to
+poll the network at regular intervals for settlement or decline results (ACH Returns).</p>
+</div>
+</div>
+<div class="pageBlockSectionWrapperFrame">
+<apex:pageBlockSection title="Batch Process ACH Payments Script" collapsible="false">
+</apex:pageBlockSection>
+<div class="pageBlockSubtext">
+This script finds scheduled ACH payments in the system and includes them in ACH batch processing requests sent to ACHWorks.  When a payment is submitted to the ACH network it's status is set to "Pending" until a response (settlement/decline) is processed.
+</div>
+
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem rendered="{!(ACHWorksProcessorIsScheduled)}">
+<apex:outputLabel value="Scheduled Batch Job Status:" />
+<apex:outputText value="Scheduled"/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem rendered="{!NOT(ACHWorksProcessorIsScheduled)}">
+<apex:outputLabel value="Schedule batch job to run:"/>
+<apex:selectList size="1" multiselect="false" value="{!ACHWorksProcessorSelectedFreqHour}">
+<apex:selectOption itemValue="*" itemLabel="Hourly"/>
+<apex:selectOption itemValue="0/2" itemLabel="Every 2 Hours"/>
+<apex:selectOption itemValue="0/4" itemLabel="Every 4 Hours"/>
+<apex:selectOption itemValue="0/6" itemLabel="Every 6 Hours"/>
+<apex:selectOption itemValue="0/12" itemLabel="Every 12 Hours"/>
+<apex:selectOption itemValue="0" itemLabel="0:30"/>
+<apex:selectOption itemValue="1" itemLabel="1:30"/>
+<apex:selectOption itemValue="2" itemLabel="2:30"/>
+<apex:selectOption itemValue="3" itemLabel="3:30"/>
+<apex:selectOption itemValue="4" itemLabel="4:30"/>
+<apex:selectOption itemValue="5" itemLabel="5:30"/>
+<apex:selectOption itemValue="6" itemLabel="6:30"/>
+<apex:selectOption itemValue="7" itemLabel="7:30"/>
+<apex:selectOption itemValue="8" itemLabel="8:30"/>
+<apex:selectOption itemValue="9" itemLabel="9:30"/>
+<apex:selectOption itemValue="10" itemLabel="10:30"/>
+<apex:selectOption itemValue="11" itemLabel="11:30"/>
+<apex:selectOption itemValue="12" itemLabel="12:30"/>
+<apex:selectOption itemValue="13" itemLabel="13:30"/>
+<apex:selectOption itemValue="14" itemLabel="14:30"/>
+<apex:selectOption itemValue="14" itemLabel="14:30"/>
+<apex:selectOption itemValue="15" itemLabel="15:30"/>
+<apex:selectOption itemValue="16" itemLabel="16:30"/>
+<apex:selectOption itemValue="17" itemLabel="17:30"/>
+<apex:selectOption itemValue="18" itemLabel="18:30"/>
+<apex:selectOption itemValue="19" itemLabel="19:30"/>
+<apex:selectOption itemValue="20" itemLabel="20:30"/>
+<apex:selectOption itemValue="21" itemLabel="21:30"/>
+<apex:selectOption itemValue="22" itemLabel="22:30"/>
+<apex:selectOption itemValue="23" itemLabel="23:30"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem helpText="Sets the number of days prior to today to include in search for unprocessed scheduled transactions." >
+<apex:outputLabel value="Processing Window"/>
+<apex:outputPanel layout="inline">
+<apex:selectList size="1" value="{!proc.pymt__Process_Scheduled_Payments_LastNDays__c}" rendered="{!NOT(ACHWorksProcessorIsScheduled)}">
+<apex:selectOption itemLabel="Last 2 Days" itemValue="2"/>
+<apex:selectOption itemLabel="Last 7 Days" itemValue="7"/>
+<apex:selectOption itemLabel="Last 30 Days" itemValue="30"/>
+</apex:selectList>
+<apex:outputText value="{!proc.pymt__Process_Scheduled_Payments_LastNDays__c} Days" rendered="{!(ACHWorksProcessorIsScheduled)}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+
+<apex:pageBlockSectionItem rendered="{!NOT(ACHWorksProcessorIsScheduled)}">
+<apex:outputLabel value="Day of the week:"/>
+<apex:selectList size="1" multiselect="false" value="{!ACHWorksProcessorSelectedFreqDay}">
+<apex:selectOption itemValue="E" itemLabel="Every Day"/>
+<!--
+<apex:selectOption itemValue="1" itemLabel="Sun"/>
+<apex:selectOption itemValue="2" itemLabel="Mon"/>
+<apex:selectOption itemValue="3" itemLabel="Tue"/>
+<apex:selectOption itemValue="4" itemLabel="Wed"/>
+<apex:selectOption itemValue="5" itemLabel="Thu"/>
+<apex:selectOption itemValue="6" itemLabel="Fri"/>
+<apex:selectOption itemValue="7" itemLabel="Sat"/>
+ -->
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!(ACHWorksProcessorIsScheduled)}">
+<apex:outputLabel value="Next Scheduled Run:" />
+<apex:outputText value="{!ACHWorksProcessorNextFireTime}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="Sets the maximum number of times the script can attempt to process a scheduled payment." >
+<apex:outputLabel value="Max Processing Attempts"/>
+<apex:outputPanel layout="inline">
+<apex:selectList size="1" value="{!proc.pymt__Max_Processing_Attempts__c}" disabled="{!(ACHWorksProcessorIsScheduled)}">
+<apex:selectOption itemLabel="1" itemValue="1"/>
+<apex:selectOption itemLabel="2" itemValue="2"/>
+<apex:selectOption itemLabel="3" itemValue="3"/>
+<apex:selectOption itemLabel="4" itemValue="4"/>
+<apex:selectOption itemLabel="5" itemValue="5"/>
+</apex:selectList>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem rendered="{!NOT(ACHWorksProcessorIsScheduled)}">
+<apex:outputLabel value=""/>
+<apex:commandButton value="Schedule Batch Job" action="{!scheduleACHWorksBatchProcessor}" />
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem rendered="{!(ACHWorksProcessorIsScheduled)}">
+<apex:outputLabel value=""/>
+<apex:outputPanel >
+<apex:commandButton value="Cancel Scheduled Batch Job" action="{!cancelACHWorksBatchProcessor}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value=""/>
+<apex:commandButton value="Run Batch Job Once" action="{!runACHWorksBatchProcessor}" />
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+<br/>
+<apex:pageBlockSection columns="1" title="Check ACH Returns Script"  collapsible="false">
+</apex:pageBlockSection>
+<div class="pageBlockSubtext">Calls out to the ACH network for returns and applies them to pending ACH payments in Salesforce changing the status to "Declined" or "Completed".
+</div>
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem rendered="{!(ACHWorksReturnsCheckerIsScheduled)}">
+<apex:outputLabel value="Scheduled Batch Job Status:" />
+<apex:outputText value="Scheduled"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!(ACHWorksReturnsCheckerIsScheduled)}">
+<apex:outputLabel value="Next Scheduled Run:" />
+<apex:outputText value="{!ACHWorksReturnsCheckerNextFireTime}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!NOT(ACHWorksReturnsCheckerIsScheduled)}">
+<apex:outputLabel value="Schedule batch job to run:"/>
+<apex:selectList size="1" multiselect="false" value="{!ACHWorksReturnsCheckerSelectedFreqHour}">
+<apex:selectOption itemValue="*" itemLabel="Hourly"/>
+<apex:selectOption itemValue="0/2" itemLabel="Every 2 Hours"/>
+<apex:selectOption itemValue="0/4" itemLabel="Every 4 Hours"/>
+<apex:selectOption itemValue="0/6" itemLabel="Every 6 Hours"/>
+<apex:selectOption itemValue="0/12" itemLabel="Every 12 Hours"/>
+<apex:selectOption itemValue="0" itemLabel="0:00"/>
+<apex:selectOption itemValue="1" itemLabel="1:00"/>
+<apex:selectOption itemValue="2" itemLabel="2:00"/>
+<apex:selectOption itemValue="3" itemLabel="3:00"/>
+<apex:selectOption itemValue="4" itemLabel="4:00"/>
+<apex:selectOption itemValue="5" itemLabel="5:00"/>
+<apex:selectOption itemValue="6" itemLabel="6:00"/>
+<apex:selectOption itemValue="7" itemLabel="7:00"/>
+<apex:selectOption itemValue="8" itemLabel="8:00"/>
+<apex:selectOption itemValue="9" itemLabel="9:00"/>
+<apex:selectOption itemValue="10" itemLabel="10:00"/>
+<apex:selectOption itemValue="11" itemLabel="11:00"/>
+<apex:selectOption itemValue="12" itemLabel="12:00"/>
+<apex:selectOption itemValue="13" itemLabel="13:00"/>
+<apex:selectOption itemValue="14" itemLabel="14:00"/>
+<apex:selectOption itemValue="14" itemLabel="14:00"/>
+<apex:selectOption itemValue="15" itemLabel="15:00"/>
+<apex:selectOption itemValue="16" itemLabel="16:00"/>
+<apex:selectOption itemValue="17" itemLabel="17:00"/>
+<apex:selectOption itemValue="18" itemLabel="18:00"/>
+<apex:selectOption itemValue="19" itemLabel="19:00"/>
+<apex:selectOption itemValue="20" itemLabel="20:00"/>
+<apex:selectOption itemValue="21" itemLabel="21:00"/>
+<apex:selectOption itemValue="22" itemLabel="22:00"/>
+<apex:selectOption itemValue="23" itemLabel="23:00"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value=""/>
+<apex:outputLabel value=""/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem rendered="{!NOT(ACHWorksReturnsCheckerIsScheduled)}">
+<apex:outputLabel value="Day of the week:"/>
+<apex:selectList size="1" multiselect="false" value="{!ACHWorksReturnsCheckerSelectedFreqDay}">
+<apex:selectOption itemValue="E" itemLabel="Every Day"/>
+<!-- <apex:selectOption itemValue="1" itemLabel="Sun"/>
+<apex:selectOption itemValue="2" itemLabel="Mon"/>
+<apex:selectOption itemValue="3" itemLabel="Tue"/>
+<apex:selectOption itemValue="4" itemLabel="Wed"/>
+<apex:selectOption itemValue="5" itemLabel="Thu"/>
+<apex:selectOption itemValue="6" itemLabel="Fri"/>
+<apex:selectOption itemValue="7" itemLabel="Sat"/>
+ -->
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value=""/>
+<apex:outputLabel value=""/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!NOT(ACHWorksReturnsCheckerIsScheduled)}">
+<apex:outputLabel value=""/>
+<apex:commandButton value="Schedule Batch Job" action="{!scheduleACHWorksReturnsChecker}" />
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem rendered="{!(ACHWorksReturnsCheckerIsScheduled)}">
+<apex:outputLabel value=""/>
+<apex:outputPanel >
+<apex:commandButton value="Cancel Scheduled Batch Job" action="{!cancelACHWorksReturnsChecker}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value=""/>
+<apex:commandButton value="Run Batch Job Once" action="{!runACHWorksReturnsChecker}" />
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</div>
+
+</apex:pageBlock>
+
+
+
+</apex:form>
+
+</apex:pageBlock>
+<table style="margin:10px auto 10px auto;">
+<tr><td>
+<analytics:reportChart developerName="Quarterly_Payments" filter="[{column:'pymt__Processor_Connection__c.Id',operator:'equals',value:'{!pymt__Processor_Connection__c.Id}'}]" size="small" hideOnError="true"/>
+</td>
+<td>
+<analytics:reportChart developerName="Quarterly_Scheduled_Payments" filter="[{column:'pymt__Processor_Connection__c.Id',operator:'equals',value:'{!pymt__Processor_Connection__c.Id}'}]" size="small" hideOnError="true"/>
+</td>
+</tr>
+</table>
+<br/><br/>
+<apex:relatedList list="pymt__Log_Entries__r" pageSize="5"/>
+<apex:relatedList list="pymt__Payments__r"  pageSize="5"/>
+<apex:relatedList list="pymt__Payment_Profiles__r" pageSize="5"/>
+<apex:relatedList list="pymt__Payment_Methods__r" pageSize="5"/>
+<apex:relatedList list="pymt__Processor_Events__r" pageSize="5" rendered="{!proc.RecordType.DeveloperName == 'ACHWorks'}"/>
+
+</apex:page>

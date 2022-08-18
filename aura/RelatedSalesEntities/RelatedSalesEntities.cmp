@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="ProcessingConsoleCtrl">
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="EntityID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="SaleEntitiesRecords" type="SaleEntity__c[]" />
+    <aura:attribute name="SaleEntitiescolumns" type="List"/> 
+    <aura:attribute name="RelatedToSaleEntity" type="boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   
+     <aura:attribute name="activeSections" type="List" default="['SaleEntities']" />
+     <aura:if isTrue="{!v.RelatedToSaleEntity}">
+      <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+          
+            <lightning:accordionSection name="SaleEntities" label="Sale Entities" >
+
+     
+                 <lightning:datatable aura:id="SaleEntitiesTable"  
+                                    
+                         data="{!v.SaleEntitiesRecords }"     
+                         columns="{!v.SaleEntitiescolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                     
+                         />
+     
+                   </lightning:accordionSection>
+    </lightning:accordion>
+         <aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Entity Does not have sale Entity!</center>
+             </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,96 @@
+@isTest
+public class CasePaymentExpeditedTest {
+    @testSetup
+    static void dataSetup() {
+        UserRole portalRole = [Select Id, PortalRole From UserRole Where Name = 'Platinum User' Limit 1];
+        User thisUser = [select Id, AccountId from User where UserRoleId = :portalRole.Id Limit 1];
+        //User sap = [SELECT id, Name FROM User where UserType = 'PowerPartner' Limit 1]; 
+        String strRecordTypeId = [Select Id From RecordType Where SobjectType = 'Case' and Name = 'Community Platinum Case'].Id;
+        //  System.runAs ( thisUser ) {
+        Id p = [select id from profile where name='Partner Community User'].id;
+        Campaign cmp = new Campaign();
+        cmp.Name = 'Steve';
+        insert cmp;        
+        Account testAccount = new Account();
+        testAccount.Name='Test Account';
+        testAccount.First_Name__c='Edward';
+        testAccount.Last_Name__c='Lee';
+        testAccount.Campaign__c = cmp.Id;
+        testAccount.OwnerId = thisUser.Id;
+        testAccount.Bookkeeper__c = thisUser.Id;
+        testAccount.phone='123456782';
+        insert testAccount;              
+        Contact cont = new Contact ();
+        cont.FirstName = 'FirstName';
+        cont.LastName = 'LastName';
+        cont.Email='email@email.com';
+        cont.phone='12345678';
+        cont.AccountId=testAccount.Id;
+        insert cont;        
+        Case cse = new Case();
+        cse.AccountId = testAccount.Id;
+        cse.ContactId = cont.Id;
+        cse.Subject = 'Platinum Bookkeeping Question';
+        cse.Description = 'Testing Descritpion';
+        cse.Status = 'New';
+        cse.Origin = 'Phone';
+        cse.Priority = 'Expedited';
+        insert cse;            
+        ChargentBase__Gateway__c cbg = new ChargentBase__Gateway__c();
+        cbg.ChargentBase__Active__c = true;
+        cbg.Name = 'AuthorizeNetTestPayment';
+        cbg.ChargentBase__Available_Payment_Methods__c = 'Credit Card';
+        
+        insert cbg;
+        Opportunity opp = new Opportunity();
+        opp.AccountId = testAccount.Id;
+        opp.RecordTypeId = '012U0000000DFSxIAO';
+        opp.Name = 'Case Opportunity';
+        opp.CloseDate = Date.today();
+        opp.StageName = 'Agreement Sent';            
+        opp.ChargentSFA__Card_Month__c = '05';
+        opp.ChargentSFA__Card_Name__c = 'Justin Campese';
+        opp.ChargentSFA__Card_Number__c = '1234565';
+        opp.ChargentSFA__Card_Year__c = '2020';
+        opp.Amount = 250.00;
+        opp.ChargentSFA__Charge_Amount__c = 250.00;
+        insert opp; 
+        ChargentSFA__Transaction__c cSFA = new ChargentSFA__Transaction__c();
+        cSFA.ChargentSFA__Amount__c = 10.00;
+        cSFA.ChargentSFA__Response_Status__c = 'Approved';
+        cSFA.ChargentSFA__Response_Message__c = 'Testing';
+        cSFA.ChargentSFA__Opportunity__c = opp.Id;
+        insert cSFA;
+        String subj = 'Platinum Insurance Question';
+        String cseDesc = 'New India Insurance Company Limited';
+        String usrAccId = thisUser.AccountId;
+        String recId = strRecordTypeId ;
+        String cmnt = 'Testing Comment';
+        String parentId = cse.Id;        
+        String  crdNo = '123456789';
+        String  expYear = '2020';
+        String  expMonth = '05';
+        String  cardHolderName = 'Justin Campese';
+        String  cardSecurity = '900';
+         
+    }
+    @isTest
+    static void testCaseExpedited() {
+        Account acc = [ SELECT Id FROM Account LIMIT 1 ];
+        Opportunity opp=[select id,RecordTypeId from Opportunity LIMIT 1];
+        String strRecordTypeId = [Select Id From RecordType Where SobjectType = 'Case' and Name = 'Community Platinum Case'].Id;
+        RecordType rId = [SELECT Id, Name FROM RecordType where Id = :opp.RecordTypeId LIMIT 1];
+        
+        RestRequest request = new RestRequest();
+        RestResponse res = new RestResponse();
+        request.requestUri ='/services/apexrest/ChargeExpedited';
+        request.httpMethod = 'POST';
+        RestContext.request = request;
+        RestContext.response= res;
+        
+        test.startTest();
+        String oppId = CasePaymentExpedited.ChargeExpedited(opp.id,'Testing5','description testing 5',acc.id,'012290000000fypAAA');
+        test.stopTest();
+        
+    }
+}

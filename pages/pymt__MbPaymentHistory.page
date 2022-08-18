@@ -1,0 +1,220 @@
+<apex:page controller="pymt.MobileBaseController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+    
+         
+    <script>
+        $( document ).on( "pagecreate", function() {
+
+            // cancel the search form submit so the keyboard enter doesn't reload the page
+            $("#searchForm").submit(function() {return false;});
+            // set listener for enter or search button click on keyboard to invoke our own search method.
+            $("#search-1").keydown(function(e) {
+                if (e.keyCode == 13) {
+                doSearch();
+                }
+            });
+             doSearch();  // do initial search using defaults.
+
+        });
+
+    function loading(showOrHide) {
+        setTimeout(function(){
+            $.mobile.loading(showOrHide);
+        }, 1); 
+    }
+
+    function sf1Redirect(path) {
+        if ( (typeof window.sforce != 'undefined') && (window.sforce!=null) ) {
+          sforce.one.navigateToURL(path);
+        }
+        else {
+          window.location.href = path;
+        }
+    }    
+
+    function sf1RedirectToObj(objId) {
+        if ( (typeof window.sforce != 'undefined') && (window.sforce!=null) ) {
+          sforce.one.navigateToSObject(objId);
+        }
+        else {
+          window.location.href = '\\'+objId;
+        }
+    }    
+    
+    function doSearch() {
+            var contactId ='', accountId='', searchString = '',orderByField, direction, itemLimit;
+            orderByField = $("#select-choice-orderby").val();
+            if (orderByField === '') {
+               orderByField = 'pymt_Date__c';
+            }
+            direction = $("#flip-results-direction").val();
+            if (direction !== 'Asc' && direction !== 'Desc') {
+               direction = 'Asc';
+               if (orderByField === 'pymt__Date__c') {
+                  direction = 'Desc';
+               }
+            }
+            
+            searchString = $("#search-1").val();
+            itemLimit = parseInt($("#slider-item-limit").val());
+            loading("show");
+            Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.MobileBaseController.searchPayments}', 
+                    contactId,
+                    searchString,
+                    orderByField,
+                    direction,
+                    itemLimit,
+                    function(results, event){
+                        loading("hide");
+                        if (event.status) {
+                            //document.getElementById('testLog').innerHTML = event.status;
+                            $("#paymentList").empty();
+                            $.each(results, function(i, result) {
+                                var paymentDate = new Date(result.pmtDate);
+                                //paymentDate.setDate(result.pmtDate);
+                                var listItem = '<li><a href="{!URLFOR($Page.MbPaymentDetail)}?id='+
+                                    result.pmtId+'"  rel="external" >';
+                                listItem = listItem + '<h2 style="margin-bottom:0px;">'+result.customerName+' - '+result.name+'</h2>'+
+                                '<table><tr><td>'+
+                                '<img style="padding-right:5px;" id="pc_accepted_card_'+result.cardType+'" src="/s.gif"/>'+
+                                '</td>'+
+                                '<td><p>'+paymentDate.toDateString()+' '+result.memo+'</p><p>'+parseFloat(result.amount, 10).toFixed(2)+
+                                ' '+result.currencyISOCode+' : '+result.status+'</p>'+
+                                '</td></table></a>'
+                                '</li>';
+                                
+                                $("#paymentList").append(listItem);
+                            
+                             });
+                            $("#paymentList").listview('refresh');
+                            
+                        } else if (event.type === 'exception') {
+                          console.log(event.message);
+                          $("#error-popup-message").html(event.message);
+                          $("#error-popup").popup("open", {positionTo:"window"});
+                        } else {
+                          console.log(event.message);
+                          $("#error-popup-message").html(event.message);
+                          $("#error-popup").popup("open", {positionTo:"window"});
+                        }
+                    }, 
+                    {escape: true}
+                );    
+    
+    } 
+    
+    </script>
+</head>
+<body>
+<div data-role="page"  data-theme="a" id="testpage">
+
+    <div data-role="header" data-position="fixed">
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-arrow-left fa-lg"></i></a>
+
+        <form id="searchForm" style="max-width:60%;margin:0px auto;">
+        <input name="search-1" id="search-1" data-mini="true"  value="" type="search" placeholder="Search Payments"/> 
+        </form>
+
+        <a href="#panel-reveal" class="fawe-icon-hdr-link"><i class="fa fa-gear fa-lg"></i></a>      
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+
+
+
+
+
+
+        <ul data-role="listview"  data-inset="true" id="paymentList">
+        <!-- test code 
+            <li><a href="#">
+                
+            <h2>Acme - Widget Deal</h2>
+            <p>$450</p></a>
+                
+            </li>
+            <li><a href="#">
+            <h2>Jones Hardware - Gizmo Deal</h2>
+            <p>$356</p></a>
+                
+            </li>
+            <li><a href="#">
+            <h2>Biz Co - Office Supplies</h2>
+            <p>$245</p></a>
+                
+            </li>
+            -->
+        </ul>
+
+
+
+
+    </div><!-- /content -->
+
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link"  onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-lg"></i></a>
+</div>
+
+    <div data-role="panel" data-position="right" data-display="overlay" id="panel-reveal">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+
+        </ul>
+<br/><br/>
+        <h3>Order Results By:</h3>
+        <select name="select-choice-orderby" id="select-choice-orderby" data-native-menu="false" >
+            <option value="pymt__Date__c">Date</option>
+            <option value="Name">Payment Name</option>
+            <option value="pymt__Status__c">Status</option>
+            <option value="pymt__Amount__c">Amount</option>
+            <option value="pymt__Scheduled_Payment_Date__c">Scheduled Date</option>
+            <option value="CreatedDate">Date/Time Created</option>
+        </select>
+            
+        
+        <div class="ui-field-contain">
+            <label for="select-choice-1"></label>
+            <select name="flip-results-direction" id="flip-results-direction" data-role="slider">
+                <option value="Desc">Desc</option>
+                <option value="Asc">Asc</option>
+            </select>
+            </div>
+
+        <h3>Max Results Size:</h3>
+        <input type="range" name="slider-item-limit" id="slider-item-limit" value="{!mobileSettings.pymt__Default_Results_Size__c}" min="0" max="100" data-highlight="true"/>
+                
+        <br/><br/>
+        <button class="ui-btn ui-corner-all ui-shadow"  onclick="javascript:doSearch();">Apply</button>
+    </div>
+
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>
+
+</div><!-- /page -->
+
+
+  
+</body>
+</html>
+
+</apex:page>

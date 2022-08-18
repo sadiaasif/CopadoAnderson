@@ -1,0 +1,477 @@
+<apex:page controller="simplesurvey.SimpleSurveyController" showHeader="false" sidebar="false" cache="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" language="{!IF(ISBLANK($CurrentPage.parameters.lang), 'en-US', $CurrentPage.parameters.lang)}">
+<html>
+    <head>
+        <title>{!$Label.simplesurvey__Title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <apex:stylesheet value="{!URLFOR($Resource.SurveyStyles)}"/>
+        <link rel="stylesheet" id="timetable_font_lato-css" href="//fonts.googleapis.com/css?family=Lato%3A400%2C700&amp;ver=4.9.1" type="text/css" media="all"/>
+        <link rel="stylesheet" id="et-builder-googlefonts-cached-css" href="https://fonts.googleapis.com/css?family=Lato%3A100%2C100italic%2C300%2C300italic%2Cregular%2Citalic%2C700%2C700italic%2C900%2C900italic%7CDroid+Serif%3Aregular%2Citalic%2C700%2C700italic&amp;ver=4.9.1#038;subset=latin,latin-ext" type="text/css" media="all"/>
+        <style type="text/css">
+            body {
+                font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+                margin: 0;
+            }
+            
+            .header, #main-footer {
+                width: 100%;
+                background-color: black;
+            }
+            
+            #main-footer {
+                position: fixed;
+                bottom: 0;
+            }
+            
+            #logocopyright {
+                float: left;
+            }
+            
+            #menu-policies {
+                float: right;
+            }
+            
+            .container {
+                width: 1110px;
+                margin: 0 auto;
+                padding: 10px 0;
+            }
+            
+            .survey-container {
+                width: 1080px;
+                margin: 80px auto 150px auto;
+            }
+            
+            .question-container {
+                margin: 20px 0;
+            }
+            
+            .field-label {
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+            
+            textarea {
+                width: 100%;
+                border: 1px solid black;
+                resize: none;
+            }
+            
+            .submit {
+                display: block;
+                font-size: 1.5em;
+                font-weight: 300;
+                background-color: #8f1336;
+                color: #fff;
+                padding: 10px 25px;
+                margin-top: 40px;
+                border: none;
+                transition: all .2s ease-in-out;
+            }
+            
+            .submit:hover {
+                -webkit-box-shadow: 0px 10px 30px -9px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 10px 30px -9px rgba(0,0,0,0.75);
+                box-shadow: 0px 10px 30px -9px rgba(0,0,0,0.75);
+                transform: scale(1.05);
+                cursor: pointer;
+            }
+            
+            .logo { margin-bottom:20px; }
+            p { padding:0;margin:0;color:#333; }
+
+            /** Default view **/
+            #thankyou {
+                font-size: 22px;
+                line-height: 1.8em;
+                font-weight: 300;
+                margin-bottom:10px;
+            }
+            #yourrating { font-size:1.3em;margin-bottom:18px;font-weight:normal; }
+            
+            .thumb{
+                max-height: 5em;
+                cursor: pointer;
+                border-radius: 5px;
+                background-color: #eee;
+            }
+            .thumb:hover{
+                border-radius: 5px;
+                /*filter: grayscale(0%) opacity(100%);
+                -webkit-filter: grayscale(0%) opacity(100%);
+                -moz-filter: grayscale(0%) opacity(100%);
+                -ms-filter: grayscale(0%) opacity(100%);*/
+                background-color: #dedede;
+                opacity: 1;
+            }
+            .thumb_deselected{
+                opacity: 0.3;
+                /*filter: grayscale(100%) opacity(50%);
+                -webkit-filter: grayscale(100%) opacity(50%);
+                -moz-filter: grayscale(100%) opacity(50%);
+                -ms-filter: grayscale(100%) opacity(50%);*/
+            }
+            #rating { display:block;margin:0 auto 40px auto; }
+            #divider { margin: 0 auto auto auto;width:65%;max-width:840px;border:0px;height:1px;background-color:#EEE; }
+            #divider2 { width:65%;max-width:840px;border:0px;height:1px;background-color:#EEE;margin:25px auto;display:block; }
+            #leavecomment { font-weight:normal;font-size:.9em;margin-bottom:10px; }
+            .rating-change { font-weight:bold;font-size:1.2em; }
+            .rating-change:hover { text-shadow:0px 3px #EEE;}
+            
+            table { margin: 0 auto; }
+            #rating-options { padding:0;margin:0 auto;max-width:690px; }
+            #rating-options li { display:inline; list-style-type:none;margin-right:3%;margin-bottom:15px; }
+            .rating-chosen { background-color:#222;padding:2px 9px;border-radius:15px;color:#EEE;font-weight:bold;font-size:1.5em; }
+            #need-to-change { color: #555;font-size:.8em;margin-bottom:5px; }
+            .radios {margin-top: -8px;}
+            .radios input[type=radio] {display: inline;}
+            .radios label {vertical-align: top; display: inline;}
+            .radios td {padding-bottom: 10px; text-align: left;}
+
+            /** Dupe and Error views **/
+            #error { font-size: 1.3em; font-weight:bold; }
+
+            .requiredInput {
+                border-left:3px solid #c00;
+                margin-top:5px;
+                margin-bottom:5px;
+                padding-left:2px;
+            }
+
+            table {
+                margin: 0px 20% 30px 20%;
+                width: 60%;
+                padding: 10px 0;
+            }
+
+            table.fields {
+                background-color: #FFF;
+                border-radius: 10px;
+                /* border: 1px dashed #CCC; */
+                border: 1px dashed #ddd;
+            }
+
+            .radios.vert>tbody>tr>td {
+                display: table-row;
+            }
+
+            .radios.vert>tbody>tr>td>input[type=radio], .radios.vert>tbody>tr>td>label {
+                display: table-cell;
+            }
+
+            td.label label {
+                font-weight: bold !important;
+                margin: 0px 0px 10px 0px;
+            }
+
+            .dateFormat a {
+                color: #555;
+                font-size:.9em;
+            }
+
+            table.radios {
+                margin: 0px auto;
+                width: 70%
+            }
+
+            fieldset {
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+
+            table.radios.hor {
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+
+            table.radios.hor td {
+                white-space: nowrap;
+                padding-right: 8px;
+            }
+
+            table.radios.hor input[type=radio], table.radios.hor input[type=checkbox] {
+                margin-right: 0px;
+            }
+
+            @media only screen and (max-width : 600px) {
+                table {
+                    margin: 10px 2% 10px 2%;
+                    width: 96%;
+                }
+
+                table.radios {
+                    margin: 0px auto;
+                    width: 100%
+                }
+            }
+
+            .errorMsg {
+                color: #C00;
+                font-size: 16pt;
+            }
+
+        </style>
+
+        <!--[if lte IE 9]>
+        <style>
+            .radios.vert>tbody>tr>td {
+                display: table-cell;
+            }
+
+            .radios.vert>tbody>tr>td>input[type=radio], .radios>tbody>tr>td>label {
+                display: inline;
+            }
+        </style>
+        <![endif]-->
+
+        <apex:outputPanel layout="none" rendered="{!$CurrentPage.Parameters.radioAboveLabel == 'true'}">
+            <style>
+                .radios input[type="radio"] {
+                    margin-left: 0px;
+                }
+
+                .radios label {
+                    display: block;
+                }
+
+                table.radios.hor td {
+                    text-align: center;
+                }
+
+                @media (max-width: 400px) {
+                    fieldset {
+                        padding-right: 0px;
+                        padding-left: 0px;
+                    }
+                }
+            </style>
+        </apex:outputPanel>
+    </head>
+    <body>
+        <apex:outputPanel id="mainWrapper">
+            <apex:form >
+                <apex:actionFunction name="rateSurvey" action="{!rateSurvey}" rerender="mainWrapper"/>
+                
+                <div class="header">
+                    <div class="container">
+                        <!-- <img src="/servlet/servlet.ImageServer?oid=00DU0000000JQSoMAO&id=0150B0000069Cyw"/> -->
+                        <img src="/servlet/servlet.ImageServer?id=0150B0000069Ddf&oid=00DU0000000JQSo"/>
+                    </div>
+                </div>
+                
+                <apex:outputPanel layout="block" styleClass="survey-container" rendered="{!!submitting}">
+                        <apex:outputPanel layout="block" id="outPanel">
+                            <!--<apex:form >-->
+                            <apex:outputPanel rendered="{!isLoaded && NOT(isUpdated) && NOT(isDup)}">
+                                <apex:outputPanel layout="none" rendered="{!$CurrentPage.parameters.simplesurvey__Survey_Score__c == '9' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '10'}">
+                                    <p id="thankyou">Thank you for providing your rating with us. We would love to have you share your experience by placing a review on either Facebook, Yelp or Google for us. This would mean a lot to us to have you do so and let others know what you thought about Anderson and our team. Just click one or more of the icons below.</p>
+                                    <p><a href="https://www.facebook.com/AndersonBusinessAdvisors/" target="_blank" rel="noopener noreferrer"><img class="alignnone wp-image-28573" src="/servlet/servlet.ImageServer?oid=00DU0000000JQSoMAO&id=0150B0000069Czk" width="50" height="50"/></a>&nbsp; &nbsp; &nbsp;<a href="https://www.yelp.com/biz/anderson-business-advisors-las-vegas-2" target="_blank" rel="noopener noreferrer"><img class="alignnone wp-image-28574" src="/servlet/servlet.ImageServer?oid=00DU0000000JQSoMAO&id=0150B0000069DZ4" width="50" height="50"/></a>&nbsp; &nbsp; &nbsp;<a href="https://search.google.com/local/writereview?placeid=ChIJ-2mgAtvEyIARlhaY19zR9TQ" target="_blank" rel="noopener noreferrer"><img class="alignnone wp-image-28575" src="/servlet/servlet.ImageServer?oid=00DU0000000JQSoMAO&id=0150B0000069DYz" width="50" height="50"/></a></p>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" rendered="{!$CurrentPage.parameters.simplesurvey__Survey_Score__c == '7' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '8'}">
+                                    <p id="thankyou">We appreciate your feedback. Please let us know how we can improve by completing the form below.</p>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" style="font-weight:400px;" rendered="{!$CurrentPage.parameters.simplesurvey__Survey_Score__c == '0' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '1' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '2' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '3' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '4' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '5' || $CurrentPage.parameters.simplesurvey__Survey_Score__c == '6'}">
+                                    <p id="thankyou" class="sorry">We are sorry your experience wasn’t better. Please complete the form below to let us know how we can improve.</p>
+                                </apex:outputPanel>
+                                <!--<apex:outputPanel layout="none" rendered="{!ratingType != '3'}"><p id="yourrating">{!$Label.simplesurvey__rating_recorded}</p></apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!ratingType == '0'}">
+                                    <apex:commandLink action="{!updateRatingN}" reRender="outPanel">
+                                        <apex:image styleClass="thumb {!IF(rate == '1', 'thumb_selected', 'thumb_deselected')}" url="{!setting.simplesurvey__Survey_Rate_Up_URL__c}"/>
+                                        <apex:param assignTo="{!RateN}" value="1"/>
+                                    </apex:commandLink>
+                                    <apex:commandLink action="{!updateRatingN}" reRender="outPanel" style="margin-left: 10px;">
+                                        <apex:image styleClass="thumb {!IF(rate == '0', 'thumb_selected', 'thumb_deselected')}" url="{!setting.simplesurvey__Survey_Rate_Down_URL__c}"/>
+                                        <apex:param assignTo="{!RateN}" value="0"/>
+                                    </apex:commandLink>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!OR(ratingType == '1', ratingType == null)}">
+                                    <apex:image styleclass="rating" url="{!setting.simplesurvey__Survey_Rate_5_IMG__c}" rendered="{!rate=='5'}"/>
+                                    <apex:image styleclass="rating" url="{!setting.simplesurvey__Survey_Rate_4_IMG__c}" rendered="{!rate=='4'}"/>
+                                    <apex:image styleclass="rating" url="{!setting.simplesurvey__Survey_Rate_3_IMG__c}" rendered="{!rate=='3'}"/>
+                                    <apex:image styleclass="rating" url="{!setting.simplesurvey__Survey_Rate_2_IMG__c}" rendered="{!rate=='2'}"/>
+                                    <apex:image styleclass="rating" url="{!setting.simplesurvey__Survey_Rate_1_IMG__c}" rendered="{!rate=='1'}"/>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!ratingType == '2'}">
+                                    <apex:outputPanel rendered="{!ratingType == '2'}">
+                                        <div style="padding:0 10px;">
+                                            <ul id="rating-options">
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='0')}" style="text-decoration:none">
+                                                        <apex:outputText value="0" style="color:#cf4b4b;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="0" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="0" rendered="{!rate=='0'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='1')}" style="text-decoration:none">
+                                                        <apex:outputText value="1" style="color:#cf5744;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="1" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="1" rendered="{!rate=='1'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='2')}" style="text-decoration:none">
+                                                        <apex:outputText value="2" style="color:#cf6d38;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="2" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="2" rendered="{!rate=='2'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='3')}" style="text-decoration:none">
+                                                        <apex:outputText value="3" style="color:#cf9024;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="3" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="3" rendered="{!rate=='3'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='4')}" style="text-decoration:none">
+                                                        <apex:outputText value="4" style="color:#cfa11a;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="4" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="4" rendered="{!rate=='4'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='5')}" style="text-decoration:none">
+                                                        <apex:outputText value="5" style="color:#caa615;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="5" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="5" rendered="{!rate=='5'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='6')}" style="text-decoration:none">
+                                                        <apex:outputText value="6" style="color:#b0a514;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="6" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="6" rendered="{!rate=='6'}" styleclass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='7')}" style="text-decoration:none">
+                                                        <apex:outputText value="7" style="color:#879d15;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="7" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="7" rendered="{!rate=='7'}" styleclass="rating-chosen"  />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='8')}" style="text-decoration:none">
+                                                        <apex:outputText value="8" style="color:#599216;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="8" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="8" rendered="{!rate=='8'}" styleClass="rating-chosen" />
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='9')}" style="text-decoration:none">
+                                                        <apex:outputText value="9" style="color:#2b8719;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="9" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="9" rendered="{!rate=='9'}"  styleClass="rating-chosen" />
+                                                </li>
+                                                <li style="margin-right:0% !important;">
+                                                    <apex:commandLink action="{!updateRatingN}" rendered="{!NOT(rate=='10')}" style="text-decoration:none">
+                                                        <apex:outputText value="10" style="color:green;" styleclass="rating-change" />
+                                                        <apex:param assignTo="{!RateN}" value="10" />
+                                                    </apex:commandlink>
+                                                    <apex:outputText value="10" rendered="{!rate=='10'}" styleClass="rating-chosen" />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <apex:commandLink action="{!changeRating}" style="font-size:75%;font-style:italic;font-weight:normal;" value="Cancel" rendered="{!ratingChange}"/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>-->
+                                
+                                <div class="question-container">
+                                    <apex:outputLabel styleClass="field-label" for="comments">Please share your feedback with our partners by adding your comments below and clicking submit.</apex:outputLabel>
+                                    <apex:inputField id="comments" html-rows="10" html-cols="50" value="{!varSurvey.simplesurvey__Survey_Comments__c}"/>
+                                </div>
+    
+                                <!--<apex:repeat var="w" value="{!fswlist}" rendered="{!fieldSet != NULL}">
+                                    <table class="fields">
+                                        <tr>
+                                            <td class="label">
+                                                <apex:outputLabel value="{!$ObjectType.simplesurvey__Survey__c.fields[w.FieldName].inlineHelpText}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <apex:outputPanel layout="block" rendered="{!showRadios[w.FieldName] = true && w.accessible}" styleClass="{!IF(w.req, 'requiredInput req-check', '')}">
+                                                    <div class="{!IF(w.req, 'requiredBlock', '')}"></div>
+                                                    <apex:selectRadio rendered="{!w.multiSelect != true}" styleClass="radios{!IF(setting.simplesurvey__Horizontal_Radios__c == true, ' hor', ' vert')}" required="{!w.req}" value="{!varSurvey[w.FieldName]}" layout="{!IF(setting.simplesurvey__Horizontal_Radios__c == true, 'lineDirection', 'pageDirection')}">
+                                                        <apex:selectOptions value="{!radioOptions[w.FieldName]}"/>
+                                                    </apex:selectRadio>
+                                                    <apex:selectCheckboxes rendered="{!w.multiSelect == true}" styleClass="radios{!IF(setting.simplesurvey__Horizontal_Checkboxes__c == true, ' hor', ' vert')}" required="{!w.req}" value="{!multiSelectedOptions[w.FieldName]}" layout="{!IF(setting.simplesurvey__Horizontal_Checkboxes__c == true, 'lineDirection', 'pageDirection')}">
+                                                        <apex:selectOptions value="{!radioOptions[w.FieldName]}"/>
+                                                    </apex:selectCheckboxes>
+                                                    <div class="errorMsg" style="display: none;"><strong>Error:</strong> You must choose a value</div>
+                                                </apex:outputPanel>
+                                                <apex:inputField rendered="{!showRadios[w.FieldName] <> true}"  value="{!varSurvey[w.FieldName]}" required="{!w.req}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </apex:repeat>-->
+    
+                                <apex:commandButton rendered="{!NOT(fswEmpty)}" styleclass="submit" id="submit" action="{!submitForm}" value="Submit" disabled="{!isPreview}" rerender="outPanel" oncomplete="checkRequiredRadios();"/>
+                                <br/>
+                                <apex:outputText value=" (Submit button disabled in preview mode)" style="font-style:italic;font-size:75%" rendered="{!AND(NOT(fswEmpty),isPreview)}"/>
+                            </apex:outputPanel>
+                            <!--</apex:form>-->
+                            <apex:outputPanel rendered="{!isUpdated}">
+                                <apex:outputText value="{!$Label.simplesurvey__feedback_thanks}"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(isLoaded) && NOT(isUpdated)}">
+                                <apex:outputText rendered="{!isDup != TRUE}" value="{!$Label.simplesurvey__error_ocurred}"/>
+                                <apex:pageMessages id="msgs"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!isDup == TRUE}">
+                                <apex:outputText value="{!$Label.simplesurvey__survey_received}"/>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    
+                        <script type="text/javascript">
+                            function checkRequiredRadios() {
+                                var radioGroups = document.querySelectorAll('.req-check');
+    
+                                for(var i = 0; i < radioGroups.length; ++i) {
+                                    var grp = radioGroups[i];
+                                    var radios = grp.querySelectorAll('input[type=radio], input[type=checkbox]');
+    
+                                    grp.querySelector('.errorMsg').style.display = "block";
+                                    for(var j = 0; j < radios.length; ++j) {
+                                        if(radios[j].checked) {
+                                            grp.querySelector('.errorMsg').style.display = "none";
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            // collect information about the user
+                            function getSubmitterInformation(){
+                                var ipAddr;
+                                var userAgent;
+                                var referrer;
+                            }
+                        </script>
+                    </apex:outputPanel>
+                    
+                    <div id="main-footer">
+                        <div id="et-footer-nav">
+                            <div class="container">
+                                <div id="logocopyright">
+                                    <p><a href="https://andersonadvisors.com/"><img src="/servlet/servlet.ImageServer?id=0150B0000069Ddf&oid=00DU0000000JQSo"/></a>© Copyright 2017 Anderson Advisors. All rights reserved.</p>
+                                </div>
+                                <ul id="menu-policies" class="bottom-nav"><li id="menu-item-24" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-24"><a href="https://andersonadvisors.com/privacy">Privacy Policy</a></li>
+                                    <li id="menu-item-25" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25"><a href="https://andersonadvisors.com/legal">Legal</a></li>
+                                    <li id="menu-item-27" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-27"><a href="https://andersonadvisors.com/terms">Terms and Conditions</a></li>
+                                    <li id="menu-item-25302" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25302"><a href="https://andersonadvisors.com/payment">Pay Invoice</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </apex:form>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!varSurvey.Id == null}">
+                <script>
+                    rateSurvey();
+                </script>
+            </apex:outputPanel>
+        </body>
+    </html>
+</apex:page>

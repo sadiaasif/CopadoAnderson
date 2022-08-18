@@ -1,0 +1,19 @@
+<apex:page showHeader="false" sidebar="false" title="SMS Insight" >
+    <apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'jquery_1_5_1.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'cometd.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'json2.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'jquery_cometd.js')}"/>
+	
+    <apex:includeLightning rendered="true"/>
+    <div id="lightning" />
+
+    <script>
+        var recordId = "{!JSENCODE($CurrentPage.parameters.id)}";
+        $Lightning.use("smagicinteract:SMSInsight", function() {
+          $Lightning.createComponent("smagicinteract:smsInsightComponent", {
+                objectId : recordId
+            },"lightning", function(cmp) {});
+        });
+    </script>
+
+</apex:page>

@@ -1,0 +1,25 @@
+<apex:page standardController="Subscription__c" recordSetVar="opportunities" extensions="ctrlCreateSubscription">
+<apex:form >
+    <apex:sectionHeader title="Entity Edit" subtitle="New Entity"/>
+    <apex:pageBlock title="Entity Edit" mode="Edit">        
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Previous" action="{!PreviousToStep2}"/>            
+            <apex:commandButton value="Next" action="{!NextToStep4}"/>            
+            <apex:commandButton value="Cancel" action="{!Cancel}"/>
+        </apex:pageBlockButtons>
+    
+        <apex:pageBlockSection collapsible="false" title="Organization:">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Organization State"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.Organization_State__c}"/>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Organization Date"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.Organizational_Date__c}"/>
+            </apex:pageBlockSectionItem>
+            
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

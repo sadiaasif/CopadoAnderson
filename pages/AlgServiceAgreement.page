@@ -1,0 +1,450 @@
+<apex:page extensions="clsBossAndAlgServiceAgreement" standardController="Opportunity" renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false">
+    <style type="text/css" media="print">
+        
+        body { background-color: #242424;}
+        
+    </style>
+    
+    <apex:form >
+<body>       
+<div id="contanier" style="background:#FFFFFF; width: 600px; margin-left:auto; margin-right:auto; padding:30px;">
+
+  <div id="header" style="height: 100px;">
+        
+    <div id="header_left" style="width: 180px; height:100px; float:left; ">
+      <table cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="font-family:'Myriad Pro'; font-size: 30px; font-weight:bold; font-stretch:extra-condensed;">AGREEMENT</td>
+                </tr>
+                
+                <tr>
+                  <td align="center" style="font-style:italic; font-size:12px;">This is not an Agreement to provide<br/>investment advice or legal services.</td>
+                </tr>
+          </table>
+        </div>
+        
+        <div id="header_right" style="width: 380px; height:100px; float:right;">
+        
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="right"> <img src="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/Anderson-Logo.gif')}" width="70%" height="70%"/></td>
+              </tr>
+              <tr>
+                <td align="right" style="font-size:10px; padding-top: 10px;">732 Broadway #201 Tacoma, WA 98402 <br/>Tel: 800.706.4741 -  Fax: 253.238.0003  -  www.andersonadvisors.com</td>
+              </tr>
+            </table>
+      </div>
+  </div> <!--HEADER END-->
+  
+  <div id="customer_info">
+  
+      <div id="customer_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">customer information
+      </div>
+      
+      <div id="customer_info_form" style="padding-top:6px; padding-bottom: 10px;">
+            <!--<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center">
+                  <tr>
+                    <td width="28%" align="left" style="font-size: 12px;">City: <apex:outputLabel value="_________________" style="width:78%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td width="31%" align="left" style="font-size: 12px;">&bull; &nbsp; Sponsor: <apex:outputLabel value="__________________" style="width:68%; font-size: 12px;"></apex:outputLabel></td>
+                    <td width="37%" align="left" style="font-size: 12px;"> &bull; &nbsp; ABA Rep: <apex:outputLabel value="________________" style="width:74%; font-size: 12px;"></apex:outputLabel></td>
+                  </tr>
+             </table>-->
+             
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" >
+                  <tr>
+                    <td width="60%" style="font-size: 12px;">Customer Name:&nbsp; <apex:outputLabel value="{!objOpp.Account.Name}" style="width:80%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td width="40%" style="font-size: 12px;">Date: &nbsp;<apex:outputField value="{!objOpp.CloseDate}" style="width:84%; font-size: 12px;"></apex:outputField> </td>
+                  </tr>
+                 </table>
+                 
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="60%" align="left" style="font-size: 12px;">Address:
+                    &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Address__c}" style="width:91%; font-size: 12px;"></apex:outputLabel> 
+                    </td>
+                  </tr>
+                 </table>
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td align="left" style="font-size: 12px;">City: &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_City__c}" style="width:82%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td align="left" style="font-size: 12px;">State: &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_State__c}" style="width:82%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td align="left" style="font-size: 12px;"> Zip:  &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Postcode__c}" style="width:83%; font-size: 12px;"></apex:outputLabel> </td>
+                  </tr>
+             </table>
+             
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="50%" style="font-size: 12px;">Home Phone: &nbsp; <apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Phone__c}" style="width:80%; font-size: 12px;"></apex:outputLabel>  </td>
+                    <td width="50%" style="font-size: 12px;">Email: &nbsp; <apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Email__c}" style="width:86%; font-size: 12px;"></apex:outputLabel> </td>
+                  </tr>
+                 </table>
+      </div>
+      </div>  <!--customer_info END-->
+      
+        <div id="product_info">
+ 
+            <div id="product_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">product information
+            </div>
+            
+      <div id="customer_info_form" style="padding-top:10px; padding-bottom: 10px;">
+      
+        <table style="font-size: 15px; text-transform:uppercase; text-align:center;">
+            <tr>
+                <td align="center" style="font-size:11px; font-weight:bold;">UNLESS INDICATED BELOW, ANY AND ALL STATE, LOCAL, OR FEDERAL FILING FEES, TAXES, OR OTHER ARE
+NOT INCLUDED IN THE PRICE OF THE ENTITY AND REMAIN THE RESPONSIBILITY OF THE CUSTOMER</td>
+            </tr>
+        </table>
+         
+         <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#333333" style="font-size: 12px; text-transform:uppercase; text-align:left;">
+             <apex:repeat value="{!objopp.OpportunityLineitems}" var="opp">
+                 <tr>
+                     <td width="80%" style="font-size: 12px;  text-align:left;">                            
+                        <apex:outputLabel style="font-size: 12px;  text-align:left;" rendered="{!if(opp.priceBookEntry.Product2.Name != 'Platinum Membership',true,false)}"> 
+                            {!opp.priceBookEntry.Product2.Name}
+                        </apex:outputLabel>                        
+                                          
+                        <apex:outputLabel style="font-size: 12px;  text-align:left;" rendered="{!if(opp.priceBookEntry.Product2.Name == 'Platinum Membership',true,false)}"> 
+                            Customer support will be automatically be billed at $35 per month.  Includes Platinum Web access.
+                            Unless otherwise indicated all State entity fling fees and Deed recording fees will be charged to the credit card on this 
+                            agreement at the time of fling.
+                        </apex:outputLabel>                       
+                     </td>
+                    <td width="20%" style=" text-align:right;">
+                        <apex:outputText value="${0, number, ###,###,###,###.00}">
+                            <apex:param value="{!opp.TotalPrice}"/>
+                        </apex:outputText>
+                    </td>
+                  </tr>
+             </apex:repeat>                 
+                 
+                 <!-- <tr>
+                    <td width="80%" height="60" valign="top" style="font-size: 11px;" align="left">
+                        Customer support will be automatically be billed at $35 per month.<br/>Includes Platinum Web access.
+                        Unless otherwise indicated all State entity filing fees and Deed recording fees will be charged to the credit card on this 
+                        agreement at the time of filing.
+                    </td>
+                    <td width="10%" valign="top" style="font-size: 12px; text-align:right;">$ 35.00</td>
+                  </tr>-->
+                  <tr>
+                    <td height="30" style="font-size: 8px; font-style:italic" align="left">
+                        <!--* All Agreements are subject to approval by our home office. &nbsp;
+                        Approval by: 
+                        <apex:outputLabel style="" value="__________"></apex:outputLabel>
+                        &nbsp;
+                        On: <apex:outputLabel style="" value="_________"></apex:outputLabel>
+                        -->
+                        <span style="float:right; font-size:12px; font-weight:bold;">TOTAL:</span>                    
+                        </td>
+                        <td style="font-size: 12px; text-align:right;">
+                            <apex:outputText value="${0, number, ###,###,###,###.00}">
+                                <apex:param value="{!AlgTotalPrice }"/>
+                            </apex:outputText>
+                        </td>
+                  </tr>
+        </table>
+      </div>
+        </div><!--product_info END-->
+        
+      <div id="disclosure_info">
+        
+            <div id="disclosure_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">disclosure &nbsp; &amp; &nbsp; acknowledgement
+        </div>
+            
+            <table style="font-size: 10px; text-transform:uppercase; text-align:center;">
+                <tr>
+                    <td align="center" style="font-size:11px; font-weight:bold;">The Customer understands that they may cancel this Agreement at any time prior to  
+midnight of the third (3) business day after the date of this Agreement.</td>
+                </tr>
+                <tr>
+                  <td align="justify" style="font-size:10px;">If Customer desires to choose the name for any entity(ies) to be filed with any state included in this Agreement, Customer agrees to return
+completed questionnaires with the desired name(s) within 45 days.  Customer acknowledges that names requested cannot be guaranteed as
+such names are maintained by the various states.  Anderson Business Advisors agrees to use its best efforts to obtain the name(s) requested by
+Customer unless Customer chooses not to return the questionnaires within 45 days, in which case Anderson Business Advisors will choose the
+name of the filed entity(ies) and Customer agrees to accept the same.  In the event Customer does not like the name(s) chosen, Customer, at
+Customer’s sole expense, may cause a change of name to be filed in the jurisdiction(s) where the entity(ies) was filed and Anderson Business
+Advisors will complete any amended bylaws, operating agreement(s) or partnership agreement(s) for Customer at no expense to Customer.</td>
+                </tr>
+          </table>
+          
+                <div id="disclosure_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;"></div>
+                
+      <div id="disclosure_info_form" style="padding-top:10px; padding-bottom: 10px;">
+                      
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="font-size: 12px;">METHOD OF PAYMENT: 
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/> <apex:inputcheckbox value="{!PaymentMethodCard}"/> </td>
+                    <td style="font-size: 12px;">Check # <apex:outputLabel value="____________________"></apex:outputLabel></td>
+                    <td style="font-size: 12px;">
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!AMEXCard}"/>Amex &nbsp;&nbsp;&nbsp;
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!visaCard}"/>Visa &nbsp;&nbsp;&nbsp;
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!MasterCard}"/>MC &nbsp;&nbsp;&nbsp;
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!DiscoverCard}"/>Discover &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="font-size: 12px;">&nbsp;</td>
+                  </tr>
+            </table>
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="60%" align="left" style="font-size: 12px;">Card#:
+                        <apex:outputLabel value="____________________" style="width:94%;"></apex:outputLabel>
+                    </td>
+                  </tr>
+             </table>
+                 
+             <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="60%" style="font-size: 12px;">Security Code (on back of card):<apex:outputLabel value="____________________" style="width:60%;"></apex:outputLabel></td>
+                    <td width="40%" style="font-size: 12px;">Expiration Date: <apex:outputLabel value="_______________" style="width:35%;"></apex:outputLabel></td>
+                  </tr>
+             </table>
+
+             <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" style="font-weight:bold;">
+                  <tr>
+                    <td width="50%" style="font-size: 12px;"> &bull; Signature:  <apex:outputLabel value="____________________" style="width:80%"></apex:outputLabel></td>
+                    <td width="50%" style="font-size: 12px;">Date: <apex:outputLabel value="____________________" style="width:89%"></apex:outputLabel></td>
+                  </tr>
+             </table>
+        </div>      
+  </div><!--disclosure_info END-->
+  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <div id="terms">
+      
+          <div id="terms_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">Terms &nbsp; &amp; &nbsp; Conditions</div>
+          
+     <div id="terms_form" style="padding-top:10px; padding-bottom: 10px;">
+            
+            <table style="font-size: 10px; text-transform:uppercase; text-align:center;">
+            <tr>
+                <td align="center" style="font-size:10px; font-weight:bold;">
+                    The Terms and Conditions are made part of the Agreement between Customer and 
+                    Anderson Business Advisors, PLLC, (“Company”) as though set forth fully herein.
+                </td>
+            </tr>
+        </table>
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="5">
+              <tr>
+                <td width="100%">
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">CUSTOMER DUTIES</span><br/>
+                        <span style="font-size:10px;">
+                            Customer agrees to be truthful with Company, to cooperate
+                            with Company and to keep Company informed of any information
+                            or developments that would have an effect
+                            on this agreement.
+                            Customer agrees to abide by this Agreement
+                            and to notify
+                            Company
+                            in the event Customer’s
+                            contact information contained
+                            in this Agreement
+                            changes.
+                      </span>
+                </td>
+              </tr>
+                
+              <tr>
+                <td>
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">COMPANY  DUTIES</span><br/>
+                        <span style="font-size:10px;">
+                        Company agrees to PROVIDE the Products listed in the Agreement
+                        or to facilitate and/or coordinate the fulfillment of the
+                        Agreement.
+                        Said facilitation and/or coordination may involve
+                        the
+                        shipping of products from a supplier’s
+                        warehouse and the
+                        utilization
+                        of third parties to accomplish the objectives of the
+                        Agreement.
+                        Such third parties may include, but are not limited
+                        to,
+                        office suite providers, resident agent providers, and working
+                        with banking and financial institutions to open accounts.
+                        Specifically
+                        excluded from this Agreement
+                        are any litigation
+                        services,
+                        arbitrations, mediations, audits, hearings of any type,
+                        accounting
+                        work, bookkeeping or tax preparation services.
+                        Products
+                        and/or Services in any matter or form other than those
+                        specifically
+                        set forth in this Agreement
+                        will require a separate
+                        Agreement.
+                        </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">LEGAL SERVICES</span><br/>
+                        <span style="font-size:10px;">
+                        Company is not in the business of providing legal services.
+                        By way of full disclosure, all members of Anderson Business
+                        Advisors, PLLC are licensed attorneys. In the event any portion
+                        of the Products contained in this Agreement are interpreted as
+                        or considered to be Legal Services, Company retains the right
+                        to facilitate the use of attorneys to complete said work and
+                        Customers agree to work with the said attorneys. Any attorneys
+                        utilized will be required to exercise their own judgment and
+                        will be required to work directly with Customer. Company will
+                        facilitate this relationship and work directly with the attorneys
+                        to carry out the purpose or this Agreement.
+                    </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">FINANCIAL SERVICES</span><br/>
+                        <span style="font-size:10px;">
+                        Company is not in the business of providing financial advice or
+                        recommendations. Nothing in this Agreement should be constructed
+                        as an endorsement, recommendation or solicitation for
+                        any
+                        financial product, stock, security,
+                        note, private placement,
+                        or
+                        any other financial product or service.
+                        </span>
+                    
+                </td>
+              </tr>
+              <tr>
+                <td width="100%">
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">FULL DISCLOSURE</span><br/>
+                        <span style="font-size:10px;">
+                            By the way of disclosure of relationships and potential conflicts,
+                            Company does hereby advise Customer that Company maintains
+                            several professional alliances with both separate and related entities
+                            including, but not limited to, Business Office Suite Services
+                            and
+                            Acorn
+                            Corporate Services. Company believes that such professional
+                            alliances are in the best interests of its Customers and that
+                            no
+                            impermissible conflicts exist. In no event is Customer required
+                            to
+                            use any of the Company’s
+                            alliance partners.
+                          </span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">DISCLAIMER</span><br/>
+                        <span style="font-size:10px;">
+                        Nothing in this Agreement and nothing in the Company’s or its
+                    Representatives’ statements should be construed as a promise or
+                    guarantee about the outcome of any matter.  Company and its Representatives
+                    can make no such promises or guarantees.
+                    </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">ENTIRE AGREEMENT</span><br/>
+                            <span style="font-size:10px;">
+                            This Agreement contains the entire Agreement between Customer
+                            and the Company. There are no other Agreements, expressed or
+                            implied, between Customer and the Company.  In the event any
+                            portion of this agreement shall be declared invalid by the court of
+                            law, the remaining sections shall remain in effect. Amendments to
+                            this Agreement must be in writing.
+                      </span>
+                    </td>
+                  </tr>
+                <tr>
+                <td>
+                    <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">MEDIATION</span><br/>
+                        <span style="font-size:10px;">
+                        If a dispute arises under this Agreement, Customer and Company
+                        agree to confer in good faith to resolve the dispute and to engage
+                        the services of JAMS or similar mediation service prior to resorting
+                        to arbitration, litigation or any other dispute process. Such mediation
+                        shall occur within 90 days of either Customer or Company
+                        asserting
+                        this provision. 
+                        </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  <span style="text-transform:uppercase; font-size:12px; font-weight:bold;">VENUE</span><br/>
+                        <span style="font-size:10px;">
+                        This Agreement is entered into under the Laws of the State of
+                        Washington. Venue shall rest in Pierce County, Washington.
+                  </span>
+                  </td>
+                
+              </tr>
+            </table>
+      </div>
+       </div><!--terms END-->
+       <br/><br/><br/><br/>
+      <div id="edu_support">
+      
+          <div id="edu_support_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">Reoccurring Monthly Educational Support Service Terms and Conditions</div>
+          
+      <div id="terms_form" style="padding-top:10px; padding-bottom: 10px;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="7">
+                  <tr>
+                    <td>
+                    <span style="font-size:12px;">
+                     In addition to the Terms &amp; Conditions set forth above, the following Educational Support Service Terms and Conditions
+                     will be made part of this Agreement if the Customer purchases Company’s Reoccurring Educational Support Service as 
+                     indicated on the front side of this Agreement.
+                     </span>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <span style="text-transform:uppercase; font-weight:bold; font-size:12px;">SERVICES THAT COMPANY WILL PROVIDE</span><br/>
+                        <span style="font-size:10px;">
+                        It is understood that the Educational Support Services contemplated under this Agreement are educational in nature and
+                         limited to education on asset protection and general business planning. The Educational Support Service is offered 
+                         with the understanding that neither the Company nor their representatives are engaged in rendering legal, accounting,
+                          or other professional advice as part of theEducational Support Service. If legal advice or other expert advice is
+                          required, the services of a competent professional should besought.
+                        </span>
+                        </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <span style="text-transform:uppercase; font-weight:bold; font-size:12px;">DURATION </span><br/>
+                    <span style="font-size:10px;">
+                    The Reoccurring Educational Support Service Terms &amp; Conditions are effective immediately and shall be automatically renewed in one month increments unless Customer provides written notice to Company of Customer’s desire to terminate this Agreement at least 15 days prior to the end of the current monthly term.  Said cancellation shall be effective on the first day of the following month. 
+                    </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <span style="text-transform:uppercase; font-weight:bold; font-size:12px;">ASSIGNMENT</span><br/>
+                    <span style="font-size:10px;">
+                    The Educational Support Services contemplated under this Agreement are not assignable by Customer.
+                    </span>
+                    </td>
+                  </tr>
+           </table>
+
+      </div>
+          
+      </div><!--edu_support END-->
+        
+    </div>
+    </body>    
+    </apex:form>
+    
+</apex:page>

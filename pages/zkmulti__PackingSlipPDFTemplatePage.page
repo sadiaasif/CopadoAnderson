@@ -1,0 +1,190 @@
+<apex:page renderAs="pdf" controller="zkmulti.PackingSlipController" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" action="{! doInit }" docType="html-5.0">
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Packing Slip</title>
+		<style media="all" type="text/css">
+		@page {
+			margin: 30px 20px 50px 20px;
+			@top-center {
+				/*content: element(header);*/
+			}
+			@bottom-center {
+				content: element(footer);
+			}
+			@bottom-right {
+				content: counter(page) " / " counter(pages);
+			}
+		}
+		body {
+			font-family: sans-serif;
+		}
+		div.header {
+			position: running(header);
+			margin: 10px 0px 60px 8px;
+			border-bottom: 1px solid black;
+			width: 100%;
+		}
+		div.footer {
+			position: running(footer);
+			display: block;
+			padding: 0 0 0 8px;
+			text-align: center;
+			width:100%;
+		}
+		.footer-text {
+			padding-top: 5px;
+			padding-bottom: 5px;
+			font-size: 12px;
+			text-align: center;
+			font-weight: bold;
+			text-transform: uppercase;
+			display:inline-block;
+			width:200px;
+		}
+		.pagenumber:before {
+			content: counter(page);
+			float: right;
+			right: 20px;
+			bottom: 5px;
+		}
+		.pagecount:before {
+			content: counter(pages);
+		}
+		.header-text {
+			display: inline-block;
+			margin: 7px 0 14px 32px;
+		}
+		.header-text-slip {
+			display: inline-block;
+			font-size: 16px;
+			font-weight: bold;
+			margin-top: 7px;
+			max-width: 500px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.header img.ee-logo {
+			vertical-align: top;
+		}
+		.header-text .header-image-title {
+			height: 20px;
+			vertical-align: top;
+		}
+		.ship-info-table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		.ship-info-table td {
+			padding:5px;
+		}
+		.page-table {
+			width: 100%;
+			margin: 30px  0 0 0 ;
+			border-collapse: collapse;
+		}
+
+		.page-table tr.alternate-row-background {background: #EFEFEF}
+		.table-header {
+			font-size: 16px;
+			font-weight: bold;
+			color:white;
+			background-color: black;
+			border-bottom: 1px solid black;
+		}
+
+		.logo{ width:100%;text-align:center;font-weight:bold;font-size:50px;}
+
+		.page-table tr td {padding:5px;}
+		.table-header-right {text-align:right;}
+		.table-product-description {font-size:15px;}
+		.table-product-quantity {text-align:right;font-size:15px;}
+		.ship-info-header {
+			font-weight: bold;
+			font-size: 15px;
+			margin-top:25px;
+		}
+		.ship-info-main {
+			font-size: 14px;
+			max-width: 440px;
+		}
+		</style>
+	</head>
+	<body>
+
+		<div class="footer">
+			<div class="footer-text">
+				{! box.boxNumberString }
+			</div>
+		</div>
+		
+		<div class="logo">{! $Organization.Name }</div>
+		<table class="ship-info-table">
+			<tr>
+				<td valign="top">
+					<div class="ship-info-header">
+						From
+					</div>
+					<div class="ship-info-main">
+						{! box.shipment.Sender_Company__c}<br />
+						{! box.shipment.Sender_Street__c}<br />
+						{! box.shipment.Sender_City__c} {! box.shipment.Sender_State_Province__c} <br />
+						{! box.shipment.Sender_Zip_Postal_Code__c}<br />
+						{! box.shipment.Sender_Country__c}
+					</div>
+				</td>
+				<td valign="top">
+					<div class="ship-info-header">
+						Ship To
+					</div>
+					<div class="ship-info-main">
+						{! box.shipment.Recipient_Company__c}<br />
+						{! box.shipment.Recipient_Street__c}<br />
+						{! box.shipment.Recipient_City__c} {! box.shipment.Recipient_State_Province__c} <br />
+						{! box.shipment.Recipient_Zip_Postal_Code__c}<br />
+						{! box.shipment.Recipient_Country__c}
+					</div>
+				</td>
+				<td valign="top">
+					<div class="ship-info-header">
+						Ref Number
+					</div>
+					<div class="ship-info-main">
+						{! box.shipment.Reference1_Value__c}
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!-- Products -->
+		<table class="page-table">  
+			<tbody>
+				<tr>
+					<td class="table-header">
+						Description
+					</td>
+					<td class="table-header table-header-right">
+						Quantity
+					</td>
+				</tr>             
+					<apex:variable value="{!1}" var="i"/>
+					<apex:repeat value="{! box.items }" var="product">
+						<tr class="{!IF(mod(i,2)==0, 'alternate-row-background', '')}">
+							<td class="table-product-description">
+								{! product.item.Description__c }
+							</td>
+							<td class="table-product-quantity">
+								{! product.item.Quantity__c }
+							</td>
+						</tr>
+						<apex:variable value="{!i+1}" var="i" />
+					</apex:repeat>
+			</tbody>
+		</table>
+		<!-- <img src="{! AttachmentLabelURL }" style="width: 6in; height: 4in;position: absolute;top: 0;"></img> -->
+		
+
+	</body>
+</html>
+</apex:page>

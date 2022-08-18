@@ -1,0 +1,344 @@
+<apex:page tabStyle="zkfedex__Shipment__c" standardController="zkfedex__Shipment__c" extensions="zkfedex.ShippingController" sidebar="false">
+  
+  <c:Loading id="LoadingControl"/>
+  
+  <script >
+    //Override JavaScript that is setting focus on Date field
+    function setFocusOnLoad() {} 
+  </script>
+
+  <apex:sectionHeader title="{!SectionHeaderTitle}" subtitle="{!RateStep2.PageBlockTitle}" help="{!HelpLinks.HelpLinkRateStep2a}"/>
+    <apex:form >
+    
+      <apex:image url="{!URLFOR($Resource.zkfedex__stepTimelines, 'stepTimelines/timeline2.png')}"/><p/>
+              
+      <apex:pageBlock mode="detail">
+      
+        <!-- pageBlockButtons -->
+        <apex:pageBlockButtons >
+          <apex:outputPanel id="domPageBlockButtons" rendered="{!NOT(InternationalRendered)}">
+            <apex:commandButton action="{!prevToRateStep1}" value="<<" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep1}" value="1" onclick="IsLoading();"/>
+            <apex:commandButton style="border-style:solid; border-color:yellow" value="2" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep4}" value="3" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep5}" value="4" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep6}" value="5" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep4}" value=">>" onclick="IsLoading();"/>
+          </apex:outputPanel>
+          <apex:outputPanel id="intlPageBlockButtons" rendered="{!InternationalRendered}">
+            <apex:commandButton action="{!prevToRateStep1}" value="<<" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep1}" value="1" onclick="IsLoading();"/>
+            <apex:commandButton style="border-style:solid; border-color:yellow" value="2A" onclick="IsLoading();"/>
+            <apex:commandButton action="{!nextToRateStep3}" value="2B" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep4}" value="3" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep5}" value="4" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep6}" value="5" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!nextToRateStep3}" value=">>" onclick="IsLoading();"/>
+          </apex:outputPanel>
+        </apex:pageBlockButtons>
+        
+        
+        <!-- Error Messages -->
+        <apex:outputPanel id="rateStep2Msg">
+          <apex:pageMessage title="Error:" summary="{!RateStep2.RateStep2Msg}" rendered="{!RateStep2.RateStep2MsgRendered}" severity="error" strength="1">
+            <apex:commandButton action="{!RateStep2.updateAvailableServices}" value="Retry" rerender="rateStep2Msg,packageDetailsSection" rendered="{!RateStep2.RetryServiceAvailableRendered}" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageMessage>
+          
+          <apex:outputPanel >
+            <c:MessageDisplay reply="{!RateStep2.CurrentWebServiceReply1}" hideSuccess="true"/>
+            <c:MessageDisplay reply="{!RateStep2.CurrentWebServiceReply2}" hideSuccess="true"/>
+          </apex:outputPanel>
+          
+          <apex:pageMessage title="Note:" summary="{!RateStep2.RateStep2MinCustomsMsg}" rendered="{!RateStep2.RateStep2MinCustomsMsgRendered}" severity="info" strength="1"/>
+          <!-- Total Customs Value no longer obtained here. Calculated from Commodity Information -->
+          <!--
+          <apex:pageMessage title="Note:" summary="Total Customs Value will be calculated based on the Commodity information that is submitted in the next step" rendered="{!InternationalCommoditiesRendered}" severity="info" strength="1"/>
+          -->
+        </apex:outputPanel>
+        
+        
+        <!-- Package Details Section -->
+        <apex:outputPanel id="packageDetailsSection">
+        <apex:pageBlockSection collapsible="false" title="Package Details (* Denotes required field)">
+      
+          <!--  Ship Date -->
+          <apex:pageBlockSectionItem rendered="{!RateStep2.ShipDateInputAllowed}">
+            <apex:outputLabel value="* Ship Date"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__ShipDate__c}">
+              <apex:actionSupport event="onchange" action="{!RateStep2.shipDateSelectRefresh}" rerender="rateStep2Msg,packageDetailsSection,reusePackageSection,packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+            </apex:inputField>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep2.ShipDateInputAllowed)}">
+            <apex:outputLabel value="Created Date"/>
+            <apex:outputField value="{!Shipment.zkfedex__ShipDate__c}"/>
+          </apex:pageBlockSectionItem>
+          <p/>
+          
+          <!-- Saturday Delivery -->
+          <apex:pageBlockSectionItem rendered="{!RateStep2.SaturdayDeliveryRendered}">
+            <apex:outputLabel value="Saturday Delivery"/>
+            <apex:inputField required="false" value="{!ShipmentSS.zkfedex__SaturdayDelivery__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep2.SaturdayDeliveryRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Saturday Pickup -->
+          <apex:pageBlockSectionItem rendered="{!RateStep2.SaturdayPickupRendered}">
+            <apex:outputLabel value="Saturday Pickup"/>
+            <apex:inputField required="false" value="{!ShipmentSS.zkfedex__SaturdayPickup__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep2.SaturdayPickupRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>          
+          
+          <!-- Service Type selectList -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Service Type"/>
+            <apex:selectList value="{!Shipment.zkfedex__ServiceType__c}" size="1" multiselect="false" >
+              <apex:actionSupport event="onchange" action="{!RateStep2.serviceTypeSelectRefresh}" rerender="rateStep2Msg,packageDetailsSection,reusePackageSection,packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep2.ServiceTypeOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+
+          <!-- Package Type selectList -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Packaging Type"/>
+            <apex:selectList id="packagingTypeSelectList" value="{!RateStep2.PackagingType}" size="1" multiselect="false" disabled="{!RateStep2.PackageTypeDisabled}">
+              <apex:actionSupport event="onchange" action="{!RateStep2.packageTypeSelectRefresh}" rerender="rateStep2Msg,packageDetailsSection,reusePackageSection,packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep2.PackageTypeOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem> 
+          
+          <!-- Weight Units -->
+          <apex:pageBlockSectionItem rendered="{!AND(RateStep2.WeightUnitsInputAllowed,InternationalRendered)}">
+            <apex:outputLabel value="Weight Units"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__WeightUnits__c}">
+              <apex:actionSupport event="onchange" rerender="rateStep2Msg,packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+            </apex:inputField>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!AND(NOT(RateStep2.WeightUnitsInputAllowed),InternationalRendered)}">
+            <apex:outputLabel value="Weight Units"/>
+            <apex:outputField value="{!Shipment.zkfedex__WeightUnits__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Dimension Units -->
+          <apex:pageBlockSectionItem rendered="{!AND(RateStep2.DimensionUnitsInputAllowed,AND(RateStep2.DimensionUnitsInputRendered,InternationalRendered))}">
+            <apex:outputLabel value="Dimension Units"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__DimensionUnits__c}">
+              <apex:actionSupport event="onchange" rerender="rateStep2Msg,packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+            </apex:inputField>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!AND(NOT(RateStep2.DimensionUnitsInputAllowed),AND(RateStep2.DimensionUnitsInputRendered,InternationalRendered))}">
+            <apex:outputLabel value="Dimension Units"/>
+            <apex:outputField value="{!Shipment.zkfedex__DimensionUnits__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!AND(RateStep2.DimensionUnitsInputRendered,InternationalRendered)}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Freight Booking Confirmation Number -->
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <apex:outputLabel value="{!RateStep2.FreightBookingConfLabel}"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__FreightBookingConfNumber__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Freight Packing List Enclosed -->
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <apex:outputLabel value="Packing List Enclosed"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__FreightPackingListEnclosed__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Document Content Type -->
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="* Package Contents"/>
+            <apex:selectRadio value="{!shipment.zkfedex__DocumentContentType__c}">
+              <apex:actionSupport event="onclick" action="{!RateStep2.documentContentTypeSelectRefresh}" rerender="rateStep2Msg,packageDetailsSection" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep2.DocumentContentTypeOptions}"/>
+            </apex:selectRadio>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+           
+          <!-- Currency -->
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="* Currency"/>
+            <apex:selectList value="{!shipment.zkfedex__Currency__c}" size="1" multiselect="false">
+              <apex:actionSupport event="onchange" rerender="rateStep2Msg,packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep2.CurrencyOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+        
+        <!-- Existing Package Lookup Section -->
+        <apex:outputPanel id="reusePackageSection">
+        <apex:pageBlockSection collapsible="false" title="{!RateStep2.SelectedExistingPackageLabel}" rendered="{!RateStep2.ExistingPkgInputRendered}">
+          
+          <!-- Existing Package Lookup -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!RateStep2.SelectedExistingPackageLabel}"/>
+            <apex:selectList value="{!RateStep2.SelectedExistingPackage}" size="1" multiselect="false">
+              <apex:selectOptions value="{!RateStep2.ExistingPkgOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem><p/>
+          
+          <!-- Add Existing Package button -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandButton action="{!RateStep2.addExistingPackageRefresh}" value="Add" rerender="rateStep2Msg,packageDetailsSection,packageListBlockTable" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+        
+        <!-- Package List Section -->
+        <apex:outputPanel id="packageListBlockTable">
+        <apex:pageBlockSection collapsible="false" title="Package List (* Denotes required field)">
+          
+          <!-- Package List Table -->
+          <apex:pageBlockTable value="{!PackageEntries}" var="packageEntry" cellpadding="10">
+            <apex:column >
+              <apex:facet name="header"></apex:facet>
+              <apex:inputCheckbox value="{!packageEntry.RemoveLine}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Entry No.</apex:facet>
+              <apex:outputText value="{!packageEntry.EntryNumber}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Packaging Type</apex:facet>
+              <apex:outputText style="width:75px" value="{!packageEntry.PackagingTypeName}"/>
+            </apex:column>
+            <apex:column rendered="{!NOT(FreightRendered)}">
+              <apex:facet name="header">* Quantity</apex:facet>
+              <apex:inputText style="width:75px" required="false" value="{!packageEntry.PackageQty}"/>
+            </apex:column>
+            <apex:column rendered="{!FreightRendered}">
+              <apex:facet name="header">* No. of Skids</apex:facet>
+              <apex:inputText style="width:75px" required="false" value="{!packageEntry.PackageQty}"/>
+            </apex:column>
+            <apex:column rendered="{!FreightRendered}">
+              <apex:facet name="header">{!RateStep2.FreightTotalPiecesOnSkidHeader}<br/> on a Skid</apex:facet>
+              <apex:inputField style="width:75px" required="false" value="{!packageEntry.Pkg.zkfedex__TotalPiecesOnSkid__c}" rendered="{!packageEntry.isNotReadOnly}"/>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__TotalPiecesOnSkid__c}" rendered="{!packageEntry.isReadOnly}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">* Weight<br/> {!PerPkgOrSkidTitle}</apex:facet>
+              <apex:inputField style="width:75px" required="false" value="{!packageEntry.Pkg.zkfedex__Weight__c}" rendered="{!packageEntry.isNotReadOnly}"/>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Weight__c}" rendered="{!packageEntry.isReadOnly}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Weight Units</apex:facet>
+              <apex:outputField value="{!Shipment.zkfedex__WeightUnits__c}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">{!RateStep2.LengthHeader}</apex:facet>
+              <apex:inputField style="width:75px" required="false" value="{!packageEntry.Pkg.zkfedex__Length__c}" rendered="{!packageEntry.isNotReadOnly}"/>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Length__c}" rendered="{!packageEntry.isReadOnly}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">{!RateStep2.WidthHeader}</apex:facet>
+              <apex:inputField style="width:75px" required="false" value="{!packageEntry.Pkg.zkfedex__Width__c}" rendered="{!packageEntry.isNotReadOnly}"/>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Width__c}" rendered="{!packageEntry.isReadOnly}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">{!RateStep2.HeightHeader}</apex:facet>
+              <apex:inputField style="width:75px" required="false" value="{!packageEntry.Pkg.zkfedex__Height__c}" rendered="{!packageEntry.isNotReadOnly}"/>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Height__c}" rendered="{!packageEntry.isReadOnly}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">Dimension<br/> Units</apex:facet>
+              <apex:outputField value="{!Shipment.zkfedex__DimensionUnits__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">* {!RateStep2.DeclaredValueHeader}<br/> {!PerPkgOrSkidTitle}</apex:facet>
+              <apex:inputField style="width:75px" required="false" value="{!packageEntry.Pkg.zkfedex__DeclaredValue__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">{!RateStep2.DeclaredValueHeader}<br/> Currency</apex:facet>
+              <apex:outputField value="{!Shipment.zkfedex__Currency__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Save For<br/> ReUse</apex:facet>
+              <apex:inputCheckbox value="{!packageEntry.SaveForReuse}" disabled="{!packageEntry.isReadOnly}">
+                <apex:actionSupport event="onclick" rerender="packageListBlockTable" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              </apex:inputCheckbox>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DescriptionInputRendered}">
+              <apex:facet name="header">* Package Description<br/> (For Future Lookup)</apex:facet>
+              <apex:inputText style="width:200px" value="{!packageEntry.SaveProfileDescription}" rendered="{!packageEntry.AllowDescriptionInput}" />
+              <apex:outputText value="{!packageEntry.SaveProfileDescription}" rendered="{!packageEntry.isReadOnly}" />
+            </apex:column>
+          </apex:pageBlockTable><p/>
+
+          <apex:outputPanel >
+            <!-- Add Line button -->
+            <apex:commandButton action="{!RateStep2.packageListAddLineRefresh}" value="Add New Row" rerender="rateStep2Msg,packageDetailsSection,packageListBlockTable" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+            <!-- Remove line(s) button -->
+            <apex:commandButton action="{!RateStep2.removeLineCheckboxRefresh}" value="Remove Selected" rerender="rateStep2Msg,packageDetailsSection,packageListBlockTable" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:outputPanel>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+        
+        <!-- Package Totals Section -->
+        <apex:outputPanel id="packageListTotalsSection">
+        <apex:pageBlockSection collapsible="false" title="Package List Totals">
+        
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total Weight"/>
+            <apex:outputText value="{!RateStep2.TotalWeight}"/>
+          </apex:pageBlockSectionItem><p/>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total {!RateStep2.DeclaredValueHeader}"/>
+            <apex:outputText value="{!RateStep2.TotalDeclaredValue}"/>
+          </apex:pageBlockSectionItem><p/>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandButton value="Update" rerender="rateStep2Msg,packageListTotalsSection" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+      </apex:pageBlock>
+      
+      <!-- Custom Component: RateReplyPageBlock -->
+      <c:RateReplyPageBlock wsiListRef="{!wsiList}" shipmentRef="{!Shipment}" shipmentSsRef="{!ShipmentSS}" packageEntriesRef="{!packageEntries}" validatePkg="true" listRates="true"/>
+      
+      
+      <!-- Shipment Notes -->
+      <apex:pageBlock mode="detail">
+        <apex:pageBlockSection collapsible="false" columns="1" title="Shipment Notes">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Shipment Notes"/>
+            <apex:inputField required="false" style="width:350px" value="{!Shipment.zkfedex__ShipmentNotes__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      
+    </apex:form>
+</apex:page>

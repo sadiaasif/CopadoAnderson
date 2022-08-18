@@ -1,0 +1,140 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController,FormController" sidebar="false" showHeader="false" lightningStylesheets="true">    
+    <apex:slds />
+    <style>
+        @media (min-width: 1024px){
+        .sidebar {display: block;
+        }
+        }
+        div {
+        word-wrap: break-word;
+        }
+        footer.container-fluid.text-center {
+        padding: 5px;
+        }
+      .pbBody .input-group-btn .btn {
+           float: inherit; 
+        }
+                
+    </style>
+
+    <div class="slds-scope">  
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>   
+                
+                 <script async='async' src="https://www.googletagmanager.com/gtag/js?id=UA-43972311-23"></script>
+                <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-43972311-23'); </script> 
+                
+            </head>
+            <body> 
+                <apex:include pageName="AndersonHeader"/>
+                <apex:form >
+                    <div class="container main-container">   
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="gray-block doc-area">                            
+                                <apex:pageBlock >
+                                    <div class="input-group">
+                                        <apex:inputText value="{!searchstring}" styleClass="form-control" id="theSearchstring" maxlength="100" size="110"/> &nbsp;
+                                        <div class="input-group-btn">
+                                            <apex:commandButton value="Go" onclick="" action="{!search}" status="searchLoader" id="submitButton" styleClass="btn btn-default" style="width:30" reRender="theSearchResults,browser,kkv" >
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </apex:commandButton>
+                                        </div>
+                                    </div>
+                                </apex:pageBlock> 
+                                <hr />
+                                <apex:messages />
+                                <apex:pageBlock > 
+                                    <apex:actionStatus id="searchLoader" style="align:center;">      
+                                        <apex:facet name="start">                                                        
+                                            <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                        </apex:facet>
+                                        <apex:facet name="stop"></apex:facet>
+                                    </apex:actionStatus>
+                                    <apex:panelGroup id="theSearchResults">
+                                        <ul id="browser" class="filetree">  
+                                            <apex:repeat id="kkv" value="{!CategoryList}" var="cat" >
+                                                <li class="closed"><span class="folder">{!cat}</span>
+                                                    <ul id="folder21">
+                                                        <apex:repeat value="{!articleCategory}"  var="article">
+                                                            <apex:outputPanel rendered="{!if(article.Knowledge_Article_Category__c==cat,true,false)}">
+                                                                <li>
+                                                                    <span class="file"> 
+                                                                        <apex:actionSupport event="onclick" status="knowledgeLoader" rerender="knowledgeid"/>
+                                                                        <a id="{!URLFOR($Action.Knowledge__kav.FileFieldDownload,article.id, ['field'=$ObjectType.Knowledge__kav.fields.Upload_File__Body__s.name])}" onclick="getRemoteDoc(this.id)" style="color:blue;" href="" >{!article.Title}</a>
+                                                                    </span>
+                                                                </li>
+                                                            </apex:outputPanel>
+                                                        </apex:repeat> 
+                                                    </ul>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul> 
+                                    </apex:panelGroup>
+                                </apex:pageBlock>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                            <div class="gray-block doc-area" id="knowledgeid">
+                                <div class="text-right" id="actionBtn" style="display:none;"> 
+                                    <button type="button" class="btn"><a href="" id="dndbtn" target="_blank" docType="html-5.0" download="">Download</a> <i class="fa fa-download" aria-hidden="true"></i></button>                                             
+                                    <button type="button" class="btn" onclick="printBlueprint('knowval')">Print <i class="fa fa-print" aria-hidden="true"></i></button>
+                                </div>                            
+                                <apex:iframe id="knowval" src=""/>                                                           
+                            </div>
+                            <apex:actionStatus id="knowledgeLoader" style="align:center;">      
+                                <apex:facet name="start">                                                        
+                                    <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                </apex:facet>
+                                <apex:facet name="stop"></apex:facet>
+                            </apex:actionStatus>
+                            
+                        </div> 
+                    </div>
+                    <apex:include pageName="AndersonFooter"/>
+                    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                    <!-- Include all compiled plugins (below), or include individual files as needed -->
+                    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.treeview.js')}"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/demo.js')}"/>   
+                    <script>                
+                    function getRemoteDoc(callingentId) {
+                        $('#actionBtn').show();
+                        document.getElementById("knowval").src = ''; 
+                        var str = callingentId;
+                        var decoded  = str.replace(/amp;/g, '&');
+                        document.getElementById("knowval").src = decoded;
+                        document.getElementById("dndbtn").download = decoded;
+                        document.getElementById("dndbtn").href = decoded;
+                    }
+                    function printBlueprint(frmFile) {
+                        var frm = document.getElementById(frmFile).contentWindow;
+                        frm.focus();// focus on contentWindow is needed on some ie versions
+                        frm.print();
+                        return false;
+                    }
+                    </script> 
+                  
+                </apex:form>
+            </body>
+        </html>
+    </div>
+</apex:page>

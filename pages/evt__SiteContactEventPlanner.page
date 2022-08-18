@@ -1,0 +1,66 @@
+<apex:page docType="html-5.0" id="siteContactEventPlanner"   title="Contact Event Planner"  showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+
+<head>
+<title>Contact Event Planner</title>
+</head>
+<apex:composition template="{!$Site.Template}">
+
+
+<apex:define name="body">
+
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="evt_site_contact_planner_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+    <apex:form >
+    <apex:pageMessages id="messages"/>  
+ 
+    <h1>Contact Event Planner</h1> 
+
+        <div class="pc_flex_form" id="evt_contact_event_planner_flex_form">
+
+          <div class="pc_flex_form_line_container">
+              <div class="pc_flex_form_label_item">
+                  Subject
+              </div>
+              <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" styleClass="requiredFieldMarker"/> 
+              </div>
+
+              <div class="pc_flex_form_field_item">
+               <apex:inputtext />
+              </div>
+          </div>
+
+          <div class="pc_flex_form_line_container">
+              <div class="pc_flex_form_label_item">
+                   Message
+              </div>
+              <div class="pc_flex_form_required_flag_item">
+                   <apex:image url="/s.gif" styleClass="requiredFieldMarker"/> 
+              </div>
+
+              <div class="pc_flex_form_field_item">
+                <apex:inputtextarea styleClass="evt_contact_form_text_area" />
+              </div>
+          </div>
+
+        </div><!-- end of flex form -->
+
+        <div class="pc_button_container"> 
+        
+        <apex:commandButton id="retButton" value="Return" onclick="alert('Not yet implemented');"/>
+        <apex:commandButton id="regButton" value="Submit" onclick="alert('Not yet implemented');"/>
+
+        </div>
+    </apex:form>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page --> 
+</div> <!--  page pc_lang_xxx div -->        
+</apex:define>
+</apex:composition>            
+    
+</apex:page>

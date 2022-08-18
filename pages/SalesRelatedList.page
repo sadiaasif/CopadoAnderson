@@ -1,0 +1,51 @@
+<apex:page showHeader="false" sidebar="false" standardController="Sales_Rep__c" tabStyle="Sales_Rep__c"  extensions="ctrlSalesRelatedList">
+   
+    <apex:form id="frm">
+
+    <apex:actionFunction name="callDeleteOpportunity" action="{!DeleteOpportunity}"/>
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!lstOpportunity}" var="opp">
+            <apex:column headerValue="Action">
+                <apex:commandLink target="_parent" style="text-decoration:none;color:#015BA7;" value="Edit " action="{!EditOpportunity}">
+                    <apex:param value="{!opp.id}" name="oppid"/>
+                </apex:commandlink>
+                <apex:commandLink target="_parent"  style="text-decoration:none;color:#015BA7;" value="| Del" action="{!DeleteOpportunity}" >
+                    <apex:param value="{!opp.id}" name="oppid"/>
+                </apex:commandlink>
+            </apex:column>
+            <apex:column headerValue="Sale Name">
+            
+               <apex:outputLink target="_parent" value="/{!opp.id}">{!opp.name}</apex:outputLink>
+               
+            </apex:column>
+             <apex:column headerValue="Client Name">
+                <apex:outputLink target="_parent" value="/{!opp.Accountid}">{!opp.Account.Name}</apex:outputLink>
+                
+            </apex:column>
+            <apex:column headerValue="Close Date">                
+                <apex:outputText value="{0,date,MM/dd/yyyy}">
+                    <apex:param value="{!opp.CloseDate}"  />
+                </apex:outputText>
+            </apex:column>
+            <apex:column style="text-align:right;" headerValue="Amount">
+                <apex:outputText value="${0, number,###,###,##0.00}">
+                    <apex:param value="{!opp.Amount}"  />
+                </apex:outputText>
+                             
+            </apex:column>            
+        </apex:pageBlockTable>
+        <table width="100%">
+        <tr>
+            <td align="right">
+                <apex:outputLabel style="font-weight:bold;"  value="Total: "></apex:outputLabel>
+
+                <apex:outputText style="font-weight:bold;" value="${0, number,###,###,##0.00}">
+                    <apex:param value="{!intTotalAmt}"  />
+                </apex:outputText>
+            </td>
+        </tr>
+        </table>
+        
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

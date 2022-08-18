@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_78352980</developerName>
+        <masterLabel>Clients</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Account.Platinum_Client_View__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Declined</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Platinum</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lifetime Platinum</sourceValue>
+            </sourceValues>
+            <value>Platinum</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Infinity Only</sourceValue>
+            </sourceValues>
+            <value>Infinity Only</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Infinity &amp; Platinum</sourceValue>
+            </sourceValues>
+            <value>Platinum &amp; Infinity</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Tax Team</sourceValue>
+            </sourceValues>
+            <value>Non Platinum</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_59902634</developerName>
+        <masterLabel>Lead Source</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Account.Main_Lead_Source__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Affiliate</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dani Johnson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dave Lindahl</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Don Pendleton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Gene Guarino</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci-NVREA</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pat James</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Real Wealth Network</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Big Dog-Love American Homes</sourceValue>
+            </sourceValues>
+            <value>Affiliate</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Adduco Media</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Anderson Event</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Online Organic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Online Marketing</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Royal Media</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Social Media</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Webinar</sourceValue>
+            </sourceValues>
+            <value>Online</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Existing Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Employee Referral</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Calendly</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Referral</sourceValue>
+            </sourceValues>
+            <value>Other</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.ChargentSFA__Balance_Due__c</field>
+    </columns>
+    <columns>
+        <field>CUST_ID</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <columns>
+        <field>STAGE_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Unique</aggregateTypes>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Charge,Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Total_Value_of_All_Sales__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_59902634</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Year</dateGranularity>
+        <field>ACCOUNT_CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Year</dateGranularity>
+        <field>ChargentSFA__Transaction__c.Transaction_date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>LTV by Main Lead Source</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ACCOUNT_CREATED_DATE</dateColumn>
+        <endDate>2021-12-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2017-01-01</startDate>
+    </timeFrameFilter>
+</Report>

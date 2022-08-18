@@ -1,0 +1,192 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="CustomLoginController" extensions="PlatinumForgotPassword" sidebar="false" showHeader="false" lightningStylesheets="true">
+ <apex:slds />
+    <style>
+        body, html {
+            height: 100%;
+        	padding:0px;
+        }
+       
+
+   </style>
+    <div class="slds-scope login-body">  
+    <html>
+        <head>
+            <meta name="google-site-verification" content="cwhp-mtY3golvIWmjqkah7BV-eWQ4qA78tAfPWMwd9A" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            <title>Anderson Advisors</title>
+            <!-- Bootstrap -->
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+            <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+            <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/> 
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>  
+            
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+<apex:includeScript value="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"/>
+<apex:includeScript value="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"/>
+<![endif]-->
+        </head>
+        <body class="login-page">
+            <section class="main-sec-login">
+                <div class="fullscreen-bg">
+                    <apex:image styleClass="align-center logo-img"  url="{!URLFOR($Resource.images, '/images/Gears_BG.gif')}" alt=""/>
+                </div>
+                
+                
+                <!--<div class="fullscreen-bg">
+<video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
+
+<source src="{!URLFOR($Resource.Webm, 'Webm/AndersonBusinessAdvisors_BGvideo.webm')}" type="video/webm"/>
+<source src="{!URLFOR($Resource.Video, 'Video/AndersonBusinessAdvisors_BGvideo.mp4')}" type="video/mp4"/> 
+</video> 
+</div>-->
+                
+                <div class="container">
+                    <div class="row  inner-login-table">
+                        <div class="main-inner-sec">
+                            
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <!--  <img class="align-center logo-img" src="images/logo.png" alt="logo" /> -->
+                                    <apex:image styleClass="align-center logo-img"  url="{!URLFOR($Resource.images, '/images/AndersonPlatinumPortal_Logo.png')}" alt=""/>
+                                </div>
+                                <div class="row input-inner-sec text-center">                              
+                                    <apex:form >                                        
+                                        <div class="form-group">
+                                            <apex:pageMessage severity="error" summary="Login Failed.Invalid Username or Password" rendered="{!isLoginFailed}"/>
+                                            <apex:pageMessage severity="error" summary="Platinum Subscription is Blocked" rendered="{!isActiveUser}"/>
+                                            <label for="email">Email address:</label>
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>                                            
+                                            <apex:inputText value="{!username}" id="username" styleClass="form-control text-center" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pwd">Password:</label>
+                                            <i class="fa fa-unlock-alt" aria-hidden="true"></i>                                            
+                                            <apex:inputSecret id="password" value="{!password}" styleClass="form-control text-center" />
+                                        </div>
+                                        <div class="checkbox logo-check-rem">
+                                            <input id="box1" type="checkbox" />
+                                            <label for="box1">Remember ME</label>
+                                        </div>                                           
+                                        <apex:commandButton action="{!login}" styleClass="btn btn-default" value="Login"/>
+                                        <div class="edit_user pull-right forget">
+                                            <a data-toggle="modal" data-target="#forgotpassword" class="a-elem" href="#"><i class="fa fa-lock"></i> Forgot Password </a>
+                                        </div>
+                                    </apex:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="forgotpassword" class="modal fade" role="dialog">
+                    <div class="modal-dialog entities-section">                                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" id="clsbtn" class="close" data-dismiss="modal" >&#215;</button>
+                                <h4 class="modal-title">Forgot Password</h4>
+                            </div>
+                            <div class="modal-body">  
+                            
+                                <div id="emailMsg"></div>
+                                <div id="erroremailMsg"></div>
+                                <div class="table-scroll">
+                                    <apex:actionStatus id="forgotLoader" style="align:center;">      
+                                        <apex:facet name="start">                                                        
+                                            <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                        </apex:facet>
+                                        <apex:facet name="stop"></apex:facet>
+                                    </apex:actionStatus>
+                                    <apex:form id="editpro">
+                                        <apex:pageBlock id="userpb">
+                                            <!---- <h2>Forgot Password Information</h2> -->
+                                            <apex:pageBlockSection >
+                                                <apex:pageBlockSectionItem >
+                                                    <apex:outputLabel value="Email Address:" />
+                                                    <apex:inputText id="emailVal" styleClass="form-control" />
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputPanel >
+                                                <div class="text-right">
+                                                    
+                                                    <apex:actionSupport event="onclick" status="forgotLoader" reRender="" ><input type="button" class="btn popup_btn" value="Submit" onClick="getForgotPassword();" /> 
+                                                    </apex:actionSupport>
+                                                </div>
+                                            </apex:outputPanel>
+                                            
+                                        </apex:pageBlock>
+                                    </apex:form>
+                                </div>
+                            </div> 
+                        </div>                                        
+                    </div>
+                </div>    
+            </section> 
+            <!--Import jQuery before materialize.js-->           
+            <apex:includeScript value="https://code.jquery.com/jquery-3.2.1.min.js"/>
+            <!--<apex:includeScript value="community_js/materialize.min.js"/>-->
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="/soap/ajax/31.0/connection.js"/>
+            <apex:includeScript value="/soap/ajax/31.0/apex.js"/>
+            <script type="text/javascript">
+            function getForgotPassword() {  
+                var nameVal = $("[id$='emailVal']").val(); 
+                if(nameVal != '') {
+                    
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PlatinumForgotPassword.getForgotPassword}',
+                        nameVal,
+                        function(result, event){  
+                            $("[id$='emailVal']").val('');
+                            if(event.status){
+                                console.log('ss'+result);
+                                if(result=='success'){
+                                    jQuery(function(){
+                                        jQuery('#clsbtn').click();
+                                    });
+                                    document.getElementById("emailMsg").innerHTML = "<span>Send Password to Email successful</span>";
+                                }else if(result=='notPlatinumSubscription'){
+                                    document.getElementById("erroremailMsg").innerHTML = "<span>Platinum Subscription is blocked.</span>";
+                                }else if(result=='invalidEmail'){
+                                    document.getElementById("erroremailMsg").innerHTML = "<span>Invalid Email Id</span>";
+                                }else{
+                                    document.getElementById("erroremailMsg").innerHTML = "<span>Invalid Email Id</span>";
+                                }
+                                
+                            } else if (event.type === 'exception'){
+                                document.getElementById("erroremailMsg").innerHTML = "<span>Error !!!</span>";
+                            } else {
+                                document.getElementById("erroremailMsg").innerHTML = "<span>There Is Some Problem</span>";
+                            }                                                                     
+                        }, 
+                        {escape: true}
+                    );
+                }else{
+                    document.getElementById("erroremailMsg").innerHTML = "<span>Please Enter email Id</span>";
+                }
+                
+                setTimeout(function() { $("#emailMsg span").fadeOut(1500); }, 5000);
+                setTimeout(function() { $("#erroremailMsg span").fadeOut(1500); }, 5000); 
+            }
+            
+            $(document).ready(function(){
+                var windowW= $(window).width();
+                if(windowW <= 768){
+                $(".entities-section table.detailList td:nth-of-type(3)").remove();
+                 $(".entities-section table.detailList td.labelCol").remove();
+                }
+            });
+            
+            </script> 
+        </body>
+    </html>
+    </div>
+</apex:page>

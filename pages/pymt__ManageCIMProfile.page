@@ -1,0 +1,541 @@
+<apex:page docType="html-5.0" standardController="Contact" extensions="pymt.ManageCIMProfileController" tabstyle="pymt__Payment_Method__c"  action="{!onLoad}"  applyBodyTag="false">
+<header>
+<script src="https://www.google.com/jsapi?key=ABQIAAAAC7Ltv_3xEtJuuoY0LLIU0BQLNlfCSZsNWrNrjOuv5jQjg1XmWxTBmlNjfmUYoQnNBdSSobucYtoG8A" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css"  />
+<script>
+       $j = jQuery.noConflict();
+       $j(document).ready(function() {
+            $j("#modalDialog").dialog({ autoOpen: false, modal: true, position: 'center', width: '600px'  });
+
+       });
+
+       function showDialog(name){
+          $j("#modalDialog").dialog("open");
+          $j('#modalDialog').dialog("option" , "title" , name);
+          $j('#modalDialog').dialog('option', 'position', 'center');
+          return false;
+       }
+
+
+</script>
+<style>
+    .modalProgressBox {
+        display: block;
+        position: absolute;
+        z-index: 999;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        background-color: #FFF;
+        top: 0px;
+        left: 0px;
+        filter:alpha(opacity=50);
+        -moz-opacity:0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        color: black;
+        font-size: 14pt;
+    }
+
+
+
+#leftPanel {
+    float:left;
+    width:40%;
+    border: #e0e0e0 solid 1px;
+    margin-top: 20px;
+
+}
+
+#middlePanel {
+    float:left;
+    height: 400px;
+    padding:100px 10px 10px 10px;
+    text-align:center;
+}
+
+#rightPanel {
+    float:left;
+    width:40%;
+    border: #e0e0e0 solid 1px;
+    margin-top: 20px;
+}
+
+.requiredMarker {
+  width:3px;
+  background-color:#c00;
+  position:absolute;
+  left:-4px;
+  top:1px;
+  bottom:1px;
+
+}
+
+  .requiredLegend {
+     visibility:hidden;
+     }
+</style>
+<apex:outputPanel rendered="{!OR($User.UIThemeDisplayed == 'Theme4t',$User.UIThemeDisplayed == 'Theme4d')}">
+<style>
+/* SF1 and lightning CSS tweaks */
+.vf_content_panel {
+  margin: 5px 20px 5px 20px;
+
+}
+</style>
+</apex:outputPanel>
+
+</header>
+<body>
+<script src="{!URLFOR($Resource.PaymentConnect, 'includes/tooltip/wz_tooltip.js')}"></script>
+<apex:sectionHeader title="PaymentConnect" subtitle="Manage Authorize.Net CIM Profiles"  help="{!$Page.pymt__Help}"/>
+<apex:form id="cimMgtForm">
+<apex:pageMessages id="messages"/>
+
+        <apex:actionStatus id="modalActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel styleClass="modalProgressBox">&nbsp;
+           <br/><br/><br/>
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/spinner_med.gif')}"  style="vertical-align:middle;" alt="busy..." />
+             &nbsp;Sending Request </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop"  >
+         </apex:facet>
+    </apex:actionStatus>
+
+<div class="vf_content_panel">
+<div style="padding-bottom:4px;">
+<apex:outputLabel value="AuthNet Account:"/>&nbsp;
+<apex:selectList size="1" multiselect="false" value="{!selectedConnectionId}">
+<apex:selectOptions value="{!connectionOptions}"/>
+<apex:actionSupport event="onchange" action="{!processorConnectionChanged}" rerender="cimMgtForm"/>
+</apex:selectList>
+</div>
+
+<apex:pageBlock mode="edit" >
+<apex:pageBlockButtons >
+<apex:commandButton value="Return" action="{!gotoReturnURL}"/>
+</apex:pageBlockButtons>
+<apex:outputPanel layout="none" id="noCustomerProfile" rendered="{!customerProfileCount == 0}">
+
+<apex:pageBlockSection columns="1" title="Add New Customer Profile" >
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Contact"/>
+<apex:outputField value="{!pmtMethodContact.pymt__Contact__c}"/>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Profile Description"/>
+<apex:inputText value="{!cpDescription}"/>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem helpText="Required. The profile email address must match the email address for this Contact so that payments processed at AuthNet can be associated with this contact automatically." >
+<apex:outputLabel value="Profile Email"/>
+<apex:outputPanel layout="none">
+<apex:inputText value="{!cpEmail}" rendered="{!OR(ISBLANK(contact.email),NOT(contact.email == cpEmail))}"/>
+<apex:outputText value="{!cpEmail}" rendered="{!AND(NOT(ISBLANK(contact.email)),(contact.email == cpEmail))}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="" />
+<apex:commandButton value="Create New Profile" disabled="{!connectionCount ==0}" action="{!addCustomerProfile}"/>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" title="Link Existing AuthNet Customer Profile">
+
+<apex:pageBlockSectionItem helpText="Enter the record Id for an existing AuthNet CIM customer profile to link it to the current Salesforce Contact record.">
+<apex:outputLabel value="Customer Profile Id"/>
+<apex:inputText value="{!selectedCustomerProfileId}"/>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+<apex:outputText value="" />
+<apex:commandButton value="Link Existing Profile" disabled="{!connectionCount ==0}" action="{!linkCustomerProfile}" onclick="if (!confirm('WARNING: Linking the wrong CIM profile could allow this contact to make charges on someone else\'s card or bank account. Be sure you are linking a profile that belongs to this contact.')) return false;"/>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+
+<apex:pageBlockSection id="multipleCustomerProfiles"  columns="1" title="AuthNet Customer Profiles" rendered="{!customerProfileCount >1}">
+<p>Multiple customer profiles were found for this contact under the selected AuthNet account.  PaymentConnect supports only one customer profile per contact/processor connection pair.  Please remove the extra profile(s) below:</p>
+<apex:outputPanel >
+<table width="500">
+<apex:repeat value="{!customerProfiles}" var="custProfile">
+<tr>
+<td>
+<apex:commandLink action="{!deleteCustomerProfile}" value="Remove"  ><apex:param id="removeProfId" name="removeProfId" value="{!custProfile.profileId}" assignTo="{!selectedCustomerProfileId}"/></apex:commandLink>
+</td>
+<td>
+Profile {!custProfile.profileId} <br/>
+{!custProfile.details} <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(custProfile.details))}"> <apex:commandLink action="{!deleteCustomerProfileLocal}" value="Remove Local Records"  ><apex:param id="removeLocalProfId" name="removeLocalProfId" value="{!custProfile.profileId}" assignTo="{!selectedCustomerProfileId}"/></apex:commandLink></apex:outputPanel>
+</td>
+<td>
+<apex:commandLink action="{!retrieveProfileDetails}" value="Details"  ><apex:param id="selectedProfId" name="selectedProfId" value="{!custProfile.profileId}" assignTo="{!selectedCustomerProfileId}"/></apex:commandLink>
+</td>
+</tr>
+</apex:repeat>
+</table>
+</apex:outputPanel>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" title="AuthNet Customer Profile"  rendered="{!customerProfileCount == 1}" >
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="{!$ObjectType['pymt__Payment_Method__c'].fields['pymt__Contact__c'].Label}"/>
+<apex:outputField value="{!pmtMethodContact.pymt__Contact__c}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Customer Profile Id"/>
+<apex:outputText value="{!customerProfile.profileId}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!(customerProfileState == 'edit')}">
+<apex:outputLabel value="Profile Description"/>
+<apex:inputText value="{!cpDescription}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!(customerProfileState == 'view')}">
+<apex:outputLabel value="Profile Description"/>
+<apex:outputText value="{!cpDescription}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!(customerProfileState == 'edit')}">
+<apex:outputLabel value="Profile Email"/>
+<apex:inputText value="{!cpEmail}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!(customerProfileState == 'view')}">
+<apex:outputLabel value="Profile Email"/>
+<apex:outputPanel layout="none">
+<apex:outputText value="{!cpEmail}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!AND(NOT(ISBLANK(contact.email)),NOT(cpEmail == contact.email))}">
+<apex:outputText value=""/>
+<apex:outputPanel layout="none" >
+Profile email address does not match local contact email: {!contact.email}
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!ISBLANK(contact.email)}">
+<apex:outputText value=""/>
+<apex:outputPanel layout="none" >
+Email address is not set on contact record.
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:commandButton value="Add Customer Profile" action="{!addCustomerProfile}" rendered="{!customerProfileState == 'missing'}"/>
+<apex:commandButton value="Delete Customer Profile" action="{!deleteCustomerProfile}" rendered="{!customerProfileState == 'view'}" onclick="if(!confirm('Deleting this customer profile will also delete any payment methods associated with the profile. Are you sure?')) return false;"/>
+<apex:commandButton value="Edit Customer Profile" action="{!editCustomerProfile}" rendered="{!customerProfileState == 'view'}"/>
+<apex:commandButton value="Update Customer Profile" action="{!updateCIMProfile}" rendered="{!customerProfileState == 'edit'}"/>
+<apex:commandButton value="Cancel" action="{!cancelCustomerProfileEdit}" rendered="{!customerProfileState == 'edit'}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+<apex:pageBlockSection columns="1" title="Payment Methods" rendered="{!customerProfileCount == 1}" >
+<apex:outputPanel >
+<apex:pageBlockTable value="{!profilePaymentMethods}" var="pmtMethod">
+<apex:column >
+<apex:commandLink action="{!editPaymentMethod}" value="Edit" oncomplete="showDialog('Edit Payment Method');" rerender="modalDialogPanel">
+<apex:param id="editPmtMethodId" name="editPmtMethodId" value="{!pmtMethod.Id}" assignTo="{!selectedPmtMethodId}"/>
+</apex:commandLink>&nbsp;|&nbsp;<apex:commandLink value="Delete" onclick="if (!confirm('Are you sure you want to delete this payment method?')) return false;" action="{!deletePaymentProfile}">
+<apex:param id="deletePmtMethodId" name="deletePmtMethodId" value="{!pmtMethod.Id}" assignTo="{!selectedPmtMethodId}"/>
+</apex:commandLink>
+</apex:column>
+
+<apex:column ><a href="/{!pmtMethod.Id}" target="top">{!pmtMethod.Name}</a></apex:column>
+<apex:column value="{!pmtMethod.pymt__Billing_First_Name__c}"/>
+<apex:column value="{!pmtMethod.pymt__Billing_Last_Name__c}"/>
+<apex:column value="{!pmtMethod.pymt__Payment_Type__c}"/>
+<apex:column value="{!pmtMethod.pymt__Last_4_Digits__c}"/>
+<apex:column headerValue="Expiration">
+<apex:outputPanel rendered="{!NOT(OR(ISBLANK(pmtMethod.pymt__Expiration_Month__c),ISBLANK(pmtMethod.pymt__Expiration_Year__c)))}">
+<apex:outputText value="{!pmtMethod.pymt__Expiration_Month__c}"/>/<apex:outputText value="{!pmtMethod.pymt__Expiration_Year__c}"/>
+
+</apex:outputPanel>
+</apex:column>
+<apex:column value="{!pmtMethod.pymt__Profile_Id__c}"/>
+<apex:column value="{!pmtMethod.pymt__Customer_Profile_Id__c}"/>
+<apex:column headerValue="Default">
+<apex:outputPanel layout="none">
+<apex:inputCheckbox disabled="true" value="{!pmtMethod.pymt__Default__c}" rendered="{!pmtMethod.pymt__Default__c}"/>
+<apex:commandLink value="Make Default" action="{!setDefaultMethod}" rendered="{!NOT(pmtMethod.pymt__Default__c)}">
+<apex:param id="setDefPmtMethodId" name="setDefPmtMethodId" value="{!pmtMethod.Id}" assignTo="{!selectedPmtMethodId}"/>
+</apex:commandLink>
+</apex:outputPanel>
+</apex:column>
+</apex:pageBlockTable>
+</apex:outputPanel>
+<apex:outputPanel >
+<apex:commandButton action="{!refreshAllPaymentMethods}" status="modalActionStatus" value="Refresh All" onclick="if (!confirm('This action will update all local profile records with current profile details retrieved from Authorize.Net')) return false;"/>
+<apex:commandButton action="{!addNewPaymentMethod}" value="Add New Payment Method" oncomplete="showDialog('Add New Payment Method');" rerender="modalDialogPanel"/>
+</apex:outputPanel>
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+</div>
+
+</apex:form>
+
+<div id="modalDialog">
+<apex:form >
+<apex:outputPanel id="modalDialogPanel">
+
+<apex:pageMessages id="dialogMessages"/>
+<apex:outputPanel layout="none" id="dialogControls">
+<apex:outputPanel >
+<script>
+var showDialogFlag = {!showDialog};
+
+// Disable browser autocomplete for fields accepting sensitive data
+	var el;
+	el = document.getElementById("{!$Component.mainPageBlock.pmtProfileSection.cardNumberSI.cardNumberField}");
+	if (el) el.setAttribute("autocomplete","off");
+	el = document.getElementById("{!$Component.mainPageBlock.pmtProfileSection.cardCodeSI.cardCodeField}");
+	if (el) el.setAttribute("autocomplete","off");
+	el = document.getElementById("{!$Component.mainPageBlock.pmtProfileSection.bankAccountNumberSI.bankAccountNumberField}");
+	if (el) el.setAttribute("autocomplete","off");
+
+</script>
+</apex:outputPanel>
+</apex:outputPanel>
+<apex:pageBlock id="mainPageBlock"  mode="edit" >
+<apex:pageBlockButtons >
+<apex:commandButton value="Update Payment Method" action="{!updateCIMPaymentProfile}" rendered="{!NOT(ISBLANK(pmtMethod.pymt__Profile_Id__c))}"  rerender="modalDialogPanel"/>
+<apex:commandButton value="Add Payment Method" action="{!saveNewCIMPaymentProfile}" rendered="{!(ISBLANK(pmtMethod.pymt__Profile_Id__c))}" rerender="modalDialogPanel" />
+<apex:commandButton value="Close" onclick="closeDialog();"  />
+</apex:pageBlockButtons>
+
+
+<apex:outputPanel id="pmtProfilePanel" >
+<apex:pageBlockSection title="Payment Method Detail"  id="pmtProfileSection"  columns="1">
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Contact" />
+<apex:outputPanel >
+<apex:outputField value="{!pmtMethod.pymt__Contact__c}" />&nbsp;&nbsp;&nbsp;&nbsp;[<apex:commandLink value="Fill from contact" action="{!fillAddressDetails}" rerender="modalDialogPanel" status="fillFieldsStatus"/>]
+&nbsp;<apex:actionStatus id="fillFieldsStatus" startText="Updating..." stopText="" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:outputField value="{!pmtMethod.pymt__Profile_Id__c}" rendered="{!NOT(ISBLANK(pmtMethod.pymt__Profile_Id__c))}" />
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Payment Method Name" />
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+<apex:inputField value="{!pmtMethod.Name}" />
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing First Name" />
+<apex:inputText value="{!cimPaymentProfile.billTo.firstName}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing Last Name" />
+<apex:inputText value="{!cimPaymentProfile.billTo.lastName}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing Street" />
+<apex:inputText value="{!cimPaymentProfile.billTo.address}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing City" />
+<apex:inputText value="{!cimPaymentProfile.billTo.city}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing State" />
+<apex:inputText value="{!cimPaymentProfile.billTo.state}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing Postal Code" />
+<apex:inputText value="{!cimPaymentProfile.billTo.zip}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Billing Country" />
+<apex:inputText value="{!cimPaymentProfile.billTo.country}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Phone" />
+<apex:inputText value="{!cimPaymentProfile.billTo.phoneNumber}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Fax" />
+<apex:inputText value="{!cimPaymentProfile.billTo.faxNumber}" />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="false">
+<apex:outputLabel value="Company" />
+<apex:inputText value="{!cimPaymentProfile.billTo.company}" />
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Payment Type"/>
+<apex:outputPanel >
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+<table><tr><td>
+<apex:selectList size="1" multiselect="false" value="{!pmtMethod.pymt__Payment_Type__c}">
+<apex:selectOption itemLabel="Credit Card" itemValue="Credit Card" />
+<apex:selectOption itemLabel="Bank Account" itemValue="Bank Account" />
+    <apex:actionSupport event="onchange" action="{!paymentProfileTypeChanged}" id="paymentProfileTypeChange" status="profilePaymentTypeStatus" rerender="modalDialogPanel"/>
+
+</apex:selectList>
+</td><td>
+    <apex:actionStatus id="profilePaymentTypeStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+         </apex:facet>
+    </apex:actionStatus>
+</td></tr></table>
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Credit Card'}">
+<apex:outputLabel value="Card Type" />
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span><apex:selectList size="1" multiselect="false" value="{!pmtMethod.pymt__Card_Type__c}">
+    <apex:selectOption itemValue="Visa" itemLabel="Visa"/>
+    <apex:selectOption itemValue="MasterCard" itemLabel="MasterCard"/>
+    <apex:selectOption itemValue="Amex" itemLabel="American Express"/>
+    <apex:selectOption itemValue="Discover" itemLabel="Discover"/>
+</apex:selectList>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem id="cardNumberSI" rendered="{!(pmtMethod.pymt__Payment_Type__c == 'Credit Card')}" >
+    <apex:outputLabel value="Card Number" />
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>    <apex:inputText id="cardNumberField" value="{!cimPaymentProfile.payment.creditCard.cardNumber}"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem id="cardCodeSI" rendered="{!pmtMethod.pymt__Payment_Type__c == 'Credit Card'}" >
+    <apex:outputLabel value="Card Code" />
+    <apex:inputText id="cardCodeField" value="{!cimPaymentProfile.payment.creditCard.cardCode}"/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Credit Card'}" >
+<apex:outputLabel value="Card Expiration" />
+<apex:outputPanel layout="inline" >
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span><apex:selectList size="1" multiselect="false" value="{!expMonth}">
+    <apex:selectOptions value="{!expMonthOptions}" />
+</apex:selectList>
+&nbsp;
+<apex:selectList size="1" multiselect="false" value="{!expYear}">
+    <apex:selectOptions value="{!expYearOptions}"/>
+</apex:selectList>
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Bank Account'}">
+    <apex:outputLabel value="Bank Name" />
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+    <apex:inputText value="{!cimPaymentProfile.payment.bankAccount.bankName}" />
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Bank Account'}">
+    <apex:outputLabel value="Name on Account" />
+<apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+    <apex:inputText value="{!cimPaymentProfile.payment.bankAccount.nameOnAccount}" />
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem id="bankAccountNumberSI" rendered="{!pmtMethod.pymt__Payment_Type__c == 'Bank Account'}" >
+    <apex:outputLabel value="Bank Account Number" />
+    <apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+    <apex:inputText id="bankAccountNumberField" value="{!cimPaymentProfile.payment.bankAccount.accountNumber}" />
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Bank Account'}" >
+    <apex:outputLabel value="Routing Number" />
+    <apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+    <apex:inputText value="{!cimPaymentProfile.payment.bankAccount.routingNumber}" />
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Bank Account'}">
+    <apex:outputLabel value="Account Type" />
+    <apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+    <apex:selectList size="1" multiselect="false" value="{!cimPaymentProfile.payment.bankAccount.accountType}">
+        <apex:selectOption itemValue="" itemLabel="-- select a bank account type --"/>
+        <apex:selectOption itemValue="checking" itemLabel="Checking"/>
+        <apex:selectOption itemValue="savings" itemLabel="Savings"/>
+        <apex:selectOption itemValue="businessChecking" itemLabel="Business Checking"/>
+    </apex:selectList>
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem rendered="{!pmtMethod.pymt__Payment_Type__c == 'Bank Account'}" >
+    <apex:outputLabel value="eCheck Type" />
+    <apex:outputPanel layout="block" styleClass="requiredInput">
+<span class="requiredMarker">&nbsp;</span>
+
+    <apex:selectList size="1" multiselect="false" value="{!cimPaymentProfile.payment.bankAccount.eCheckType}">
+        <apex:selectOption itemValue="" itemLabel="-- select an eCheck type --"/>
+        <apex:selectOption itemValue="CCD" itemLabel="CCD - Cash Concentration or Disbursement"/>
+        <apex:selectOption itemValue="PPD" itemLabel="PPD - Prearranged Payment and Deposit Entry"/>
+        <apex:selectOption itemValue="TEL" itemLabel="TEL - Telephone-Initiated Entry"/>
+        <apex:selectOption itemValue="WEB" itemLabel="WEB - Internet-Initiated Entry"/>
+    </apex:selectList>
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="" />
+    <apex:outputPanel >
+        <apex:inputCheckbox value="{!validate}" />&nbsp;Validate changes to this profile before saving.
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</apex:outputPanel>
+<span style="clear:both;">&nbsp;</span>
+
+
+
+
+
+</apex:pageBlock>
+</apex:outputPanel> <!--  modalDialogPanel -->
+</apex:form>
+</div> <!--  modalDialog -->
+</body>
+</apex:page>

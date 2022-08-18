@@ -1,0 +1,61 @@
+<apex:page tabStyle="Opportunity" showHeader="true" sidebar="false">
+
+<script type="text/javascript" src="/soap/ajax/16.0/connection.js"></script>
+<script type="text/javascript" src="/soap/ajax/16.0/apex.js"></script>
+
+<script type="text/javascript">
+sforce.connection.sessionId = "{!$Api.Session_ID}";
+function twistSection_custom(twisty) {
+}
+</script>
+<style type="text/css" media="screen">
+.batchLink { color: blue; cursor: pointer; text-decoration: underline; }
+</style>
+
+<apex:pageBlock title="Recurring Opportunities Batch Processing">
+<a href="javascript:void(0)" onclick="processRecurring(this)">Start Daily Process</a><br/>
+<a href="javascript:void(0)" onclick="processRecurring_batchable(this)">Start Daily Process /Batchable</a><br/>
+Log:
+<div id="log_div">
+</div>
+
+</apex:pageBlock>
+
+<script type="text/javascript">
+function processRecurring(sender) {
+    var sforce_result = sforce.apex.execute('ChargentSFA/TChargentBatchProcessing', 'Daily_proc', {});
+    var results = (sforce_result instanceof Array ? sforce_result : [sforce_result]);
+//  alert(results);
+
+    var log = "";
+    var log_div = document.getElementById("log_div");
+
+    log += "Daily process ececuted. Processed " + results.length + " transatcions:" + "<br>";
+    for (var i=0; i<results.length; i++) {
+        var one_log = results[i];
+        log += one_log + "<br>";
+    }
+    
+    log_div.innerHTML = log;
+
+}
+function processRecurring_batchable(sender) {
+    var sforce_result = sforce.apex.execute('ChargentSFA/TChargentBatchProcessing', 'Daily_proc_batchable', {});
+    var results = (sforce_result instanceof Array ? sforce_result : [sforce_result]);
+//  alert(results);
+
+    var log = "";
+    var log_div = document.getElementById("log_div");
+
+    log += "Daily process ececuted. Processed " + results.length + " transatcions:" + "<br>";
+    for (var i=0; i<results.length; i++) {
+        var one_log = results[i];
+        log += one_log + "<br>";
+    }
+    
+    log_div.innerHTML = log;
+
+}
+</script>
+
+</apex:page>

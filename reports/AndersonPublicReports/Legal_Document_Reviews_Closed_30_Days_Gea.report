@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_12374817</developerName>
+        <masterLabel>Age of Case</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>AGE</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>1</to>
+            </sourceValues>
+            <value>&lt;1 Day</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>1</from>
+                <to>3</to>
+            </sourceValues>
+            <value>2-3 Days</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>3</from>
+                <to>5</to>
+            </sourceValues>
+            <value>4-5 Days</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>5</from>
+                <to>14</to>
+            </sourceValues>
+            <value>6-14 Days</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>14</from>
+            </sourceValues>
+            <value>&gt;14 Days</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_89517027</developerName>
+        <masterLabel>Professional</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>OWNER</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Eliot Thomas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Eliot Thomas (LEX)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kurt Bergfjord</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dana Cummings (LEX)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Cody Dinda</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jay Haney</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rachel Elder</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mark Robbins</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jeffrey Stulken</sourceValue>
+            </sourceValues>
+            <value>Tax</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Amanda Wynalda</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Carl Zoellner</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sergey Garanyants</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Joshua Robertson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jonathon Evans</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jeffrey Cottle</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>David Monsivais</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jason Zundel</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ghassan Jabali</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Gwendy Wolfe</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lauren Robins</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jarom Hillery</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Philip Barr</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Isaac Noh</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Miranda Bilodeau</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Preston Knight</sourceValue>
+            </sourceValues>
+            <value>Legal</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Bobbi Williams</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Aiden Larsen</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ashley Sevy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Amanda Wallace</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Emily Taylor</sourceValue>
+            </sourceValues>
+            <value>Paralegal</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jon Yukon</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>KC Ushijima</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chris Wade</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Grant Singleton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kathryn James</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ashley Freeman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Amanda Breck</sourceValue>
+            </sourceValues>
+            <value>Legal2</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>CASE_NUMBER</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <columns>
+        <field>BucketField_89517027</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>CLOSED_DATE</field>
+    </columns>
+    <columns>
+        <field>AGE</field>
+    </columns>
+    <columns>
+        <field>CLOSED</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Case.Platinum_Questions,Case.Community_Platinum_Case</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPEN</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>TYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Service Question</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_12374817</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Legal Document Reviews - Closed 30 Days</name>
+    <params>
+        <name>units</name>
+        <value>d</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_LAST30</interval>
+    </timeFrameFilter>
+</Report>

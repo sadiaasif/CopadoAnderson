@@ -1,0 +1,79 @@
+<apex:page controller="DaScoopComposer.GMobileMailController" sidebar="false">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">
+.custombutton{
+    width:400px;
+    background: #e8e8e9;
+    background-color: #03A3BB;
+    font-size: 18px;
+    margin: 10px 0px;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    border-bottom: 5px solid #03A3BB;
+    margin-left:auto;
+    margin-right:auto;
+    font-weight: normal;
+}
+.tableStyle {
+    font-family: HelveticaNeue, Arial;
+    width: 840px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #333;
+    line-height: 20px;
+    padding: 2px;
+    background: #00C7D0;
+    margin-bottom: 5px;
+    border: 1px solid #00C7D0;
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
+}
+.tableHeader {
+    background-color: #046d70;
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+    padding: 5px;
+}
+.tableRowOdd {
+     padding: 10px;
+    background-color: #FFF;
+}
+.icon {
+	margin-right: 15px;
+}
+</style>
+
+<script type="text/javascript">
+    function navPage(vfPage) {
+        location.href = vfPage;
+    }
+</script>
+
+
+    <div style="height:25px"/>
+
+    <div class="tableStyle">
+        <div class="tableHeader">
+            Groove Dashboards
+        </div>
+        <div class="tableRowOdd">
+            <br/>
+            <div onclick="navPage('/apex/DaScoopComposer__GroovePerformanceActivities');" class="custombutton">
+				<i class="fa fa-bar-chart icon"></i>
+            	Activity Performance
+            </div>
+            <div onclick="navPage('/apex/DaScoopComposer__GroovePerformancePipeline');" class="custombutton">
+            	<i class="fa fa-filter icon"></i>
+            	Pipeline Performance
+            </div>
+            <br/>
+            <br/>
+        </div>
+    </div>
+
+</apex:page>

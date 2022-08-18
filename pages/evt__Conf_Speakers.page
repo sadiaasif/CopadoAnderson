@@ -1,0 +1,54 @@
+<apex:page docType="html-5.0" id="siteConfSpeakersPage" controller="evt.ConfSpeakersController" title="{!event.Name} Speakers" showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>
+    {!IF($Label.ConfSpeakers_Heading == '-','Speakers',SUBSTITUTE($Label.ConfSpeakers_Heading,'{eventname}',event.Name))}
+</title></head>
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_conf_speakers_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="speakers"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+<apex:form >
+
+<div id="evt_conf_speakers_box" class="evt_h1_outer_box">
+    <div class="evt_box_header">
+<apex:outputPanel rendered="{!$Label.evt__ConfSpeakers_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__ConfSpeakers_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+<apex:outputPanel rendered="{!NOT($Label.evt__ConfSpeakers_Message == '-')}">
+<p>{!$Label.evt__ConfSpeakers_Message}</p>
+</apex:outputPanel> 
+<apex:dataTable value="{!confSpeakers}" var="speaker" columns="2" styleClass="evt_conf_speakers_table" columnClasses="evt_speaker_image_column, evt_speaker_bio_column">
+    <apex:column >
+        <apex:outputPanel rendered="{!AND(NOT(ISBLANK(speaker.evt__Profile_Image__c)),ISBLANK(speaker.evt__Image_URL__c))}" >
+            <img class="evt_speaker_thumbnail"  src="{!URLFOR($Action.Attachment.Download,speaker.evt__Profile_Image__c)}" />
+        </apex:outputPanel>
+ 
+        <apex:outputPanel rendered="{!NOT(ISBLANK(speaker.evt__Image_URL__c))}" >
+             <img class="evt_speaker_thumbnail"  src="{!speaker.evt__Image_URL__c}" />
+        </apex:outputPanel>
+    </apex:column>
+    
+    <apex:column >
+        <div class="evt_speaker_bio_name"><apex:outputField value="{!speaker.Name}" /></div>
+        <div class="evt_speaker_bio_content"><apex:outputField value="{!speaker.evt__Profile__c}" /></div>
+        
+    </apex:column>    
+</apex:dataTable>
+
+    </div>
+    <div class="evt_box_bottom"/>
+    </div>
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+</apex:define>
+</apex:composition>
+</apex:page>

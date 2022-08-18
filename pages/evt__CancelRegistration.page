@@ -1,0 +1,53 @@
+<apex:page standardController="evt__Attendee__c" extensions="evt.CancelRegistrationController">
+<apex:sectionHeader title="Linvio Events" subtitle="Cancel Registration"/>
+<apex:form >
+<apex:pagemessages />
+<apex:pageBlock mode="Edit">
+<apex:pageBlockButtons >
+<apex:commandButton value="Return" action="{!returnToAttendee}"/>
+<apex:commandButton value="Cancel Registration" action="{!cancelRegistration}" disabled="{!disableCancelButton}"/>
+<apex:commandButton value="Cancel and Process Refund" action="{!cancelAndRefund}" disabled="{!disableCancelRefundButton}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockSection title="Attendee Details" columns="2">
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Attendee Name"/>
+<apex:outputText value="{!attendee.evt__First_Name__c} {!attendee.evt__Last_Name__c}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Company"/>
+<apex:outputText value="{!attendee.evt__Company__c}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Event"/>
+<apex:outputField value="{!attendee.evt__Event__c}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Invitation Status"/>
+<apex:outputField value="{!attendee.evt__Invitation_Status__c}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Related Payment"/>
+<apex:outputField value="{!attendee.evt__Payment__c}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Related Payment Amount"/>
+<apex:outputField value="{!attendee.Payment__r.pymt__Amount__c}"/>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>

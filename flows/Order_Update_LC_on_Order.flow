@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <decisions>
+        <name>Update_LC_on_Order</name>
+        <label>Update LC on Order</label>
+        <locationX>739</locationX>
+        <locationY>205</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Valid_Picklist_Value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ValidLCValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Order</targetReference>
+            </connector>
+            <label>Valid Picklist Value</label>
+        </rules>
+    </decisions>
+    <description>Updates the LC on order whenever the owner is changed</description>
+    <interviewLabel>Order - Update LC on Order {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order - Update LC on Order</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetches the picklist value to be updated for LC</description>
+        <name>getAssignedCSRValues</name>
+        <label>getAssignedCSRValues</label>
+        <locationX>534</locationX>
+        <locationY>194</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_LC_on_Order</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>EntityParticleId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account.00N0B000005yDEB</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Value</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getUserName.Name</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>PicklistValueInfo</object>
+        <outputAssignments>
+            <assignToReference>ValidLCValue</assignToReference>
+            <field>IsActive</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>fetches user name based on order owner id</description>
+        <name>getUserName</name>
+        <label>getUserName</label>
+        <locationX>224</locationX>
+        <locationY>259</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getAssignedCSRValues</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the LC on order</description>
+        <name>Update_Order</name>
+        <label>Update Order</label>
+        <locationX>766</locationX>
+        <locationY>411</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Law_Coordinator__c</field>
+            <value>
+                <elementReference>getUserName.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Order</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>getUserName</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Captures the order Id of order</description>
+        <name>OrderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Captures the order Id</description>
+        <name>OwnerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Boolean to check whether the LC should be updated or not</description>
+        <name>ValidLCValue</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

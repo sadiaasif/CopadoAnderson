@@ -1,0 +1,154 @@
+<apex:page tabStyle="UspsPreferences__tab" standardController="zkusps__ShippingPreference__c" extensions="zkusps.ShippingPreferenceController" sidebar="true" action="{! init }">
+
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+
+    <apex:sectionHeader title="USPS Express1 Shipping Preference Edit"  subtitle="New USPS Express1 Shipping Preference" rendered="{!NOT(IsEditMode)}"/>
+    <apex:sectionHeader title="USPS Express1 Shipping Preference Edit"  subtitle="Edit USPS Express1 Shipping Preference" rendered="{!IsEditMode}"/>
+
+    <apex:form >
+
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+
+                $j(document).ready(function() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                });
+            </script>
+        </apex:outputPanel>
+
+
+        <apex:pageBlock id="shippingPreferencePageBlock" mode="detail">
+
+            <!-- Messages -->
+            <apex:outputPanel id="shippingPreferencePageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+
+
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveShippingPreference}" value="Save"/>
+                <apex:commandButton action="{!backToPreviousPage}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+
+            <!-- Billing Preference -->
+            <apex:pageBlockSection id="billingPreferenceSection" columns="1" collapsible="false" title="Associate the Billing Preference record">
+                <apex:inputField value="{!ShippingPreference.zkusps__preference__c}" rendered="{!NOT(IsEditMode)}"/>
+                <!-- If editing existing Shipping Preference, make read only so Billing Preference cannot be changed. This is so any existing shipment record that references this existing Shipping Preference does not look like it was billed to a different account/card -->
+                <apex:outputField value="{!ShippingPreference.zkusps__preference__c}" rendered="{!IsEditMode}"/>
+            </apex:pageBlockSection>
+
+
+            <!-- Shipping Info Section -->
+            <apex:pageBlockSection id="customerInfoSection" columns="1" collapsible="false" title="Enter Shipping Address">
+
+                <!-- Company Name -->
+                <apex:inputField value="{!ShippingPreference.zkusps__companyName__c}"/>
+
+                <!-- Shipping Street -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Shipping Street"/>
+                    <apex:inputField style="width:350px" value="{!ShippingPreference.zkusps__shippingStreet__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Shipping City -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Shipping City"/>
+                    <apex:inputField value="{!ShippingPreference.zkusps__shippingCity__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Shipping State -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Shipping State"/>
+                    <apex:inputText value="{!ShippingState}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Shipping Postal Code -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Shipping Postal Code"/>
+                    <apex:inputField value="{!ShippingPreference.zkusps__shippingPostalCode__c}"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+
+            <!-- Shipping Sender Defaults -->
+            <apex:pageBlockSection id="shippingDefaultsSection" columns="1" collapsible="false" title="Add Shipping Sender Defaults">
+
+                <!-- Shipping Sender Name Default -->
+                <apex:inputField value="{!ShippingPreference.zkusps__shippingSenderNameDefault__c}"/>
+                <!-- Shipping Sender Email Default -->
+                <apex:inputField value="{!ShippingPreference.zkusps__shippingSenderEmailDefault__c}"/>
+                <!-- Shipping Sender Phone Default -->
+                <apex:pageBlockSectionItem helpText="">
+                    <apex:outputLabel value="Shipping Sender Phone Default"/>
+                    <apex:inputText value="{!ShippingSenderPhoneDefault}"/>
+                </apex:pageBlockSectionItem>
+                <!-- Label Image Type Default -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Label Image Type Default"/>
+                    <apex:selectList value="{!SelectedLabelImageTypeDefault}" size="1" multiselect="false" >
+                        <apex:selectOptions value="{!LabelImageTypeDefaultOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+
+            <!-- Shipping Sender Defaults -->
+            <apex:pageBlockSection id="emailLabelDefaultsSection" columns="1" collapsible="false" title="Add Email Label Defaults">
+
+                <!-- Email Label Sender Display Name Default -->
+                <apex:inputField value="{!ShippingPreference.zkusps__emailLabelSenderDisplayNameDefault__c}"/>
+                <!-- Email Label Reply To Email Default -->
+                <apex:inputField value="{!ShippingPreference.zkusps__emailLabelReplyToEmailDefault__c}"/>
+                <!-- Email Label Subject Line Default -->
+                <apex:inputField style="width:350px" value="{!ShippingPreference.zkusps__emailLabelSubjectLineDefault__c}"/>
+                <!-- Email Label Text Body Default -->
+                <apex:inputField style="width:600px" value="{!ShippingPreference.zkusps__emailLabelTextBodyDefault__c}"/>
+                
+                <apex:pageBlockSectionItem rendered="{! isOrgWideEmailRendered }">
+                    <apex:outputLabel value="Org Wide Email Address" />
+                    <apex:selectList value="{! selectedOrgWideEmail }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! orgWideEmails }" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <!-- Convert Labels -->
+            <apex:pageBlockSection id="convertLabelSection" columns="1" collapsible="false" title="Convert Labels">
+                <apex:inputField value="{! ShippingPreference.Convert_4x6_GIF_to_PDF__c }"/>
+            </apex:pageBlockSection>
+
+            <!-- Other Details -->
+            <apex:pageBlockSection id="otherDefaultsSection" columns="1" collapsible="false" title="Other Defaults">
+                <!-- Detailed View - Shipmate Preference List -->
+                <apex:inputField value="{!ShippingPreference.zkusps__DetailedViewShipmatePreferenceList__c}"/>
+                <!-- Include Image Resolution -->
+                <apex:inputField value="{!ShippingPreference.zkusps__IncludeImageResolution__c}"/>
+                <!-- Include Image Rotation -->
+                <apex:inputField value="{! ShippingPreference.LabelImageRotationDefault__c }"/>
+
+                <apex:pageBlockSectionItem helpText="Used only for ZPLII and EPL labels. Default value is 203 dpi">
+                    <apex:outputLabel value="Default Image Resolution" />
+                    <apex:selectList value="{! selectedLabelResolution }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! labelResolutionOptions }" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <!-- Enable Scales Package -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Enable Scales"/>
+                    <apex:inputField value="{! ShippingPreference.EnableScales__c }"/>
+                </apex:pageBlockSectionItem>
+                <!-- AutoWeigh Package -->
+                <apex:pageBlockSectionItem helpText="Auto Weight Package using Scale">
+                    <apex:outputLabel value="Auto Weigh Package"/>
+                    <apex:inputField value="{! ShippingPreference.AutoWeighPackage__c }"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

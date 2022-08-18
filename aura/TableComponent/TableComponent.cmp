@@ -1,0 +1,156 @@
+<aura:component controller="RowController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">   
+    <!--Init handler which is call initRecords js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.initRecords}"/>
+    <aura:handler event="force:refreshView" action="{!c.initRecords}" />
+    <!--declare aura attributes-->
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="trueFlag" type="boolean" default="true"/>
+    <aura:attribute name="falseFlag" type="boolean" default="false"/>
+    <aura:attribute name="ItemsList" type="orderItem[]" description="store account records list"/>
+    <aura:attribute name="completedStages" type="List" default="['Completed', 'Refunded', 'Kitted', 'Exchanged for Other Services']" />
+    <aura:attribute name="completed_Stages" type="List" default="['Completed', 'Refunded', 'Kitted', 'Exchanged for Other Services', 'N/A']" />
+    <aura:attribute name="showSaveCancelBtn" type="boolean" default="false" description="flag for rendered save and cancel buttons in aura:if "/>
+    <lightning:navigation aura:id="navService"/>
+    <div class="slds-m-around_large">
+        <!-- use aura:if for show/hide buttons -->
+        
+        
+        <aura:if isTrue="{!v.showSaveCancelBtn}">
+            <!--button for save and cancel Record after Inline Edit-->
+            <lightning:buttonGroup class="slds-m-around_medium slds-align_absolute-center">
+                <lightning:button label="Cancel" onclick="{!c.cancel}"/>
+                <lightning:button label="Save" onclick="{!c.Save}" variant="success"/>
+            </lightning:buttonGroup>
+        </aura:if>
+        <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true">
+            
+            <lightning:accordionSection name="In Progress AND Not Started" label="In Progress AND Not Started">
+                
+                
+                
+                
+                <!--Data Table-->     
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th scope="col"><div class="slds-truncate" title="Action Alert">Action Alert</div></th>
+                            <th style="width:300px;"><div class="slds-truncate" title="Due Date">Due Date</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Service Name">Service Name</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Quantity">Quantity</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Stage">Stage</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Entity">Entity - Org State</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Processor">Processor</div></th>  
+                            <th style="width:750px;"><div class="slds-truncate" title="Comments">Comments</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Update Comments">Update Comments</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Audit Completed">Audit Completed</div></th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <!--### display all records of AccountList attribute one by one by aura:iteration ###-->
+                        <aura:iteration items="{!v.ItemsList}" var="osi" indexVar="sNo">
+                            <c:auraIfContains items="{!v.completed_Stages}" element="{!osi.Processing_Stage__c}" flip="{!v.falseFlag}">
+                                <!-- Child Lightning Component --> 
+                                <c:RowComponent singleRec="{!osi}"
+                                                showSaveCancelBtn="{!v.showSaveCancelBtn}"
+                                                dueDate="{!osi.Due_Date__c}"
+                                                auditDueDate="{!osi.Audit_Completed__c}"
+                                                sNo="{!sNo + 1}" 
+                                                />
+                            </c:auraIfContains>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </lightning:accordionSection>
+            
+            <lightning:accordionSection name="Completed" label="Completed">
+                
+                
+                
+                
+                <!--Data Table-->     
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th scope="col"><div class="slds-truncate" title="Action Alert">Action Alert</div></th>
+                            <th style="width:300px;"><div class="slds-truncate" title="Due Date">Due Date</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Service Name">Service Name</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Quantity">Quantity</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Stage">Stage</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Entity">Entity - Org State</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Processor">Processor</div></th>  
+                            <th scope="col"><div class="slds-truncate" title="Due Date">Due Date</div></th>
+                            <th style="width:750px;"><div class="slds-truncate" title="Comments">Comments</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Update Comments">Update Comments</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Audit Completed">Audit Completed</div></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <!--### display all records of AccountList attribute one by one by aura:iteration ###-->
+                        <aura:iteration items="{!v.ItemsList}" var="osi" indexVar="sNo">
+                            <c:auraIfContains items="{!v.completedStages}" element="{!osi.Processing_Stage__c}" flip="{!v.trueFlag}">
+                                <!-- Child Lightning Component --> 
+                                <c:RowComponent singleRec="{!osi}"
+                                                showSaveCancelBtn="{!v.showSaveCancelBtn}"
+                                                dueDate="{!osi.Due_Date__c}"
+                                                auditDueDate="{!osi.Audit_Completed__c}"
+                                                sNo="{!sNo + 1}" 
+                                                />
+                            </c:auraIfContains>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </lightning:accordionSection>
+            
+            <lightning:accordionSection name="N/A" label="N/A">
+                
+                
+                
+                
+                <!--Data Table-->     
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title--caps">
+                            <th scope="col"><div class="slds-truncate" title="Action Alert">Action Alert</div></th>
+                            <th style="width:300px;"><div class="slds-truncate" title="Due Date">Due Date</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Service Name">Service Name</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Quantity">Quantity</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Stage">Stage</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Entity">Entity - Org State</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Processor">Processor</div></th>  
+                            <th scope="col"><div class="slds-truncate" title="Due Date">Due Date</div></th>
+                            <th style="width:750px;"><div class="slds-truncate" title="Comments">Comments</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Update Comments">Update Comments</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Audit Completed">Audit Completed</div></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <!--### display all records of AccountList attribute one by one by aura:iteration ###-->
+                        <aura:iteration items="{!v.ItemsList}" var="osi" indexVar="sNo">
+                            <!-- Child Lightning Component -->
+                            <aura:if isTrue="{!osi.Processing_Stage__c == 'N/A'}">
+                                <c:RowComponent singleRec="{!osi}"
+                                                showSaveCancelBtn="{!v.showSaveCancelBtn}"
+                                                dueDate="{!osi.Due_Date__c}"
+                                                auditDueDate="{!osi.Audit_Completed__c}"
+                                                sNo="{!sNo + 1}" 
+                                                />
+                            </aura:if>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </lightning:accordionSection>
+            
+        </lightning:accordion>
+        <aura:if isTrue="{!v.showSaveCancelBtn}">
+            <!--button for save and cancel Record after Inline Edit-->
+            <lightning:buttonGroup class="slds-m-around_medium slds-align_absolute-center">
+                <lightning:button label="Cancel" onclick="{!c.cancel}"/>
+                <lightning:button label="Save" onclick="{!c.Save}" variant="success"/>
+            </lightning:buttonGroup>
+        </aura:if>
+    </div>
+</aura:component>

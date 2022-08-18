@@ -1,0 +1,53 @@
+<aura:component controller="CreatePlatinumWordpressUser" implements="flexipage:availableforRecordHome,forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global">
+    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="createuser"  type="Boolean" default="false" />
+     <aura:attribute name="contactRecord" type="Object"/>
+     
+   <aura:attribute name="isContactPrimary"  type="Boolean" default="false" />
+    <aura:attribute name="platinumFields" type="String[]" default="FirstName,LastName,Platinum_Email__c"/>
+    <aura:attribute name="spin" type="Boolean" default="false"/>
+  <force:recordData aura:id="recordLoader"
+      recordId="{!v.recordId}"
+      fields="Platinum_Wordpress_Id__c,Account_Roles__c"
+                        targetFields="{!v.contactRecord}"
+                       
+                      recordUpdated="{!c.doInit}"
+     
+      />
+     <br/>
+        <br/>
+    <aura:if isTrue="{!v.isContactPrimary}">
+     <aura:if isTrue="{!v.createuser}">
+    <lightning:recordForm id="PlatinumWordPressForm"
+                          recordId="{!v.recordId}"
+                          objectApiName="Contact"
+                          fields="{!v.platinumFields}"
+                          columns="1"
+                          mode="view">
+    </lightning:recordForm>
+    
+        <div>
+        <lightning:button variant="brand" label="Create New User" title="createbutton" onclick="{!c.createUser}"/>
+        </div>
+      
+      
+            <aura:set attribute="else">
+           
+               This contact already has a Platinum user account.
+         
+       </aura:set>
+    </aura:if>
+         <aura:set attribute="else">
+           
+              Please select the primary contact to the create platinum user.
+         
+       </aura:set>
+   </aura:if>
+    <aura:if isTrue="{!v.spin}">
+        <div class="loadSpinner">
+            <lightning:spinner aura:id="mySpinner" />
+        </div>
+    </aura:if> 
+    
+</aura:component>

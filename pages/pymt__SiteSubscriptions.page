@@ -1,0 +1,150 @@
+<apex:page docType="HTML-5.0" id="siteSubscriptions" controller="pymt.SiteSubscriptionsController" showHeader="false" sidebar="false" cache="false" standardStylesheets="false" language="{!$CurrentPage.parameters.lang}" title="{!$Label.pymt__SiteSubscriptions_Heading}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+  <apex:define name="body"  >
+<style>
+table.pmt_method_details_item_table > tbody > tr > td:first-child {
+   font-weight: bold;
+   padding-right:10px;
+}
+.warning_message {
+   color: red;
+   font-style: italic;
+   padding-left:10px;
+}
+</style>
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitesubscriptions_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+
+    <apex:pageMessages id="messages"/>
+    <apex:outputPanel rendered="{!NOT(disablePage)}">
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscriptions_Heading == '-')}">
+    <h1>{!$Label.pymt__SiteSubscriptions_Heading}</h1>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscriptions_Message == '-')}">
+    <p>{!$Label.pymt__SiteSubscriptions_Message}</p>
+    </apex:outputPanel>
+
+
+
+
+<apex:form id="mainForm">
+<apex:repeat value="{!subscriptions}" var="item">
+<div class="payment_method_widget {!IF(item.expanded,'expanded','')}">
+<div class="payment_method_widget_header">
+<img id="pc_subscription_icon" src="/s.gif"/>
+{!item.profileName}
+<apex:outputPanel rendered="{!(item.showWarning == TRUE)}">
+<img src="/s.gif" class="warning_icon_small"/>
+</apex:outputPanel>
+<apex:commandLink action="{!expandSelectedSubscription}" ><img class="expand_icon" src="/s.gif"/><apex:param name="selectedSubscriptionToExpand" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandLink>
+
+</div>
+<apex:outputPanel rendered="{!item.expanded}">
+<div class="payment_method_widget_body">
+<apex:outputPanel rendered="{!(item.showWarning == TRUE)}">
+<apex:outputText styleclass="warning_message" value="{!item.warningText}" rendered="{!item.showWarning}"/>
+</apex:outputPanel>
+<div class="pmt_method_details_container">
+<div class="pmt_method_details_item">
+    <table class="pmt_method_details_item_table">
+    <tr>
+        <td><apex:outputText value="Start Date"/></td>
+        <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!item.startDate}" /></apex:outputText>
+        </td>
+   </tr>
+   <tr>
+        <td>
+        <apex:outputText value="Recurring Amount"/>
+        </td>
+        <td><apex:outputText value="{!item.formattedRecurringAmount}"/>&nbsp;{!item.subscriptionTerms}
+        </td>
+    </tr>
+    <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(item.cardType))}">
+   <tr>
+        <td>
+        <apex:outputText value="Card"/>
+        </td>
+        <td><apex:outputText value="{!item.cardType}"/>&nbsp;<apex:outputText value="({!item.lastFour})" rendered="{!NOT(ISBLANK(item.lastFour))}"/>
+        </td>
+    </tr>
+    </apex:outputPanel>
+    </table>
+</div>
+<div class="pmt_method_details_item">
+    <table class="pmt_method_details_item_table">
+    <apex:outputPanel rendered="{!NOT(ISBLANK(item.nextPayment))}">
+    <tr>
+
+        <td><apex:outputText value="Next Payment"/></td>
+        <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!item.nextPayment}" /></apex:outputText>
+        </td>
+   </tr>
+    </apex:outputPanel>
+
+   <tr>
+        <td>
+        <apex:outputText value="Status"/>
+        </td>
+        <td><apex:outputText value="{!item.status}"/>
+        </td>
+    </tr>
+
+    <tr>
+         <td>
+         <apex:outputText value="Type"/>
+         </td>
+         <td><apex:outputText value="{!item.subscriptionType}"/>
+         </td>
+     </tr>
+
+    </table>
+
+</div>
+</div>
+<apex:outputPanel >
+<div class="pc_button_container">
+  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+    <apex:commandButton value="{!$Label.pymt__Label_Cancel}" action="{!cancelSelectedSubscription}" rendered="{!item.allowCancel}"><apex:param name="selectedMethodToDel" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandButton>
+    <apex:commandButton value="{!$Label.pymt__Label_Update}" action="{!updateSelectedSubscription}" rendered="{!item.allowUpdate}"><apex:param name="selectedMethodToDel" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandButton>
+    <apex:commandButton value="Make a Payment" action="{!makePayment}" rendered="{!item.allowPayment}"><apex:param name="selectedMethodToPay" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandButton>
+  </apex:outputPanel>
+  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+    <apex:commandLink styleClass="css-button btn-small" value="{!$Label.pymt__Label_Cancel}" action="{!cancelSelectedSubscription}" rendered="{!item.allowCancel}"><apex:param name="selectedMethodToDel" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandLink>
+    <apex:commandLink styleClass="css-button btn-small" value="{!$Label.pymt__Label_Update}" action="{!updateSelectedSubscription}" rendered="{!item.allowUpdate}"><apex:param name="selectedMethodToDel" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandLink>
+    <apex:commandLink styleClass="css-button btn-small" value="Make a Payment" action="{!makePayment}" rendered="{!item.allowPayment}"><apex:param name="selectedMethodToPay" assignTo="{!selectedSubscriptionId}" value="{!item.recordId}"/></apex:commandLink>
+  </apex:outputPanel>
+</div>
+</apex:outputPanel>
+
+</div>
+</apex:outputPanel>
+
+</div>
+</apex:repeat>
+
+</apex:form>
+
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!debug}">
+    <br/><br/>
+    Debug:  Date/Time = {!Now()}
+    </apex:outputPanel>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:define>
+</apex:composition>
+
+</apex:page>

@@ -1,0 +1,201 @@
+<apex:page standardController="evt__Special_Event__c"  extensions="evt.GoToWebinarLinkController" sidebar="false">
+<style>
+.leftcol {
+text-align:right;
+font-weight:bold;
+}
+.surveyResultsTable {
+	border-collapse:collapse;
+	width:450px;
+}
+.surveyResultsTable td {
+    padding:4px;
+	border:1px solid #383838;
+}
+.pollResultsTable {
+	width:450px;
+}
+.pollResultsTable td {
+    padding:4px;
+	border:1px solid #383838;
+}
+a.btn {
+	text-decoration: none;
+	font-size:1.4em;
+}
+a.btn:hover {
+	text-decoration: none;
+}
+td.icon_column {
+	text-align:center;
+	padding:0px 10px 10px 10px;
+}
+
+</style>
+<apex:sectionHeader title="Linvio Events" subtitle="GoToWebinar Link"/>
+<apex:pageMessages id="messages" />
+<apex:form id="myForm">
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Return" action="{!returnFromPage}"/>
+</apex:pageBlockButtons>
+
+<apex:outputPanel id="pagePanels">
+<apex:outputPanel rendered="{!NOT(linked)}" id="connectToGTW">
+<table>
+<tr>
+<td class="icon_column">
+<a href="https://www.gotowebinar.com" target="_blank"><img title="Click to log into GotoWebinar" style="width:60px;margin-right:20px;" src="{!URLFOR($Resource.EventManagement,'/images/gotowebinar-icon.png')}"/></a>
+</td>
+<td>
+<apex:pageMessage severity="warning" strength="1" summary="This event is not yet connected to a GoToWebinar account. " />
+<apex:outputText value="GoToWebinar Username"/>&nbsp;
+<apex:inputText value="{!username}" />&nbsp;&nbsp;
+<apex:outputText value="Password"/>&nbsp;
+<apex:inputSecret value="{!password}" />&nbsp;&nbsp; 
+<apex:commandButton value="Connect" action="{!loginToGTW}" rerender="pagePanels"/>
+</td></tr>
+</table>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(linked,ISBLANK(event.evt__External_Meeting_ID__c))}" id="connectToWebinar">
+<table>
+<tr>
+<td class="icon_column">
+<a href="https://global.gotowebinar.com" target="_blank"><img title="Click to log into GotoWebinar" style="width:60px;margin-right:20px;" src="{!URLFOR($Resource.EventManagement,'/images/gotowebinar-icon.png')}"/></a>
+</td>
+<td>
+<apex:pageMessage severity="INFO" strength="1" summary="Connected. Now link this event to a specific upcoming event: " />
+<apex:selectList value="{!selectedWebinarOption}" size="1" multiselect="false" rendered="{!upcomingWebinarsFound == true}">
+<apex:selectOptions value="{!upcomingWebinarOptions}" />
+</apex:selectList><apex:inputText value="{!selectedWebinarOption}" rendered="{!upcomingWebinarsFound == false}"/>&nbsp;&nbsp;
+<apex:commandButton value="Link" action="{!linkEventToWebinar}" rerender="pagePanels"/>
+</td></tr>
+</table>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(linked,NOT(ISBLANK(event.evt__External_Meeting_ID__c)))}" id="connectedToWebinar">
+<table>
+<tr>
+<td class="icon_column">
+<a href="https://www.gotowebinar.com" target="_blank"><img title="Click to log into GotoWebinar" style="width:60px;" src="{!URLFOR($Resource.EventManagement,'/images/gotowebinar-icon.png')}"/></a><br/>
+<apex:outputPanel rendered="{!event.evt__Start__c >= (NOW() - 1)}">
+<br/>
+<apex:outputLink styleClass="btn" target="_blank" value="https://www4.gotomeeting.com/join/{!event.evt__External_Meeting_ID__c}">&nbsp;Join&nbsp;</apex:outputLink>
+</apex:outputPanel>
+</td>
+<td>
+<apex:pageMessage severity="confirm" strength="1" summary="Connected and linked to a GoToWebinar event. " />
+<table>
+<tr>
+<td class="leftcol">Subject:</td>
+<td>{!webinar.subject}</td>
+</tr>
+<tr>
+<td class="leftcol">Description:</td>
+<td>{!webinar.description}</td>
+</tr>
+<apex:repeat value="{!webinar.times}" var="timeLine">
+<tr>
+<td class="leftcol">Start/Stop Time:</td>
+<td>{!timeLine.startTime} / {!timeLine.endTime}</td>
+</tr>
+</apex:repeat>
+<tr>
+<td class="leftcol">Time Zone:</td>
+<td>{!webinar.timeZone}</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<br/>
+<apex:commandButton value="Copy Details To Salesforce" action="{!copyDetailsToSalesforce}" status="pageStatus" onclick="if(!confirm('This action will overwrite event name and data fields with event details from GoToWebinar.  Continue?')){return};" rerender="pagePanels"/>
+&nbsp;<apex:commandButton value="Check Attendance" action="{!checkAttendance}" rerender="reportViews, messages" status="pageStatus"/>
+&nbsp;<apex:commandButton value="Show Poll Results" action="{!viewPolls}"  status="pageStatus"/>
+&nbsp;<apex:commandButton value="Show Survey Results" action="{!viewSurveys}"  status="pageStatus"/> 
+&nbsp;<apex:commandButton value="Show Q&A" action="{!getSessionQuestions}"  status="pageStatus"/> 
+<apex:actionStatus startText=" Processing..."
+stopText="" id="pageStatus"/>
+<apex:outputPanel id="reportViews" >
+<apex:outputPanel id="attendancePanel" rendered="{!reportView == 'Attendees'}">
+<br/><br/>
+<apex:pageBlock title="Webinar Attendees">
+<apex:pageBlockButtons >
+<apex:commandButton value="Update Local Attendee Record Status" action="{!copyAttendanceToSalesforce}" rerender="messages"/><apex:actionStatus startText=" Processing..."
+stopText="" id="attendeeStatus" />
+</apex:pageBlockButtons>
+<apex:pageBlockTable value="{!attendees}" var="attendee" >
+<apex:column headerValue="First Name" value="{!attendee.firstName}"/>
+<apex:column headerValue="Last Name" value="{!attendee.lastName}"/>
+<apex:column headerValue="Email" value="{!attendee.email}"/>
+<apex:column headerValue="Attendance Time In Seconds" value="{!attendee.attendanceTimeInSeconds}"/>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:outputPanel>
+ 
+<apex:outputPanel id="questionsPanel" rendered="{!reportView == 'Questions'}">
+<br/><br/>
+<apex:pageBlock title="Webinar Q&A">
+<apex:pageBlockTable value="{!questions}" var="question" >
+<apex:column headerValue="Question" value="{!question.question}"/>
+<apex:column headerValue="Asked By" value="{!question.askedBy}"/>
+<apex:column headerValue="Answer(s)" >
+<apex:repeat value="{!question.answers}" var="ans">
+{!ans.answer}&nbsp;<span style="font-weight:bold;">({!ans.answeredBy})</span><br/><br/>
+</apex:repeat>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:outputPanel>
+
+<apex:outputPanel id="pollsPanel" rendered="{!reportView == 'Polls'}">
+<br/><br/>
+<apex:repeat value="{!pollResults}" var="chartx" id="theRepeat">
+<apex:outputText value="{!chartx.name}"/>
+<span id='chart_{!chartx.myId}'>&nbsp;</span>
+<apex:chart renderto="chart_{!chartx.myId}" height="350" width="450" data="{!chartx.dataList}" resizable="true" rendered="{!NOT(chartx.displayAsTable)}">
+<apex:pieSeries tips="true" dataField="value" labelField="label"></apex:pieSeries>
+<apex:legend position="right"/>
+</apex:chart>
+<apex:outputPanel rendered="{!chartx.displayAsTable}">
+<table class="pollResultsTable">
+<apex:repeat value="{!chartx.dataList}" var="line">
+<tr><td>{!line.label}</td>
+<td>{!line.value}</td>
+</tr>
+</apex:repeat>
+</table>
+</apex:outputPanel>
+<br/><br/>
+</apex:repeat>
+</apex:outputPanel>
+
+<apex:outputPanel id="surveysPanel" rendered="{!reportView == 'Surveys'}">
+<br/><br/>
+<apex:repeat value="{!surveyResults}" var="chartx" id="theRepeat2">
+<apex:outputText value="{!chartx.name}"/>
+<span id='chart_{!chartx.myId}'>&nbsp;</span>
+<apex:chart renderto="chart_{!chartx.myId}" height="350" width="450" data="{!chartx.dataList}" resizable="true" rendered="{!NOT(chartx.displayAsTable)}">
+<apex:pieSeries tips="true" dataField="value" labelField="label"></apex:pieSeries>
+<apex:legend position="right"/>
+</apex:chart>
+<apex:outputPanel rendered="{!chartx.displayAsTable}">
+<table class="surveyResultsTable">
+<apex:repeat value="{!chartx.dataList}" var="line">
+<tr><td>{!line.label}</td>
+<td>{!line.value}</td>
+</tr>
+</apex:repeat>
+</table>
+</apex:outputPanel>
+<br/><br/>
+</apex:repeat>
+</apex:outputPanel>
+
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:pageBlock>
+</apex:form> 
+</apex:page>

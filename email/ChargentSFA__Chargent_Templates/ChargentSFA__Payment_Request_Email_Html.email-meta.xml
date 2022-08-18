@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Payment Request Email Html</name>
+    <style>none</style>
+    <subject>{!Organization.Name} Payment Request Notification</subject>
+    <textOnly>Hello {!ChargentSFA__Payment_Request__c.ChargentSFA__Billing_Contact__c} 
+
+{!Opportunity.OwnerFullName} has sent you a payment request. 
+
+Please click on the link below to make a secure online payment: 
+
+{!ChargentSFA__Payment_Request__c.ChargentSFA__Payment_Link_Formatted__c} 
+
+Original message : 
+{!ChargentSFA__Payment_Request__c.ChargentSFA__Notes__c} 
+
+Thanks, 
+{!Organization.Name}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,21 @@
+<apex:page docType="html-5.0" id="siteConfAgendaPage" controller="evt.ConfAgendaController" title="{!event.Name} Agenda"   showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>{!event.Name} {!$Label.evt__ConfNav_AgendaTab}</title></head>
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_conference_agenda_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="agenda"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+
+    <apex:outputText value="{!event.evt__Agenda_HTML__c}" escape="false"/>
+
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+</apex:define>
+</apex:composition>
+</apex:page>

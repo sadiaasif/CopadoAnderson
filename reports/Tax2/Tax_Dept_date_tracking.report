@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_59546676</developerName>
+        <masterLabel>Team</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Case.Activities$Owner</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Ian Hanuscin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Christos Zattas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Julio Trejo</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Luis Garcia</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Troy Butler</sourceValue>
+            </sourceValues>
+            <value>Jennifer Phipps</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Emily Dacanay</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mariel Garvin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Landon Stagg</sourceValue>
+            </sourceValues>
+            <value>Ronnie Withaeger</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Maria Mendiola</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Autumn Gatesman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>James McEvoy</sourceValue>
+            </sourceValues>
+            <value>Maria Mendiola</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumnGrouped</chartType>
+        <enableHoverLabels>true</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Case.Activities$LastModifiedDate</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <location>CHART_TOP</location>
+        <secondaryGroupingColumn>Case.Activities$Owner</secondaryGroupingColumn>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Huge</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Case.Activities$Days_to_begin_Tax_Prep__c</field>
+    </columns>
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case.Activities$Subject</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case.Activities$Subject</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>1120,1120S,990,1040,1065,5500,1041</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.Activities$Owner</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>gatesman,dacanay,hanuscin,garvin,mendiola,wyatt,mcevoy,zattas,trejo,garcia,butler,stagg</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.Activities$Days_to_begin_Tax_Prep__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>Case.Activities$LastModifiedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_59546676</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Activities$Owner</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax Dept, date tracking</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Cases_with_Tasks__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Case.Activities$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURFY</interval>
+    </timeFrameFilter>
+</Report>

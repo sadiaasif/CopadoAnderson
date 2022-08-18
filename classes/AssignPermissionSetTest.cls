@@ -1,0 +1,33 @@
+@isTest
+private class AssignPermissionSetTest {
+     @isTest static void init(){
+       //  Set<Id> settesID = new Set<Id>();
+        Profile p = [select id from profile where name='Partner Community User'];
+        Account acc = new Account(name='Test Account');
+        acc.First_Name__c ='test';
+        acc.Last_Name__c = 'chetu';
+         insert acc;
+         Contact cont = new Contact();
+        cont.AccountId = acc.Id;
+        cont.FirstName ='test2';
+        cont.LastName ='ttestchetu';
+        insert cont;
+         User usr = new User();
+        usr.Email = 'test@gmail.com';
+        usr.Username ='tester@chetu.com';
+        usr.LastName ='chetu';
+        usr.Alias = 'testc';
+        usr.ProfileId =p.id;
+        usr.TimeZoneSidKey = 'GMT';
+        usr.LocaleSidKey ='en_US';
+        usr.EmailEncodingKey ='ISO-8859-1';
+        usr.LanguageLocaleKey ='en_US';
+        usr.isActive = true;
+        //usr.AccountId = acc.id;
+        usr.ContactId = cont.id;
+          insert usr;  
+        
+     //settesID.add(usr.Id);
+    }
+
+}

@@ -1,0 +1,369 @@
+<apex:page controller="n2de.TeamActionTrackingDetailController" action="{!init}" tabStyle="n2de__Team__c" sidebar="false">
+
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-3.5.1.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-migrate-3.3.0.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-ui-1.10.4.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery.multiselect.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/requiredBlockUtil.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.DEResources, 'css/jquery-ui-1.10.4-nc2.css')}" type="text/css"/>
+    <link rel="stylesheet" href="{!URLFOR($Resource.DEResources, 'css/jquery.multiselect.css')}" type="text/css"/>
+
+    <style>
+    .tableHeader {
+        font-size: 11px;
+        color: #4A4A56;
+        padding-bottom: 5px;
+        padding-right: 4px;
+    }
+    .alertCol {
+        padding-right: 10px;
+    }
+    .alertSeq {
+        width: 20px;
+    }
+    .alertOperator {
+        width: 110px;
+    }
+    .addRowLink {
+        padding-top: 4px;
+        padding-bottom: 10px;
+    }
+    .label {
+        font-weight: bold;
+        color: #4A4A56;
+    }
+    .alertMsg {
+        color: red;
+        font-weight: bold;
+        padding-left: 40px;
+    }
+
+    </style>
+    <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+
+    <c:CommonHelp help_page="team-detail"/>
+    <c:CommonMask />
+    <apex:form id="tracking_form" styleClass="tracking_form">
+        <apex:sectionHeader title="Team Action Tracking" subtitle="{!team.Name}" rendered="{!team.Name != null}"/>
+
+        <apex:pageBlock title="Tracking Edit" id="page_block" mode="edit">
+            <apex:actionFunction action="{!changeActionsTracked}" name="changeActionsTrackedAF" reRender="page_block"/>
+
+            <script type="text/javascript">
+            $(document).ready(function($){
+                $('.tracking_form').on("keyup keypress", function(e) {
+                      var code = e.keyCode || e.which;
+                      if (code  == 13) {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                $('.multiselectAction').multiselect({
+                    minWidth: 400,
+                    noneSelectedText: 'Select actions to track',
+                    selectedList: 2,
+                    classes: 'actions-multiselect',
+                    multiple: true,
+                    position: {
+                         my: 'left top',
+                        at: 'left bottom',
+                        collision: 'flip'
+                    },
+                    close: function() {
+                        showMask();
+                        changeActionsTrackedAF();
+                    }
+                });
+                $('.multiselectEvent').multiselect({
+                    minWidth: 400,
+                    noneSelectedText: '--All event types--',
+                    selectedList: 4,
+                    classes: 'events-multiselect',
+                    position: {
+                        my: 'left top',
+                          at: 'left bottom',
+                        collision: 'flip'
+                    }
+                });
+                $('.multiselectTask').multiselect({
+                    minWidth: 400,
+                    noneSelectedText: '--All task types--',
+                    selectedList: 4,
+                    classes: 'tasks-multiselect',
+                    position: {
+                        my: 'left top',
+                          at: 'left bottom',
+                        collision: 'flip'
+                    }
+                });
+                hideMask();
+            });
+
+            function resetActionMultiSelect() {
+                $('.multiselectAction').multiselect({
+                    minWidth: 400,
+                    noneSelectedText: 'Select actions to track',
+                    selectedList: 2,
+                    classes: 'actions-multiselect',
+                    multiple: true,
+                    position: {
+                        my: 'left top',
+                        at: 'left bottom',
+                        collision: 'flip'
+                    }
+                });
+            }
+
+            </script>
+
+            <apex:pageMessages escape="false"/>
+
+            <apex:pageBlockButtons >
+                <apex:commandButton id="save_button_top" action="{!saveTracking}" value="Save"/>
+                <apex:commandButton id="cancel_button_top" action="{!cancelTracking}" value="Cancel" immediate="true"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection id="object_actions" title="Time to Action" columns="2" collapsible="false" rendered="{!AND(ActionTrackingSupported, NOT(Team.n2de__Is_distribute_to_queue__c))}">
+                <apex:inputField id="object_actions_time_to_action" value="{!Team.n2de__Is_action_tracking__c}">
+                    <apex:actionSupport action="{!setDefaultActionTracking}" event="onchange" onsubmit="showMask();" reRender="page_block"/>
+                </apex:inputField>
+                <c:CommonInlineHelp help_page="action-tracking"/>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Actions_respect_distribution_hours__c}" rendered="{!Team.n2de__Is_action_tracking__c}">
+                    <apex:outputLabel value="Respect distribution hours"/>
+                    <apex:selectList id="object_actions_respect_distribution_hours" value="{!Team.n2de__Actions_respect_distribution_hours__c}" size="1">
+                        <apex:selectOptions value="{!RespectDistributionHoursOptionList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!Team.n2de__Is_action_tracking__c}"/>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_action_field_name__c.InlineHelpText}" rendered="{!Team.n2de__Is_action_tracking__c}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_action_field_name__c.Label}"/>
+                    <apex:selectList id="object_action_field_name" value="{!Team.n2de__Object_action_field_name__c}" size="1">
+                        <apex:selectOptions value="{!ObjectActionFieldOptionList}"/>
+                        <apex:actionSupport event="onchange" action="{!changeActionTrackingObject}" onsubmit="showMask();" oncomplete="resetActionMultiSelect()" reRender="page_block"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_action_tracked_value__c.InlineHelpText}" rendered="{!Team.n2de__Is_action_tracking__c}">
+                    <apex:outputLabel value="Actions to track"/>
+                    <apex:selectList id="object_action_actions_to_track" value="{!ActionsTracked}" size="5" multiSelect="true" styleClass="multiselectAction requiredIndicator">
+                        <apex:selectOptions value="{!ObjectActionValueOptionList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:inputField id="track_actions_any_user" value="{!Team.n2de__Track_actions_any_user__c}" rendered="{!Team.n2de__Is_action_tracking__c}"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="auto_actions" title="Auto-action" collapsible="false" columns="2" rendered="{!AND(ActionTrackingSupported, Team.n2de__Is_action_tracking__c)}">
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Is_auto_action_on_event__c.InlineHelpText}">
+                    <apex:outputLabel value="Auto-action on event"/>
+                    <apex:inputField id="auto_action_on_event" value="{!Team.n2de__Is_auto_action_on_event__c}">
+                        <apex:actionSupport event="onchange" onsubmit="showMask();" reRender="page_block"/>
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!NOT(Team.n2de__Is_auto_action_on_event__c)}"/>
+
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Event_types_to_action__c.InlineHelpText}" rendered="{!Team.n2de__Is_auto_action_on_event__c}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Event_types_to_action__c.Label}"/>
+                    <apex:selectList id="auto_action_event_types" value="{!EventTypesToTriggerAction}" size="1" multiSelect="true" styleClass="multiselectEvent">
+                        <apex:selectOptions value="{!EventTypeOptionList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem helpText="Auto-action on task">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Is_auto_action_on_task__c.Label}"/>
+                    <apex:inputField id="auto_action_on_task" value="{!Team.n2de__Is_auto_action_on_task__c}">
+                        <apex:actionSupport event="onchange" onsubmit="showMask();" reRender="page_block"/>
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Task_types_to_action__c.InlineHelpText}" rendered="{!Team.n2de__Is_auto_action_on_task__c}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Task_types_to_action__c.Label}"/>
+                    <apex:selectList id="auto_action_task_types" value="{!TaskTypesToTriggerAction}" size="1" multiSelect="true" styleClass="multiselectTask">
+                        <apex:selectOptions value="{!TaskTypeOptionList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!NOT(Team.n2de__Is_auto_action_on_task__c)}"/>
+
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Auto_action_value__c.InlineHelpText}" rendered="{!OR(Team.n2de__Is_auto_action_on_event__c, Team.n2de__Is_auto_action_on_task__c)}">
+                    <apex:outputLabel value="Action to set"/>
+                    <apex:selectList id="auto_action_action_to_set" value="{!Team.n2de__Auto_action_value__c}" size="1" multiselect="false">
+                        <apex:selectOptions value="{!ActionsTrackedOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="object_alerts" title="SLAs" columns="1" collapsible="false" rendered="{!NOT(Team.n2de__Is_distribute_to_queue__c)}">
+                <c:CommonInlineHelp help_page="alerts"/>
+                <apex:pageMessage severity="warning" summary="{!ReassignWarnMessage}" rendered="{!AlertHasRelatedReassigns}" strength="1"/>
+                <apex:pageBlockSectionItem helpText="When checked, will enable the creation of SLAs, based upon a time period and condition.">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Is_alert__c.Label}"/>
+                    <apex:outputPanel >
+                        <apex:inputField id="object_alerts_enabled" value="{!Team.n2de__Is_alert__c}">
+                            <apex:actionSupport action="{!switchEnableAlerts}" event="onchange" onsubmit="showMask();" reRender="page_block"/>
+                        </apex:inputField>
+                        <apex:outputText value="Note: Distributors for this team have SLAs enabled. On save, SLAs & auto-reassign will be disabled for those distributors." rendered="{!HasAlertDistributorWarning}" styleClass="alertMsg"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:selectList id="object_alerts_respect_distribution_hours" value="{!Team.n2de__Alert_respect_distribution_hours__c}" size="1" rendered="{!Team.n2de__Is_alert__c}">
+                    <apex:selectOptions value="{!RespectDistributionHoursOptionList}"/>
+                </apex:selectList>
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem helptext="Time Checkpoint SLAs check the SLA criteria once at a predefined time after assignment. Monitored SLAs check whether the SLA has failed every time Distribution Engine runs during the defined time period." rendered="{!Team.n2de__Is_alert__c}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Alert_type__c.Label}"/>
+                    <apex:selectList id="object_alerts_alert_type" value="{!Team.n2de__Alert_type__c}" size="1">
+                        <apex:selectOptions value="{!AlertTypeOptionList}"/>
+                        <apex:actionSupport event="onchange" action="{!switchAlertType}" onsubmit="showMask()" oncomplete="hideMask()" reRender="page_block"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="object_alert_rows" columns="1" collapsible="false" rendered="{!NOT(Team.n2de__Is_distribute_to_queue__c)}">
+                <apex:pageBlockSectionItem helpText="SLAs on distribution: If the period of time from distribution has passed and the condition is found to be true an alert will be raised. SLAs must be entered in the sequence they will occur." rendered="{!CheckPointAlertRowsVisible}">
+                    <apex:outputLabel value="SLAs"/>
+                    <apex:outputPanel id="alert_panel">
+                        <apex:dataTable value="{!TeamAlertList}" var="alert" headerClass="tableHeader">
+                            <apex:column styleClass="alertSeq">
+                                <apex:outputText id="alert_row_alert_sequence" value="{!alert.AlertSeq}" styleClass="label"/>
+                            </apex:column>
+                            <apex:column styleClass="alertCol">
+                                <apex:facet name="header">Time since assignment</apex:facet>
+                                <apex:inputText id="alert_row_alert_period" value="{!alert.AlertPeriodText}" maxlength="5" size="2"/>
+                                <apex:selectList id="alert_row_alert_unit" value="{!alert.TeamAlert.n2de__Alert_unit__c}" size="1">
+                                    <apex:selectOptions value="{!alert.AlertUnitOptionList}"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column styleClass="alertCol">
+                                <apex:facet name="header">SLA missed if</apex:facet>
+                                <apex:selectList id="alert_row_alert_condition_field" value="{!alert.TeamAlert.n2de__Alert_condition_field_name__c}" size="1">
+                                    <apex:selectOptions value="{!alert.AlertFieldOptionList}"/>
+                                    <apex:actionSupport action="{!alert.changeAlertCondition}" onsubmit="showMask();" event="onchange" reRender="page_block"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"></apex:facet>
+                                <apex:selectList id="alert_row_alert_condition_operator" value="{!alert.TeamAlert.n2de__Alert_condition_operator__c}" size="1" styleClass="alertOperator" disabled="{!alert.TeamAlert.n2de__Alert_condition_field_name__c=null}">
+                                    <apex:selectOptions value="{!alert.AlertComparisonOperatorOptionList}"/>
+                                    <apex:actionSupport action="{!alert.changeAlertOperator}" onsubmit="showMask();" event="onchange" reRender="page_block"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"></apex:facet>
+                                <apex:inputText id="alert_row_alert_condition_argument_type_value" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" rendered="{!OR(alert.AlertFieldType=='', alert.AlertFieldType=='STRING', alert.AlertFieldType=='DOUBLE')}" disabled="{!alert.TeamAlert.n2de__Alert_condition_field_name__c=null}"/>
+                                <apex:selectList id="alert_row_alert_condition_argument_type_boolean" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!alert.AlertFieldType=='BOOLEAN'}">
+                                    <apex:selectOption itemValue="true" itemLabel="true"/>
+                                    <apex:selectOption itemValue="false" itemLabel="false"/>
+                                </apex:selectList>
+                                <apex:selectList id="alert_row_alert_condition_argument_type_picklist" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!alert.AlertFieldType=='PICKLIST'}">
+                                    <apex:selectOptions value="{!alert.AlertFieldPicklistOptionList}"/>
+                                </apex:selectList>
+                                <apex:selectList id="alert_row_alert_condition_argument_type_datetime_picklist" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!AND(OR(alert.TeamAlert.n2de__Alert_condition_operator__c=='equals', alert.TeamAlert.n2de__Alert_condition_operator__c=='not equal'), OR(alert.AlertFieldType=='DATETIME', alert.AlertFieldType=='DATE'))}">
+                                    <apex:selectOptions value="{!alert.DateTimeOptions}"/>
+                                </apex:selectList>
+                                <apex:outputText id="alert_row_alert_condition_argument_type_date" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" rendered="{!AND(alert.TeamAlert.n2de__Alert_condition_operator__c!='equals', alert.TeamAlert.n2de__Alert_condition_operator__c!='not equal', OR(alert.AlertFieldType=='DATETIME', alert.AlertFieldType=='DATE'))}"/>
+
+                            </apex:column>
+                        </apex:dataTable>
+                        <div class="addRowLink">
+                            <apex:commandLink id="alert_add_row" action="{!addAlertRow}" onclick="showMask()" value="Add Row" reRender="page_block" rendered="{!TeamAlertList.size<MaxAlertRows}"/>&nbsp;&nbsp;<apex:commandLink id="alert_remove_row" action="{!removeAlertRow}" value="Remove Row" onclick="showMask()" reRender="page_block" rendered="{!TeamAlertList.size>1}"/>
+                        </div>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_team_alert__c.Fields.n2de__Alert_sequence__c.InlineHelpText}" rendered="{!CustomDTAlertRowsVisible}">
+                    <apex:outputLabel value="Alerts"/>
+                    <apex:outputPanel id="dt_alert_panel">
+                        <apex:dataTable value="{!TeamAlertList}" var="alert" headerClass="tableHeader">
+                            <apex:column styleClass="alertSeq">
+                                <apex:outputText id="dt_alert_row_alert_sequence" value="{!alert.AlertSeq}" styleClass="label"/>
+                            </apex:column>
+                            <apex:column styleClass="alertCol">
+                                <apex:facet name="header">{!$ObjectType.n2de__Distribution_team_alert__c.Fields.n2de__Alert_datetime_field__c.Label}</apex:facet>
+                                <apex:selectList id="dt_alert_row_datetime_field" value="{!alert.TeamAlert.n2de__Alert_datetime_field__c}" size="1">
+                                    <apex:selectOptions value="{!alert.DateTimeFieldOptionList}"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Condition Field</apex:facet>
+                                <apex:selectList id="dt_alert_row_alert_condition_field" value="{!alert.TeamAlert.n2de__Alert_condition_field_name__c}" size="1">
+                                    <apex:selectOptions value="{!alert.AlertFieldOptionList}"/>
+                                    <apex:actionSupport action="{!alert.changeAlertCondition}" onsubmit="showMask();" event="onchange" reRender="page_block"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Operator</apex:facet>
+                                <apex:selectList id="dt_alert_row_alert_condition_operator" value="{!alert.TeamAlert.n2de__Alert_condition_operator__c}" size="1" styleClass="alertOperator" disabled="{!alert.TeamAlert.n2de__Alert_condition_field_name__c=null}">
+                                    <apex:selectOptions value="{!alert.AlertComparisonOperatorOptionList}"/>
+                                    <apex:actionSupport action="{!alert.changeAlertOperator}" onsubmit="showMask();" event="onchange" reRender="page_block"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Value</apex:facet>
+                                <apex:inputText id="dt_alert_row_alert_condition_argument_type_value" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" rendered="{!OR(alert.AlertFieldType=='', alert.AlertFieldType=='STRING', alert.AlertFieldType=='DOUBLE')}" disabled="{!alert.TeamAlert.n2de__Alert_condition_field_name__c=null}"/>
+                                <apex:selectList id="dt_alert_row_alert_condition_argument_type_boolean" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!alert.AlertFieldType=='BOOLEAN'}">
+                                    <apex:selectOption itemValue="true" itemLabel="true"/>
+                                    <apex:selectOption itemValue="false" itemLabel="false"/>
+                                </apex:selectList>
+                                <apex:selectList id="dt_alert_row_alert_condition_argument_type_picklist" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!alert.AlertFieldType=='PICKLIST'}">
+                                    <apex:selectOptions value="{!alert.AlertFieldPicklistOptionList}"/>
+                                </apex:selectList>
+                                <apex:selectList id="dt_alert_row_alert_condition_argument_type_datetime_picklist" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!AND(OR(alert.TeamAlert.n2de__Alert_condition_operator__c=='equals', alert.TeamAlert.n2de__Alert_condition_operator__c=='not equal'), OR(alert.AlertFieldType=='DATETIME', alert.AlertFieldType=='DATE'))}">
+                                    <apex:selectOptions value="{!alert.DateTimeOptions}"/>
+                                </apex:selectList>
+                                <apex:outputText id="dt_alert_row_alert_condition_argument_type_date" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" rendered="{!AND(alert.TeamAlert.n2de__Alert_condition_operator__c!='equals', alert.TeamAlert.n2de__Alert_condition_operator__c!='not equal', OR(alert.AlertFieldType=='DATETIME', alert.AlertFieldType=='DATE'))}"/>
+                            </apex:column>
+                        </apex:dataTable>
+                        <div class="addRowLink">
+                            <apex:commandLink id="alert_add_row_dt" action="{!addAlertRow}" onclick="showMask()" value="Add Row" reRender="page_block" rendered="{!TeamAlertList.size<MaxAlertRows}"/>&nbsp;&nbsp;<apex:commandLink id="alert_remove_row_dt" action="{!removeAlertRow}" value="Remove Row" onclick="showMask()" reRender="page_block" rendered="{!TeamAlertList.size>1}"/>
+                        </div>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem helpText="SLA on distribution: If the period of time from distribution has not yet passed and the condition is found to be true an alert will be raised."
+                        rendered="{!MonitoringAlertRowsVisible}">
+                    <apex:outputLabel value="SLA"/>
+                    <apex:outputPanel id="monitoring_alert_panel">
+                        <apex:dataTable value="{!TeamAlertList}" var="alert" headerClass="tableHeader">
+                            <apex:column styleClass="alertCol">
+                                <apex:facet name="header">Time Period to Monitor</apex:facet>
+                                <apex:inputText id="monitoring_alert_row_alert_period" value="{!alert.AlertPeriodText}" maxlength="5" size="2"/>
+                                <apex:outputText id="monitoring_alert_row_alert_unit" value="day(s)" />
+                            </apex:column>
+                            <apex:column styleClass="alertCol">
+                                <apex:facet name="header">SLA missed if</apex:facet>
+                                <apex:selectList id="monitoring_alert_row_alert_condition_field" value="{!alert.TeamAlert.n2de__Alert_condition_field_name__c}" size="1">
+                                    <apex:selectOptions value="{!alert.AlertFieldOptionList}"/>
+                                    <apex:actionSupport action="{!alert.changeAlertCondition}" onsubmit="showMask();" event="onchange" reRender="page_block"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"></apex:facet>
+                                <apex:selectList id="monitoring_alert_row_alert_condition_operator" value="{!alert.TeamAlert.n2de__Alert_condition_operator__c}" size="1" styleClass="alertOperator" disabled="{!alert.TeamAlert.n2de__Alert_condition_field_name__c=null}">
+                                    <apex:selectOptions value="{!alert.AlertComparisonOperatorOptionList}"/>
+                                    <apex:actionSupport action="{!alert.changeAlertOperator}" onsubmit="showMask();" event="onchange" reRender="page_block"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"></apex:facet>
+                                <apex:inputText id="monitoring_alert_row_alert_condition_argument_type_value" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" rendered="{!OR(alert.AlertFieldType=='', alert.AlertFieldType=='STRING', alert.AlertFieldType=='DOUBLE')}" disabled="{!alert.TeamAlert.n2de__Alert_condition_field_name__c=null}"/>
+                                <apex:selectList id="monitoring_alert_row_alert_condition_argument_type_boolean" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!alert.AlertFieldType=='BOOLEAN'}">
+                                    <apex:selectOption itemValue="true" itemLabel="true"/>
+                                    <apex:selectOption itemValue="false" itemLabel="false"/>
+                                </apex:selectList>
+                                <apex:selectList id="monitoring_alert_row_alert_condition_argument_type_picklist" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!alert.AlertFieldType=='PICKLIST'}">
+                                    <apex:selectOptions value="{!alert.AlertFieldPicklistOptionList}"/>
+                                </apex:selectList>
+                                <apex:selectList id="monitoring_alert_row_alert_condition_argument_type_datetime_picklist" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" size="1" rendered="{!AND(OR(alert.TeamAlert.n2de__Alert_condition_operator__c=='equals', alert.TeamAlert.n2de__Alert_condition_operator__c=='not equal'), OR(alert.AlertFieldType=='DATETIME', alert.AlertFieldType=='DATE'))}">
+                                    <apex:selectOptions value="{!alert.DateTimeOptions}"/>
+                                </apex:selectList>
+                                <apex:outputText id="monitoring_alert_row_alert_condition_argument_type_date" value="{!alert.TeamAlert.n2de__Alert_condition_argument__c}" rendered="{!AND(alert.TeamAlert.n2de__Alert_condition_operator__c!='equals', alert.TeamAlert.n2de__Alert_condition_operator__c!='not equal', OR(alert.AlertFieldType=='DATETIME', alert.AlertFieldType=='DATE'))}"/>
+                            </apex:column>
+                        </apex:dataTable>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <c:StatusPanel />
+</apex:page>

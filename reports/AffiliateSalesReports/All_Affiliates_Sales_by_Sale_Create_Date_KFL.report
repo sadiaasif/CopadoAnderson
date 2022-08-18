@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_58496553</developerName>
+        <masterLabel>Stage</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>STAGE_NAME</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Closed Won</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Fulfillment/Partial Payment</sourceValue>
+            </sourceValues>
+            <value>Closed Won</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Qualification</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pending</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Scheduled</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Agreement Sent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DocuSign Completed</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dead Lead</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Closed Lost</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Canceled</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined-</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Converted</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Refund Requested</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reassigned</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Event - No Consult</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>New Consult</sourceValue>
+            </sourceValues>
+            <value>Not Closed</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Unique</aggregateTypes>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Opportunity.Net_Transactions_net_of_Fees__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sale_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sale_Parent_Campaign__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Entity_Formation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CAMPAIGN_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Infinity</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Campaign.Parent_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Affiliate</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_58496553</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Campaign.Parent_Campaign__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>CAMPAIGN_PARENT_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>All Affiliates Sales by Sale Create Date</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityCampaign</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <endDate>2022-03-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2021-11-01</startDate>
+    </timeFrameFilter>
+</Report>

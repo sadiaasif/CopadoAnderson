@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <decisions>
+        <description>If the user is active then update the LC on order item equal to LC on Account.</description>
+        <name>Update_Law_Coordinator_on_Order</name>
+        <label>Law Coordinator Active?</label>
+        <locationX>343</locationX>
+        <locationY>200</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>UserisActive</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_LC_on_order_Item</targetReference>
+            </connector>
+            <label>UserisActive</label>
+        </rules>
+    </decisions>
+    <description>Sets the Law Coordinator on order item equal to LC on Account if that LC is an active user</description>
+    <interviewLabel>Order Item - Update Law Coordinator {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order Item - Update Law Coordinator</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Fetches the user&apos;s active status based on name</description>
+        <name>GetLawCoordinatorUser</name>
+        <label>GetLawCoordinatorUser</label>
+        <locationX>115</locationX>
+        <locationY>270</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Law_Coordinator_on_Order</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountLawCoordinator</elementReference>
+            </value>
+        </filters>
+        <object>User</object>
+        <outputAssignments>
+            <assignToReference>isActive</assignToReference>
+            <field>IsActive</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update LC on order item to LC on Account</description>
+        <name>Update_LC_on_order_Item</name>
+        <label>Update LC on order Item</label>
+        <locationX>622</locationX>
+        <locationY>168</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OrderItemId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Law_Coordinator__c</field>
+            <value>
+                <elementReference>AccountLawCoordinator</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OrderItem</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>GetLawCoordinatorUser</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Captures the Law Coordinator on Account</description>
+        <name>AccountLawCoordinator</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Captures whether the Law Coordinator is Active or not</description>
+        <name>isActive</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Captures the id of order item</description>
+        <name>OrderItemId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

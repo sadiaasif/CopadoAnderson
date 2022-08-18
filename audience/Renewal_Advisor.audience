@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Audience xmlns="http://soap.sforce.com/2006/04/metadata">
+    <audienceName>Role - Renewal Advisor - BCP</audienceName>
+    <container>Anderson Internal</container>
+    <criteria>
+        <criterion>
+            <criteriaNumber>1</criteriaNumber>
+            <criterionValue>
+                <entityField>$User.Community_View__c</entityField>
+                <entityType>User</entityType>
+                <fieldValue>Renewal Advisor - BCP</fieldValue>
+            </criterionValue>
+            <operator>Equal</operator>
+            <type>FieldBased</type>
+        </criterion>
+    </criteria>
+    <formulaFilterType>AllCriteriaMatch</formulaFilterType>
+    <isDefaultAudience>false</isDefaultAudience>
+    <targets>
+        <target>
+            <groupName>0c374a14-59fe-49ac-a68f-58f76283dff3</groupName>
+            <priority>1</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Report_Detail_Report_Detail_Renewal_Advisors_BCP_Page</targetValue>
+        </target>
+        <target>
+            <groupName>f0ba6bf2-e601-457e-9d56-8a24b0ea5437</groupName>
+            <priority>3</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Home_beta_Home_Renewal_Advisors_BCP_Page</targetValue>
+        </target>
+        <target>
+            <groupName>62e47baa-cc3b-40ea-8368-badb98518e63</groupName>
+            <priority>7</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Client_Detail_Client_Detail_BCP_Page</targetValue>
+        </target>
+    </targets>
+</Audience>

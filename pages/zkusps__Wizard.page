@@ -1,0 +1,1608 @@
+<apex:page standardController="zkusps__Shipment__c" extensions="zkusps.WizardController" sidebar="false" action="{! init }">
+
+<apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"  />
+<apex:includeScript value="/support/console/35.0/integration.js"/>
+<apex:stylesheet value="{!$Resource.zkusps__WizardCSSv2}"/>
+
+<style>
+    .lightboxWizard {       
+        display: none;
+        background: #FFFFFF;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: 1000;
+    }
+
+    .vfHelpText a            {position:relative;}
+    .vfHelpText a span       {display: none;}
+    .vfHelpText a:hover span {display: block;
+                                  position:absolute;
+                                  top:2em;
+                                  padding:2px 5px;
+                                  left:2em; 
+                                  width:20em;
+                                  z-index:100;
+                                  border:1px solid orange;
+                                  background-color:#FEFDB9;
+                                  color:black;
+                                 }
+</style>
+
+<apex:form >
+        <script>
+
+            var myUserContext = "{!$User.UITheme}"; 
+
+            $j = jQuery.noConflict();
+            $j(document).ready(function() {
+                 $j(".pbTitle").next().append('<span class="requiredExampleOuter" style="float:right"><span class="requiredExample">&nbsp;</span><span class="requiredText"> = Required Information</span></span>');
+
+                $j('.section_collapse').click(function (){
+
+                    $j(this).parents('.section_wrapper').find('.section_body').toggle()
+                    var text = $j(this).text();
+                    $j(this).text(text == "Hide" ? "Show" : "Hide");
+
+                });
+
+                UpdateReturnOrOutbound();
+
+            });
+
+            function IsLoading(whichLoading) {
+                $j('.lightboxWizard').show();
+                $j('.' + whichLoading).toggle();
+            };
+
+            function IsLoadingComplete() {
+                $j('.lightboxWizard').hide();
+            };
+
+            function ShowHideDisclaimer() {
+                var text = $j('#ReadMoreDisclaimer').text();
+
+                $j('#extraFormsDisclaimerText').toggle(0,function() {
+                    $j('#ReadMoreDisclaimer').text(text == "See More" ? "See Less" : "See More");
+                });
+
+            };
+
+            function UpdateReturnOrOutbound() {
+                if ($j('.selectShipmentProcess').val() == 'Create_a_Return_Shipment' || $j('.selectShipmentProcess').val() == 'EndiciaPayOnUse') {
+                    $j('#sender').find('.section_name').text('2. Return Shipment To');
+                    $j('#recipient').find('.section_name').text('3. Return Shipment From');
+                } else {
+                    $j('#sender').find('.section_name').text('2. Sender');
+                    $j('#recipient').find('.section_name').text('3. Recipient');
+                };
+            };
+
+            function DisableCommandButton(btnId) {
+                $j('input[id$="' + btnId + '"]').attr("disabled", true);
+            };
+
+            function EnableCommandButton(btnId) {
+                $j('input[id$="' + btnId + '"]').attr("disabled", false);
+            };
+
+            function deselectOtherServices(chkBox) {
+                if (chkBox != delConfInput && delConfInput != null) {
+                    delConfInput.checked = false;
+                }
+                if (chkBox != sigConfInput && sigConfInput != null) {
+                    sigConfInput.checked = false;
+                }
+                if (chkBox != adultSigInput && adultSigInput != null) {
+                    adultSigInput.checked = false;
+                }
+                if (chkBox != restrictedDelInput && restrictedDelInput != null) {
+                    restrictedDelInput.checked = false;
+                }
+        }
+
+        var openSuccess = function openSuccess(result) {
+        };
+
+        var subTabId;
+        var showSubTabId = function showSubTabId(result) {
+            subTabId = result.id;            
+        };        
+
+        function redirectForConsole() {
+            if (sforce.console.isInConsole()) {
+                sforce.console.getEnclosingPrimaryTabId(openSubtab);
+            }
+        }
+
+        function redirectForLightning() {
+            if (myUserContext == 'Theme4d' || myUserContext == 'Theme4t') {                
+                // setTimeout(function func() {
+                    
+                // }, 3000);
+            }            
+        }
+
+
+        </script>
+
+    <apex:actionFunction name="shipmentContinue" action="{!section8.shipmentContinue}" 
+        rerender="Section9MessageList,{!MessageListNames},redirectScript" 
+        oncomplete="IsLoading('loadingProcessShipment');EnableCommandButton('shipNowButton');IsLoadingComplete();redirectForConsole();redirectForLightning();">
+        <apex:param name="is_console" value=""/>
+    </apex:actionFunction>
+
+    <apex:outputPanel id="redirectScript">
+        <script>
+            var openSubtab = function openSubtab(result) {
+                var primaryTabId = result.id;
+                var newURL = '{! section8.redirectURL }';
+                console.log('openSubtab', newURL, primaryTabId);
+                if (newURL) {
+                    sforce.console.openSubtab(primaryTabId , newURL, true, 'External Page', null, openSuccess, 'ExternalPage');
+                    sforce.console.closeTab(subTabId, openSuccess);
+                }                            
+            };
+        </script>
+    </apex:outputPanel>
+
+
+    <apex:pageBlock id="shipWizardBasicInfoPageBlock" title="Shipment Wizard" >       
+        <apex:pageMessages />
+        <c:MessageListDisplay id="MessageList" msgList="{! messageList }"/>
+
+        <apex:outputPanel >
+            <!-- <apex:commandButton action="/apex/zkusps__newShipmatePreference" value="New Shipmate Preference" rendered="{!NewShipmatePreferenceButtonRendered}"/>
+            <apex:commandButton action="{!goToPersonalInfoSetup}" value="Go To Personal Information" immediate="true" rendered="{!PersonalInfoSetupButtonRendered}"/> -->
+        </apex:outputPanel>
+
+        <apex:pageBlockSection collapsible="false" columns="1" rendered="{!WizardRendered}">
+            <apex:outputText value="DEMO MODE" style="color:red;" rendered="{! isDemoMode }" />
+            <div style="float:left; width:100%; min-width:1150px;">
+                <div style="float:left; width:48%;">
+                    <div id="pref" class="section_wrapper">
+                        <div class="section_header">
+                            <div class="section_name">1. Preference and Shipment Type</div>
+                            <div class="section_collapse">Show</div>
+                        </div>
+                        <table class="section_body" style="display:none;">
+                            <tr>
+                                <td class="noPaddingOrMargin">
+                                    <c:MessageListDisplay id="Section1MessageList" msgList="{! section1.messageList }"/>
+                                    <apex:outputPanel layout="block">
+                                        <fieldset style="border:0; margin-left:-30px; padding-left:-20px; margin-right:20px;">
+                                            <ol class="form" >
+                                                <!-- Choose Preference -->
+                                                <li>
+                                                    <apex:outputPanel id="pnlPrefSelection" layout="block" styleClass="onecol" >
+                                                        <apex:outputLabel value="Preference:" for="selectedPref" styleClass="prefLabel" />
+                                                        <apex:selectList id="selectedPref" value="{! section1.selectedPreference }" size="1" multiselect="false"  >
+                                                            <apex:actionSupport event="onchange" action="{! section1.shippingPreferenceSelectRefresh }" rerender="{!MessageListNames},labelImageType,pnlShipmentType,pnlLabelResolution,pnlLabelRotation,pnlPrefSelection,availServiceReplyMsg,pnlSenderFields,pnlPackageArea,pnlBilling,pnlEmailRecipients,pnlSpecialServices" onsubmit="IsLoading('loadingShipmatePreference');" oncomplete="IsLoadingComplete();" />
+                                                            <apex:selectOptions value="{! section1.allPreferencesOptions }"/>
+                                                        </apex:selectList>
+                                                        <apex:image id="loadingShipmatePreference" styleClass="loadingShipmatePreference" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <!-- Shipment Type -->
+                                                <li>
+                                                    <apex:outputPanel id="pnlShipmentType" layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Shipment Type:" for="selectShipmentProcess" styleClass="prefLabel" />
+                                                        <apex:selectList id="selectShipmentProcess" styleClass="selectShipmentProcess" value="{! section1.selectedShipmentProcess }" size="1" multiselect="false" >
+                                                            <apex:actionSupport event="onchange" rerender="pnlReturnShipmentType,Section4MessageList,Section3MessageList,availServiceReplyMsg,pnlEmailRecipients,pnlPackageArea,pnlSpecialServices,pnlBilling,Section8MessageList,mailClassTable,shipNowButton,pnlRecipientFields" 
+                                                                action="{! section1.shipmentProcessSelectRefresh }"  onsubmit="IsLoading('loadingShipmentTypeSelect');" oncomplete="IsLoading('loadingShipmentTypeSelect');UpdateReturnOrOutbound();IsLoadingComplete();" />
+                                                            <apex:selectOptions value="{! section1.shipmentProcessOptions }"/>
+                                                        </apex:selectList>
+                                                        <apex:image id="loadingShipmentTypeSelect" styleClass="loadingShipmentTypeSelect" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <!-- Label Image Type -->
+                                                <li>
+                                                    <apex:outputPanel id="pnlLabelImage" layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Label Image Type" styleClass="prefLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:selectList value="{! section1.selectedLabelImageType }" size="1" multiselect="false" >
+                                                            <apex:actionSupport event="onchange" rerender="pnlLabelResolution,pnlLabelRotation" 
+                                                                onsubmit="IsLoading('loadingLabelImageType');" oncomplete="IsLoading('loadingLabelImageType');IsLoadingComplete();" />
+                                                            <apex:selectOptions value="{! section1.labelImageTypeOptions }"/>
+                                                        </apex:selectList>
+                                                        <apex:image id="loadingLabelImageType" styleClass="loadingLabelImageType" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <!-- Label Image Resolution -->
+                                                <li>
+                                                    <apex:outputPanel id="pnlLabelResolution">
+                                                        <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section1.IsLabelImageResolutionRendered }">
+                                                            <apex:outputLabel value="Label Image Resolution" styleClass="prefLabel" />
+                                                            <apex:selectList value="{! section1.selectedLabelResolution }" size="1" multiselect="false" disabled="{! NOT(section1.isImageResolutionWriteMode) }">
+                                                                <apex:selectOptions value="{! section1.labelResolutionOptions }"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <!-- Label Image Rotation -->
+                                                <li>
+                                                    <apex:outputPanel id="pnlLabelRotation">
+                                                        <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section1.isLabelImageRotationRendered }">
+                                                            <apex:outputLabel value="Rotate label image 180 degrees" styleClass="prefLabel" />
+                                                            <apex:inputCheckbox value="{! section1.selectedImageLabelRotation }" />
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <!-- Label Image Size -->
+                                                <li>
+                                                    <apex:outputPanel id="pnlLabelImageSize">
+                                                        <apex:outputPanel layout="block" styleClass="onecol" rendered="{! AND(selectedWebServiceName == 'Endicia', section1.isLabelImageSizeRendered) }">
+                                                            <apex:outputLabel value="Label Image Size" styleClass="prefLabel" />
+                                                            <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                            <apex:selectList value="{! shipment.LabelImageSize__c }" size="1" multiselect="false" >
+                                                                <apex:selectOptions value="{! section1.labelImageSizeOptions }"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                </li>
+                                            </ol>
+                                        </fieldset>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="sender" class="section_wrapper">
+                        <div class="section_header">
+                            <div class="section_name">2. Sender</div>
+                            <div class="section_collapse">Show</div>
+                        </div>
+                        <table class="section_body" style="display:none;">
+                            <tr>
+                                <td class="section_body_td">
+                                    <c:MessageListDisplay id="Section2MessageList" msgList="{! section2.messageList }"/>
+                                    <apex:outputPanel id="pnlSenderFields" layout="block">
+                                        <fieldset>
+                                            <ol class="form" style="margin-left:-20px; width:105%; padding-left:0px;">
+                                                <li>
+                                                    <apex:outputPanel layout="block" styleClass="col2-1">
+                                                        <apex:outputLabel value="Name:" for="senderName" styleClass="formLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputText id="senderName"  value="{! shipment.fromName__c }"  />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="col2-2">
+                                                        <apex:outputLabel value="Email:" for="senderEmail" styleClass="formLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                         <apex:inputText id="senderEmail" value="{! shipment.fromEmail__c }" />
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <li>
+                                                    <apex:outputPanel layout="block" styleClass="col2-1">
+                                                        <apex:outputLabel value="Company:" for="senderCompany" styleClass="formLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputText id="senderCompany" value="{! shipment.fromCompany__c }"  />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="col2-2">
+                                                         <apex:outputLabel value="Phone:" for="senderPhone" styleClass="formLabel" />
+                                                         <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                         <apex:inputText id="senderPhone" value="{! shipment.fromPhone__c }"  />
+                                                    </apex:outputPanel>
+                                                </li>
+                                                <li>
+                                                    <apex:outputPanel layout="block" styleClass="col2-1tall">
+                                                      <apex:outputLabel value="Street:" for="senderStreet" styleClass="formLabel" />
+                                                      <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                      <apex:inputTextarea id="senderStreet" value="{! shipment.fromStreet__c }"  />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="col2-2tall">
+                                                        <apex:outputLabel value="City:" for="senderCity" styleClass="formLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputText id="senderCity" value="{! shipment.fromCity__c }" >
+                                                        </apex:inputText>
+                                                    </apex:outputPanel>
+                                                </li>
+
+                                                <li>
+                                                    <apex:outputPanel layout="block" styleClass="col2-1">
+                                                        <apex:outputLabel value="State:" for="senderState"  styleClass="formLabel" />                                                       
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputText id="senderState" value="{! shipment.fromState__c }"  />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="col2-2">
+                                                        <apex:outputLabel value="Postal Code:" for="senderPostalCode" styleClass="formLabel"  />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputText id="senderPostalCode" value="{! shipment.fromPostalCode__c }" >
+                                                                <!-- <apex:actionSupport event="onchange" action="{!Section2.senderPostalCodeRefresh}" rerender="Section2MessageList,Section4MessageList,availServiceReplyMsg,pnlPackageArea" /> -->
+                                                        </apex:inputText>                                                       
+                                                  </apex:outputPanel>
+                                                </li>
+                                                <li>
+                                                    <apex:outputPanel layout="block" styleClass="col2-1" >
+                                                        <apex:inputField id="hideSenderAddress" value="{! shipment.HideSenderAddress__c }"/>
+                                                        <apex:outputLabel value="Hide Sender Address" for="hideSenderAddress" styleClass="simpleLabel">
+                                                            <span class="vfHelpText">
+                                                                <apex:outputLink value="javascript:return false;">
+                                                                    <img src="/s.gif" alt="" class="helpOrb" />
+                                                                    <span>Hide Sender Addres on the label</span>
+                                                                </apex:outputLink>
+                                                            </span>
+                                                        </apex:outputLabel>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! selectedWebServiceName == 'Endicia' }">
+                                                        <apex:outputLabel value="Zip4:" for="senderPostalCodeZip4" styleClass="formLabel" />
+                                                        <apex:inputText id="senderPostalCodeZip4" value="{! fromZip4 }" />
+                                                    </apex:outputPanel>
+                                                </li>
+                                            </ol>
+                                        </fieldset>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="recipient" class="section_wrapper">
+                        <div class="section_header">
+                            <div class="section_name">3. Recipient</div>
+                            <div class="section_collapse">Hide</div>
+                        </div>
+                        <table class="section_body">
+
+                            <tr>
+                                <td class="section_body_td">
+                                    <c:MessageListDisplay id="Section3MessageList" msgList="{! section3.messageList }"/>
+                                    <apex:outputPanel layout="block">
+                                        <fieldset>
+                                            <ol class="form" style="margin-left:-20px; width:105%; padding-left:0px;">
+                                                <apex:outputPanel id="pnlRecipientChooserFields">
+
+                                                    <li>
+                                                        <apex:outputPanel id="pnlAddressSource" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Choose:" for="selectedAddressSource" styleClass="formLabel" />
+                                                            <apex:selectList id="selectedAddressSource" value="{! section3.selectedAddressSource }" size="1" multiselect="false" >
+                                                                <apex:actionSupport event="onchange" action="{! section3.addressSourceSelectRefresh }" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlEmailRecipients,pnlSpecialServices,pnlLabelImage,pnlLabelImageSize,autoPrintBlock" onsubmit="IsLoading('loadingAddressSourceSelect');" oncomplete="IsLoadingComplete();"/>
+                                                                <apex:selectOptions value="{! section3.addressSourceOptions }"/>
+                                                            </apex:selectList>
+                                                            <apex:image id="loadingAddressSourceSelect" styleClass="loadingAddressSourceSelect" value="{!$Resource.zkusps__LoadingImage2}"/>
+
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                        <apex:outputPanel id="pnlLeadAddressSource" rendered="{! section3.addressSourceIsLeads }" layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Lead:" for="recipientLead" styleClass="formLabel" />
+                                                        <apex:inputField id="recipientLead" value="{! shipment.toLead__c }">
+                                                            <apex:actionSupport event="onchange" action="{! section3.leadSelectRefresh }" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlPackageArea,pnlRecipientFields,pnlBilling,pnlSpecialServices,pnlLabelImage,pnlLabelImageSize" onsubmit="IsLoading('loadingLeadAddressSourceInput')" oncomplete="IsLoadingComplete();"/>
+                                                            </apex:inputField>
+                                                            <apex:image id="loadingLeadAddressSourceInput" styleClass="loadingLeadAddressSourceInput" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                        <apex:outputPanel id="pnlContactAddressSource" rendered="{! section3.addressSourceIsContacts }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Contact:" for="recipientContact" styleClass="formLabel" />
+                                                            <apex:inputField id="recipientContact" value="{! shipment.toContact__c }">
+                                                                <apex:actionSupport event="onchange" action="{! section3.contactSelectRefresh }" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlPackageArea,pnlRecipientFields,pnlBilling,pnlSpecialServices,pnlLabelImage,pnlLabelImageSize" onsubmit="IsLoading('loadingContactAddressSourceInput');" oncomplete="IsLoadingComplete();"/>
+                                                            </apex:inputField>
+                                                            <apex:image id="loadingContactAddressSourceInput" styleClass="loadingContactAddressSourceInput" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                        <apex:outputPanel id="pnlAccountAddressSource" rendered="{! section3.addressSourceIsAccounts }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Account:" for="recipientAccount" styleClass="formLabel" />
+                                                            <apex:inputField id="recipientAccount" value="{! shipment.toAccount__c }">
+                                                                <apex:actionSupport event="onchange" action="{! section3.accountSelectRefresh }" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageListmavailServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlSpecialServices,pnlLabelImage,pnlLabelImageSize" onsubmit="IsLoading('loadingAccountAddressSourceInput');" oncomplete="IsLoadingComplete();" />
+                                                            </apex:inputField>
+                                                            <apex:image id="loadingAccountAddressSourceInput" styleClass="loadingAccountAddressSourceInput" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                      <apex:outputPanel id="pnlOpportunityddressSource" rendered="{! section3.addressSourceIsOpportunities }" layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Opportunity:" for="recipientOpportunity" styleClass="formLabel" />
+                                                        <apex:inputField id="recipientOpportunity" value="{! shipment.toOpportunity__c }">
+                                                            <apex:actionSupport event="onchange" action="{! section3.opportunitySelectRefresh }" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlSpecialServices,pnlLabelImage,pnlLabelImageSize" onsubmit="IsLoading('loadingOpportunityAddressSourceInput');" oncomplete="IsLoadingComplete();" />
+                                                        </apex:inputField>
+                                                        <apex:image id="loadingOpportunityAddressSourceInput" styleClass="loadingOpportunityAddressSourceInput" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                      </apex:outputPanel>
+                                                      </li>
+
+                                                      <li>
+                                                        <apex:outputPanel id="pnlDestFilter" rendered="{! section3.addressSourceIsCustomAddressSource }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Search:" for="destFilter" styleClass="formLabel" />
+                                                            <!-- input text -->
+                                                            <apex:inputText id="destFilter" value="{! section3.selectedDestFilter }"/>
+                                                            <!-- Apply Filter button -->
+                                                            <apex:commandButton action="{! section3.destFilterRefresh }" value="Go!" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlEmailRecipients,pnlSpecialServices"  onclick="IsLoading('loadingDestFilterInput');" oncomplete="IsLoadingComplete();" />
+                                                            <!-- Clear Filter button -->
+                                                            <apex:commandButton action="{! section3.destFilterClearRefresh }" value="Clear" rerender="pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlEmailRecipients,pnlSpecialServices"  onclick="IsLoading('loadingDestFilterInput');" oncomplete="IsLoadingComplete();" />
+                                                            <apex:image id="loadingDestFilterInput" styleClass="loadingDestFilterInput" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+
+                                                      <li>
+                                                        <apex:outputPanel id="pnlCustomAddrSource" rendered="{! section3.addressSourceIsCustomAddressSource }" layout="block" styleClass="onecol">
+                                                          <apex:outputLabel value="Address Source Value:" for="recipientCasValues" styleClass="formLabel" />
+                                                          <apex:selectList id="recipientCasValues" style="width:350px" value="{!section3.SelectedCustomAddressSourceValue}" size="1" multiselect="false">
+                                                            <apex:actionSupport event="onchange" action="{! section3.customAddressSourceValueSelectRefresh }" rerender="pnlPrefSelection,pnlSenderFields,pnlRecipientChooserFields,Section3MessageList,pnlAddressValidationResults,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlEmailRecipients,pnlSpecialServices,pnlLabelImage,pnlLabelImageSize" onsubmit="IsLoading('loadingCustomAddressSourceInput');" oncomplete="IsLoadingComplete();" />
+                                                            <apex:selectOptions value="{! section3.customAddressSourceValueOptions }" />
+                                                          </apex:selectList>
+                                                          <apex:image id="loadingCustomAddressSourceInput" styleClass="loadingCustomAddressSourceInput" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+
+                                                      <li>
+                                                        <apex:outputPanel id="pnlContactInAccountAddressSource" rendered="{! section3.contactInAccountRendered }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Contact:" for="selectContactToName" styleClass="formLabel" />
+                                                            <apex:selectList id="selectContactToName" value="{! section3.selectedContactInAccount }" size="1" multiselect="false">
+                                                                <apex:actionSupport event="onchange" action="{! section3.contactInAccountSelectRefresh }" onsubmit="IsLoading('loadingClientInAccount');" oncomplete="IsLoading('loadingClientInAccount'); IsLoadingComplete();"  rerender="Section3MessageList,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlSpecialServices" />
+                                                                <apex:selectOptions value="{! section3.contactInAccountOptions }"/>
+                                                            </apex:selectList>
+                                                            <apex:image id="loadingClientInAccount" styleClass="loadingClientInAccount" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                  </apex:outputPanel>
+                                                  <apex:outputPanel id="pnlRecipientFields">
+                                                      <li>
+                                                        <apex:outputPanel id="pnlSwapAddress" rendered="{! section3.isSwapAddressCheckboxRendered }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="{! section3.swapAddressCheckboxTitle }" for="swapAddress" styleClass="formLabel85up10" />
+                                                            <apex:inputCheckbox id="swapAddress" value="{! section3.swapAddressCheckbox }">
+                                                                <apex:actionSupport event="onchange" action="{! section3.swapAddressCheckboxSelectRefresh }" onsubmit="IsLoading('loadingSwapAddress');" rerender="Section3MessageList,pnlContactInAccountAddressSource,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlSpecialServices" oncomplete="IsLoadingComplete();"/>
+                                                            </apex:inputCheckbox>
+                                                            <apex:image id="loadingSwapAddress" styleClass="loadingSwapAddress" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+
+                                                      <li>
+                                                        <apex:outputPanel id="pnlAllowEdit" rendered="{! section3.isAllowEditRendered }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Allow Edit:" for="allowEdit" styleClass="formLabel"/>
+                                                            <apex:inputCheckbox id="allowEdit" value="{! shipment.userAllowedEditOfRecipientInfo__c }">
+                                                                <apex:actionSupport event="onchange" action="{! section3.allowEditSelectRefresh }" onsubmit="IsLoading('loadingAllowEdit');" rerender="Section3MessageList,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlPackageArea,pnlBilling,pnlSpecialServices" oncomplete="IsLoadingComplete();"/>
+                                                            </apex:inputCheckbox>
+                                                            <apex:image id="loadingAllowEdit" styleClass="loadingAllowEdit" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                      </li>
+
+                                                      <li>
+                                                        <apex:outputPanel layout="block" styleClass="col2-1" rendered="{! NOT(section3.isRecipientNameReadOnly) }">
+                                                            <apex:outputLabel value="Name:" for="recipientName" styleClass="formLabel" />
+                                                            <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                            <apex:inputText id="recipientName" value="{! shipment.toName__c }" />
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="col2-1" rendered="{! section3.isRecipientNameReadOnly }">
+                                                            <apex:outputLabel value="Name:" for="recipientNameReadOnly" styleClass="formLabel" />
+                                                            <apex:outputText id="recipientNameReadOnly" value="{! shipment.toName__c }" style="float:left; margin-top:4px;"  />
+                                                        </apex:outputPanel>
+
+                                                        <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! NOT(section3.isRecipientEmailReadOnly) }">
+                                                            <apex:outputLabel value="Email:" for="recipientEmail" styleClass="formLabel" />
+                                                            <apex:inputText id="recipientEmail" value="{! shipment.toEmail__c }"  />
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! section3.isRecipientEmailReadOnly }">
+                                                            <apex:outputLabel value="Email:" for="recipientEmailReadOnly" styleClass="formLabel" />
+                                                             <apex:outputText id="recipientEmailReadOnly" value="{! shipment.toEmail__c }" style="float:left; margin-top:4px;"  />
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                        <apex:outputPanel layout="block" styleClass="col2-1" rendered="{! NOT(section3.isRecipientCompanyReadOnly) }">
+                                                            <apex:outputLabel value="Company" for="recipientCompany" styleClass="formLabel" />
+                                                            <apex:inputText id="recipientCompany" value="{! shipment.toCompany__c }" />
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="col2-1" rendered="{! section3.isRecipientCompanyReadOnly }">
+                                                            <apex:outputLabel value="Company:" for="recipientCompanyReadOnly" styleClass="formLabel" />
+                                                            <apex:outputText id="recipientCompanyReadOnly" value="{! shipment.toCompany__c }" style="float:left; margin-top:4px;" />
+                                                        </apex:outputPanel>
+
+
+
+                                                        <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! NOT(section3.isRecipientPhoneReadOnly) }">
+                                                            <apex:outputLabel value="Phone:" for="recipientPhone" styleClass="formLabel" />
+                                                            <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                             <apex:inputText id="recipientPhone" value="{! shipment.toPhone__c }" />
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! section3.isRecipientPhoneReadOnly }">
+                                                            <apex:outputLabel value="Phone:" for="recipientPhoneReadOnly" styleClass="formLabel" />
+                                                             <apex:outputText id="recipientPhoneReadOnly" value="{! shipment.toPhone__c }" style="float:left; margin-top:4px;"  />
+                                                        </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                          <apex:outputPanel layout="block" styleClass="col2-1tall" rendered="{! NOT(section3.isRecipientStreetReadOnly) }">
+                                                              <apex:outputLabel value="Street:" for="recipientStreet" styleClass="formLabel" />
+                                                              <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                              <apex:inputTextarea id="recipientStreet" value="{! shipment.toStreet__c }" />
+                                                          </apex:outputPanel>
+                                                          <apex:outputPanel layout="block" styleClass="col2-1tall" rendered="{! section3.isRecipientStreetReadOnly }">
+                                                              <apex:outputLabel value="Street:" for="recipientStreetReadOnly" styleClass="formLabel" />
+                                                              <span style="float:left; margin-top:4px;" >
+                                                                <apex:outputField id="recipientStreetReadOnly" value="{! shipment.toStreet__c }"  />
+                                                              </span>
+                                                          </apex:outputPanel>
+
+                                                          <apex:outputPanel layout="block" styleClass="col2-2tall" rendered="{! NOT(section3.isRecipientCityReadOnly) }">
+                                                              <apex:outputLabel value="City:" for="recipientCity" styleClass="formLabel" />
+                                                              <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                              <apex:inputText id="recipientCity" value="{! shipment.toCity__c }"/>
+                                                          </apex:outputPanel>
+                                                          <apex:outputPanel layout="block" styleClass="col2-2tall" rendered="{! section3.isRecipientCityReadOnly }">
+                                                              <apex:outputLabel value="City:" for="recipientCityReadOnly" styleClass="formLabel" />
+                                                              <apex:outputText id="recipientCityReadOnly" value="{! shipment.toCity__c }" style="float:left; margin-top:4px;"  />
+                                                          </apex:outputPanel>
+                                                      </li>
+                                                      <li>
+                                                          <apex:outputPanel layout="block" styleClass="col2-1" rendered="{! NOT(section3.isRecipientStateReadOnly) }">
+                                                              <apex:outputLabel value="State:" for="recipientState" styleClass="formLabel" />
+                                                              <apex:outputPanel rendered="{! section3.recipientStateRequired }">
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                              </apex:outputPanel>
+                                                              <apex:inputText id="recipientState" value="{! shipment.toState__c }"/>
+                                                          </apex:outputPanel>
+                                                          <apex:outputPanel layout="block" styleClass="col2-1" rendered="{! section3.isRecipientStateReadOnly }">
+                                                              <apex:outputLabel value="State:" for="recipientStateReadOnly" styleClass="formLabel" />
+                                                              <apex:outputText id="recipientStateReadOnly" value="{! shipment.toState__c }" style="float:left; margin-top:4px;"  />
+                                                          </apex:outputPanel>
+
+                                                          <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! NOT(section3.isRecipientPostalCodeReadOnly) }">
+                                                                <apex:outputLabel value="Postal Code:" for="recipientPostalCode" styleClass="formLabel" />
+                                                                <apex:outputPanel rendered="{! section3.recipientPostalCodeRequired }">
+                                                                    <span class="inputFieldRequiredBar" style="color:red;">&nbsp;</span>
+                                                                </apex:outputPanel>
+                                                                <apex:inputText id="recipientPostalCode" value="{! shipment.toPostalCode__c }">
+                                                                    <apex:actionSupport event="onchange" action="{! section3.recipientPostalCodeRefresh }" rerender="Section3MessageList,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlPackageArea,pnlBilling,pnlLabelImage,pnlLabelImageSize"  onsubmit="IsLoading('loadingServiceType');" oncomplete="IsLoadingComplete();"/>
+                                                                </apex:inputText>
+                                                          </apex:outputPanel>
+                                                          <apex:outputPanel layout="block" styleClass="col2-2" rendered="{! section3.isRecipientPostalCodeReadOnly }">
+                                                                <apex:outputLabel value="Postal Code:" for="recipientPostalCodeReadOnly" styleClass="formLabel" />
+                                                                <apex:outputText id="recipientPostalCodeReadOnly" value="{! shipment.toPostalCode__c }" style="float:left; margin-top:4px;"  />
+                                                          </apex:outputPanel>
+                                                     </li>
+                                                     <li>
+                                                         <apex:outputPanel layout="block" styleClass="col2-1-wide" rendered="{! NOT(section3.isRecipientCountryReadOnly) }">
+                                                            <apex:outputLabel value="Country: " for="recipientCountry" styleClass="formLabel" />
+                                                            <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                            <apex:selectList id="recipientCountry" value="{! section3.recipientCountry }" size="1" multiselect="false" style="float:left; margin-right:0px; padding-right:0px; width:170px;">
+                                                                <apex:actionSupport event="onchange" action="{! section3.recipientCountryRefresh }" rerender="Section3MessageList,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlRecipientFields,pnlSpecialServices,pnlPackageArea,pnlBilling,pnlServiceTypesAndRates,pnlLabelImage,pnlLabelImageSize"  onsubmit="IsLoading('loadingRecipientCountry');IsLoading('loadingServiceType');" oncomplete="IsLoadingComplete();"  />
+                                                                <apex:selectOptions value="{! section3.recipientCountryOptions }"/>
+                                                            </apex:selectList>
+                                                            <apex:image id="loadingRecipientCountry" styleClass="loadingRecipientCountry" value="{!$Resource.zkusps__LoadingImage2}"/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="col2-1-wide" rendered="{! section3.isRecipientCountryReadOnly }">
+                                                            <apex:outputLabel value="Country: " for="recipientCountryReadOnly" styleClass="formLabel" />
+                                                            <apex:outputText id="recipientCountryReadOnly" value="{! shipment.toCountry__c }" style="float:left; margin-top:4px;"  />
+                                                        </apex:outputPanel>
+                                                     </li>
+                                                     </apex:outputPanel>
+                                                     <li>
+                                                        <apex:outputPanel layout="block" styleClass="col2-1">
+                                                            <apex:inputField id="bypassAddrValidation" value="{! shipment.bypassAddressValidation__c }"/>
+                                                            <apex:outputLabel value="Bypass Address Validation" for="bypassAddrValidation" styleClass="simpleLabel"  />
+                                                        </apex:outputPanel>
+                                                        
+                                                     </li>
+
+                                            </ol>
+                                        </fieldset>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>                           
+                        </table>
+                    </div>
+                    <div id="packages" class="section_wrapper">
+                        <div class="section_header">
+                            <div class="section_name">4. Mail Piece</div>
+                            <div class="section_collapse">Hide</div>
+                        </div>
+                        <table class="section_body" >
+                            <tr>
+                                <td style="margin:0px; padding:0px;">
+                                    <c:MessageListDisplay id="Section4MessageList" msgList="{! section4.MessageList }"/>
+
+                                    <apex:outputPanel id="pnlPackageArea" layout="block" style="min-width:540px;">
+                                        <fieldset>
+                                            <ol style="width: 100%;list-style-type: none;margin: 0;padding: 0;">
+
+                                                <!--  Ship Date -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section4.shipDateInputAllowed}">
+                                                    <apex:outputLabel value="Ship Date:" styleclass="packageAreaLabel" />
+                                                    <apex:selectList id="selectShipDate" value="{! section4.selectedShipDateAdvance }" size="1" multiselect="false" >
+                                                        <apex:selectOptions value="{! section4.shipDateOptions }"/>
+                                                    </apex:selectList>
+    <!--                                                <apex:inputField required="false" value="{!Shipment.ShipDate__c}">
+                                                      <apex:actionSupport event="onchange" action="{! section4.shipDateSelectRefresh }" rerender="Section4MessageList,availServiceReplyMsg,pnlPackageArea,weightUnits,dimmUnits,pnlServiceTypesAndRates" onsubmit="IsLoading('loadingShipDate');"/>
+                                                    </apex:inputField>
+                                                    <apex:image id="loadingShipDate" styleClass="loadingShipDate" value="{!$Resource.zkusps__LoadingImage2}" /> -->
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! NOT(section4.shipDateInputAllowed) }">
+                                                    <apex:outputLabel value="Created Date:" styleclass="packageAreaLabel" />
+                                                    <apex:outputField value="{! shipment.ShipDate__c }"/>
+                                                </apex:outputPanel>
+
+                                                <!-- Mail Piece Shape -->
+                                                <apex:outputPanel layout="block" styleClass="onecol">
+                                                    <apex:outputLabel value="Mail Piece Type:" styleclass="packageAreaLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:selectList id="selectMailPiece" value="{! section4.selectedMailPiece }" size="1" multiselect="false" >
+                                                        <apex:actionSupport event="onchange" action="{! section4.mailPieceSelectRefresh }" rerender="Section4MessageList,Section8MessageList,availServiceReplyMsg,weightUnits,dimmUnits,pnlPackageArea,pnlBilling,pnlSpecialServices,mailClassTable,pnlLabelImageSize" onsubmit="IsLoading('loadingMailPiece');" oncomplete="IsLoadingComplete();" />
+                                                        <apex:selectOptions value="{! section4.mailPieceOptions }"/>
+                                                    </apex:selectList>
+                                                    <apex:image id="loadingMailPiece" styleClass="loadingMailPiece" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+
+
+                                                <!-- Mail Class -->
+                                                <apex:outputPanel layout="block" styleClass="onecol">
+                                                    <apex:outputLabel value="Mail Class:" styleclass="packageAreaLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:selectList id="serviceTypeList" value="{! shipment.MailClass__c }" size="1" multiselect="false" >
+                                                        <apex:actionSupport event="onchange" action="{! section4.mailClassSelectRefresh }" rerender="Section4MessageList,availServiceReplyMsg,weightUnits,dimmUnits,pnlPackageArea,pnlBillingAndReference,pnlSpecialServices,Section7MessageList,Section9MessageList,pnlLabelImageSize" onsubmit="IsLoading('loadingMailClass');" oncomplete="IsLoadingComplete();" />
+                                                        <apex:selectOptions value="{! section4.availableMailClasses }"/>
+                                                    </apex:selectList>
+                                                    <apex:image id="loadingMailClass" styleClass="loadingMailClass" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+
+                                               
+                                                <!-- Non-Machinable Pickup -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section4.nonMachinableInputRendered }">
+                                                    <apex:outputLabel value="Non-Machinable:" styleclass="packageAreaLabel" />
+                                                    <apex:inputField required="false" value="{! section4.mailPiece.nonMachinable__c }"/>
+                                                </apex:outputPanel>
+
+                                                <!-- Presorting Section -->
+                                                <apex:outputPanel id="presortingPnl" rendered="{! section4.presortingSectionRendered }">
+                                                    <apex:outputPanel layout="block" styleClass="onecol" >
+                                                        <apex:outputLabel value="Sort Type:" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:selectList id="sortTypeList" value="{! shipment.SortType__c }" size="1" multiselect="false">  
+                                                            <apex:selectOptions value="{! section4.availableSortTypes }"/>
+                                                        </apex:selectList>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol" >
+                                                        <apex:outputLabel value="Entry Facility:" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:selectList id="entryFacilityList" value="{! shipment.EntryFacility__c }" size="1" multiselect="false">    
+                                                            <apex:selectOptions value="{! section4.availableEntryFacilities }"/>
+                                                        </apex:selectList>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol" >
+                                                        <apex:outputLabel value="PO Zip Code:" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField required="false" value="{! shipment.POZipCode__c }" /> 
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+
+                                                <!-- Current Scale -->
+                                               <apex:outputPanel id="scaleInfoPnl" >
+                                                 <apex:outputPanel layout="block" styleClass="onecol" rendered="{! isUseScale }">
+                                                        <apex:outputLabel value="Current Scale:" styleclass="packageAreaLabel"/>
+                                                        <apex:outputText value="{! formatterScaleName }" />
+                                                    </apex:outputPanel>
+                                               </apex:outputPanel> 
+
+                                                
+                                                <!-- Weight -->
+                                               <!--  <apex:outputPanel id="weightUnits" rendered="{! AND(section4.weightSectionRendered, NOT(section4.customsDetailsRendered)) }">
+                                                    <apex:outputPanel layout="block" styleClass="onecol" >
+                                                        <apex:outputLabel value="Weight (pounds):" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField required="false" value="{! section4.mailPiece.weightPounds__c }">
+                                                            <apex:actionSupport event="onchange" action="{! section4.doCheckWeight }"  rerender="loadingWeightPounds,Section4MessageList" 
+                                                                onsubmit="IsLoading('loadingWeightPounds');" oncomplete="IsLoadingComplete();" />
+                                                        </apex:inputField>
+                                                        <apex:image id="loadingWeightPounds" styleClass="loadingWeightPounds" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Weight (ounces):" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField required="false" value="{! section4.mailPiece.weightOunces__c }">
+                                                            <apex:actionSupport event="onchange" action="{! section4.doCheckWeight }" rerender="loadingWeightOunces,Section4MessageList" 
+                                                            onsubmit="IsLoading('loadingWeightOunces');"  oncomplete="IsLoadingComplete();"/>
+                                                        </apex:inputField>
+                                                        <apex:image id="loadingWeightOunces" styleClass="loadingWeightOunces" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel> -->
+
+                                                <!-- Dimension -->
+<!--                                                 <apex:outputPanel id="dimmUnits" rendered="{! section4.dimensionSectionRendered }">
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Dimension Length (IN):" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField required="false" value="{!  section4.mailPiece.length__c }">
+                                                        </apex:inputField>
+                                                        <apex:image id="loadingLength" styleClass="loadingLength" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Dimension Width (IN):" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField required="false" value="{! section4.mailPiece.width__c }">
+                                                        </apex:inputField>
+                                                        <apex:image id="loadingWidth" styleClass="loadingWidth" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Dimension Height (IN):" styleclass="packageAreaLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField required="false" value="{! section4.mailPiece.height__c }">
+                                                        </apex:inputField>
+                                                        <apex:image id="loadingHeight" styleClass="loadingHeight" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel> -->
+
+
+                                                <apex:actionRegion >
+                                                    <!-- REUSE ITEMS - Custom Items -->
+                                                    <apex:outputPanel id="reuseCustomsItemSection" >
+                                                        <apex:outputPanel rendered="{! AND(section4.existingCustomItemRendered, section4.customsDetailsRendered) }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Add Existing:" styleclass="packageAreaLabel" />
+                                                            <apex:selectList value="{! section4.selectedExistingCustomItem }" size="1" multiselect="false">
+                                                                <apex:selectOptions value="{! section4.exitingCustomItemOptions }"/>
+                                                            </apex:selectList>                                                          
+                                                            <apex:commandButton action="{! section4.addExistingCustomItemRefresh }" value="Add" rerender="packageTable,mailClassTable,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlSpecialServices,pnlServiceTypesAndRates" onclick="IsLoading('loadingAddPackage');" oncomplete="IsLoading('loadingAddPackage');IsLoadingComplete();" />
+                                                            <apex:image id="loadingAddPackage" styleClass="loadingAddPackage" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                    <!-- REUSE ITEMS - Mail Piece -->
+                                                    <apex:outputPanel id="reuseMailPieceSection" >
+                                                        <apex:outputPanel rendered="{! AND(section4.existingMailPieceRendered, section4.mailPieceExistingSelectionRendered) }" layout="block" styleClass="onecol">
+                                                            <apex:outputLabel value="Use Existing:" styleclass="packageAreaLabel" />
+                                                            <apex:selectList value="{! section4.selectedExistingMailPiece }" size="1" multiselect="false">
+                                                                <apex:selectOptions value="{! section4.exitingMailPieceOptions }"/>
+                                                            </apex:selectList>                                                          
+                                                            <apex:commandButton action="{! section4.addExistingMailPieceRefresh }" value="Use" rerender="mailPieceTable,mailClassTable,Section4MessageList,Section8MessageList,availServiceReplyMsg,pnlSpecialServices,pnlServiceTypesAndRates" onclick="IsLoading('loadingAddMailPiece');" oncomplete="IsLoading('loadingAddMailPiece');IsLoadingComplete();" />
+                                                            <apex:image id="loadingAddMailPiece" styleClass="loadingAddMailPiece" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+
+                                                    <!-- Mail Piece Item/Table -->
+                                                    <apex:outputPanel id="mailPieceTable">
+                                                        <apex:pageBlockTable value="{! section4.mailPieceEntries }" var="packageEntry" cellpadding="10" style="margin-top:10px" rendered="{! AND(section4.mailPieceExistingSelectionRendered, section4.neededAnyInformationRendered) }">
+                                                            <!-- Weight -->
+                                                            <apex:column rendered="{! AND(section4.weightSectionRendered, section4.mailPieceExistingSelectionRendered) }">
+                                                                <apex:facet name="header">Weight (pounds)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:30px" required="false" value="{! packageEntry.weightPounds__c }">
+                                                                    <apex:actionSupport event="onchange" action="{! section4.doCheckWeight }"  rerender="loadingWeightPounds,Section4MessageList" 
+                                                                        onsubmit="IsLoading('loadingWeightPounds');" oncomplete="IsLoadingComplete();" />
+                                                                </apex:inputField>
+                                                                <apex:image id="loadingWeightPounds" styleClass="loadingWeightPounds" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                            </apex:column>                                                    
+                                                            <apex:column rendered="{! AND(section4.weightSectionRendered, section4.mailPieceExistingSelectionRendered) }">
+                                                                <apex:facet name="header">Weight (ounces)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:30px" required="false" value="{! packageEntry.weightOunces__c }">
+                                                                    <apex:actionSupport event="onchange" action="{! section4.doCheckWeight }" rerender="loadingWeightOunces,Section4MessageList" 
+                                                                    onsubmit="IsLoading('loadingWeightOunces');"  oncomplete="IsLoadingComplete();"/>
+                                                                </apex:inputField>
+                                                                <apex:image id="loadingWeightOunces" styleClass="loadingWeightOunces" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                            </apex:column>
+
+                                                            <!-- Dimension -->
+                                                            <apex:column rendered="{! section4.dimensionSectionRendered }">
+                                                                <apex:facet name="header">Dimension Length (IN)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:70px" required="false" value="{! packageEntry.length__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! section4.dimensionSectionRendered }">
+                                                                <apex:facet name="header">Dimension Width (IN)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:70px" required="false" value="{! packageEntry.width__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! section4.dimensionSectionRendered }">
+                                                                <apex:facet name="header">Dimension Height (IN)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:70px" required="false" value="{! packageEntry.height__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! isUseScale }">
+                                                                <apex:facet name="header">Scale<br/></apex:facet>
+                                                                <apex:commandButton action="{! Section4.doGetWeightFromScale }" value="Get Weight" reRender="mailPieceTable,Section4MessageList" onclick="IsLoading('loadingScaleWeight');" oncomplete="IsLoadingComplete();">
+                                                                </apex:commandButton>
+                                                                <apex:image id="loadingScaleWeight" styleClass="loadingScaleWeight" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                            </apex:column>
+                                                        </apex:pageBlockTable>
+
+                                                        <!-- FOR INTL -->
+                                                        <apex:pageBlockTable value="{! section4.mailPieceEntries }" var="packageEntry" cellpadding="10" style="margin-top:10px" rendered="{! AND(section4.customsDetailsRendered, section4.dimensionSectionRendered) }">
+                                                            <!-- Dimension -->
+                                                            <apex:column rendered="{! section4.dimensionSectionRendered }">
+                                                                <apex:facet name="header">Dimension Length (IN)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:70px" required="false" value="{! packageEntry.length__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! section4.dimensionSectionRendered }">
+                                                                <apex:facet name="header">Dimension Width (IN)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:70px" required="false" value="{! packageEntry.width__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! section4.dimensionSectionRendered }">
+                                                                <apex:facet name="header">Dimension Height (IN)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:70px" required="false" value="{! packageEntry.height__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! isUseScale }">
+                                                                <apex:facet name="header">Scale<br/></apex:facet>
+                                                                <apex:commandButton action="{! Section4.doGetWeightFromScale }" value="Get Weight" reRender="mailPieceTable,Section4MessageList" onclick="IsLoading('loadingScaleWeight');" oncomplete="IsLoadingComplete();">
+                                                                </apex:commandButton>
+                                                                <apex:image id="loadingScaleWeight" styleClass="loadingScaleWeight" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                            </apex:column>
+                                                        </apex:pageBlockTable>
+                                                    </apex:outputPanel>
+
+                                                    <!-- CUSTOM ITEMS TABLE -->
+                                                    <apex:outputPanel id="packageTable">
+                                                        <apex:pageBlockTable value="{! section4.customItems }" 
+                                                                var="customItemWrapper" cellpadding="10" style="margin-top:10px" rendered="{! section4.customsDetailsRendered }">
+                                                           <apex:column >
+                                                              <apex:facet name="header"></apex:facet>
+                                                              <apex:inputCheckbox value="{!customItemWrapper.selected}" />
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Entry<br />No.</apex:facet>
+                                                                <apex:outputText value="{! customItemWrapper.entryNumber }"/>
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Quantity</apex:facet>
+                                                                <apex:selectList value="{! customItemWrapper.quantity }" size="1" multiselect="false">
+                                                                    <apex:selectOptions value="{! section4.customItemQuantityOptions }"/>
+                                                                </apex:selectList>
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Value per<br />Unit (USD)</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:30px" required="false" value="{! customItemWrapper.customItem.Value__c }" />
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Weight<br/>Pounds</apex:facet>
+                                                                <apex:inputField style="width:30px" required="false" value="{! customItemWrapper.customItem.WeightPounds__c }" />
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Weight<br/>Ounces</apex:facet>
+                                                                <apex:inputField style="width:30px" required="false" value="{! customItemWrapper.customItem.WeightOunces__c }" />
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Country of Origin</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <!-- <apex:inputField style="width:30px" required="false" value="{! customItemWrapper.customItem.countryOfOrigin__c }" /> -->
+                                                                <apex:selectList style="width:130px;" value="{! customItemWrapper.customItem.CountryOfOrigin__c }" size="1" multiselect="false">
+                                                                    <apex:selectOptions value="{! section4.countryOfOriginOptions }"/>
+                                                                </apex:selectList>
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">HS Tariff<br/>Number</apex:facet>
+                                                                <apex:inputField style="width:30px" required="false" value="{! customItemWrapper.customItem.HsTariffNumber__c }" />
+                                                            </apex:column>
+                                                             <apex:column >
+                                                                <apex:facet name="header">Name</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:50px" required="false" value="{! customItemWrapper.customItem.Name }" />
+                                                            </apex:column>
+                                                            <apex:column >
+                                                                <apex:facet name="header">Description</apex:facet>
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField style="width:90px" required="false" value="{! customItemWrapper.customItem.Description__c }" />
+                                                            </apex:column>
+                                                            <apex:column rendered="{! isUseScale }">
+                                                                <apex:facet name="header">Scale<br/></apex:facet>
+                                                                <apex:commandButton action="{! Section4.doCustomItemGetWeightFromScale }" value="Get Weight" reRender="packageTable,Section4MessageList" onclick="IsLoading('loadingScaleWeight2');" oncomplete="IsLoadingComplete();">
+                                                                    <apex:param name="pckNumber" value="{! customItemWrapper.entryNumber }" />
+                                                                </apex:commandButton>
+                                                                <apex:image id="loadingScaleWeight2" styleClass="loadingScaleWeight2" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                            </apex:column>
+                                                            
+                                                        </apex:pageBlockTable>
+                                                    </apex:outputPanel>
+                                                    <!-- REUSE ACTIONS - CUSTOM ITEM -->
+                                                    <apex:outputPanel layout="block" style="margin-top:5px" rendered="{! section4.customsDetailsRendered }">
+                                                        <apex:commandButton action="{! section4.customItemsAddLineRefresh }" value="Add New" rerender="packageTable,mailClassTable,Section4MessageList,availServiceReplyMsg,pnlSpecialServices,pnlServiceTypesAndRates,pnlLabelImage" onclick="IsLoading('loadingAddRemoveLine');" oncomplete="IsLoading('loadingAddRemoveLine');IsLoadingComplete();"  />
+
+                                                        <apex:commandButton action="{! section4.removeCustomItemAndRefresh }" value="Remove" style="margin-left:3px" rerender="packageTable,mailClassTable,Section4MessageList,availServiceReplyMsg,pnlSpecialServices,pnlLabelImage" onclick="IsLoading('loadingAddRemoveLine');" oncomplete="IsLoading('loadingAddRemoveLine');IsLoadingComplete();" />
+
+                                                        <apex:commandButton action="{! section4.showCustomItemNameInput }" value="Save for Re-Use" style="margin-left:3px" rerender="pnlSaveForReUse,Section4MessageList,availServiceReplyMsg" onclick="IsLoading('loadingAddRemoveLine');" oncomplete="IsLoading('loadingAddRemoveLine'); IsLoadingComplete();" />
+
+                                                        <apex:image id="loadingAddRemoveLine" styleClass="loadingAddRemoveLine" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                    <!-- SAVE FOR REUSE - CUSTOMS ITEM -->
+                                                    <apex:outputPanel id="pnlSaveForReUse">
+                                                        <apex:outputPanel rendered="{! section4.descriptionInputRendered }" layout="block" styleClass="onecol" style="margin-top:15px">
+                                                            <apex:outputLabel value="Customs Item Name:" for="inputSaveProfileDescription" styleclass="packageAreaLabel" />
+                                                            <apex:inputText id="inputSaveProfileDescription" value="{! section4.inputSaveProfileDescription }" style="width:180px" />
+                                                            <apex:commandButton action="{! section4.doSaveForReUse }" value="Save" rerender="Section4MessageList,availServiceReplyMsg,pnlSaveForReUse,reuseCustomsItemSection" onclick="IsLoading('loadingSaveForReUse');" oncomplete="IsLoadingComplete();" />
+                                                            <apex:image id="loadingSaveForReUse" styleClass="loadingSaveForReUse" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+
+                                                    <!-- REUSE ACTIONS - MAIL PIECE -->
+                                                    <apex:outputPanel layout="block" style="margin-top:5px" rendered="{! AND(section4.neededAnyInformationRendered, section4.MailPieceExistingSelectionRendered) }">
+                                                        <apex:commandButton action="{! section4.doShowDescriptionInput }" value="Save for Re-Use" rerender="mailPieceTable,pnlSaveMailPieceForReUse,mailClassTable,Section4MessageList" onclick="IsLoading('loadingMailPieceProfileAction');" oncomplete="IsLoading('loadingMailPieceProfileAction');IsLoadingComplete();"  />
+                                                        <apex:image id="loadingMailPieceProfileAction" styleClass="loadingMailPieceProfileAction" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                    <!-- SAVE FOR REUSE - MAIL PIECE -->
+                                                    <apex:outputPanel id="pnlSaveMailPieceForReUse">
+                                                        <apex:outputPanel rendered="{! section4.descriptionInputRendered }" layout="block" styleClass="onecol" style="margin-top:15px">
+                                                            <apex:outputLabel value="Package Profile Name:" for="inputSaveProfileDescriptionMP" styleclass="packageAreaLabel" />
+                                                            <apex:inputText id="inputSaveProfileDescriptionMP" value="{! section4.inputSaveProfileDescription }" style="width:180px" />
+                                                            <apex:commandButton action="{! section4.doSaveMailPieceForReUseClick }" value="Save" reRender="Section4MessageList,availServiceReplyMsg,pnlSaveMailPieceForReUse,reuseMailPieceSection" onclick="IsLoading('loadingSaveMailPieceForReUse');" oncomplete="IsLoadingComplete();" />
+                                                            <apex:image id="loadingSaveMailPieceForReUse" styleClass="loadingSaveMailPieceForReUse" value="{!$Resource.zkusps__LoadingImage2}" />
+
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+
+                                                </apex:actionRegion>
+
+
+                                            </ol>
+                                        </fieldset>
+                                    </apex:outputPanel>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="float:left; width:48%; margin-left:15px;">
+                    <div id="billing" class="section_wrapper">
+                        <div class="section_header">
+                            <div class="section_name">5. Customs and Reference Information</div>
+                            <div class="section_collapse">Show</div>
+                        </div>
+                        <table class="section_body" style="display:none;">
+                            <tr>
+                                <td class="noPaddingOrMargin">
+                                    <c:MessageListDisplay id="Section5MessageList" msgList="{! section5.messageList }"/>
+                                    <apex:outputPanel id="pnlBilling" layout="block" >
+                                        <apex:outputPanel rendered="{! section5.customsInformationRendered }">
+                                            <fieldset style="border:0; margin-left:-30px; padding-left:-20px; margin-right:20px;">
+                                                <ol class="form" >
+                                                    <li class="noPaddingOrMargin">
+                                                        <p class="noPaddingOrMargin"><b>Customs:</b></p>
+                                                    </li>
+
+                                                    <li>
+<!--                                                         <apex:outputPanel layout="block" styleClass="onecol" >
+                                                            <apex:outputLabel value="Add Existing:" styleClass="billingLabel" />
+                                                            <apex:selectList value="{! section5.selectedExistingCustomInfo }" size="1" multiselect="false">
+                                                                <apex:actionSupport event="onchange" action="{! section5.customInfoSelectRefresh }" onsubmit="IsLoading('loadingAddCustomInfo');" rerender="Section5MessageList,Section8MessageList,pnlBilling" oncomplete="IsLoadingComplete();"/>
+                                                                <apex:selectOptions value="{! section5.exitingCustomInfoOptions }"/>
+                                                            </apex:selectList>
+                                                            <apex:image id="loadingAddCustomInfo" styleClass="loadingAddCustomInfo" value="{!$Resource.zkusps__LoadingImage2}" />       
+                                                        </apex:outputPanel>  -->
+
+                                                        <apex:outputPanel layout="block" styleClass="onecol" >
+                                                            <apex:outputLabel value="Add Existing:" styleClass="billingLabel" />
+                                                            <apex:inputField value="{! shipment.CustomsInformation__c }">
+                                                                <apex:actionSupport event="onchange" action="{! section5.customInfoSelectRefresh }" onsubmit="IsLoading('loadingAddCustomInfo');" rerender="Section5MessageList,Section8MessageList,pnlBilling" oncomplete="IsLoadingComplete();"/>
+                                                            </apex:inputField>
+                                                            <apex:image id="loadingAddCustomInfo" styleClass="loadingAddCustomInfo" value="{!$Resource.zkusps__LoadingImage2}" />       
+                                                        </apex:outputPanel> 
+
+                                                        
+                                                        <apex:outputPanel rendered="{! NOT(section5.isEditMode) }">
+                                                            <apex:outputPanel id="pnlCustomsInfoName" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Customs Information Name:" for="customsInfoName" styleClass="billingLabel" />
+                                                                <apex:outputText id="customsInfoName" value="{! section5.customsInformation.Name}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlContentsType" layout="block" styleClass="onecol" >
+                                                                <apex:outputLabel value="Contents Type:" for="contentsType" styleClass="billingLabel" />
+                                                                <apex:outputText id="contentsType" value="{! section5.customsInformation.ContentsType__c }"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>                                             
+                                                            <apex:outputPanel id="pnlContentsExplanation" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Contents Explanation:" for="contentsExplanation" styleClass="billingLabel" />
+                                                                <apex:outputText id="contentsExplanation" value="{! section5.customsInformation.ContentsExplanation__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlNonDeliveryInstr" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Non-Delivery Instructions:" for="nonDeliveryInstr" styleClass="billingLabel" />
+                                                                <apex:outputText id="nonDeliveryInstr" value="{! section5.customsInformation.NonDeliveryInstructions__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlRestrictionType" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Restriction Type:" for="restrictionType" styleClass="billingLabel" />
+                                                                <apex:outputText id="restrictionType" value="{! section5.customsInformation.RestrictionType__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlRestrictionComments" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Restriction Comments:" for="restrictionComments" styleClass="billingLabel" />
+                                                                <apex:outputText id="restrictionComments" value="{! section5.customsInformation.RestrictionComments__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlSenderCustRef" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Sender's Customs Reference:" for="senderCustRef" styleClass="billingLabel" />
+                                                                <apex:outputText id="senderCustRef" value="{! section5.customsInformation.SendersCustomsReference__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlImporterCustRef" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Importer's Customs Reference:" for="importerCustRef" styleClass="billingLabel" />
+                                                                <apex:outputText id="importerCustRef" value="{! section5.customsInformation.ImportersCustomsReference__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlLicenseNumber" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="License Number:" for="licenseNumber" styleClass="billingLabel" />
+                                                                <apex:outputText id="licenseNumber" value="{! section5.customsInformation.LicenseNumber__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlCertificateNumber" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Certificate Number:" for="certificateNumber" styleClass="billingLabel" />
+                                                                <apex:outputText id="certificateNumber" value="{! section5.customsInformation.CertificateNumber__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlInvoiceNumber" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Invoice Number:" for="invoiceNumber" styleClass="billingLabel" />
+                                                                <apex:outputText id="invoiceNumber" value="{! section5.customsInformation.InvoiceNumber__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel id="pnlEelpfc" layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="EEL/PFC:" for="eelpfc" styleClass="billingLabel" />
+                                                                <apex:outputText id="eelpfc" value="{! section5.customsInformation.EelPfc__c}"  style="float:left; margin-top:4px;"/>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel id="pnlCustomInfoEdit" rendered="{! section5.isEditMode }">
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Customs Information Name:" styleClass="billingLabel" />
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField value="{! section5.customsInformation.Name}" />
+                                                            </apex:outputPanel>
+                                                            <!-- Contents Type CUSTOM SELECT LIST-->
+                                                            <apex:outputPanel layout="block" styleClass="onecol" >
+                                                                <apex:outputLabel value="Contents Type:" styleClass="billingLabel" />
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <!-- <apex:inputField value="{! section5.customsInformation.ContentsType__c }" /> -->
+                                                                <apex:selectList value="{! section5.selectedContentsType }" size="1" multiselect="false">
+                                                                    <apex:actionSupport event="onchange" action="{! section5.contentsTypeSelectRefresh }" onsubmit="IsLoading('loadingContentsTypeInfo');" rerender="pnlCustomInfoEdit" oncomplete="IsLoadingComplete();" />
+                                                                    <apex:selectOptions value="{! section5.contentsTypeOptions }"/>
+                                                                </apex:selectList>
+                                                                <apex:image id="loadingContentsTypeInfo" styleClass="loadingContentsTypeInfo" value="{!$Resource.zkusps__LoadingImage2}" />     
+                                                            </apex:outputPanel>                                             
+                                                            <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section5.contentsExplanationRendered }">
+                                                                <apex:outputLabel value="Contents Explanation:" styleClass="billingLabel" />
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField value="{! section5.customsInformation.ContentsExplanation__c}" />
+                                                            </apex:outputPanel>
+                                                            <!-- Non Delivery Instructions CUSTOM SELECT LIST -->
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Non-Delivery Instructions:" styleClass="billingLabel" />
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:selectList value="{! section5.selectedNonDeliveryOptionType }" size="1" multiselect="false">
+                                                                    <apex:selectOptions value="{! section5.nonDeliveryOptionTypeOptions }"/>
+                                                                </apex:selectList>
+                                                            </apex:outputPanel>
+                                                            <!-- Restriction Type CUSTOM SELECT LIST -->
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Restriction Type:" styleClass="billingLabel" />
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:selectList value="{! section5.selectedRestrictionType }" size="1" multiselect="false">
+                                                                    <apex:actionSupport event="onchange" action="{! section5.restrictionTypeSelectRefresh }" rerender="pnlCustomInfoEdit" onsubmit="IsLoading('loadingRestrictionTypeInfo');" oncomplete="IsLoadingComplete();" />
+                                                                    <apex:selectOptions value="{! section5.restrictionTypeOptions }"/>
+                                                                </apex:selectList>
+                                                                <apex:image id="loadingRestrictionTypeInfo" styleClass="loadingRestrictionTypeInfo" value="{!$Resource.zkusps__LoadingImage2}" />       
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section5.restrictionCommentsRendered }">
+                                                                <apex:outputLabel value="Restriction Comments:" styleClass="billingLabel" />
+                                                                <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                                <apex:inputField value="{! section5.customsInformation.RestrictionComments__c}" />
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Sender's Customs Reference:" styleClass="billingLabel" />
+                                                                <apex:inputField value="{! section5.customsInformation.SendersCustomsReference__c}" />
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Importer's Customs Reference:" styleClass="billingLabel" />
+                                                                <apex:inputField value="{! section5.customsInformation.ImportersCustomsReference__c}" />
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="License Number:" styleClass="billingLabel" />
+                                                                <apex:inputField value="{! section5.customsInformation.LicenseNumber__c}" />
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Certificate Number:" styleClass="billingLabel" />
+                                                                <apex:inputField value="{! section5.customsInformation.CertificateNumber__c}" />
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="Invoice Number:" styleClass="billingLabel" />
+                                                                <apex:inputField value="{! section5.customsInformation.InvoiceNumber__c}" />
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="block" styleClass="onecol">
+                                                                <apex:outputLabel value="EEL/PFC:" styleClass="billingLabel" />
+                                                                <apex:inputField value="{! section5.customsInformation.EelPfc__c}" />
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                    </li>
+                                                </ol>
+                                            </fieldset>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel id="pnlReference" layout="block">
+                                        <fieldset style="border:0; margin-left:-30px; padding-left:-20px; margin-right:20px;">
+                                            <ol class="form" >
+                                                <li class="noPaddingOrMargin">
+                                                    <p class="noPaddingOrMargin"><b>Reference Values:</b></p>
+                                                </li>
+                                                <li>
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Your Reference 1:" styleClass="billingLabel" />
+                                                        <apex:inputField value="{! shipment.yourReference1__c }"/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Your Reference 2:" styleClass="billingLabel" />
+                                                        <apex:inputField value="{! shipment.yourReference2__c }"/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:outputLabel value="Your Reference 3:" styleClass="billingLabel" />
+                                                        <apex:inputField value="{! shipment.yourReference3__c }"/>
+                                                    </apex:outputPanel>     
+                                                </li>
+                                                
+                                            </ol>
+                                        </fieldset>
+                                    </apex:outputPanel>  
+                            
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="emails" class="section_wrapper">
+                    <div class="section_header">
+                        <!-- <div class="section_name">6. {!RegisteredNameData.FedexShipAlertName} and Shipment Notes</div> -->
+                        <div class="section_name">6. Shipment Notes</div>
+                        <div class="section_collapse">Hide</div>
+                    </div>
+                    <table class="section_body">
+                        <tr>
+                            <td style="margin:0px; padding:0px;">
+                                <apex:outputPanel id="pnlEmailRecipients" layout="block" style="">
+                                    <fieldset>
+                                        <ol class="form" >
+                                            <li>
+                                                <apex:outputPanel layout="block" style="float: left;border-bottom: solid 1px #efefef;width:100%; height: 50px;padding: 4px 0 8px 0px;margin:4px 0 2px 0px;">
+                                                    <apex:outputLabel value="Shipment Notes:" for="txtShipmentNotes" styleClass="formLabel" />
+                                                    <apex:inputTextarea id="txtShipmentNotes" value="{! shipment.shipmentNotes__c }" style="float:left;width:300px; height:30px" />
+                                                </apex:outputPanel>
+                                            </li>
+                                        </ol>
+                                    </fieldset>
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div id="specialservices" class="section_wrapper">
+                    <div class="section_header">
+                        <div class="section_name">7. Special Services</div>
+                        <div class="section_collapse">Hide</div>
+                    </div>
+                    <table class="section_body">
+                            <tr>
+                                <td style="margin:0px; padding:0px;">                         
+                                <c:MessageListDisplay id="Section7MessageList" msgList="{! section7.messageList }"/>
+
+                                <apex:outputPanel id="pnlSpecialServices" layout="block" >
+                                    <apex:outputPanel id="pnlNoSpecialServicesAvailable" layout="block" rendered="{! section7.noSpecialServicesAvailable }">
+                                        <div class="message infoM4">
+                                            <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+                                                <tr valign="top">
+                                                    <td>
+                                                        <img alt="info" class="msgIcon" src="/s.gif" title="info" />
+                                                    </td>
+                                                    <td class="messageCell">
+                                                        <div  class="messageText">
+                                                            <span>
+                                                                <h4>Note:</h4>
+                                                            </span>
+                                                            Please ensure you've selected a Mail Class before choosing Shipment Special Services
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <fieldset>
+                                        <ol style="width: 100%;list-style-type: none;margin: 0;padding: 0;">
+                                            <apex:outputPanel id="servicesSection" rendered="{! section7.isSpecialServicesSectionRendered }">
+                                                <!-- Signature Waiver -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isSignatureWaiverRendered }">
+                                                    <apex:inputCheckbox value="{! section7.specialServices.signatureWaiver__c }" style="float:left;"/>
+                                                    <apex:outputLabel value="Signature Waiver" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                </apex:outputPanel>
+
+                                                <!-- No Delivery on Saturdays -->                                               
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isNoDeliveryOnSaturdaysRendered }">
+                                                    <apex:inputField value="{! section7.specialServices.noDeliveryOnSaturdays__c }" style="float:left;"/>
+                                                    <apex:outputLabel value="No Delivery on Saturdays" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                </apex:outputPanel>
+
+                                                <!-- Sunday/Holiday Delivery -->                                            
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isSundayHolidayDeliveryRendered }">
+                                                    <apex:inputCheckbox value="{! section7.specialServices.sundayHolidayDelivery__c }" style="float:left;"/>
+                                                    <apex:outputLabel value="Sunday/Holiday Delivery" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                </apex:outputPanel>
+
+                                                <!-- Certified Mail Express 1-->                                                
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! AND(section7.isCertifiedMailRendered, selectedWebServiceName == 'Express1') }">
+                                                    <apex:inputCheckbox value="{! section7.specialServices.certifiedMail__c }" style="float:left;"/>
+                                                    <apex:outputLabel value="Certified Mail" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                </apex:outputPanel>
+
+                                                <!-- Certified Mail Endicia -->                                             
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! AND(section7.isCertifiedMailRendered, selectedWebServiceName == 'Endicia') }">
+                                                    <apex:inputCheckbox value="{! section7.specialServices.certifiedMail__c }" style="float:left;">
+                                                        <apex:actionSupport event="onclick" action="{! section7.certifiedMailSelectRefresh }" rerender="Section7MessageList,servicesSection,pnlLabelImageSize" onSubmit="IsLoading('loadingCertifiedMail');" oncomplete="IsLoadingComplete();" />
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputLabel value="Certified Mail" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                    <apex:image id="loadingCertifiedMail" styleClass="loadingCertifiedMail" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+
+                                                
+
+                                                <!-- Return Receipt -->                                             
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isReturnReceiptRendered }">
+                                                    <apex:inputCheckbox value="{! section7.specialServices.returnReceipt__c }" style="float:left;"/>
+                                                    <apex:outputLabel value="Return Receipt" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                </apex:outputPanel>
+
+                                                <!-- Insured Mail -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isInsuredMailRendered }">
+                                                    <apex:inputCheckbox value="{! section7.specialServices.insuredMail__c }" style="float:left;"/>
+                                                        <apex:actionSupport event="onclick" action="{! section7.insuredMailSelectRefresh }" rerender="Section7MessageList,pnlCODAmount,servicesSection" onSubmit="IsLoading('loadingInsuredMail');" oncomplete="IsLoadingComplete();" />                                                        
+                                                    <apex:outputLabel value="Insured Mail" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                    <apex:image id="loadingInsuredMail" styleClass="loadingInsuredMail" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+
+
+                                                <!-- Insured Type -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! AND(selectedWebServiceName == 'Endicia', section7.specialServices.insuredMail__c) }">
+                                                    <apex:outputLabel value="Insured Type" styleClass="ssLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:selectList value="{! section7.specialServices.InsuredType__c }" size="1" multiselect="false">
+                                                        <apex:selectOptions value="{! section7.insuredTypeOptions }"/>
+                                                    </apex:selectList>
+                                                </apex:outputPanel>
+
+                                                <!-- Value Of Contents -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.insuredMail__c }">
+                                                    <apex:outputLabel value="Value of Contents" styleClass="ssLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:inputField value="{! section7.mailPiece.valueOfContents__c }" />
+                                                </apex:outputPanel>
+
+                                                <!-- COD -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! AND(selectedWebServiceName == 'Express1', section7.isCodRendered) }">                                                 
+                                                    <apex:inputCheckbox value="{! section7.specialServices.cod__c }" style="float:left;">
+                                                        <apex:actionSupport event="onclick" action="{! section7.codSelectRefresh }" rerender="Section7MessageList,pnlCODAmount,servicesSection" onSubmit="IsLoading('loadingCollectOnDelivery');" oncomplete="IsLoadingComplete();" />
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputLabel value="COD" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                    <apex:image id="loadingCollectOnDelivery" styleClass="loadingCollectOnDelivery" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+                                                
+                                                <!-- COD Amount -->
+                                                <apex:outputPanel id="pnlCODAmount" layout="block" styleClass="onecol" 
+                                                        rendered="{! AND(selectedWebServiceName == 'Express1', section7.specialServices.cod__c) }">
+                                                    <apex:outputLabel value="COD Amount (USD)" styleClass="ssLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:inputField value="{! section7.specialServices.codAmount__c }"/>
+                                                </apex:outputPanel>
+
+                                                <!--  Endicia Cod Section -->
+                                                <apex:outputPanel id="specialServicesCodSection" title="Collect on Delivery (C.O.D)" 
+                                                        rendered="{! AND(selectedWebServiceName == 'Endicia', section7.isCodRendered) }">
+                                                    <!-- COD -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol">                                                   
+                                                        <apex:inputCheckbox value="{! section7.specialServices.cod__c }" style="float:left;">
+                                                            <apex:actionSupport event="onclick" action="{! section7.codSelectRefresh }" rerender="Section7MessageList,pnlCODAmountEndicia,servicesSection" onSubmit="IsLoading('loadingCollectOnDeliveryEndicia');" oncomplete="IsLoadingComplete();" />
+                                                        </apex:inputCheckbox>
+                                                        <apex:outputLabel value="COD" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                        <apex:image id="loadingCollectOnDeliveryEndicia" styleClass="loadingCollectOnDeliveryEndicia" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+                                                    
+                                                    <!-- COD Amount -->
+                                                    <apex:outputPanel id="pnlCODAmountEndicia" layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }">
+                                                        <apex:outputLabel value="COD Amount (USD)" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.codAmount__c }"/>
+                                                    </apex:outputPanel>
+
+                                                    <!-- Return Address information -->
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s name" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnName__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s Company" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnCompany__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s Address Line 1" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnAddress1__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s Address Line 2" styleClass="ssLabel" />
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnAddress2__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s City" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnCity__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s Postal Code" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnPostalCode__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Return Addressee’s State" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodReturnState__c}"/>
+                                                    </apex:outputPanel>
+
+                                                    <!-- AS3816 FORM TYPE -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }">
+                                                        <apex:outputLabel value="AS3816 Form Type" styleClass="ssLabel" />
+                                                        <apex:selectList value="{! Section7.CODTypeSelected }" size="1" multiselect="false">
+                                                            <apex:actionSupport event="onchange" rerender="Section7MessageList,specialServicesCodSection" action="{! section7.codTypeAction }"
+                                                            onsubmit="IsLoading('loadingAS3816');" oncomplete="IsLoadingComplete();" />
+                                                            <apex:selectOptions value="{! section7.CODTypeOptions }"/>
+                                                        </apex:selectList>
+                                                        <apex:image id="loadingAS3816" styleClass="loadingAS3816" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+
+                                                    <!-- PMExpressReturn -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }">
+                                                        <apex:outputPanel >                                                     
+                                                            <apex:inputCheckbox value="{! section7.specialServices.CodPMExpressReturn__c }" >
+                                                                <apex:actionSupport event="onclick" rerender="Section7MessageList,specialServicesCodSection" onSubmit="IsLoading('loadingUSPSCA');" oncomplete="IsLoadingComplete();"/>
+                                                            </apex:inputCheckbox>
+                                                            <apex:outputLabel value="Returned by Express" styleClass="ssLabel"/>
+                                                            <apex:image id="loadingUSPSCA" styleClass="loadingUSPSCA" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+
+                                                    <!-- USPSCA -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" 
+                                                                rendered="{! AND(section7.specialServices.cod__c, section7.specialServices.CodPMExpressReturn__c) }" >
+                                                        <apex:outputLabel value="USPS Corporate Account Number" styleClass="ssLabel" />
+                                                        <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                        <apex:inputField value="{! section7.specialServices.CodUSPSCA__c }"/>
+                                                    </apex:outputPanel>
+
+                                                    <!-- OptionalEndorsement -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }" >
+                                                        <apex:outputLabel value="Endorsement String on the Form" styleClass="ssLabel" />
+                                                        <apex:inputField value="{! section7.specialServices.CodOptionalEndorsement__c}"/>
+                                                    </apex:outputPanel>                                          
+
+                                                </apex:outputPanel>
+
+                                                <!-- Value Of Contents -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.cod__c }">
+                                                    <apex:outputLabel value="Value of Contents" styleClass="ssLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:inputField value="{! section7.mailPiece.valueOfContents__c }" />
+                                                </apex:outputPanel>
+
+                                                <!-- Registered Mail -->
+                                                <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isRegisteredMailRendered }">                                                 
+                                                    <apex:inputCheckbox value="{! section7.specialServices.RegisteredMail__c }" style="float:left;">
+                                                        <apex:actionSupport event="onclick" action="{! section7.registredMailSelectRefresh }" rerender="Section7MessageList,pnlRegMailValue,servicesSection" onSubmit="IsLoading('loadingRegisteredMailValue');" oncomplete="IsLoadingComplete();"/>
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputLabel value="Registered Mail" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;" />
+                                                    <apex:image id="loadingRegisteredMailValue" styleClass="loadingRegisteredMailValue" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+
+                                                <!-- Registered Mail Value -->
+                                                <apex:outputPanel id="pnlRegMailValue" layout="block" styleClass="onecol" rendered="{! section7.specialServices.RegisteredMail__c }">
+                                                    <apex:outputLabel value="Registered Mail value (USD)" styleClass="ssLabel" />
+                                                    <span class="inputFieldRequiredBar">&nbsp;</span>
+                                                    <apex:inputField value="{! section7.specialServices.RegisteredMailValue__c }"/>
+                                                </apex:outputPanel>
+                                                                            
+                                            </apex:outputPanel>
+
+                                            <apex:outputPanel id="confServicesSection" rendered="{! AND(section7.isConfirmationServicesSectionRendered, selectedWebServiceName == 'Express1') }">
+
+                                                    <!-- Delivery Confirmation -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isDeliveryConfirmationRendered }">
+                                                        <apex:inputCheckbox id="delConfInput" value="{! section7.specialServices.deliveryConfirmation__c }" onclick="deselectOtherServices(this)" style="float:left;"/>
+                                                        <apex:outputLabel value="Delivery Confirmation" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+                                                    
+                                                    <!-- Signature Confirmation -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isSignatureConfirmationRendered }">          
+                                                        <apex:inputCheckbox id="sigConfInput" value="{! section7.specialServices.signatureConfirmation__c }" onclick="deselectOtherServices(this)" style="float:left;"/>
+                                                        <apex:outputLabel value="Signature Confirmation" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                                    <!-- Adult Signature -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isAdultSignatureRendered }">                                                 
+                                                        <apex:inputCheckbox id="adultSigInput" value="{! section7.specialServices.adultSignature__c }" onclick="deselectOtherServices(this)" style="float:left;"/>
+                                                        <apex:outputLabel value="Adult Signature" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                                    <!-- Restricted Delivery-->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isRestrictedDeliveryRendered }">                                             
+                                                        <apex:inputCheckbox id="restrictedDelInput" value="{! section7.specialServices.restrictedDelivery__c }" onclick="deselectOtherServices(this)" style="float:left;"/>
+                                                        <apex:outputLabel value="Restricted Delivery" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                                    <script>
+                                                        var delConfInput = document.getElementById('{!$Component.delConfInput}');
+                                                        var sigConfInput = document.getElementById('{!$Component.sigConfInput}');
+                                                        var adultSigInput = document.getElementById('{!$Component.adultSigInput}');
+                                                        var restrictedDelInput = document.getElementById('{!$Component.restrictedDelInput}');
+                                                    </script>
+                                            </apex:outputPanel>
+
+                                            <apex:outputPanel id="confServicesSectionEnd" rendered="{! AND(section7.isConfirmationServicesSectionRendered, selectedWebServiceName == 'Endicia') }">
+
+                                                    <!-- AM Delivery -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isAMDeliveryRendered }">
+                                                        <apex:inputCheckbox id="amDeliveryEnd" value="{! section7.specialServices.AMDelivery__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="AM Delivery" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                                    <!-- Delivery Confirmation -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isDeliveryConfirmationRendered }">
+                                                        <apex:inputCheckbox id="delConfInputEnd" value="{! section7.specialServices.deliveryConfirmation__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="Delivery Confirmation" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+                                                    
+                                                    <!-- Signature Confirmation -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isSignatureConfirmationRendered }">          
+                                                        <apex:inputCheckbox id="sigConfInputEnd" value="{! section7.specialServices.signatureConfirmation__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="Signature Confirmation" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                                    <!-- Adult Signature -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isAdultSignatureRendered }">                                                 
+                                                        <apex:inputCheckbox id="adultSigInputEnd" value="{! section7.specialServices.adultSignature__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="Adult Signature" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                                    <!-- Adult Signature Restricted Delivery -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isAdultSignatureRestrictedDeliveryRendered }">                                                   
+                                                        <apex:inputCheckbox id="adultSigRestDelEnd" value="{! section7.specialServices.AdultSignatureRestrictedDelivery__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="Adult Signature Restricted Delivery" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+                                                    
+                                                    <!-- Electronic Return Receipt -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isElectronicReturnReceiptRendered }">                                                
+                                                        <apex:inputCheckbox id="electrReturnReceiptEnd" value="{! section7.specialServices.ElectronicReturnReceipt__c }" style="float:left;">
+                                                            <apex:actionSupport event="onclick" rerender="Section7MessageList,confServicesSectionEnd" onSubmit="IsLoading('loadingBpodClientDUNSNumber');" oncomplete="IsLoadingComplete();"/>
+                                                        </apex:inputCheckbox>
+                                                        <apex:outputLabel value="Electronic Return Receipt" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                        <apex:image id="loadingBpodClientDUNSNumber" styleClass="loadingBpodClientDUNSNumber" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                    </apex:outputPanel>
+
+                                                    <!-- BpodClientDUNSNumber -->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.specialServices.ElectronicReturnReceipt__c }">
+                                                        <apex:outputLabel value="BpodClientDUNSNumber" styleClass="ssLabel" />
+                                                        <apex:inputField value="{! section7.specialServices.BpodClientDUNSNumber__c }" />
+                                                    </apex:outputPanel>
+
+                                                    <!-- Restricted Delivery-->
+                                                    <apex:outputPanel layout="block" styleClass="onecol" rendered="{! section7.isRestrictedDeliveryRendered }">                                             
+                                                        <apex:inputCheckbox id="restrictedDelInputEnd" value="{! section7.specialServices.restrictedDelivery__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="Restricted Delivery" style="float:left; font-weight:bold; margin:3px 0px 0px 5px;"  />
+                                                    </apex:outputPanel>
+
+                                            </apex:outputPanel>
+
+                                            <apex:outputPanel id="specialContents" rendered="{! section7.isSpecialContentsRendered }">                                          
+                                                <!-- Special Contents -->
+                                                <apex:outputPanel layout="block" styleClass="onecol">
+                                                    <apex:outputLabel value="Special Contents:" style="float:left; font-weight:bold;" />
+                                                    <apex:selectList value="{! section7.selectedSpecialContents }" size="1" multiselect="false" >
+                                                        <apex:actionSupport event="onchange" rerender="Section7MessageList,specialContents" onsubmit="IsLoading('loadingSpecialContentsClass');" oncomplete="IsLoadingComplete();"/>
+                                                        <apex:selectOptions value="{! section7.specialContentsOptions }"/>
+                                                    </apex:selectList>
+                                                    <apex:image id="loadingSpecialContentsClass" styleClass="loadingSpecialContentsClass" value="{!$Resource.zkusps__LoadingImage2}" />
+                                                </apex:outputPanel>
+
+                                                <!-- Live Animal Surcharge -->
+                                                <apex:outputPanel rendered="{! section7.IsLiveAnimalSurchargeRendered }">
+                                                    <apex:outputPanel layout="block" styleClass="onecol">
+                                                        <apex:inputCheckbox value="{! section7.specialServices.LiveAnimalSurcharge__c }" style="float:left;"/>
+                                                        <apex:outputLabel value="Live Animal Surcharge" styleClass="ssLabel" />
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </ol>
+                                    </fieldset>
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </table>
+                </div>      
+
+                <div id="shipbuttons" class="section_wrapper">
+                    <table class="section_body">
+                        <tr>
+                            <td>
+                                <apex:outputPanel layout="block">
+                                    <c:MessageListDisplay id="Section9MessageList" msgList="{! section8.messageMainList }"/>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel id="rateTable" layout="block" style="min-width:540px;">
+                                    <apex:pageBlockTable rendered="{! section8.rateTableRendered }" value="{! section8.rateWrapperList }"  var="rateDetail"  cellpadding="10" styleClass="rateTable">
+                                        <apex:column >
+                                            <apex:facet name="header"></apex:facet>
+                                            <apex:inputCheckbox value="{! rateDetail.isSelectedMailClass }" disabled="true" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">Mail Class</apex:facet>
+                                            <apex:outputText value="{! rateDetail.mailClass }"/>
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">Postage<br />Mail Service</apex:facet>
+                                            <apex:outputText value="{! rateDetail.postageMailService }"/>
+                                        </apex:column>
+                                        <apex:column rendered="{! selectedWebServiceName == 'Endicia' }">
+                                            <apex:facet name="header">Estimate<br />Delivery Date</apex:facet>
+                                            <apex:outputText value="{! rateDetail.estDeliveryDate }" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">Postage<br />Zone</apex:facet>
+                                            <apex:outputText value="{! rateDetail.postageZone }"/>
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">Total Amount</apex:facet>
+                                            <apex:outputText value="{! rateDetail.totalAmountStr }"/>
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">Postage<br />Total Amount</apex:facet>
+                                            <apex:outputText value="{! rateDetail.postageTotalAmountStr }"/>
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">Fees</apex:facet>
+                                            <apex:outputText value="{! rateDetail.feesTotalAmountStr }"/>
+                                        </apex:column>
+                                    </apex:pageBlockTable>                                  
+                                </apex:outputPanel>                             
+
+                                <apex:outputPanel layout="block" style="margin-top:5px">
+                                    <apex:commandButton action="{! section8.updateRateTable }" style="float:left"  value="Calculate Rates" rerender="Section8MessageList,Section9MessageList,rateTable,pnlSpecialServices" onclick="IsLoading('loadingRates');" oncomplete="IsLoading('loadingRates');IsLoadingComplete();" />                                  <!-- 
+                                    <apex:commandButton action="{! section8.receiveMailClassRateEndicia }" style="float:left"  value="Calculate Rate For Mail Class" rerender="Section8MessageList,Section9MessageList," onclick="IsLoading('loadingRates');" oncomplete="IsLoading('loadingRates');"/> -->
+                                    <apex:image id="loadingRates" styleClass="loadingRates" value="{!$Resource.zkusps__LoadingImage2}" />
+                                    <div style="float:right; width:120px;margin-right:15px;">
+                                        <!-- <apex:commandButton id="shipNowButton" action="{! section8.createPostageLabel }" value="{! section8.shipButtonTitle }" disabled="{! section8.submitButtonDisabled }" 
+                                            rerender="Section9MessageList,{!MessageListNames}"  
+                                            onclick="IsLoading('loadingProcessShipment');DisableCommandButton(this.id);" 
+
+                                            oncomplete="IsLoading('loadingProcessShipment');EnableCommandButton(this.id);IsLoadingComplete();" 
+
+                                            style="float:right;" /> -->
+                                        <apex:commandButton styleClass="shipNowButtonCls" id="shipNowButton" action="{! section8.createPostageLabel }" value="{! section8.shipButtonTitle }" disabled="{! section8.submitButtonDisabled }" 
+                                            rerender="Section9MessageList,{!MessageListNames}"  
+                                            onclick="IsLoading('loadingProcessShipment');DisableCommandButton(this.id);" 
+                                            oncomplete="shipmentContinue(sforce.console.isInConsole());"
+                                            style="float:right;" />
+                                        <apex:image id="loadingProcessShipment" styleClass="loadingProcessShipment" style="float:right;" value="{!$Resource.zkusps__LoadingImage2}" />
+                                        <br/>
+                                        <apex:outputPanel id="autoPrintBlock" layout="block" style="float: right; padding-top: 10px;">
+                                            <apex:outputLabel value="Auto Print" for="autoprintChk" styleClass="formLabel" style=" margin-top: 2px; margin-right: -15px;" />
+                                            <apex:inputCheckbox id="autoprintChk" value="{! isAutoPrintAfterCreateShipmentSource }" title="Auto Print"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+
+    <div class="lightboxWizard">
+    </div>
+
+    <script type="text/javascript">
+        sforce.console.getFocusedSubtabId(showSubTabId);
+        Sfdc.onReady(function() {
+            var isCas = '{! isAutoCreateShipmentSource }';
+            if (isCas == 'true') {
+                IsLoading('loadingProcessShipment');
+                DisableCommandButton('shipNowButton');
+                shipmentContinue(sforce.console.isInConsole());                
+            } 
+        });
+  </script>
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Registered_Agent_Services__c</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Organizational_Date__c</field>
+    </columns>
+    <crossFilters>
+        <criteriaItems>
+            <column>Sale_Type__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>State Renewal</value>
+        </criteriaItems>
+        <operation>without</operation>
+        <primaryTableColumn>CUST_ID</primaryTableColumn>
+        <relatedTable>SaleEntity__c</relatedTable>
+        <relatedTableJoinColumn>Entity__c</relatedTableJoinColumn>
+    </crossFilters>
+    <filter>
+        <criteriaItems>
+            <column>Entities__c.Organization_State__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Texas</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Entities__c.Land_Trust,Entities__c.Living_Trust</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Entities__c.Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Inactive,Terminated,Future Planned,Missing Information,Expedited,Sent To Processing</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Texas Audit</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Entities__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Entities__c.Registered_Agent_Services__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Entities__c.X1stDayAnnivMo__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,49 @@
+<apex:page controller="EditAll_Quote">
+<apex:form id="editAll">
+    <apex:pageBlock id="pbEditall" title="Add Terms">
+        <apex:pagemessages ></apex:pagemessages>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Save" action="{!save}" />
+            <apex:commandButton value="Save & Close" action="{!saveClose}" />
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockTable var="OLI" value="{!lstOppyLineItems}" cellpadding="2" border="0" id="mypbtable">
+                <apex:column headerValue="Service Code" width="10%">
+                    <apex:outputText value="{!OLI.PricebookEntry.Product2.ProductCode}"/>
+                </apex:column>
+                <apex:column headerValue="Date" width="10%" >
+                    <span class="dateInput dateOnlyInput">
+                    <apex:inputField value="{!OLI.ServiceDate}" />
+                    </span>
+                </apex:column>
+                <apex:column headerValue="Service">
+                    <apex:outputField value="{!OLI.PricebookEntry.Product2.Name}"/>
+                </apex:column>
+                <apex:column headerValue="Family">
+                    <apex:outputField value="{!OLI.PricebookEntry.Product2.Family}"/>
+                </apex:column>
+                <apex:column headerValue="Entity Type">
+                    <apex:outputField value="{!OLI.PricebookEntry.Product2.Entity_Type__c}"/>
+                </apex:column>
+                <apex:column headerValue="List Price">
+                    <apex:outputField value="{!OLI.ListPrice}"/>
+                </apex:column>
+                 <apex:column headerValue="Quantity">
+                    <apex:inputField value="{!OLI.Quantity}" style="width:40px;"/>
+                </apex:column>
+                 <apex:column headerValue="Sale Price">
+                    <apex:inputField value="{!OLI.UnitPrice}" style="width:65px;"/>
+                </apex:column>
+                 <apex:column headerValue="Total Price">
+                    <apex:outputField value="{!OLI.TotalPrice}"/>
+                </apex:column>
+                <apex:column headerValue="Description">
+                    <apex:inputField value="{!OLI.Description}"/>
+                </apex:column>
+               
+                
+        </apex:pageBlockTable> 
+            
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

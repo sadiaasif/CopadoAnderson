@@ -1,0 +1,219 @@
+<apex:page renderAs="PDF" standardcontroller="Opportunity" extensions="AndersonReceit">
+
+<div id="header" style="border:1px solid;">
+ <div id="header" style="height: 100px;border:1px solid;">
+ 
+<div id="header_right" style="width: 380px;  float:right;">
+        
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="right"> <img src="{!URLFOR($Resource.AgreementPdfImages2, 'AgreementPDFimg/DGA_Logo_400pxWide.gif')}" width="45%" height="45%"/></td>
+              </tr>
+              <tr>
+                <td align="right" style="font-size:12px; padding-top: 12px;">
+3225 McLeod Dr, Las Vegas, NV 89121
+<br/>
+Tel: 888.829.8447
+<br/>
+Fax: 702.664.0547
+<br/>
+Website: http://www.andersonadvisors.com/
+</td>
+              </tr>
+            </table>
+      </div>
+        
+    <div id="header_left1" style="width: 180px; float:left">
+      <table cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="font-family:'Myriad Pro'; font-size:30px;font-weight:bold; font-stretch:extra-condensed;">
+                  
+                  
+                  Receipt
+                  </br>
+                   </tr>
+                   <tr>
+                   <td align="center" style="font-family:'Myriad Pro'; font-size:15px;font-weight:bold; font-stretch:extra-condensed;">
+                 
+                  
+                  {!Date}
+                  </td>
+                </tr>
+                
+               
+          </table>
+        </div>
+        
+        
+  </div>
+  
+  
+  <div id="header2" style="border:1px solid;">
+ 
+ <div id="header_right" style="width: 380px;  float:left;">
+        
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          
+             <tr>
+             <td>
+             
+             </td>
+                <td align="left" style="font-size:10px; padding-top: 10px;">
+                <b>{!ClientInfo.Name} </b><br/>
+                {!ClientInfo.BillingStreet}<br/>
+                {!ClientInfo.BillingCity},{!ClientInfo.BillingState},{!ClientInfo.BillingPostalCode} <br/>
+                {!ClientInfo.BillingCountry}<br/>
+                Email : {!ClientInfo.E_Mail__c}<br/>
+                Phone : {!ClientInfo.Phone}
+                </td>
+              </tr>
+            </table>
+             <br/>
+      </div>
+        
+        
+        
+  </div>
+  
+  <div id="header2" style="border:1px solid;">
+
+ <div id="header_right" style="width: 380px;  float:left;left:10px;">
+        
+          <table width="700px" border="1" cellspacing="0" cellpadding="0">
+          <tr >
+                <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Description"></apex:outputLabel>
+               </td>
+               <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Qty"></apex:outputLabel>
+               </td>
+               <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Unit Price"></apex:outputLabel>
+               </td>
+               <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Date"></apex:outputLabel>
+               </td>
+               <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Total Price"></apex:outputLabel>
+               </td>
+              </tr>
+              <apex:repeat value="{!ProdInfo}" var="t">
+             <tr>
+                <td align="left" style="font-size:10px; padding-top: 10px;">
+                <apex:outputField value="{!t.Description}"></apex:outputField>
+                </td>
+                <td align="left" style="font-size:10px; padding-top: 10px;">
+                <apex:outputField value="{!t.Quantity}"></apex:outputField>
+                </td>
+                <td align="left" style="font-size:10px; padding-top: 10px;">
+                <apex:outputField value="{!t.UnitPrice}"></apex:outputField>
+                </td>
+                <td align="left" style="font-size:10px; padding-top: 10px;">
+                <apex:outputText value="{!Month(t.ServiceDate)}/{!Day(t.ServiceDate)}/{!YEAR(t.ServiceDate)}">
+                    
+                    </apex:outputText> 
+                </td>
+                <td align="right" style="font-size:10px; padding-top: 10px;">
+                <apex:outputField value="{!t.TotalPrice}"></apex:outputField>
+                </td>
+              </tr>
+              </apex:repeat>
+             
+              
+            </table>
+           
+             <table width="700px" border="" cellspacing="0" cellpadding="0">
+             <tr>
+                <td align="Center" style="font-size:10px; padding-top: 10px;width:100px">
+               <apex:outputLabel value=" "></apex:outputLabel>
+                </td>
+                <td align="Center" style="font-size:10px; padding-top: 10px;width:100px">
+                <apex:outputLabel value=" "></apex:outputLabel>
+                </td>
+                <td align="Center" style="font-size:10px; padding-top: 10px;width:100px">
+               <apex:outputLabel value=" "></apex:outputLabel>
+                </td>
+                <td align="right" style="font-size:15px; padding-top: 10px;width:1000px">
+                <apex:outputLabel value="Grand Total"></apex:outputLabel>
+                </td>
+                <td align="Right" style="font-size:15px; padding-top: 10px;width:100px">
+                <apex:outputField value="{!GrandTotal.TotalPrice}"></apex:outputField>
+                </td>
+              </tr>
+             </table>
+      </div>
+        
+        
+        
+  </div>
+   
+  <div id="header2" style="border:1px solid;">
+
+ <div id="header_right" style="width: 380px; float:left;left:10px;">
+        <br/>
+          <table width="700px" border="1" cellspacing="0" cellpadding="0">
+           <tr >
+                <td align="left" style="font-size:15px; padding-top: 10px;" colspan="3">
+                <apex:outputLabel value="Payments : "></apex:outputLabel>
+               </td>
+                
+               
+              
+              </tr>
+          <tr >
+                <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Date"></apex:outputLabel>
+               </td>
+                <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Credit Card Number"></apex:outputLabel>
+               </td>
+               <td align="Center" style="font-size:15px; padding-top: 10px;">
+                <apex:outputLabel value="Amount"></apex:outputLabel>
+               </td>
+               
+              
+              </tr>
+              <apex:repeat value="{!Transactions}" var="t">
+             <tr>
+                <td align="Center" style="font-size:10px; padding-top: 10px;">
+                <apex:outputText value="{!Month(t.ChargentSFA__Gateway_Date__c)}/{!Day(t.ChargentSFA__Gateway_Date__c)}/{!YEAR(t.ChargentSFA__Gateway_Date__c)}">
+                </apex:outputText>
+                </td>
+                 <td align="Center" style="font-size:10px; padding-top: 10px;">
+                <apex:outputField value="{!t.ChargentSFA__Credit_Card_Number__c}"></apex:outputField>
+                </td>
+                <td align="Center" style="font-size:10px; padding-top: 10px;">
+                <apex:outputField value="{!t.ChargentSFA__Amount__c}"></apex:outputField>
+                </td>
+                
+               
+              </tr>
+               </apex:repeat>
+             
+             
+            </table>
+            <br/>
+            <table width="700px" border="0" cellspacing="0" cellpadding="0">
+             <tr>
+                <td align="Center" style="font-size:10px; padding-top: 10px;width:350px">
+                <apex:outputLabel value=" "></apex:outputLabel>
+                </td>
+                
+                <td align="right" style="font-size:15px; padding-top: 10px;width:100px">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                <apex:outputLabel value="Balance Due"></apex:outputLabel>
+                </td>
+                <td align="right" style="font-size:15px; padding-top: 10px;width:100px">
+                <apex:outputLabel value="-" rendered="{!CheckVE}"></apex:outputLabel>
+                <apex:outputField value="{!DueBalance.TotalPrice}"></apex:outputField>
+                </td>
+              </tr>
+              </table>
+      </div>
+      
+        
+      </div> 
+        
+  </div>
+</apex:page>

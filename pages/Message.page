@@ -1,0 +1,150 @@
+<apex:page doctype="html-5.0" standardController="Task" extensions="MessageController" rendered="{!(acc.Platinum_Client_View__c != 'Tax Team' && acc.Platinum_Client_View__c != 'Infinity Only' && acc.Platinum_Client_View__c !='Mastermind Only')}" sidebar="false" showHeader="false">    
+<apex:slds />   
+<div class="slds-scope">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="Mobile compatible" content="ie=edge" />
+            <title>Anderson Business Advisors</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+            
+        <script async='async' src="https://www.googletagmanager.com/gtag/js?id=UA-43972311-23"></script>
+            <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-43972311-23'); </script> 
+
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Anderson Advisors</title>            
+        <!-- Bootstrap -->
+        <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+        <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+        <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>
+        <style>
+       @media (min-width: 1024px){
+            .sidebar {display: block;
+            }
+           }
+            div {
+         word-wrap: break-word;
+            }
+            .loader {            
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 50%;
+            top:50%;
+            }
+        </style>
+    </head>
+    <body> 
+        <apex:include pageName="AndersonHeader"/> 
+        <apex:form >
+                         
+            <div class="container">
+               <div class="row content no-margin"> 
+                <div class="mid-inner-sec entities login-history-table-grid col-xs-12">
+                    <h2>Message Center</h2>
+                    <!-- <div class="col-sm-3">
+                        <div class="top-img-left left-full-block">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley. </p>
+                        </div>                            
+                    </div> -->
+                    <div class="col-xs-12 activity-mail">
+                        <div class="row">
+                            <div class="col-xs-12">
+                               
+                                <apex:actionStatus id="taskLoader" style="align:center;">      
+                                    <apex:facet name="start">                                                        
+                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                    </apex:facet>
+                                    <apex:facet name="stop"></apex:facet>
+                                </apex:actionStatus>
+                                
+                                <apex:pageblock >                                        
+                                    <div> 
+                                        <apex:outputPanel id="myPanel">   
+                                            <div class="table-responsive scroll-data">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Subject</th>
+                                                            <!--<th>Description</th>-->
+                                                            <th>Status</th>
+                                                            <th>Created Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <apex:repeat value="{!IncomingTaskHistory}" var="intask">
+                                                            <tr>
+                                                                <td><apex:outputPanel ><apex:actionSupport event="onclick" status="taskLoader" rerender="taskdesc"/><a data-toggle="modal" data-target="#taskdesc" id="{!intask.Id}" onclick="getRemoteTask(this.id)" style="color:blue;" href="#">
+                                                                       {!intask.Subject}</a>                                    
+                                                                    </apex:outputPanel></td>
+                                                                <!--<td><apex:outputField value="{!intask.Description}" />  </td>-->
+                                                                <td>{!intask.Status}</td>
+                                                                <td>{!intask.CreatedDate}</td>                                                
+                                                            </tr>
+                                                        </apex:repeat>
+                                                        <input type="hidden" name="contAcctId" id="contAcctId" value="{!con.Accountid}" />
+                                                    </tbody> 
+                                                </table>
+                                            </div>                                                                                               
+                                        </apex:outputPanel>
+                                    </div>                                        
+                                </apex:pageblock> 
+                               
+                                    <div id="taskdesc" class="modal fade" role="dialog">                                    
+                                    <div class="modal-dialog entities-section">                                        
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Activity Description</h4>
+                                            </div>
+                                            <div class="modal-body">  
+                                                <apex:pageMessages id="messages" />
+                                                 <input type="hidden" id="sitedomain" value= "{!$Site.CurrentSiteUrl}" />
+                                                <pre>
+                                                <div id="taskInfo">
+                                                   <!--<apex:outputField  value=""/>-->                                                       
+                                                </div>
+                                                 </pre>
+                                            </div> 
+                                        </div>                                        
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+           <apex:include pageName="AndersonFooter"/>
+        </apex:form>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->           
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+        <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+        <script>
+        function getRemoteTask(callingtskId) {
+            var tskVal = callingtskId;
+            //alert(tskVal); 
+            var conAccId = $('#contAcctId').val();
+            //alert(conAccId);
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.MessageController.getTaskDescription}',
+                tskVal,conAccId,
+                function(result, event){   
+                    //alert(result[0].Description);   
+                    document.getElementById("taskInfo").innerHTML = "";
+                    document.getElementById("taskInfo").innerHTML = result[0].Description; 
+                }, 
+                {escape: true}
+            );
+        }
+        </script>
+    </body>
+</html>
+</div>
+</apex:page>

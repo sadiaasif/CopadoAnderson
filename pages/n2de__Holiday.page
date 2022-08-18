@@ -1,0 +1,100 @@
+<apex:page controller="n2de.HolidayController" tabStyle="Manage_Holidays__tab" sidebar="false" action="{!init}">
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-3.5.1.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-migrate-3.3.0.min.js')}"></script>
+    <c:CommonHelp help_page="distribution-holidays"/>
+    <style>
+        .active_row {
+            background-color: #E5F1D6;
+        }
+
+    </style>
+    <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    <apex:form >
+        <apex:sectionHeader title="Distribution Holidays" subtitle="Home"/>
+
+        <apex:outputLabel value="Holiday Region: " styleClass="listViewLabel"/>
+        <apex:selectList id="holiday_region_select" value="{!HolidayGroupId}" size="1" disabled="{!HolidayGroupId==null}">
+            <apex:selectOptions value="{!HolidayGroupOptionList}"/>
+            <apex:actionSupport event="onchange" action="{!changeHolidayGroup}" reRender="record_list, history_block"/>
+        </apex:selectList>
+        &nbsp;
+        <apex:outputPanel layout="none" rendered="{!HolidayGroupId != null}">
+            <apex:outputPanel layout="none" rendered="{!$ObjectType.n2de__Holiday_group__c.Updateable}">
+                <apex:commandLink id="edit_holiday_group_link" value="Edit" action="{!editHolidayGroup}" styleClass="listViewLinks"/>
+                <apex:outputLabel value=" | "/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!$ObjectType.n2de__Holiday_group__c.Deletable}">
+                <apex:commandLink id="delete_holiday_group_link" value="Delete" action="{!deleteHolidayGroup}" styleClass="listViewLinks" onclick="if (!window.confirm('Are you sure?')) return false;"/>
+                <apex:outputLabel value=" | "/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:commandLink id="create_new_holiday_group_link" value="Create New Holiday Region" action="{!newHolidayGroup}" styleClass="listViewLinks" rendered="{!$ObjectType.n2de__Holiday_group__c.Createable}"/>
+        <apex:outputLabel value="Year: " styleClass="listViewLabel"/>
+        <apex:selectList id="year_select" value="{!YearLiteral}" size="1" disabled="{!HolidayGroupId==''}">
+            <apex:selectOptions value="{!YearOptionList}"/>
+            <apex:actionSupport event="onchange" reRender="record_list"/>
+        </apex:selectList>
+        <br/><br/>
+        <apex:pageBlock id="record_list" title="Holidays">
+
+            <apex:pageMessages />
+
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton id="new_holiday_button" action="{!newHoliday}" value="New" rendered="{!$ObjectType.n2de__Holiday__c.Createable}" disabled="{!HolidayGroupId==null}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!HolidayList}" var="HL">
+                <apex:column headerValue="Action" styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:commandLink id="hl_edit_link" action="{!editHoliday}" rendered="{!$ObjectType.n2de__Holiday__c.Updateable}">
+                        <b>Edit</b>
+                        <apex:param name="actionrecordid" value="{!HL.holiday.Id}" assignTo="{!ActionRecordId}"/>
+                    </apex:commandLink>
+                    <apex:outputLabel value=" | " rendered="{!$ObjectType.n2de__Holiday__c.Deletable}"/>
+                    <apex:commandLink id="hl_delete_link" action="{!deleteHoliday}" reRender="record_list, history_block" rendered="{!$ObjectType.n2de__Holiday__c.Deletable}" onclick="if (!window.confirm('Are you sure?')) return false;">
+                        <b>Del</b>
+                        <apex:param name="actionrecordid" value="{!HL.holiday.Id}" assignTo="{!ActionRecordId}"/>
+                    </apex:commandLink>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.n2de__Holiday__c.Fields.Name.Label}" styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:outputfield id="hl_name" value="{!HL.holiday.Name}"/>
+                </apex:column>
+                <apex:column styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:facet name="header">
+                        <apex:commandLink id="hl_sort_by_date_link" value="{!$ObjectType.n2de__Holiday__c.Fields.n2de__Date__c.Label} {!IF(SortOrder=='desc','↓','↑')}" action="{!sortColumn}" reRender="record_list"/>
+                    </apex:facet>
+                    <apex:outputfield id="h1_date" value="{!HL.holiday.n2de__Date__c}"/>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.n2de__Holiday__c.Fields.n2de__Is_all_day__c.Label}" styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:outputField id="hl_is_all_day" value="{!HL.holiday.n2de__Is_all_day__c}"/>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.n2de__Holiday__c.Fields.n2de__Start_hour__c.Label}" styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:outputText id="hl_start_time" value="{!HL.holiday.n2de__Start_hour__c} : {!HL.holiday.n2de__Start_min__c}" rendered="{!NOT(HL.holiday.n2de__Is_all_day__c)}"/>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.n2de__Holiday__c.Fields.n2de__End_hour__c.Label}" styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:outputText id="hl_end_time" value="{!HL.holiday.n2de__End_hour__c} : {!HL.holiday.n2de__End_min__c}" rendered="{!NOT(HL.holiday.n2de__Is_all_day__c)}"/>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.n2de__Holiday__c.Fields.n2de__Timezone__c.Label}" styleClass="{!IF(HL.isActive,'active_row','')}">
+                    <apex:outputText id="hl_timezone" value="{!HL.holiday.n2de__Timezone__c}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+
+        </apex:pageBlock>
+        <c:HistoryTable historyList="{!latestHistory}" blockTitle="Holiday Region History" sectionTitle="Holiday Change History"/>
+    </apex:form>
+
+    <style>
+        .listViewLabel {
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .listViewLinks {
+            color: #015BA7;
+            text-decoration: none;
+        }
+        .pageLink {
+            float:right;
+            margin-right: 20px;
+        }
+
+    </style>
+    <c:StatusPanel />
+</apex:page>

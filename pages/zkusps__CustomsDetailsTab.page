@@ -1,0 +1,7 @@
+<apex:page tabStyle="CustomsDetails__tab">
+    <apex:sectionHeader title="Customs Information and Customs Items" subtitle="Home" help="http://www.zenkraft.com/support/usps/docs/create-international-shipment"/>
+    <!-- Customs Information -->
+    <apex:enhancedList type="CustomsInformation__c" customizable="true" height="400" rowsPerPage="10" id="CustomsInformationList"></apex:enhancedList>
+    <!-- Customs Item -->
+    <apex:enhancedList type="CustomsItem__c" customizable="true" height="400" rowsPerPage="10" id="CustomsItemList"></apex:enhancedList>
+</apex:page>

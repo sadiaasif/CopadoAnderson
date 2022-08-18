@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order$Account</field>
+    </columns>
+    <columns>
+        <field>Order$OrderNumber</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>Order$Comments__c</field>
+    </columns>
+    <columns>
+        <field>Order$Description</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Entity__c</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$OrderItemNumber</field>
+    </columns>
+    <columns>
+        <field>Order$Law_Coordinator__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Order$Law_Coordinator__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Jessica Thornton</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$New_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Informational Only</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Anderson Services,Basic,3-Year Tax Return Review,Strategy Session,Annual List,Asset Protection Event,Anderson Tax Advantage Program,Virtual Yearly,No Activity First Year Tax Package,Real Estate Pro,360,Anderson Tax Advantage Program - Lite,REI Mastery Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Not Started</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Due_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>lessOrEqual</operator>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Jessica Thornton</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Back to BCP/Renewal Advisor,BCP Scheduled,Completed,Exchanged for Other Services,Kitted,N/A,Need to Kit,Refunded,Submitted to Processing</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>Order.OrderItems$Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Daily OSI Report - Jessica Thorton</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Orders_with_Order_Items__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Order$ActivatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

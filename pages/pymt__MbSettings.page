@@ -1,0 +1,175 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbSettingsController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+    
+         
+    <script>
+
+
+        $( document ).on( "pagecreate", function() {          
+           
+           $("#select-choice-processor").val("{!mobileSettings.pymt__Processor_Connection_Id__c}").change();
+           $("#select-choice-pricebook").val("{!mobileSettings.pymt__Pricebook_Id__c}").change();  
+           $("#default-country").val("{!mobileSettings.pymt__Default_Country__c}").change();  
+    
+        });
+        
+        function saveSettings() {
+       loading("show");
+        var userId = "{!$User.Id}";
+        var settingsObj = new Object();
+        settingsObj.pymt__Processor_Connection_Id__c = $("#select-choice-processor").val();
+        settingsObj.pymt__Pricebook_Id__c = $("#select-choice-pricebook").val();  
+        settingsObj.pymt__Default_Country__c = $("#default-country option:selected").val();  
+        settingsObj.pymt__Default_Results_Size__c = parseFloat($("#slider-item-limit").val());        
+        
+        saveSettingsToSF(settingsObj.pymt__Default_Country__c,
+                    settingsObj.pymt__Default_Results_Size__c,
+                    settingsObj.pymt__Pricebook_Id__c,
+                    settingsObj.pymt__Processor_Connection_Id__c);
+                    
+        //Visualforce.remoting.Manager.invokeAction(
+        //        '{!$RemoteAction.MobileBaseController.saveMobileSettings}', 
+        //        userId,
+        //        settingsObj,
+        //        function(result, event){
+        //            loading("hide");
+        //            if (event.status) {
+        //                if (result.success) {
+        //                   alert("Settings saved.");
+        //                } else {
+        //                   alert("Error saving settings: "+result.message);
+        //                }
+        //                
+        //            } else if (event.type === 'exception') {
+        //              $("#error-popup-message").html(event.message);
+        //              $("#error-popup").popup("open", {positionTo:"window"});
+        //            } else {
+        //              $("#error-popup-message").html(event.message);
+        //              $("#error-popup").popup("open", {positionTo:"window"});
+        //            }
+        //        }, 
+        //        {escape: true}
+        //    );        
+        
+        }
+    
+    
+        
+    function loading(showOrHide) {
+        setTimeout(function(){
+            $.mobile.loading(showOrHide);
+        }, 1); 
+    }          
+    </script>
+
+</head>
+<body>
+<div data-role="page"  data-theme="a" id="testpage">
+    <div data-role="header" data-position="fixed">
+        <h1>Settings</h1>
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+
+
+<!--
+<h1>Settings</h1>
+<p></p>
+-->
+
+<apex:form >
+<apex:actionFunction name="saveSettingsToSF" action="{!saveSettings}" oncomplete="loading('hide');">
+<apex:param name="firstParam" assignTo="{!mbSettings.pymt__Default_Country__c}" value=""/>
+<apex:param name="secondParam" assignTo="{!mbSettings.pymt__Default_Results_Size__c}" value=""/>
+<apex:param name="thirdParam" assignTo="{!mbSettings.pymt__Pricebook_Id__c}" value=""/>
+<apex:param name="fourthParam" assignTo="{!mbSettings.pymt__Processor_Connection_Id__c}" value=""/>
+
+</apex:actionFunction>
+</apex:form>
+            
+            <div class="ui-field-contain" >
+
+            <label for="select-choice-processor" class="select">Processor Connection:</label>
+            <select name="select-choice-processor" id="select-choice-processor">
+            <apex:repeat value="{!processorConnectionOptions}" var="item">
+                <option value="{!item.value}">{!item.label}</option>
+            </apex:repeat>
+            </select>
+
+            </div>
+
+            <div class="ui-field-contain" >
+
+            <label for="select-choice-pricebook" class="select">Pricebook:</label>
+            <select name="select-choice-pricebook" id="select-choice-pricebook">
+            <apex:repeat value="{!pricebookOptions}" var="item">
+                <option value="{!item.value}" >{!item.label}</option>
+            </apex:repeat>
+            </select>
+            
+            </div>
+            
+            <div data-role="fieldcontain">
+                <label for="default-country">Default Country</label>
+                <select name="default-country" id="default-country">
+                    <apex:repeat value="{!countryPicklistOptions}" var="country">
+                        <option value="{!country.value}">{!country.label}</option>
+                    </apex:repeat>
+                </select>
+            </div>              
+    
+            <div class="ui-field-contain" >
+            <label for="slider-item-limit" class="select">Default Results Size:</label>
+            <input type="range" name="slider-item-limit" id="slider-item-limit" value="{!mobileSettings.pymt__Default_Results_Size__c}" min="0" max="100" data-highlight="true"/>
+            </div>
+            
+            <div class="ui-field-contain" >
+            <label for="user-details" class="select">User:</label>
+            <div id="user-details">{!$User.FirstName} {!$User.LastName} / {!$Organization.Name}</div>
+            </div>            
+
+            <div class="ui-field-contain" >
+            <label for="organization-id" class="select">SF Org ID:</label>
+            <div id="organization-id">{!$Organization.Id}</div>
+            </div>            
+
+            <div class="ui-field-contain" >
+            <label for="settings-save-btn" class="select"></label>
+            <a href="#" id="settings-save-btn" class="ui-btn ui-corner-all ui-shadow " onclick="javascript:saveSettings();">Save</a>
+            </div>
+
+    </div><!-- /content -->
+
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link" onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>
+
+</div><!-- /page -->
+  
+</body>
+</html>
+
+</apex:page>

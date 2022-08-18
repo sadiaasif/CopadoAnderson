@@ -1,0 +1,16 @@
+<apex:page standardController="pymt__Payment_Method__c" extensions="pymt.DelPaymentMethodController" action="{!redirect}">
+
+<apex:form >
+<apex:SectionHeader title="Linvio PaymentConnect" subtitle="Delete Payment Method"/>
+<apex:pageMessages />
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Cancel" action="{!gotoRetURL}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockSection >
+This page checks the record type of the selected payment method and deletes the record or redirects to the correct payment method management page.
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

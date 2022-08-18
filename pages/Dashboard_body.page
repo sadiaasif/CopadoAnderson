@@ -1,0 +1,1099 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController,RssFeedController,PaginationController,CaseController,KnowledgeCustomSearchController,ChangePasswordCallout" action="{!forwardToCustomAuthPage}" sidebar="false" showHeader="false" lightningStyleSheets="true" showChat="true">
+    <apex:Slds />  
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="Mobile compatible" content="ie=edge" />
+            <!--<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>-->
+            <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+        </head>
+        <style>
+            .col-xs-4 {
+            width: 100%;
+            }
+            .pbBody .input-group-btn .btn {
+            float: inherit; 
+            }
+            .autocomplete {
+            position: relative;
+            display: inline-block;
+            }
+            
+            input {
+            border: 1px solid transparent;
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-size: 16px;
+            }
+            
+            input[type=text] {
+            background-color: #f1f1f1;
+            width: 100%;
+            }
+            
+            input[type=submit] {
+            background-color: DodgerBlue;
+            cursor: pointer;
+            }
+            
+            .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            
+            right: 0;
+            }
+            
+            .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff; 
+            border-bottom: 1px solid #d4d4d4; 
+            }
+            
+            /*when hovering an item:*/
+            .autocomplete-items div:hover {
+            background-color: #e9e9e9; 
+            }
+            
+            /*when navigating through the items using the arrow keys:*/
+            .autocomplete-active {
+            background-color: DodgerBlue !important; 
+            color: #ffffff; 
+            }
+            
+            /* start 26.12.18*/
+            
+            body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock{
+            background:transparent;
+            }
+            .search #testinput{
+            width: 100%;
+            border: 1px solid #00000038;
+            line-height: 24px;
+            }
+            .search .btn-default{
+            padding: 11px 15px !important;
+            line-height: 24px !important;
+            margin-top: 35px;
+            }
+            
+            .main-block .search-heading {
+            width: 100%;
+            float: left;
+            font-size: 17px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            margin: 0 0 10px !important;
+            }
+            
+            .main-block .list
+            {
+            border:none !important;
+            background:none !important;
+            }
+            .main-block .list tr td
+            {
+            border: 1px solid #243b5b !important;
+            padding: 10px;
+            }
+            
+            
+            .main-block .list tr th 
+            {
+            padding: 10px !important;
+            background: #243b5b !important;
+            color: #fff !important;
+            border: 1px solid #243b5b !important;
+            border-collapse: collapse;
+            }
+            
+            .main-block .input-group, .main-block .input-group .pbSubsection{
+            display:inline-block;
+            width:100%;
+            }
+            .main-block .input-group .detailList,   .main-block .input-group .detailList tr,   .main-block .input-group .detailList tr td{
+            width:100%;
+            float:left;
+            }
+            .main-block .input-group .detailList .search1{
+            width: 80%;
+            float: left;           
+            }
+            .main-block .input-group .detailList .search1 #testinput{
+            border: 1px solid #8080807d;
+            padding: 9px 10px;
+            border-radius: 5px;
+            line-height: 19px;
+            }
+            .main-block .input-group .detailList .search2 input{
+            margin-left: -3px;
+            border: 1px solid #243b5b;
+            }
+            .main-block .list ~ label {
+            float: right;
+            }
+            .main-block .list ~ label input {
+            border: none;
+            border: 1px solid grey;
+            background: transparent;
+            /* padding: 6px 10px; */
+            width: 84px;
+            padding: 7px 0;
+            margin: 0;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 10px 3px 0;
+            }
+            .thumb_box tr td 
+            {
+            padding:0px 10px;
+            width:33%;
+            }
+            .thumb_box tr td img {
+            max-width: 80%;
+            }
+            .thumb_box tr:first-child td
+            {
+            padding-bottom:10px;
+            }
+            
+            #welcome
+            {
+            width: 100%;
+            float: left;
+            font-size: 17px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            margin: 0 0 10px !important;
+            }
+            .full-page gform_wrapper{
+            display: block !important;
+            }
+            #calloutUser,#calloutPass,#calloutCpass{
+            border: 1px solid #16325c !important;
+            }
+            #chngPass{
+            color: #ffffff;
+            width: 100%;
+            background-color: #243b5b;
+            margin-top: 10px;
+            }
+            
+        </style>
+    </html>
+    <div class="slds-scope">
+        <html lang="en">
+            <head>
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Business Advisors</title>            
+                <!-- Bootstrap -->
+                
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/code-jquery-ui.css')}"/>
+            </head>
+            <style type='text/css'>
+                
+                @font-face {
+                font-family: 'Salesforce Sans';
+                src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+                url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+                }
+            </style>
+            
+            <body>
+                
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.11';
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+                <apex:outputpanel rendered="{!acc.Platinum_Client_View__c != 'Infinity Only'}"> 
+                    <apex:include pageName="AndersonHeader"/>
+                </apex:outputpanel>
+                <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Infinity Only'}">
+                    <apex:include pageName="Infinite_calculator"/>
+                </apex:outputpanel> 
+                <div class="container">
+                    <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Tax Team'}">
+                        <iframe width="100%" height="800px" src="https://www.anderson515168platinum.com/ask-a-tax-question/"></iframe>
+                    </apex:outputpanel> 
+                    <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c != 'Tax Team' && acc.Platinum_Client_View__c != 'Infinity Only' && acc.Platinum_Client_View__c != 'Mastermind Only' )}">
+                        <div class="row content">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sidenav left-side">
+                                <div class="top-img-left">
+                                    <h1>My Team At Anderson <br></br><span style="color:#243B5B;"> 1-800-706-4741 </span></h1>                            
+                           <!--      <div class="row form-group">                                
+<div class="col-xs-3 team-member">
+<apex:outputPanel rendered="{!if(camPath != ' ',true,false)}">
+<apex:image value="{!camPath}" alt="CAM Image" />
+</apex:outputPanel>
+<apex:outputPanel rendered="{!if(camPath == ' ',true,false)}">
+<apex:image value="{!usObj.smallphotourl}" alt=""/>
+</apex:outputPanel>
+</div>
+<div class="col-xs-9"><div class="row">
+<span class="team-member-name">{!acc.Assigned_CAM__c}</span>
+<span class="team-member-postion"> ( Client Account Manager )</span>
+<div class="team-member-email" title="{!acc.CAM_Email__c}">Email - {!acc.CAM_Email__c}</div>
+<span class="team-member-postion">Ext - {!acc.CAM_Ext__c}</span></div>
+</div>
+</div> -->
+  <div class="row form-group">                                 
+                                    <div class="col-xs-3 team-member">                                   
+                                        <apex:outputPanel rendered="{!if(csrPath !=' ',true,false)}">
+                                            <apex:image value="{!csrPath}" alt="CSR image" />
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!if(csrPath ==' ',true,false)}">
+                                            <apex:image value="{!usObj.smallphotourl}" alt="12"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="row">
+                                            <span class="team-member-name">{!acc.Assigned_CSR__c}</span>
+                                            <span class="team-member-postion"> ( Law Coordinator )</span>
+                                            <div class="team-member-email" title="{!acc.CSR_Email__c}">Email - {!acc.CSR_Email__c}</div>
+                                            <span class="team-member-postion">Ext - {!acc.CSR_Ext__c}</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row form-group">                                
+                                    <div class="col-xs-3 team-member">
+                                        <apex:outputPanel rendered="{!if(userObj.Image_URL__c !='',true,false)}">
+                                            <apex:image value="{!userObj.Image_URL__c}" alt="Account Image" />
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!if(userObj.Image_URL__c == '',true,false)}">
+                                            <apex:image value="{!usObj.smallphotourl}" alt="1"/>
+                                        </apex:outputPanel>
+                                        
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="row">
+                                            <span class="team-member-name">{!acc.Accounting_Coordinators__c}</span>
+                                            <span class="team-member-postion"> ( Accounting Coordinator )</span>
+                                            <div class="team-member-email" title="{!userObj.Email}">Email - {!userObj.Email}</div>
+                                            <span class="team-member-postion">Ext - {!userObj.Extension}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<p class="small">Click to email or contact your csr to schedule with your professional team.</p> -->                           
+                                <hr />
+                                <div class="row form-group">                                
+                                    <div class="col-xs-3 team-member">
+                                        <apex:outputPanel rendered="{!if(saPath !=' ',true,false)}">
+                                            <apex:image value="{!saPath}" alt="Sr. Advisor Image" />
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!if(saPath ==' ',true,false)}">
+                                            <apex:image value="{!usObj.smallphotourl}" alt="123"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="col-xs-9"><div class="row"><span class="team-member-name">{!acc.Senior_Advisor_Picklist__c}</span><br/><span class="team-member-postion"> ( Sr. Advisor )</span></div></div>
+                                </div>
+                                <div class="row form-group">                                
+                                    <div class="col-xs-3 team-member">
+                                        <apex:outputPanel rendered="{!if(taxPath !=' ',true,false)}">
+                                            <apex:image value="{!taxPath}" alt="Tax Preparer Image" />
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!if(taxPath ==' ',true,false)}">
+                                            <apex:image value="{!usObj.smallphotourl}" alt="456"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="col-xs-9"><div class="row"><span class="team-member-name">{!acc.Tax_Preparer__c}</span><br/><span class="team-member-postion"> ( Tax )</span></div></div>
+                                </div>
+                                <div class="row form-group">                                
+                                    <div class="col-xs-3 team-member">
+                                        <apex:outputPanel rendered="{!if(bookkeeperPath !=' ',true,false)}">
+                                            <apex:image value="{!bookkeeperPath}" alt="Bookkeeper Image" />
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!if(bookkeeperPath ==' ',true,false)}">
+                                            <apex:image value="{!usObj.smallphotourl}" alt=""/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="col-xs-9"><div class="row"><span class="team-member-name">{!acc.Bookkeeper_Text__c}</span><br/><span class="team-member-postion"> ( Bookkeeping )</span></div></div>
+                                </div>                            
+                            </div>
+                            <div class="top-img-left top-img-left1 no-padding">
+                                
+                                <a data-toggle="modal" data-target="#platinumtour" href="#"><apex:image url="{!URLFOR($Resource.images, 'images/Click-Here-For-The-Platinum-Tour.jpg')}" alt="Platinum Tour" /></a>
+                                
+                                <!--Platinum Tour-->
+                            </div>
+                            <div class="top-img-left top-img-left1 no-padding">
+                                
+                                <a data-toggle="modal" data-target="#platinumtour" href="#"><apex:image url="{!URLFOR($Resource.images, 'images/Click-Here-For-The-Platinum-Tour.jpg')}" alt="Platinum Tour" /></a>
+                                
+                                <!--Platinum Tour-->
+                            </div>
+                            
+                            <div class="top-img-left top-img-left1 no-padding">
+                                
+                                <a data-toggle="modal" data-target="#sessiontour" href="#"><apex:image url="{!URLFOR($Resource.images, 'images/Click-Here-For-The-Platinum-Tour-SPA.jpg')}" alt="Session Tour" /></a>
+                                
+                                <!--Platinum Tour-->
+                            </div>
+                            
+                            <div class="top-img-left right-top-main mid-main-sec">                            
+                                <div class="g-ytsubscribe" data-channelid="UCX5nh607M8hSBLiMB9MgbIQ" data-layout="full"  data-count="default"></div>
+                            </div>
+                        </div>
+                        <div class="bs-example">
+                            <div id="platinumtour" class="modal fade" role="dialog">                                    
+                                <div class="modal-dialog entities-section">                                        
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Platinum Tour</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16">
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/KVRN5nnJtVA" frameborder="0" allow="autoplay; encrypted-media" ></iframe>
+                                            </div>
+                                        </div> 
+                                    </div>                                        
+                                </div>
+                            </div>
+                            <div id="sessiontour" class="modal fade" role="dialog">                                    
+                                <div class="modal-dialog entities-section">                                        
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Session Tour</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16">
+                                                <iframe width="560" height="315" src="https://andersonadvisors.app.box.com/embed/s/7lxelsuskvw21t7gj16kjfjsan89vp56" frameborder="0" allow="autoplay; encrypted-media" ></iframe>
+                                            </div>
+                                        </div> 
+                                    </div>                                        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left no-pad p-m-l-r-15">  
+                            <div class="main-block">
+                                
+                                <div class="input-group">
+                                    <h6 class="search-heading">
+                                        Anderson Knowledge
+                                    </h6>
+                                    <apex:form id="artForm" styleClass="anderson-search">
+                                        <apex:pageBlock id="thePb" >
+                                            <apex:pageblockSection id="thepbs"> 
+                                                <div class="autocomplete search1">
+                                                    <input type="text" id="testinput"/>                                                                 
+                                                </div>
+                                                <div class="input-group-btn search2">
+                                                    <input name="artBtn" id="mybtn" type="button" onclick="testinputJS()" value="Search" class="btn btn-default"/>
+                                                </div>
+                                            </apex:pageblockSection>
+                                            
+                                            <apex:actionFunction action="{!searchArt}" name="passToController" oncomplete="showArtDetails()" rerender="details" status="articlePaginationtb">
+                                                <apex:param value="" name="inpval" assignTo="{!searchArticle}"/>
+                                            </apex:actionFunction>
+                                        </apex:pageBlock>
+                                        <div id="artErrMsg" style="display:none;" ></div>
+                                        <apex:actionStatus id="articlePaginationtb" style="align:center;">      
+                                            <apex:facet name="start">                                                        
+                                                <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                            </apex:facet>
+                                            <apex:facet name="stop"></apex:facet>
+                                        </apex:actionStatus>
+                                        <div class="anderson-search-detail">
+                                            <apex:pageBlock id="details">
+                                                <apex:outputLabel rendered="{! IF( errorMsg != null && errorMsg == 1, true, false)}">
+                                                    <div class="alert alert-danger text-center text-bold">No Record Found</div>
+                                                </apex:outputLabel>
+                                                
+                                                <apex:pageBlockTable value="{!articleList}" var="objKnowledge" rendered="{! IF( articleList != null && articleList.size >0, true, false)}">
+                                                    
+                                                    <apex:column headerValue="Article Number">
+                                                        <apex:outputLink value="/apex/sendmail?articleid={!objKnowledge.Id}" target="_blank">{!objKnowledge.ArticleNumber}</apex:outputLink>
+                                                    </apex:column>
+                                                    <apex:column value="{!objKnowledge.Title}" headerValue="Article Title" />
+                                                    <apex:column value="{!objKnowledge.Article_category_type__c}" headerValue="Category" />
+                                                    <apex:column headerValue="Short Description" value="{!objKnowledge.Short_Description__c}"/>                         
+                                                    <apex:column headerValue="Revision Date" value="{!objKnowledge.Revision_Date__c}" />  
+                                                </apex:pageBlockTable>
+                                                
+                                                <apex:outputLabel rendered="{! IF( articleList != null && articleList.size >0, true, false)}" >
+                                                    <apex:commandButton status="articlePaginationtb" value="First Page" rerender="details" action="{!FirstPage}" disabled="{!prev}"/>
+                                                    <apex:commandButton status="articlePaginationtb" value="Previous" rerender="details" action="{!previousRow}" disabled="{!prev}"/>
+                                                    <apex:commandButton status="articlePaginationtb" value="Next" rerender="details" action="{!nextRow}" disabled="{!nxt}"/>
+                                                    <apex:commandButton status="articlePaginationtb" value="Last Page" rerender="details" action="{!LastPage}" disabled="{!nxt}"/>
+                                                </apex:outputLabel>
+                                                
+                                            </apex:pageBlock>
+                                        </div>
+                                    </apex:form>
+                                </div>
+                            </div> 
+                            <!--  <div class="main-block">
+<h1 id="welcome">
+Welcome To Live Web Chat..
+</h1>
+<button class="show"><b>Chat with Us</b></button>
+</div>-->
+                            <div class="main-block">
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <apex:form >
+                                            <table cellspacing="0" cellpadding="0" border="0" width="100%" class="static-links thumb_box">
+                                                <tr>
+                                                    <td><apex:commandLink value="" target="_blank" action="{!GetLink}"><apex:param assignTo="{!embededLink}"  value="https://calendly.com/anderson-attorneys/30-minute-attorney-consultation"/><apex:image url="{!URLFOR($Resource.images, 'images/Meet-with-attorney.png')}" alt="Meet with an Attorney" /></apex:commandLink></td>
+                                                    <td><apex:commandLink value="" action="{!GetLink}"><apex:param assignTo="{!embededLink}" value="https://www.anderson515168platinum.com/courses/"/><apex:image url="{!URLFOR($Resource.images, 'images/Online-Courses.png')}" alt="Courses" /></apex:commandLink></td>
+                                                    <td><apex:commandLink value="" action="{!GetLink}"><apex:param assignTo="{!embededLink}" value="https://andersonadvisors.com/platinum-meeting-minutes/"/><apex:image url="{!URLFOR($Resource.images, 'images/platinum-Meeting.png')}" alt="Meeting-Minutes" /></apex:commandLink></td>
+                                                </tr>
+                                                <tr>
+                                                    <!-- <td><a href="https://{!$Site.Domain}{!URLFOR($Page.Billing)}"><apex:image url="{!URLFOR($Resource.images, 'images/Make-A-Payment.png')}" alt="Make A Payment" /></a></td>-->
+                                                    <td><a  href="https://{!$Site.Domain}{!URLFOR($Page.SubmitPlatinumQuestion)}"><apex:image url="{!URLFOR($Resource.images, 'images/platinum-Submit.png')}" alt="Submit Plantinum" /></a></td>
+                                                    <td><apex:commandLink value="" action="{!GetLink}"><apex:param assignTo="{!embededLink}" value="https://www.anderson515168platinum.com/2288-2/"/><apex:image url="{!URLFOR($Resource.images, 'images/Document-Review.png')}" alt="Document-Review" /></apex:commandLink></td>
+                                                    <td><apex:commandLink value="" action="{!GetLink}"><apex:param assignTo="{!embededLink}" value="https://andersonadvisors.com/br/"/><apex:image url="{!URLFOR($Resource.images, 'images/Binder-Review.png')}" alt="Binder-Review" /></apex:commandLink></td>
+                                                    
+                                                </tr>
+                                                
+                                                
+                                            </table>
+                                            
+                                        </apex:form>
+                                    </div>                                
+                                </div>                                                     
+                            </div>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c != 'NVREA Platinum'}">
+                                <div id="owl-demo" class="owl-carousel owl-theme form-group">
+                                    <apex:repeat value="{!listSliderImg}" var="si" >
+                                        <div class="item">
+                                            <a href="{!si.Slider_path__c}" target="_blank" alt="{!si.Name}">
+                                                <apex:outputField value="{!si.Image__c}" />                                   
+                                            </a>
+                                            <div class="caption slid-text-sec">
+                                                <h3>{!si.Image_Description__c}</h3>
+                                            </div>
+                                        </div>
+                                    </apex:repeat>                           
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == ''}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c == 'Platinum'|| acc.Platinum_Client_View__c == 'Mastermind & Platinum')}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Platinum Elite'}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Lifetime Platinum'}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Infinity Only'}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Infinity & Platinum'}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Tax Team'}">
+                                <div class="calendar-area form-group">
+                                    <iframe class="iframe-full-width" src="https://calendar.google.com/calendar/embed?mode=AGENDA&src=andersonadvisors.com_k1a4k2bcr7alroi9gnakqbvl00%40group.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+                                </div>                              
+                            </apex:outputpanel>
+                            <div id="editProfile" class="modal fade" role="dialog">                                    
+                                <div class="modal-dialog entities-section">                                        
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            
+                                            <h4 class="modal-title">Edit Profile</h4>
+                                        </div>
+                                        <div class="modal-body">  
+                                            <apex:pageMessages id="messages" />
+                                            <div class="table-scroll">
+                                                <apex:actionStatus id="profileLoader" style="align:center;">      
+                                                    <apex:facet name="start">                                                        
+                                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                    </apex:facet>
+                                                    <apex:facet name="stop"></apex:facet>
+                                                </apex:actionStatus>
+                                                <apex:form id="editpro">
+                                                    <apex:pageBlock id="userpb">
+                                                        <h2>Account Information</h2>
+                                                        <div class="col-xs-12 form-group detailList">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="First Name" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.First_Name__c}" id="firstname" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Last Name" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.Last_Name__c}" id="lastname" styleClass="form-control"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Phone"/>
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.Phone}" id="phone" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <br/>
+                                                        
+                                                        <h2>Billing Address</h2>
+                                                        <div class="col-xs-12 form-group detailList">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Billing Street" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.BillingStreet}" id="BillingStreet" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Billing City" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.BillingCity}" id="BillingCity" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Billing State" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.BillingState}" id="BillingState" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Billing PostalCode" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.BillingPostalCode}" id="BillingPostalCode" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Billing Country" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.BillingCountry}" id="BillingCountry" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                            
+                                                            </div>
+                                                        </div>
+                                                        <br/>
+                                                        <h2>Shipping Address</h2>
+                                                        <div class="col-xs-12 form-group detailList">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Shipping Street" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.ShippingStreet}" id="ShippingStreet" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Shipping City" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.ShippingCity}" id="ShippingCity" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Shipping State" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.ShippingState}" id="ShippingState" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                            
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Shipping Country" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.ShippingCountry}" id="ShippingCountry" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="row form-group">
+                                                                        <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                            <apex:outputLabel value="Shipping PostalCode" />
+                                                                        </div>
+                                                                        <div class="col-md-7 col-xs-12">
+                                                                            <apex:inputField value="{!acc.ShippingPostalCode}" id="ShippingPostalCode" styleClass="form-control" />
+                                                                        </div>
+                                                                    </div>                                                                                                                            
+                                                                </div>                                                            
+                                                            </div>
+                                                        </div>
+                                                        <apex:commandButton action="{!updateAccount}" status="profileLoader" value="Save" id="btnSave" styleClass="btn btn-primary popup_btn" rerender="userpb,messages"/>
+                                                    </apex:pageBlock>
+                                                </apex:form>
+                                            </div>
+                                        </div> 
+                                    </div>                                        
+                                </div>
+                            </div> 
+                            
+                            <!--  <div class="accordion-option">                            
+<a href="javascript:void(0)" class="toggle-accordion active" accordion-id="#accordion"></a>
+</div>-->
+                            <div class="clearfix"></div>
+                            
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sidenav right-side">
+                            <div class="top-img-left mid-main-sec user-profile-block">
+                                <!--  <img src="images/side-img.jpg" alt="" /> -->
+                                <!-- <apex:image value="{!usObj.FullPhotoUrl}" alt=""/>-->
+                                <apex:outputField styleClass="profile-img-sec" value="{!usObj.Client_Image__c}" />
+                                <h1>Welcome to the Anderson Platinum Member Portal, {!usObj.FirstName}!</h1>
+                                <ul>
+                                    <li class="green">Member Name</li>
+                                    <li class="green">Member Id </li>
+                                    <li>{!acc.First_Name__c} {!acc.Last_Name__c}</li>
+                                    <li>{!acc.Account_Number__c}</li>
+                                </ul>
+                                <div class="btn-group" role="group">
+                                    <a data-toggle="modal" data-target="#editProfile" class="edit-profile-btn" href="#"><apex:image url="{!URLFOR($Resource.images, 'images/Edit-Your-Profile.png')}" alt="Courses" /></a>
+                                </div>  
+                            </div>
+                          <div class="top-img-left right-top-main mid-main-sec col-lg-3 col-md-3 col-sm-3">
+                                
+                                <h1> Our Platinum Portal is moving! Please <a href="https://{!$Site.Domain}{!URLFOR($Page.WordpressPasswordChangePage)}" target="_blank">click here</a> for more info. Please set your password for the new portal below.</h1>
+                                
+                                <apex:form id="frm">
+                                    <apex:pageMessages id="messages"/>
+                                    <div id="passMsg1"></div>
+                                    <div id="errorpassMsg1"></div>
+                                    <apex:outputLabel ><b>Username:</b><span style="color:red">*</span></apex:outputLabel>
+                                    <input type="text" name="calloutUser" id="calloutUser" value="" styleClass="form-control form-info" readonly="true"/><br/>
+                                    <apex:outputLabel ><b>New Password:</b><span style="color:red">*</span></apex:outputLabel>
+                                    <input type="text" name="calloutPass" id="calloutPass" value="" styleClass="form-control"/><br/>
+                                    <apex:outputLabel ><b>Confirm Password:</b><span style="color:red">*</span></apex:outputLabel>
+                                    <input type="text" name="calloutCpass" id="calloutCpass" value="" styleClass="form-control"/><br/>
+                                    
+                                    <input type="Submit" name="Submit" value="Submit" id="chngPass" onclick="checkPassword(); return false;"/><br/>
+                                    
+                                </apex:form>
+                                
+                            </div>
+                            <div class="top-img-left right-top-main mid-main-sec col-lg-3 col-md-3 col-sm-3">
+                                <div class="fb-page" data-href="https://www.facebook.com/AndersonBusinessAdvisors/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/AndersonBusinessAdvisors/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/AndersonBusinessAdvisors/">Anderson Business Advisors</a></blockquote></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </apex:outputpanel> 
+                <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c == 'Mastermind Only')}">
+                    <iframe width="100%" height="800px" src="https://trainingcenter.anderson515168platinum.com/mastermind"></iframe>
+                </apex:outputpanel> 
+            </div>
+            <!-- <footer class="container-fluid text-center">
+<p>Privacy and Security Statement  |  Terms and Conditions Copyright © 2017 by Anderson Advisors - All rights reserved.</p>
+</footer>-->
+            <apex:include pageName="AndersonFooter"/>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>     
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.marquee.js')}"/>
+            <apex:includeScript value="https://apis.google.com/js/platform.js"/>
+            <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+            <script>    
+            $(document).ready(function() {                     
+                var availableTags =  [];
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.KnowledgeCustomSearchController.getUserKeywords}',                            
+                    function(result, event){   
+                        console.log('result11='+result);
+                        if(event.status){ 
+                            availableTags = result;
+                        } 
+                    });
+                $('#testinput').on("keypress", function() {
+                    $( "#testinput" ).autocomplete({
+                        source: availableTags
+                    });
+                });
+            }); 
+            </script>
+            <script>
+            $( document ).ready(function() {
+                console.log( "ready!" );
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ChangePasswordCallout.preUsername}',                            
+                    function(result, event){ 
+                        if(event.status){
+                            document.getElementById('calloutUser').value=result;
+                        }
+                    });
+});
+            
+            </script>
+            
+            <script type="text/javascript">
+            function testinputJS(){
+                $('#testinput').autocompleter = null;
+                var str = document.getElementById('testinput').value;
+                string = str.trim();
+                if(string != ''){
+                    passToController(string);
+                } else {
+                    document.getElementById("artErrMsg").innerHTML = "<span id='errorMsg'>Please Enter Some Value</span>";
+                    document.getElementById("artErrMsg").style.display = "block";
+                    $('.anderson-search-detail').hide();
+                    setTimeout(function() { $("#artErrMsg").fadeOut(1500); }, 5000);
+                    
+                }
+            }
+            function showArtDetails(){
+                $('.anderson-search-detail').show();
+            }
+            
+            $(document).ready(function() {
+                $('#testinput').keydown(function(event){
+                    if(event.keyCode == 13) {
+                        $('input[name = artBtn]').click();
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            });
+            </script>
+            <script>
+            $(document).ready(function() {  
+                $("#owl-demo").owlCarousel({
+                    items: 1,                    
+                    loop: true,
+                    navigation : true, 
+                    autoPlay: true,
+                    autoplayTimeout: 500,
+                    autoplayHoverPause: true,
+                    touchDrag: true,
+                    dots: true,
+                    slideSpeed : 300,
+                    paginationSpeed : 400,
+                    singleItem: true,
+                    pagination: false         
+                    
+                }); 
+                $('#pagesize').change(function() {
+                    var ls = this.value
+                    $("#listsize").val(this.value);
+                });
+                
+            }); 
+            </script> 
+            <script type="text/javascript">
+            $("#expedited").change(function(){
+                $("#showexpedited").fadeToggle();
+                $("#expedited-question").fadeToggle();
+                
+            });
+            
+            
+            function getRemoteAccount(callingCaseNumber,UsrId) {
+                var caseNo = callingCaseNumber;
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.CaseController.getCaseDetails}',
+                    caseNo, 
+                    function(result, event){
+                        var commentHtml = '';
+                        var caseHtml = '';                        
+                        document.getElementById("commentResults").innerHTML = "";                        
+                        document.getElementById("caseResults").innerHTML = "";                                               
+                        var cdate=new Date(result[0].caseCreateDate).getDate();
+                        var cmonth=new Date(result[0].caseCreateDate).getMonth()+1;
+                        var cyear=new Date(result[0].caseCreateDate).getFullYear();
+                        var hours = new Date(result[0].caseCreateDate).getHours();
+                        var min = new Date(result[0].caseCreateDate).getMinutes();
+                        var sec = new Date(result[0].caseCreateDate).getSeconds();                        
+                        var ampm = hours >= 12 ? 'PM' : 'AM';
+                        hours = hours % 12;
+                        hours = hours ? hours : 12; // the hour '0' should be '12'
+                        min = min < 10 ? '0'+min : min;
+                        var strTime = hours + ':' + min + ' ' + ampm;
+                        var original_date = cmonth + '/' + cdate + '/' + cyear +' '+ strTime;
+                        //caseHtml += '<td width="65%"><div class="row"><div class="col-xs-6">Case Number- '+ result[0].CaseNumber +'</div><div class="col-xs-6">Created Date '+ original_date +'</div><div class="col-xs-12"><h4 class="h4">'+ result[0].caseName +'</h4></div></div> </td><td><div class="row"><div class="col-xs-12">Status- '+ result[0].caseStatus +'</div><div class="col-xs-12">Case Owner- '+ result[0].caseOwner +'</div></div></td>'; 
+                        caseHtml += '<td width="65%"><div class="row"><div class="col-xs-6">Case Number- '+ result[0].CaseNumber +'</div><div class="col-xs-6">Created Date '+ original_date +'</div><div class="col-xs-12"><h4 class="h4">'+ result[0].caseName +'</h4></div></div> </td><td><div class="row"><div class="col-xs-12">Status- '+ result[0].caseStatus +'</div></div></td>'; 
+                        if(result[0].caseStatus == 'Closed') { $("#cmntBox").hide(); } else { $("#cmntBox").show();}
+                        $("#caseResults").append(caseHtml);     
+                        if (typeof result[0].caseDesc=== "undefined") {
+                            result[0].caseDesc = '';
+                        }
+                        document.getElementById("commdesc").innerHTML = result[0].caseDesc;
+                        for (var i = 0; i < result.length; i++) { 
+                            if (event.status) {                                
+                                $("#userComment").val(result[0].CaseId);
+                                $("#caseval").val(callingCaseNumber);                                
+                                if(result[i].commBody) {    
+                                    var Uid = document.getElementById('usid').value;
+                                    var comdate=new Date(result[i].commDate).getDate();
+                                    var commonth=new Date(result[i].commDate).getMonth()+1;
+                                    var comyear=new Date(result[i].commDate).getFullYear();
+                                    var comhours = new Date(result[i].commDate).getHours();
+                                    var commin = new Date(result[i].commDate).getMinutes();
+                                    var comsec = new Date(result[i].commDate).getSeconds();                        
+                                    var comampm = comhours >= 12 ? 'PM' : 'AM';
+                                    comhours = comhours % 12;
+                                    comhours = comhours ? comhours : 12; // the hour '0' should be '12'
+                                    commin = commin < 10 ? '0'+commin : commin;
+                                    var comTime = comhours + ':' + commin + ' ' + comampm;
+                                    var original_com_date = commonth + '/' + comdate + '/' + comyear +' '+ comTime; 
+                                    //alert('com by = ' + result[i].commById+' , User id = '+ Uid);
+                                    if(result[i].commById == Uid) { var comId = result[i].commBy; } else { var comId = 'Anderson Business Advisors'; }
+                                    //commentHtml += '<div class="col-xs-9"><div class="col-xs-12 comment-list"><div class="col-xs-4 form-group">'+ result[i].commBy +'</div><div class="col-xs-8 form-group">Update date- '+ original_com_date +'</div><div class="col-xs-12"> '+ result[i].commBody +'</div></div></div>';
+                                    commentHtml += '<div class="col-xs-12"><div class="col-xs-12 comment-list"><div class="col-xs-4 form-group"><b>'+ comId +'</b></div><div class="col-xs-8 form-group"><b>Update date- '+ original_com_date +'</b></div><div class="col-xs-12"> '+ result[i].commBody +'</div></div></div>';                                
+                                }
+                            } else if (event.type === 'exception') {
+                                document.getElementById("responseErrors").innerHTML = 
+                                    event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                            } else {
+                                document.getElementById("responseErrors").innerHTML = event.message;
+                            }
+                        }
+                        $("#commentResults").append(commentHtml);                           
+                    }, 
+                    {escape: true}
+                );
+            }
+            
+            </script>
+            
+            <style type='text/css'>
+                .embeddedServiceHelpButton .helpButton .uiButton {
+                background-color: #466d8c;
+                font-family: "Salesforce Sans", sans-serif;
+                }
+                .embeddedServiceHelpButton .helpButton .uiButton:focus .message{
+                outline: 1px solid #466d8c;
+                }
+                
+                .embeddedServiceSidebar button{
+                background:none;
+                border:none;
+                text-transform: none;
+                
+                }
+                .embeddedServiceSidebarMinimizedDefaultUI .minimizedText {  
+                overflow: visible;
+                text-transform: none;
+                }
+                .embeddedServiceHelpButton .uiButton .helpButtonLabel .message {
+                overflow: visible;
+                white-space: nowrap;
+                text-transform: none;
+                }
+                .message {
+                background-color: #466d8c;
+                overflow: visible;
+                border-style: none;
+                color: #fff;
+                }
+                @font-face {
+                font-family: 'Salesforce Sans';
+                src: url('https://c1.sfdcstatic.com/etc/clientlibs/sfdc-aem-master/clientlibs_base/fonts/SalesforceSans-Regular.woff') format('woff'),
+                url('https://c1.sfdcstatic.com/etc/clientlibs/sfdc-aem-master/clientlibs_base/fonts/SalesforceSans-Regular.ttf') format('truetype');
+                }
+                
+                .embeddedServiceHelpButton .uiButton{
+                max-width: 20em;
+                }
+                .embeddedServiceSidebarButton {
+                background: #466d8c !important;
+                
+                }
+                .embeddedServiceSidebarMinimizedDefaultUI {
+                min-width: 18em !important;
+                }
+            </style>
+            
+            <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+            <script type='text/javascript'>
+                var initESW = function(gslbBaseURL) {
+                    embedded_svc.settings.displayHelpButton = true; //Or false
+                    embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+                    
+                    embedded_svc.settings.defaultMinimizedText = 'Ask Us Your Platinum Question?'; //(Defaults to Chat with an Expert)
+                    embedded_svc.settings.disabledMinimizedText = 'Platinum Professionals Offline'; //(Defaults to Agent Offline)
+                    
+                    //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+                    //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+                    
+                    // Settings for Chat
+                    //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+                    // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+                    // Returns a valid button ID.
+                    //};
+                    embedded_svc.settings.prepopulatedPrechatFields = {FirstName: "{!con.FirstName}", LastName: "{!con.LastName}", Email: "{!con.Email}"}; //Sets the auto-population of pre-chat form fields
+                    //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+                    embedded_svc.settings.offlineSupportMinimizedText = 'We\'re Offline - Contact Us!'; //(Defaults to Contact Us))
+                    
+                    embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+                    embedded_svc.settings.entryFeature = 'LiveAgent';
+                    
+                    embedded_svc.init(
+                        'https://andersonadvisors--Comm.cs19.my.salesforce.com',
+                        'https://comm-platinum.cs19.force.com/dashboard',
+                        gslbBaseURL,
+                        '00D29000000DMwA',
+                        'Platinum_Advisor_Chat',
+                        {
+                            baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content',
+                            deploymentId: '57229000000006i',
+                            buttonId: '5732900000000Hg',
+                            baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat',
+                            eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I290000008OfxEAE_16fae6855e7',
+                            isOfflineSupportEnabled: false
+                        }
+                    );
+                };
+            
+            if (!window.embedded_svc) {
+                var s = document.createElement('script');
+                s.setAttribute('src', 'https://andersonadvisors--Comm.cs19.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+                s.onload = function() {
+                    initESW(null);
+                };
+                document.body.appendChild(s);
+            } else {
+                initESW('https://service.force.com');
+            }
+            
+            function checkPassword() {
+                var calloutUser = document.getElementById('calloutUser').value;
+                var calloutPass = $('#calloutPass').val();
+                var calloutCpass = $('#calloutCpass').val(); 
+                if(calloutUser != '') { 
+                    if(calloutPass != '') {
+                        if(calloutCpass != '') {
+                            if(calloutPass == calloutCpass) {
+                                // Call the remote action to save the record data
+                                Visualforce.remoting.Manager.invokeAction(
+                                    '{!$RemoteAction.ChangePasswordCallout.sendNewPwdToWordpress}',
+                                    calloutUser,calloutPass,
+                                    function(result, event){   
+                                        console.log('result=='+result);
+                                        if(event.status){
+                                            console.log('event.status='+event.status);
+                                            document.getElementById('calloutPass').value='';
+                                            document.getElementById('calloutCpass').value='';
+                                            if(result=='Your password has been updated successfully!')
+                                            {
+                                                document.getElementById("passMsg1").innerHTML = "<span id='successMsg' style='color:green'>"+result+"</span>";
+                                            }else
+                                            {
+                                                document.getElementById("passMsg1").innerHTML = "<span id='errorMsg'>"+result+"</span>";
+                                            }
+                                            console.log('result=' + result);
+                                        } else if (event.type === 'exception'){
+                                            document.getElementById("errorpassMsg1").innerHTML = "<span id='errorMsg'>Error !!!</span>";
+                                            console.log('22222');
+                                        } else {
+                                            document.getElementById("errorpassMsg1").innerHTML = "<span id='errorMsg'>There Is Some Problem</span>";
+                                            console.log('333333');
+                                        }    
+                                    });
+                            } else { 
+                                document.getElementById("errorpassMsg1").innerHTML = "<span id='errorMsg'>Passwords Do Not Match</span>";  
+                                console.log('pass not match');                    
+                            } } else {
+                                document.getElementById("errorpassMsg1").innerHTML = "<span id='errorMsg'>Please Confirm Password</span>"; 
+                                console.log('call confirm pass');
+                            }
+                    } else {
+                        document.getElementById("errorpassMsg1").innerHTML = "<span id='errorMsg'>Please Enter Password</span>";
+                        console.log('call pass');
+                    }
+                } else {
+                    document.getElementById("errorpassMsg1").innerHTML = "<span id='errorMsg'>Please Enter Username</span>"; 
+                    console.log('call user');
+                }
+                setTimeout(function() { $("#passMsg1 span").fadeOut(1500); }, 5000);
+                setTimeout(function() { $("#errorpassMsg1 span").fadeOut(1500); }, 5000);
+            }
+            </script>
+            
+            
+        </body>
+    </html>
+</div>
+</apex:page>

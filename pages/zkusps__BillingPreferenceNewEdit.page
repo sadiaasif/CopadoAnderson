@@ -1,0 +1,179 @@
+<apex:page tabStyle="UspsPreferences__tab" standardController="zkusps__Preference__c" extensions="zkusps.BillingPreferenceController" sidebar="true">
+
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+
+    <apex:sectionHeader title="USPS Express1 Billing Preference Edit"  subtitle="New USPS Express1 Billing Preference" rendered="{!NOT(IsEditMode)}"/>
+    <apex:sectionHeader title="USPS Express1 Billing Preference Edit"  subtitle="Edit USPS Express1 Billing Preference" rendered="{!IsEditMode}"/>
+
+    <apex:form >
+
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+
+                $j(document).ready(function() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                });
+            </script>
+        </apex:outputPanel>
+
+        <apex:pageBlock id="preferencePageBlock" mode="detail">
+
+            <!-- Messages -->
+            <apex:outputPanel id="preferencePageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+
+
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!savePreference}" value="Save"/>
+                <apex:commandButton action="{!backToPreviousPage}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+
+            <!-- Customer Info Section -->
+            <apex:pageBlockSection id="customerInfoSection" collapsible="false" title="Customer Info and Mailing Address">
+
+                <!-- Company Name -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Company Name"/>
+                    <apex:inputField value="{!Preference.zkusps__companyName__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Mailing Street -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Mailing Street"/>
+                    <apex:inputField style="width:350px" value="{!Preference.zkusps__mailingStreet__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Account Contact Name -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Account Contact Name"/>
+                    <apex:inputField value="{!Preference.zkusps__accountContactName__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Mailing City -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Mailing City"/>
+                    <apex:inputField value="{!Preference.zkusps__mailingCity__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Account Contact Email -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Account Contact Email"/>
+                    <apex:inputField value="{!Preference.zkusps__accountContactEmail__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Mailing State -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Mailing State"/>
+                    <apex:inputField value="{!Preference.zkusps__mailingState__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Account Contact Phone -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Account Contact Phone"/>
+                    <apex:inputField value="{!Preference.zkusps__accountContactPhone__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Mailing Postal Code -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Mailing Postal Code"/>
+                    <apex:inputField value="{!Preference.zkusps__mailingPostalCode__c}"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+
+            <!-- Payment Info Section -->
+            <apex:pageBlockSection id="paymentInfoSection" collapsible="false" title="Payment Info">
+
+                <!-- Credit Card Type -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Credit Card Type"/>
+                    <apex:inputField value="{!Preference.zkusps__creditCardType__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Billing Street -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Billing Street"/>
+                    <apex:inputField style="width:350px" value="{!Preference.zkusps__billingStreet__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Credit Card Number -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Credit Card Number"/>
+                    <apex:inputField value="{!Preference.zkusps__creditCardNumber__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Billing City -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Billing City"/>
+                    <apex:inputField value="{!Preference.zkusps__billingCity__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Name one Credit Card -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Name on Card"/>
+                    <apex:inputField value="{!Preference.zkusps__nameOnCard__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Billing State -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Billing State"/>
+                    <apex:inputField value="{!Preference.zkusps__billingState__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Credit Card Security Code -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Credit Card Security Code"/>
+                    <apex:inputSecret size="4" value="{!CreditCardSecurityCode}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Billing Postal Code -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Billing Postal Code"/>
+                    <apex:inputField value="{!Preference.zkusps__billingPostalCode__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Expiration Month dropdown -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Credit Card Expiration Month"/>
+                    <apex:selectList value="{!Preference.zkusps__creditCardExpirationMonth__c}" size="1" multiselect="false" >
+                        <apex:selectOptions value="{!CreditCardExpirationMonthOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem><p/>
+
+                <!-- Expiration Year dropdown -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Credit Card Expiration Year"/>
+                    <apex:selectList value="{!Preference.zkusps__creditCardExpirationYear__c}" size="1" multiselect="false" >
+                        <apex:selectOptions value="{!CreditCardExpirationYearOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem><p/>
+            </apex:pageBlockSection>
+
+
+            <!-- Terms Section -->
+            <apex:pageBlockSection id="termsSection" collapsible="false" columns="1" title="Terms">
+
+                <!-- Terms & Conditions link -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandLink target="_blank" immediate="true" value="Express1 Terms and Conditions" action="https://service.express1.com/Customer/Terms.aspx"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Terms Accepted -->
+                <!-- Required -->
+                <apex:inputField value="{!Preference.zkusps__termsAccepted__c}" rendered="{!NOT(IsEditMode)}"/>
+                <!-- In edit mode, do not need the ability to un-accept terms. Make read only -->
+                <apex:outputField value="{!Preference.zkusps__termsAccepted__c}" rendered="{!IsEditMode}"/>
+
+            </apex:pageBlockSection>
+
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Formstack permission set that provides access to Admin Settings panel to unlicensed users to allow them to manage package licenses.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VisualAntidote__Formstack_User_License__c.VisualAntidote__One_Primary_User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VisualAntidote__Formstack_User_License__c.VisualAntidote__User_Is_Unique__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VisualAntidote__Formstack_User_License__c.VisualAntidote__User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Formstack Admin Settings</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>VisualAntidote__Formstack_User_License__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <pageAccesses>
+        <apexPage>VisualAntidote__AdminSettingsPanel</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VisualAntidote__FFAuthUpdate</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VisualAntidote__FormMenu</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VisualAntidote__FormWelcome</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VisualAntidote__WelcomeToFormstack</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <tabSettings>
+        <tab>VisualAntidote__FastForms</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

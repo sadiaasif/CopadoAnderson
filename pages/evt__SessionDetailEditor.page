@@ -1,0 +1,8 @@
+<apex:page standardController="evt__Session__c" extensions="evt.SessionEditController">
+<apex:form id="contentEditorForm">
+<div style="margin-bottom:5px;">
+<c:richeditor value="{!evt__Session__c.evt__Session_Details__c}" height="400px" />
+</div>
+<apex:commandButton action="{!saveRecord}" value="Save Content Changes"  onclick="document.getElementById('saveHTMLStatus').innerHTML='Saving changes ...';" />&nbsp;<span id="saveHTMLStatus"></span>
+</apex:form>
+</apex:page>

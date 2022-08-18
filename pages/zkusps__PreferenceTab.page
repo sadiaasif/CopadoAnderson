@@ -1,0 +1,9 @@
+<apex:page tabStyle="UspsPreferences__tab">
+    <apex:sectionHeader title="Shipping Preferences, Billing Preferences and Endicia Preferences" subtitle="Home" help="http://www.zenkraft.com/support/usps/docs/preferences"/>
+    <!-- Billing Preference -->
+    <apex:enhancedList type="Preference__c" customizable="true" height="300" rowsPerPage="10" id="BillingPreferenceList"></apex:enhancedList>
+    <!-- Shipping Preference -->
+    <apex:enhancedList type="ShippingPreference__c" customizable="true" height="300" rowsPerPage="10" id="ShippingPreferenceList"></apex:enhancedList>
+    <!-- Endicia Preference -->
+    <apex:enhancedList type="EndiciaPreference__c" customizable="true" height="300" rowsPerPage="10" id="EndiciaPreferenceList"></apex:enhancedList>
+</apex:page>

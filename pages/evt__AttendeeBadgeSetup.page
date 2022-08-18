@@ -1,0 +1,105 @@
+<apex:page standardController="evt__Special_Event__c"  extensions="evt.AttendeeBadgeSetupController">
+<apex:sectionHeader title="Linvio Events" subtitle="Attendee Badges" help="{!URLFOR($Page.evt__EventManagementHelp)}"/>
+<apex:form >
+<apex:pageMessages />
+<apex:pageBlock mode="edit">
+<apex:pageBlockButtons >
+<apex:commandButton value="Return" action="{!returnToEvent}"/>
+<apex:commandButton value="Create Attendee Badges" action="{!createBadges}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockSection columns="2" title="General Settings" collapsible="false">
+<apex:pageBlockSectionItem >
+<apex:outputText value="Page Layout"/>
+<apex:selectList size="1" multiselect="false" value="{!selectedPageLayout}">
+<apex:selectOption itemValue="Avery5390" itemLabel="2.25x3.5 Name Badge Inserts (Avery 5390)"/>
+<apex:selectOption itemValue="Avery5395" itemLabel="2-1/3x3-3/8 Adhesive Name Badges (Avery 5395)"/>
+<apex:selectOption itemValue="Avery5392" itemLabel="3x4 Badge Insert (Avery 5392)"/>
+<apex:selectOption itemValue="Avery5392QR" itemLabel="3x4 Badge Insert w/QR Codes (Avery 5392)"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Show Gridlines"/>
+<apex:inputCheckbox value="{!showGrid}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Show Barcode"/>
+<apex:inputCheckbox value="{!showBarcode}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Show Title"/>
+<apex:inputCheckbox value="{!showTitle}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value="Show Company"/>
+<apex:inputCheckbox value="{!showCompany}"/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem helpText="Select the status(es) of attendees you want to include on the check-in sheet.">
+<apex:outputText value="Registration Status(es)"/>
+<apex:selectList size="5" multiselect="true"  value="{!statusValues}">
+<apex:selectOption itemLabel="Invited" itemValue="Invited"/>
+<apex:selectOption itemLabel="Payment Pending" itemValue="Payment Pending"/>
+<apex:selectOption itemLabel="Registered" itemValue="Registered"/>
+<apex:selectOption itemLabel="Cancelled" itemValue="Canceled"/>
+<apex:selectOption itemLabel="Declined" itemValue="Declined"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem helpText="Select the category(ies) of attendees you want to include on the check-in sheet.">
+<apex:outputText value="Attendee Category"/>
+<apex:selectList size="5" multiselect="true" value="{!attendeeCategories}">
+<apex:selectOption itemLabel="Attendee" itemValue="Attendee"/>
+<apex:selectOption itemLabel="Exhibitor" itemValue="Exhibitor"/>
+<apex:selectOption itemLabel="Sponsor" itemValue="Sponsor"/>
+<apex:selectOption itemLabel="Volunteer" itemValue="Volunteer"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="2" title="Advanced Settings" collapsible="true" >
+<apex:pageBlockSectionItem helpText="(Optional) If you use 'bucket accounts' to group Contacts that don't have an Account, enter the Account record Ids here to mask them on badges.  Separate multiple Ids with commas.">
+<apex:outputText value="Bucket Account Ids"/>
+<apex:inputText value="{!maskedAccounts}" style="width:350px;"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="(Optional) Enter a URL for generating attendee badge QR codes - overriding the default Linvio Events QR generator.  NOTE: The domain in this URL must also be added to your Remote Sites settings in Salesforce.">
+<apex:outputText value="vCard QR Code Generator"/>
+<apex:inputText value="{!event.evt__vCard_QR_Generator__c}" style="width:350px;"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputText value=""/>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

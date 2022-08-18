@@ -1,0 +1,3938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ComposeGmail</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ComposeGmail</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ComposeGmail</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>LogCall</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>LogCall</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>LogCall</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>MailMerge</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>MailMerge</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>MailMerge</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SendEmail</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SendEmail</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SendEmail</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewAll</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewAll</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewAll</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AMS_Events_Notify__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Invite guests in Google</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Advisor__c</fullName>
+        <externalId>false</externalId>
+        <label>Advisor</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Advisors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Agreement_Processor__c</fullName>
+        <defaultValue>&quot;Bill Widener&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Agreement Processor</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Bill Widener</fullName>
+                    <default>false</default>
+                    <label>Bill Widener</label>
+                </value>
+                <value>
+                    <fullName>Christian Abraham</fullName>
+                    <default>false</default>
+                    <label>Christian Abraham</label>
+                </value>
+                <value>
+                    <fullName>Samantha Kimes</fullName>
+                    <default>false</default>
+                    <label>Samantha Kimes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Anderson_System_Stage__c</fullName>
+        <description>Current Stage of the Anderson System</description>
+        <externalId>false</externalId>
+        <label>Anderson System Stage</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Anderson_System_Stages</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AssignedToProfile__c</fullName>
+        <externalId>false</externalId>
+        <formula>Owner:User.Profile.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AssignedToProfile</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Assigned_Paralegal__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( RecordTypeId = &quot;0120B000000t82r&quot;, 
+   IF( NOT(ISBLANK( Related_Entity__c)), 
+   Related_Entity__r.Processor__r.FirstName &amp; &quot; &quot; &amp; Related_Entity__r.Processor__r.LastName, 
+   Trust__r.Processor__r.FirstName &amp; &quot; &quot; &amp; Trust__r.Processor__r.LastName), 
+IF( RecordTypeId = &quot;0124P000000gMHn&quot;, 
+   TEXT(Case_connect__r.Assigned_Paralegal_Deep_Prep__c) , NULL) 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Assigned Paralegal</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BKG_Reviewer__c</fullName>
+        <description>Who is doing the review</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Who is doing the review</inlineHelpText>
+        <label>BKG Reviewer</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sara Winter</fullName>
+                    <default>false</default>
+                    <label>Sara Winter</label>
+                </value>
+                <value>
+                    <fullName>Marie Pues</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Marie Pues</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Admin__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeper</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Bookkeeping_Admin</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_IC__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeping IC</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bookkeeper 1</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 1</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 2</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 2</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 3</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 3</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 4</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 4</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 5</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 5</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 6</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 6</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 7</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 7</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 8</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 8</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 9</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 9</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 10</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 10</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 11</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 11</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 12</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 12</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 13</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 13</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 14</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 14</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 15</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 15</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 16</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 16</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 17</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 17</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 18</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 18</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 19</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 19</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 20</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 20</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 21</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 21</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 22</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 22</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 23</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 23</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 24</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 24</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeper 25</fullName>
+                    <default>false</default>
+                    <label>Bookkeeper 25</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Reviewer__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeping Reviewer</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Bookkeeping_Reviewer</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Stages__c</fullName>
+        <description>Stages of Bookkeeping</description>
+        <externalId>false</externalId>
+        <label>Bookkeeping Stages</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Bookkeeping_Stages</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Business_Days_to_Close__c</fullName>
+        <externalId>false</externalId>
+        <formula>(5 * ( FLOOR( ( DATEVALUE(Completed_Date__c) - DATE( 1900, 1, 8) ) / 7 ) ) + MIN( 5, MOD( 
+DATEVALUE(Completed_Date__c)- DATE( 1900, 1, 8), 7 ) ) ) 
+- 
+(5 * ( FLOOR( ( DATEVALUE(DateCreated__c) - DATE( 1900, 1, 8) ) / 7 ) ) + MIN( 5, MOD( 
+DATEVALUE(DateCreated__c) - DATE( 1900, 1, 8), 7 ) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Business Days to Close</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CAM__c</fullName>
+        <externalId>false</externalId>
+        <label>CAM</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>CAM</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>CSR__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Success Coordinator</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>CSR</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Calendly__InviteeUuid__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>InviteeUuid</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Calendly__IsRescheduled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is Rescheduled</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Call_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Call Outcome</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Spoke to Client</fullName>
+                    <default>false</default>
+                    <label>Spoke to Client</label>
+                </value>
+                <value>
+                    <fullName>Left VM</fullName>
+                    <default>false</default>
+                    <label>Left VM</label>
+                </value>
+                <value>
+                    <fullName>No Answer</fullName>
+                    <default>false</default>
+                    <label>No Answer</label>
+                </value>
+                <value>
+                    <fullName>Transferred</fullName>
+                    <default>false</default>
+                    <label>Transferred</label>
+                </value>
+                <value>
+                    <fullName>Setup Call Back</fullName>
+                    <default>false</default>
+                    <label>Setup Call Back</label>
+                </value>
+                <value>
+                    <fullName>Scheduled Appt.</fullName>
+                    <default>false</default>
+                    <label>Scheduled Appt.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_connect__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Case Connected</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Activities</relationshipLabel>
+        <relationshipName>Activities</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Client__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Client</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Activities</relationshipLabel>
+        <relationshipName>Activities</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Completed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Completed Date</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Completing_Books_for_Months__c</fullName>
+        <description>Months you are completing books for</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Months you are completing books for</inlineHelpText>
+        <label>Completing Books for Months</label>
+        <required>false</required>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Jan</fullName>
+                    <default>false</default>
+                    <label>Jan</label>
+                </value>
+                <value>
+                    <fullName>Feb</fullName>
+                    <default>false</default>
+                    <label>Feb</label>
+                </value>
+                <value>
+                    <fullName>Mar</fullName>
+                    <default>false</default>
+                    <label>Mar</label>
+                </value>
+                <value>
+                    <fullName>Apr</fullName>
+                    <default>false</default>
+                    <label>Apr</label>
+                </value>
+                <value>
+                    <fullName>May</fullName>
+                    <default>false</default>
+                    <label>May</label>
+                </value>
+                <value>
+                    <fullName>Jun</fullName>
+                    <default>false</default>
+                    <label>Jun</label>
+                </value>
+                <value>
+                    <fullName>Jul</fullName>
+                    <default>false</default>
+                    <label>Jul</label>
+                </value>
+                <value>
+                    <fullName>Aug</fullName>
+                    <default>false</default>
+                    <label>Aug</label>
+                </value>
+                <value>
+                    <fullName>Sep</fullName>
+                    <default>false</default>
+                    <label>Sep</label>
+                </value>
+                <value>
+                    <fullName>Oct</fullName>
+                    <default>false</default>
+                    <label>Oct</label>
+                </value>
+                <value>
+                    <fullName>Nov</fullName>
+                    <default>false</default>
+                    <label>Nov</label>
+                </value>
+                <value>
+                    <fullName>Dec</fullName>
+                    <default>false</default>
+                    <label>Dec</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Completing_Books_for_Year__c</fullName>
+        <description>Completing books for year</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Completing books for year</inlineHelpText>
+        <label>Completing Books for Year</label>
+        <required>false</required>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>2018</fullName>
+                    <default>false</default>
+                    <label>2018</label>
+                </value>
+                <value>
+                    <fullName>2017</fullName>
+                    <default>false</default>
+                    <label>2017</label>
+                </value>
+                <value>
+                    <fullName>2016</fullName>
+                    <default>false</default>
+                    <label>2016</label>
+                </value>
+                <value>
+                    <fullName>2015</fullName>
+                    <default>false</default>
+                    <label>2015</label>
+                </value>
+                <value>
+                    <fullName>2014</fullName>
+                    <default>false</default>
+                    <label>2014</label>
+                </value>
+                <value>
+                    <fullName>2013</fullName>
+                    <default>false</default>
+                    <label>2013</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Complexity_Score__c</fullName>
+        <description>Score the complexity of the client.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>1 = Simple, 5 = Standard, 10 = Most Complex</inlineHelpText>
+        <label>Complexity Score</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Consult_Scheduled__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Entity__r.Consult_Scheduled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Consult Scheduled</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__Is_Created_By_Groove__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether this activity was automatically created by Groove. This can be used as signal for workflows to trigger (field updates, email alerts, etc.).</inlineHelpText>
+        <label>Is Created By Groove</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__LastModifiedDate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>is the most recent date/time on which Groove updated the event record or the date/time a logged email was sent by the sender.</inlineHelpText>
+        <label>Timestamp</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__Last_Opened_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If a task reflects a tracked email, this field indicates the timestamp of the most recent open event (most recent email open by one of the recipients).</inlineHelpText>
+        <label>Last Opened Date</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__Mirror_in_Owner_s_Calendar__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>controls whether or not this event will be mirrored in the corporate calendar of the user who is the owner of this event. This field is part of the Groove calendar integration.</inlineHelpText>
+        <label>Mirror in Owner&apos;s Calendar</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__Replied__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Replied</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__Times_Clicked__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If a task reflects a tracked email, this field indicates how many times any of the links contained in the email was clicked.</inlineHelpText>
+        <label>Times Clicked</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__Times_Opened__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>if a task reflects a tracked email, this field indicates how many times the email was opened by any of the recipients.</inlineHelpText>
+        <label>Times Opened</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__vCal_IID__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>is the instance ID of a recurring calendar event or the id of a referenced email. This field is part of Groove integration.</inlineHelpText>
+        <label>IID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DaScoopComposer__vCal_UID__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>is the unique ID of an activity such as the calendar event UID or the email message ID. This field is part of the Groove calendar integration.</inlineHelpText>
+        <label>UID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DateCreated__c</fullName>
+        <externalId>false</externalId>
+        <formula>CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DateCreated</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Binder_was_Shipped__c</fullName>
+        <description>The date the binder was shipped.
+
+For Tax record types: 
+WF &quot;Review Complete&quot; or &quot;Review Complete - Paper File&quot; to &quot;Ready for Client Review</description>
+        <externalId>false</externalId>
+        <label>Date Binder was Shipped</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Due__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Will update the Due Date of the task when changed.</inlineHelpText>
+        <label>Date Due</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_in_Ready_for_Client_Review__c</fullName>
+        <externalId>false</externalId>
+        <label>Date in Ready for Client Review</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_in_Tax_Prep__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date task is changed to Tax-Prep.</inlineHelpText>
+        <label>Date in Tax-Prep</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_in_Tax_Review_Complete__c</fullName>
+        <externalId>false</externalId>
+        <label>Date in Tax-Review Complete</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_in_Tax_Review__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date task is changed to Tax-Review.</inlineHelpText>
+        <label>Date in Tax-Review</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Days_Since_Last_Modified__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOW() - LastModifiedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Calculates the days between the &quot;Last Modified Date&quot; field and the current date.</inlineHelpText>
+        <label>Days Since Last Modified</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_in_Prep__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(MOD(Date_in_Tax_Prep__c- DATE(1985,6,24),7), 
+0 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,2,2,3,3,4,4,5,5,5,6,5,1), 
+1 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,2,2,3,3,4,4,4,5,4,6,5,1), 
+2 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,2,2,3,3,3,4,3,5,4,6,5,1), 
+3 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,2,2,2,3,2,4,3,5,4,6,5,1), 
+4 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,1,2,1,3,2,4,3,5,4,6,5,1), 
+5 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,0,2,1,3,2,4,3,5,4,6,5,0), 
+6 , CASE( MOD( Date_in_Tax_Review__c -Date_in_Tax_Prep__c,7),1,1,2,2,3,3,4,4,5,5,6,5,0), 
+999) 
++ 
+(FLOOR(( Date_in_Tax_Review__c -Date_in_Tax_Prep__c)/7)*5)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Difference between days task changed to Tax-Prep and Tax-Review</inlineHelpText>
+        <label>Days in Prep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_in_Review__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(MOD( DATEVALUE(DateCreated__c) - DATE(1985,6,24),7), 
+0 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,2,2,3,3,4,4,5,5,5,6,5,1), 
+1 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,2,2,3,3,4,4,4,5,4,6,5,1), 
+2 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,2,2,3,3,3,4,3,5,4,6,5,1), 
+3 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,2,2,2,3,2,4,3,5,4,6,5,1), 
+4 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,1,2,1,3,2,4,3,5,4,6,5,1), 
+5 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,0,2,1,3,2,4,3,5,4,6,5,0), 
+6 , CASE( MOD( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c),7),1,1,2,2,3,3,4,4,5,5,6,5,0), 
+999) 
++ 
+(FLOOR(( DATEVALUE(Completed_Date__c)-DATEVALUE(DateCreated__c))/7)*5)</formula>
+        <label>Days in Review</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_to_Complete__c</fullName>
+        <businessStatus>Active</businessStatus>
+        <externalId>false</externalId>
+        <formula>Completed_Date__c   -  CreatedDate</formula>
+        <label>Days to Complete</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <securityClassification>Internal</securityClassification>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_to_begin_Tax_Prep__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(MOD( DATEVALUE(DateCreated__c) - DATE(1985,6,24),7), 
+0 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c),7),1,2,2,3,3,4,4,5,5,5,6,5,1), 
+1 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c) ,7),1,2,2,3,3,4,4,4,5,4,6,5,1), 
+2 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c),7),1,2,2,3,3,3,4,3,5,4,6,5,1), 
+3 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c),7),1,2,2,2,3,2,4,3,5,4,6,5,1), 
+4 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c) ,7),1,1,2,1,3,2,4,3,5,4,6,5,1), 
+5 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c),7),1,0,2,1,3,2,4,3,5,4,6,5,0), 
+6 , CASE( MOD( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c) ,7),1,1,2,2,3,3,4,4,5,5,6,5,0), 
+999) 
++ 
+(FLOOR(( Date_in_Tax_Prep__c-DATEVALUE(DateCreated__c))/7)*5)</formula>
+        <label>Days to begin Tax Prep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Docs_Rcvd_from_Client__c</fullName>
+        <description>Date the documents were sent from the client</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the documents were sent from the client</inlineHelpText>
+        <label>Docs Rcvd from Client</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Draft_Financial_Sent_to_Client_On__c</fullName>
+        <externalId>false</externalId>
+        <label>Draft Financial Sent to Client On</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EXT_Due_Date__c</fullName>
+        <description>This is the date the extension is due.</description>
+        <externalId>false</externalId>
+        <label>EXT Due Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>ActivityDate-30</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>End Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Escalation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Escalation</label>
+        <referenceTo>Escalation__c</referenceTo>
+        <relationshipLabel>Activities</relationshipLabel>
+        <relationshipName>Activities</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Escalation_status__c</fullName>
+        <externalId>false</externalId>
+        <formula>Text(Escalation__r.Escalation_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Escalation status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fee_Quote__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Fee quoted to client for the return</inlineHelpText>
+        <label>Fee Quote</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fee_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Tax Package for all units of time packages, hourly rate for any set price we are billing the client, Only use &quot;Other&quot; if there is another format of payment.</inlineHelpText>
+        <label>Fee Type</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Tax Package</fullName>
+                    <default>false</default>
+                    <label>Tax Package</label>
+                </value>
+                <value>
+                    <fullName>Hourly Rate</fullName>
+                    <default>false</default>
+                    <label>Hourly Rate</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Final_Tax_Return_Timestamp__c</fullName>
+        <description>Creates a timestamp for the Final Tax Return Stage.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Timestamps Final Tax Return stage.</inlineHelpText>
+        <label>Final Tax Return Timestamp</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Final_Tax_Return__c</fullName>
+        <description>Used to demarcate if the client requested us to complete their final tax return for them for dissolution tasks.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Renewal Advisor asks our client if they would like us to complete their final tax return for them, then the Renewal Advisor marks &quot;Yes&quot; or &quot;No&quot;. This field is required to change the Stage to &quot;Final Tax Return Required&quot;.</inlineHelpText>
+        <label>Final Tax Return?</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Financials_Sent_to_Client_On__c</fullName>
+        <description>Financials sent to client on this date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Financials sent to client on this date</inlineHelpText>
+        <label>Financials Sent to Client On</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Formation_Processor__c</fullName>
+        <externalId>false</externalId>
+        <label>Formation Processor</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Processors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Formula_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_for_Communities__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;https://platinum.force.com/aba/s/detail/&quot;+ Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link for Communities</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Living_Trust_Attorney__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+NOT(ISBLANK( Related_Entity__c )),
+TEXT(Related_Entity__r.LivingTrustAttorney__c),
+TEXT(Trust__r.LivingTrustAttorney__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Living Trust Attorney</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Living_Trust_Stages__c</fullName>
+        <externalId>false</externalId>
+        <label>Stage</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Living_Trust_Stage</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Mail_Clerks__c</fullName>
+        <externalId>false</externalId>
+        <label>Mail Clerks</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Mail_Clerks</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Name_of_Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Name of Entity</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_Dissolving_Entities__c</fullName>
+        <description>Used to list the other entities the client is dissolving.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>You&apos;re awesome! Also, if the client is dissolving more than one entity, please copy and paste the other ones here.</inlineHelpText>
+        <label>Other Dissolving Entities</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Processing_Stage__c</fullName>
+        <description>Stage the Processing Task is in</description>
+        <externalId>false</externalId>
+        <label>Processing Stage</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Processing_Stages</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processing_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to change task status without having to edit the record.</inlineHelpText>
+        <label>Stage</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>false</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>Consult Requested</fullName>
+                    <default>false</default>
+                    <label>Consult Requested</label>
+                </value>
+                <value>
+                    <fullName>Consult Invite Sent</fullName>
+                    <default>false</default>
+                    <label>Consult Invite Sent</label>
+                </value>
+                <value>
+                    <fullName>Consult Scheduled</fullName>
+                    <default>false</default>
+                    <label>Consult Scheduled</label>
+                </value>
+                <value>
+                    <fullName>Waiting on Client</fullName>
+                    <default>false</default>
+                    <label>Waiting on Client</label>
+                </value>
+                <value>
+                    <fullName>Client Non-responsive</fullName>
+                    <default>false</default>
+                    <label>Client Non-responsive</label>
+                </value>
+                <value>
+                    <fullName>Declined</fullName>
+                    <default>false</default>
+                    <label>Declined</label>
+                </value>
+                <value>
+                    <fullName>Process Agreement</fullName>
+                    <default>false</default>
+                    <label>Process Agreement</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Ready to File</fullName>
+                    <default>false</default>
+                    <label>Ready to File</label>
+                </value>
+                <value>
+                    <fullName>Waiting on someone else</fullName>
+                    <default>false</default>
+                    <label>Waiting on someone else</label>
+                </value>
+                <value>
+                    <fullName>Supporting Documents Received</fullName>
+                    <default>false</default>
+                    <label>Supporting Documents Received</label>
+                </value>
+                <value>
+                    <fullName>Waiting on SOS</fullName>
+                    <default>false</default>
+                    <label>Waiting on SOS</label>
+                </value>
+                <value>
+                    <fullName>Waiting for Tax Clearance</fullName>
+                    <default>false</default>
+                    <label>Waiting for Tax Clearance</label>
+                </value>
+                <value>
+                    <fullName>Waiting for Client Signature</fullName>
+                    <default>false</default>
+                    <label>Waiting for Client Signature</label>
+                </value>
+                <value>
+                    <fullName>Waiting on IRS</fullName>
+                    <default>false</default>
+                    <label>Waiting on IRS</label>
+                </value>
+                <value>
+                    <fullName>On Hold</fullName>
+                    <default>false</default>
+                    <label>On Hold</label>
+                </value>
+                <value>
+                    <fullName>Review</fullName>
+                    <default>false</default>
+                    <label>Review</label>
+                </value>
+                <value>
+                    <fullName>Review Notes</fullName>
+                    <default>false</default>
+                    <label>Review Notes</label>
+                </value>
+                <value>
+                    <fullName>Send Financials</fullName>
+                    <default>false</default>
+                    <label>Send Financials</label>
+                </value>
+                <value>
+                    <fullName>Waiting for 1244 Approval</fullName>
+                    <default>false</default>
+                    <label>Waiting for 1244 Approval</label>
+                </value>
+                <value>
+                    <fullName>Final Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>Final Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>Final Tax Return Required</fullName>
+                    <default>false</default>
+                    <label>Final Tax Return Required</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Waiting on QRP</fullName>
+                    <default>false</default>
+                    <label>Waiting on QRP</label>
+                </value>
+                <value>
+                    <fullName>1st Review</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>1st Review</label>
+                </value>
+                <value>
+                    <fullName>2nd Review</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>2nd Review</label>
+                </value>
+                <value>
+                    <fullName>3rd Review</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>3rd Review</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processor_Reviewer__c</fullName>
+        <externalId>false</externalId>
+        <label>Processor Reviewer</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Processor_Reviewer</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processors__c</fullName>
+        <externalId>false</externalId>
+        <label>Processors</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Processors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Profile_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;Last Modified By Profile: &quot; +LastModifiedBy.Profile.Name+&quot;; Created By profile: &quot;+ CreatedBy.Profile.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Profile name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ready_to_File_TS__c</fullName>
+        <description>Timestamp for when the Ready to File stage is selected.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Timestamps the ready to file stage.</inlineHelpText>
+        <label>Ready to File Timestamp</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Recurrence_Interval_Mirror__c</fullName>
+        <externalId>false</externalId>
+        <label>Recurrence Interval Mirror</label>
+        <precision>9</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Related_Entity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Entity</label>
+        <referenceTo>Entities__c</referenceTo>
+        <relationshipLabel>Activities</relationshipLabel>
+        <relationshipName>Activities</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Advisor__c</fullName>
+        <externalId>false</externalId>
+        <label>Renewal Advisor</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Adrian Sanchez</fullName>
+                    <default>false</default>
+                    <label>Adrian Sanchez</label>
+                </value>
+                <value>
+                    <fullName>Brad Pues</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Brad Pues</label>
+                </value>
+                <value>
+                    <fullName>Chanitra Hill</fullName>
+                    <default>false</default>
+                    <label>Chanitra Hill</label>
+                </value>
+                <value>
+                    <fullName>Christopher Dykes</fullName>
+                    <default>false</default>
+                    <label>Christopher Dykes</label>
+                </value>
+                <value>
+                    <fullName>Deprecated</fullName>
+                    <default>false</default>
+                    <label>Deprecated</label>
+                </value>
+                <value>
+                    <fullName>Dustin Hamby</fullName>
+                    <default>false</default>
+                    <label>Dustin Hamby</label>
+                </value>
+                <value>
+                    <fullName>Edwin Rivera</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Edwin Rivera</label>
+                </value>
+                <value>
+                    <fullName>Geoff Meiser</fullName>
+                    <default>false</default>
+                    <label>Geoff Meiser</label>
+                </value>
+                <value>
+                    <fullName>Jailene Flores</fullName>
+                    <default>false</default>
+                    <label>Jailene Flores</label>
+                </value>
+                <value>
+                    <fullName>Jason Vasquez</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Jason Vasquez</label>
+                </value>
+                <value>
+                    <fullName>Joseph Jauregui</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Joseph Jauregui</label>
+                </value>
+                <value>
+                    <fullName>Joseph Sacco</fullName>
+                    <default>false</default>
+                    <label>Joseph Sacco</label>
+                </value>
+                <value>
+                    <fullName>Kip Stump</fullName>
+                    <default>false</default>
+                    <label>Kip Stump</label>
+                </value>
+                <value>
+                    <fullName>LaDora Wiltgen</fullName>
+                    <default>false</default>
+                    <label>LaDora Wiltgen</label>
+                </value>
+                <value>
+                    <fullName>Michelle Ramirez</fullName>
+                    <default>false</default>
+                    <label>Michelle Ramirez</label>
+                </value>
+                <value>
+                    <fullName>Monique Citron</fullName>
+                    <default>false</default>
+                    <label>Monique Citron</label>
+                </value>
+                <value>
+                    <fullName>Natasia Serna</fullName>
+                    <default>false</default>
+                    <label>Natasia Serna</label>
+                </value>
+                <value>
+                    <fullName>Perla Galindo</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Perla Galindo</label>
+                </value>
+                <value>
+                    <fullName>Samantha Herndon</fullName>
+                    <default>false</default>
+                    <label>Samantha Herndon</label>
+                </value>
+                <value>
+                    <fullName>Selene Garduno</fullName>
+                    <default>false</default>
+                    <label>Selene Garduno</label>
+                </value>
+                <value>
+                    <fullName>Tasha Spears</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Tasha Spears</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Renewal_Processor__c</fullName>
+        <externalId>false</externalId>
+        <label>Renewal Processor</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Adrienne Moyte</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Adrienne Moyte</label>
+                </value>
+                <value>
+                    <fullName>Amanda Stottlemyer</fullName>
+                    <default>false</default>
+                    <label>Amanda Stottlemyer</label>
+                </value>
+                <value>
+                    <fullName>Cecelia Chambers</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Cecelia Chambers</label>
+                </value>
+                <value>
+                    <fullName>Christian Abraham</fullName>
+                    <default>false</default>
+                    <label>Christian Abraham</label>
+                </value>
+                <value>
+                    <fullName>Danielle Dennie</fullName>
+                    <default>false</default>
+                    <label>Danielle Dennie</label>
+                </value>
+                <value>
+                    <fullName>Janey Agustin</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Janey Agustin</label>
+                </value>
+                <value>
+                    <fullName>Jesse Ruddy</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Jesse Ruddy</label>
+                </value>
+                <value>
+                    <fullName>Joshua Byrns</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Joshua Byrns</label>
+                </value>
+                <value>
+                    <fullName>Mary Goodwin</fullName>
+                    <default>false</default>
+                    <label>Mary Goodwin</label>
+                </value>
+                <value>
+                    <fullName>Mina Myers</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Mina Myers</label>
+                </value>
+                <value>
+                    <fullName>Randall Ritchie</fullName>
+                    <default>false</default>
+                    <label>Randall Ritchie</label>
+                </value>
+                <value>
+                    <fullName>Seth Blomquist</fullName>
+                    <default>false</default>
+                    <label>Seth Blomquist</label>
+                </value>
+                <value>
+                    <fullName>Sydney Grice</fullName>
+                    <default>false</default>
+                    <label>Sydney Grice</label>
+                </value>
+                <value>
+                    <fullName>Thalia Beckstead-Alban</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Thalia Beckstead-Alban</label>
+                </value>
+                <value>
+                    <fullName>Travis Price</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Travis Price</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Report_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+$User.Id = Owner:User.Id ||
+ 
+AND(
+CONTAINS( Owner:User.LastName , &quot;(LEX)&quot;),
+
+If((Owner:User.FirstName + SUBSTITUTE( Owner:User.LastName , &quot; (LEX)&quot;, &quot;&quot;) )= ($User.FirstName + $User.LastName ), True,False))
+
+,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Report User</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sale_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Sale URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Method__c</fullName>
+        <description>The shipping Service used</description>
+        <externalId>false</externalId>
+        <label>Shipping Method</label>
+        <length>15</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Type</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UPS</fullName>
+                    <default>false</default>
+                    <label>UPS</label>
+                </value>
+                <value>
+                    <fullName>Fedex</fullName>
+                    <default>false</default>
+                    <label>Fedex</label>
+                </value>
+                <value>
+                    <fullName>Postal Mail</fullName>
+                    <default>false</default>
+                    <label>Postal Mail</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>ActivityDate-Recurrence_Interval_Mirror__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Start Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Summary__c</fullName>
+        <description>Summarizes the comments section for the related lists view.</description>
+        <externalId>false</externalId>
+        <label>Summary</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Task_Error_picklist__c</fullName>
+        <externalId>false</externalId>
+        <label>Task Error</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Misspelling</fullName>
+                    <default>false</default>
+                    <label>Misspelling</label>
+                </value>
+                <value>
+                    <fullName>Does Not Match Structure</fullName>
+                    <default>false</default>
+                    <label>Does Not Match Structure</label>
+                </value>
+                <value>
+                    <fullName>Incorrect Services Listed</fullName>
+                    <default>false</default>
+                    <label>Incorrect Services Listed</label>
+                </value>
+                <value>
+                    <fullName>Entity Improperly Attached</fullName>
+                    <default>false</default>
+                    <label>Entity Improperly Attached</label>
+                </value>
+                <value>
+                    <fullName>Improper Task Setup/Assignment</fullName>
+                    <default>false</default>
+                    <label>Improper Task Setup/Assignment</label>
+                </value>
+                <value>
+                    <fullName>Missing Required Info</fullName>
+                    <default>false</default>
+                    <label>Missing Required Info</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Advisors_Admin__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Tax Coordinator</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Tax_Advisors_Admin</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Deadline__c</fullName>
+        <description>Deadline of Tax Return</description>
+        <externalId>false</externalId>
+        <label>Tax Deadline</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Tax_IC__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Tax Admin</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Alex Price</fullName>
+                    <default>false</default>
+                    <label>Alex Price</label>
+                </value>
+                <value>
+                    <fullName>Alice Camper</fullName>
+                    <default>false</default>
+                    <label>Alice Camper</label>
+                </value>
+                <value>
+                    <fullName>Anthony Espada</fullName>
+                    <default>false</default>
+                    <label>Anthony Espada</label>
+                </value>
+                <value>
+                    <fullName>Brina DeLeon</fullName>
+                    <default>false</default>
+                    <label>Brina DeLeon</label>
+                </value>
+                <value>
+                    <fullName>Carisma James</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Carisma James</label>
+                </value>
+                <value>
+                    <fullName>Chloe Freeman</fullName>
+                    <default>false</default>
+                    <label>Chloe Freeman</label>
+                </value>
+                <value>
+                    <fullName>Corbin Roache</fullName>
+                    <default>false</default>
+                    <label>Corbin Roache</label>
+                </value>
+                <value>
+                    <fullName>Freddi Mitchell</fullName>
+                    <default>false</default>
+                    <label>Freddi Mitchell</label>
+                </value>
+                <value>
+                    <fullName>John Doe</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>John Doe</label>
+                </value>
+                <value>
+                    <fullName>Kaimara Hatcher</fullName>
+                    <default>false</default>
+                    <label>Kaimara Hatcher</label>
+                </value>
+                <value>
+                    <fullName>Kaitlyn Scrivener</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Kaitlyn Scrivener</label>
+                </value>
+                <value>
+                    <fullName>Kelly Andrews</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Kelly Andrews</label>
+                </value>
+                <value>
+                    <fullName>Lena Limon</fullName>
+                    <default>false</default>
+                    <label>Lena Limon</label>
+                </value>
+                <value>
+                    <fullName>Lucy Mendez</fullName>
+                    <default>false</default>
+                    <label>Lucy Mendez</label>
+                </value>
+                <value>
+                    <fullName>Marcela Rocha</fullName>
+                    <default>false</default>
+                    <label>Marcela Rocha</label>
+                </value>
+                <value>
+                    <fullName>Marissa Yadao</fullName>
+                    <default>false</default>
+                    <label>Marissa Yadao</label>
+                </value>
+                <value>
+                    <fullName>Megan Harris</fullName>
+                    <default>false</default>
+                    <label>Megan Harris</label>
+                </value>
+                <value>
+                    <fullName>Micah Wyllie</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Micah Wyllie</label>
+                </value>
+                <value>
+                    <fullName>Preparer 1</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 1</label>
+                </value>
+                <value>
+                    <fullName>Preparer 10</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 10</label>
+                </value>
+                <value>
+                    <fullName>Preparer 11</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 11</label>
+                </value>
+                <value>
+                    <fullName>Preparer 12</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 12</label>
+                </value>
+                <value>
+                    <fullName>Preparer 13</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 13</label>
+                </value>
+                <value>
+                    <fullName>Preparer 14</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 14</label>
+                </value>
+                <value>
+                    <fullName>Preparer 15</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 15</label>
+                </value>
+                <value>
+                    <fullName>Preparer 16</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 16</label>
+                </value>
+                <value>
+                    <fullName>Preparer 17</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 17</label>
+                </value>
+                <value>
+                    <fullName>Preparer 18</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 18</label>
+                </value>
+                <value>
+                    <fullName>Preparer 19</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 19</label>
+                </value>
+                <value>
+                    <fullName>Preparer 2</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 2</label>
+                </value>
+                <value>
+                    <fullName>Preparer 20</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 20</label>
+                </value>
+                <value>
+                    <fullName>Preparer 21</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 21</label>
+                </value>
+                <value>
+                    <fullName>Preparer 22</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 22</label>
+                </value>
+                <value>
+                    <fullName>Preparer 3</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 3</label>
+                </value>
+                <value>
+                    <fullName>Preparer 4</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 4</label>
+                </value>
+                <value>
+                    <fullName>Preparer 5</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 5</label>
+                </value>
+                <value>
+                    <fullName>Preparer 6</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 6</label>
+                </value>
+                <value>
+                    <fullName>Preparer 7</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 7</label>
+                </value>
+                <value>
+                    <fullName>Preparer 8</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 8</label>
+                </value>
+                <value>
+                    <fullName>Preparer 9</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Preparer 9</label>
+                </value>
+                <value>
+                    <fullName>Rachael Kirk</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Rachael Kirk</label>
+                </value>
+                <value>
+                    <fullName>Rachel Kirk</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Rachel Kirk</label>
+                </value>
+                <value>
+                    <fullName>Rachel Retherford</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Rachel Retherford</label>
+                </value>
+                <value>
+                    <fullName>Sheri Alexander</fullName>
+                    <default>false</default>
+                    <label>Sheri Alexander</label>
+                </value>
+                <value>
+                    <fullName>Terrell Markie</fullName>
+                    <default>false</default>
+                    <label>Terrell Markie</label>
+                </value>
+                <value>
+                    <fullName>Tina Hambelton</fullName>
+                    <default>false</default>
+                    <label>Tina Hambelton</label>
+                </value>
+                <value>
+                    <fullName>Valencia Campbell</fullName>
+                    <default>false</default>
+                    <label>Valencia Campbell</label>
+                </value>
+                <value>
+                    <fullName>Valzzz Campbell</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Valzzz Campbell</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Preparer__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Preparer</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Tax_Preparer</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Reviewer__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Reviewer</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Alisha Green-Jenkins</fullName>
+                    <default>false</default>
+                    <label>Alisha Green-Jenkins</label>
+                </value>
+                <value>
+                    <fullName>Brittany Stuck</fullName>
+                    <default>false</default>
+                    <label>Brittany Stuck</label>
+                </value>
+                <value>
+                    <fullName>Christos Zattas</fullName>
+                    <default>false</default>
+                    <label>Christos Zattas</label>
+                </value>
+                <value>
+                    <fullName>Danielle Harris</fullName>
+                    <default>false</default>
+                    <label>Danielle Harris</label>
+                </value>
+                <value>
+                    <fullName>Drew Young</fullName>
+                    <default>false</default>
+                    <label>Drew Young</label>
+                </value>
+                <value>
+                    <fullName>Gary McHenry</fullName>
+                    <default>false</default>
+                    <label>Gary McHenry</label>
+                </value>
+                <value>
+                    <fullName>Ian Hanuscin</fullName>
+                    <default>false</default>
+                    <label>Ian Hanuscin</label>
+                </value>
+                <value>
+                    <fullName>Ianthia Henson</fullName>
+                    <default>false</default>
+                    <label>Ianthia Henson</label>
+                </value>
+                <value>
+                    <fullName>Jeff Webb</fullName>
+                    <default>false</default>
+                    <label>Jeff Webb</label>
+                </value>
+                <value>
+                    <fullName>Jennifer Phipps</fullName>
+                    <default>false</default>
+                    <label>Jennifer Phipps</label>
+                </value>
+                <value>
+                    <fullName>Jesse Martinez</fullName>
+                    <default>false</default>
+                    <label>Jesse Martinez</label>
+                </value>
+                <value>
+                    <fullName>Karim Hanafy</fullName>
+                    <default>false</default>
+                    <label>Karim Hanafy</label>
+                </value>
+                <value>
+                    <fullName>Maria Mendiola</fullName>
+                    <default>false</default>
+                    <label>Maria Mendiola</label>
+                </value>
+                <value>
+                    <fullName>Meredith Pratt</fullName>
+                    <default>false</default>
+                    <label>Meredith Pratt</label>
+                </value>
+                <value>
+                    <fullName>Piao Sam</fullName>
+                    <default>false</default>
+                    <label>Piao Sam</label>
+                </value>
+                <value>
+                    <fullName>Ricardo Gonzalez</fullName>
+                    <default>false</default>
+                    <label>Ricardo Gonzalez</label>
+                </value>
+                <value>
+                    <fullName>Ruvimbo Mashingaidze</fullName>
+                    <default>false</default>
+                    <label>Ruvimbo Mashingaidze</label>
+                </value>
+                <value>
+                    <fullName>Steve Kalt</fullName>
+                    <default>false</default>
+                    <label>Steve Kalt</label>
+                </value>
+                <value>
+                    <fullName>Tanya Saxon</fullName>
+                    <default>false</default>
+                    <label>Tanya Saxon</label>
+                </value>
+                <value>
+                    <fullName>Troy Butler</fullName>
+                    <default>false</default>
+                    <label>Troy Butler</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Stage__c</fullName>
+        <description>The current Stage the Tax Return is in</description>
+        <externalId>false</externalId>
+        <label>Tax Stage</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Tax_Stages</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Supervisor__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Reviewer</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Tax_Supervisors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Team_Lead__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Lead</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>BK_Team_Lead</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Team__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account.Teams__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Team</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Track_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Shipping_Type__c,&quot;Postal Mail&quot;), HYPERLINK(&quot;https://trkcnfrm1.smi.usps.com/PTSInternetWeb/InterLabelInquiry.do?origTrackNum=&quot;&amp; Tracking__c ,&quot;Track &quot;&amp; Shipping_Method__c &amp;&quot; - &quot;&amp;Subject ),
+
+IF( ISPICKVAL(Shipping_Type__c,&quot;UPS&quot;), HYPERLINK(&quot;https://wwwapps.ups.com/etracking/tracking.cgi?tracknums_displayed=1&amp;TypeOfInquiryNumber=T&amp;HTMLVersion=4.0&amp;InquiryNumber1=&quot;&amp; Tracking__c ,&quot;Track &quot;&amp; Shipping_Method__c &amp;&quot; - &quot;&amp;Subject),
+
+IF( ISPICKVAL( Shipping_Type__c,&quot;Fedex&quot;), HYPERLINK (&quot;https://www.fedex.com/Tracking?cntry_code=us&amp;tracknumbers=&quot;&amp; Tracking__c ,&quot;Track &quot;&amp; Shipping_Method__c &amp;&quot; - &quot;&amp;Subject) ,
+
+IF( ISPICKVAL( Shipping_Type__c ,&quot;DHL&quot;), HYPERLINK (&quot;https://track.dhl-usa.com/TrackByNbr.asp?ShipmentNumber=&quot;&amp; Tracking__c ,&quot;Track &quot;&amp; Shipping_Method__c &amp;&quot; - &quot;&amp;Subject),
+Null))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Track Status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tracking__c</fullName>
+        <description>Tracking number for Binder sent</description>
+        <externalId>false</externalId>
+        <label>Tracking #</label>
+        <length>25</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trust__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Trust</label>
+        <referenceTo>Trust__c</referenceTo>
+        <relationshipLabel>Activities</relationshipLabel>
+        <relationshipName>Activities</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type_of_Financials_Sent__c</fullName>
+        <description>Type of financials sent to the client</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Type of financials sent to the client</inlineHelpText>
+        <label>Type of Financials Sent</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Missing Info</fullName>
+                    <default>false</default>
+                    <label>Missing Info</label>
+                </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Final</fullName>
+                    <default>false</default>
+                    <label>Final</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type_of_Tax_Return__c</fullName>
+        <externalId>false</externalId>
+        <label>Type of Tax Return</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1040</fullName>
+                    <default>false</default>
+                    <label>1040</label>
+                </value>
+                <value>
+                    <fullName>1120</fullName>
+                    <default>false</default>
+                    <label>1120</label>
+                </value>
+                <value>
+                    <fullName>1120S</fullName>
+                    <default>false</default>
+                    <label>1120S</label>
+                </value>
+                <value>
+                    <fullName>1065</fullName>
+                    <default>false</default>
+                    <label>1065</label>
+                </value>
+                <value>
+                    <fullName>5500</fullName>
+                    <default>false</default>
+                    <label>5500</label>
+                </value>
+                <value>
+                    <fullName>1041</fullName>
+                    <default>false</default>
+                    <label>1041</label>
+                </value>
+                <value>
+                    <fullName>990</fullName>
+                    <default>false</default>
+                    <label>990</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Update_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Update Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pi__pardot_source_id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Identifies the Pardot record that caused this activity to be created.</description>
+        <externalId>true</externalId>
+        <label>Pardot Source Id</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>pymt__Event_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Code used to identify each type of PaymentConnect event notification task</inlineHelpText>
+        <label>Event Code</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>Form_8822_8832</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>Certificate,8822,8832,2553</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>Acceptance</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>mheal</value>
+        </filters>
+        <label>Form 8822, 8832, 2553 &amp; Certs</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Jennifer_Phipps_Refund_Task</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>Formula_Comments__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>Refund</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>TASK.TYPE</field>
+            <operation>notEqual</operation>
+            <value>Meeting</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FIRST_NAME</field>
+            <operation>equals</operation>
+            <value>Jennifer</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.LAST_NAME</field>
+            <operation>equals</operation>
+            <value>Phipps</value>
+        </filters>
+        <label>Jennifer Phipps Refund Task</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Internal_Accounting</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Joe_CSR_Anderson_System</fullName>
+        <columns>Client__c</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>Update_Comments__c</columns>
+        <columns>Date_Due__c</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>Tax_Stage__c</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Anderson_System</value>
+        </filters>
+        <filters>
+            <field>Report_User__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Joe (CSR Anderson System)</label>
+    </listViews>
+    <listViews>
+        <fullName>LC_Anderson_System_Tasks</fullName>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Anderson_System</value>
+        </filters>
+        <label>LC Anderson System Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LC_Follow_Ups</fullName>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <label>LC Follow Ups</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LC_Platinum_Declined_Tasks</fullName>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>platinum</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Event.AS_Call,Task.Anderson_System</value>
+        </filters>
+        <label>LC Platinum Declined Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LC_Processing_Tasks</fullName>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>LC Processing Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LC_Tax_Tasks</fullName>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>2553,binder,8832,certificate</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <label>LC Tax Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>LC_Welcome_Calls</fullName>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>welcome,corp call</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>LC Welcome Calls</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_Bookkeeping_Tasks</fullName>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>Bookkeeping_Stages__c</columns>
+        <columns>Type_of_Financials_Sent__c</columns>
+        <columns>Date_Due__c</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>Update_Comments__c</columns>
+        <columns>Summary__c</columns>
+        <columns>Completing_Books_for_Months__c</columns>
+        <columns>Completing_Books_for_Year__c</columns>
+        <columns>Docs_Rcvd_from_Client__c</columns>
+        <columns>Financials_Sent_to_Client_On__c</columns>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Bookkeeping_Task</value>
+        </filters>
+        <filters>
+            <field>Bookkeeping_Stages__c</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>TASK.WHAT_NAME</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>My Bookkeeping Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Bookkeeping</group>
+            <group>Bookkeeping_Managers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_Processing_Tasks</fullName>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>Update_Comments__c</columns>
+        <columns>Formula_Comments__c</columns>
+        <columns>Related_Entity__c</columns>
+        <columns>Client__c</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notEqual</operation>
+            <value>Annual List Filing</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Dissolution</value>
+        </filters>
+        <label>My Processing Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_Tasks_AC</fullName>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>Formula_Comments__c</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Job_Role_Accounting_Coordinator</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_Tax_Tasks_for_Bookkeepers</fullName>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>Tax_Stage__c</columns>
+        <columns>Type_of_Tax_Return__c</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>Tax_Deadline__c</columns>
+        <columns>Update_Comments__c</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>Bookkeeping_Admin__c</columns>
+        <columns>CSR__c</columns>
+        <columns>Tax_Supervisor__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Tax</value>
+        </filters>
+        <filters>
+            <field>Report_User__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Tax Tasks (for Bookkeepers)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Bookkeeping</group>
+            <group>Bookkeeping_Managers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>One_Case_Extension_Due_Date</fullName>
+        <columns>Client__c</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>EXT_Due_Date__c</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>One Case Extension Due Date</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Open_Tasks</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>greaterOrEqual</operation>
+            <value>3/24/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Report_User__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.TYPE</field>
+            <operation>notEqual</operation>
+            <value>Meeting</value>
+        </filters>
+        <label>Open Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>Overdue_Tasks</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed,On Hold,In Progress,Waiting on someone else</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>lessThan</operation>
+            <value>8/1/2019 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Event.Meeting,Event.Two_Year_Tax_Review,Event.AS_Call,Task.Anderson_System</value>
+        </filters>
+        <filters>
+            <field>TASK.TYPE</field>
+            <operation>notEqual</operation>
+            <value>Internal,Meeting</value>
+        </filters>
+        <label>Overdue Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Platinum</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>Walkthrough</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY,LAST_90_DAYS,NEXT_N_DAYS:30</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>mheal,jterr,ksumm,jcortes,ethom,plong,dollm,CZoel,eruss,tmathis,cmarkus,cposg</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notEqual</operation>
+            <value>Platinum Elite Audit,Audit Platinum Elite Clients</value>
+        </filters>
+        <label>Platinum</label>
+    </listViews>
+    <listViews>
+        <fullName>Platinum_Declined_Team1</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>declined,decline</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Event.AS_Call,Task.Anderson_System</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Ronnander,Trance,Cristina,Jones Tanner,Shonteanna,Fallon,Markeeta,Vanderpool</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>walkthrough</value>
+        </filters>
+        <label>Platinum Declined (Team 1)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_1_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Platinum_Declined_Team2</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>decline</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Event.AS_Call,Task.Anderson_System</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Tibbs,Lessard,White,Shorty,Meyers</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>walk</value>
+        </filters>
+        <label>Platinum Declined (Team 2)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_2_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Platinum_Declined_Team3</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>decline</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Event.AS_Call,Task.Anderson_System</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Piggee,Joyce,Burns,Osei,Dale,Dybas,Enriquez,Abernathy,Ashanti</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>walk</value>
+        </filters>
+        <label>Platinum Declined (Team 3)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_3_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Platinum_Declined_Team4</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>decline</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Event.AS_Call,Task.Anderson_System</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>McElwain,Pena,Coughlan,Smerdel,Mabion,Amsbury</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>walk</value>
+        </filters>
+        <label>Platinum Declined (Team 4)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_4_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Processing_Tasks_Team_1</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Ronnander,Washington,Cristina,Jones Tanner,Vanderpool,Markeeta,Fallon,Shonteanna</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Processing Tasks (Team 1)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_1_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Processing_Tasks_Team_2</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Tibbs,Lessard,Shorty,White,Meyers</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Processing Tasks (Team 2)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_2_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Processing_Tasks_Team_3</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Piggee,Joyce,Burns,Osei,Dybas,Enriquez,Abernathy,smidowicz,hermina,moore</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Processing Tasks (Team 3)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_3_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Processing_Tasks_Team_4</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>pena,mcelwain,coughlan,smerdel,mabion,amsbury</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Processing Tasks (Team 4)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_4_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Processor_Open_Tasks</fullName>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>Update_Comments__c</columns>
+        <columns>Summary__c</columns>
+        <columns>Processing_Status__c</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.CREATED_DATE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Call,Task.Processing</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>TASK.WHAT_NAME</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Processor Open Tasks</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sam_s_Tasks</fullName>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>Formula_Comments__c</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <filterScope>Team</filterScope>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>UPDATEDBY_USER.ALIAS</field>
+            <operation>equals</operation>
+            <value>Herndon</value>
+        </filters>
+        <filters>
+            <field>CREATEDBY_USER.ALIAS</field>
+            <operation>equals</operation>
+            <value>Herndon</value>
+        </filters>
+        <label>Sam&apos;s Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Chance_Truscott</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Certs_Team1</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>2553,binder,8832,certificate</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Ronnander,Trance,Cristina,Jones Tanner,Shonteanna,Fallon,Markeeta,Vanderpool</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <label>Tax &amp; Certs (Team 1)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_1_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Certs_Team2</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>2553,binder,8832,certificate</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Tibbs,Lessard,White,Shorty,Meyers</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <label>Tax &amp; Certs (Team 2)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_2_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Certs_Team3</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>2553,binder,8832,certificate</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Piggee,Joyce,Burns,Osei,Dale,Dybas,Enriquez,Abernathy,Ashanti</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <label>Tax &amp; Certs (Team 3)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_3_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Certs_Team4</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>2553,binder,8832,certificate</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>McElwain,Pena,Coughlan,Smerdel,Mabion,Amsbury</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>notEqual</operation>
+            <value>Task.Dissolution,Task.Processing</value>
+        </filters>
+        <label>Tax &amp; Certs (Team 4)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_4_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Welcome_Call</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Tax</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>equals</operation>
+            <value>Welcome Call</value>
+        </filters>
+        <label>Tax &amp; Welcome Call</label>
+    </listViews>
+    <listViews>
+        <fullName>UpcomingEvents</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>greaterThan</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <label>Upcoming Events</label>
+    </listViews>
+    <listViews>
+        <fullName>Welcome_Call_Pool</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>TASK.RECORDTYPE</columns>
+        <columns>TASK.LAST_UPDATE_DATE_ONLY</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.CREATED_DATE</columns>
+        <columns>TASK.TYPE</columns>
+        <columns>CAM__c</columns>
+        <columns>Case_connect__c</columns>
+        <columns>ACTIVITY.TASK</columns>
+        <columns>Bookkeeping_Admin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>Welcome Call</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>equals</operation>
+            <value>Not Started</value>
+        </filters>
+        <filters>
+            <field>TASK.CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>LAST_90_DAYS</value>
+        </filters>
+        <filters>
+            <field>CREATEDBY_USER.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>GiGi</value>
+        </filters>
+        <filters>
+            <field>TASK.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Task.Call,Task.Processing</value>
+        </filters>
+        <label>Welcome Call Pool</label>
+    </listViews>
+    <listViews>
+        <fullName>Welcome_Calls_Team_1</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Ronnander,Washington,Cristina,Jones Tanner,Vanderpool,Markeeta,Fallon,Shonteanna</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>welcome,corp call</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Welcome Calls (Team 1)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_1_Service</group>
+            <role>System_Admin</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Welcome_Calls_Team_2</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Tibbs,Lessard,Shorty,White,Meyers</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>welcome,corp call</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Welcome Calls (Team 2)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_2_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Welcome_Calls_Team_3</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Piggee,Joyce,Burns,Osei</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>welcome,corp call</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Welcome Calls (Team 3)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_3_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Welcome_Calls_Team_4</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>McElwain,Coughlan,Smerdel,Mabion,Amsbury</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>welcome,corp call</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>notContain</operation>
+            <value>follow,f/u</value>
+        </filters>
+        <filters>
+            <field>ACTIVITY.TASK</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>TASK.STATUS</field>
+            <operation>notEqual</operation>
+            <value>Completed</value>
+        </filters>
+        <label>Welcome Calls (Team 4)</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Team_4_Service</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>X2553_Audit_Report</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>2553</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.DUE_DATE</field>
+            <operation>equals</operation>
+            <value>LAST_90_DAYS</value>
+        </filters>
+        <label>2553 Audit Report</label>
+    </listViews>
+    <listViews>
+        <fullName>X8822_8832_2553_Cert_Acceptance_Only</fullName>
+        <columns>TASK.SUBJECT</columns>
+        <columns>TASK.WHO_NAME</columns>
+        <columns>TASK.WHAT_NAME</columns>
+        <columns>TASK.DUE_DATE</columns>
+        <columns>TASK.STATUS</columns>
+        <columns>TASK.PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>TASK.LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>Certificate,8822,8832,2553</value>
+        </filters>
+        <filters>
+            <field>TASK.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>TASK.SUBJECT</field>
+            <operation>contains</operation>
+            <value>Acceptance</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ALIAS</field>
+            <operation>notEqual</operation>
+            <value>mheal</value>
+        </filters>
+        <label>8822, 8832, 2553, Cert - Acceptance Only</label>
+        <language>en_US</language>
+    </listViews>
+    <searchLayouts>
+        <searchFilterFields>TASK.CREATED_DATE</searchFilterFields>
+        <searchFilterFields>CORE.USERS.ALIAS</searchFilterFields>
+        <searchFilterFields>CORE.USERS.FULL_NAME</searchFilterFields>
+        <searchResultsAdditionalFields>TASK.SUBJECT</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TASK.WHO_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TASK.WHAT_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TASK.DUE_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

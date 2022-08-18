@@ -1,0 +1,769 @@
+<apex:page docType="html-5.0" title="{!event.Name}" id="ptlSemRegPage" controller="evt.ConfRegController" action="{!onload}" sidebar="false" cache="false" standardStylesheets="false">
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" />
+
+<apex:outputPanel layout="none" rendered="{!showCaptcha}">
+<script src="//www.google.com/recaptcha/api.js" type="text/javascript" />
+</apex:outputPanel>
+<style>
+
+.centerAlign {
+    text-align:center;
+}
+.pc_page_content .currencyColumn {
+    text-align:right;
+    padding-left:20px;
+}
+
+</style>
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_sem_reg_page">
+  <div class="evt_page_content_top">
+    <c:SemTemplateNav event="{!event}"  currentTab="registration"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+<apex:form id="mainForm">
+<apex:pageMessage rendered="{!soldOut}" severity="Info" strength="0" title="{!$Label.evt__Text_SoldOut}"/>
+<apex:pageMessage rendered="{!registrationClosed}" severity="Info" strength="0" title="{!$Label.evt__Text_RegistrationClosed}"/>
+<apex:pageMessages id="messages" />
+<apex:outputPanel styleClass="evt_wait_list_link" rendered="{!AND(soldOut, event.evt__Wait_List__c)}">
+<apex:outputLink value="{!$Page.evt__SiteWaitList}?eid={!event.id}">Add your name to our wait list.</apex:outputLink>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!$Label.evt__ConfReg_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__ConfReg_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!NOT($Label.evt__ConfReg_RegistrationMessage == '-')}">
+<p>{!$Label.evt__ConfReg_RegistrationMessage}</p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!AND(event.evt__By_Invitation__c,ISBLANK(invitedAttendee.Id))}">
+<div id="invitation_code_box">
+  <p>Please enter your invitation code:&nbsp;<apex:inputText styleclass="pc_medium_input_field" value="{!invitationCode}">
+    <apex:actionSupport event="onchange" oncomplete="alert('changed');" action="{!validateInvitationCode}"/>
+  </apex:inputText></p>
+</div>
+</apex:outputPanel>
+
+<apex:actionRegion id="attendeeListRegion">
+<apex:outputPanel id="registrantListPanel">
+<apex:outputPanel id="attendeeListPanel" rendered="{!numberOfRegistrants > 0}">
+<h2>Registrants</h2>
+<table style="width:100%;border:1px solid #e0e0e0;">
+<apex:repeat value="{!attendees}" var="registrant">
+  <tr><td>{!registrant.selectedRegCategory}:&nbsp;{!registrant.firstName}&nbsp;{!registrant.lastName}
+    <apex:repeat value="{!registrant.sessionItems}" var="sessionItem">
+       <apex:outputPanel rendered="{!IF(sessionItem.selected == true,'true','false')}">
+        <br/>&nbsp;&nbsp;<apex:outputText value="{!sessionItem.session.name}"/>
+      </apex:outputPanel>
+  </apex:repeat>
+  </td>
+  <td>
+    <apex:outputPanel layout="none" rendered="{!IF(NOT(AND(registrant.isPrimary, (numberOfRegistrants > 1))),true, false)}">
+    <apex:commandLink action="{!removeRegistrant}" value="Remove" html-formnovalidate="formnovalidate" rerender="registrantListPanel, registrantInformation, cartTotalPanel, donationPanel, paymentOptions, buttonPanel">
+      <apex:param id="wrapperNumberR" name="wrapperNumberR" value="{!registrant.wrapperNumber}" assignTo="{!wrapperSelectedForDelete}"/>
+    </apex:commandLink>
+  </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!IF(AND(registrant.isPrimary, (numberOfRegistrants > 1)), true, false)}">
+    Primary
+  </apex:outputPanel> |
+    <apex:commandLink action="{!editRegistrant}" value="Edit" html-formnovalidate="formnovalidate" rerender="registrantListPanel, registrantInformation, cartTotalPanel, donationPanel, paymentOptions, buttonPanel">
+        <apex:param id="wrapperNumberE" name="wrapperNumberE" value="{!registrant.wrapperNumber}" assignTo="{!wrapperSelectedForEdit}"/>
+    </apex:commandLink><apex:outputPanel rendered="{!allowAddAttendee}"> |
+    <apex:commandLink action="{!duplicateRegistrant}" value="Duplicate" html-formnovalidate="formnovalidate" rerender="registrantListPanel, registrantInformation, cartTotalPanel, donationPanel, paymentOptions, buttonPanel">
+        <apex:param id="wrapperNumberD" name="wrapperNumberD" value="{!registrant.wrapperNumber}" assignTo="{!wrapperSelectedForDuplication}"/>
+    </apex:commandLink></apex:outputPanel>
+  </td>
+  <td class="currencyColumn">
+    <apex:outputPanel rendered="{!AND(pageView == 'Edit Registrant',registrant.WrapperNumber == wrapperSelectedForEdit)}">----</apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(AND(pageView == 'Edit Registrant',registrant.WrapperNumber == wrapperSelectedForEdit))}">
+      <apex:outputText value="{!currencyShortFormatExpression}"><apex:param value="{!registrant.registrantTotal}" /></apex:outputText>
+    </apex:outputPanel>
+
+  </td>
+</tr>
+</apex:repeat>
+</table>
+<br/>
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:actionRegion>
+
+<apex:outputPanel id="registrantInformation" styleClass="evt_registrant_info_panel" >
+<apex:outputPanel rendered="{!OR(pageView == 'Edit Registrant', pageView == 'Add Registrant')}">
+
+<div id="pc_contact_info">
+
+<div id="evt_conf_reg_registrant_details_box" class="evt_h2_outer_box">
+    <div class="evt_box_header">
+        <apex:outputPanel rendered="{!pageView == 'Edit Registrant'}">
+          <h2>Edit {!selectedRegCategory}:&nbsp;{!firstname}&nbsp;{!lastname}</h2>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!pageView == 'Add Registrant'}">
+         <h2>{!$Label.evt__ConfReg_RegistrantDetailsHeading}</h2>
+       </apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+
+      <div class="pc_flex_form" id="evt_registrant_details_flex_form">
+
+        <apex:outputpanel layout="none" rendered="{!NOT(event.evt__Salutation_Field__c == 'Hidden')}">
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+                <apex:outputText value="{!$Label.pymt__Label_Salutation}"/>
+
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+                <apex:image value="/s.gif" styleClass="{!IF(event.evt__Salutation_Field__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+
+            <div class="pc_flex_form_field_item">
+             <apex:selectList id="billingsalutation"  value="{!salutation}" multiselect="false" size="1" disabled="{!NOT(ISBLANK(loggedInContact.Id))}">
+               <apex:selectOptions value="{!salutationOptions}"/>
+            </apex:selectList>
+            </div>
+        </div>
+        </apex:outputPanel>
+
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_FirstName}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(NOT(requireAdditionalAttDetail), selectedRegCategory == 'Attendee', NOT(isPrimaryRegistrant)), 'optionalFieldMarker','requiredFieldMarker')}"/>
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="text" required="{!IF(AND(NOT(requireAdditionalAttDetail), selectedRegCategory == 'Attendee', NOT(isPrimaryRegistrant)), 'false','true')}" id="mailingfirstname" styleclass="pc_medium_input_field" value="{!firstname}" disabled="{!if(pageView == 'Edit Registrant',true,false)}" />
+              </div>
+        </div>
+
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_LastName}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(NOT(requireAdditionalAttDetail), selectedRegCategory == 'Attendee', NOT(isPrimaryRegistrant)), 'optionalFieldMarker','requiredFieldMarker')}"/>
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="text" required="{!IF(AND(NOT(requireAdditionalAttDetail), selectedRegCategory == 'Attendee', NOT(isPrimaryRegistrant)), 'false','true')}" id="mailinglastname" styleclass="pc_medium_input_field" value="{!lastname}"  disabled="{!if(pageView == 'Edit Registrant',true,false)}" />
+            </div>
+        </div>
+
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_Email}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(NOT(requireAdditionalAttDetail), selectedRegCategory == 'Attendee', NOT(isPrimaryRegistrant)), 'optionalFieldMarker','requiredFieldMarker')}"/>
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="email" required="{!IF(AND(NOT(requireAdditionalAttDetail), selectedRegCategory == 'Attendee', NOT(isPrimaryRegistrant)), 'false','true')}" id="emailaddress" styleclass="pc_medium_input_field" value="{!emailAddress}"  disabled="{!if(AND(pageView == 'Edit Registrant',NOT(ISBLANK(emailAddress))),true,false)}" />
+            </div>
+        </div>
+
+        <apex:outputPanel layout="none" rendered="{!NOT(event.evt__Company_Field__c == 'Hidden')}">
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_Company}" />
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image value="/s.gif" styleClass="{!IF(AND(event.evt__Company_Field__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="text" required="{!IF(AND(event.evt__Company_Field__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'true','false')}" id="mailingcompany"  styleclass="pc_medium_input_field" value="{!companyName}" />
+            </div>
+        </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!NOT(event.evt__Address_Fields__c == 'Hidden')}">
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_StreetAddress}" />
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="text" required="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'true','false')}" id="mailingstreet" styleclass="pc_long_input_field" value="{!mailingstreet}"  />
+            </div>
+        </div>
+
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_City}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="text" required="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'true','false')}" id="mailingcity" styleclass="pc_medium_input_field" value="{!mailingcity}" />
+            </div>
+        </div>
+
+        <apex:actionRegion id="stateCountryRegion">
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_Country}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+            <div class="pc_flex_form_field_item">
+               <apex:selectList id="mailingcountry" size="1" multiselect="false"
+               value="{!mailingcountry}" >
+               <apex:actionSupport event="onchange" action="{!nullAction}" status="stateUpdateStatus" rerender="statepicklistPanel, messages, stateCountryRegion"/>
+               <apex:selectOptions value="{!countryPicklistOptions}"/>
+               </apex:selectList>&nbsp;<apex:actionStatus startText="" stopText="" id="stateUpdateStatus"/>
+            </div>
+        </div>
+
+        <apex:outputPanel layout="none" id="statePicklistPanel">
+            <apex:outputPanel layout="block" styleclass="pc_flex_form_line_container"  rendered="{!hasStateOptions}">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_StateProvince}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:selectList id="mailingstate" value="{!mailingState}" size="1" multiselect="false">
+                 <apex:selectOptions value="{!stateOptions}"/>
+            </apex:selectList>
+            </div>
+          </apex:outputPanel>
+        </apex:outputPanel>
+      </apex:actionRegion>
+
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_PostalCode}" />
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+              <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+            </div>
+            <div class="pc_flex_form_field_item">
+              <apex:input type="text" required="{!IF(AND(event.evt__Address_Fields__c == 'Required',NOT(AND(selectedRegCategory == 'Attendee',NOT(requireAdditionalAttDetail),NOT(isPrimaryRegistrant)))),'true','false')}" id="mailingpostalcode" styleclass="pc_medium_input_field" value="{!mailingpostalcode}" />
+            </div>
+        </div>
+        </apex:outputPanel>
+
+      </div><!-- end of flex form -->
+
+
+
+
+        <div class="pc_flex_form" id="evt_conf_custom_field_flex_form">
+
+        <apex:repeat id="customFieldTable" value="{!customFields}" var="customField" >
+
+        <apex:outputPanel layout="none" rendered="{!NOT(AND(customField.mapping.evt__Maps_To_Object__c == 'Payment',isPrimaryRegistrant == false))}">
+          <apex:outputPanel layout="none" rendered="{!AND(NOT(customField.mapping.evt__Hidden__c == true), OR(customField.displayCategory == selectedRegCategory,(customField.displayCategory == 'All')))}">
+          <div class="pc_flex_form_line_container">
+              <div class="pc_flex_form_label_item">
+                  <apex:outputField value="{!customField.mapping.Name}" rendered="{!(customField.mapping.evt__Type__c <> 'Checkbox' && customField.mapping.evt__Type__c <> 'Blank Space')}"/>
+              </div>
+              <div class="pc_flex_form_required_flag_item">
+                <apex:image value="/s.gif" styleClass="{!IF(customField.mapping.evt__Required__c,'requiredFieldMarker','')}"/>
+              </div>
+              <div class="pc_flex_form_field_item">
+                    <apex:input type="text" required="{!IF(customField.mapping.evt__Required__c,'true','false')}" id="customText" value="{!customField.stringVal}" rendered="{!customField.mapping.evt__Type__c == 'Text'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                    <apex:input type="email" required="{!IF(customField.mapping.evt__Required__c,'true','false')}" id="customEmail" value="{!customField.emailVal}" rendered="{!customField.mapping.evt__Type__c == 'Email'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                    <apex:input type="date" required="{!IF(customField.mapping.evt__Required__c,'true','false')}" id="customDate" value="{!customField.dateVal}" rendered="{!customField.mapping.evt__Type__c == 'Date'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                    <apex:input type="tel" required="{!IF(customField.mapping.evt__Required__c,'true','false')}" id="customPhone" value="{!customField.phoneVal}" rendered="{!customField.mapping.evt__Type__c == 'Phone'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                    <apex:input type="number" required="{!IF(customField.mapping.evt__Required__c,'true','false')}" html-step="any" id="customNumber" value="{!customField.numVal}" rendered="{!customField.mapping.evt__Type__c == 'Number'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                    <apex:inputCheckbox id="customCheckbox" value="{!customField.booleanVal}" rendered="{!customField.mapping.evt__Type__c == 'Checkbox'}"/>&nbsp;<apex:outputText value="{!customField.mapping.evt__Long_Label__c}" rendered="{!customField.mapping.evt__Type__c == 'Checkbox'}"/>
+                    <apex:outputText rendered="{!customField.mapping.evt__Type__c == 'Blank Space'}">&nbsp;</apex:outputText>
+                    <apex:selectList id="customPicklist" rendered="{!customField.mapping.evt__Type__c == 'Picklist'}" multiselect="{!customField.multiselect}" size="{!customField.size}"
+                                value="{!customField.stringVal}" title="{!customField.mapping.evt__Long_Label__c}">
+                        <apex:selectOptions value="{!customField.options}"/>
+                    </apex:selectList>                  </div>
+          </div>
+          </apex:outputPanel>
+        </apex:outputPanel>
+        </apex:repeat>
+
+
+        </div><!-- end of flex form -->
+
+        <apex:actionRegion >
+        <apex:outputPanel layout="none" rendered="{!event.evt__Enable_Coupons__c}">
+        <div class="pc_flex_form" id="evt_conf_coupon_flex_form">
+
+          <div class="pc_flex_form_line_container">
+              <div class="pc_flex_form_label_item">
+                <apex:outputLabel value="{!$Label.evt__Label_Coupon_Code}" styleclass="evt_coupon_code_label" />
+              </div>
+              <div class="pc_flex_form_required_flag_item">
+                <apex:image url="/s.gif" />
+              </div>
+              <div class="pc_flex_form_field_item">
+                <apex:inputText value="{!couponCode}" styleClass="evt_coupon_code_field" />&nbsp;<apex:commandLink action="{!applyCoupon}" value="Apply" rerender="messages, cartTotalPanel">
+              </apex:commandLink>
+              </div>
+          </div>
+
+        </div><!-- end of flex form -->
+        </apex:outputPanel>
+      </apex:actionRegion>
+
+
+
+        </div>
+
+</div>
+</div>
+<apex:actionRegion >
+<div id="evt_conf_reg_options_box" class="evt_h2_outer_box">
+<div class="evt_box_header">
+    <h2>{!$Label.evt__ConfReg_RegistrationOptionsHeading}</h2>
+</div>
+    <div class="evt_box_body">
+
+      <div class="pc_flex_form" id="evt_registration_options_flex_form">
+
+        <div class="pc_flex_form_line_container">
+            <div class="pc_flex_form_label_item">
+              <apex:outputText value="{!$Label.evt__Label_RegistrationType}"/>
+            </div>
+            <div class="pc_flex_form_required_flag_item">
+                <apex:image url="/s.gif" />
+            </div>
+
+            <div class="pc_flex_form_field_item">
+
+
+            <apex:selectList value="{!selectedRegCategory}" size="1" disabled="{!pageView == 'Edit Registrant'}">
+                <apex:selectOptions value="{!registrationTypeOptions}" />
+                <apex:actionSupport event="onchange" action="{!selectedRegTypeChanged}" rerender="feeOptions, cartTotalPanel, sessionOptions, productOptions, selectionStatus, paymentOptions, paymentOptionsLabel, customFieldTable" status="selectionStatus"/>
+            </apex:selectList>
+            <br/><br/>
+
+            <apex:outputPanel id="feeOptions"  >
+                <apex:selectRadio value="{!selectedEventFee}"  layout="pageDirection"  rendered="{!selectedRegCategory == 'Attendee'}">
+                    <apex:selectOptions value="{!attendeeFeeOptions}">
+                    </apex:selectOptions>
+                    <apex:actionSupport event="onchange" action="{!selectedFeeChanged}" rerender="messages, cartTotalPanel, paymentOptions, paymentOptionsLabel, selectionStatus" status="selectionStatus"/>
+                </apex:selectRadio>
+
+                <apex:selectRadio value="{!selectedEventFee}" layout="pageDirection" rendered="{!selectedRegCategory == 'Exhibitor'}" >
+                    <apex:selectOptions value="{!exhibitorFeeOptions}">
+                    </apex:selectOptions>
+                    <apex:actionSupport event="onchange"  action="{!selectedFeeChanged}" rerender="messages, cartTotalPanel, paymentOptions, paymentOptionsLabel,  selectionStatus" status="selectionStatus"/>
+                </apex:selectRadio>
+
+                <apex:selectRadio value="{!selectedEventFee}"  layout="pageDirection"  rendered="{!selectedRegCategory == 'Sponsor'}">
+                    <apex:selectOptions value="{!sponsorFeeOptions}">
+                    </apex:selectOptions>
+                    <apex:actionSupport event="onchange"  action="{!selectedFeeChanged}" rerender="messages, cartTotalPanel,  paymentOptions, paymentOptionsLabel, selectionStatus" status="selectionStatus"/>
+                </apex:selectRadio>
+
+
+                <apex:selectRadio value="{!selectedEventFee}"  layout="pageDirection"  rendered="{!selectedRegCategory == 'Volunteer'}">
+                    <apex:selectOptions value="{!volunteerFeeOptions}">
+                    </apex:selectOptions>
+                    <apex:actionSupport event="onchange" rerender="cartTotalPanel,  selectionStatus" status="selectionStatus"/>
+                </apex:selectRadio>
+                <apex:actionSupport event="onchange"  action="{!selectedFeeChanged}" rerender="messages, cartTotalPanel,  paymentOptions, paymentOptionsLabel, selectionStatus" status="selectionStatus" />
+
+            </apex:outputPanel>
+
+
+
+            </div>
+        </div>
+
+
+
+      </div><!-- end of flex form -->
+
+
+    </div>
+</div>
+
+
+
+<apex:outputPanel id="sessionOptions"  rendered="{!hasSessions}">
+<apex:outputPanel id="sessionOptionPanel" rendered="{!selectedRegCategory == 'Attendee'}">
+<div id="evt_conf_reg_sessions_box" class="evt_h2_outer_box">
+<div class="evt_box_header">
+    <apex:outputPanel layout="none" rendered="{!NOT($Label.evt__ConfReg_EventSessionsHeading == '-')}">
+    <h2><apex:outputText value="{!$Label.evt__ConfReg_EventSessionsHeading}"/></h2>
+   </apex:outputPanel>
+</div>
+    <div class="evt_box_body">
+
+<apex:dataTable style="width:100%" id="evtSessionTable" styleClass="evt_session_selection_table" value="{!sessionItems}" var="sessionItem" columnClasses="centerAlign, leftAlign, leftAlign, currencyColumn">
+    <apex:column headerClass="centerAlign" headerValue="">
+            <apex:inputCheckbox value="{!sessionItem.selected}" rendered="{!NOT(sessionItem.full)}">
+                <apex:actionSupport event="onchange" action="{!toggleSessionSelectBox}" rerender="evtSessionTable, cartTotalPanel, messages, selectionStatus" status="selectionStatus">
+                <apex:param name="setcurrentsessionid0" value="{!sessionItem.session.Id}" assignTo="{!currentSessionId}"/>
+                </apex:actionSupport>
+            </apex:inputCheckbox>
+            <apex:outputText value="-" title="Full" rendered="{!sessionItem.full}"/>
+
+
+    </apex:column>
+
+    <apex:column headerClass="leftAlign" headerValue="{!$Label.evt__Label_Session}" >
+        <apex:outputText value="{!sessionItem.session.Name}"/><apex:outputText value="- {!sessionItem.session.evt__Short_Description__c}" rendered="{!NOT(ISBLANK(sessionItem.session.evt__Short_Description__c))}" />
+        <div class="evt_expandible_content">
+
+        <div class="evt_session_date_range">
+        <apex:outputText rendered="{!NOT(sessionItem.multiday)}">
+            {!sessionItem.startDate}&nbsp;{!sessionItem.startTime}&nbsp;-&nbsp;{!sessionItem.endTime}
+
+        </apex:outputText>
+        <apex:outputPanel rendered="{!sessionItem.multiday}">
+            {!sessionItem.startDate}&nbsp;{!sessionItem.startTime}&nbsp;-&nbsp;{!sessionItem.endDate}&nbsp;{!sessionItem.endTime}
+        </apex:outputPanel>
+        </div>
+        </div>
+    </apex:column>
+
+    <apex:column headerClass="leftAlign_collapsible_col" style="white-space:nowrap;" styleClass="evt_collapsible_col" headerValue="{!$Label.evt__Label_Date}">
+        <apex:outputText rendered="{!NOT(sessionItem.multiday)}" >
+            {!sessionItem.startDate}&nbsp;{!sessionItem.startTime}&nbsp;-&nbsp;{!sessionItem.endTime}
+
+        </apex:outputText>
+        <apex:outputPanel rendered="{!sessionItem.multiday}" >
+            {!sessionItem.startDate}&nbsp;{!sessionItem.startTime}<br/><div style="text-align:right;">-&nbsp;{!sessionItem.endDate}&nbsp;{!sessionItem.endTime}</div>
+        </apex:outputPanel>
+    </apex:column>
+
+
+
+    <apex:column headerClass="rightAlign" headerValue="{!$Label.evt__Label_Fee}" rendered="{!NOT(event.evt__Free_Event__c)}">
+        <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(sessionItem.session.evt__Session_Fee__c))}"  >
+        <apex:outputText value="{!currencyShortFormatExpression}"><apex:param value="{!sessionItem.session.evt__Session_Fee__c}" /></apex:outputText>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!(ISBLANK(sessionItem.session.evt__Session_Fee__c))}" >
+        <apex:outputText value=""/>
+        </apex:outputPanel>
+
+    </apex:column>
+
+
+</apex:dataTable>
+
+
+    </div>
+</div>
+
+</apex:outputPanel>
+</apex:outputPanel>
+<br/>
+<apex:outputPanel id="productOptions" >
+<apex:outputPanel id="productOptionPanel" rendered="{!hasActiveCartItems}">
+<div id="evt_conf_reg_products_box" class="evt_h2_outer_box">
+<div class="evt_box_header">
+    <apex:outputPanel layout="none" rendered="{!NOT($Label.evt__ConfReg_EventProductsHeading == '-')}">
+    <h2><apex:outputText value="{!$Label.evt__ConfReg_EventProductsHeading}"/></h2>
+   </apex:outputPanel>
+</div>
+    <div class="evt_box_body">
+<apex:dataTable style="width:100%" id="evtProductTable" styleClass="evt_product_selection_table" value="{!activeCartItems}" var="cartItem" columnClasses="leftAlign, leftAlign, leftAlign, currency_column">
+    <apex:column headerClass="leftAlign" headerValue="{!$Label.evt__Label_Quantity}">
+        <apex:outputPanel rendered="{!cartItem.selectionMethod =='input_field'}"   >
+            <apex:input type="number" html-step="1" html-min="0" value="{!cartItem.selectedQty}" style="width:40px;" disabled="{!cartItem.disableEdit}">
+                <apex:actionSupport event="onchange" action="{!nullAction}" rerender="evtSessionTable, cartTotalPanel, messages, selectionStatus" status="selectionStatus">
+                </apex:actionSupport>
+            </apex:input>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!cartItem.selectionMethod =='picklist'}" >
+            <apex:selectList value="{!cartItem.selectedQty}" size="1" multiselect="false" disabled="{!cartItem.disableEdit}">
+               <apex:selectOptions value="{!cartItem.qtyOptions}"/>
+                <apex:actionSupport event="onchange" action="{!nullAction}" rerender="evtSessionTable, cartTotalPanel, messages, selectionStatus" status="selectionStatus">
+                </apex:actionSupport>
+            </apex:selectList>
+        </apex:outputPanel>
+    </apex:column>
+
+    <apex:column headerClass="leftAlign" headerValue="{!$Label.evt__Label_Item}">
+        <apex:outputText value="{!cartItem.eventProductName}" />
+    </apex:column>
+    <apex:column headerClass="leftAlign" headerValue="{!$Label.evt__Label_Description}">
+        <apex:outputText value="{!cartItem.description}" />
+    </apex:column>
+    <apex:column headerClass="currency_column" headerValue="{!$Label.evt__Label_Price}">
+        <apex:outputText value="{!currencyShortFormatExpression}"><apex:param value="{!cartItem.unitPrice}" /></apex:outputText>
+    </apex:column>
+</apex:dataTable>
+
+
+    </div>
+</div>
+
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:actionRegion>
+</apex:outputPanel>
+</apex:outputPanel>
+
+
+    <br/>
+
+
+
+
+    <apex:outputPanel rendered="{!acceptDonations}" id="donationPanel">
+    <div id="evt_conf_reg_donations_box" class="evt_h2_outer_box">
+    <div class="evt_box_header">
+        <apex:outputPanel layout="none" rendered="{!NOT($Label.evt__ConfReg_DonationHeading == '-')}">
+          <h2><apex:outputText value="{!$Label.evt__ConfReg_DonationHeading}"/></h2>
+        </apex:outputPanel>
+    </div>
+     <div class="evt_box_body">
+
+      <apex:actionRegion id="donationRegion">
+      <div class="pc_flex_form" id="evt_donation_amount_flex_form">
+
+          <div class="pc_flex_form_line_container">
+              <div class="pc_flex_form_label_item">
+                <apex:outputText value=""/>
+              </div>
+              <div class="pc_flex_form_required_flag_item">
+                <apex:image url="/s.gif"  styleClass="optionalFieldMarker"/>
+              </div>
+              <div class="pc_flex_form_field_item">
+                <apex:outputPanel layout="inline">
+                    <apex:outputText value="{!If(event.evt__Donation_Option_Label__c == '','Add a contribution to this checkout.',event.evt__Donation_Option_Label__c)}"/>
+                </apex:outputPanel>
+              </div>
+          </div>
+
+
+         <apex:outputPanel rendered="{!NOT(donationOptionLayout == 'SingleBox')}">
+         <div class="pc_flex_form_line_container">
+             <div class="pc_flex_form_label_item">
+                 <apex:outputText value=""/>
+             </div>
+             <div class="pc_flex_form_required_flag_item">
+                 <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+             </div>
+
+             <div class="pc_flex_form_field_item">
+              <apex:outputPanel id="donationOptionsVertical"  styleClass="donationOptionsVertical" rendered="{!(donationOptionLayout == 'Vertical')}">
+                  <apex:selectRadio id="donationOptionsPicklistVert"  value="{!selectedDonationOption}" layout="pageDirection">
+                      <apex:selectOptions value="{!suggestedDonationOptions}" />
+                  </apex:selectRadio>
+                  <apex:input type="number" html-placeholder="Other Amount"  id="donationInputFieldVert" styleclass="donation_amount_input_vert" rendered="{!enableOtherDonation}" value="{!otherDonationAmount}" />
+              </apex:outputPanel>
+
+              <apex:outputPanel id="donationOptionsHorizontal"  styleClass="donationOptionsHorizontal" rendered="{!(donationOptionLayout == 'Horizontal')}" >
+                  <apex:selectRadio id="donationOptionsPicklistHoriz" value="{!selectedDonationOption}" >
+                      <apex:selectOptions value="{!suggestedDonationOptions}" />
+                  </apex:selectRadio><apex:input type="number" html-placeholder="Other Amount" id="donationInputFieldHoriz" styleClass="donation_amount_input_horiz" value="{!otherDonationAmount}"   rendered="{!enableOtherDonation}" />
+              </apex:outputPanel>
+             </div>
+         </div>
+
+         </apex:outputPanel>
+
+         <apex:outputPanel layout="none" rendered="{!(donationOptionLayout == 'SingleBox')}">
+         <div class="pc_flex_form_line_container">
+             <div class="pc_flex_form_label_item">
+                 Amount
+             </div>
+             <div class="pc_flex_form_required_flag_item">
+                 <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+             </div>
+
+             <div class="pc_flex_form_field_item">
+              <apex:outputPanel id="donationOptionsOneBox"  styleClass="donationOptionsSingleBox" rendered="{!(donationOptionLayout == 'SingleBox')}">
+                  <apex:input type="text" html-placeholder="Amount" styleClass="donation_amount_input" id="donationInputField" value="{!otherDonationAmount}" />
+              </apex:outputPanel>
+             </div>
+         </div>
+         </apex:outputPanel>
+
+      </div><!-- end of flex form -->
+
+      </apex:actionRegion>
+    </div>
+    </div>
+    </apex:outputPanel>
+
+    <br/>
+    <apex:outputPanel id="cartTotalPanel" styleClass="evt_conf_cart_total" rendered="{!OR(hasActiveCartItems,NOT(event.evt__Free_Event__c))}">
+        <apex:outputText value="{!$Label.evt__Label_Cart_Total}:"/>&nbsp;<apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!cartTotal}" id="cartTotal"/></apex:outputText>&nbsp;<apex:actionStatus id="selectionStatus" >
+             <apex:facet name="start">
+                 <apex:outputPanel >&nbsp;
+                     <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                         style="vertical-align:middle;" alt="" />
+                         &nbsp;Updating...
+                 </apex:outputPanel>
+             </apex:facet>
+             <apex:facet name="stop">
+                 <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+             </apex:facet>
+             </apex:actionStatus>
+   </apex:outputPanel>
+   <br/>
+
+   <apex:outputPanel id="paymentOptions">
+   <apex:outputPanel layout="inline" rendered="{!showPaymentOptions}">
+        <apex:selectRadio value="{!selectedPaymentOption}" layout="pageDirection">
+           <apex:selectOptions value="{!paymentOptions}" />
+        </apex:selectRadio>
+   </apex:outputPanel>
+   </apex:outputPanel>
+
+   <br/>
+
+        <apex:outputPanel id="nocaptcha"  rendered="{!NOT(showCaptcha == true)}">
+                <script type="text/javascript">
+                function captureResponse(ele) {
+                }
+                </script>
+        </apex:outputPanel>
+
+        <apex:outputPanel id="captcha" rendered="{!showCaptcha == true}">
+                <apex:inputhidden value="{!recaptcha.response}" id="response" />
+                <script type="text/javascript">
+                function captureResponse(ele) {
+
+                    document.getElementById('{!$Component.response}').value =
+                        document.getElementById('g-recaptcha-response').value;
+                }
+                </script>
+
+        <div class="pc_flex_form" id="captcha_flex_form">
+
+           <div class="pc_flex_form_line_container">
+               <div class="pc_flex_form_label_item">
+                   <apex:outputText value=""/>
+               </div>
+               <div class="pc_flex_form_required_flag_item">
+                   <apex:image url="/s.gif"/>
+               </div>
+
+               <div class="pc_flex_form_field_item">
+                    <apex:outputPanel layout="inline">
+                    <div id="dynamic_recaptcha_1" class="g-recaptcha" data-sitekey="{!reCaptcha.publicKey}"></div>
+
+                        <br />
+                        <!--  display the image using the reCAPTCHA AJAX API -->
+                    </apex:outputPanel>
+               </div>
+           </div>
+
+        </div><!-- end of flex form -->
+
+
+        </apex:outputPanel>
+
+   <br/>
+
+   <apex:outputPanel layout="none" id="buttonPanel">
+       <div class="pc_button_container">
+         <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+             <apex:commandButton id="saveRegButton"
+                         value="Save Changes"
+                         onclick=""
+                         action="{!saveRegistrant}"
+                         status="formActionStatus"
+                         disabled="{!registrationClosed}"
+                         rendered="{!AND(numberOfRegistrants >0,OR(pageView == 'Add Registrant',pageView == 'Edit Registrant'))}"/>
+             <apex:commandButton id="cancelAddButton"
+                         value="Cancel Add"
+                         onclick=""
+                         action="{!cancelAddEdit}"
+                         status="formActionStatus"
+                         disabled="{!registrationClosed}"
+                         rendered="{!AND(pageView == 'Add Registrant',numberOfRegistrants >0)}"
+                         html-formnovalidate="formnovalidate"
+                         immediate="true"/>
+             <apex:commandButton id="cancelEditButton"
+                         value="Cancel Changes"
+                         onclick=""
+                         action="{!cancelAddEdit}"
+                         status="formActionStatus"
+                         disabled="{!registrationClosed}"
+                         rendered="{!AND(pageView == 'Edit Registrant')}"
+                         html-formnovalidate="formnovalidate"
+                         immediate="true"/>
+             <apex:commandButton id="addAttendeeButton"
+                         value="+ Add Another Registrant"
+                         onclick=""
+                         action="{!addNewRegistrant}"
+                         status="formActionStatus"
+                         disabled="{!registrationClosed}"
+                         rendered="{!AND(OR(pageView == 'Blank', AND(pageView == 'Add Registrant',numberOfRegistrants < 1)),
+                          allowAddAttendee)}"/>
+             <apex:commandButton id="regButton"
+                             value="{!$Label.evt__ConfReg_SubmitRegistrationButton} >>"
+                             onclick="captureResponse(this);"
+                             action="{!submitRegistration}"
+                             status="formActionStatus"
+                             disabled="{!registrationClosed}" />
+       </apex:outputPanel>
+       <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+         <input type="submit" style="display:none;" id="hiddenSubmit" name="hiddenSubmitInput"/>
+         <apex:commandLink styleClass="css-button"  id="saveRegButton2"
+                     value="Save Changes"
+                     onclick=""
+                     action="{!saveRegistrant}"
+                     status="formActionStatus"
+                     rendered="{!AND(NOT(registrationClosed),numberOfRegistrants >0,OR(pageView == 'Add Registrant',pageView == 'Edit Registrant'))}"/>
+         <apex:commandLink styleClass="css-button"  id="cancelAddButton2"
+                     value="Cancel Add"
+                     onclick=""
+                     action="{!cancelAddEdit}"
+                     status="formActionStatus"
+                     rendered="{!AND(NOT(registrationClosed),pageView == 'Add Registrant',numberOfRegistrants >0)}"
+                     html-formnovalidate="formnovalidate"
+                     immediate="true"/>
+         <apex:commandLink styleClass="css-button"  id="cancelEditButton2"
+                     value="Cancel Changes"
+                     onclick=""
+                     action="{!cancelAddEdit}"
+                     status="formActionStatus"
+                     rendered="{!AND(NOT(registrationClosed),pageView == 'Edit Registrant')}"
+                     html-formnovalidate="formnovalidate"
+                     immediate="true"/>
+         <apex:commandLink styleClass="css-button" id="addAttendeeButton2"
+                     value="+ Add Another Registrant"
+                     onclick="if (!validateForm()) {return false;}"
+                     action="{!addNewRegistrant}"
+                     status="formActionStatus"
+                     rendered="{!AND(NOT(registrationClosed),OR(pageView == 'Blank', AND(pageView == 'Add Registrant',numberOfRegistrants < 1)),
+                      allowAddAttendee)}"/>
+         <apex:commandLink styleClass="css-button" id="regButton2"
+                         value="{!$Label.evt__ConfReg_SubmitRegistrationButton} >>"
+                         onclick="captureResponse(this);if (!validateForm()) {return false;}"
+                         action="{!submitRegistration}"
+                         status="formActionStatus"
+                         rendered="{!NOT(registrationClosed)}" />
+         <script>
+         function validateForm() {
+           // for apex:commandLink which does not invoke HTML5 form validation automatically
+           var form = document.getElementById('{!$Component.mainForm}');
+           var submitBtn = document.getElementById('hiddenSubmit');
+           if (form.checkValidity() == false) {
+             submitBtn.click();  // force form to display validation messages.
+             return false;
+           }
+           return true;
+         }
+         </script>
+       </apex:outputPanel>
+
+        <apex:actionStatus id="formActionStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel >&nbsp;
+                        <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                            style="vertical-align:middle;" alt="" />
+                            &nbsp;Processing...
+                    </apex:outputPanel>
+                </apex:facet>
+                <apex:facet name="stop">
+                    <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                </apex:facet>
+        </apex:actionStatus>
+        </div>
+      </apex:outputPanel>
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div><!--  pc_lang -->
+</apex:page>

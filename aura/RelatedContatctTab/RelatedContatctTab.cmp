@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="ProcessingConsoleCtrl">
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="EntityID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="RelatedContactRecords" type="Contact[]" />
+    <aura:attribute name="RelatedContactcolumns" type="List"/> 
+    <aura:attribute name="RelatedToContact" type="boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   
+     <aura:attribute name="activeSections" type="List" default="['RelatedClientContacts']" />
+     <aura:if isTrue="{!v.RelatedToContact}">
+      <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+          
+            <lightning:accordionSection name="RelatedClientContacts" label="Related Contacts" >
+
+     
+                 <lightning:datatable aura:id="RelatedClientContactTable"  
+                                    
+                         data="{!v.RelatedContactRecords }"     
+                         columns="{!v.RelatedContactcolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                     
+                         />
+     
+                   </lightning:accordionSection>
+    </lightning:accordion>
+         <aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have Related contact!</center>
+             </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

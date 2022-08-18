@@ -1,0 +1,36 @@
+<apex:page controller="boxforcommunitiesDesign" action="{!doinit}"  lightningStylesheets="true">
+
+     <apex:slds />
+  
+    <apex:form >
+      <apex:pageMessages ></apex:pageMessages>
+        <apex:outputPanel rendered="{!NOT(createfolderinbox)}">
+            <b>To open the box in a new tab please click on this link - <a href="{!url}">Box</a></b>
+             <br/>
+        
+        <br/>
+   <iframe src="{!url}"  width="100%" height="800"></iframe> 
+</apex:outputPanel>
+                
+         <apex:pageBlock id="pgBlckId">
+             <apex:outputLabel rendered="{!createfolderinbox}"><b> To upload content to Box for this Client, create a folder for this record.</b> </apex:outputLabel>  <apex:commandButton value="Create a New Folder" action="{!createAttachmentinBox}" reRender="pgBlckId" status="actStatusId" disabled="{!disable}" >  
+            <apex:param name="createdrecordID" value="{!recordId}" assignTo="{!createdrecordID}" />
+    </apex:commandButton>
+     <apex:actionStatus id="actStatusId" >
+                <apex:facet name="start" >
+                  <img src="/img/loading.gif" />                    
+                </apex:facet>
+            </apex:actionStatus>
+
+      <apex:pageBlockSection rendered="{!createfolderinbox}" columns="1">
+           
+                 <br/>
+             <b>To open the box in a new tab please click on this link - <a href="{!newurl}">Box</a></b>
+              <br/>
+                 <iframe src="{!newurl}"  width="100%" height="800"></iframe>
+             </apex:pageBlockSection>
+   
+        </apex:pageBlock>
+     
+    </apex:form>
+</apex:page>

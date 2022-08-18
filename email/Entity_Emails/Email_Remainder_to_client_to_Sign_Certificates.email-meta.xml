@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Remainder to client to Sign Certificates</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Email Remainder to client to Sign Certificates</name>
+    <style>none</style>
+    <subject>Anderson Advisors -- Certificate Needed</subject>
+    <textOnly>Hello {!Entities__c.AccName__c},
+
+We request that you sign and return the unit certificates enclosed in your LLC&apos;s binder. These certificates, similar to stock certificates, are issued to individuals who possess an ownership interest in an LLC.
+
+A major reason for establishing your business entity in Nevada or Wyoming is the exclusive charging order protection afforded by the state. For example, in the unfortunate event a judgment is entered against you for a personal liability incurred - like a car accident - charging orders generally allow creditors to place a lien on the debtor member&apos;s monetary distributions, if any, until the judgment is satisfied.
+
+In some jurisdictions charging orders allow creditors to foreclose on the business interests of the debtor, effectively forcing dissolution or liquidation of the business entity to satisfy the personal judgment entered against the debtor member.
+
+Nevada and Wyoming do not allow foreclosure of the business to satisfy the personal debts of its members. Case law suggests that our possession of the executed certificate(s) here in Nevada helps ensure that your business falls under local jurisdiction.
+
+Please sign the certificate(s) for the following business entities:
+
+[{!Entities__c.Name}]
+
+Please mail the executed certificates to:
+
+Anderson Business Advisors
+3225 McLeod Drive
+Las Vegas, NV 89121
+
+Please don&apos;t hesitate to reach out if you have any questions or concerns!
+
+
+Kind Regards,
+Anderson Business Advisors, LLC</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

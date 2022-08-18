@@ -1,0 +1,56 @@
+<apex:page docType="html-5.0" id="ptlConfSessionPage" controller="evt.ConfSessionController" sidebar="false" cache="false" title="Session: {!currentSessionItem.session.Name}">
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" />
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_ptlconfsession_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}" currentTab="sessions" lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+<apex:form >
+<apex:pageMessages />
+<h1>Session: {!currentSessionItem.session.Name}</h1>
+<apex:panelGrid columns="2" columnClasses="label, value" styleClass="session_item_grid">
+<apex:outputText value="Track: " rendered="{!currentSessionItem.session.evt__Track__c <> null}"/>
+<apex:outputField value="{!currentSessionItem.session.evt__Track__c}" rendered="{!currentSessionItem.session.evt__Track__c <> null}"/>
+<apex:outputText value="Start: " rendered="{!currentSessionItem.session.evt__Start__c <> null && currentSessionItem.multiday==true}"/>
+<apex:outputText value="{!currentSessionItem.startDate} {!currentSessionItem.startTime}" rendered="{!currentSessionItem.session.evt__Start__c <> null && currentSessionItem.multiday==true}"/>
+<apex:outputText value="End: " rendered="{!currentSessionItem.session.evt__End__c <> null && currentSessionItem.multiday==true}"/>
+<apex:outputText value="{!currentSessionItem.endDate} {!currentSessionItem.endTime}" rendered="{!currentSessionItem.session.evt__End__c <> null && currentSessionItem.multiday==true}"/>
+<apex:outputText value="Date/Time:" rendered="{!currentSessionItem.multiday==false}"/>
+<apex:outputPanel rendered="{!currentSessionItem.multiday==false}">
+   {!currentSessionItem.startDate}&nbsp;{!currentSessionItem.startTime}&nbsp;-&nbsp;{!currentSessionItem.endTime}
+</apex:outputPanel>
+</apex:panelGrid>
+
+<apex:outputText value="{!currentSessionItem.session.evt__Session_Details__c}" escape="false"/>
+<br/>
+<apex:outputPanel rendered="{!currentSessionItem.full}">
+<div class="session_full_box">
+</div>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!NOT(currentSessionItem.full)}">
+<div class="pc_button_container">
+  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+    <apex:commandButton value="Add" action="{!addSessionWithConfirmation}" rendered="{!(currentSessionItem.selected == false)}" >
+    </apex:commandButton>
+    <apex:commandButton value="Remove" action="{!removeSessionWithConfirmation}" rendered="{!(currentSessionItem.selected)}"  >
+    </apex:commandButton>
+  </apex:outputPanel>
+  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+    <apex:commandLink styleClass="css-button" value="Add" action="{!addSessionWithConfirmation}" rendered="{!(currentSessionItem.selected == false)}" >
+    </apex:commandLink>
+    <apex:commandLink styleClass="css-button" value="Remove" action="{!removeSessionWithConfirmation}" rendered="{!(currentSessionItem.selected)}"  >
+    </apex:commandLink>
+  </apex:outputPanel>
+    </div>
+
+</apex:outputPanel>
+
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->
+</apex:page>

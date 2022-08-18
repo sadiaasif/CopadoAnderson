@@ -1,0 +1,26 @@
+<apex:page standardController="Foreign_Qualifications__c" extensions="clsNewForeignQualifications">
+    <apex:form >
+        <apex:sectionHeader title="Foreign Qualifications Edit" subtitle="New Foreign Qualifications"/>
+        <apex:pageBlock title="Foreign Qualifications Edit" mode="Edit">
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!Save}"/>
+                <apex:commandButton value="Save& New" action="{!SaveandNew}"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >State</apex:outputLabel>
+                    <apex:inputField value="{!objForeignQua.State__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Filed Date</apex:outputLabel>
+                    <apex:inputField value="{!objForeignQua.Filed_Date__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

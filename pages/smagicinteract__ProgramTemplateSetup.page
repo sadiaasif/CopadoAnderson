@@ -1,0 +1,64 @@
+<apex:page sidebar="false" tabStyle="Converse_App__tab">
+    <apex:includeLightning />
+    <style>
+        .height-for-lightning-page {
+            height: calc(100vh - 10px);
+        }
+        .height-for-lightning-page .selectedTemplates {
+            height: calc(100vh - 152px);
+        }
+        .height-for-lightning-page .searchTemplateWrap {
+            height: calc(100vh - 152px);
+        }
+        .height-for-lightning-page .viewTemplateBox {
+            height: calc(100vh - 75px);
+        }
+        .height-for-lightning-page .viewTemplateBox p {
+            max-height: calc(100vh - 250px);
+        }
+        .height-for-lightning-page .template-form-wrapper {
+            height: calc(100vh - 75px);
+        }
+    </style>
+   <!--height-for-lightning-page class added for lightning page on visual page scroll issue-->
+  <div id="lightning" class="height-for-lightning-page" />
+
+    <script>
+        $Lightning.use("smagicinteract:conversationApp", function () {
+        $Lightning.createComponent("smagicinteract:programsTemplateSetup", {
+            programId: getParameterByName('programId'),
+            programName: getParameterByName('programName'),
+            sObjectName: getParameterByName('sObjectName'),
+            noOfActions: getParameterByName('noOfActions')
+            },
+            "lightning",
+            function (cmp) {
+            // do some stuff
+            });
+        });
+
+        function sanitizeUrl(url) {
+            if(!url || !url.indexOf('script:') !== -1 && url.indexOf('data:') !== -1) {
+                return '';
+            }
+            var el = document.createElement('a'); 
+            el.href = url;    
+            if (el.protocol === 'https:') { 
+                return encodeURI(url);
+            } 
+            return '';
+        }
+
+        function getParameterByName(name, url) {
+        if (!url){
+            url = sanitizeUrl(window.location.href);
+        } 
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(decodeURIComponent(results[2].replace(/\+/g, " ")));
+        }
+    </script>
+</apex:page>

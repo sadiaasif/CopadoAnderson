@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_89210757</developerName>
+        <masterLabel>Source Campaign</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Lead.Grandparent_Campaign__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Adwords</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Anderson Youtube</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chat Transcript</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Calendly - Shaena Consolini</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Calendly</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Internet Search</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Website</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Website - Current Platinum Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Webinar</sourceValue>
+            </sourceValues>
+            <value>Website</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Dani Johnson</sourceValue>
+            </sourceValues>
+            <value>Dani Johnson</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Nick Vertucci</sourceValue>
+            </sourceValues>
+            <value>Vertucci</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Clint Coons Blog</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Clints Youtube Free SS</sourceValue>
+            </sourceValues>
+            <value>Clint&apos;s Sites</value>
+        </values>
+        <values>
+            <value>Referral</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Elite Legacy -- 09.30.2016 -- Dallas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Parent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad</sourceValue>
+            </sourceValues>
+            <value>Elite</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Dave Lindahl</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Denise DeVoe</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Don Pendleton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Gene Guarino</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Gene Gurino</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Goins Group</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>GLVAR</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jerry Royse</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jason Burke</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kana</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lee Arnold</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mona Affiliates</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Outback</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>OREIA</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pat James</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>REIA</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Real Wealth Network</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ron Legrand</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TackleTrading</sourceValue>
+            </sourceValues>
+            <value>Affiliates</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Existing Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Millionaire Tax Strategies Live</sourceValue>
+            </sourceValues>
+            <value>Existing Clients</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Lead.Grandparent_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Primary_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>CONVERTED</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>LAST_N_WEEKS:3</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Primary_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Simple,Str.,Gene,Invest Four,Cordner,Norada,Outback,Right Path,Realty,Coach,Pendleton,Big Dog,Real Wealth,Elite AP,Dynasty,Vertucci,Elite,NVREA,Lindahl,Dani Johnson,Love America,TackleTrading,Lee Arnold</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>COMPANY</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>&quot;t.b.d., Unknown&quot;</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <name>Leads Tracking Affiliates (DO NOT DELETE</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CREATED_DATE</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

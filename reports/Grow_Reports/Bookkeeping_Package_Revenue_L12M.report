@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CHILD_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestTimeEntry__c.H2S__Person__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>H2S__HarvestTimeEntry__c.H2S__Duration__c</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestProject__c.H2S__HarvestProjectID__c</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+    </columns>
+    <description>last 12 months</description>
+    <filter>
+        <criteriaItems>
+            <column>H2S__HarvestProject__c.H2S__ProjectInvoicedBy__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Task hourly rate</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>H2S__HarvestProject__c.H2S__Budget__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Total project fees</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Bookkeeping,Package Bookkeeper,Pre-Paid Tax Fulfillment,Setup Quickbooks &amp; Chart of Accounts*,Bookkeeping Combo Work</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>H2S__HarvestTimeEntry__c.H2S__Duration__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CHILD_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>LAST_N_MONTHS:13</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>H2S__HarvestTimeEntry__c.H2S__Person__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>zattas,hufano,stuck,ianthia,brian l,armen,alishia,tax preparer,min j,phillip w,piao</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Bookkeeping Package Revenue (L12M)</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$H2S__HarvestProject__c$H2S__HarvestTimeEntry__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CHILD_CREATED_DATE</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CHILD_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

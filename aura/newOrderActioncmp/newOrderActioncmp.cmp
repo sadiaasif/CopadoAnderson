@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	  <aura:attribute name="recordId" type="string"/>
+    <aura:attribute name="AccountIds" type="string" />
+    <aura:attribute name="SaleTypes" type="string" />
+    <aura:attribute name="SaleIds" type="string" />
+    <aura:attribute name="SaleNames" type="string" />
+    
+    
+   <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   <lightning:flow aura:id="flowData"/>
+</aura:component>

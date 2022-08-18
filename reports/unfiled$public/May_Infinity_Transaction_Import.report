@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ChargentSFA__Transaction__c$Client__c</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$Name</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$ChargentSFA__Gateway_ID__c</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$ChargentSFA__Opportunity__c</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$ChargentSFA__Amount__c</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$ChargentSFA__Card_Last_4__c</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$ChargentSFA__Credit_Card_Type__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$CreatedDate</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>6/28/2019 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$CreatedBy</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Nick Frates</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$ChargentSFA__Gateway_ID__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Stripe</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>May Infinity Transaction Import</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Chargent_Transactions__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

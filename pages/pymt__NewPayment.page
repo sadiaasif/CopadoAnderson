@@ -1,0 +1,173 @@
+<apex:page docType="html-5.0" tabStyle="pymt__PaymentX__c" standardController="pymt__PaymentX__c"  extensions="pymt.NewPaymentController" cache="false" sidebar="false" >
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<apex:outputPanel rendered="{!$User.UIThemeDisplayed == 'Theme3'}">
+<style>
+#option_table td {padding-right:10px;}
+/* This button CSS generated using CSSButtonGenerator.com */
+#option_table .bigbutton {
+    -moz-box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    background-color:#f0f0f0;
+    -webkit-border-top-left-radius:0px;
+    -moz-border-radius-topleft:0px;
+    border-top-left-radius:0px;
+    -webkit-border-top-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-bottomright:0px;
+    border-bottom-right-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    -moz-border-radius-bottomleft:0px;
+    border-bottom-left-radius:0px;
+    text-indent:0;
+    border:2px solid #c2c2c2;
+    display:inline-block;
+    color:#7a7a7a;
+    font-family:Trebuchet MS;
+    font-size:15px;
+    font-weight:bold;
+    font-style:normal;
+    height:40px;
+    line-height:40px;
+    width:200px;
+    text-decoration:none;
+    text-align:center;
+}
+#option_table  .bigbutton:hover {
+    background-color:#2d86c2;
+    color:white;
+}
+#option_table  .bigbutton:active {
+    position:relative;
+    top:1px;
+}
+</style>
+  <apex:sectionHeader title="Linvio PaymentConnect"  subtitle="New Payment"/>
+    <apex:form >
+    <apex:pageMessages />
+        <apex:pageBlock title="New Payment Options" mode="maindetail">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Cancel" action="{!cancelFromNewPayment}"/>
+            </apex:pageBlockButtons>
+<div style="height:2px;width:100%;background:#e0e0e0;margin-bottom:4px;"/>
+            <br/>
+            <table id="option_table">
+            <tr>
+            <td>
+                <apex:commandLink styleclass="bigbutton" action="{!openCardTerminal}">
+                Credit Card Terminal
+                </apex:commandLink>
+                <div style="clear:both;"/>
+            </td>
+            <td>
+                Use the Credit Card Terminal
+                to process a credit card payment or authorization using one of your configured processor connections.
+            </td>
+            </tr>
+            <tr>
+            <td><apex:commandLink styleclass="bigbutton" action="{!openCashTerminal}">
+                Cash Entry Terminal
+                </apex:commandLink>
+            </td>
+            <td>
+                Use the Cash Entry Terminal to
+                enter a cash, check or money order receipt into Salesforce.
+
+            </td>
+            </tr>
+            </table>
+            <!-- <p>You may also select products to attach to this transaction using the "Add Products" button below:</p>
+            <br/>-->
+                <!--apex:commandButton value="Add Products" /-->
+
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p><apex:commandLink action="{!openEditView}">Bypass terminal entry</apex:commandLink> and create a Payment record manually.</p>
+        </apex:pageBlock>
+
+
+    </apex:form>
+
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!OR($User.UIThemeDisplayed == 'Theme4t',$User.UIThemeDisplayed == 'Theme4d')}">
+  <apex:stylesheet value="{!URLFOR($Resource.pymt__SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+  <style>
+   .slds-list__item:hover {
+     background-color: #e0e0e0;
+   }
+   a.no_decoration_plain, a.no_decoration_plain:hover {
+     text-decoration:none;
+     color:inherit;
+   }
+  </style>
+
+
+
+<apex:form >
+<apex:actionFunction onComplete="alert('testing');" name="cancelFromPage" />
+   <div class="slds">
+
+     <p class="slds-text-heading--label slds-m-bottom--small">
+     </p>
+
+     <div class="slds-page-header" role="banner">
+       <!-- LAYOUT GRID -->
+       <div class="slds-grid">
+         <!-- GRID COL -->
+         <div class="slds-col">
+           <!-- HEADING AREA -->
+           <p class="slds-text-heading--label">PaymentConnect</p>
+           <h1 class="slds-text-heading--medium">Add Payment</h1>
+           <!-- /HEADING AREA -->
+         </div>
+
+         <!-- GRID COL -->
+         <div class="slds-col slds-no-flex slds-align-middle">
+
+           <div class="slds-button-group" role="group">
+             <button class="slds-button slds-button--neutral" onclick="cancelFromPage();">
+               Cancel
+             </button>
+           </div>
+
+         </div>
+       </div>
+     </div>
+     <br/>
+
+     <ul class="slds-list--vertical slds-has-cards--space has-selections">
+       <li class="slds-list__item">
+         <apex:commandLink styleClass="no_decoration_plain" action="{!openCardTerminal}">
+         <div class="slds-tile slds-tile--board">
+           <div class="slds-tile__detail">
+             <p class="slds-text-heading--medium">Credit Card Terminal</p>
+             <p class="slds-truncate">Credit cards and stored payment methods.</p>
+           </div>
+         </div>
+       </apex:commandLink>
+       </li>
+       <li class="slds-list__item">
+         <apex:commandLink styleClass="no_decoration_plain" action="{!openCashTerminal}">
+         <div class="slds-tile slds-tile--board">
+           <div class="slds-tile__detail">
+             <p class="slds-text-heading--medium">Cash Entry Terminal</p>
+             <p class="slds-truncate">Cash, checks or money orders</p>
+           </div>
+         </div>
+       </apex:commandLink>
+       </li>
+
+     </ul>
+
+
+   </div><!-- slds -->
+ </apex:form>
+
+</apex:outputPanel>
+</html>
+</apex:page>

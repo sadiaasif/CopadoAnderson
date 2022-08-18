@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Access_Users</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Access Users</label>
+        <sharedTo>
+            <group>Job_Role_Service</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>LastName</field>
+            <operation>equals</operation>
+            <value>Advisors</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

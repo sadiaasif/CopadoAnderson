@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="Thank you for registering" recipientType="Contact" relatedToType="pymt__PaymentX__c">
+<messaging:HTMLEmailBody >
+Thank you for registering!  Here are your event pass(es).
+<br/>
+Event: {!RelatedTo.evt__Event__r.Name}<br/>
+<br/>
+Payment Received: {!RelatedTo.pymt__Amount__c} {!RelatedTo.pymt__Currency_ISO_Code__c}<br/>
+<br/><br/>
+<apex:repeat value="{!relatedTo.evt__Attendees__r}" var="attendee">
+<div style="width:900px;border:4px solid #e0e0e0;padding:5px;page-break-inside:avoid;">
+<c:EventPass attendeeId="{!attendee.id}" passFormat="basic"/>
+</div><br/><br/>
+<div>&nbsp;</div>
+</apex:repeat>
+</messaging:HTMLEmailBody>
+</messaging:emailTemplate>

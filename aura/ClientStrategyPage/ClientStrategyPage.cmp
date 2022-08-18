@@ -1,0 +1,792 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="ClientStrategyPageCtrl">
+    <aura:attribute name="recordId" type="Id"/>
+    
+     <aura:attribute name="Salesoptions" type="List" default="[
+	{'label': 'Platinum Client', 'value': 'Platinum'},
+	{'label': 'Titanium Client', 'value': 'Titanium'},
+    {'label': 'Tax Client', 'value': 'TaxClient'},
+    {'label': 'Bookkeeping Client', 'value': 'BookkeepingClient'},
+  	{'label': 'Has Living Trust', 'value': 'HasLivingTrust'},
+     {'label': 'Has Land Trust', 'value': 'HasLandTrust'},
+	{'label': 'Has Complaint', 'value': 'HasComplaint'}                                    
+	
+    ]"/>
+     <aura:attribute name="activeSections" type="List" default="['ClientOverviewandAttorneyNotes','Notes']" />
+     <aura:attribute name="showEvents" type="Boolean" default="false" />
+    <aura:attribute name="Salesvalue" type="List"/>
+    <aura:attribute name="TotalTaxSalesvalue" type="Double"/>
+    <aura:attribute name="TotalBkSalesvalue" type="Double"/>
+      <aura:attribute name="TotalSalesvalue" type="Double"/>
+    
+     <aura:attribute name="PrimaryContactName" type="string"/>
+    <aura:attribute name="PrimaryContactGender" type="string"/>
+    <aura:attribute name="PrimaryContactDOB" type="Date"/>
+    <aura:attribute name="PrimaryContactage" type="Integer"/>
+    <aura:attribute name="PrimaryContactmaritalstaus" type="string"/>
+      <aura:attribute name="PrimaryContactSpouseName" type="string"/>
+    <aura:attribute name="PrimaryContactSpouseGender" type="string"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    
+    <aura:attribute name="contacts" type="contact[]" />
+    <aura:attribute name="BluePrint" type="Attachment" />
+    <aura:attribute name="Entities" type="Entities__c[]" />
+    <aura:attribute name="BookkepingRecords" type="Bookkeeping__c[]" />
+  
+   <!-- <aura:attribute name="OnlineQRecords" type="LLC_Q__c[]" />-->
+    <aura:attribute name="TaxRecords" type="Tax__c[]" />
+    <aura:attribute name="PlatinumSaleRecords" type="Opportunity[]" />
+    <aura:attribute name="SalesDueNext30DaysRecords" type="Opportunity[]" />
+    <aura:attribute name="EntityFormationSalesRecords" type="Opportunity[]" />
+    <aura:attribute name="RefundsRecords" type="Refund__c[]" />
+    <aura:attribute name="BKClosedCasesRecords" type="Cases[]" />
+     <aura:attribute name="BKOpenCasesRecords" type="Cases[]" />
+    <aura:attribute name="openASandEFCasesRecords" type="Cases[]" />
+    <aura:attribute name="TaxProjectsRecords" type="H2S__HarvestProject__c[]" />
+     <aura:attribute name="FillingFeesSaleRecords" type="Opportunity[]" />
+     <aura:attribute name="TaxSalesRecords" type="Opportunity[]" />
+     <aura:attribute name="CallTaskRecords" type="Opportunity[]" />
+     <aura:attribute name="AdvisorscallTaskRecords" type="task[]" />
+     <aura:attribute name="ServicecallTaskRecords" type="task[]" />
+    <aura:attribute name="EntityTaxRecords" type="Entities__c[]" />
+     <aura:attribute name="setofbooksRecords" type="Set_of_Books__c[]" />
+     <aura:attribute name="SSQTableRecords" type="Strategy_Session_Questionnaire__c[]" />
+      <aura:attribute name="EventsAttenededRecords" type="List" />
+    <aura:attribute name="ContactwithEventRecords" type="Contact[]" />
+     <aura:attribute name="FeedbackRecords" type="case[]" />
+    <aura:attribute name="NotesRecords" type="Note__c[]" />
+    <aura:attribute name="AdvisorscallTaskcolumns" type="List"/>
+    <aura:attribute name="Bookepingcolumns" type="List"/>
+    <aura:attribute name="EntityTaxcolumns" type="List"/>
+     <aura:attribute name="SetofBookscolumns" type="List"/>
+     <aura:attribute name="SSQTablecolumns" type="List"/>
+    <aura:attribute name="FillingFeesColumns" type="List" />
+    <aura:attribute name="PlatinumSaleColumns" type="List" />
+    
+     <aura:attribute name="TaxSalescolumns" type="List"/>
+     <aura:attribute name="TaxProjectsColumns" type="List"/>
+    <aura:attribute name="SalesDueNext30DaysColumns" type="List"/>
+    <aura:attribute name="EntityFormationSaleColumns" type="List"/>
+       <aura:attribute name="ServicecallTaskcolumns" type="List"/>
+     <aura:attribute name="RefundsColumns" type="List"/>
+    <aura:attribute name="Taxcolumns" type="List"/> 
+      <aura:attribute name="openASandEFCasesColumns" type="List"/> 
+     <aura:attribute name="CallTaskColumns" type="List"/> 
+    <aura:attribute name="OnlineQColumns" type="List"/>
+    <aura:attribute name="Feedbackcolumns" type="List"/>
+      <aura:attribute name="EventsAttenededcolumns" type="List"/>
+     <aura:attribute name="ContactwithEventcolumns" type="List"/>
+     <aura:attribute name="Notescolumns" type="List"/>
+    <aura:attribute name="OnlineQEdit" type="boolean"/>
+    <aura:attribute name="editQId" type="id"/>
+    <aura:attribute name="Accounts" type="Account" />
+    <aura:attribute name="accObj" type="account" default="{ sObjectType: 'Account'}"/>
+     
+    <aura:attribute name="AdvisorNotesFields" type="List" default="Advisor_Notes__c,Update_Structure_Comments__c"/>
+     <aura:attribute name="AdvisorNotesUpdatedFields" type="List" default="Date_User_Advisor_Notes__c,Structure_Comments__c"/>
+    <aura:attribute name="AccountNotesFields" type="List" default="Partner_Notes__c"/>
+    <aura:attribute name="BookkeepingNotesFields" type="List" default="Update_Bookkeeping_Notes__c"/>
+     <aura:attribute name="RenewalsNotesFields" type="List" default="Update_Renewal_Notes__c"/>
+    <aura:attribute name="TaxNotesFields" type="List" default="Update_Tax_Notes__c,Update_Tax_Consult_Notes__c,Update_Keep_more_Solution__c"/>
+     <aura:attribute name="ServiceNotesFields" type="List" default="Update_Service_Notes__c"/>
+    <aura:attribute name="BookkeepingNotesUpdatedFields" type="List" default="Bookkeeping_Notes__c"/>
+    <aura:attribute name="AccountNotesUpdatedFields" type="List" default="Date_User_Partner_Notes__c"/>
+    <aura:attribute name="TaxNotesUpdatedFields" type="List" default="Tax_Notes__c,Tax_Consult_Notes__c,Keep_More_Solution_Notes__c"/>
+    <aura:attribute name="ServiceNotesUpdatedFields" type="List" default="Service_Notes__c,Important_Notes__c"/>
+    <aura:attribute name="RenewalsNotesUpdatedFields" type="List" default="Renewal_Notes__c"/>
+    <aura:attribute name="AccountBadgesFields" type="String[]" default="Corporate_Assistance_Program__c,Corporate_Headquarters__c,Platinum__c,Credit__c,Filing_Fees__c,Unlimited_LLC__c,ULT_Image__c,Unlimited_Living_Trust_Amendments__c"/>
+   <aura:attribute name="ClientOverview" type="String[]" default="Nickname__c,CreatedDate"/>
+<aura:attribute name="ClientOverviewNotes" type="String[]" default="Client_s_Anderson_Story_help_box__c,Client_Personal_Notes_help_box__c,Important_Notes__c"/>
+    <aura:attribute name="ClientAdditonalinfo" type="String[]" default="Real_Estate_Investor__c,Professional_Tax_Advisor_Assigned__c,Does_flips__c,Has_brick_and_mortar_business__c,Who_is_the_client_doing_their_taxes_with__c,New_Client_Flow__c,New_Client_Flow_Stage__c"/>
+    <aura:attribute name="blueprintimageUrl" type="String" default=""></aura:attribute>
+      <aura:attribute name="EntitiesTaxReturnPagiList" type="Entities__c[]"/>
+    <aura:attribute name="EntitiesTaxReturnList" type="Entities__c[]"/>
+ <aura:attribute name="Pageination" type="Boolean" default="true"/>
+<aura:attribute name="pageSize" type="Integer" default="1"/>
+
+<aura:attribute name="totalSize" type="Integer"/>
+
+<aura:attribute name="start" type="Integer" />
+
+<aura:attribute name="end" type="Integer"/>
+     <aura:attribute name="EnnameList" type="String[]" />
+    <aura:attribute name="NotesTypeList" type="Map" />
+     <aura:attribute name="NotesTypeSelected" type="Boolean"  default="false"/>
+     <aura:attribute name="ShowEventsSection" type="Boolean"  default="false"/>
+      <aura:attribute name="UserhasEventsLisence" type="Boolean"  default="false"/>
+      <aura:attribute name="NotestexArea" type="String" />
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+     <aura:attribute name="SSQID" type="id" />
+     <aura:attribute name="HideSpinner" type="Boolean" default="false"/>
+     <aura:attribute name="isNotesModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="NotesID" type="id" />
+    <div class="slds-box slds-theme_default">
+        <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"   
+                             activeSectionName="{! v.activeSections }">
+      <!--     -->
+            
+                <lightning:accordionSection name="Blueprint" label=" Blueprint Diagram">
+               
+              <iframe src="{! v.blueprintimageUrl }" width="100%" height="500px;" frameBorder="0"/>
+                       
+                   
+               </lightning:accordionSection>
+            
+           <lightning:accordionSection name="ClientOverviewandAttorneyNotes" label="Client Overview " >
+                   <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.ClientOverviewNotes}"
+                                          columns="2"
+                                          
+                                           mode="view" />
+                   <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.ClientOverview}"
+                                          columns="2"
+                                          
+                                           mode="readonly" />
+                <br/>
+                <br/>
+              
+           <div class="slds-grid slds-gutters">
+               <div class="slds-col slds-size_6-of-12">
+                   
+         <span>   
+                     <b>Primary Contact's Name:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactName}"/>
+                       <br/>                 
+                      
+          
+                               <b>Primary Contact's Gender:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactGender}"/>
+                       <br/>  
+                            <b>Primary Contact's Date of Birth:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactDOB}"/>
+                       <br/>                 
+                            <b>Primary contact's age:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactage}"/>
+                       <br/>                 
+                            <b>Primary Contact's Legal Marital Status:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactmaritalstaus}"/>
+                       <br/>                 
+                      <label class="slds-form-element__label" style="margin-right: 0.5rem;font-weight: bold;">Sales</label>  <lightning:helptext iconName="utility:info" content="Tax Client-Checks if the client has purchased Tax Compliance Sale;Bookkeeping Client-checks if the client has purchased Bookkeeping Sale or Bookkeeping Subscription;Has Living Trust-checks if the client has Living Trust Entity;Has Land Trust-checks if the client has Land Trust Entity" />
+ 
+               <lightning:checkboxGroup name="SalesPresent"
+                             
+                             options="{! v.Salesoptions }"
+                             value="{! v.Salesvalue }"
+                             disabled="true"
+                                        /></span>
+               </div> 
+                 
+               <div class="slds-col slds-size_6-of-12">
+                   <span>
+                       <b>Primary Spouse Name:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactSpouseName}"/>
+                       <br/> 
+                    <br/>
+                      
+          
+                    <b>Primary Spouse Gender:</b>&nbsp; <ui:outputText value="{!v.PrimaryContactSpouseGender}"/>
+                        <br/>
+                         <br/>
+                       <b>Total Value of Tax Sales:</b>&nbsp; <ui:outputText value="{!v.TotalTaxSalesvalue}"/>
+                       <br/>
+                         <br/>
+                <b>Total Value of Bookkeeping Sales:</b>&nbsp; <ui:outputText value="{!v.TotalBkSalesvalue}"/>
+                       <br/>                 
+                       <br/>
+          
+                               <b>Total Value of Sales:</b>&nbsp; <ui:outputText value="{!v.TotalSalesvalue}"/>
+                       
+           
+               
+   </span></div>
+                </div>
+                <br/>
+                <br/>
+  
+                <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.ClientAdditonalinfo}"
+                                          columns="2"
+                                          
+                                           mode="view" />
+                            
+       <!--     <lightning:accordionSection name="Attorney Notes" label="Attorney Notes" >
+                <lightning:recordForm aura:id="AccountNoteTable" 
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.AccountNotesFields}"
+                                      columns="2"
+                                      onsubmit="{!c.contactSave}"                           
+                                      mode="view" />
+                  
+                <lightning:recordForm
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.AccountNotesUpdatedFields}"
+                                      columns="2"
+                                      
+                                      mode="readonly" />
+                </lightning:accordionSection>-->
+                  <lightning:accordionSection name="Notes" label="Notes">
+                         <aura:if isTrue="{!v.isNotesModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeNotesModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                      
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                       <lightning:recordForm aura:id="brokerForm"
+                        recordId="{!v.NotesID}"
+                        objectApiName="Note__c"
+                        columns="2"
+                        layoutType="Full"/>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeNotesModel }"/>
+                        <lightning:button variant="brand"
+                                          label="OK"
+                                          title="OK"
+                                          onclick="{!c.submitNotesDetails}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+             <aura:renderIf isTrue="{!v.HideSpinner}">
+    <div class="slds-spinner_container" >
+        <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+            <span class="slds-assistive-text">Loading, Please Wait...</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:renderIf>
+                 <lightning:accordionSection name="UpdateNotes" label="Create New Notes">
+                      <ui:outputText value="Please select the type of notes to Create New Notes"/>
+                     <br/>
+                       <lightning:select label="Notes Type" aura:id="NotestypeList" onchange="{!c.onSelectNoteTypeChange}">
+                                           <option value="None">--None--</option>
+        <aura:iteration items="{!v.NotesTypeList}" var="Note" indexVar="key">
+           <option text="{!Note.value}" value="{!Note.key}"  />
+        </aura:iteration>
+    </lightning:select>
+                     <br/>
+                     <aura:if isTrue="{!v.NotesTypeSelected}">
+                         <lightning:inputRichText label="Enter the Notes:" value="{!v.NotestexArea}" placeholder="type here..."/>
+                         <br/>
+                         <lightning:button variant="brand" label="Update" title="Upate Notes" onclick="{!c.UpateNotes}" class="slds-m-left_x-small"></lightning:button>
+                     </aura:if>
+                   </lightning:accordionSection>
+                      <br/>
+                    <lightning:select label="Filter Notes Type" aura:id="NotesFilterList" onchange="{!c.onFilterNoteTypeChange}">
+                                           <option value="All">All</option>
+        <aura:iteration items="{!v.NotesTypeList}" var="Note" indexVar="key">
+           <option text="{!Note.value}" value="{!Note.key}"  />
+        </aura:iteration>
+    </lightning:select>
+                         <lightning:datatable aura:id="NotesTable"  
+                           data="{!v.NotesRecords}"     
+                                     columns="{!v.Notescolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                               onrowaction="{!c.OpenNotesDetail}"
+                                      onsave="{! c.onNotesRecordSave }"
+                                    />
+                  
+            </lightning:accordionSection>
+
+  <aura:if isTrue="{!v.ShowEventsSection}">
+          <aura:if isTrue="{!v.showEvents}">
+                              
+               <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered slds-table_striped">
+ <thead>
+                                        <tr class="slds-text-title_caps">
+                                            
+                                          
+                                            <th scope="col">
+                                                <div title="Value">Events Attended</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.EventsAttenededRecords}" var="Event" indexVar="key">
+                                        <tr>
+                                            
+                                               
+                                                <th scope="col">
+                                                    <div title="{!Event.value}">{!Event.value}</div>
+                                                </th>
+                                            
+                                        </tr>
+                                            </aura:iteration>
+                                    </tbody>
+                                </table>
+                <lightning:accordionSection name="Events Attended" label="Events Attended" >
+                  <lightning:datatable aura:id="EventsAttenededTable"  
+                           data="{!v.EventsAttenededRecords}"     
+                                     columns="{!v.EventsAttenededcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                </lightning:accordionSection>
+
+ <aura:set attribute="else">
+     <br/>
+     <br/>
+     <br/>
+        <ui:outputText value="Sorry You do not have the permission to view the events"/>
+    </aura:set>
+              </aura:if>
+                      <aura:set attribute="else">
+     <br/>
+     <br/>
+     <br/>
+                          <lightning:button label="Show Events Attended" onclick="{!c.ShowEvents}" />
+   
+    </aura:set>
+                </aura:if>
+              <!--      <lightning:accordionSection name="Events Attended" label="Events Attended" >
+                  <lightning:datatable aura:id="EventsAttenededTable"  
+                           data="{!v.ContactwithEventRecords}"     
+                                     columns="{!v.ContactwithEventcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                </lightning:accordionSection>-->
+            </lightning:accordionSection>
+             <lightning:accordionSection name="AdvisorandstructureOverview" label=" Sales And Service Calls ">
+              <!--      <lightning:accordionSection name="AdvisorandstructureNotes" label="Advisor and Structure Notes" >
+                 <lightning:accordionSection name="AdvisorandstructureNotes" label="Edit Advisor and Structure Notes" >
+                        <lightning:recordForm aura:id="AdvisorNoteTable" 
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.AdvisorNotesFields}"
+                                      columns="1"
+                                      onsubmit="{!c.contactSave}"                           
+                                      mode="view" />
+                        </lightning:accordionSection>
+                         <lightning:accordionSection name="AdvisorandstructureNotes" label="Updated Advisor and Structure Notes" >
+                <lightning:recordForm
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.AdvisorNotesUpdatedFields}"
+                                      columns="1"
+                                      
+                                      mode="readonly" />
+                        </lightning:accordionSection>
+                        </lightning:accordionSection>-->
+                    <lightning:accordionSection name="AdvisorTask" label="Advisor Calls" >
+                         <lightning:datatable aura:id="AdvisorTaskTable"  
+                           data="{!v.AdvisorscallTaskRecords}"     
+                                     columns="{!v.AdvisorscallTaskcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                    <lightning:accordionSection name="ServiceTask" label="Service Calls" >
+                         <lightning:datatable aura:id="ServiceTaskTable"  
+                           data="{!v.ServicecallTaskRecords}"     
+                                     columns="{!v.ServicecallTaskcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+            </lightning:accordionSection>
+             <lightning:accordionSection name="Tax" label="Tax">
+                                       <!--  <lightning:accordionSection name="TaxNotes" label="Consult Information" >
+  			<lightning:accordionSection name="TaxNotes" label="Edit Consult Information" > 
+                <lightning:recordForm aura:id="TaxNoteTable" 
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.TaxNotesFields}"
+                                      columns="1"
+                                      onsubmit="{!c.contactSave}"                           
+                                      mode="view" />
+                        </lightning:accordionSection>
+                         <lightning:accordionSection name="TaxNotes" label="Updated Consult Information" >
+                <lightning:recordForm
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.TaxNotesUpdatedFields}"
+                                      columns="1"
+                                      
+                                      mode="readonly" />
+
+                 </lightning:accordionSection>
+            </lightning:accordionSection>-->
+                 <lightning:accordionSection name="Entity Tax Information" label="Entity Tax Information" >
+                     
+                       <!--     <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout" style="width:100%">
+                                <tr > <td  >
+                                      <lightning:select label="Show" aura:id="EntityList" onchange="{!c.onSelectChange}">
+                                           <option value="All"> ALL</option>
+        <aura:iteration items="{!v.EnnameList}" var="val" >
+            <option value="{!val}"> {!val}</option>
+        </aura:iteration>
+    </lightning:select>
+                                  
+
+</td>
+</tr>
+                                <aura:if isTrue="{!not(empty(v.EntitiesTaxReturnPagiList))}">
+                                 <aura:iteration items="{!v.EntitiesTaxReturnPagiList}" var="En"  indexVar="index">
+                
+                    <tbody>
+                         <tr class="slds-text-heading_label">
+                            
+                             <th scope="col">
+                                <div class="slds-truncate" title="{!En.Name}" >  <a   onclick="{!c.navigateToEntityRecord}" style="width:100%;" data-index="{!index}">{!En.Name}</a></div></th>
+                        </tr>
+                            <tr>
+                                
+                                <td><div class="slds-truncate" title="{!En.Tax_Return_Required__c}" >Tax Return Required: <input type="checkbox" name="options" id="checkbox-unique-id-72" value="checkbox-unique-id-72" disabled="True" checked="{!En.Tax_Return_Required__c}" /> 
+                                    </div><br/>
+                                    <div class="slds-truncate" title="{!En.status}" >Tax Period Type:  {!En.Status__c} 
+                                    </div><br/>
+                                   <div class="slds-truncate" title="{!En.Tax_Year_Ended__c}" >First Tax Year End:  {!En.Tax_Year_Ended__c} 
+                                    </div><br/>
+                                    <div class="slds-truncate" title="{!En.Tax_Form__c}" >Tax Form:  {!En.Tax_Form__c} 
+                                    </div><br/>
+                                    <div class="slds-truncate" title="{!En.Year_End_Month__c}" >Year End Month:  {!En.Year_End_Month__c} 
+                                    </div><br/>
+                                    <div class="slds-truncate" title="{!En.Tax_Matter_Representative__c}" >Tax Matter Representative:  {!En.Tax_Matter_Representative__c} 
+                                    </div><br/>
+                                    <div class="slds-truncate" title="{!En.Federal_Return__c}" >Federal Return Due Date:  {!En.Federal_Return__c} 
+                                    </div><br/>
+                                     <div class="slds-truncate" title="{!En.Year_End__c}" >Year End Selected:  {!En.Year_End__c} 
+                                    </div><br/>
+                                     <div class="slds-truncate" title="{!En.State_Return_Due_Date__c}" >State Return Due Date:  {!En.State_Return_Due_Date__c} 
+                                    </div><br/>
+                                     <div class="slds-truncate" title="{!En.Disregarded_To_Personal__c}" >Disregarded To Personal:  {!En.Disregarded_To_Personal__r.Name} 
+                                    </div><br/>
+                                     <div class="slds-truncate" title="{!En.Disregarded_To__c}" >Disregarded To Entity:  {!En.Disregarded_To__r.Name} 
+                                    </div><br/>
+                                     <div class="slds-truncate" title="{!En.Disregarded_to_Entity_s_Yr_End_Month__c}" >Disregarded to Entitys Yr End Month:  {!En.Disregarded_to_Entity_s_Yr_End_Month__c} 
+                                    </div><br/>
+                                    
+                                </td>
+                              
+                                
+                            </tr>
+                       
+                    </tbody>
+                      </aura:iteration> </aura:if>
+                                    
+                                 <aura:if isTrue="{!v.Pageination}">
+                              
+
+<lightning:button label="Previous" disabled="{!v.start == 0}"  onclick="{!c.previous}" />
+
+<lightning:button label="Next" disabled="{!v.end >= v.totalSize}" onclick="{!c.next}" />
+
+</aura:if>
+                </table>-->
+                   
+                       <lightning:datatable aura:id="EntityTaxTable"  
+                           data="{!v.EntityTaxRecords}"     
+                                     columns="{!v.EntityTaxcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                    <lightning:accordionSection name="TaxProjects" label="Projects" >
+                         <lightning:datatable aura:id="TaxProjectsTable"  
+                           data="{!v.TaxProjectsRecords}"     
+                                     columns="{!v.TaxProjectsColumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                   
+            </lightning:accordionSection>
+                <lightning:accordionSection name="Bookkeeping" label="Bookkeeping">
+             
+                  <lightning:accordionSection name="Set of Books Information" label="Set of Books Information" >
+                         <lightning:datatable aura:id="SetofBooksTable"  
+                           data="{!v.setofbooksRecords}"     
+                                     columns="{!v.SetofBookscolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                   
+                   
+            </lightning:accordionSection>
+            <lightning:accordionSection name="Strategy Session Questionnaire" label="Strategy Session Questionnaire">
+               
+          <div class="slds-clearfix">
+  <div class="slds-float_right">
+    <p><ui:button label="New" press="{!c.createSSQRecord}"/>
+      <ui:button label="Refresh" press="{!c.RefreshSSQRecord}"/></p>
+  </div>
+</div>
+                 <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                      
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                       <lightning:recordForm aura:id="brokerForm"
+                        recordId="{!v.SSQID}"
+                        objectApiName="Strategy_Session_Questionnaire__c"
+                        columns="2"
+                        layoutType="Full"/>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="OK"
+                                          title="OK"
+                                          onclick="{!c.submitDetails}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+                <br/>
+                <br/>
+                 
+                         <lightning:datatable aura:id="SSQTable"  
+                           data="{!v.SSQTableRecords}"     
+                                     columns="{!v.SSQTablecolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"
+                                               onrowaction="{!c.OpenDetail}"
+                                    />
+                  
+            </lightning:accordionSection> 
+            <lightning:accordionSection name="Feedback" label="Feedback">
+          
+                 
+                         <lightning:datatable aura:id="FeedbackTable"  
+                           data="{!v.FeedbackRecords}"     
+                                     columns="{!v.Feedbackcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                  
+            </lightning:accordionSection> 
+            
+             
+          <!--   <lightning:accordionSection name="Renewals" label="Renewals">
+                    <lightning:accordionSection name="RenewalsNotes" label="Renewals Notes" >
+                <lightning:recordForm aura:id="RenewalsNoteTable" 
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.RenewalsNotesFields}"
+                                      columns="2"
+                                      onsubmit="{!c.contactSave}"                           
+                                      mode="view" />
+                    
+                <lightning:recordForm
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Account"
+                                      
+                                      fields="{!v.RenewalsNotesUpdatedFields}"
+                                      columns="2"
+                                      
+                                      mode="readonly" />
+                        </lightning:accordionSection>
+                    <lightning:accordionSection name="SalesDueNext30Days" label="Sales Due (Next 30 Days)" >
+                         <lightning:datatable aura:id="SalesDueNext30DaysTable"  
+                           data="{!v.SalesDueNext30DaysRecords}"     
+                                     columns="{!v.SalesDueNext30DaysColumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                 
+                   
+            </lightning:accordionSection>
+
+              <lightning:accordionSection name="PartialPaymentsandRefunds" label="Partial Payments and Refunds">
+                  
+                    <lightning:accordionSection name="Partial Payments" label="Partial Payments" >
+                         <lightning:datatable aura:id="EntityFormationSaleTable"  
+                           data="{!v.EntityFormationSalesRecords}"     
+                                     columns="{!v.EntityFormationSaleColumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                   <lightning:accordionSection name="Refunds" label="Refunds (Last 90 Days)" >
+                         <lightning:datatable aura:id="RefundsTable"  
+                           data="{!v.RefundsRecords}"     
+                                     columns="{!v.RefundsColumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    />
+                    </lightning:accordionSection>
+                   
+            </lightning:accordionSection>
+                    
+           <lightning:accordionSection name="TaxNotes" label=" Tax Notes">
+                <lightning:datatable aura:id="TaxTable"  
+                                     
+                                     data="{! v.TaxRecords }"     
+                                     columns="{! v.Taxcolumns }"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                     onsave="{! c.onTaxRecordSave }"/>
+            </lightning:accordionSection>
+            <lightning:accordionSection name="BookepingNotes" label=" Bookeping Notes">
+                <lightning:datatable aura:id="BookkeepingTable"  
+                                     data="{! v.BookkepingRecords }"     
+                                     columns="{! v.Bookepingcolumns }"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                     onsave="{! c.onBookepingRecordSave }"/>               
+            </lightning:accordionSection>
+            <lightning:accordionSection name="Contacts" label=" Contact Details"  >
+                <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                    <thead>
+                        <tr class="slds-text-heading_label">
+                            
+                            <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Email">Email</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Account Roles">Account Roles</div></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.contacts}" var="con" indexVar="index">
+                            <tr>
+                                
+                                <td><div class="slds-truncate" title="{!con.Name}" >  <a   onclick="{!c.navigateTocontactRecord}" style="width:100%;" data-index="{!index}">{!con.Name}</a></div></td>
+                                <td><div class="slds-truncate" title="{!con.Email}">{!con.Email}</div></td>
+                                <td><div class="slds-truncate" title="{!con.Phone}">{!con.Phone}</div></td>
+                                <td><div class="slds-truncate" title="{!con.Account_Roles__c}">{!con.Account_Roles__c}</div></td>
+                                
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                    
+                </table>
+            </lightning:accordionSection>
+            <lightning:accordionSection name="Entities" label=" Entity Details" >
+                <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                    <thead>
+                        <tr class="slds-text-heading_label">
+                            
+                            <th scope="col"><div class="slds-truncate" title="Name">Entity Name</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Status">Status</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Tax Status">Tax Status</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Disregarded To Entity">Disregarded To Entity</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Organization State">Organization State</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Federal Return Due Date">Federal Return Due Date</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Organizational Date">Organizational Date</div></th>
+                            <th scope="col"><div class="slds-truncate" title="EIN #">EIN #</div></th>
+                            <th scope="col"><div class="slds-truncate" title="First Tax Year End">First Tax Year End</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Date Shipped">Date Shipped</div></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.Entities}" var="Entity" indexVar="Enindex">
+                            <tr>
+                                
+                                <td> 
+                                    <div class="slds-truncate" title="{!Entity.Name}" >  <a   onclick="{!c.navigateToEntityRecord}" style="width:100%;" data-index="{!Enindex}">{!Entity.Name}</a></div>
+                                    
+                                </td>
+                                <td><div class="slds-truncate" title="{!Entity.Status__c}">{!Entity.Status__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Tax_Status__c}">{!Entity.Tax_Status__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Disregarded_To__c}">{!Entity.Disregarded_To__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Organization_State__c}">{!Entity.Organization_State__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Federal_Return__c}">{!Entity.Federal_Return__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Organizational_Date__c}">{!Entity.Organizational_Date__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.EIN__c}">{!Entity.EIN__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Year_End__c}">{!Entity.Year_End__c}</div></td>
+                                <td><div class="slds-truncate" title="{!Entity.Date_Shipped_Formula__c}">{!Entity.Date_Shipped_Formula__c}</div></td>
+                                
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                    
+                </table>
+            </lightning:accordionSection>
+            <lightning:accordionSection name="Blueprint" label=" Blueprint Diagram">
+                
+                <iframe src="{ }" width="100%" height="500px;" frameBorder="0"/>
+                
+            </lightning:accordionSection>
+            <lightning:accordionSection name="StartegyQChanges" label="Strategy Q changes">
+                <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                    <thead>
+                        <tr class="slds-text-heading_label">
+                            
+                            <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Updated Fiedls and Values"> Updated Fiedls and Values </div></th>
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.OnlineQRecords}" var="OnlineQChanges" indexVar="indexQ">
+                            <tr>
+                                
+                                <td><div class="slds-truncate" title="{!OnlineQChanges.Name}" >  <a   onclick="{!c.navigateToOnlineQ}" style="width:100%;" data-index="{!indexQ}">{!OnlineQChanges.Name}</a></div></td>
+                                <td><div class="slds-truncate" title="{!OnlineQChanges.Updated_Fields__c}"><ui:outputRichText aura:id="outputRT" value="{!OnlineQChanges.Updated_Fields__c}" /></div></td>
+                                
+                                
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                    
+                </table>
+            </lightning:accordionSection>
+            <lightning:accordionSection name="StrategyQDetails" label="Strategy Q">
+                
+                <lightning:datatable aura:id="onlineQTable"  
+                                     data="{! v.OnlineQRecords }"     
+                                     columns="{! v.OnlineQColumns }"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                     onrowaction="{!c.sendMail}"
+                                     onsave="{! c.onQRecordSave }"/>
+            </lightning:accordionSection> -->                
+            
+        </lightning:accordion>
+        
+    </div>
+    
+    
+    
+</aura:component>

@@ -1,0 +1,951 @@
+<apex:page showHeader="false" standardController="Case" title="HelpDesk Ticket System" sidebar="false" extensions="HelpDeskClass" docType="html-5.0" lightningStylesheets="true"> 
+  <html>
+    
+<!--  <apex:outputPanel rendered="{!!Classic}">-->
+      
+      <apex:slds />
+    <!--</apex:outputPanel>-->
+    <head>           
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="description" content=""/>
+      <meta name="author" content=""/>
+     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.treeview.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/demo.js')}"/>  
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.cookie.min2.js')}"/>
+       <style type="text/css">
+           .hdrCaption {
+            text-align:right;
+        }
+        .hdrCaptionValue {
+            text-align:left;
+        }
+      
+            
+         </style>
+     <script type="text/javascript">
+    
+        function Scroll(){
+      
+                 $("html, body").animate({ scrollTop: 0 }, "slow");           
+        
+        }    
+</script>            
+    </head>  
+      <body style="margin:0; max-width:100%; overflow-y: hidden;overflow-x: hidden;">
+      <div class="slds-scope">
+          
+          
+    <apex:form id="form">
+       
+        <center>
+            <br/>
+            <br/>
+          
+          <apex:outputPanel id="RequestDep" style="overflow-y: hidden;overflow-x: hidden;" >
+   <apex:outputText value="Request Department  " style="font-weight:900;font-size:15px;"></apex:outputText>   
+             
+<apex:actionRegion >
+      <apex:selectList size="1" value="{!Department}">
+         <apex:actionSupport event="onchange" action="{!onChangeDepartment}" />
+          <apex:selectOptions value="{!dynamiclist}"></apex:selectOptions>
+      </apex:selectList>
+    </apex:actionRegion>
+            </apex:outputPanel>  </center>
+        <br/>
+        <br/>
+                        <center>
+                 <apex:actionFunction name="save" action="{!save}" />  
+          
+        <apex:outputPanel id="redirectPanel" style="height:100%"   layout="block"
+   styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform">
+            <div style="width:600px;">
+       
+            
+       
+             <apex:pagemessages ></apex:pagemessages>
+  
+             
+                <!--Final Redirect-->
+           
+
+                  <!----Marketing Form-->
+
+        
+     
+<apex:outputPanel style="width:500px;overflow-y: hidden;overflow-x: hidden;" layout="block"
+   styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" rendered="{!redirectSFMarketinEventRequest}">
+   <apex:panelGrid columns="1" style="text-align:left;">
+        <apex:outputText value="Project Name:" style="font-weight:900;"/>
+                           <apex:input type="text" value="{!projectName}" style="width:300px;"/>
+    <br/>
+     <br/>
+    <apex:outputText value="Project Type: " style="font-weight:900;"/> 
+                     <apex:selectRadio value="{!projectTypes}" layout="pageDirection">
+            <apex:selectOptions value="{!ProjectType}"/>
+            </apex:selectRadio>
+     <br/>
+     <br/>
+      <apex:outputText value="Which department will be paying for this project?: " style="font-weight:900;"/> 
+                 
+                      <apex:input type="text" value="{!deptPaying}" style="width:300px;"/>
+    
+     <br/>
+     <br/>
+     
+      <apex:outputText value="Project Description: " style="font-weight:900;"/> 
+                
+                   
+    <apex:inputTextarea value="{!projectDesc}" style="width:500px;height:200px;" />
+     <br/>
+     <br/>
+     <apex:outputText value="Project Audience: " style="font-weight:900;"/> 
+                  
+                      <apex:inputTextarea value="{!projectAudience}" style="width:500px;height:200px;" />
+     <br/>
+     <br/>
+      <apex:outputText value="Project Value: " style="font-weight:900;"/> 
+                    
+                      <apex:inputTextarea value="{!projectValue}" style="width:500px;height:200px;" />
+     <br/>
+     <br/>
+     <apex:outputText value="Any other information you would like to share with the Marketing & Communications team?" style="font-weight:900;"/> 
+                
+                      <apex:inputTextarea value="{!projectInfo}" style="width:500px;height:200px;" />
+     <br/>
+     <br/>
+               <apex:outputText value=" Requested Due Date: " style="font-weight:900;"/> <apex:inputfield value="{!objcase.Requested_Due_Date__c}" />
+<br/>
+     <br/>                            
+          <apex:actionRegion > 
+
+         <apex:outputText value="Attachments" style="font-weight:900;"/> 
+        
+  
+ <apex:inputFile id="fileToUpload6" value="{!fileBody}" filename="{!fileName}" styleClass="input-file"/>  
+       </apex:actionRegion>
+      <apex:outputPanel >
+          <br/>
+          <br/>
+        <apex:actionRegion >
+            <center>
+             <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style="width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center"  />  
+                </center>
+          </apex:actionRegion>
+        </apex:outputPanel>
+  
+      <br/>
+     <br/>
+
+    </apex:panelGrid>
+    
+    </apex:outputPanel>
+  
+      
+
+             <!----Event Form-->
+             
+        
+     
+<apex:outputPanel style="width:750px;overflow-y: hidden;overflow-x: hidden;" rendered="{!redirectSFEventRequest}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform">
+   <apex:panelGrid columns="1" style="text-align:left;">
+        <apex:outputText value="Type of Meeting" style="font-weight:900;"/>
+        <br/>
+        <apex:selectList size="1" value="{!meetingType}">
+            <apex:selectOptions value="{!MeetingTypes}"></apex:selectOptions>
+        </apex:selectList>
+         
+    <br/>                
+    <br/>
+     
+    <apex:outputText value="Name of orginization " style="font-weight:900;"/> 
+                   
+                      <apex:input type="text" value="{!OrganiztionName}" style="width:300px;"/> 
+     <br/>
+     <br/>
+      <apex:outputText value="Event Type " style="font-weight:900;"/> 
+                
+                     <apex:selectList size="1" value="{!eventType}">
+            <apex:selectOptions value="{!EventTypesList}"></apex:selectOptions>
+        </apex:selectList>
+     <br/>
+     <br/>
+     
+      <apex:outputText value="Event Venue Address" style="font-weight:900;"/> 
+                   
+                   
+   <apex:selectList size="1" value="{!eventVenueAddress}">
+            <apex:selectOptions value="{!VenueAddresses}"></apex:selectOptions>
+        </apex:selectList>
+     <br/>
+     <br/>
+     <apex:outputText value="Contact Person for the Event " style="font-weight:900;"/> 
+                   
+                       <apex:input type="text" value="{!eventcontactPerson}" style="width:300px;"/> 
+     <br/>
+     <br/>
+      <apex:outputText value="Contact Email Address" style="font-weight:900;"/> 
+                   
+                      <apex:input type="email" value="{!contactEmailAddress}" style="width:300px;"/> 
+     <br/>
+     <br/>
+     <apex:outputText value="Contact Phone Number" style="font-weight:900;"/> 
+                 
+                       <apex:input type="tel" value="{!contactPhoneNumber}" style="width:300px;"/> 
+     <br/>
+     <br/>
+               <apex:outputText value=" Program/Meeting description for online calendar of events " style="font-weight:900;"/> 
+
+                  
+                      <apex:inputTextarea value="{!meetingDesc}" style="width:400px;height:100px" />
+<br/>
+     <br/>                            
+          <apex:outputText value=" First Choice Meeting Date/ Time" style="font-weight:900;"/> 
+   
+                
+        <apex:outputPanel >
+             <apex:outputText value=" Event Start" style="font-weight:900;"/> 
+            <apex:outputText value=" " /> 
+            <apex:input type="datetime-local" value="{!eventStartDateChoice1}"  /> 
+            <br/>
+            <br/>
+             <apex:outputText value=" Event Ends" style="font-weight:900;"/> 
+             <apex:outputText value=" " /> 
+              <apex:input type="datetime-local" value="{!eventEndDateChoice1}"/> 
+            </apex:outputPanel>
+<br/>
+     <br/>     
+         <apex:outputText value=" Secound Choice Meeting Date/ Time" style="font-weight:900;"/> 
+   
+                 
+        <apex:outputPanel >
+             <apex:outputText value=" Event Start" style="font-weight:900;"/> 
+            <apex:outputText value=" " /> 
+            <apex:input type="datetime-local" value="{!eventStartDateChoice2}"  /> 
+            <br/>
+            <br/>
+             <apex:outputText value=" Event Ends" style="font-weight:900;"/> 
+             <apex:outputText value=" " /> 
+              <apex:input type="datetime-local" value="{!eventEndDateChoice2}"/> 
+            </apex:outputPanel>
+<br/>
+     <br/>  
+        <apex:outputText value="If you'd like to schedule a recurring event, " style="font-weight:900;"/> <br/>
+        <apex:outputText value="please enter the desired additional dates and times below " style="font-weight:900;"/> 
+
+                 
+                      <apex:inputTextarea value="{!SchRecuringEvent}" style="width:400px;height:100px"/>
+<br/>
+     <br/>   
+         <apex:outputText value="Estimated number of people attending " style="font-weight:900;"/> 
+                  
+                       <apex:input type="number" value="{!noOfPeopleAttending}" style="width:300px;"/> 
+     <br/>
+     <br/>
+          <apex:outputText value="Room Setup" style="font-weight:900;"/> 
+                  
+                   
+       <apex:selectList value="{!roomSetup}" size="1" >
+            <apex:selectOptions value="{!roomSetups}"></apex:selectOptions>
+       </apex:selectList>
+     <br/>
+     <br/>
+        <apex:outputText value="A/V Needs: Select Desired Equipment" style="font-weight:900;"/> 
+                 
+                   
+ <apex:selectList value="{!aVNeeds}" multiselect="true">
+     <apex:selectOptions value="{!AvneedsList}"></apex:selectOptions>
+        </apex:selectList>
+        <br/>
+     <br/>
+         <apex:outputText value="Food and Beverage Needs" style="font-weight:900;"/> 
+                  
+                   
+<apex:selectList value="{!foodBeverageNeeds}" multiselect="true" >
+     <apex:selectOptions value="{!FoodneedList}"></apex:selectOptions>
+        </apex:selectList>
+        <br/>
+     <br/>
+      
+     <apex:outputText value="List Other Food and Beverage Needs " style="font-weight:900;"/> 
+                   
+                       <apex:input type="text" value="{!otherNeeds}" style="width:300px;"/> 
+           <br/>
+     <br/>
+         <apex:outputText value="Staff Needs" style="font-weight:900;"/> 
+                 
+<apex:selectList value="{!staffNeeds}" multiselect="true" >
+     <apex:selectOptions value="{!staffneedList}"></apex:selectOptions>
+        </apex:selectList>
+        <br/>
+     <br/>
+           <apex:outputText value=" Advisors List " style="font-weight:900;"/> 
+
+                
+                      <apex:inputTextarea value="{!advisorsList}" style="width:400px;height:100px" />
+<br/>
+     <br/> 
+         <apex:outputText value=" Speakers List " style="font-weight:900;"/> 
+
+                
+                      <apex:inputTextarea value="{!speakersList}" style="width:400px;height:100px" />
+<br/>
+     <br/> 
+             <apex:outputText value="Registration Requirements" style="font-weight:900;"/> 
+                  
+                   
+<apex:selectList value="{!registrationRequirements}" multiselect="true" >
+     <apex:selectOptions value="{!registrationReqList}"></apex:selectOptions>
+        </apex:selectList>
+        <br/>
+     <br/>
+         <apex:outputText value="Supplies, Equipment, Handouts" style="font-weight:900;"/> 
+                  
+                   
+<apex:selectList value="{!Supplies}" multiselect="true" >
+     <apex:selectOptions value="{!SuppliesList}"></apex:selectOptions>
+        </apex:selectList>
+        <br/>
+     <br/>
+         <apex:outputText value=" Any other comments" style="font-weight:900;"/> 
+
+                
+                     <apex:inputfield value="{!objcase.Comments}"  style="width:400px;height:100px"/>
+<br/>
+     <br/>     
+         <apex:outputText value="Attachments" style="font-weight:900;"/> 
+        
+    
+    <apex:actionRegion >
+        
+ <apex:inputFile id="fileToUpload1" value="{!fileBody}" filename="{!fileName}" styleClass="input-file"/>  
+      
+    <br/>
+    <br/>
+        </apex:actionRegion>
+        <apex:actionRegion >
+            <center>
+             <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;"  style=" width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center" >
+             
+             
+            </apex:commandButton>
+                 </center>
+          </apex:actionRegion>
+     
+  
+      <br/>
+     <br/>
+
+  </apex:panelGrid>
+    
+    </apex:outputPanel>
+  
+      
+
+              <!---Training-->
+                        
+     
+<apex:outputPanel style="width:500px;overflow-y: hidden;overflow-x: hidden;"  rendered="{!redirectWebinarRequest}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" >
+    <apex:panelGrid columns="1" style="text-align:left;">
+        <apex:outputText value="Title of Webinar" style="font-weight:900;"/>
+        
+         <apex:input type="text" value="{!webinarTitle}" style="width:300px;"/> 
+         
+    <br/>                
+    <br/>
+     
+    <apex:outputText value="Webinar Speaker " style="font-weight:900;"/> 
+                  
+                      <apex:input type="text" value="{!webinarSpeaker}" style="width:300px;"/> 
+     <br/>
+     <br/>
+      <apex:outputText value="Webinar Audience " style="font-weight:900;"/> 
+                 
+                     <apex:selectList multiselect="true" value="{!webinarAudience}">
+            <apex:selectOptions value="{!webinarAudiencelist}"></apex:selectOptions>
+        </apex:selectList>
+     <br/>
+     <br/>
+     
+      <apex:outputText value="Type of Platform" style="font-weight:900;"/> 
+                
+  <apex:selectRadio value="{!platformType}" layout="pageDirection">
+            <apex:selectOptions value="{!platformTypelist}"></apex:selectOptions>
+        </apex:selectRadio>
+     <br/>
+     <br/>
+           
+       
+             <apex:outputText value=" Recording Due Date" style="font-weight:900;"/> 
+           
+            <apex:input type="datetime-local" value="{!recordingDueDate}"  /> 
+            <br/>
+            <br/>
+             <apex:outputText value=" Slides Due Date" style="font-weight:900;"/> 
+            
+              <apex:input type="datetime-local" value="{!SlidesDueDateDueDate}"/> 
+           
+<br/>
+     <br/>     
+     
+        <apex:outputText value="Intended Audience " style="font-weight:900;"/> 
+                    <apex:selectList size="1" value="{!intendedAudience }">
+            <apex:selectOptions value="{!intendedAudiencelist}"></apex:selectOptions>
+        </apex:selectList>
+<br/>
+     <br/>   
+         <apex:outputText value="Bullet Points" style="font-weight:900;"/> 
+                  
+                      <apex:inputTextarea value="{!bulletPoints}" style="width:500px;height:200px;" />
+     <br/>
+     <br/>
+          <apex:outputText value="Summary Paragraph" style="font-weight:900;"/> 
+                 
+                   
+ <apex:inputTextarea value="{!summaryParagraph}" style="width:500px;height:200px;" />
+     <br/>
+     <br/>
+        <apex:outputText value="Call to Action" style="font-weight:900;"/> 
+                 
+  <apex:inputTextarea value="{!calltoAction}" style="width:500px;height:200px;" />
+        <br/>
+     <br/>
+         <apex:outputText value="Special Offer Details" style="font-weight:900;"/> 
+                  
+                   
+ <apex:inputTextarea value="{!specialOfferDetails}" style="width:500px;height:200px;" />
+        <br/>
+     <br/>
+      
+     <apex:outputText value="Offer Type " style="font-weight:900;"/> 
+                   
+                       <apex:input type="text" value="{!offerType}" style="width:300px;"/> 
+           <br/>
+     <br/>
+         <apex:outputText value="Offer Start Date" style="font-weight:900;"/> 
+                 
+                   
+   <apex:input type="datetime-local" value="{!OfferStartDate}"  /> 
+        <br/>
+     <br/>
+           <apex:outputText value=" Offer End Date " style="font-weight:900;"/> 
+
+                  
+                   <apex:input type="datetime-local" value="{!OfferEndDate}"  /> 
+<br/>
+     <br/> 
+         <apex:outputText value=" Offer Terms" style="font-weight:900;"/> 
+
+                  
+                  <apex:input type="text" value="{!OfferTerms}" style="width:300px;"/>    
+<br/>
+     <br/> 
+             <apex:outputText value="Extra Details" style="font-weight:900;"/> 
+                  
+                   
+  <apex:inputTextarea value="{!extraDetails}" style="width:500px;height:200px;" />
+        <br/>
+     <br/>
+     
+         
+  
+        <apex:actionRegion >
+            <center>
+             <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style=" width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center"/>  
+                </center>
+          </apex:actionRegion>
+     
+  
+      <br/>
+     <br/>
+
+    </apex:panelGrid>
+    
+    </apex:outputPanel>
+  
+      
+
+              <!---New Affiliate Onboarding-->
+              
+                    
+        <apex:outputPanel style="width:600px;overflow-y: hidden;overflow-x: hidden;"  rendered="{!redirectNewAffiliateOnboarding}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" >
+     
+       <!-- <apex:panelGrid columns="1" class="slds-grid slds-gutters" style="table-layout:fixed;text-align:left;" >-->
+        <div class="slds-grid slds-gutters" style="tex-align:left;">
+             <div class="slds-col" style="tex-align:left;">
+              <apex:outputText value="Name of the Affiliate" style="text-align:left;font-weight:900;"/> 
+           <apex:input type="text" value="{!affiliateName}" style="width:200px;"/> 
+            <br/> <br/>
+           <apex:outputText value="Primary Contact Email" style="text-align:left;font-weight:900;"/> 
+             <apex:input type="text" value="{!pcontactEmail}" style="width:200px;"/> 
+             <br/> <br/>
+            <apex:outputText value=" Billing Contact " style="text-align:left;font-weight:900;"/> 
+            <apex:input type="text" value="{!billingContactName}" style="width:200px;"/> 
+            <br/> <br/>
+             <apex:outputText value=" Billing Contact Phone Number " style="text-align:left;font-weight:900;"/> 
+       <apex:input type="text" value="{!billingConPhoneNumber}" style="width:200px;"/> 
+           <br/>
+            <br/>
+             <br/>
+            <br/>
+             <br/>
+            <br/>
+              <br/>
+            <br/>
+             <br/>
+            <br/>
+             <br/>
+            <br/>
+             <br/>
+             <br/>
+            <br/>
+               <br/>
+            
+                 <apex:outputText value="Payout % " style="text-align:left;font-weight:900;"/> <br/>
+        <apex:input type="text" value="{!payoutPercent}" style="width:200px;"/> 
+            <br/> <br/>
+ <apex:outputText value=" Type of Affiliate Relationship" style="text-align:left;font-weight:900;"/> 
+         <apex:input type="text" value="{!affRealationship}" style="width:200px;"/> 
+            <br/>
+           <br/>
+             <br/>
+             <br/>
+            <br/>
+            <br/>
+           
+            <apex:outputText value=" W9 Completed (Please Attach)" style="text-align:left;font-weight:900;"/> 
+          <apex:inputFile id="fileToUpload" value="{!fileBody1}" filename="{!fileName1}" styleClass="input-file"/>   
+            <br/> <br/>
+                 <apex:actionRegion >
+             <apex:outputText value="Upload Other Files" style="text-align:left;font-weight:900;"/> 
+            <apex:inputFile id="fileToUpload2" value="{!fileBody}" filename="{!fileName}" styleClass="input-file"/>  </apex:actionRegion>
+            </div>
+    <!--    </apex:panelGrid>-->
+      
+        
+      <!--  <apex:panelGrid columns="1" style="table-layout:fixed;text-align:left;">-->
+             <div class="slds-col" style="tex-align:left;">
+            <apex:outputText value="Name of Primary Contact" style="text-align:left;font-weight:900;"/> 
+             <apex:input type="text" value="{!pcontactName}" style="width:200px;"/> 
+            <br/> <br/>
+             <apex:outputText value="Primary Contact Phone Number" style="text-align:left;font-weight:900;"/> 
+           <apex:input type="text" value="{!pcontactPhoneNumber}" style="width:200px;"/>
+            <br/> <br/>
+           <apex:outputText value=" Billing Contact Email" style="text-align:left;font-weight:900;"/> 
+            <apex:input type="text" value="{!billingContactName}" style="width:200px;"/>
+             <br/> <br/>
+            <apex:outputPanel >
+           <apex:outputText value=" Billing Address for Affiliate" style="text-align:left;font-weight:900;"/> 
+                <apex:input type="text" value="{!billingAffAddress1}" style="width:200px;"/><br/><br/>
+                
+                <apex:input type="text" value="{!billingAffAddress2}" style="width:200px;"/><br/><br/>
+                <apex:input type="text" value="{!billingAffAddress3}" style="width:200px;"/><br/><br/>
+                <apex:outputText value="City" style="text-align:left;font-weight:900;"/> <br/>
+          <apex:input type="text" value="{!billingAffcity}" style="width:200px;"/>
+                <br/> <br/>
+                <apex:outputText value="State" style="text-align:left;font-weight:900;"/><br/>
+        
+                <apex:selectList size="1" value="{!billingAffstate}" style="width:200px;">
+                <apex:selectOptions value="{!citylist}">
+                    </apex:selectOptions>
+                </apex:selectList><br/>
+                  <apex:outputText value="ZIP Code" style="text-align:left;font-weight:900;"/> <br/>
+           <apex:input type="text" value="{!billingAffzip}" style="width:200px;"/><br/>
+                </apex:outputPanel>
+            
+            <br/> <br/>
+             <apex:outputText value=" Other Names the Affiliate is Known By" style="text-align:left;font-weight:900;"/> 
+           <apex:input type="text" value="{!affOtherName}" style="width:200px;"/>
+            <br/> <br/>
+              <apex:outputText value=" Marketing Types Allowed (Select all that apply)" style="text-align:left;font-weight:900;"/> 
+            <apex:selectList value="{!marketingTypes}" multiselect="true">
+                <apex:selectOptions value="{!marketingTypesList}"></apex:selectOptions>
+            </apex:selectList>
+             <br/> <br/>
+              <apex:outputText value=" Affiliate Agreement Signed by Both Parties (Please attach)" style="text-align:left;font-weight:900;"/> 
+         <apex:inputFile id="fileToUpload3" value="{!fileBody2}" filename="{!fileName2}" styleClass="input-file"/>   
+           <br/> <br/>
+           
+                 <apex:outputText value="Notes" style="text-align:left;font-weight:900;"/> <br/>
+           <apex:inputfield value="{!objcase.Internal_Notes__c}" style="width:200px"/>
+            <br/>
+            </div>
+        </div>
+      <!--  </apex:panelGrid>-->
+       
+  
+   
+ <apex:actionRegion >
+     <br/>
+     <br/>
+     <center>
+                     <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style=" width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center"/>  
+         </center>
+        </apex:actionRegion>  
+                         </apex:outputPanel>
+
+              
+              <!----Salesforce Support Form-->
+      
+           
+     
+
+     <apex:outputPanel style="width:750px;overflow-y: hidden;overflow-x: hidden;"  rendered="{!redirectSFHelpdesk}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" >    
+      
+ 
+     
+        <apex:panelGrid columns="2"  style="table-layout:fixed;" >
+          
+         Severity Level: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Severity_Level__c}" style="width:100px" />
+             
+            <br/>
+             Category:<div style="color:red;">
+               *
+            </div>  <apex:selectList value="{!categoryChoice}" multiselect="false" size="1" >
+             <apex:actionSupport event="onchange" action="{!onChangecategory}" />
+                <apex:selectOptions value="{!categorylist}"></apex:selectOptions>
+            </apex:selectList>
+            <br/>
+               
+            Requested Due Date: <div style="color:red;">
+               *
+            </div>  <apex:inputfield value="{!objcase.Requested_Due_Date__c}" style="width:100px" />
+            <br/>
+          <div style="display:{!if(NOT(fileupload),'block','none')};">
+               
+          Number of Users Impacted: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.How_many_users_are_impacted__c}" style="display:{!if(NOT(fileupload),'block','none')};width:100px" />
+            <br/>
+               </div>
+           
+            
+              
+       Subject: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Subject}" style="width:100px" />
+            <br/>
+          
+              <div style="display:{!if(NOT(fileupload),'block','none')};">
+        Description: <apex:inputfield value="{!objcase.Description}" style="display:{!if(NOT(fileupload),'block','none')};width:100px" />
+         
+            </div>
+                <div style="display:{!if(fileupload,'block','none')};">
+        Notes:  <div style="color:red;">
+               *
+            </div><apex:input type="text" value="{!FileuploadDesc}" style="display:{!if(fileupload,'block','none')};width:100px" /> 
+                    <br/>
+            </div>
+             <div style="display:{!if(fileupload,'block','none')};">
+        Main Lead Source:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Main_Lead_Source__c}" style="display:{!if(fileupload,'block','none')};width:100px" />
+                 <br/>
+            </div>
+              <div style="display:{!if(fileupload,'block','none')};">
+            Original Campaign Source:  <apex:inputfield value="{!objcase.Original_Campaign_Source__c}" style="display:{!if(fileupload,'block','none')};width:100px" />
+                  <br/>
+            </div>
+             <div style="display:{!if(fileupload,'block','none')};">
+            Other Campaign Source (if applicable): <apex:input type="text" value="{!othercampaignsource}" style="display:{!if(fileupload,'block','none')};width:100px" /> 
+                 
+            </div>
+        </apex:panelGrid>
+        
+        <apex:panelGrid columns="2" style="table-layout:fixed">
+          
+            <div style="display:{!if(NOT(fileupload),'block','none')};">
+            Is there currently a workaround?:<div style="color:red;">
+               *
+            </div><apex:inputfield value="{!objcase.Is_there_currently_a_workaround__c}" style="display:{!if(NOT(fileupload),'block','none')};width:100px"/>
+            <br/>
+            </div>
+             <div style="display:{!if(NOT(fileupload),'block','none')};">
+           Web Error URL (if applicable):  <apex:inputfield value="{!objcase.Web_Error_URL_if_applicable__c}" style="display:{!if(NOT(fileupload),'block','none')};width:100px"/>
+            <br/>
+            </div>
+             <div style="display:{!if(NOT(fileupload),'block','none')};">
+            New Idea Priority (if applicable):  <apex:inputfield value="{!objcase.New_Idea_Priority__c}" style="display:{!if(NOT(fileupload),'block','none')};width:100px"/>
+            <br/>
+            </div>
+          <div style="display:{!if(NOT(fileupload),'block','none')};">
+            Case Created By (If sharing login):  <apex:inputfield value="{!objcase.Case_creator_name_If_Sharing_Login__c}" style="display:{!if(NOT(fileupload),'block','none')};width:100px"/>
+            <br/>
+            </div>
+           
+            <div style="display:{!if(NOT(fileupload),'block','none')};">
+             Upload File:
+              <apex:actionRegion >
+                  <br/>
+                 
+             <apex:inputFile id="fileToUpload4" value="{!fileBody}" filename="{!fileName}" styleClass="input-file" rendered="{!NOT(fileupload)}"/>   
+             
+           </apex:actionRegion>  
+            </div>
+            
+             <div style="display:{!if(fileupload,'block','none')};">
+             Upload File:<div style="color:red;">
+               *
+            </div>
+              <apex:actionRegion >
+                  <br/>
+                 
+             <apex:inputFile id="fileToleadUpload" value="{!fileBody3}" filename="{!fileName3}" styleClass="input-file" rendered="{!fileupload}"/>   
+             
+           </apex:actionRegion>  
+            </div>
+           
+         
+          
+        </apex:panelGrid>
+         <br/>
+         <br/>
+    
+   
+          <apex:actionRegion >
+              
+            <center>
+                     <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style="width:100px;cursor:pointer;border-radius: 10px; height:40px;"/>  
+            </center>
+        </apex:actionRegion>
+                  </apex:outputPanel>
+       
+    
+        
+      
+
+                 <!----WebSites-->
+      
+         
+     
+
+        
+        <apex:outputPanel style="width:750px;overflow-y: hidden;overflow-x: hidden;"  rendered="{!redirectWebsite}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" >  
+    
+     
+        <apex:panelGrid columns="2"  style="table-layout:fixed" >
+           Severity Level:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Severity_Level__c}" style="width:100px" />
+            <br/>
+             Category:<div style="color:red;">
+               *
+            </div> <apex:selectList value="{!categoryChoiceweb}" multiselect="false" size="1" >
+                <apex:selectOptions value="{!categoryweblist}"></apex:selectOptions>
+            </apex:selectList>
+            <br/>
+           Number of Users Impacted:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.How_many_users_are_impacted__c}" style="width:100px" />
+            <br/>
+            Requested Due Date:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Requested_Due_Date__c}" style="width:100px"  />
+            <br/>
+       Subject:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Subject}" style="width:100px" />
+            <br/>
+        Description:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Description}" style="width:100px" />
+        </apex:panelGrid>
+        
+        <apex:panelGrid columns="2" style="table-layout:fixed">
+            Is there currently a workaround?: <div style="color:red;">
+               *
+            </div><apex:inputfield value="{!objcase.Is_there_currently_a_workaround__c}" style="width:100px"  />
+            <br/>
+           <br/>
+           Web Error URL : <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Web_Error_URL_if_applicable__c}" style="width:100px"  />
+            <br/>
+            New Idea Priority (if applicable):  <apex:inputfield value="{!objcase.New_Idea_Priority__c}" style="width:100px"/>
+            <br/>
+            Case Created By (If sharing login):  <apex:inputfield value="{!objcase.Case_creator_name_If_Sharing_Login__c}" style="width:100px" />
+          <br/>
+      Upload File:
+              <apex:actionRegion >
+                  <br/>
+           <apex:inputFile id="fileToUpload5" value="{!fileBody}" filename="{!fileName}" styleClass="input-file"/>   
+                    </apex:actionRegion>   
+      
+         
+          
+        </apex:panelGrid>
+       
+    
+            <br/>
+            <br/>
+            
+          <apex:actionRegion >
+              <center>
+                     <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style="width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center"/>  
+                  </center>
+        </apex:actionRegion>
+               
+       
+    
+                  </apex:outputPanel>
+      
+
+                 <!----Blueprint Form-->
+      
+              
+     
+<apex:outputPanel style="width:750px; overflow-y: hidden;overflow-x: hidden;"  rendered="{!redirectBlueprint}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" > 
+        
+
+     
+        <apex:panelGrid columns="2"  style="table-layout:fixed;" >
+           Severity Level:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Severity_Level__c}" style="width:100px" />
+            <br/>
+            Category:<div style="color:red;">
+               *
+            </div> <apex:outputText value="Blueprint Software"></apex:outputText>
+            <br/>
+          Number of Users Impacted:<div style="color:red;">
+               *
+            </div><apex:inputfield value="{!objcase.How_many_users_are_impacted__c}" style="width:100px" />
+            <br/>
+            Requested Due Date: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Requested_Due_Date__c}" style="width:100px"  />
+            <br/>
+       Subject:<div style="color:red;">
+               *
+            </div>  <apex:inputfield value="{!objcase.Subject}" style="width:100px" />
+            <br/>
+        Description: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Description}" style="width:100px" />
+        </apex:panelGrid>
+        
+        <apex:panelGrid columns="2" style="table-layout:fixed">
+            Is there currently a workaround?:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Is_there_currently_a_workaround__c}" style="width:100px" />
+            <br/>
+           
+           Web Error URL (if applicable): <apex:inputfield value="{!objcase.Web_Error_URL_if_applicable__c}" style="width:100px" />
+            <br/>
+            New Idea Priority (if applicable):  <apex:inputfield value="{!objcase.New_Idea_Priority__c}" style="width:100px" />
+            <br/>
+                 Case Created By (If sharing login):  <apex:inputfield value="{!objcase.Case_creator_name_If_Sharing_Login__c}" style="width:100px" />
+            <br/>                      
+          Upload File: 
+            <apex:actionRegion >
+                <br/>
+             <apex:inputFile id="fileToUpload7" value="{!fileBody}" filename="{!fileName}" styleClass="input-file" />   
+                      </apex:actionRegion>
+       
+         
+          
+        </apex:panelGrid>
+    <br/>
+    <br/>
+     
+          <apex:actionRegion >
+              <center>
+                     <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style=" width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center"/>  
+                  </center>
+        </apex:actionRegion>
+               
+                  </apex:outputPanel>
+    
+                <!--Operation Help Desk-->
+                
+                <apex:outputPanel style="width:750px; overflow-y: hidden;overflow-x: hidden;"  rendered="{!redirectOperatinHelpDesk}"  styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform" > 
+        
+
+     
+        <apex:panelGrid columns="2"  style="table-layout:fixed;" >
+           Priority :<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Severity_Level__c}" style="width:100px" />
+            <br/>
+            Category:<div style="color:red;">
+               *
+            </div>  <apex:selectList value="{!categoryChoiceoperation}" multiselect="false" size="1" >
+                <apex:selectOptions value="{!categoryopplist}"></apex:selectOptions>
+            </apex:selectList>
+            <br/>
+        
+            Requested Due Date: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Requested_Due_Date__c}" style="width:100px"  />
+            <br/>
+       Subject:<div style="color:red;">
+               *
+            </div>  <apex:inputfield value="{!objcase.Subject}" style="width:100px" />
+            <br/>
+        Description: <div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Description}" style="width:100px" />
+        </apex:panelGrid>
+        
+        <apex:panelGrid columns="2" style="table-layout:fixed">
+            Is there currently a workaround?:<div style="color:red;">
+               *
+            </div> <apex:inputfield value="{!objcase.Is_there_currently_a_workaround__c}" style="width:100px" />
+            <br/>
+           
+           AnyDesk Address Code (if applicable): <apex:inputfield value="{!objcase.Desk_Address_Code__c}" style="width:100px" />
+            <br/>
+               Case Created By (If sharing login):  <apex:inputfield value="{!objcase.Case_creator_name_If_Sharing_Login__c}" style="width:100px" />
+            <br/>
+              E-mail(if applicable):<apex:inputfield value="{!objcase.E_mail__c}" style="width:100px" />
+            <br/>
+                           
+          Upload File: 
+            <apex:actionRegion >
+                <br/>
+             <apex:inputFile id="fileToUpload8" value="{!fileBody}" filename="{!fileName}" styleClass="input-file" />   
+                      </apex:actionRegion>
+       
+         
+          
+        </apex:panelGrid>
+    <br/>
+    <br/>
+     
+          <apex:actionRegion >
+              <center>
+                     <apex:commandButton value="Submit"  immediate="true"  onclick="save();return false;" style=" width:100px;cursor:pointer;border-radius: 10px; height:40px; float:center"/>  
+                  </center>
+        </apex:actionRegion>
+               
+                  </apex:outputPanel>
+        
+
+
+
+          
+                </div>
+        </apex:outputPanel></center>
+            
+  </apex:form></div>   
+    </body>
+
+      </html>         
+</apex:page>

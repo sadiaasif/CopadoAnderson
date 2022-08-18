@@ -1,0 +1,34 @@
+<apex:page docType="HTML-5.0" action="{!onloadAction}" controller="pymt.SiteCancelSubscriptionDefController" id="ptlCancelSubscriptionDef" showHeader="true" sidebar="false" cache="false" standardStylesheets="false" title="{!$Label.pymt__SiteCancelSubscription_Heading}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_ptlcancelsubscriptiondef_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+
+		<apex:form id="mainForm">
+		<apex:pageMessages id="messages"/>
+		<h1>{!$Label.pymt__SiteCancelSubscription_Heading}</h1>
+
+		<p>{!$Label.pymt__SiteCancelSubscription_DefaultInstructions}</p>
+    <br/><br/>
+    <div class="pc_button_container">
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+      		<apex:commandButton value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, nativeSubscriptionPanel" />
+      </apex:outputPanel>
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+      		<apex:commandLink styleClass="css-button" value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, nativeSubscriptionPanel" />
+      </apex:outputPanel>
+    </div>
+
+		</apex:form>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:page>

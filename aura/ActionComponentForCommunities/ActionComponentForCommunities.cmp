@@ -1,0 +1,63 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId"  access="global"  controller="ActionComponentForCommCtrl" >
+      <aura:attribute name="objectType" type="String"/>
+    
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="fields"
+                    type="String[]"
+                    default="['Subject', 'Description']"/>
+    <aura:attribute name="contactList" type="String[]" />
+      <aura:attribute name="Subject" type="String"/>
+     <aura:attribute name="Comments" type="String"/>
+     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    
+	   <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+      <lightning:tabset >
+        
+        <lightning:tab label="Log a Call" >
+             <aura:renderIf isTrue="{!v.showSpinner}">
+    <div class="slds-spinner_container" >
+        <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+            <span class="slds-assistive-text">Loading, Please Wait...</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:renderIf>
+           <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout" style="width:100%">
+                    <tbody>
+                        
+                            <tr>
+                                
+                                <td><div class="slds-truncate" title="Subject" > <lightning:input name="Subject" label="Subject" value="{!v.Subject}" />
+                                    </div>
+                                    <div class="slds-truncate" title="Comments" ><lightning:textarea name="Comments" label="Comments" value="{!v.Comments}"/> 
+                                    </div><br/> 
+                              
+                                   <div class="slds-truncate" title="Name" >  <lightning:select label="Name" aura:id="ContactListT" required="true" messageWhenValueMissing="Choose one!">
+                   <option value = " ">select</option>                        
+        <aura:iteration items="{!v.contactList}" var="val" >
+            <option value="{!val}"> {!val}</option>
+        </aura:iteration>
+    </lightning:select>
+                                        </div>
+                                    <br/>
+                                    <br/>
+                                    
+                                    <lightning:button variant="Brand" label="Save" title="Save" onclick="{!c.Logacall}" />
+                             
+                                </td>
+                              
+                                
+                            </tr>
+                       
+                    </tbody>
+            </table>
+                               
+         
+          </lightning:tab>
+          <lightning:tab label="New Event" >
+              <ui:button label="Please Click here to create a New Event" press="{!c.createEventRecord}"/>
+
+          </lightning:tab>
+    </lightning:tabset>
+</aura:component>

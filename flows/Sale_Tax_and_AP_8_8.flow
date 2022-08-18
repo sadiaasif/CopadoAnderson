@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <description>Adds Tax Tool Box service item 1 hour after initial purchase.</description>
+    <interviewLabel>Sale - Tax and AP 8/8 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sale - Tax and AP 8/8</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Add_Tax_Tool_Box</name>
+        <label>Add Tax Tool Box</label>
+        <locationX>452</locationX>
+        <locationY>255</locationY>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>OppId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PricebookEntryId</field>
+            <value>
+                <stringValue>01u6f00000JlS9MAAV</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01t6f00000NvJ0tAAF</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Pause_1_HR</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <variables>
+        <name>OppId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <waits>
+        <name>Pause_1_HR</name>
+        <label>Pause 1 HR</label>
+        <locationX>164</locationX>
+        <locationY>243</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>X1_HR</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Add_Tax_Tool_Box</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>1 HR</label>
+        </waitEvents>
+    </waits>
+</Flow>

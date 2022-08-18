@@ -1,0 +1,220 @@
+<apex:page standardController="zkusps__EndiciaPreference__c" extensions="zkusps.EndiciaGetSCANCtrl" showHeader="false" sidebar="false" action="{! init }" >
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+
+    <apex:sectionHeader title="Endicia SCAN Form"/>
+
+    <apex:form >
+        <apex:pageBlock id="scanPageBlock">
+
+            <!-- Messages -->
+            <apex:outputPanel id="scanStatusMessages">
+                <c:MessageListDisplay msgList="{! messageList }"/>
+            </apex:outputPanel>
+
+
+            <!-- SCAN Parameters -->
+            <apex:outputPanel id="scanParametersStatusDetails">
+                <apex:pageBlockSection collapsible="false" columns="2" >
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="SCAN Filters"/>
+                            <apex:actionStatus id="acctStatusDetailsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Filter by CostCenter"/>
+                        <apex:inputText value="{! costCenter }">
+                            <apex:actionSupport event="onchange" action="{! doCalcDisabledState }" rerender="scanButtonPnl" status="acctStatusDetailsStatus" />
+                        </apex:inputText>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Filter by ReferenceID"/>
+                        <apex:inputText value="{! referenceID }">
+                            <apex:actionSupport event="onchange" action="{! doCalcDisabledState }" rerender="scanButtonPnl" status="acctStatusDetailsStatus" />
+                        </apex:inputText>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Filter by SearchZip"/>
+                        <apex:inputText value="{! searchZip }">
+                            <apex:actionSupport event="onchange" action="{! doCalcDisabledState }" rerender="scanButtonPnl" status="acctStatusDetailsStatus" />
+                        </apex:inputText>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                    </apex:pageBlockSectionItem>
+                    
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <apex:pageBlockSection collapsible="false" title="Shipment Filters" columns="2" id="selectedTrackingNumberPanelId">
+
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Shipments "/>
+                        <apex:actionStatus id="getFilterStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Selected Tracking Numbers"/>
+                    <apex:outputText value="{! selectedShipmentStr }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Shipment from"/>
+                    <apex:inputField value="{! fromDate.ShipDate__c}" >
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Shipment to"/>
+                    <apex:inputField value="{! toDate.ShipDate__c}">
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! doChooseDateFilter }" value="Apply Filter" rerender="shipmentTable, scanButtonPnl" status="getFilteredShipments"/>
+                </apex:pageBlockSectionItem>
+
+                
+            </apex:pageBlockSection>
+
+            <apex:outputPanel id="shipmentTable" layout="block" style="height:320px; overflow:hidden;overflow-y: scroll; border:solid 1px #CFCFCF; margin-top:10px;">   
+                <apex:pageBlockTable value="{! shipmentList }" var="entry" >
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipments "/>
+                            <apex:actionStatus id="getFilteredShipments">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:column width="80px">
+                        <apex:facet name="header">
+                            <apex:inputCheckbox > 
+                                <apex:actionSupport event="onchange" action="{! doSelectAllShipments }" rerender="selectedTrackingNumberPanelId,scanButtonPnl,shipmentTable" />
+                            </apex:inputCheckbox>
+                        </apex:facet>
+                        <apex:inputCheckbox value="{! entry.selected }"> 
+                            <apex:actionSupport event="onchange" action="{! doSelectShipment }" rerender="selectedTrackingNumberPanelId,scanButtonPnl">
+                                <apex:param name="ship_id" value="{! entry.shipId }" />
+                            </apex:actionSupport>
+                        </apex:inputCheckbox>
+                    </apex:column> 
+                    <apex:column >    
+                        <apex:facet name="header">Shipment Name</apex:facet>
+                        <apex:outputText value="{! entry.shipmentName }"/> 
+                    </apex:column>
+                    <apex:column >    
+                        <apex:facet name="header">Shipment Date</apex:facet>
+                        <apex:outputText value="{! entry.shipDate }"/> 
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Tracking Number</apex:facet>
+                        <apex:outputText value="{! entry.trackingNumber }"/> 
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+
+            <!-- Action -->
+            <apex:outputPanel id="scanButtonPnl">
+                <apex:pageBlockSection collapsible="false" columns="1">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Get SCAN "/>
+                            <apex:actionStatus id="getScanButtonStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Image Format"/>
+                        <apex:selectList value="{! imageFormat }" size="1" multiselect="false">
+                            <apex:selectOptions value="{! imageFormatList }" />
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Image Resolution"/>
+                        <apex:selectList value="{! imageResolution }" size="1" multiselect="false">
+                            <apex:selectOptions value="{! imageResolutionList }" />
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <!-- Get SCAN Button -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <!-- rerenders whole page -->
+                        <apex:commandButton action="{! doGetSCANForm }" value="SCAN Form" disabled="{! getSCANDisabled }" rerender="scanPageBlock" status="getScanButtonStatus"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection><p/>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="scanOldButtonPnl">
+                <apex:pageBlockSection collapsible="false" columns="1">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Previously generated SCAN Form"/>
+                            <apex:actionStatus id="getOldScanButtonStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Image Format"/>
+                        <apex:selectList value="{! imageFormatOld }" size="1" multiselect="false">
+                            <apex:selectOptions value="{! imageFormatList }" />
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Image Resolution"/>
+                        <apex:selectList value="{! imageResolutionOld }" size="1" multiselect="false">
+                            <apex:selectOptions value="{! imageResolutionList }" />
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Submission ID"/>
+                        <apex:inputText value="{! submissionID }" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:commandButton action="{! doGetOldSCANForm }" value="Re-print SCAN Form" rerender="scanPageBlock" status="getOldScanButtonStatus"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection><p/>
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

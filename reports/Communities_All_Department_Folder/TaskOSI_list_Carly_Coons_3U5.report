@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order$OrderNumber</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$OrderItemNumber</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Active_User__c</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Status__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Order.OrderItems$Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Carly Coons</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Not Started,In Progress,Stalled-Client,Stalled-Internal,Escalated,Need to Kit,Kitted</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Task/OSI list - Carly Coons</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Orders_with_Order_Items__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Order.OrderItems$OrderItemNumber</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Order$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

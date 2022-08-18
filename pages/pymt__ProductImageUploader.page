@@ -1,0 +1,6 @@
+<apex:page standardController="Product2"  docType="html-5.0" >
+
+   <p>Drag an image (jpg, png, gif) to the drop zone below to add a product image to this record.</p>
+    <c:DragAndDropUploader DropZoneText="Drop Image Here" ParentId="{!Product2.Id}" MaxSize="1000000"  AllowedTypes="image/jpg,image/jpeg,image/gif,image/png,text/plain"  OverWrite="false"  DragDropHeight="100px" />
+
+</apex:page>

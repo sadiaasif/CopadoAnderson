@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When user done any opportunity transaction then this email template is send.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Opportunity Transaction Email</name>
+    <style>none</style>
+    <subject>Platinum Payment Receipt</subject>
+    <textOnly>%%subject%%
+
+
+Hello %%First_Name%%
+Thank you for your recent payment. Please review the payment information below and keep this email for your personal records.
+Date: 00.00.00
+Amount: $0.00
+Transaction ID: 000000
+If you have any questions, please contact us at 800.706.4741. We appreciate your business and the opportunity to serve you.
+
+Sincerely,
+Anderson Business Advisors
+
+Copyright © %%current_year_YYYY%%, All rights reserved.
+
+Our mailing address is:
+%%account_address%%
+unsubscribe from all emails update subscription preferences</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

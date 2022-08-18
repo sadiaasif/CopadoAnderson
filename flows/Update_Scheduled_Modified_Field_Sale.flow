@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <description>An error has occurred, please contact your Salesforce Administrator</description>
+        <name>Error_Message</name>
+        <label>Error Message</label>
+        <locationX>337</locationX>
+        <locationY>576</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>An error has occurred, please contact your Salesforce Administrator</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Else</name>
+        <label>Else</label>
+        <locationX>609</locationX>
+        <locationY>70</locationY>
+        <defaultConnector>
+            <targetReference>Error_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Scheduled_By_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Scheduled_By__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>When_Opp_is_Updated</targetReference>
+            </connector>
+            <label>Is Scheduled By Changed?</label>
+        </rules>
+        <rules>
+            <name>When_the_lead_is_created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Scheduled_By__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>When_the_opp_is_created</targetReference>
+            </connector>
+            <label>When the opp is created</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>DateTimeOfCreation</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Record.CreatedDate}</expression>
+    </formulas>
+    <formulas>
+        <name>DateTimeOfRecordChange</name>
+        <dataType>DateTime</dataType>
+        <expression>IF({!Is_Scheduled_By_Changed},{!$Record.LastModifiedDate},null)</expression>
+    </formulas>
+    <interviewLabel>Update Scheduled Modified Field - Sale {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Scheduled Modified Field - Sale</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>When_Opp_is_Updated</name>
+        <label>When Opp is Updated</label>
+        <locationX>651</locationX>
+        <locationY>479</locationY>
+        <inputAssignments>
+            <field>Scheduled_By_Modified_Date_Time__c</field>
+            <value>
+                <elementReference>DateTimeOfRecordChange</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>When_the_opp_is_created</name>
+        <label>When the opp is created</label>
+        <locationX>885</locationX>
+        <locationY>254</locationY>
+        <inputAssignments>
+            <field>Scheduled_By_Modified_Date_Time__c</field>
+            <value>
+                <elementReference>DateTimeOfCreation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Else</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Case_Record_Page73</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Client_Page13</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Record_Page11</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Lead_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>System_Changes_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>System_Changes__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Task_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Task</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Admins_Lightning_Contact</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+    </actionOverrides>
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Non-Console for Salesforce Admins</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Admins Lightning</label>
+    <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Lead_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.General_Lead</recordType>
+        <type>Flexipage</type>
+        <profile>Magentrix Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Service - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Service - LEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Service Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Simple Survey Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>SolutionManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Standard</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Sr.Admin-Additional Refund Access</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Tax - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Tax Manager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Tax Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Processing - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Processing Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Professional Advisor - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Professional Advisors Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>QA - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Quality Assurance</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Read Only</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Renewal Advisor - BCP - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Renewal Advisor BCP LEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Renewals Processing - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Renewals Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Sales</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Accounting Coordinator - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Accounting Coordinators Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Advisor - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Advisor Admin - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Advisor Admins Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Advisors Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Anderson Internal Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Anderson Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Anderson University(Lex)</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Article Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Assivo - LucidChart conversion</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>B2BMA Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Bookkeeping - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Bookkeeping Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Box Trigger Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>CEO &amp; Partners</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter External User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter Free User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Chatter Moderator User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>ContractManager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Customer Community User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Estate Planning - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Estate Planning Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Eventbrite Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>EventForm Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Events</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Events (renewaladvisors2 placeholder) Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Events - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Executive - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Executive Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>External User - Reduced Access - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>FormsLibrary Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Groove Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Guest License User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Help Desk Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Identity User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Jr. Admins</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Magentrix Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Mail</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Manager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>MarketingProfile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Minimum Access - Salesforce</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>NotarizationAPIRest Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Partner Community User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>Partner Panel Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Trust_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Trust__c</pageOrSobjectType>
+        <recordType>Trust__c.Land_Trust</recordType>
+        <type>Flexipage</type>
+        <profile>PaymentConnect Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Jr. Admins</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Magentrix Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Processing Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Accounting Coordinator - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Accounting Coordinators Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Advisor - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Advisor Admin - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Advisor Admins Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Advisors Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Bookkeeping - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Tax Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Tax Manager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Tax - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Sr.Admin-Additional Refund Access</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Service Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Sales</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Service - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Renewals Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Renewals Processing - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Renewal Advisor - BCP - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Quality Assurance</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Professional Advisor - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Processing - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Manager</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Mail</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>QA - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Professional Advisors Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>MarketingProfile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Bookkeeping Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>CEO &amp; Partners</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Estate Planning - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Estate Planning Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Executive - Community</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Internal_Case</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Internal</recordType>
+        <type>Flexipage</type>
+        <profile>Executive Profile</profile>
+    </profileActionOverrides>
+    <tabs>standard-Case</tabs>
+    <tabs>standard-Lead</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>Entities__c</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>Box_Listener__c</tabs>
+    <tabs>Employment__c</tabs>
+    <tabs>Notarization__c</tabs>
+    <tabs>Dissolution__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Admins_Lightning_UtilityBar</utilityBar>
+</CustomApplication>

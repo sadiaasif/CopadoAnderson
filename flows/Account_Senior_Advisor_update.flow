@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>IsSaleNewUpdateSeniorAdv</name>
+        <label>IsSaleNewUpdateSeniorAdv</label>
+        <locationX>314</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsSaleNewUpdate_Acc_SeniorAdv</name>
+            <conditionLogic>( 1 OR 2 OR 3 OR 4) AND 5 AND 6 AND 7 AND 8 AND 9</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>012U0000000DFSxIAO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000N8E5QAK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000QwAnQAK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>012U0000000DFUyIAO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Senior_Advisor_Picklist__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.First_Closed_Sale_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNewSale</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Sales_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Senior_Advisor</targetReference>
+            </connector>
+            <label>IsSaleNewUpdate Acc SeniorAdv</label>
+        </rules>
+        <rules>
+            <name>Edit_Sale_update_Acc_SeniorAdv</name>
+            <conditionLogic>(1 OR 2 OR  3 OR  4 OR  5) AND 6 AND 7 AND 8</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>012U0000000DFSxIAO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000N8E5QAK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000QwAnQAK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>012U0000000g4stIAA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>012U0000000DFUyIAO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Sales_Rep__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Permission.AllowChangeSeniorAdvisor</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Senior_adv_on_update</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Edit Sale update Acc SeniorAdv</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>IsNewSale</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>ValueofSeniorAd</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.Sales_Rep__c},
+&quot;a0HU000000LS1CnMAL&quot;,	&quot;Al Caiazza&quot;,
+&quot;a0H4P00000eXV1HUAW&quot;,	&quot;Alfonso Andino&quot;,
+&quot;a0H6f00000lkPYBEA2&quot;,	&quot;Allison Markus&quot;,
+&quot;a0H4P00000eYfQFUA0&quot;,	&quot;Amanda Wynalda&quot;,
+&quot;a0H6f00000ls97qEAA&quot;,	&quot;Bob Wilkinson&quot;,
+&quot;a0HU0000004J73JMAS&quot;,	&quot;Bob Wilkinson&quot;,
+&quot;a0H6f00000lsnhtEAA&quot;,	&quot;Bradford Embree&quot;,
+&quot;a0H0B00000SzjeBUAR&quot;,	&quot;Brian Bowman&quot;,
+&quot;a0H0B00000NGMLhUAP&quot;,	&quot;Carl Zoellner&quot;,
+&quot;a0H6f00000lklIgEAI&quot;,	&quot;Carl Zoellner&quot;,
+&quot;a0H0B00000OppWPUAZ&quot;,	&quot;Chance Truscott&quot;,
+&quot;a0H0B00000Szn5oUAB&quot;,	&quot;Chanitra Hill&quot;,
+&quot;a0H4P00000XT3GqUAL&quot;,	&quot;Charles Hall&quot;,
+&quot;a0H6f00000lku3TEAQ&quot;,	&quot;Claire Johnson&quot;,
+&quot;a0HU0000004IVeDMAW&quot;,	&quot;Clint Coons&quot;,
+&quot;a0H0B00000TArTGUA1&quot;,	&quot;Corey Posgay&quot;,
+&quot;a0H6f00000lsnhvEAA&quot;,	&quot;Dan Shaker&quot;,
+&quot;a0H6f00000lHCG5EAO&quot;,	&quot;David Corbin&quot;,
+&quot;a0HU000000DttQzMAJ&quot;,	&quot;David Gass&quot;,
+&quot;a0HU0000004J73nMAC&quot;,	&quot;Doug Schaumburg&quot;,
+&quot;a0HU000000A6Q8GMAV&quot;,	&quot;Erica Terrell&quot;,
+&quot;a0H6f00000k8AdOEAU&quot;,	&quot;Ghassan Jabali&quot;,
+&quot;a0H6f00000lsOedEAE&quot;,	&quot;Gwendy Wolfe&quot;,
+&quot;a0H6f00000lrim7EAA&quot;,	&quot;Hermina Certeza&quot;,
+&quot;a0H0B00000T0uJoUAJ&quot;,	&quot;Ianthia Henson&quot;,
+&quot;a0H6f00000lkGGlEAM&quot;,	&quot;Isaac Noh&quot;,
+&quot;a0H6f00000ls1yPEAQ&quot;,	&quot;Jason Kopp&quot;,
+&quot;a0H6f00000lsOeYEAU&quot;,	&quot;Jason Zundel&quot;,
+&quot;a0H6f00000lrimbEAA&quot;,	&quot;Jennie Wilson&quot;,
+&quot;a0H6f00000lkPXCEA2&quot;,	&quot;Jeremy Bavolek&quot;,
+&quot;a0H6f00000lrikLEAQ&quot;,	&quot;Jhunelyn Talaid&quot;,
+&quot;a0H6f00000ll9OIEAY&quot;,	&quot;Joe Sacco&quot;,
+&quot;a0H4P00000eYfUqUAK&quot;,	&quot;John Anderson&quot;,
+&quot;a0H6f00000lkmH2EAI&quot;,	&quot;John Anderson&quot;,
+&quot;a0H6f00000lh5m4EAA&quot;,	&quot;Jonathon Evans&quot;,
+&quot;a0H4P00000PBGQdUAP&quot;,	&quot;Joseph Sacco&quot;,
+&quot;a0H6f00000ls1zrEAA&quot;,	&quot;Josh Heers&quot;,
+&quot;a0H0B00000TAjBQUA1&quot;,	&quot;Josh Terry&quot;,
+&quot;a0H6f00000lhBdCEAU&quot;,	&quot;Joshua Robertson&quot;,
+&quot;a0H6f00000lkPXbEAM&quot;,	&quot;Kaimara Hatcher&quot;,
+&quot;a0H6f00000lkPXlEAM&quot;,	&quot;Kaitlyn Scrivener&quot;,
+&quot;a0H0B00000SzTY7UAN&quot;,	&quot;Karim Hanafy&quot;,
+&quot;a0H6f00000lkPXHEA2&quot;,	&quot;Kayla Moore&quot;,
+&quot;a0H0B00000NFrRPUA1&quot;,	&quot;Kelly Allison&quot;,
+&quot;a0H6f00000lkPXcEAM&quot;,	&quot;Kelly Butterfield&quot;,
+&quot;a0H6f00000l8ds5EAA&quot;,	&quot;LaDora Wiltgen&quot;,
+&quot;a0H6f00000lsJdXEAU&quot;,	&quot;Lauren Robins&quot;,
+&quot;a0H6f00000k8Cy6EAE&quot;,	&quot;Leah Pocoroba&quot;,
+&quot;a0H4P00000eXf75UAC&quot;,	&quot;Lucas Turman&quot;,
+&quot;a0H6f00000lsOIwEAM&quot;,	&quot;Marwa Triggiani&quot;,
+&quot;a0H6f00000lkPXMEA2&quot;,	&quot;Mary Goodwin&quot;,
+&quot;a0H4P00000eZJFxUAO&quot;,	&quot;Mayra De Arcos&quot;,
+&quot;a0HU0000004J72GMAS&quot;,	&quot;Michael Bowman&quot;,
+&quot;a0H6f00000k8CxwEAE&quot;,	&quot;Michael Ciuffetelli&quot;,
+&quot;a0HU0000008REplMAG&quot;,	&quot;Michael Hackler&quot;,
+&quot;a0H4P00000eY0HMUA0&quot;,	&quot;Michelle Ramirez&quot;,
+&quot;a0H6f00000lku1rEAA&quot;,	&quot;Miguel Arce&quot;,
+&quot;a0H4P00000eYsKkUAK&quot;,	&quot;Mike Tracey&quot;,
+&quot;a0H4P00000eZPz4UAG&quot;,	&quot;Natasia Serna&quot;,
+&quot;a0H6f00000k8CxrEAE&quot;,	&quot;Nicolo Nisbett&quot;,
+&quot;a0H6f00000ll4ckEAA&quot;,	&quot;Philip Barr&quot;,
+&quot;a0H6f00000lkPXXEA2&quot;,	&quot;Rachael Kirk&quot;,
+&quot;a0H6f00000lkfI2EAI&quot;,	&quot;Razilee Zehri&quot;,
+&quot;a0HU0000008Q50vMAC&quot;,	&quot;Sara Winter&quot;,
+&quot;a0H0B00000OppW5UAJ&quot;,	&quot;Savannah Wallace&quot;,
+&quot;a0H4P00000PCqV5UAL&quot;,	&quot;Serena Cervantes&quot;,
+&quot;a0H4P00000eXVfCUAW&quot;,	&quot;Sergey Garanyants&quot;,
+&quot;a0HU0000006n9RwMAI&quot;,	&quot;Seth Perlman&quot;,
+&quot;a0HU000000HLWFMMA5&quot;,	&quot;Shaena Aguilar&quot;,
+&quot;a0HU00000067qJtMAI&quot;,	&quot;Toby Mathis&quot;,
+&quot;a0H6f00000lkPXREA2&quot;,	&quot;Valencia Campbell&quot;,
+&quot;a0H6f00000lkFRkEAM&quot;,	&quot;Victor Mejorado&quot;,&quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>Account Senior Advisor update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Senior Advisor update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Senior_adv_on_update</name>
+        <label>Update Senior adv on update</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Senior_Advisor_Picklist__c</field>
+            <value>
+                <elementReference>ValueofSeniorAd</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Senior_Advisor</name>
+        <label>Update Senior Advisor</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Senior_Advisor_Picklist__c</field>
+            <value>
+                <elementReference>ValueofSeniorAd</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>IsSaleNewUpdateSeniorAdv</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

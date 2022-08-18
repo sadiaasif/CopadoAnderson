@@ -1,0 +1,58 @@
+<apex:page id="ptlConfirmScheduledPage" controller="evt.ConfirmScheduledController"  showHeader="true" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>Confirmation Page</title>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+  <div class="pc_page_content"  id="evt_ptl_confirm_scheduled_page">
+    <div class="pc_page_content_inner"> 
+     <apex:form >
+    <apex:outputPanel >
+    <apex:outputPanel layout="none" rendered="{!NOT($Label.evt__ConfirmScheduled_Heading == '-')}">
+      <h1><apex:outputText value="{!$Label.evt__ConfirmScheduled_Heading}"/></h1>
+    </apex:outputPanel>      
+    <apex:outputPanel layout="none" rendered="{!NOT($Label.evt__ConfirmScheduled_Message == '-')}">
+      <p><apex:outputText value="{!$Label.evt__ConfirmScheduled_Message}"/></p>
+    </apex:outputPanel>      
+    </apex:outputPanel>
+    <pymt:CartItemDataTable cartItems="{!attachedCartItems}" currencyFormat="{!currencyShortFormatExpression}" />
+    
+            <div class="pc_checkout_totals" >
+            <apex:panelGrid columns="2" columnClasses="totalsLabelColumn,currency_column">
+                <apex:outputText value="{!$Label.pymt__Label_DiscountAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Discount__c),payment.pymt__Discount__c==0))}"/>
+                <apex:outputText styleClass="discountAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Discount__c),payment.pymt__Discount__c==0))}"
+                    value="{!currencyFormatExpression}" >
+                   <apex:param value="{!payment.pymt__Discount__c}"/>
+                </apex:outputText> 
+                
+                <apex:outputText value="{!$Label.pymt__Label_TaxAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Tax__c),payment.pymt__Tax__c==0))}"/>
+                <apex:outputText styleClass="taxAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Tax__c),payment.pymt__Tax__c==0))}"
+                    value="{!currencyFormatExpression}" >
+                   <apex:param value="{!payment.pymt__Tax__c}"/>
+                </apex:outputText> 
+                
+                <apex:outputText value="{!$Label.pymt__Label_ShippingAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Shipping__c),payment.pymt__Shipping__c==0))}"/>
+                <apex:outputText styleClass="shippingAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Shipping__c),payment.pymt__Shipping__c==0))}"
+                    value="{!currencyFormatExpression}" >
+                   <apex:param value="{!payment.pymt__Shipping__c}"/>
+                </apex:outputText> 
+                
+                <apex:outputText value="{!$Label.pymt__Label_TotalAmount}"/>
+                <apex:outputText styleClass="totalAmount" 
+                    value="{!currencyFormatExpression}" >
+                   <apex:param value="{!payment.pymt__Amount__c}"/>
+                </apex:outputText> 
+                                
+                
+            </apex:panelGrid>
+
+            </div>
+    <p>{!$Label.Label_PaymentDue}:&nbsp;<apex:outputText value="{0, date, MMM dd', 'YYYY}"><apex:param value="{!payment.pymt__Scheduled_Payment_Date__c}" /></apex:outputText></p> 
+ 
+    <apex:commandButton value="Cancel"  action="{!cancelFromPage}"  />&nbsp;<apex:commandButton value="Confirm"  action="{!acceptTerms}"    />
+    </apex:form>
+        
+    </div>
+    </div>
+
+</apex:page>

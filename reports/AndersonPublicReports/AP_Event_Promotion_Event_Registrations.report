@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>evt__Attendee__c.Speaker__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.Client__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.evt__First_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.evt__Last_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.evt__Invitation_Status__c</field>
+    </columns>
+    <columns>
+        <field>evt__Special_Event__c.evt__Start__c</field>
+    </columns>
+    <description>Leads from the AP Event Promotion who register for AP events</description>
+    <filter>
+        <criteriaItems>
+            <column>evt__Attendee__c.Parent_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Dave Lindahl AP Event Promotion</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>evt__Attendee__c.Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>AP Event Promotion - Event Registrations</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$evt__Special_Event__c$evt__Attendee__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>evt__Special_Event__c.evt__Start__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>evt__Special_Event__c.evt__End__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

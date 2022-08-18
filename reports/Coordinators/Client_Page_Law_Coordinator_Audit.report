@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CAM__c</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CSR__c</field>
+    </columns>
+    <columns>
+        <field>Account.Law_Coordinator__c</field>
+    </columns>
+    <columns>
+        <field>Account.Platinum_Client_View__c</field>
+    </columns>
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Account.Assigned_CSR__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Erica Terrell,Megan Antolin-Antonio,Alexander White,Alexandria Lessard,Ambria Tibbs,Brenda Burns,Caresse Shorty,Cristina Thompson,Crystal Smerdel,Deborah Lewis,Greg Coughlan,Joyce Johnson,Kristy McElwain,Megan Amsbury,Micah Mabion,Nicole Jones Tanner,Other or Renewals Team,Savannah Wallace,Shanay Piggee,Tara Osei-Bonsu,Trance Washington,Mina Myers,LaKeisha Moreland,Hermina Certeza,Jennie Moore,Jessica Barboza</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Platinum_Client_View__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Platinum,Lifetime Platinum,NVREA Platinum,Infinity &amp; Platinum</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Client Page Law Coordinator Audit</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Account.Assigned_CSR__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2010-01-01</startDate>
+    </timeFrameFilter>
+</Report>

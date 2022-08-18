@@ -1,0 +1,73 @@
+<apex:page controller="H2S.SettingsController">
+
+  <apex:form >
+    <apex:sectionHeader title="HarvestSync for Salesforce" subtitle="Setup Guide">
+      <apex:pageMessages />
+      <apex:pageBlock title="HarvestSync for Salesforce Settings">
+        <apex:pageBlockSection columns="1">
+          <apex:outputField value="{!settings.H2S__HarvestURL__c}"/>
+          <apex:outputField value="{!settings.H2S__Username__c}"/>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Auto-Sync Frequency"/>
+            <apex:outputText value="{!AutoSyncFrequencyLabel}"/>
+          </apex:pageBlockSectionItem>
+          <apex:outputField value="{!settings.H2S__Sync_Using_Harvest_Project_ID__c}"/>
+        </apex:pageBlockSection>
+        <div style="text-align: center; margin: 10px 0px;">
+          <apex:commandButton value="Edit" action="{!edit}"/>
+          <apex:commandButton value="Manual Sync" action="{!startSync}"
+                              title="Starts a one-time sync of all projects"/>
+        </div>
+      </apex:pageBlock>
+
+      <apex:PageBlock title="Step 1: Remote Site Security"><span style="font-size:125%;">
+        Add "https://yourdomain.harvestapp.com" to the list of secure remote sites, replacing "yourdomain" with the domain you use with HarvestSync for Salesforce.
+        <br/>You must be a system administrator to complete this step. 
+        <br/>
+        <br/>Click on "Setup | Security Controls | Remote Site Settings" or click <a
+        href="/0rp?spl1=1&setupid=SecurityRemoteProxy" target="_blank">here</a>, then click the "New Remote Site" button to create a record
+        <br/>similar to the one below, replacing "yourdomain" with the domain you use with HarvestApp.  Then click the "Save" button.
+        <p/><apex:image url="{!$Resource.H2S__setupImage_remoteSite}"/>
+        </span></apex:PageBlock>
+      <apex:pageBlock title="Step 2: Harvest Settings"><span style="font-size:125%;">
+        Add HarvestApp administrator credentials and auto-sync frequency by clicking the Edit button above. 
+        <br/>Follow the instructions on the following page, click "Save" and then continue below.
+        
+      </span></apex:pageBlock>
+      <apex:pageBlock title="Step 3: Custom Tab and Related Lists"><span style="font-size:125%;">
+        Add the "Projects" tab to your Application(s). This will provide your users with easy access to the Projects object.
+        <br/>Click on "Setup | Create | Apps", then select the correct Apps(s) and add the tabs.  Alternatively, your users may manually add this tab.
+        <br/>
+        <br/>Add the Projects related list to the Accounts (and optionally the Opportunities objects).
+        <br/>Setup | Customize | Accounts | Page Layouts - add the Projects object to the related list section.
+        <br/>Setup | Customize | Opportunities | Page Layouts - add the Projects object to the related list section.
+        
+      </span></apex:pageBlock>
+      <apex:pageBlock title="Step 4: Use it!"><span style="font-size:125%;">
+        To use this application:<p/>
+        <li>Create a Project record in salesforce.com. A unique Project Code (e.g., PID-1) will be created after you save each record.</li>
+        <li>Ensure a Project record exists in HarvestApp and that it contains the Project Code above in the optional Harvest Project Code field.</li><p/>
+        <p/><apex:image url="{!$Resource.H2S__setupImage_harvestproject}"/><p/>
+        <br/>If you already have records in Harvest that are populated with a Project Code, you can manually override the Project Code
+        <br/>in salesforce.com by editing the "Project Code External Id". Otherwise, it should be the same as the Project Code field
+        <br/>on the salesforce.com Project record.
+        <br/>
+        <br/>
+        <li>From the Project record in salesforce.com, click on the "Sync Harvest Time Cards" button to manually sync, or<br/>
+        wait for the auto-sync interval if set.</li>
+        <p/><apex:image url="{!$Resource.H2S__setupImage_timesync}"/>
+        <li>Review the Time Card records that will be automatically populated into salesforce.com.</li>
+      </span></apex:pageBlock>
+      <apex:pageBlock title="Help or Questions?"><span style="font-size:125%;">
+       If you have support questions, visit our <a
+        href="https://www.akacrm.com/powerapps/apps-support"
+        target="_blank">Product Support page</a>.
+       We also recommend reviewing the <a
+        href="https://docs.google.com/document/d/18pZ7KnTZaZJtxraIpuuFdmD1yuN1hTRn172RZpfNxac/edit#"
+        target="_blank">Installation Instructions and Release Notes</a>.
+       <br/>
+       <br/>"<a href="https://www.getharvest.com/" target="_blank">Harvest</a>", "HarvestApp" and "Salesforce.com", are trademarks of their respective owners.
+        </span></apex:pageBlock>
+    </apex:sectionHeader>
+  </apex:form>
+</apex:page>

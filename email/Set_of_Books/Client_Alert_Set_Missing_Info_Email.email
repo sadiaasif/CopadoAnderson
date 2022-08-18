@@ -1,0 +1,10 @@
+Hello {!IF(NOT(ISBLANK(Set_of_Books__c.Both_Names__c)), Set_of_Books__c.Both_Names__c,
+IF(NOT(ISBLANK(Set_of_Books__c.Contact_Name__c)), Set_of_Books__c.Contact_Name__c,
+IF(NOT(ISBLANK(Set_of_Books__c.Client_Name__c)), Set_of_Books__c.Client_Name__c,
+"valued Anderson bookkeeping client")))},
+
+This automatic email is to alert you that we are missing information required to complete the books for one or more of your entities. 
+
+Please reach out to {!NULLValue(Set_of_Books__c.bk_team_Bookkeeper__c, "your bookkeeper")} by phone or email at your earliest convenience.
+
+Thank you and have a great day!

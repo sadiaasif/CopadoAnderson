@@ -1,0 +1,272 @@
+<apex:page controller="zkmulti.UPSHazMatManifestController" renderAs="pdf" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" action="{! doInit }" docType="html-5.0">
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<style media="all" type="text/css">
+			@page {
+				size: A4;
+				margin: 20px 20px 50px 20px;
+				@bottom-right {
+					content: "Page " counter(page) " of " counter(pages);
+				}
+			}
+
+			body {
+				display: inline;
+				margin-top: 0px;
+				margin-right: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+				font-family: sans-serif;
+			}
+
+			.table {
+				display:block;
+			}
+
+			.header-table {
+				border-collapse: collapse;
+				width: 100%;
+				text-align: center;
+			}
+
+			.header-table tr {
+				border: none;
+			}
+
+			.header-table td {
+				padding: 5px;
+			}
+
+			.info-table {
+				border-collapse: collapse;
+				width: 100%;
+				float: left;				
+			}
+
+			.info-table tr {
+				border: none;
+			}
+
+			.info-table td {
+				padding: 5px;
+			}
+
+			.preference-table {
+				border-collapse: collapse;
+				width: 50%;
+				float: left;
+				text-align: left;
+			}
+
+			.preference-table tr {
+				border: none;
+			}
+
+			.preference-table td {
+				padding: 5px;
+				border: none;
+			}
+
+			.preference-full-table {
+				border-collapse: collapse;
+				width: 100%;
+				float: left;
+				text-align: left;
+			}
+
+			.preference-full-table tr {
+				border: none;
+			}
+
+			.preference-full-table td {
+				padding: 5px;
+				border: none;
+			}
+
+			.adr-table {
+				/*display: block;*/
+				border-collapse: collapse;
+				width: 50%;
+				float: left;
+				text-align: center;
+			}
+
+			.adr-table tr {
+				border: 1px solid black;
+			}
+
+			.adr-table td {
+				padding: 5px;
+				border: 1px solid black;
+			}
+
+			.commodity-table {
+				/*display: block;*/
+				border-collapse: collapse;
+				width: 100%;
+				float: left;
+			}
+
+			.commodity-table tr {
+				border: 2px solid black;
+			}
+
+			.commodity-table td {
+				padding: 5px;
+				border: 2px solid black;
+			}
+
+			.text-font-0 {
+				font-size: 30px;
+			}
+
+			.text-font-1 {
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.text-font-2 {
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.text-font-main {
+				font-size: 12px;
+			}
+
+			.text-font-3 {
+				font-size: 10px;
+			}
+
+			.text-font-4 {
+				font-size: 8px;
+			}
+		</style>
+	</head>
+<body>
+
+	<div>
+		<table class="header-table">
+			<tr>
+				<td class="text-font-0" style="text-align: center;">
+					{! manifestName }
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<apex:outputPanel layout="block" rendered="{! NOT(isEuManifest) }">
+		<table class="preference-full-table">
+			<tr><td><u>{!preferenceDetail.accountNumber}</u></td></tr>
+			<tr><td>{!preferenceDetail.companyName}</td></tr>
+			<tr><td>{!preferenceDetail.billingStreet}</td></tr>
+			<tr><td>{!preferenceDetail.billingCity}, {!preferenceDetail.billingZip}, {!preferenceDetail.billingState}, {!preferenceDetail.billingCountry} ({!preferenceDetail.billingCountryCode})</td></tr>
+		</table>
+	</apex:outputPanel>
+
+	<apex:outputPanel layout="block" rendered="{! isEuManifest }">
+		<table class="preference-table">
+			<tr><td><u>{!preferenceDetail.accountNumber}</u></td></tr>
+			<tr><td>{!preferenceDetail.companyName}</td></tr>
+			<tr><td>{!preferenceDetail.billingStreet}</td></tr>
+			<tr><td>{!preferenceDetail.billingCity}, {!preferenceDetail.billingZip}, {!preferenceDetail.billingState}, {!preferenceDetail.billingCountry} ({!preferenceDetail.billingCountryCode})</td></tr>
+		</table>
+		<table class="adr-table">
+			<tr>
+				<td class="text-font-3">ADR Transport<br />Category</td>
+				<td class="text-font-3">ADR Units (L/kg)</td>
+				<td class="text-font-3">ADR Total Points</td>
+			</tr>
+			<apex:repeat value="{! adrTransportCategoryTable.categories }" var="adrCategory">
+				<tr style="height: 20px;">
+					<td class="text-font-3">{! adrCategory.category }</td>
+					<td class="text-font-3">{! adrCategory.units }</td>
+					<td class="text-font-3">{! adrCategory.points }</td>
+				</tr>
+			</apex:repeat>
+		</table>
+	</apex:outputPanel>
+
+	<div style="width: 100%; height: 200px;">
+	</div>
+
+	<div>
+		<table class="commodity-table">
+			<tr>
+				<td class="text-font-3" style="font-weight: bold;">Hazardous Materials Description and Quantity</td>
+				<td class="text-font-3" style="font-weight: bold;">Regulation<br />Set</td>
+				<td class="text-font-3" style="font-weight: bold;">This Shipment is within<br />the limitations<br />prescribed for:</td>
+				<td class="text-font-3" style="font-weight: bold;">Emergency<br />Contant<br />Information</td>
+				<td class="text-font-3" style="font-weight: bold;">Tracking Number</td>
+			</tr>
+			<apex:repeat value="{! regulationSets }" var="regulationSet">
+				<tr>
+					<td class="text-font-3">
+						<apex:repeat value="{! regulationSet.hazMatDetails }" var="hazMatRecord">
+							{! hazMatRecord.description } <br />
+						</apex:repeat>
+						<br />
+						{! regulationSet.packedString }
+					</td>
+					<td class="text-font-3">{! regulationSet.regulationSet }</td>
+					<td class="text-font-3">{! regulationSet.serviceType }</td>
+					<td class="text-font-3">{! regulationSet.emergencyPhone } {! regulationSet.emergencyContactName }</td>
+					<td class="text-font-3">{! regulationSet.trackingNumber }</td>
+				</tr>
+			</apex:repeat>
+		</table>
+	</div>
+
+	<!-- <div>
+		<div class="text-font-4">
+		For Air Shipments, "I declare that all of the applicable air transport requirements have beet met."<br />
+		I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and<br />
+		labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If this shipment contains<br />
+		radioactive material acceptable for passenger aircraft, such material is intended for use in, or incident to, research, medical diagnosis or treatment.
+		</div>
+	</div> -->
+	<div>
+		<table class="info-table" style="text-align: left;">
+			<tr>
+				<td class="text-font-4">
+					For Air Shipments, "I declare that all of the applicable air transport requirements have beet met."<br />
+					I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and<br />
+					labeled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. If this shipment contains<br />
+					radioactive material acceptable for passenger aircraft, such material is intended for use in, or incident to, research, medical diagnosis or treatment.
+				</td>
+			</tr>
+		</table>
+		<table class="info-table">
+			<tr>
+				<td class="text-font-3">
+					<div style="width: 80%; border-bottom: 2px solid black; height: 30px;">
+					</div>				
+				</td>
+				<td class="text-font-3">
+				</td>
+				<td class="text-font-3">
+					<div style="width: 80%; border-bottom: 2px solid black; height: 30px;">
+					</div>					
+				</td>
+				<td class="text-font-3">
+				</td>
+			</tr>
+			<tr>
+				<td class="text-font-3" style="text-align: center;">
+					Shipper Signature
+				</td>
+				<td class="text-font-3">
+				</td>
+				<td class="text-font-3" style="text-align: center;">
+					Date
+				</td>
+				<td class="text-font-3">
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
+</apex:page>

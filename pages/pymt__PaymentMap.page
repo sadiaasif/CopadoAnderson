@@ -1,0 +1,12 @@
+<apex:page standardController="pymt__PaymentX__c" showheader="false" sidebar="false">
+<script type="text/javascript">
+
+</script>
+<apex:outputPanel rendered="{!IF (OR(ISNULL(pymt__PaymentX__c.pymt__Latitude__c),ISNULL(pymt__PaymentX__c.pymt__Longitude__c), 
+pymt__PaymentX__c.pymt__Latitude__c ==0, pymt__PaymentX__c.pymt__Longitude__c == 0), false,true)}">
+<a href="http://maps.apple.com/?ll={!pymt__PaymentX__c.pymt__Latitude__c},{!pymt__PaymentX__c.pymt__Longitude__c}" target="_top">
+<img src="https://maps.google.com/maps/api/staticmap?markers=color:blue|label:S|{!pymt__PaymentX__c.pymt__Latitude__c},{!pymt__PaymentX__c.pymt__Longitude__c}&zoom=13&size=640x200&maptype=roadmap&sensor=false"/>
+</a>
+<br/>
+</apex:outputPanel>
+</apex:page>

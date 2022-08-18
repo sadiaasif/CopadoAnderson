@@ -1,0 +1,24 @@
+<apex:page standardController="n2de__Tag_Category__c" extensions="n2de.TagController" sidebar="false" tabStyle="Distribution_Tags__tab">
+
+    <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    <c:CommonHeader />
+    <c:CommonMask />
+    <c:CommonHelp help_page="distributor-tags"/>
+
+    <style>
+    </style>
+    <apex:form >
+        <apex:sectionHeader title="Tag Collections" subtitle="{!IF(n2de__Tag_Category__c.Name != null, n2de__Tag_Category__c.Name, 'New')}"/>
+        <apex:pageMessages />
+        <apex:pageBlock title="Tag Collection">
+            <apex:pageBlockButtons >
+                <apex:commandButton id="save_button_top" value="Save" action="{!saveCollection}"/>
+                <apex:commandButton id="cancel_button_top" value="Cancel" action="{!toListPage}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:InputText id="collection_name" value="{!n2de__Tag_Category__c.Name}" maxlength="30"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <c:StatusPanel />
+</apex:page>

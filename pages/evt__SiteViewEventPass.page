@@ -1,0 +1,32 @@
+<apex:page docType="html-5.0" id="siteViewEventPass"   title="Event Pass"  showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+
+<head>
+<title>Event Pass</title>
+</head>
+<apex:composition template="{!$Site.Template}">
+
+
+<apex:define name="body">
+
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="evt_siteeventpass_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+    
+    <apex:pageMessages id="messages"/>  
+ 
+    <h1>Event Pass</h1> 
+
+        <div class="eventPassBox" >
+        <c:EventPass attendeeId="{!$CurrentPage.parameters.aid}" passFormat="default"/> 
+        </div>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page --> 
+</div> <!--  page pc_lang_xxx div -->        
+</apex:define>
+</apex:composition>            
+    
+</apex:page>

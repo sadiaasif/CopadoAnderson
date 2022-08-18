@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Entities__c$Name</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Activities$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Activities$RecordType</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Activities$Account</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Activities$Subject</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Activities$Who</field>
+    </columns>
+    <columns>
+        <field>Entities__c.Activities$Owner</field>
+    </columns>
+    <description>Follow Task Assigned to Anderson Advisors</description>
+    <filter>
+        <criteriaItems>
+            <column>Entities__c.Activities$Subject</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Follow up</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Entities__c.Activities$RecordType</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Task.Call</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Entities__c.Activities$Owner</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Anderson Advisors</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Follow-Up Task Assigned to AA</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Entities_with_Tasks__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Entities__c.Activities$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

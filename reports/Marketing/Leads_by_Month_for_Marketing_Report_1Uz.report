@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_91417585</developerName>
+        <masterLabel>Status</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>STATUS</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>New Lead</sourceValue>
+            </sourceValues>
+            <value>New</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>NC1</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>NC2</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>NC3</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Recycle</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Interested in Later Call</sourceValue>
+            </sourceValues>
+            <value>No Contact</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>No Interest</sourceValue>
+            </sourceValues>
+            <value>No Interest</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Qualified</sourceValue>
+            </sourceValues>
+            <value>Converted</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>CONVERTED</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Lead.Original_Campaign_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>#1,Adduco,Adwords,AirBnB,Anderson Youtube,Invisible,Zone,Clint,Facebook,Free Consult,Internet,LLCs for,Online Marketing,OPZ,Primer,Referral,Social Media,Tax Wise Business,Toby,Website</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Lead_Created_Date_Hidden_For_Conversion__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>STATUS</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>DUPE,DELETE,Existing Client</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Original_Campaign_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Trade,Jerry,Deal,Baltimore,chat</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>Lead.Lead_Created_Date_Hidden_For_Conversion__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_91417585</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Leads by Month for Marketing Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

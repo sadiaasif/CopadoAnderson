@@ -1,0 +1,33 @@
+<apex:page showHeader="false"
+           renderAs="pdf"
+           controller="evt.EventPassPDFController"
+           cache="true">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+
+<style type="text/css">
+@page{
+    size:A4 portrait;
+
+    @bottom-right {
+        content: "Page " counter(page) " - " counter(pages);
+        font-family: 'Arial', 'Helvetica', sans-serif;
+        font-size:10px;
+    }
+}
+  .evt_event_pass_separator { page-break-after: always;}
+</style>
+</head>
+<apex:pageMessages />
+<apex:variable var="passCounter" value="{!1}"/>
+    <apex:repeat value="{!attendeeIds}" var="attendeeId" >
+        <apex:outputPanel rendered="{!passCounter > 1}">
+          <div class="evt_event_pass_separator" style="page-break-after: always;"/>
+        </apex:outputPanel>
+        <div class="eventPassBox" >
+        <c:EventPass attendeeId="{!attendeeId}" passFormat="pdf"/>
+        <apex:variable var="passCounter" value="{!passCounter + 1}"/>
+        </div>
+   </apex:repeat>
+</apex:page>

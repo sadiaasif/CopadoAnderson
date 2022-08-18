@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order.OrderItems$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$OrderItemNumber</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$New_Type__c</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Processing_Stage__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Order.OrderItems$Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>IRS Form - 2553 - Fulfillment</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$New_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>IRS Form</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Confirmation Received,Ready to Submit to IRS,Waiting on Confirmation</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Tax Form OSIs</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Orders_with_Order_Items__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Order$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

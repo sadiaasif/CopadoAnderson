@@ -1,0 +1,115 @@
+<apex:page docType="html-5.0" id="siteSubscribeConfirmPage" controller="pymt.SiteSubscribeConfirmController" showHeader="false" sidebar="false" cache="false" standardStylesheets="false" action="{!onload}" language="{!$CurrentPage.Parameters.lang}" title="{!$Label.pymt__SiteSubscribeConfirm_Heading}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+
+  <apex:define name="body">
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitesubscribeconfirm_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+    <apex:form id="mainForm"  >
+    <script>
+    // HTML5 validation fallback code - for Safari, ios and android devices
+    function hasHtml5Validation () {
+      return typeof document.createElement('input').checkValidity === 'function';
+    }
+
+    if (hasHtml5Validation()) {
+      $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+        if (!this.checkValidity()) {
+          e.preventDefault();
+          $j(this).addClass('invalid');
+          $j('#status').html('invalid');
+        } else {
+          $j(this).removeClass('invalid');
+          $j('#status').html('submitted');
+        }
+      });
+    }
+    // end HTML5 validation fallback code
+    </script>
+    
+        <apex:outputPanel id="checkoutConfirmFormPanel" >
+
+            <apex:pageMessages id="messages"/>
+            <apex:outputPanel rendered="{!showPageContents}">
+                <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeConfirm_Heading == '-')}">
+                <h1>{!$Label.pymt__SiteSubscribeConfirm_Heading}</h1>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeConfirm_CompletedMessage == '-')}">
+                <p>{!$Label.pymt__SiteSubscribeConfirm_CompletedMessage}</p>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeConfirm_ReceiptDetailsHeading == '-')}">
+                <h2>{!$Label.pymt__SiteSubscribeConfirm_ReceiptDetailsHeading}</h2>
+                </apex:outputPanel>
+
+
+                 <apex:panelGrid columns="2" columnClasses="labelColumn,term_column" id="subscription_terms" styleclass="subscription_terms_table">
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionFor}:" />
+                    <apex:outputText value="{!profileName}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_Description}:" rendered="{!NOT(ISNULL(profileDescription))}" />
+                    <apex:outputText value="{!profileDescription}" rendered="{!NOT(ISNULL(profileDescription))}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_StartDate}:" />
+                    <apex:outputText value="{!startDateString}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_InitialAmount}:"  rendered="{!NOT(ISNULL(initialAmount))}"/>
+                    <apex:outputText rendered="{!NOT(ISNULL(initialAmount))}"
+                        value="{!currencyFormatExpression}" >
+                    <apex:param value="{!initialAmount}"/>
+                    </apex:outputText>
+
+                    <apex:outputText value="{!$Label.pymt__Label_TrialAmount}:"  rendered="{!NOT(ISNULL(trialTerms))}"/>
+                    <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(trialTerms))}">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!trialAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!trialTerms}"/>
+
+                    </apex:outputPanel>
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionAmount}:"/>
+                    <apex:outputPanel layout="inline">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!recurringAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!subscriptionTerms}"/>
+                    </apex:outputPanel>
+
+                </apex:panelGrid>
+
+
+              <h2>{!$Label.SiteSubscribeConfirm_ReceivedFromHeading}</h2>
+              <p>{!firstname} {!lastname}<br/>
+                {!billingStreet}<br/>
+                {!billingCity}, {!billingState}&nbsp;{!billingPostalCode}<br/>
+                {!billingCountry}<br/>
+              </p>
+              <h2>{!$Label.SiteSubscribeConfirm_PaidToHeading}</h2>
+              <p>{!$Organization.Name}<br/>
+                {!$Organization.Street}<br/>
+                {!$Organization.City}, {!$Organization.State}&nbsp;{!$Organization.PostalCode}<br/>
+                {!$Organization.Country}<br/>
+                {!$Organization.Phone}<br/>
+              </p>
+              <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+                <apex:commandButton id="finish" value="{!$Label.pymt__SiteSubscribeConfirm_FinishedButton}" action="{!finishTransaction}" onclick="" rendered="{!finishURL <> null}"/>
+              </apex:outputPanel>
+              <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+                <apex:commandLink styleClass="css-button" id="finish2" value="{!$Label.pymt__SiteSubscribeConfirm_FinishedButton}" action="{!finishTransaction}" onclick="" rendered="{!finishURL <> null}"/>
+              </apex:outputPanel>
+
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+    </apex:define>
+</apex:composition>
+</apex:page>

@@ -1,0 +1,11 @@
+<apex:page standardController="Account">
+<b>Please Wait:</b> Loading . . . 
+  <script>   
+    if ( (typeof window.sforce != 'undefined') && (window.sforce!=null) ) {
+      sforce.one.navigateToURL('/apex/TSS_StickIt_MR1__StickIt_Mobile_Account?id={!Id}');
+    }
+    else {
+      alert('Not in Salesforce1 :(');
+    }
+ </script>
+</apex:page>

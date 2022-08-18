@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Billable --></label>
+        <name>Billable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date of time entry if tracking time by duration vs. start and end time. --></help>
+        <label><!-- Date --></label>
+        <name>H2S__Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Duration of time in decimal format.  Eg., 2.75 = 2 hours and 45 minutes. --></help>
+        <label><!-- Duration --></label>
+        <name>H2S__Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- If time is tracked by start and end time vs. duration, this is the end time. --></help>
+        <label><!-- EndTime --></label>
+        <name>H2S__EndTime__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is the unique ID of a time card in HarvestApp. --></help>
+        <label><!-- Harvest Entry Id --></label>
+        <name>H2S__HarvestEntryId__c</name>
+    </fields>
+    <fields>
+        <help><!-- Project time is related to. --></help>
+        <label><!-- HarvestProject --></label>
+        <name>H2S__HarvestProject__c</name>
+        <relationshipLabel><!-- Time Entries --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Indicates this time card has been invoiced in Harvest --></help>
+        <label><!-- Invoiced --></label>
+        <name>H2S__Invoiced__c</name>
+    </fields>
+    <fields>
+        <help><!-- Description of time / notes --></help>
+        <label><!-- Notes --></label>
+        <name>H2S__Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name/Alias of person logging time. --></help>
+        <label><!-- Person --></label>
+        <name>H2S__Person__c</name>
+    </fields>
+    <fields>
+        <help><!-- If time is tracked by start and end time vs. duration, this is the start time. --></help>
+        <label><!-- StartTime --></label>
+        <name>H2S__StartTime__c</name>
+    </fields>
+    <fields>
+        <help><!-- Type of time.  These values are maintained in Harvest and are one-way Harvest- - &gt;SFDC. --></help>
+        <label><!-- Task Type --></label>
+        <name>H2S__Task_Type__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,115 @@
+<apex:page doctype="html-5.0" standardController="pymt__Payment_Profile__c" extensions="pymt.NewProfileController" sidebar="false">
+<style>
+#option_table td {padding-right:10px;}
+/* This button CSS generated using CSSButtonGenerator.com */
+#option_table .bigbutton {
+    -moz-box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    background-color:#f0f0f0;
+    -webkit-border-top-left-radius:0px;
+    -moz-border-radius-topleft:0px;
+    border-top-left-radius:0px;
+    -webkit-border-top-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-bottomright:0px;
+    border-bottom-right-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    -moz-border-radius-bottomleft:0px;
+    border-bottom-left-radius:0px;
+    text-indent:0;
+    border:2px solid #c2c2c2;
+    display:inline-block;
+    color:#7a7a7a;
+    font-family:Trebuchet MS;
+    font-size:15px;
+    font-weight:bold;
+    font-style:normal;
+    height:40px;
+    line-height:40px;
+    width:200px;
+    text-decoration:none;
+    text-align:center;
+}
+#option_table  .bigbutton:hover {
+    background-color:#2d86c2;
+    color:white;
+}
+#option_table  .bigbutton:active {
+    position:relative;
+    top:1px;
+}
+</style>
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Create a New Recurring Payment Profile"  help="{!$Page.pymt__Help}"/>
+<apex:form > 
+<apex:pageMessages id="messages"/>
+<apex:pageBlock title="New Recurring Payment Profile Options" mode="maindetail" >
+<apex:pageBlockButtons >
+                <apex:commandButton value="Cancel" action="{!cancelFromPage}"/>
+
+</apex:pageBlockButtons>
+ <div style="height:2px;width:100%;background:#e0e0e0;margin-bottom:4px;"/> 
+            <br/>
+            <table id="option_table" >
+            <apex:outputPanel layout="none" rendered="{!payPalTermEnabled}">
+            <tr>
+            <td>
+                <apex:commandLink styleclass="bigbutton" action="{!addPayPalARBProfile}">
+                PayPal Recurring
+                </apex:commandLink>
+            </td>
+            <td>
+                Use the PayPal Recurring Payment Terminal to create subscriptions via the PayPay Recurring Payments API.  PayPal handles the scheduling and processing of each payment and then notifies PaymentConnect so that transaction data can be inserted in Salesforce in real-time.  The "Recurring Payments" service must be enabled in your PayPal merchant account to use this feature. 
+                
+                
+            </td>
+            </tr>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!authNetTermEnabled}">
+            <tr>
+            <td><apex:commandLink styleclass="bigbutton" action="{!addAuthNetARBProfile}">
+                AuthNet ARB
+                </apex:commandLink>
+            </td>
+            <td>
+                Use the AuthNet Recurring Payment Terminal to create an Authorize.Net Automated Recurring Billing (ARB) Profile.  With ARB profiles, recurring charges are processed on Authorize.Net's servers 
+and posted to PaymentConnect as they are completed.  ARB support must be enabled in your merchant account at Authorize.net.
+
+                
+            </td>
+            </tr>
+            </apex:outputPanel>
+            <tr>
+            <td><apex:commandLink styleclass="bigbutton" action="{!addScheduledPaymentProfile}">
+                Native Recurring
+                </apex:commandLink>
+            </td>
+            <td>
+                Use the Native Recurring Payments Terminal to create a native Scheduled Payments Profile.  Subscription payments are created and processed in Salesforce using scheduled batch Apex.  While configuration options support batch processing of payments using PayPal, eWay, AuthNet and stored credit card payment methods, or email notification to request an online payment.
+                
+            </td>
+            </tr>
+            <tr><td>&nbsp;<br/><br/></td><td>&nbsp;</td></tr>
+            <tr> 
+            <td><apex:commandLink styleclass="bigbutton" action="{!installmentPaymentsTerminal}">
+                Installments
+                </apex:commandLink>
+            </td>
+            <td>
+                Use the Installment Payments Terminal to create a fixed number of scheduled payments based on a total amount and required number of installments.
+                
+            </td>
+            </tr>            
+            </table>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <apex:outputPanel rendered="{!genericProfileLinkEnabled}">
+            <p><apex:commandLink action="{!addGenericProfile}">Bypass terminal entry</apex:commandLink> and create a Recurring Payment Profile record manually.</p>
+            </apex:outputPanel>
+    </apex:pageBlock>           
+</apex:form>
+</apex:page>

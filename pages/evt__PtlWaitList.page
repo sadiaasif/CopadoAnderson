@@ -1,0 +1,232 @@
+<apex:page docType="html-5.0" id="ptlWaitList" controller="evt.SiteWaitListController"  title="Event Wait List"  showHeader="true" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>
+    {!IF($Label.SiteWaitList_Heading == '-','Attendees',SUBSTITUTE($Label.SiteWaitList_Heading,'{eventname}',event.Name))}
+</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+<apex:outputPanel layout="none" rendered="{!showCaptcha = true}">
+<script src="//www.google.com/recaptcha/api/js/recaptcha_ajax.js" type="text/javascript" />
+<script>
+function showRecaptcha(element) {
+      Recaptcha.create("{!recaptcha.publicKey}", element, {
+            theme: '{!IF(ISNULL(event.evt__Captcha_Theme__c),"clean",event.evt__Captcha_Theme__c)}',
+            tabindex: 0,
+            lang: '{!CASE(lang,"fr","fr","de","de","nl","nl","tr","tr","ru","ru","es","es","pt","pt","en")}',
+            callback: Recaptcha.focus_response_field
+      });
+}
+</script>  
+</apex:outputPanel>
+
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="evt_ptl_wait_list_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+    <apex:form >
+    <apex:pageMessages id="messages"/>  
+ 
+    <apex:outputPanel rendered="{!$Label.evt__SiteWaitList_Heading <> '-'}">
+        <h1>{!SUBSTITUTE($Label.evt__SiteWaitList_Heading,'{eventname}',event.Name)}</h1>
+    </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT($Label.evt__SiteWaitList_Message == '-')}">
+        <p>{!$Label.evt__SiteWaitList_Message}</p>
+        </apex:outputPanel> 
+
+          <div class="pc_flex_form" id="stdFieldsGrid">
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Event}"/>
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:outputText value="{!event.name}"/>
+                 </div>
+             </div>
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                  <apex:outputText value="{!$Label.evt__Label_FirstName}"/>
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+                <div class="pc_flex_form_field_item">
+                  <apex:inputText id="mailingfirstname" styleclass="pc_medium_input_field" value="{!firstname}" disabled="{!if(isLoggedIn,true,false)}" required="true" />
+                </div>
+            </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_LastName}"/>
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="text" id="mailinglastname" styleclass="pc_medium_input_field" value="{!lastname}"  disabled="{!if(isLoggedIn,true,false)}" required="true"/>
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Email}"/>
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="email" id="emailaddress" styleclass="pc_medium_input_field" value="{!emailAddress}"  disabled="{!if(isLoggedIn,true,false)}" required="true" />
+                 </div>
+             </div>
+
+             <apex:outputPanel layout="none" rendered="{!NOT(event.evt__Company_Field__c == 'Hidden')}">
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Company}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image value="/s.gif" styleClass="{!IF(event.evt__Company_Field__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="text" id="mailingcompany" styleclass="pc_medium_input_field" value="{!companyName}" required="{!IF(event.evt__Company_Field__c == 'Required','true','false')}" />                 
+                 </div>
+             </div>
+             </apex:outputPanel>
+
+             <apex:outputPanel layout="none" rendered="{!NOT(event.evt__Address_Fields__c == 'Hidden')}" >          
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_StreetAddress}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="text" id="mailingstreet" styleclass="pc_long_input_field" value="{!mailingstreet}" required="{!IF(event.evt__Address_Fields__c == 'Required','true','false')}" />
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                  <apex:outputText value="{!$Label.evt__Label_City}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                  <apex:input type="text" id="mailingcity" styleclass="pc_medium_input_field" value="{!mailingcity}" required="{!IF(event.evt__Address_Fields__c == 'Required','true','false')}" />
+                 </div>
+             </div>
+             
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Country}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                     <apex:selectList id="mailingcountry" size="1" multiselect="false"  
+                     value="{!mailingcountry}" >
+                     <apex:selectOptions value="{!countryPicklistOptions}"/>
+                     </apex:selectList>   
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_StateProvince}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="text" id="mailingstate" styleclass="pc_short_input_field" value="{!mailingstate}" required="{!IF(event.evt__Address_Fields__c == 'Required','true','false')}" />
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_PostalCode}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="text" id="mailingpostalcode" styleclass="pc_medium_input_field" value="{!mailingpostalcode}" required="{!IF(event.evt__Address_Fields__c == 'Required','true','false')}"/>
+                 </div>
+             </div>
+             </apex:outputPanel>
+
+          </div><!-- end of flex form -->
+
+        <apex:outputPanel id="nocaptcha"  rendered="{!NOT(showCaptcha = true)}">
+                <script type="text/javascript">
+                function captureResponse(ele) {
+                }
+                </script>
+        </apex:outputPanel>
+            
+        <apex:outputPanel id="captcha" rendered="{!showCaptcha = true}">
+                <apex:inputhidden value="{!recaptcha.challenge}" id="challenge" />
+                <apex:inputhidden value="{!recaptcha.response}" id="response" />
+                <script type="text/javascript">
+                function captureResponse(ele) {
+                    document.getElementById('{!$Component.challenge}').value =
+                        document.getElementById('recaptcha_challenge_field').value;
+                     
+                    document.getElementById('{!$Component.response}').value =
+                        document.getElementById('recaptcha_response_field').value;
+                }
+                </script>
+
+            <div class="pc_flex_form" id="pc_captcha_flex_form">
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                  <apex:outputText value=""/>
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif"/>
+                </div>
+                <div class="pc_flex_form_field_item">
+                  <apex:outputPanel layout="inline">   
+                      <div id="dynamic_recaptcha_1"></div>
+                      <br />
+                      <!--  display the image using the reCAPTCHA AJAX API -->
+                  </apex:outputPanel>
+                </div>
+            </div>
+
+            </div><!-- end of flex form --> 
+
+            <script type="text/javascript">showRecaptcha('dynamic_recaptcha_1');</script>
+            <br/>
+        </apex:outputPanel> 
+
+
+        <div class="pc_button_container"> 
+        
+        <apex:commandButton id="retButton" value="Return" action="{!cancelButton}"
+          rendered="{!NOT(ISBLANK(retURL))}"/>
+        <apex:commandButton id="regButton" 
+                value="Submit" 
+                onclick="captureResponse(this);return validateForm();"
+                action="{!addToWaitList}"/>
+
+        </div>
+    </apex:form>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page --> 
+</div> <!--  page pc_lang_xxx div -->        
+    
+</apex:page>

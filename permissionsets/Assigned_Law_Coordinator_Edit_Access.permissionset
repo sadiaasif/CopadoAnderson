@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>AllowChangeLawCoordinator</name>
+    </customPermissions>
+    <description>Allows assignees to change the Assigned Law Coordinator while the Apex Trigger causing the breaking tasks is fixed. 5-1-2019 NF</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Assigned_CSR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Assigned  Client Success Coordinator Edit Access</label>
+</PermissionSet>

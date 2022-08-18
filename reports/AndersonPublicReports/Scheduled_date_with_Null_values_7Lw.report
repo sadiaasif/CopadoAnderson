@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>Opportunity.ChargentSFA__Transaction_Total__c:SUM / RowCount</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA1</developerName>
+        <downGroupingContext>Opportunity.Scheduled_By__c</downGroupingContext>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>$ per OO Set</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>LEAD_SOURCE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Opportunity.ChargentSFA__Transaction_Total__c</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE_BY</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Scheduled_By_Modified_Date_Time__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <column>Opportunity.Scheduled_By__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Amanda Allen,Summer Govea,stephanie contrino,Sharon leja,Cynthia Jones,Brittany Bower,Olivia Sliger,shenquia Marshall,Tameka Fulton,Samantha Kimes,David Corbin,Carolyn Matthews,Bradford Embree,Dan Shaker,Arlysha Lowe,david maddox,alizay,Laura Cassani</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Scheduled_By_Modified_Date_Time__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Scheduled_By__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Scheduled date with Null values</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Opportunity@Opportunity.Sales_Rep__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <endDate>2021-10-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2021-10-01</startDate>
+    </timeFrameFilter>
+</Report>

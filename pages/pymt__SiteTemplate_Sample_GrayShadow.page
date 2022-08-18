@@ -1,0 +1,327 @@
+<apex:page docType="html-5.0" showHeader="false" id="SiteTemplate" standardStylesheets="false" language="{!$CurrentPage.Parameters.lang}">
+<style>
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+
+    }
+
+</style>
+<!-- Linvio PaymentConnect CSS includes -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/sites_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/sites_basic_responsive.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/trust_logos.css')}" /> 
+<!-- Optional button and field styling -->
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/sites_buttons_fields.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/css_buttons/gray.css')}" />
+<!-- link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/css_buttons/blue.css')}" /-->
+<!-- Linvio Events add-on styling -->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/sites_basic.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/sites_basic_responsive.css')}" />
+-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/sites_quickevent_multicol.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/sites_h2_header_boxes.css')}" />-->
+<!-- Linvio Events submenu style options -->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/default/style_grey.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/default/style_blue.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/pro/style_blue.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/pro/style_navy.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/pro/style_brown.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/pro/style_green.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/pro/style_orange.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/simple/style_green.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/classics/style_orange.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/matte/style_black.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/matte/style_blue.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/matte/style_orange.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/matte/style_red.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/garden/style.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/slate/style_blue.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/slate/style_green.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/slate/style_red.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/slate/style_purple.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/dolphin/style.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/prime/style_blue.css')}" />-->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'nav/prime/style_brown.css')}" />-->
+<!-- End subnav style options for Linvio Events     -->
+<!-- eStore Lite add-on styling -->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.eslt__eStoreLiteResources,'styles/sites_basic.css')}" /> -->
+<!-- Linvio Donations add-on styling -->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.dn8n__LinvioDonations,'styles/sites_basic.css')}" /> -->
+<!-- Quotes & Invoices add-on styling -->
+<!-- <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.quot__QuotesAndInvoices,'styles/sites_basic.css')}" /> -->
+<!-- eStore pro package styling -->
+<!--
+<link rel="stylesheet" type="text/css" href="{URLFOR($Resource.str__LinvioEStoreResources,'styles/sites_basic.css')}" />
+<link rel="stylesheet" type="text/css" href="{URLFOR($Resource.str__LinvioEStoreResources,'styles/sites_widget_panel.css')}" />
+<link rel="stylesheet" type="text/css" href="{URLFOR($Resource.str__LinvioEStoreResources,'includes/tab-content/template3/tabcontent.css')}" />
+<link rel="stylesheet" type="text/css" href="{URLFOR($Resource.str__Slider,'bxslider/jquery.bxslider.css')}" />
+-->
+<!-- Overall styling for the default template -->
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/grayshadow/main.css')}" />
+<style>
+/* Page Banner */
+/* 
+.top_banner {
+    background: url("../../images/architecture.png");
+    height:187px;
+    padding:0px;
+    width:1000px;
+    text-align:left;
+}
+*/
+
+/* Javascript menu bar styling */
+
+#pc_menubar_wrapper {
+    width:100%;
+    border: 0px;
+    padding:0px;
+    margin:0px;
+    background: #6699CC;
+    margin-bottom:15px;
+    }
+#pc_menubar
+{   margin: 0;
+    padding: 0;
+    z-index: 30}
+
+#pc_menubar li
+{   margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+    font: bold 14px arial}
+
+#pc_menubar li a
+{   display: block;
+    margin: 0 0px 0 0;
+    border-right: 1px solid #E0E0E0;
+    padding: 8px 10px;
+    width: 110px;
+    background: #5970B2;
+    background: #6699CC;
+    color: #FFF;
+    text-align: center;
+    text-decoration: none}
+
+#pc_menubar li a:hover
+{   background: #49A3FF;
+    background: #336699;
+}
+
+#pc_menubar div
+{   position: absolute;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    background: #EAEBD8;
+    border: 1px solid #6699CC;
+    border-top: 0px;
+    z-index:50;    
+    }
+
+    #pc_menubar div a
+    {   position: relative;
+        display: block;
+        margin: 0;
+        padding: 5px 10px;
+        width: auto;
+        white-space: nowrap;
+        text-align: left;
+        text-decoration: none;
+        background: #fff;  /* dropdown background color */
+        color: #A0A0A0;
+        font: 14px arial}
+
+#pc_menubar div a:hover {   
+    background: #e0e0e0;
+    color: #FFF}
+    
+</style>
+<style>
+.org_name {
+  margin:0px;
+  padding:10px;
+}
+.tag_line {
+  margin:0px;
+  padding:10px;
+
+}
+body {
+    line-height:normal;
+    }
+</style>
+<script>
+// Copyright 2006-2007 javascript-array.com
+
+var timeout = 500;
+var closetimer  = 0;
+var ddmenuitem  = 0;
+
+// open hidden layer
+function mopen(id)
+{   
+    // cancel close timer
+    mcancelclosetime();
+
+    // close old layer
+    if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+    // get new layer and show it
+    ddmenuitem = document.getElementById(id);
+    ddmenuitem.style.visibility = 'visible';
+
+}
+// close showed layer
+function mclose()
+{
+    if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+}
+
+// go close timer
+function mclosetime()
+{
+    closetimer = window.setTimeout(mclose, timeout);
+}
+
+// cancel close timer
+function mcancelclosetime()
+{
+    if(closetimer)
+    {
+        window.clearTimeout(closetimer);
+        closetimer = null;
+    }
+}
+
+// close layer when click-out
+document.onclick = mclose; 
+</script>
+<div id="page">
+    <apex:insert name="header">
+    <!--  Add custom banner and navigation here -->
+        <div class="pc_frame_top">
+        <ul class="top_nav">
+        
+            <li>
+                <a href='{!$Site.Prefix}/' 
+                title='Home' 
+                target='_self'> Home</a>
+            </li>
+                        
+            <li>
+                <a href='#' 
+                title='Events' 
+                target='_self'> Events</a>
+            </li>
+            
+            <li>
+                <a href='#' 
+                title='Public Affairs' 
+                target='_self'> Public Affairs</a>
+            </li>
+            
+            <li>
+                <a href='#' 
+                title='' 
+                target='_self'> About Us</a>
+            </li>
+            
+            <li>
+                <a href='#' 
+                title='Contact Us' 
+                target='_self'> Contact Us</a>
+            </li>
+            
+            <li>
+                <a href='#' 
+                title='Foundation' 
+                target='_self'> Foundation</a>
+            </li>
+            
+            
+        </ul>
+            <div class="top_banner">
+            <div class="top_banner_inner">
+                 <img class="pc_logo" src="/s.gif" /><br/><apex:outputText styleClass="org_name" value="{!$Organization.Name}"/>
+                 <br/><span class="tag_line">Demo Sites Website</span>
+            </div>
+            </div>
+            <div id="nav_divider" ></div>
+
+            <div id="pc_menubar_wrapper">
+            <ul id="pc_menubar">
+                <li><a href="#">Menu Item 1</a></li>
+                <li><a href="#" 
+                    onmouseover="mopen('m1')" 
+                    onmouseout="mclosetime()">Menu Item 2</a>
+                    <div id="m1" 
+                        onmouseover="mcancelclosetime()" 
+                        onmouseout="mclosetime()">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                    </div>
+                </li>
+                <li><a href="#">Menu Item 3</a></li>
+                <li><a href="#" 
+                    onmouseover="mopen('m2')" 
+                    onmouseout="mclosetime()">Portal</a>
+                    <div id="m2" 
+                        onmouseover="mcancelclosetime()" 
+                        onmouseout="mclosetime()">
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">                                                    
+                        <a href="{!URLFOR($Page.pymt__SitePaymentHistory)}">Payment History</a>
+                        <a href="{!URLFOR($Page.pymt__SiteSubscriptions)}">Subscriptions</a>
+                        <a href="{!URLFOR($Page.pymt__SiteScheduledPayments)}">Scheduled Payments</a>
+                        <a href="{!URLFOR($Page.pymt__SiteManagePmtMethods)}">Payment Methods</a>
+                        <apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">{!$Label.site.logout}</apex:outputLink>
+                    </apex:outputPanel>    
+    
+                    <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">    
+                        <a href="{!URLFOR($Page.pymt__SiteLogin)}">Portal Login</a>
+                        <a href="{!URLFOR($Page.pymt__SiteRegister)}">New User</a>
+                    </apex:outputPanel>
+                    </div>
+                </li>
+                <li><a href="#">Support</a></li>
+            </ul>
+            <div style="clear:both"></div>
+            </div>
+
+
+        </div>
+
+    </apex:insert>
+    <div class="pc_frame">
+    <div class="pc_frame_inner">
+    
+
+
+    <apex:insert name="body"/>
+
+    </div><!--  end pc_frame_inner -->
+    </div><!--  end pc_frame -->
+
+    <apex:insert name="footer">
+    <!--  Add custom footer here -->
+    <div class="footer">
+    <div class="footer_inner">
+    <div class="contact_info">
+    {!$Organization.Name}&nbsp;|&nbsp;
+    {!$Organization.Street},&nbsp;
+    {!$Organization.City},&nbsp;
+    {!$Organization.State}&nbsp;
+    {!$Organization.Country}&nbsp;
+    {!$Organization.PostalCode}&nbsp;|&nbsp;
+    {!$Organization.Phone}
+    </div>
+    <div class="powered_by">{!$Label.site.powered_by} Linvio PaymentConnect</div>
+    </div>
+    </div>
+    </apex:insert>
+</div>
+</apex:page>

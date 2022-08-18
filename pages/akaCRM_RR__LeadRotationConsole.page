@@ -1,0 +1,44 @@
+<!-- Author: akaCRM by David Helgerson
+     Date: 01/24/2013
+     Description: Lead Rotaion Console VF page that dispalys 
+       users who have the Shown on Lead Console set to true. Users
+       are grouped by Role and ordered by the lead order field 
+-->
+<apex:page Controller="akaCRM_RR.LeadRotationConsoleController"
+  title="Round Robin Lead Assignment Console" cache="false">
+  <apex:sectionHeader title="Round Robin Lead Assignment Console" />
+  <apex:pageMessages id="consoleMessage" />
+  
+  <apex:form id="consoleForm" >
+    <apex:pageBlock >
+      <apex:repeat value="{!RoleUsersList}" var="ru">
+        <apex:pageBlockSection title="{!ru.cRoleName}" columns="1" collapsible="false">
+          <apex:pageBlockTable value="{!ru.cUserList}" var="u" >
+            <apex:column value="{!u.Name}" />
+            <apex:column width="20%" headerValue="Receive Leads" ><apex:inputfield value="{!u.akaCRM_RR__Receive_Leads__c}" /></apex:column>
+            <apex:column width="20%" headerValue="Daily Cap"><apex:inputfield value="{!u.akaCRM_RR__Daily_Cap__c}" /></apex:column>
+            <apex:column width="20%" headerValue="Lead Order"><apex:inputfield value="{!u.akaCRM_RR__Lead_Order__c}" /></apex:column>
+          </apex:pageBlockTable>
+        </apex:pageBlockSection>
+      </apex:repeat>
+      <br />
+      <apex:pageBlockSection columns="1" collapsible="false">
+        <div class = "requiredInput">
+          <div class = "requiredBlock"></div>
+          <apex:inputField value="{!rotationSettings.akaCRM_RR__Default_Lead_Owner__c}" required="true" /> 
+        </div>
+      </apex:pageBlockSection>
+      <apex:pageBlockButtons location="bottom" >
+        <apex:actionStatus id="mySaveStatus1">
+          <apex:facet name="stop">     
+            <apex:commandButton action="{!saveChanges}" status="mySaveStatus1" value="Save Changes" disabled="false"     rerender="consoleForm,consoleMessage"/>     
+          </apex:facet>     
+          <apex:facet name="start">
+            <apex:commandButton action="{!saveChanges}" status="consoleForm,consoleMessage" value="Saving..." disabled="true"/>                  
+          </apex:facet>
+        </apex:actionStatus>
+      </apex:pageBlockButtons> 
+    </apex:pageBlock>
+  </apex:form>
+
+</apex:page>

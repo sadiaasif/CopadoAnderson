@@ -1,0 +1,331 @@
+<apex:page docType="html-5.0" controller="pymt.SplashPageController" sidebar="false" applyHtmlTag="{!NOT(OR($User.UIThemeDisplayed == 'Theme4t',$User.UIThemeDisplayed == 'Theme4d'))}" applyBodyTag="false" standardstylesheets="false"
+  showHeader="{!NOT(OR($User.UIThemeDisplayed == 'Theme4t',$User.UIThemeDisplayed == 'Theme4d'))}" standardStylesheets="false">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+  <apex:stylesheet value="{!URLFOR($Resource.pymt__SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+  <apex:include pageName="pymt__UIThemeUtilsInclude"/>
+
+ <script src="https://www.google.com/jsapi/?key=ABQIAAAAloYEvC1CVLn_TAvH9rYeaRSErT9zxRzV78VUdn4VYjg2x8MmkBQGnkkQISDcn8neSE3_oSl7zSM2oA" type="text/javascript"></script>
+  <script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+  <style type="text/css">
+    @import url("https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+
+    #feedControl {
+      margin-top : 0px;
+      margin-left: 0px;
+      margin-right: auto;
+      margin-bottom: 20px;
+      /* width : 600px; */
+      height:auto;
+      font-size: 16px;
+      color: #9CADD0;
+    }
+    .gfg-title {
+     padding:4px 4px 4px 10px;
+     background:rgb(0,84,160);
+       color:white;
+       font-size:16px;
+    }
+    .gfg-entry {
+        padding-top:5px;
+    }
+    .gfg-title a {
+       text-decoration:none;
+       color:white;
+    }
+    .gfg-title a:visited {
+       color:white;
+    }
+    .gfg-title a:link {
+       color:white;
+    }
+    .gfg-list {
+       font-size:14px;
+    }
+    .gfg-root {
+      border: 1px solid rgb(0,84,160);
+      border-radius: 6px;
+      margin-top:0px;
+    }
+    .gfg-listentry-odd {
+       background-color:transparent;
+    }
+  </style>
+  <style>
+  .dashboardTable {
+    width:100%;
+  }
+  .dashboardTable td {
+    vertical-align: top;
+  }
+  </style>
+  <script type="text/javascript">
+    function load() {
+      var feed ="https://linvio.secure.force.com/pmtx/ctnt__SiteRSSFeed";
+      var options = {
+           numResults : 8
+           }
+      new GFdynamicFeedControl(feed, "feedControl", options);
+
+    }
+    google.load("feeds", "1");
+    google.setOnLoadCallback(load);
+
+  </script>
+<style>
+/*
+h1 {
+
+  font-size: 2.0em;
+  border-bottom: 1px solid #e0e0e0;
+  color:#404040;
+  margin-top:0px;
+  padding-top:0px;
+  } */
+
+/*
+a:link {
+    color: #006fd3;
+    }
+a:visited {
+    color: #006fd3;
+    }
+h2 {
+  color: #606060;
+} */
+.analyticsEmbeddedReportChart .asOfDateContainer {
+   font-family:helvetica;
+   font-size:11px;
+}
+</style>
+<!-- apex:stylesheet value="{!URLFOR($Resource.PaymentConnect,'styles/splashpage/main.css')}" / -->
+<apex:outputPanel layout="none" rendered="{!IF(CONTAINS($CurrentPage.URL,'sfdc.tabName'),'false','true')}">
+<style>
+/*
+body {
+   margin:0px;
+   padding:0px;
+   background-color:#009ACD;
+}
+*/
+</style>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!IF(CONTAINS($CurrentPage.URL,'sfdc.tabName'),'true','false')}">
+<style>
+/*
+h1, h2, h3, h4 {
+  display:block;
+  }
+h1 { margin-bottom:10px; }
+h2 { font-size: 14px; margin:5px 0px 5px 0px; }
+.contentdiv {
+   margin:10px;
+   padding: 0px;
+   border-radius: 0px;
+   background: white;
+   }
+td { vertical-align:top; }
+*/
+.alert_table {
+  border-collapse: collapse;
+}
+.alert_table td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  vertical-align: top;
+}
+.alert_row {
+  border-bottom: 1px dashed #e0e0e0;
+}
+</style>
+</apex:outputPanel>
+</head>
+<body>
+<div class="slds">
+
+  <div class="slds-page-header" role="banner">
+    <div class="slds-grid">
+      <div class="slds-col slds-has-flexi-truncate">
+        <div class="slds-media">
+          <div class="slds-media__figure">
+            <svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-standard-user">
+              <use xlink:href="{!URLFOR($Resource.SLDS102, 'assets/icons/custom-sprite/svg/symbols.svg#custom40')}"></use>
+            </svg>
+          </div>
+          <div class="slds-media__body">
+            <p class="slds-text-heading--label">Linvio PaymentConnect</p>
+            <div class="slds-grid">
+              <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Record Title">Application Dashboard</h1>
+            <!--  <div class="slds-col slds-shrink-none">
+                <button class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive">
+                  <span class="slds-text-not-selected">
+                    <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+                      <use xlink:href="{!URLFOR($Resource.SLDS102, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                    </svg>Follow</span>
+                  <span class="slds-text-selected">
+                    <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+                      <use xlink:href="{!URLFOR($Resource.SLDS102, 'assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                    </svg>Following</span>
+                  <span class="slds-text-selected-focus">
+                    <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+                      <use xlink:href="{!URLFOR($Resource.SLDS102, 'assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                    </svg>Unfollow</span>
+                </button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-col slds-no-flex slds-align-bottom">
+        <div class="slds-button-group" role="group">
+          <button class="slds-button slds-button--neutral" onclick="ForceUI.navigateToURL('{!URLFOR($Page.pymt__PaymentConnectSettings)}');return false;">PaymentConnect Admin</button>
+          <!-- <button class="slds-button slds-button--neutral">Delete</button>
+          <button class="slds-button slds-button--neutral">Clone</button>
+          <div class="slds-button--last">
+            <button class="slds-button slds-button--icon-border-filled">
+              <svg aria-hidden="true" class="slds-button__icon">
+                <use xlink:href="{!URLFOR($Resource.SLDS102, 'assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+              </svg>
+              <span class="slds-assistive-text">More</span>
+            </button>
+          </div>   -->
+        </div>
+      </div>
+    </div>
+    <!--
+    <ul class="slds-grid slds-page-header__detail-row">
+      <li class="slds-col--padded slds-size--1-of-4">
+        <p class="slds-text-heading--label slds-truncate" title="Field 1">Field 1</p>
+        <p class="slds-text-body--regular slds-truncate" title="Description that demonstrates truncation with a long text field">Description that demonstrates truncation with a long text field.</p>
+      </li>
+      <li class="slds-col--padded slds-size--1-of-4">
+        <p class="slds-text-heading--label slds-truncate" title="Field2 (3)">Field 2 (3)
+          <button class="slds-button slds-button--icon-bare">
+            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+              <use xlink:href="{!URLFOR($Resource.SLDS102, 'assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+            </svg>
+            <span class="slds-assistive-text">More Actions</span>
+          </button>
+        </p>
+        <p class="slds-text-body--regular">Multiple Values</p>
+      </li>
+      <li class="slds-col--padded slds-size--1-of-4">
+        <p class="slds-text-heading--label slds-truncate" title="Field 3">Field 3</p><a href="#void">Hyperlink</a></li>
+      <li class="slds-col--padded slds-size--1-of-4">
+        <p class="slds-text-heading--label slds-truncate" title="Field 4">Field 4</p>
+        <p>
+          <span>Description (2-line truncat...</span>
+        </p>
+      </li>
+    </ul> -->
+  </div>
+
+<br/>
+<table class="dashboardTable">
+<tr>
+<td style="width:1%;white-space:nowrap;">
+  <analytics:reportChart developerName="pymt__Monthly_Receipts" size="small" hideOnError="true"/><br/><br/>
+  <analytics:reportChart developerName="pymt__Cart_Item_Revenue" size="small" hideOnError="true"/><br/><br/>
+  <analytics:reportChart developerName="pymt__Category_Totals_By_Month" size="small" hideOnError="true"/><br/><br/>
+</td>
+<td style="padding-left:20px;">
+  <apex:outputPanel rendered="{!hasAlerts}">
+  <h2 style="font-size:18px;border-bottom:1px solid #e0e0e0;">Alerts</h2>
+  <table  class="alert_table">
+  <apex:repeat value="{!alerts}" var="alert">
+  <tr class="alert_row">
+  <td style="width:30px;" >
+  <apex:outputPanel rendered="{!alert.severity == 'error'}"><apex:image url="{!URLFOR($Resource.pymt__PaymentConnect, 'images/error.png')}"/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!alert.severity == 'warning'}"><apex:image url="{!URLFOR($Resource.pymt__PaymentConnect, 'images/error.png')}"/>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!alert.severity == 'info'}"><apex:image url="{!URLFOR($Resource.PaymentConnect,
+                    'images/information.png')}" />
+  </apex:outputPanel>
+  </td>
+  <td>
+  {!alert.message}
+  </td>
+  </tr>
+  </apex:repeat>
+  </table>
+  <br/>
+  </apex:outputPanel>
+
+
+  <h2>Getting Started</h2>
+  <a onclick="ForceUI.navigateToURL('{!URLFOR($Page.pymt__PaymentConnectSettings)}');return false;">PaymentConnect Admin</a>&nbsp;|&nbsp;
+  <a href="{!URLFOR($Page.pymt__Help)}" target="_blank">Users Guide</a>&nbsp;|&nbsp;
+  <a href="{!URLFOR($Page.pymt__AdminGuide)}" target="_blank">Administrator Guide</a>
+  <h2>
+  Additional Resources
+  </h2>
+  <a href="https://groups.google.com/forum/?hl=en&fromgroups#!forum/linvio-products" target="_blank">Linvio Forums</a>&nbsp;|&nbsp;
+
+  <a href="http://www.linvioportal.com/" target="_blank">Customer Portal</a>&nbsp;|&nbsp;
+
+  <a href="http://www.youtube.com/user/LinvioInc?feature=mhee" target="_blank">Video Library</a>&nbsp;|&nbsp;
+
+  <a href="http://www.linvio.com" target="_blank">Linvio Website</a>
+
+  <h2>PaymentConnect Add-Ons</h2>
+  <apex:outputPanel rendered="{!accessToEvents == false}">
+    <a href="http://www.linvio.com" target="_blank">Linvio Events</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToEvents == true}">
+    <a href="{!$Site.BaseURL}/apex/evt__EventManagementSettings?retURL={!$CurrentPage.URL}">Linvio Events Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToAccountingSeedPack == true}">
+    <a href="/apex/pc2as__PCAS_Config?retURL={!$CurrentPage.URL}">Accounting Seed Integration Pack Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToFinancialForcePack == true}">
+    <a href="/apex/p2f__FFConnectorConfig?retURL={!$CurrentPage.URL}">FinancialForce Integration Pack Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <a href="http://www.linvio.com" target="_blank">Linvio eStore Lite</a>&nbsp;|&nbsp;
+  <apex:outputPanel rendered="{!accessToQuotesAndInvoices == false}">
+    <a href="http://www.linvio.com" target="_blank">Linvio Quotes &amp; Invoices</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToQuotesAndInvoices == true}">
+    <a href="/apex/quot__QuotesInvoicesConfig?retURL={!$CurrentPage.URL}">Quotes &amp; Invoices Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToOppSync == true}">
+    <a href="/apex/opsync__OppSyncConfig?retURL={!$CurrentPage.URL}">Oppsync Utility Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToRollups == true}">
+  <a href="/apex/rlp__ManageContactRollup?retURL={!$CurrentPage.URL}">Contact Rollups Configuration</a>&nbsp;|&nbsp;
+  <a href="/apex/rlp__ManageAccountRollup?retURL={!$CurrentPage.URL}">Account Rollups Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!accessToDonations == true}">
+    <a href="/apex/dn8n__DonationAddOnSettings?retURL={!$CurrentPage.URL}">Donations Expansion Pack Configuration</a>&nbsp;|&nbsp;
+  </apex:outputPanel>
+
+  <a href="http://www.linvio.com" target="_blank">Linvio Non-Profit Toolkit</a>&nbsp;|&nbsp;
+
+  <a href="http://www.linvio.com" target="_blank">More...</a>
+
+  <!-- social media icons -->
+  <br/><br/>
+  <a href="http://www.youtube.com/user/LinvioInc?feature=mhee" target="_blank"><img class="icon_youtube" src="/s.gif"/></a>
+  <!--
+  <a href="https://www.linkedin.com/company/1607218?trk=tyah&trkInfo=tarId%3A1404352784057%2Ctas%3Alinvio%2Cidx%3A1-1-1" target="_blank"><img class="icon_linkedin" src="/s.gif"/></a>
+   -->
+  <a href="https://www.facebook.com/pages/Linvio-Inc/182082282306" target="_blank"><img class="icon_fb" src="/s.gif"/></a>
+  <a href="https://twitter.com/Linvio" target="_blank"><img class="icon_twitter" src="/s.gif"/></a>
+  <a href="https://plus.google.com/u/1/105969920896950402340/about" target="_blank"><img class="icon_google" src="/s.gif"/></a>
+<br/>
+  <!-- RSS Feed -->
+        <div id="feedbody">
+          <div id="feedControl">Loading...</div>
+        </div>
+      </td>
+</tr>
+
+</table>
+
+
+</div>
+
+
+</body>
+</html>
+</apex:page>

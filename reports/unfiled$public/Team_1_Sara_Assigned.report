@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account.Teams__c</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CAM__c</field>
+    </columns>
+    <columns>
+        <field>Account.Last_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.First_Name__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Platinum_Client_View__c</field>
+    </columns>
+    <columns>
+        <field>Account.E_Mail__c</field>
+    </columns>
+    <columns>
+        <field>Account.Phone_1__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Account.Teams__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Team 1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Assigned_CAM__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Sara Winter</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Team 1 - Sara Assigned</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>ACCOUNT.NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

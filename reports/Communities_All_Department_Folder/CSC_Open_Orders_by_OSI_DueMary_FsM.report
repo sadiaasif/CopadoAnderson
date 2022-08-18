@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_29847295</developerName>
+        <masterLabel>Age of Order</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>OrderItem.Age__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>7</to>
+            </sourceValues>
+            <value>&lt;1 Week</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>7</from>
+                <to>21</to>
+            </sourceValues>
+            <value>2-3 Weeks</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>21</from>
+                <to>35</to>
+            </sourceValues>
+            <value>4-5 Weeks</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>35</from>
+                <to>56</to>
+            </sourceValues>
+            <value>6-8 Weeks</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>56</from>
+            </sourceValues>
+            <value>&gt;8 Weeks</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>BucketField_29847295</field>
+    </columns>
+    <columns>
+        <field>Order.Days_Since_Last_Activity__c</field>
+    </columns>
+    <columns>
+        <field>Order.Law_Coordinator__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>Order.Stage__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_NAME</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Days_Since_Last_Activity__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Age__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_SERVICE_DATE</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Active_User__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Update_Comments__c</field>
+    </columns>
+    <description>Orders with Open OSIs due in the next 7 days.</description>
+    <filter>
+        <booleanFilter>(1 OR 6) AND 2 AND 3 AND 4 AND 5 AND 7</booleanFilter>
+        <criteriaItems>
+            <column>Order.Law_Coordinator__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Maryana Postolovska</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_ITEM_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Administrative Fee,State Late Fee,State Filing Fees- LP,Foreign Filing State Fee,BBRRR Package,Business Essentials Program - Bookkeeping Version,Business Essentials - Don P,State Reinstatement Fee,Certified Copy - State Fee,Certificate of Good Standing - State Fee,Expedite Fee - State,Domestication Filing Fee,Amendment Filing Fee,Expedite Fee - Internal,Basic,Registered Agent Change State Filing Fee,Registered Agent Fee,Stock Pro,State Filing Fees - Corp,Real Estate Pro,Dissolution Filing Fee,Infinity Investing Through Shared Housing,360,Shared Housing Academy 3-Day Virtual Training,State Filing Fees- LLC,Deed Recording Fee,Tax Toolbox,Anderson Funding Community,Asset Protection Event,&quot;Company Assistance Program, 1 Year, Initial&quot;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>1/1/2021 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Kitted,Refund Requested,Refunded,Exchanged for Other Services,Completed - Client Unresponsive,Completed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Kitted,Refunded</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Maryana Postolovska</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Due_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>NEXT_N_DAYS:7</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OrderItem.Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ACCOUNT_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>CSC Open Orders by OSI Due-Maryana</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ORDER_EFFECTIVE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

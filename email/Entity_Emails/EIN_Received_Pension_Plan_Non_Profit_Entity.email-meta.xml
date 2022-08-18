@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sends email when EIN Received date is entered.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>EIN Received - Pension Plan &amp; Non Profit Entity</name>
+    <style>none</style>
+    <subject>EIN Received from the IRS</subject>
+    <textOnly>Dear {!Entities__c.AccName__c},
+
+We have received the Employer Identification Number (EIN) for {!Entities__c.Name}.
+
+The EIN number is: {!Entities__c.EIN__c}
+
+
+Thank you,
+Anderson Business Advisors, LLC</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

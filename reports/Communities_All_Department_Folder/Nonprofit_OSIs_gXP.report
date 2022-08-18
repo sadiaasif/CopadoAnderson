@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order.OrderItems$Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$OrderItemNumber</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>Order$Comments__c</field>
+    </columns>
+    <columns>
+        <field>Order$Account</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Order.OrderItems$Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1023 Consult Scheduled,1023 Drafting,1023 In Review,1023 Ready for Review,1023 - Review Comments,Ready for 1023 Consult,Ready for EIN,Ready to send to client,Send to Client,Sent to Client</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Non,1023</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Fee,Non-Profit Director Board</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Order.OrderItems$Active_User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Non-profit OSIs</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Orders_with_Order_Items__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Order$ActivatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

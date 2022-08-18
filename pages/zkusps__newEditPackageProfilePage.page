@@ -1,0 +1,173 @@
+<apex:page tabStyle="zkusps__PackageProfile__c" standardController="zkusps__PackageProfile__c" extensions="zkusps.EditPackageProfileController" action="{! init }">
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+
+    <apex:sectionHeader title="USPS Endicia Preference Edit"  subtitle="New USPS Endicia Preference" rendered="{! NOT(isEditMode) }"/>
+    <apex:sectionHeader title="USPS Endicia Preference Edit"  subtitle="Edit USPS Endicia Preference" rendered="{! isEditMode }" />
+
+    <style>
+        .inputFieldRequiredBar {
+            height:14px;
+            float:right;
+            display: inline;
+            font-size: 8pt;
+            color: #cc0000;
+            padding: 5px 0 2px 0;
+            margin-left: 16px;
+            margin-right: -19px;
+            margin-top:2px;
+            background-color: #cc0000;
+        }
+
+    </style>
+
+    <apex:form id="formId">
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+
+                function setRequiredFields() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                }
+
+                $j(document).ready(function() {
+                    setRequiredFields();
+                });
+
+                
+            </script>
+        </apex:outputPanel>
+
+        <!-- Messages -->
+        <apex:outputPanel id="preferencePageMessages">
+            <c:MessageListDisplay msgList="{! messageList }"/>
+        </apex:outputPanel>
+
+        <apex:pageBlock id="pageBlock" mode="maindetail" rendered="{! NOT(mainInfoMode) }">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{! backToPreviousPage }" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection id="weighSection" collapsible="false" title="Package Type" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Package Profile"/>
+                    <apex:inputField value="{! profileObject.PackageProfile__c }">
+                        <apex:actionSupport event="onchange" action="{! doChooseMode }" rerender="formId">
+                            <apex:param name="modeType" value="package" />
+                        </apex:actionSupport>
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Customs Item Profile"/>
+                    <apex:inputField value="{! profileObject.CustomsItemProfile__c }">
+                        <apex:actionSupport event="onchange" action="{! doChooseMode }" rerender="formId">
+                            <apex:param name="modeType" value="customs" />
+                        </apex:actionSupport>
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="mainInfoBlock" mode="maindetail" rendered="{! mainInfoMode }">
+            
+
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{! createProfile }" value="Create Package Profile" rendered="{! NOT(isEditMode) }"/>
+                <apex:commandButton action="{! saveProfile }" value="Update Package Profile" rendered="{! isEditMode }"/>
+                <apex:commandButton action="{! backToPreviousPage }" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+            <!-- Main Information -->
+            <apex:pageBlockSection id="mainSection" collapsible="false" title="Main Information" columns="1">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Package Profile Description"/>
+                    <apex:inputField value="{! profileObject.PackageProfileDescription__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Mail Piece Type"/>
+                    <apex:selectList value="{! profileObject.Shape__c }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! mailClassOptions }"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+
+            <!-- Weigh -->
+            <apex:pageBlockSection id="weighSection" collapsible="false" title="Weigh" columns="2">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Weight Pounds"/>
+                    <apex:inputField value="{! profileObject.WeightPounds__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Weight Ounces"/>
+                    <apex:inputField value="{! profileObject.WeightOunces__c }"/>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+
+            <!-- Dimensions -->
+            <apex:pageBlockSection id="dimSection" collapsible="false" title="Dimensions" columns="1" rendered="{! NOT(isCustomsInformation) }">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Length"/>
+                    <apex:inputField value="{! profileObject.Length__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Width"/>
+                    <apex:inputField value="{! profileObject.Width__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Width"/>
+                    <apex:inputField value="{! profileObject.Height__c }"/>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+
+            <!-- Customs Inforation -->
+            <apex:pageBlockSection id="customsSection" collapsible="false" title="Customs Information" columns="2" rendered="{! isCustomsInformation }">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Quantity"/>
+                    <apex:inputField value="{! profileObject.Quantity__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Value per Unit (USD)"/>
+                    <apex:inputField value="{! profileObject.Value__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Country of Origin"/>
+                    <apex:selectList value="{! profileObject.CountryOfOrigin__c }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! countryOptions }"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="HS Tariff Number"/>
+                    <apex:inputField value="{! profileObject.HSTariffNumber__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Customs Item Name"/>
+                    <apex:inputField value="{! profileObject.CustomsItemName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Description"/>
+                    <apex:inputField value="{! profileObject.Description__c }"/>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

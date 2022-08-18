@@ -1,0 +1,375 @@
+<apex:page docType="html-5.0" id="ptlUserProfile" controller="pymt.SiteUserProfileController" sidebar="false" cache="false" standardStylesheets="false" title="{!$Label.pymt__SiteUserProfile_Heading}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_ptluserprofile_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+      <div class="pc_page_content_inner">
+      <apex:form id="mainForm">
+      <script>
+      // HTML5 validation fallback code - for Safari, ios and android devices
+      function hasHtml5Validation () {
+        return typeof document.createElement('input').checkValidity === 'function';
+      }
+
+      if (hasHtml5Validation()) {
+        $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+          if (!this.checkValidity()) {
+            e.preventDefault();
+            $j(this).addClass('invalid');
+            $j('#status').html('invalid');
+          } else {
+            $j(this).removeClass('invalid');
+            $j('#status').html('submitted');
+          }
+        });
+      }
+      // end HTML5 validation fallback code
+      </script>
+
+       <apex:pagemessages />
+      <h1>{!$Label.pymt__SiteUserProfile_Heading}</h1>
+
+        <apex:outputPanel rendered="{!editMode == false}">
+            <div class="pc_flex_form">
+
+
+                <div class="pc_flex_form_line_container">
+                    <div class="pc_flex_form_label_item">
+                        {!$Label.pymt__Label_FirstName}:
+                    </div>
+                    <div class="pc_flex_form_required_flag_item">
+                        <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                    </div>
+
+                    <div class="pc_flex_form_field_item">
+                        <apex:outputtext value="{!originalProfile.firstname}" />
+                    </div>
+                </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_LastName}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!originalProfile.lastname}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_Email}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!originalProfile.email}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_StreetAddress}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!originalProfile.billingstreet}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_City}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!originalProfile.billingcity}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_StateProvince}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!stateName}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_PostalCode}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!originalProfile.billingpostalcode}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       {!$Label.pymt__Label_Country}:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                    <apex:outputtext value="{!countryName}" />
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       Locale:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                      <apex:outputText value="{!localeDisplayName}"/>
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       Time Zone:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                      <apex:outputText value="{!timeZoneDisplayName}"/>
+                   </div>
+               </div>
+
+
+            </div><!-- end of flex form -->
+
+            <div class="pc_button_container">
+        <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+                 <apex:commandButton value="{!$Label.site.edit}" action="{!editProfile}" rerender="profile_form, editPanel"/>
+         </apex:outputPanel>
+         <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+                 <apex:commandLink styleClass="css-button" value="{!$Label.site.edit}" action="{!editProfile}"/>
+          </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel id="editPanel" rendered="{!editMode == true}">
+            <div class="pc_flex_form">
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_FirstName}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:input type="text" required="true" id="firstname" value="{!edittedProfile.firstname}" />
+                </div>
+            </div>
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_LastName}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:input type="text" required="true" value="{!edittedProfile.lastname}" />
+                </div>
+            </div>
+
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_Email}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:input type="email" required="true" value="{!edittedProfile.email}" />
+                </div>
+            </div>
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_StreetAddress}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:input type="text" value="{!edittedProfile.billingstreet}" />
+                </div>
+            </div>
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_City}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:input type="text" required="true" value="{!edittedProfile.billingcity}" />
+                </div>
+            </div>
+
+            <apex:actionRegion id="stateCountryRegion">
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_Country}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                      <apex:selectList id="countrypicklist"  multiselect="false" size="1"
+                                        value="{!edittedProfile.billingcountry}"  >
+                        <apex:actionSupport event="onchange" action="{!nullAction}" status="stateUpdateStatus" rerender="statepicklistPanel, messages, stateCountryRegion"/>
+                        <apex:selectOptions value="{!countryOptions}"/>
+                      </apex:selectList>&nbsp;<apex:actionStatus startText="" stopText="" id="stateUpdateStatus"/>
+
+                </div>
+            </div>
+
+            <apex:outputPanel layout="none" id="statePicklistPanel">
+            <apex:outputPanel layout="block" styleclass="pc_flex_form_line_container"  rendered="{!hasStateOptions}">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_StateProvince}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" id="staterequired" styleClass="{!If(hasStateOptions,'requiredFieldMarker','optionalFieldMarker')}"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                    <apex:selectList id="statepicklist" multiselect="false" size="1"  value="{!edittedProfile.billingstate}"  >
+                    <apex:selectOptions value="{!stateOptions}"/>
+                    </apex:selectList>
+                </div>
+          </apex:outputPanel>
+        </apex:outputPanel>
+      </apex:actionRegion>
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    {!$Label.pymt__Label_PostalCode}
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:input type="text" required="true" value="{!edittedProfile.billingpostalcode}" />
+                </div>
+            </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       Locale:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                      <apex:selectList value="{!userLocale}" size="1" multiselect="false">
+                        <apex:selectoptions value="{!localeOptions}"/>
+                      </apex:selectList>
+                   </div>
+               </div>
+
+               <div class="pc_flex_form_line_container">
+                   <div class="pc_flex_form_label_item">
+                       Time Zone:
+                   </div>
+                   <div class="pc_flex_form_required_flag_item">
+                       <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                   </div>
+
+                   <div class="pc_flex_form_field_item">
+                      <apex:selectList value="{!tzID}" size="1" multiselect="false">
+                        <apex:selectoptions value="{!timeZoneOptions}"/>
+                      </apex:selectList>
+                   </div>
+               </div>
+
+            </div><!-- end of flex form -->
+            <div class="pc_button_container">
+        <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+          <apex:commandButton value="{!$Label.site.submit}"  action="{!saveEdit}"/>
+          <apex:commandButton html-novalidate="true" value="{!$Label.site.cancel}" action="{!cancelEdit}"/>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+          <input type="submit" style="display:none;" id="hiddenSubmit" name="hiddenSubmitInput"/>
+          <apex:commandLink styleClass="css-button" onclick="return validateForm();" value="{!$Label.site.submit}"  action="{!saveEdit}"/>
+          <apex:commandLink html-novalidate="true" styleClass="css-button" value="{!$Label.site.cancel}" action="{!cancelEdit}" immediate="true"/>
+          <script>
+          function validateForm() {
+            // for apex:commandLink which does not invoke HTML5 form validation automatically
+            var form = document.getElementById('{!$Component.mainForm}');
+            var submitBtn = document.getElementById('hiddenSubmit');
+            if (form.checkValidity() == false) {
+              submitBtn.click();  // force form to display validation messages.
+              return false;
+            }
+            return true;
+          }
+          </script>
+
+        </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+
+
+    </apex:form>
+
+    <apex:outputPanel rendered="{!debug}">
+    <br/><br/>
+    Debug:  User Id = {!$User.Id} , Contact Id =  {!contactId}
+    </apex:outputPanel>
+    
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:page>

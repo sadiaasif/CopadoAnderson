@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>WON:SUM / CLOSED:SUM</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>false</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Close %</masterLabel>
+        <scale>1</scale>
+    </aggregates>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_31316438</developerName>
+        <masterLabel>Financial Freedom</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Original_Campaign_Source__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Financial Freedom Passive Income MD 10.10.2020 Virtual</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Financial Freedom Passive Income MD 10.26.2019 LA - BP</sourceValue>
+            </sourceValues>
+            <value>Financial Freedom</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_71404366</developerName>
+        <masterLabel>Stage</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>STAGE_NAME</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Fulfillment/Partial Payment</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Closed Won</sourceValue>
+            </sourceValues>
+            <value>Closed Won</value>
+        </values>
+        <values>
+            <value>Following Up</value>
+        </values>
+        <values>
+            <value>Closed Lost</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Dead Lead</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Closed Lost</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Canceled</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined-</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Refund Requested</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Qualification</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pending</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Scheduled</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Agreement Sent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DocuSign Completed</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Converted</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reassigned</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Event - No Consult</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>New Consult</sourceValue>
+            </sourceValues>
+            <value>Not Closed</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_51463726</developerName>
+        <masterLabel>TVAS</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>Account.Total_Value_of_All_Sales__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>1,495</to>
+            </sourceValues>
+            <value>Not a Client</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>1,495</from>
+                <to>14,999</to>
+            </sourceValues>
+            <value>Middle Tier Client $1,495 - $14,999</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>14,999</from>
+            </sourceValues>
+            <value>Top Tier Client &gt;$15k</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>CREATED</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Unique</aggregateTypes>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Initial_Consult_Date__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Account.Total_Value_of_All_Sales__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sales_Rep__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Consult_Date__c</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sale_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>BucketField_71404366</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Opportunity.Net_Transactions__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND (2 OR 3) AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Entity_Formation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Original_Campaign_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Real Wealth,Fettke</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sale_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Real Wealth,Fettke</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sales_Rep_Title__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Sr Strategist,Senior Advisor,Business Advisor,Sr. Advisor</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_71404366</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Closed Won,Not Closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Infinity Membership - Basic</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_51463726</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>RECORDTYPE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Real Wealth Fettke Sales - By Year</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

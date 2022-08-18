@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="ProcessingConsoleCtrl">
+      <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="EntityID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="RelatedToEntity" type="boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   <aura:handler event="force:showToast" action="{!c.handleToastEvent}"/>
+
+ 
+
+    <aura:if isTrue="{!v.RelatedToEntity}">
+	    <article class="slds-card">
+           
+        
+          
+           <center> <lightning:button label="Edit" onclick="{!c.edit}"/>
+             </center>
+        
+       
+                <div aura:id="EntityDetailcontainer">
+ 
+            <force:recordView aura:id="EntityDetails" recordId="{!v.EntityID}" type="FULL"/>
+            </div>
+            
+     
+       
+      
+    </article>
+         <aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Task is not related to Entity!</center>
+             </div>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

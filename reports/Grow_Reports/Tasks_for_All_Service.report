@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case.Activities$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case.Activities$Owner</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Whitney Ronnander,Mayra De Arcos,Fallon Williams,Michelle Enriquez,Amanda Dybas,Matthew Smidowicz,Antoinette Abernathy,Ambria Tibbs,Savannah Wallace,Alexandria Lessard,Crystal Smerdel,Kristy McElwain,Sydney Nichols,Greg Coughlan,Candy Adauto,Shonteanna Gipson,Erica Henderson,Ashley Silafau-Sanitoa,Charles Williams,Dylan Vanderpool,Brenda Burns,Rodney Pena,Allison Dale,Joyce Johnson,Troy&apos;ce Lee,Erica Terrell,Christina Brown,Mary Borden,Sara Winter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.Activities$Status</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Activities$RecordType</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Activities$Owner</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Activities$Subject</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tasks for All Service</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Cases_with_Tasks__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Case$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

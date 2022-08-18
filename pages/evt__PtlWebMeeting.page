@@ -1,0 +1,592 @@
+<apex:page docType="html-5.0" id="ptlWebMeetingPage" controller="evt.SiteWebMeetingController" sidebar="false" cache="false">
+<head><title>{!event.Name}</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+<apex:outputPanel layout="none" rendered="{!event.evt__Show_Social_Links__c}">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+// Facebook social link script
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script> 
+
+</apex:outputPanel>
+
+<apex:outputPanel layout="none" rendered="{!showCaptcha = true}">
+<script src="//www.google.com/recaptcha/api/js/recaptcha_ajax.js" type="text/javascript" />
+<script>
+function showRecaptcha(element) {
+      Recaptcha.create("{!recaptcha.publicKey}", element, {
+            theme: '{!IF(ISNULL(event.evt__Captcha_Theme__c),"clean",event.evt__Captcha_Theme__c)}',
+            tabindex: 0,
+            lang: '{!CASE(lang,"fr","fr","de","de","nl","nl","tr","tr","ru","ru","es","es","pt","pt","en")}',
+            callback: Recaptcha.focus_response_field
+      });
+}
+</script>  
+</apex:outputPanel>
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page" id="evt_ptl_webmeeting_page">
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+
+<apex:form id="evt_reg_form"> 
+<apex:pageMessage rendered="{!soldOut}" severity="Info" strength="0" title="{!$Label.evt__Text_SoldOut}"/>
+<apex:pageMessage rendered="{!registrationClosed}" severity="Info" strength="0" title="{!$Label.evt__Text_RegistrationClosed}"/>
+<apex:pageMessages id="messages"/>
+<apex:outputPanel styleClass="evt_wait_list_link" rendered="{!AND(soldOut, event.evt__Wait_List__c)}"> 
+<apex:outputLink value="{!$Page.evt__PtlWaitList}?eid={!event.id}">Add your name to our wait list.</apex:outputLink>
+</apex:outputPanel>
+
+<div id="evt_webmeeting_title" class="evt_h1_outer_box">
+<div class="evt_box_header">
+    <h1>{!event.Name}</h1>
+</div>
+<div class="evt_box_body">
+
+    <div class="evt_event_date_time">
+    <apex:outputPanel layout="inline" rendered="{!multiday}">
+        <apex:outputText value="{!startDate}"/>&nbsp;<apex:outputText value="{!startTime}"/>&nbsp;-&nbsp;<apex:outputText value="{!endDate}"/>&nbsp;<apex:outputText value="{!endTime}"/>
+    </apex:outputPanel>
+    <apex:outputPanel layout="inline" rendered="{!NOT(multiday)}">
+        <apex:outputText value="{!startDate}"/>&nbsp;<apex:outputText value="{!startTime}"/>&nbsp;-&nbsp;<apex:outputText value="{!endTime}"/>
+    </apex:outputPanel>
+    </div>
+
+    <apex:outputPanel rendered="{!event.evt__Show_Available_Seats__c == true}" styleclass="evt_avail_seats">
+    {!$Label.Label_AvailableTickets}:&nbsp; <apex:outputText value="{!availSeats}" />
+    </apex:outputPanel>
+    
+
+</div>
+
+<div id="evt_webmeeting_details_box" >
+ <div class="evt_box_body">
+<apex:outputText value="{!event.evt__Landing_Page_HTML__c}" escape="false"/>
+</div>
+</div>
+ 
+</div>
+
+    <apex:outputPanel id="registrantInformation" styleClass="evt_registrant_info_panel">
+    
+       <script language="javascript">
+       
+       function isValidEmailAddress_1(email) {
+            AtPos = email.indexOf("@")
+            StopPos = email.lastIndexOf(".")
+            var result = true;
+
+            if (email == "") {
+                result = false;
+            }
+
+            if (AtPos == -1 || StopPos == -1) {
+                result = false;
+            }
+
+            if (StopPos < AtPos) {
+                result = false;
+            }
+
+            if (StopPos - AtPos == 1) {
+                result = false;
+            }
+
+            return result;
+        }
+
+          function validateForm() {
+              // check required fields
+              var fname = document.getElementById("{!$Component.evt_reg_form.mailingfirstname}");
+              var lname = document.getElementById("{!$Component.evt_reg_form.mailinglastname}");
+              if (fname !== null && lname !== null) {
+                  if (fname.value == "" || lname.value == "") {
+                      alert("Please enter your name.");
+                      return false;
+                  }
+              }
+          
+              var emailaddress = document.getElementById("{!$Component.evt_reg_form.emailaddress}");
+              if (emailaddress !== null) {
+                  if (emailaddress.value == "") {
+                      alert("Please provide your email address.");
+                      return false;
+                  }
+                  if (!isValidEmailAddress_1(emailaddress.value)) {
+                      alert("Please enter a valid email address.");
+                      return false;              
+                  }
+              }
+
+            <apex:outputPanel layout="none" rendered="{!event.evt__Company_Field__c == 'Required'}" >
+              var company = document.getElementById("{!$Component.evt_reg_form.mailingcompany}");
+              if (company !== null) {
+                  if (company.value == "") {
+                      alert("Please provide your company name.");
+                      return false;
+                  }
+              }
+              </apex:outputPanel>    
+                        
+              <apex:outputPanel layout="none" rendered="{!event.evt__Address_Fields__c == 'Required'}" >
+              var address = document.getElementById("{!$Component.evt_reg_form.mailingstreet}");
+              if (address !== null) {
+                  if (address.value == "") {
+                      alert("Please provide your street address.");
+                      return false;
+                  }
+              }
+          
+              var city = document.getElementById("{!$Component.evt_reg_form.mailingcity}");
+              if (city !== null) {
+                  if (city.value == "") {
+                      alert("Please provide your city.");
+                      return false;
+                  }
+              }
+          
+              var state = document.getElementById("{!$Component.evt_reg_form.mailingstate}");
+              if (state !== null) {
+                  if (state.value == "") {
+                      alert("Please provide your state/province.");
+                      return false;
+                  }
+              }
+          
+              var zip = document.getElementById("{!$Component.evt_reg_form.mailingpostalcode}");
+              if (zip !== null) {
+                  if (zip.value == "") {
+                      alert("Please provide your postal code.");
+                      return false;
+                  }
+              }
+          
+              //var country = document.getElementById("{!$Component.evt_reg_form.mailingcountry}");
+              //if (country.value == "") {
+              //    alert("Please provide your 2 character country code.");
+              //    return false;
+              //}
+              </apex:outputPanel>
+          
+                var domId = "";
+                var cfld = "";
+                  <apex:repeat value="{!customFields}" var="cf">
+    
+                if ("{!cf.mapping.evt__Type__c}" == "Text") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customText";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && cfld.value == "" && "{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1") {
+                        alert("Please enter a value for the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                } 
+                
+                if ("{!cf.mapping.evt__Type__c}" == "Number") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customNumber";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && (("{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1" &&  cfld.value == "" ) ||
+                        (cfld.value !== "" && isNaN(cfld.value)))
+                        ) {
+                        alert("Please enter a numeric value for the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                } 
+    
+                if ("{!cf.mapping.evt__Type__c}" == "Email") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customEmail";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && (("{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1" && cfld.value == "" ) ||
+                        (cfld.value !== "" && !isValidEmailAddress_1(cfld.value)))
+                        ) {
+                        alert("Please enter an email address the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                } 
+
+                if ("{!cf.mapping.evt__Type__c}" == "Date") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customDate";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && (("{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1" && cfld.value == "" ) )
+                        ) {
+                        alert("Please enter a date value for the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                } 
+
+                if ("{!cf.mapping.evt__Type__c}" == "Phone") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customPhone";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && (("{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1" && cfld.value == "" ) )
+                        ) {
+                        alert("Please enter a phone number for the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                }                 
+                            
+                if ("{!cf.mapping.evt__Type__c}" == "Checkbox") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customCheckbox";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && "{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1" && cfld.checked == false
+                        ) {
+                        alert("Please enter a value for the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                } 
+    
+                if ("{!cf.mapping.evt__Type__c}" == "Picklist") {
+                    domId = "{!$Component.evt_reg_form.customFieldTable}:{!cf.index}:customPicklist";
+                    cfld = document.getElementById(domId);
+                    if (cfld !== null && (("{!If(cf.mapping.evt__Required__c == true,'1','0')}" == "1" && 
+                        cfld.selectedIndex < 0) || 
+                        (cfld.selectedIndex >=0 && cfld.options[cfld.selectedIndex].value == ''))
+                        ) {
+                        alert("Please select a value for the field: {!cf.mapping.name} ");
+                        return false;
+                    }
+                } 
+                  </apex:repeat>          
+
+              var invCode = document.getElementById("{!$Component.evt_reg_form.invitationCode}");
+              if (invCode !== null && invCode.value == "") {
+                  alert("Please enter your invitation code.");
+                  return false;
+              }
+              
+              return true;
+          }
+          </script>
+          <div id="pc_contact_info">  
+                
+    <div id="evt_conf_reg_registrant_details_box" class="evt_h2_outer_box">
+        <div class="evt_box_header">
+             <h2>{!$Label.evt__ConfReg_RegistrantDetailsHeading}</h2>
+        </div>
+        <div class="evt_box_body">
+
+          <div class="pc_flex_form" id="stdFieldsGrid">
+
+            <apex:outputpanel layout="none" rendered="{!NOT(event.evt__Salutation_Field__c == 'Hidden')}">
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.pymt__Label_Salutation}"/>
+                
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                    <apex:image value="/s.gif" styleClass="{!IF(event.evt__Salutation_Field__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                </div>
+
+                <div class="pc_flex_form_field_item">
+                 <apex:selectList id="billingsalutation"  value="{!salutation}" multiselect="false" size="1" disabled="{!NOT(ISBLANK(loggedInContact.Id))}">
+                   <apex:selectOptions value="{!salutationOptions}"/>
+                </apex:selectList>
+                </div>
+            </div>
+            </apex:outputPanel>
+            
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                  <apex:outputText value="{!$Label.evt__Label_FirstName}"/>
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+                <div class="pc_flex_form_field_item">
+                  <apex:inputText id="mailingfirstname" styleclass="pc_medium_input_field" value="{!firstname}" disabled="{!if(isLoggedIn,true,false)}" />
+                </div>
+            </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_LastName}"/>
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:inputText id="mailinglastname" styleclass="pc_medium_input_field" value="{!lastname}"  disabled="{!if(isLoggedIn,true,false)}" />
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Email}"/>
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:input type="email" id="emailaddress" styleclass="pc_medium_input_field" value="{!emailAddress}"  disabled="{!if(isLoggedIn,true,false)}" />
+                 </div>
+             </div>
+
+             <apex:outputPanel layout="none" rendered="{!NOT(event.evt__Company_Field__c == 'Hidden')}">
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Company}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image value="/s.gif" styleClass="{!IF(event.evt__Company_Field__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:inputText id="mailingcompany"  styleclass="pc_medium_input_field" value="{!companyName}" />                 
+                 </div>
+             </div>
+             </apex:outputPanel>
+
+             <apex:outputPanel layout="none" rendered="{!NOT(event.evt__Address_Fields__c == 'Hidden')}" >          
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_StreetAddress}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:inputText id="mailingstreet" styleclass="pc_long_input_field" value="{!mailingstreet}"  />
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                  <apex:outputText value="{!$Label.evt__Label_City}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                  <apex:inputText id="mailingcity" styleclass="pc_medium_input_field" value="{!mailingcity}"  />
+                 </div>
+             </div>
+             
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_Country}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                     <apex:selectList id="mailingcountry" size="1" multiselect="false"  
+                     value="{!mailingcountry}" >
+                     <apex:selectOptions value="{!countryPicklistOptions}"/>
+                     </apex:selectList>   
+                 </div>
+             </div>
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_StateProvince}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}" />
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:inputText id="mailingstate" styleclass="pc_short_input_field" value="{!mailingstate}"  />
+                 </div>
+             </div>
+
+
+             <div class="pc_flex_form_line_container">
+                 <div class="pc_flex_form_label_item">
+                    <apex:outputText value="{!$Label.evt__Label_PostalCode}" />
+                 </div>
+                 <div class="pc_flex_form_required_flag_item">
+                    <apex:image url="/s.gif" styleClass="{!IF(event.evt__Address_Fields__c == 'Required','requiredFieldMarker','optionalFieldMarker')}"/>
+                 </div>
+                 <div class="pc_flex_form_field_item">
+                    <apex:inputText id="mailingpostalcode" styleclass="pc_medium_input_field" value="{!mailingpostalcode}" />
+                 </div>
+             </div>
+             </apex:outputPanel>
+
+          </div><!-- end of flex form -->
+
+          <div class="pc_flex_form" id="evt_custom_field_flex_form">
+                <apex:repeat value="{!customFields}" var="customField">
+                  <apex:outputPanel layout="none" rendered="{!AND(NOT(customField.mapping.evt__Hidden__c == true), true)}">
+                  <div class="pc_flex_form_line_container">
+                      <div class="pc_flex_form_label_item">
+                              <apex:outputField value="{!customField.mapping.Name}" rendered="{!(customField.mapping.evt__Type__c <> 'Checkbox' && customField.mapping.evt__Type__c <> 'Blank Space')}"/>
+                      </div>
+                      <div class="pc_flex_form_required_flag_item">
+                          <apex:image value="/s.gif" styleClass="{!IF(customField.mapping.evt__Required__c,'requiredFieldMarker','')}"/>
+                      </div>
+                      <div class="pc_flex_form_field_item">
+                            <apex:input type="text" id="customText" value="{!customField.stringVal}" rendered="{!customField.mapping.evt__Type__c == 'Text'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                            <apex:input type="email" id="customEmail" value="{!customField.emailVal}" rendered="{!customField.mapping.evt__Type__c == 'Email'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                            <apex:input type="date" id="customDate" value="{!customField.dateVal}" rendered="{!customField.mapping.evt__Type__c == 'Date'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                            <apex:input type="tel" id="customPhone" value="{!customField.phoneVal}" rendered="{!customField.mapping.evt__Type__c == 'Phone'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                            <apex:input type="number" html-step="any" id="customNumber" value="{!customField.numVal}" rendered="{!customField.mapping.evt__Type__c == 'Number'}"  title="{!customField.mapping.evt__Long_Label__c}"/>
+                            <apex:inputCheckbox id="customCheckbox" value="{!customField.booleanVal}" rendered="{!customField.mapping.evt__Type__c == 'Checkbox'}"/>&nbsp;<apex:outputText value="{!customField.mapping.evt__Long_Label__c}" rendered="{!customField.mapping.evt__Type__c == 'Checkbox'}"/>
+                            <apex:outputText rendered="{!customField.mapping.evt__Type__c == 'Blank Space'}">&nbsp;</apex:outputText>
+                            <apex:selectList id="customPicklist" rendered="{!customField.mapping.evt__Type__c == 'Picklist'}" multiselect="{!customField.multiselect}" size="{!customField.size}"
+                                        value="{!customField.stringVal}" title="{!customField.mapping.evt__Long_Label__c}">
+                                <apex:selectOptions value="{!customField.options}"/>
+                            </apex:selectList>
+                      </div>
+
+                  </div>
+                  </apex:outputPanel>
+                  </apex:repeat>
+
+          </div><!-- end of flex form -->
+
+
+            <apex:outputPanel layout="none" rendered="{!AND(event.evt__By_Invitation__c,NOT(isLoggedIn))}">
+            <div class="pc_flex_form" id="evt_invitation_code_flex_form">
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                  <apex:outputLabel value="{!$Label.evt__Label_InvitationCode}" styleclass="evt_invitation_code_label" rendered="{!event.evt__By_Invitation__c}"/>
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                </div>
+                <div class="pc_flex_form_field_item">
+                  <apex:inputText id="invitationCode" value="{!invitationCode}" styleClass="evt_invitation_code_field" rendered="{!event.evt__By_Invitation__c}"/>
+                </div>
+            </div>
+
+            </div><!-- end of flex form --> 
+            </apex:outputPanel>
+
+             
+             
+            </div>
+
+
+    
+    </div>
+    </div>        
+    </apex:outputPanel> 
+    
+        <apex:outputPanel id="nocaptcha"  rendered="{!NOT(showCaptcha = true)}">
+                <script type="text/javascript">
+                function captureResponse(ele) {
+                }
+                </script>
+        </apex:outputPanel>
+            
+        <apex:outputPanel id="captcha" rendered="{!showCaptcha = true}">
+                <apex:inputhidden value="{!recaptcha.challenge}" id="challenge" />
+                <apex:inputhidden value="{!recaptcha.response}" id="response" />
+                <script type="text/javascript">
+                function captureResponse(ele) {
+                    document.getElementById('{!$Component.challenge}').value =
+                        document.getElementById('recaptcha_challenge_field').value;
+                     
+                    document.getElementById('{!$Component.response}').value =
+                        document.getElementById('recaptcha_response_field').value;
+                }
+                </script>
+
+            <div class="pc_flex_form" id="pc_captcha_flex_form">
+
+            <div class="pc_flex_form_line_container">
+                <div class="pc_flex_form_label_item">
+                  <apex:outputText value=""/>
+                </div>
+                <div class="pc_flex_form_required_flag_item">
+                  <apex:image url="/s.gif"/>
+                </div>
+                <div class="pc_flex_form_field_item">
+                  <apex:outputPanel layout="inline">   
+                      <div id="dynamic_recaptcha_1"></div>
+                      <br />
+                      <!--  display the image using the reCAPTCHA AJAX API -->
+                  </apex:outputPanel>
+                </div>
+            </div>
+
+            </div><!-- end of flex form --> 
+
+            <script type="text/javascript">showRecaptcha('dynamic_recaptcha_1');</script>
+        </apex:outputPanel>     
+   <br/>    
+
+    <apex:outputPanel id="buttons">
+        <div class="pc_button_container"> 
+        <apex:commandButton id="regButton" 
+                        value="{!$Label.evt__ConfReg_SubmitRegistrationButton}" 
+                        onclick="captureResponse(this);return validateForm();" 
+                        action="{!submitRegistration}"
+                        status="formActionStatus" 
+                        disabled="{!OR(registrationClosed,disableRegButton)}" />
+         <apex:actionStatus id="formActionStatus">
+                 <apex:facet name="start">
+                     <apex:outputPanel >&nbsp;
+                         <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                             style="vertical-align:middle;" alt="" />
+                             &nbsp;Processing...
+                     </apex:outputPanel>
+                 </apex:facet>
+                 <apex:facet name="stop">
+                     <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" /> 
+                 </apex:facet> 
+         </apex:actionStatus>  
+        </div>
+    </apex:outputPanel>
+
+
+<apex:outputPanel rendered="{!event.evt__Publish_Sponsors__c}">
+<div id="evt_webmeeting_sponsors_box" class="evt_page_box">
+<div class="evt_box_header">
+    <h2>{!$Label.evt__QuickEvent_SponsorsHeading}</h2>
+</div>
+    <div class="evt_box_body">
+    <div id="evt_event_sponsor_flexbox">
+    <apex:repeat value="{!sponsors}" var="sponsor"> 
+        <div class="evt_sponsor_logo_box">
+            <apex:outputPanel rendered="{!AND(NOT(ISBLANK(sponsor.evt__Image_Id__c)),ISBLANK(sponsor.evt__Image_URL__c))}" >
+              <apex:outputLink value="{!sponsor.evt__Website__c}" target="_blank" disabled="{!ISNULL(sponsor.evt__Website__c)}">
+                 <img class="evt_sponsor_logo"  src="{!URLFOR($Action.Attachment.Download,sponsor.evt__Image_Id__c)}" />
+              </apex:outputLink>
+            </apex:outputPanel>
+ 
+            <apex:outputPanel rendered="{!NOT(ISBLANK(sponsor.evt__Image_URL__c))}" >
+              <apex:outputLink value="{!sponsor.evt__Website__c}" target="_blank" disabled="{!ISNULL(sponsor.evt__Website__c)}">
+                <img class="evt_sponsor_logo"  src="{!sponsor.evt__Image_URL__c}" />
+              </apex:outputLink>
+            </apex:outputPanel>
+        </div>
+    </apex:repeat>
+    </div>
+    </div>
+    <div class="evt_box_bottom"/>
+    
+</div>
+</apex:outputPanel>
+<div class="evt_box_bottom"/>
+
+
+</apex:form>
+
+<apex:outputPanel layout="none" rendered="{!event.evt__Show_Social_Links__c}">
+<div class="evt_social_links" >
+<div class="linkedin-share"  >
+<script src=" {!IF(BEGINS(LOWER($Site.CurrentSiteUrl),'https'),'https','http')}://platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/Share" data-counter="right"></script>
+</div>
+<div class="twitter-share" >
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+<div class="facebook-share" >
+<div class="fb-like"  data-send="true" data-layout="button_count" data-width="250" data-show-faces="true" data-action="recommend"></div>
+</div>
+</div>
+</apex:outputPanel> 
+
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->
+
+</apex:page>

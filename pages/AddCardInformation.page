@@ -1,0 +1,12 @@
+<apex:page standardController="Opportunity" extensions="ctrlAddCardInformation" >
+
+    <apex:form >
+    <apex:outputlabel value="Card Name Type : " ></apex:outputlabel>
+        <apex:selectList value="{!Selectedid}" multiselect="false" size="1">
+            <apex:selectOptions value="{!option}" ></apex:selectOptions>
+        </apex:selectList>
+
+       <apex:commandButton value="Update" action="{!informationcard}" onComplete="parent.location.href = '/{!opperunityid}'" />
+       
+    </apex:form>
+</apex:page>

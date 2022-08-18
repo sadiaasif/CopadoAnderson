@@ -1,0 +1,64 @@
+<apex:page id="ptlConfirmationPage" controller="evt.ConfirmationController"  sidebar="false" cache="false" title="Confirmation Page">
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" />
+
+  <div class="pc_page_content"  id="evt_ptlconfirmation_page">
+    <div class="pc_page_content_inner">
+    <apex:form >
+    <apex:pageMessage summary="Registration not found." severity="ERROR" strength="2" rendered="{!NOT(recordFound)}"/>
+    <apex:outputPanel layout="none" rendered="{!recordFound}">
+    <apex:outputPanel rendered="{!ISBLANK(htmlContent)}">
+        <h1>{!$Label.evt__Confirmation_Heading}</h1>
+        <p>{!$Label.evt__Confirmation_Message}</p>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(ISBLANK(htmlContent))}">
+        <apex:outputText value="{!htmlContent}" escape="false"/>
+    </apex:outputPanel>
+    <apex:outputPanel id="receiptPanel" styleClass="evt_confirmation_receipt_panel" rendered="{!showPaymentDetails}">
+       <apex:panelGrid columns="2">
+       <apex:outputText value="{!$Label.evt__Label_Event}:"/>
+       <apex:outputText value="{!event.Name}"/>
+
+        <apex:outputText value="{!$Label.pymt__Label_TotalAmount}:" rendered="{!NOT(AND(event.evt__Free_Event__c,payment.pymt__Amount__c == 0))}"/>
+        <apex:outputText value="{!currencyFormatExpression}" rendered="{!NOT(AND(event.evt__Free_Event__c,payment.pymt__Amount__c == 0))}"><apex:param value="{!payment.pymt__Amount__c}"/></apex:outputText>
+
+       <apex:outputPanel layout="none">
+       <apex:outputText value="{!$Label.evt__Label_BillingContact}:" rendered="{!payment.pymt__Status__c = 'Scheduled'}"/>
+       <apex:outputText value="{!$Label.evt__Label_Name}:" rendered="{!NOT(payment.pymt__Status__c = 'Scheduled')}"/>
+       </apex:outputPanel>
+       <apex:outputText value="{!payment.pymt__Contact__r.Firstname} {!payment.pymt__Contact__r.Lastname}"/>
+
+       <apex:outputText value="{!$Label.evt__Label_PaymentDue}:" rendered="{!payment.pymt__Status__c = 'Scheduled'}"/>
+       <apex:outputText value="{!dueDate}" rendered="{!payment.pymt__Status__c = 'Scheduled'}"/>
+
+       <apex:outputText value="{!$Label.evt__Label_Status}:" rendered="{!NOT(payment.pymt__Status__c = 'Scheduled')}"/>
+       <apex:outputText value="{!payment.pymt__Status__c}" rendered="{!NOT(payment.pymt__Status__c = 'Scheduled')}"/>
+
+        </apex:panelGrid> <br/> <br/>
+    </apex:outputPanel>
+    <apex:repeat value="{!attendees}" var="attendeeRec" rendered="{!event.evt__Web_Meeting_Service__c == 'GoToWebinar'}">
+        <div class="joinURLBox" >
+        <apex:outputText value="{!attendeeRec.evt__Join_URL__c}"/>
+        </div>
+        <div class="evt_event_pass_separator"/>
+   </apex:repeat>
+
+    <apex:outputPanel rendered="{!event.evt__Present_Tickets_Online__c == true}">
+    <div class="pc_button_container">
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+        <!-- apex:commandButton value="Download Event Pass{!IF(numberOfAttendees >1,'es','')}" oncomplete="javascript:top.location='{!URLFOR($Page.EventPassPDF)}?id={!primaryAttendee.id}&all=true';"/-->
+        <apex:commandButton value="Download Event Pass{!IF(numberOfAttendees >1,'es','')}" oncomplete="javascript:window.location.href = '{!URLFOR($Page.evt__EventPassPDF)}?id={!primaryAttendee.id}&all=true';"/>
+      </apex:outputPanel>
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+        <!-- apex:commandButton value="Download Event Pass{!IF(numberOfAttendees >1,'es','')}" oncomplete="javascript:top.location='{!URLFOR($Page.EventPassPDF)}?id={!primaryAttendee.id}&all=true';"/-->
+        <apex:commandLink styleClass="css-button" value="Download Event Pass{!IF(numberOfAttendees >1,'es','')}" oncomplete="javascript:window.location.href = '{!URLFOR($Page.evt__EventPassPDF)}?id={!primaryAttendee.id}&all=true';"/>
+      </apex:outputPanel>
+    </div>
+    </apex:outputPanel>
+
+   </apex:outputPanel>
+   </apex:form>
+
+    </div>
+    </div>
+</apex:page>

@@ -1,0 +1,25 @@
+<aura:component controller="EntityRecordTypeSelectionCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="recordId" type="string"/>
+
+     <aura:handler name="init" action="{!c.fetchListOfRecordTypes}" value="{!this}" access="global" />
+    <aura:attribute name="lstOfRecordType" type="String[]" />
+    <aura:attribute name="PrimaryClient" type="String" />
+    <aura:attribute name="isOpen" type="boolean" default="true" />
+     <br/>
+     <br/>
+  <ui:outputText value="Please select the Record Type:" class="boldtext"/>
+                     <br/>
+    <br/>
+   
+    <ui:inputSelect aura:id="selectid">
+                                <aura:iteration items="{!v.lstOfRecordType}" var="Entity">                            
+                                    <ui:inputSelectOption text="{!Entity}" label="{!Entity}"  />
+                                </aura:iteration>
+                            </ui:inputSelect>
+    <br/>
+    <br/>
+    
+   
+                    <lightning:button class="slds-button slds-button--brand" onclick="{!c.createRecord}">Next</lightning:button>
+  
+</aura:component>

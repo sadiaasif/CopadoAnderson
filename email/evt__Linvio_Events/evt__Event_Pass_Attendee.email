@@ -1,0 +1,28 @@
+<messaging:emailTemplate subject="Your event pass" recipientType="Contact" relatedToType="evt__Attendee__c">
+<messaging:htmlEmailBody >
+<style>
+.evt_pass_grid {
+    background:white;
+    width:900px;
+    
+}
+.evt_pass_grid {
+    border-collapse:collapse;
+
+}
+</style>
+Thank you for registering for our event.  Please print this pass and bring it with you to the event:
+<br/>
+<br/>
+<div id="passBox" style="width:700px;border:4px solid #e0e0e0;">
+<c:EventPass attendeeId="{!RelatedTo.Id}" passFormat="basic" />
+</div>
+<apex:repeat value="{!relatedTo.attendees__r}" var="att">
+<div style="page-break-after:always;">&nbsp;</div>
+<div style="width:700px;border:4px solid #e0e0e0;">
+<c:EventPass attendeeId="{!att.id}" passFormat="basic"/>
+</div>
+</apex:repeat>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

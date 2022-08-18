@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Classes Total --></label>
+        <name>enxootr__Classes_Total_Archive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Classes Total Rollup --></label>
+        <name>enxootr__Classes_Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checked when we finish to calculate the coverage based on &quot;Is Latest&quot; check boxes on Class Coverage. Those check boxes are checked asynchronously. --></help>
+        <label><!-- Coverage Calculated --></label>
+        <name>enxootr__Coverage_Calculated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Coverage --></label>
+        <name>enxootr__Coverage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Count --></label>
+        <name>enxootr__Error_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Latest --></label>
+        <name>enxootr__Is_Latest__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Checked --></label>
+        <name>enxootr__Last_Checked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lines Covered --></label>
+        <name>enxootr__Lines_Covered_Archive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lines Covered Rollup --></label>
+        <name>enxootr__Lines_Covered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lines Total --></label>
+        <name>enxootr__Lines_Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- Store the number of uncovered lines copied from roll-up field, used for storing the data even if child objects get removed --></help>
+        <label><!-- Lines Uncovered --></label>
+        <name>enxootr__Lines_Uncovered_Archive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lines Uncovered Rollup --></label>
+        <name>enxootr__Lines_Uncovered__c</name>
+    </fields>
+    <fields>
+        <label><!-- Organization --></label>
+        <name>enxootr__Organization__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Partial Test Technical Info --></label>
+        <name>enxootr__Partial_Test_Technical_Info__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Run --></label>
+        <name>enxootr__Previous_Run__c</name>
+        <relationshipLabel><!-- Next Run --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Retrieve Job Id --></label>
+        <name>enxootr__Retrieve_Job_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run Duration [mins] --></label>
+        <name>enxootr__Run_Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Contains error message from test run if there is any --></help>
+        <label><!-- Run Error Message --></label>
+        <name>enxootr__Run_Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run Finished --></label>
+        <name>enxootr__Run_Finished__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run Id --></label>
+        <name>enxootr__Run_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run Started --></label>
+        <name>enxootr__Run_Started__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>enxootr__Status__c</name>
+        <picklistValues>
+            <masterLabel>Aborted</masterLabel>
+            <translation><!-- Aborted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Archived</masterLabel>
+            <translation><!-- Archived --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finished</masterLabel>
+            <translation><!-- Finished --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress - Detailed Coverage</masterLabel>
+            <translation><!-- In Progress - Detailed Coverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Started</masterLabel>
+            <translation><!-- Started --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Store the number of failed tests copied from roll-up field, used for storing the data even if child objects get removed --></help>
+        <label><!-- Tests Failed --></label>
+        <name>enxootr__Tests_Failed_Archive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tests Failed Rollup --></label>
+        <name>enxootr__Tests_Failed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tests Left --></label>
+        <name>enxootr__Tests_Left__c</name>
+    </fields>
+    <fields>
+        <help><!-- Store the number of tests succeeded copied from roll-up field, used for storing the data even if child objects get removed --></help>
+        <label><!-- Tests Succeded --></label>
+        <name>enxootr__Tests_Succeded_Archive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tests Succeded Rollup --></label>
+        <name>enxootr__Tests_Succeded__c</name>
+    </fields>
+    <fields>
+        <label><!-- OLD_Total Tests Run --></label>
+        <name>enxootr__Total_Tests_Run__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Tests Run --></label>
+        <name>enxootr__Total_tests_run_formula__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Running all test classes on organization --></description>
+        <label><!-- Full Run --></label>
+        <name>enxootr__Full_Run</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Running only specified tests on organization --></description>
+        <label><!-- Partial Run --></label>
+        <name>enxootr__Partial_Run</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Partial runs cannot be run on Organizations which do not store detailed line coverage. Please select the checkbox and run full Test Run before executing Partial Run. [TR_VR01] --></errorMessage>
+        <name>enxootr__TR_VR01_PartialTestsNeed</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Abort_Tests --></label>
+        <name>enxootr__Abort_Tests</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Retrieve_test_results --></label>
+        <name>enxootr__Retrieve_test_results</name>
+    </webLinks>
+</CustomObjectTranslation>

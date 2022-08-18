@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_97443934</developerName>
+        <masterLabel>Client Values</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>Campaign.CampaignMembers*CampaignMember$Total_Value_of_All_Sales__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>1,495</to>
+            </sourceValues>
+            <value>Non Client</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>1,495</from>
+                <to>12,000</to>
+            </sourceValues>
+            <value>Client $1500-$12k</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>12,000</from>
+            </sourceValues>
+            <value>Client &gt;$12k</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Campaign.CampaignMembers$MemberId</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Campaign.CampaignMembers*CampaignMember$Total_Value_of_All_Sales__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Campaign$Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Tax and Asset Protection 01.30.2021</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Campaign$IsActive</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_97443934</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Campaign.CampaignMembers*CampaignMember$Main_Lead_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Campaign.CampaignMembers*CampaignMember$Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax and AP 01.30.21 by Attendee</name>
+    <params>
+        <name>scopeid</name>
+        <value></value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Campaigns_with_Campaign_Members__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Campaign$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

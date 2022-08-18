@@ -1,0 +1,113 @@
+<apex:page standardController="zkusps__EndiciaPreference__c" extensions="zkusps.EndiciaGetStatusCtrl" showHeader="false" sidebar="false" action="{! init }" >
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+
+    <apex:sectionHeader title="Endicia Account Status"/>
+
+    <apex:form >
+        <apex:pageBlock id="accountStatusPageBlock">
+
+            <!-- Messages -->
+            <apex:outputPanel id="accountStatusMessages">
+                <c:MessageListDisplay msgList="{! messageList }"/>
+            </apex:outputPanel>
+
+
+            <!-- Account Status Section -->
+            <apex:outputPanel id="accountStatusDetails">
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{! accountStatusDetailsRendered }">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Endicia Account Status Details "/>
+                            <apex:actionStatus id="acctStatusDetailsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <!-- Account ID -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Account ID"/>
+                        <apex:outputText value="{! wsrGetAccountStatus.accountInformation.accountId }"/>
+                    </apex:pageBlockSectionItem>
+
+                    <!-- Postage Balance -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Postage Balance (USD)"/>
+                        <apex:outputText value="{! wsrGetAccountStatus.accountInformation.postageBalanceFormatted }"/>
+                    </apex:pageBlockSectionItem>
+
+                    <!-- Ascending Balance -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Ascending Balance (Total Amount of Postage Printed)"/>
+                        <apex:outputText value="{! wsrGetAccountStatus.accountInformation.ascendingBalanceFormatted }"/>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="accountFeatureDetails">                               
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{! IsFeatureRendered }">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Account Features "/>
+                            <apex:actionStatus id="buyPostageStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <!-- Account Features -->
+                    <apex:pageBlockTable value="{! WsrGetAccountStatus.features }" var="f">
+                        <apex:column >
+                            <apex:facet name="header">Feature Name</apex:facet>
+                            <apex:outputText value="{! f.name }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Is Active</apex:facet>
+                            <apex:outputText value="{! IF(f.isActive, 'YES', 'NO') }" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Is Eligible</apex:facet>
+                            <apex:outputText value="{! IF(f.isEligible, 'YES', 'NO') }" />
+                        </apex:column>
+                    </apex:pageBlockTable>                  
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Buy Postage Section -->
+            <apex:pageBlockSection collapsible="false" columns="1">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Buy Postage "/>
+                        <apex:actionStatus id="buyPostageStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Buy Postage Amount -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Buy Amount (USD)"/>
+                    <apex:inputField value="{! preference.LastBoughtPostageAmount__c }"/>
+                </apex:pageBlockSectionItem>
+                <!-- Buy Postage Button -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <!-- rerenders whole page -->
+                    <apex:commandButton action="{! buyPostage }" value="Buy Postage" disabled="{! accountStatusDisabled }" rerender="accountStatusPageBlock" status="buyPostageStatus"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection><p/>
+
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

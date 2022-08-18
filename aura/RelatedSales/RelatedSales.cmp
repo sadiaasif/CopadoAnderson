@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="ProcessingConsoleCtrl">
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="EntityID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="SaleRecords" type="opportunity[]" />
+    <aura:attribute name="Salecolumns" type="List"/> 
+    <aura:attribute name="RelatedToSale" type="boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   
+     <aura:attribute name="activeSections" type="List" default="['Sale']" />
+     <aura:if isTrue="{!v.RelatedToSale}">
+      <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+          
+            <lightning:accordionSection name="Sale" label="Sale" >
+
+     
+                 <lightning:datatable aura:id="SaleTable"  
+                                    
+                         data="{!v.SaleRecords }"     
+                         columns="{!v.Salecolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                     
+                         />
+     
+                   </lightning:accordionSection>
+    </lightning:accordion>
+         <aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have sale Associated!</center>
+             </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

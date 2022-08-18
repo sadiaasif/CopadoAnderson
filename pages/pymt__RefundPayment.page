@@ -1,0 +1,208 @@
+<apex:page docType="html-5.0" standardController="pymt__PaymentX__c" extensions="pymt.RefundPaymentController" sideBar="{!IF($CurrentPage.parameters.hideSideBar == 'true',false,true)}" showHeader="{!IF($CurrentPage.parameters.hideHeader == 'true',false,true)}" cache="false" tabStyle="pymt__PaymentX__c">
+<style>
+.modalProgressBox {
+    display: block;
+    position: absolute;
+    z-index: 999;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    padding-top:250px;
+    top: 0px;
+    left: 0px;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+    color: black;
+    font-size: 14pt;
+   }
+</style>
+<script>
+var enableValidation = false;
+function validateForm() {
+   if (enableValidation) {
+   // alert("Form submitted");
+   }
+
+    enableValidation = false;
+    return true;
+}
+
+</script>
+<apex:outputPanel id="pagePanel">
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Refund/Void Transaction" help="{!$Page.pymt__Help}"/>
+
+<apex:pageMessages id="pageMessages" />
+<apex:pageMessage rendered="{!simulationMode}" strength="1" severity="warning" summary="PaymentConnect is currently in gateway simulation mode. In this mode PaymentConnect will simulate responses from your payment processor and by-pass actual credit card charges, refunds, etc. To run live transactions, have your Salesforce administrator turn gateway simulation mode off."/>
+    <apex:form id="refundForm" >
+        <apex:actionStatus id="modalActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel styleClass="modalProgressBox">&nbsp;
+           <br/><br/><br/>
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/spinner_med.gif')}"  style="vertical-align:middle;" alt="busy..." />
+              </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop"  >
+         </apex:facet>
+    </apex:actionStatus>
+
+       <apex:pageBlock id="refundPageBlock" mode="edit">
+        <apex:pageBlockButtons id="pageButtons">
+          <apex:commandButton id="returnBtn" value="Return"
+            action="{!cancelFromPage}" rendered="{!pageStatus == 'finished'}"/>
+           <apex:commandButton id="cancel" value="Cancel"
+               action="{!cancelFromPage}" rendered="{!NOT(pageStatus == 'finished')}" />
+            <apex:commandButton id="refundButton"
+                                value="Submit"
+                                action="{!doRefund}"
+                                status="modalActionStatus"
+                                rendered="{!NOT(pageStatus == 'finished')}"
+                                rerender="pagePanel"
+                                disabled="{!disableRefundBtn}" />
+
+               <apex:actionStatus id="formActionStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel >&nbsp;
+              <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                            style="vertical-align:middle;" alt="busy..." />
+              &nbsp;Updating Page</apex:outputPanel>
+                </apex:facet>
+                <apex:facet name="stop">
+                    <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                </apex:facet>
+            </apex:actionStatus>
+
+        </apex:pageBlockButtons>
+        <apex:outputPanel id="transactionDetailsPanel">
+            <apex:pageBlockSection id="transactionDetailsSection" showHeader="true" title="Transaction Details" collapsible="false">
+
+                <apex:pageblocksectionitem >
+                   <apex:outputLabel value="Payment Name"/>
+                    <apex:outputField value="{!payment.Name}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:outputField value="{!payment.pymt__Contact__c}"/>
+
+                <apex:outputField value="{!payment.pymt__Date__c}"/>
+                <apex:outputField value="{!payment.pymt__Status__c}"/>
+
+                <apex:outputField value="{!payment.pymt__Amount__c}"/>
+                <apex:outputField value="{!payment.pymt__Processor_Connection__c}"/>
+
+
+                <apex:pageblocksectionitem helpText="Select Cash/Check if you are refunding the amount via cash or check payment.  Use 'Direct Refund' to submit a refund through your processor connection.">
+                   <apex:outputLabel value="Refund/Void Action"/>
+                   <apex:selectList multiselect="false" size="1" value="{!selectedAction}">
+                      <apex:selectOptions value="{!actionOptions}"/>
+                      <apex:actionSupport event="onchange"  action="{!nullAction}" reRender="refundForm" status="formActionStatus" />
+                   </apex:selectList>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem >
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+
+
+                <apex:pageblocksectionitem rendered="{!OR(selectedAction == 'Cash Refund',selectedAction == 'Direct Refund')}">
+                   <apex:outputLabel value="Refund Amount"/>
+                   <apex:inputText value="{!refundAmount}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem rendered="{!OR(selectedAction == 'Cash Refund',selectedAction == 'Direct Refund')}">
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem >
+                   <apex:outputLabel value="Reason"/>
+                   <apex:inputTextArea value="{!reason}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem >
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="last4SI" rendered="{!AND(processor=='Authorize.Net',selectedAction == 'Direct Refund',payment.pymt__Payment_Type__c <> 'ECheck')}" helpText="Last 4 digits of the credit card number">
+                   <apex:outputLabel value="Last 4 Digits"/>
+                   <apex:inputText value="{!last4}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="last4SI2" rendered="{!AND(processor=='Authorize.Net',selectedAction == 'Direct Refund',payment.pymt__Payment_Type__c <> 'ECheck')}">
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="bankRoutingSI" rendered="{!AND(processor=='Authorize.Net',selectedAction == 'Direct Refund',payment.pymt__Payment_Type__c == 'ECheck')}" helpText="Bank routing number">
+                   <apex:outputLabel value="Bank Routing Number"/>
+                   <apex:inputText value="{!bankRoutingNumber}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="bankRoutingSI2" rendered="{!AND(processor=='Authorize.Net',selectedAction == 'Direct Refund',payment.pymt__Payment_Type__c == 'ECheck')}">
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="bankAcctSI" rendered="{!AND(processor=='Authorize.Net',selectedAction == 'Direct Refund',payment.pymt__Payment_Type__c == 'ECheck')}" helpText="Customer's bank account number">
+                   <apex:outputLabel value="Bank Account Number"/>
+                   <apex:inputText value="{!bankAccountNumber}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="bankAcctSI2" rendered="{!AND(processor=='Authorize.Net',selectedAction == 'Direct Refund',payment.pymt__Payment_Type__c == 'ECheck')}">
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="checkNumberSI" rendered="{!(selectedAction == 'Cash Refund')}">
+                   <apex:outputLabel value="Check Number"/>
+                   <apex:inputText value="{!checkNumber}"/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageblocksectionitem id="checkNumberSI2" rendered="{!(selectedAction == 'Cash Refund')}">
+                   <apex:outputLabel value=""/>
+                   <apex:outputText value=""/>
+                </apex:pageblocksectionitem>
+
+                <apex:pageBlockSectionItem rendered="{!AND(processor == 'eWay', selectedAction == 'Direct Refund')}">
+                    <apex:outputText value="Card Expiration"/>
+                    <apex:outputPanel layout="inline">
+                    <apex:selectList value="{!expMonth}"  size="1">
+                        <apex:selectOption itemLabel="01" itemValue="01"/>
+                        <apex:selectOption itemLabel="02" itemValue="02"/>
+                        <apex:selectOption itemLabel="03" itemValue="03"/>
+                        <apex:selectOption itemLabel="04" itemValue="04"/>
+                        <apex:selectOption itemLabel="05" itemValue="05"/>
+                        <apex:selectOption itemLabel="06" itemValue="06"/>
+                        <apex:selectOption itemLabel="07" itemValue="07"/>
+                        <apex:selectOption itemLabel="08" itemValue="08"/>
+                        <apex:selectOption itemLabel="09" itemValue="09"/>
+                        <apex:selectOption itemLabel="10" itemValue="10"/>
+                        <apex:selectOption itemLabel="11" itemValue="11"/>
+                        <apex:selectOption itemLabel="12" itemValue="12"/>
+                    </apex:selectList>&nbsp;
+                    <apex:selectList value="{!expYear}" size="1">
+                        <apex:selectOptions value="{!twoCharYearOptions}"/>
+
+                    </apex:selectList>
+                    </apex:outputPanel>
+
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!AND(processor == 'eWay', selectedAction == 'Direct Refund')}">
+                    <apex:outputText value=""/>
+                    <apex:outputText value=""/>
+                </apex:pageBlockSectionItem>
+
+
+
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            </apex:pageBlock>
+
+    </apex:form>
+   </apex:outputPanel>
+</apex:page>

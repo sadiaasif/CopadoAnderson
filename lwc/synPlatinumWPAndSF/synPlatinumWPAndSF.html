@@ -1,0 +1,212 @@
+<template>
+
+<lightning-accordion allow-multiple-sections-open  active-section-name={activeSections}>
+  <div if:true={isLoaded}>
+    <lightning-spinner
+        alternative-text="Loading..." variant="brand">
+    </lightning-spinner>
+  </div>
+  <lightning-accordion-section name="CreateNewPlatinumUser" label="Create New Platinum User">
+    <div>
+      <div if:true={accwrapperList.hasmorethanoneprimarycontact}>
+      
+      <b>The client has two primary contacts.Please check and update it.</b>
+      </div>
+
+    <div if:false={accwrapperList.hasmorethanoneprimarycontact}>
+    <div if:true={createuser}> 
+       </br>
+        <b>First Name: </b>
+        <lightning-formatted-text value={accwrapperList.accconFirstName} ></lightning-formatted-text>
+      <br>
+        <b>Last Name: </b>
+        <lightning-formatted-text value={accwrapperList.accconLastName} ></lightning-formatted-text>
+        <br>
+        <b>Email: </b>
+        <lightning-formatted-text value={accwrapperList.accconEmail} ></lightning-formatted-text>
+        <br></br> 
+        <div>
+          <lightning-button variant="brand" label="Create New User" title="createbutton" onclick={createUser}></lightning-button>
+        </div>
+      </div>
+    <div if:false={createuser}>
+                
+                    This contact already has a Platinum user account.
+              
+              </div>
+            </div>
+    
+</div>
+
+</lightning-accordion-section>
+<lightning-accordion-section name="UpdatePlatinumUser" label="Update Platinum Email">
+
+<div if:true={accwrapperList.hasmorethanoneprimarycontact}>
+<b>The client has two primary contacts.Please check and update it.</b>
+</div>
+
+<div if:false={accwrapperList.hasmorethanoneprimarycontact}>
+<div if:true={Updateuser}>
+<br></br>
+<b>First Name:</b>
+<lightning-input variant="label-hidden" value={accwrapperList.accconFirstName} onchange={handleFirstNameChange}></lightning-input>
+<b>Last Name:</b>
+<lightning-input variant="label-hidden" value={accwrapperList.accconLastName} onchange={handleLastNameChange}></lightning-input>
+<b>Platinum Email:</b>
+<lightning-input variant="label-hidden" type="text" value={accwrapperList.accPlatinumEmail} onchange={handleEmailChange} ></lightning-input>
+<br>
+<div>
+<lightning-button variant="brand" label="Update User" title="updatebutton" onclick={updateClick}></lightning-button>
+</div>
+</div>
+<div if:false={Updateuser}>
+
+    This contact has No Platinum user account.
+
+</div>
+</div>
+</lightning-accordion-section>
+<lightning-accordion-section name="ResetPasswordandEmailClient" label="Reset Password and Email Client">
+
+<div if:true={Updateuser}>
+<div if:true={generatenewpassword}>
+<b> Click below to create a new random password for the client.  
+<br></br>
+
+</b>
+<lightning-button variant="brand" label="Create new password" title="Reset" onclick={genrateandsetpassword}></lightning-button>
+</div>
+
+<br></br>
+<div if:true={SendEmailtoclient}>
+<div class="slds-grid slds-gutters">
+<b>Click here to email the newly created password to the client.</b>
+<br></br>
+<div class="slds-col slds-size_6-of-12">
+  <span>
+    <b>Email: </b>
+    <lightning-formatted-text value={accwrapperList.accPlatinumEmail}></lightning-formatted-text>
+    <br></br>
+    <b>Generated password: </b>
+    <lightning-formatted-text value={accwrapperList.accPlatinumGeneratedPass}></lightning-formatted-text>
+    <br></br>
+    <lightning-button variant="brand" label="Email new password to client" title="email" onclick={SendEmail}></lightning-button>
+  </span>
+  </div>
+</div>
+
+</div>
+ </div>
+<div if:false={Updateuser}>
+
+    This contact has No Platinum user account.
+
+</div>
+</lightning-accordion-section>
+<lightning-accordion-section name="platinumSFSync" label="Fix Declined Payment and Sync Issues">
+<div if:true={Updateuser}>
+<div if:true={NeedtoSync}>
+<b> Do you want to Sync Saleforce and platinum ?  </b>
+<lightning-button variant="brand" label="Yes" title="Sync" onclick={SyncUser}></lightning-button>
+</div>
+<div if:true={Checkforsync}>
+<br>
+<div if:true={accwrapperList.hasmorethanoneprimarycontact}>
+<b>The client has two primary contacts.Please check and update it.</b>
+</div>
+<div if:false={accwrapperList.hasmorethanoneprimarycontact}>
+<br></br>
+
+<div class="slds-grid slds-gutters">
+  <div class="slds-col slds-size_6-of-12">
+  <span>
+    <b>Salesforce Wordpress ID: </b>
+    <lightning-formatted-text value={accwrapperList.acccontactWPId}></lightning-formatted-text>
+    <br></br>
+      <b>Salesforce Account ID: </b>
+      <lightning-formatted-text value={recordId}></lightning-formatted-text>
+      <br></br>
+      <b>Salesforce Sale ID: </b>
+      <lightning-formatted-text value={accwrapperList.accsaleId}></lightning-formatted-text>
+      <br></br>
+      <b>Saleforce Contact Id: </b>
+      <lightning-formatted-text value={accwrapperList.acccontactId}></lightning-formatted-text>
+      <br></br>
+      
+      <b>Saleforce Platinum sale stage : </b>
+      <div style="display: inline-block" if:true={accwrapperList.accPlatinumsaleStage}> Closed won  </div>
+      <div style="display: inline-block" if:false={accwrapperList.accPlatinumsaleStage}>Declined</div>
+      <br></br>
+    </span>
+  </div>
+  <div class="slds-col slds-size_6-of-12">
+    <span>
+      <b>Platinum Account Id: </b>
+      <lightning-formatted-text value={WordpressplatinumaccwrapperList.WplatinumaccountId}></lightning-formatted-text>
+      <br></br>
+      <b>Platinum Sale Id: </b><lightning-formatted-text value={WordpressplatinumaccwrapperList.WplatinumaccsaleId}></lightning-formatted-text>
+      <br></br>
+      <b>Platinum Contact Id: </b>
+      <lightning-formatted-text value={WordpressplatinumaccwrapperList.WplatinumcontactId}></lightning-formatted-text>
+      <br></br>
+      <b>Platinum sale stage: </b>
+      <!-- <aura:if isTrue="{!v.WordpressplatinumaccwrapperList.WplatinumsaccPlatinumSaleStage}"> -->
+      <div style="display: inline-block" if:true={WordpressplatinumaccwrapperList.WplatinumsaccPlatinumSaleStage}>Closed won 
+      </div>
+      <div style="display: inline-block" if:false={WordpressplatinumaccwrapperList.WplatinumsaccPlatinumSaleStage}>Declined</div>
+      <br></br>
+      <b>Platinum Wordpress Role: </b>
+      <lightning-formatted-text value={WordpressplatinumaccwrapperList.WordPressRoles}></lightning-formatted-text>
+      
+    </span>
+  </div>
+</div>
+<br></br>
+<br></br>
+<div if:true={WordpressplatinumaccwrapperList.WplatinumsfMatch}>
+  <lightning-button variant="brand" label="Sync SF and platinum" title="Sync" onclick={SyncSFandwpUser}></lightning-button>
+</div>
+</div>
+</div>
+</div>
+<div if:false={Updateuser}>
+
+    This contact has No Platinum user account.
+
+</div>
+</lightning-accordion-section>
+<lightning-accordion-section name="DigitalProducts" label="Digital Products">
+
+<template if:true={Updateuser}>
+
+<template if:true={digitalproductswrapperList.hasmorethanoneprimarycontactDp}>
+<b>The client has two primary contacts.Please check and update it.</b>
+</template>
+<div if:false={digitalproductswrapperList.hasmorethanoneprimarycontactDp}>
+<div if:true={digitalproductswrapperList.oplhasNooppnoservice}>
+<b>The client has not purchased any digital products!</b>
+</div>
+<div if:false={digitalproductswrapperList.oplhasNooppnoservice}>
+<b> The client has purchased the following digital products:</b>
+<br>
+<lightning-formatted-text value={digitalproductswrapperList.ServicesPurchasedByClientswrapped}></lightning-formatted-text>
+<!--<br/><ui:outputText value="{!v.digitalproductswrapperList.oplhastaxtoolbox}"/><br/><ui:outputText value="{!v.digitalproductswrapperList.oplhasinfinitysubcription}"/>-->
+<br>
+<div if:true={digitalproductswrapperList.conhasserviceitems}>
+  <b>The digital products in platinum are up to date!</b>
+</div>
+<div if:false={digitalproductswrapperList.conhasserviceitems}>
+  <b> The digital products in platinum are not updated.Please click on this button to update  </b>
+  <lightning-button variant="brand" label="Update the digital products" title="Sync" onclick={Digitalproductsupdate}></lightning-button>
+</div>
+</div>
+</div>
+</template>
+<div if:false={Updateuser}>
+
+    This contact has No Platinum user account.
+
+</div>
+</lightning-accordion-section>
+</lightning-accordion>
+</template>

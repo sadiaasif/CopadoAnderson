@@ -1,0 +1,143 @@
+<apex:page docType="html-5.0" controller="pymt.PtlSubscribeController"   cache="false" action="{!initializePage}"  tabStyle="pymt__PaymentX__c" language="{!$CurrentPage.Parameters.lang}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+
+  <div id="{!HTMLENCODE($CurrentPage.parameters.context)}">
+  <div id="pc_lang_{!$CurrentPage.parameters.lang}">
+  <div class="pc_page" id="pc_ptlsubscribe_page">
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner">
+
+      <apex:form id="mainForm" styleClass="{!IF($CurrentPage.parameters.form_class == NULL,'pc_subscription_checkout_form',$CurrentPage.parameters.form_class)}" >
+      <script>
+      // HTML5 validation fallback code - for Safari, ios and android devices
+      function hasHtml5Validation () {
+        return typeof document.createElement('input').checkValidity === 'function';
+      }
+
+      if (hasHtml5Validation()) {
+        $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+          if (!this.checkValidity()) {
+            e.preventDefault();
+            $j(this).addClass('invalid');
+            $j('#status').html('invalid');
+          } else {
+            $j(this).removeClass('invalid');
+            $j('#status').html('submitted');
+          }
+        });
+      }
+      // end HTML5 validation fallback code
+      </script>
+
+        <apex:outputPanel id="cardEntryPanel" >
+          <apex:pageMessages />
+          <apex:outputPanel rendered="{!showPageContents}">
+              <h1>{!$Label.pymt__SiteSubscribe_CheckoutHeading}</h1>
+              <h2>{!$Label.pymt__SiteSubscribe_SubscriptionSummaryHeading}</h2>
+
+                <apex:panelGrid columns="2" columnClasses="labelColumn,term_column" id="subscription_terms">
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionFor}:" />
+                    <apex:outputText value="{!profileName}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_Description}:" rendered="{!NOT(ISNULL(profileDescription))}" />
+                    <apex:outputText value="{!profileDescription}" rendered="{!NOT(ISNULL(profileDescription))}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_StartDate}:" />
+                    <apex:outputText value="{!startDateString}"/>
+
+
+                    <apex:outputText value="{!$Label.pymt__Label_TrialAmount}:"  rendered="{!NOT(ISNULL(trialTerms))}"/>
+                    <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(trialTerms))}">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!trialAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!trialTerms}"/>
+
+                    </apex:outputPanel>
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionAmount}:"/>
+                    <apex:outputPanel layout="inline">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!recurringAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!subscriptionTerms}"/>
+                    </apex:outputPanel>
+
+                </apex:panelGrid>
+                <br/>
+
+
+              <apex:outputPanel id="buttons">
+              <div class="pc_button_container">
+                  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+                      <apex:commandButton id="createSubscription" value="Subscribe" status="formActionStatus"
+                            action="{!createSubscription}"  disabled="{!disableForm}" rerender="mainForm" />
+                      <apex:commandButton id="cancel" value="{!$Label.pymt__SiteSubscribeARB_CancelButton}" html-formnovalidate="true" immediate="true"
+                            action="{!cancelTransaction}" rendered="{!(cancelURL<>null && NOT(ISNULL(cancelURL)))}"/>
+                  </apex:outputPanel>
+                  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+                      <apex:commandLink styleClass="css-button" id="createSubscription2" value="Subscribe" status="formActionStatus"
+                          action="{!createSubscription}" onclick="if (!validateForm()) { return false; }" rendered="{!NOT(disableForm)}" rerender="mainForm" />
+                      <apex:commandLink styleClass="css-button-disabled" id="createSubscription2d" value="Subscribe" status="formActionStatus"
+                            rendered="{!disableForm}" rerender="mainForm" />
+                      <apex:commandLink styleClass="css-button" id="cancel2" value="{!$Label.pymt__SiteSubscribeARB_CancelButton}" html-formnovalidate="true"
+                            immediate="true"
+                            action="{!cancelTransaction}" rendered="{!(cancelURL<>null && NOT(ISNULL(cancelURL)))}"/>
+                      <script>
+                       function validateForm() {
+                         // for apex:commandLink which does not invoke HTML5 form validation automatically
+                         var form = document.getElementById('{!$Component.mainForm}');
+                         var submitBtn = document.getElementById('hiddenSubmit');
+                         if (form.checkValidity() == false) {
+                           submitBtn.click();  // force form to display validation messages.
+                           return false;
+                         }
+                         return true;
+                       }
+                       </script>
+                  </apex:outputPanel>
+
+                      <apex:actionStatus id="formActionStatus" onstart="disableSubmitButtons(true)" onstop="disableSubmitButtons(false)">
+                          <apex:facet name="start">
+                          <apex:outputPanel styleClass="pc_button_spinner_panel">&nbsp;
+                              <apex:image value="/s.gif"
+                                  styleClass="pc_button_container_spinner" alt="" />
+                                  &nbsp;Processing...
+                          </apex:outputPanel>
+                          </apex:facet>
+                          <apex:facet name="stop">
+                            <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                          </apex:facet>
+                      </apex:actionStatus>
+                      <script>
+                      function disableSubmitButtons(flag) {
+                         var submitBtn1 = document.getElementById('{!$Component.mainForm.createSubscription}');
+                         var submitBtn2 = document.getElementById('{!$Component.mainForm.createSubscription2}');
+                         if(submitBtn1 !== null) {
+                           submitBtn1.disabled = flag;
+                         }
+                         if(submitBtn2 !== null) {
+                           submitBtn2.disabled = flag;
+                         }
+                       }
+
+                      </script>
+
+              </div>
+
+              </apex:outputPanel>
+          </apex:outputPanel>
+        </apex:outputPanel>
+
+      </apex:form>
+
+
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page context div -->
+</apex:page>

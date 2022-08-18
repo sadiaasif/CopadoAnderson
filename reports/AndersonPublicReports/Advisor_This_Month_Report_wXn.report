@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_84858255</developerName>
+        <masterLabel>Advisors</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Sales_Rep__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Al Caiazza</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michael Hackler</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Corey Posgay</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Seth Perlman</sourceValue>
+            </sourceValues>
+            <value>Sr. Strategist</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Kelly Allison</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shaena Aguilar</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shane Broyard</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michelle Merritt</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kendall O&apos;Leary</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ricardo Gonzalez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Brian Bowman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chuck Hall</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Josh Terry</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Justin Cortes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mike Tracey</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Charles Hall</sourceValue>
+            </sourceValues>
+            <value>Sr. Advisor</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Joey Felix</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sara Winter</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Serena Cervantes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Terrence Redmond</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lucas Turman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alfonso Andino</sourceValue>
+            </sourceValues>
+            <value>Business Advisor</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <aggregate>Sum</aggregate>
+            <axisBinding>y</axisBinding>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Opportunity.Sales_Rep__c</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c.Transaction_date__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sale_Campaign__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ChargentSFA__Transaction__c.Filing_Fees_Affiliate__c</field>
+    </columns>
+    <description>Sent to Advisors Weekly</description>
+    <filter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Charge,Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Payment_Method__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Client Referral Credit,Credit to be used</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_MONTH</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.Sales_Rep_Title__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Sr Advisor,Sr Strategist,Senior Advisor,Business Advisor,Certified Senior Strategist,B. Advisor,Senior Strategist</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sales_Rep__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Broyard,Cortes,Fenn</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Gateway_ID__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>credit</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Opportunity.Credit,Opportunity.State_Renewal,Opportunity.Standard_Renewal,Opportunity.Pension_Renewal,Opportunity.Platinum_Subscription,Opportunity.Bookkeeping_Subscription</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Advisor - This Month Report</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

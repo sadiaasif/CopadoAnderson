@@ -1,0 +1,18 @@
+<apex:page showheader="false" standardStylesheets="false" controller="TSS_StickIt_MR1.stickItPushTopicManager">
+<head>
+    <apex:stylesheet value="{!URLFOR($Resource.TSS_StickIt_MR1__StickIt_Resources, 'bulma/bulma.0.6.2.css')}"/>
+</head>
+<div class="hero is-dark is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <p class="title">Welcome to the StickIt Automation Station!</p>
+            <p class="subtitle">Before getting started, we'll need to create a Push Topic record to activate the Streaming API. Use the button below to automagically create the necessary record and continue.</p>
+            <p class="has-text-centered">
+                <apex:form >
+                    <apex:commandButton value="Activate" action="{!insertPushTopic}" styleClass="button is-large is-dark is-inverted is-outlined" />
+                </apex:form>
+            </p>
+        </div>
+    </div>
+</div>
+</apex:page>

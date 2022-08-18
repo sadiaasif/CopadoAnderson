@@ -1,0 +1,47 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global"  controller="SaleDeletecomponentctrl" >
+        <aura:attribute name="recordId" type="Id"/>
+     <aura:attribute name="AttachmentNameList" type="Map" />
+      <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>
+     <aura:attribute name="ShowAttPicklist" type="Boolean" default="true"/>
+    <aura:attribute name="ShowFinishMessage" type="Boolean" default="False"/>
+     <aura:attribute name="Showsubmitbutton" type="Boolean" default="False"/>
+      <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+      <aura:renderIf isTrue="{!v.ShowSpinner}">
+    <div class="slds-spinner_container" >
+        <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+            <span class="slds-assistive-text">Loading, Please Wait...</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:renderIf>
+     <aura:renderIf isTrue="{!v.ShowAttPicklist}">
+	  <ui:outputText value="Please select the attachmenent that needs to be deleted"/>
+                     <br/>
+                       <lightning:select label="Name of the Attachment" aura:id="AttachmentNameListId" onchange="{!c.onSelectAttnameChange}">
+                                           <option value="None">--None--</option>
+        <aura:iteration items="{!v.AttachmentNameList}" var="AttName" indexVar="key">
+           <option text="{!AttName.value}" value="{!AttName.key}"  />
+        </aura:iteration>
+    </lightning:select>
+         <br/>
+         <br/>
+         <br/>
+       <aura:renderIf  isTrue="{!v.Showsubmitbutton}">
+     <lightning:button variant="brand" label="Submit" title="Submit Attname" onclick="{!c.SubmitAttname}" class="slds-m-left_x-small"></lightning:button>
+           </aura:renderIf>
+    </aura:renderIf>
+     <aura:renderIf isTrue="{!v.ShowFinishMessage}">
+           <ui:outputText value="Your requested attachment will be deleted within an hour..Thank you!"/>
+            <br/>
+             <br/>
+             <br/>
+          <lightning:button variant="brand" label="close" title="close componenent" onclick="{!c.closecmtName}" class="slds-m-left_x-small"></lightning:button>
+    </aura:renderIf>
+         <aura:renderIf isTrue="{!v.ShowErrorMessage}">
+             <br/>
+             <br/>
+             <br/>
+           <ui:outputText value="Sorry there was a technical issue..Please try again!!"/>
+    </aura:renderIf>
+</aura:component>

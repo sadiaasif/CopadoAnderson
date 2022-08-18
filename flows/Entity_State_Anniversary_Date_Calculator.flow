@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Adjust_Leap_Year_Day</name>
+        <label>Adjust Leap Year Day</label>
+        <locationX>338</locationX>
+        <locationY>381</locationY>
+        <assignmentItems>
+            <assignToReference>EntityOrgDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LeapYearDateAdjustment</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Store_Original_Org_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Future_Anniversary_Date</name>
+        <label>Future Anniversary Date</label>
+        <locationX>796</locationX>
+        <locationY>270</locationY>
+        <assignmentItems>
+            <assignToReference>FutureAnniversaryDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EachStatesFormulaToUse</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Next_Anniversary_Date</name>
+        <label>Next Anniversary Date</label>
+        <locationX>640</locationX>
+        <locationY>270</locationY>
+        <assignmentItems>
+            <assignToReference>NextAnniversaryDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EachStatesFormulaToUse</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EntityOrgDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EachStatesFormulaToUse</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Future_Anniversary_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_Original_Org_Date</name>
+        <label>Store Original Org Date</label>
+        <locationX>499</locationX>
+        <locationY>270</locationY>
+        <assignmentItems>
+            <assignToReference>OriginalEntityOrgDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EntityOrgDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Next_Anniversary_Date</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Leap_Year_Day</name>
+        <label>Leap Year Day?</label>
+        <locationX>169</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isLeapYearDay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Adjust_Leap_Year_Day</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isLeapYearDay</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_Original_Org_Date</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>Default_1yr_Anniv_ExactDay</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))</expression>
+    </formulas>
+    <formulas>
+        <name>Default_1yr_Anniv_MonthEnd</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!OrgDateMonthEnd}))</expression>
+    </formulas>
+    <formulas>
+        <name>Default_2yr_Anniv_ExactDay</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!EntityOrgDate}) + 2, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))</expression>
+    </formulas>
+    <formulas>
+        <name>Default_2yr_Anniv_MonthEnd</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!EntityOrgDate}) + 2, MONTH({!EntityOrgDate}), DAY({!OrgDateMonthEnd}))</expression>
+    </formulas>
+    <formulas>
+        <name>EachStatesFormulaToUse</name>
+        <dataType>Date</dataType>
+        <expression>CASE({!StateName},
+&quot;Alabama&quot;,{!State_Alabama},
+&quot;Alaska&quot;,{!State_Alaska},
+&quot;Arizona&quot;,{!State_Arizona},
+&quot;Arkansas&quot;,{!State_Arkansas},
+&quot;California&quot;,{!State_California},
+&quot;Colorado&quot;,{!State_Colorado},
+&quot;Connecticut&quot;,{!State_Connecticut},
+&quot;District of Columbia&quot;,{!State_DC},
+&quot;Delaware&quot;,{!State_Delaware},
+&quot;Florida&quot;,{!State_Florida},
+&quot;Georgia&quot;,{!State_Georgia},
+&quot;Hawaii&quot;,{!State_Hawaii},
+&quot;Idaho&quot;,{!State_Idaho},
+&quot;Illinois&quot;,{!State_Illinois},
+&quot;Indiana&quot;,{!State_Indiana},
+&quot;Iowa&quot;,{!State_Iowa},
+&quot;Kansas&quot;,{!State_Kansas},
+&quot;Kentucky&quot;,{!State_Kentucky},
+&quot;Louisiana&quot;,{!State_Louisiana},
+&quot;Maine&quot;,{!State_Maine},
+&quot;Maryland&quot;,{!State_Maryland},
+&quot;Massachusetts&quot;,{!State_Massachusetts},
+&quot;Michigan&quot;,{!State_Michigan},
+&quot;Minnesota&quot;,{!State_Minnesota},
+&quot;Mississippi&quot;,{!State_Mississippi},
+&quot;Missouri&quot;,{!State_Missouri},
+&quot;Montana&quot;,{!State_Montana},
+&quot;Nebraska&quot;,{!State_Nebraska},
+&quot;Nevada&quot;,{!State_Nevada},
+&quot;New Hampshire&quot;,{!State_NewHampshire},
+&quot;New Jersey&quot;,{!State_NewJersey},
+&quot;New Mexico&quot;,{!State_NewMexico},
+&quot;New York&quot;,{!State_NewYork},
+&quot;North Carolina&quot;,{!State_NorthCarolina},
+&quot;North Dakota&quot;,{!State_NorthDakota},
+&quot;Ohio&quot;,{!State_Ohio},
+&quot;Oklahoma&quot;,{!State_Oklahoma},
+&quot;Oregon&quot;,{!State_Oregon},
+&quot;Pennsylvania&quot;,{!State_Pennsylvania},
+&quot;Rhode Island&quot;,{!State_RhodeIsland},
+&quot;South Carolina&quot;,{!State_SouthCarolina},
+&quot;South Dakota&quot;,{!State_SouthDakota},
+&quot;Tennessee&quot;,{!State_Tennessee},
+&quot;Texas&quot;,{!State_Texas},
+&quot;Utah&quot;,{!State_Utah},
+&quot;Vermont&quot;,{!State_Vermont},
+&quot;Virginia&quot;,{!State_Virginia},
+&quot;Washington&quot;,{!State_Washington},
+&quot;West Virginia&quot;,{!State_WestVirginia},
+&quot;Wisconsin&quot;,{!State_Wisconsin},
+&quot;Wyoming&quot;,{!State_Wyoming},
+{!Default_1yr_Anniv_MonthEnd} )</expression>
+    </formulas>
+    <formulas>
+        <name>isLeapYearDay</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(MONTH({!EntityOrgDate}) =2 &amp;&amp; DAY({!EntityOrgDate}) = 29, TRUE, FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>LeapYearDateAdjustment</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!EntityOrgDate}), 2, 22)</expression>
+    </formulas>
+    <formulas>
+        <name>OrgDateMonthEnd</name>
+        <dataType>Date</dataType>
+        <expression>IF(MONTH({!EntityOrgDate}) = 2, DATE(YEAR({!EntityOrgDate}),02,28),
+ADDMONTHS(DATE(YEAR( {!EntityOrgDate}),MONTH( {!EntityOrgDate}), 01), 1) - 1)</expression>
+    </formulas>
+    <formulas>
+        <name>State_Alabama</name>
+        <dataType>Date</dataType>
+        <expression>{!DummyDate_RAOnly}</expression>
+    </formulas>
+    <formulas>
+        <name>State_Alaska</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 2, 1, 2),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 2, 1, 2),
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Arizona</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!DummyDate_RAOnly},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!DummyDate_RAOnly}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Arkansas</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 1),
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 1),
+{!DummyDate_RAOnly}
+))</expression>
+    </formulas>
+    <formulas>
+        <name>State_California</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+{!Default_2yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Colorado</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Connecticut</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 3, 31),
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 3, 31),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_DC</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Delaware</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 3, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Florida</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 30),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 30),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 30),
+
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 30)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Georgia</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Hawaii</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Idaho</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Illinois</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1),
+
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Indiana</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+{!Default_2yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Iowa</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+IF(MOD(YEAR({!EntityOrgDate}),2)=0, DATE(YEAR({!EntityOrgDate})+1,4,1), DATE(YEAR({!EntityOrgDate})+2,4,1)),
+
+IF({!EntityType} = &apos;Corp&apos;,
+IF(MOD(YEAR({!EntityOrgDate}),2)=0, DATE(YEAR({!EntityOrgDate})+2,4,1), DATE(YEAR({!EntityOrgDate})+1,4,1)),
+
+IF({!EntityType} = &apos;LP&apos;,
+IF(MOD(YEAR({!EntityOrgDate}),2)=0, DATE(YEAR({!EntityOrgDate})+1,4,1), DATE(YEAR({!EntityOrgDate})+2,4,1)),
+
+{!Default_1yr_Anniv_ExactDay}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Kansas</name>
+        <dataType>Date</dataType>
+        <expression>{!DummyDate_Do_Not_Create_Sales}</expression>
+    </formulas>
+    <formulas>
+        <name>State_Kentucky</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 30),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 30),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 30),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Louisiana</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+{!Default_1yr_Anniv_ExactDay}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Maine</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 6, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Maryland</name>
+        <dataType>Date</dataType>
+        <expression>{!DummyDate_RAOnly}</expression>
+    </formulas>
+    <formulas>
+        <name>State_Massachusetts</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!DummyDate_Do_Not_Create_Sales},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+{!Default_1yr_Anniv_ExactDay}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Michigan</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+IF (AND ({!EntityOrgDate} &gt;= DATE(YEAR({!EntityOrgDate}),9,11), {!EntityOrgDate} &lt;= DATE(YEAR({!EntityOrgDate}),12,31)),
+            DATE(YEAR({!EntityOrgDate}) + 2, 2, 14),  DATE(YEAR({!EntityOrgDate}) + 1, 2, 14)),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 14),
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!DummyDate_RAOnly}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Minnesota</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 12, 31),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 12, 31),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 12, 31),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Mississippi</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15),
+
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Missouri</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!DummyDate_RAOnly},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Montana</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 5, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate})),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Nebraska</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+IF(MOD(YEAR({!EntityOrgDate}),2)=0, DATE(YEAR({!EntityOrgDate})+1,4,1), DATE(YEAR({!EntityOrgDate})+2,4,1)),
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!DummyDate_RAOnly},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!DummyDate_RAOnly}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Nevada</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_NewHampshire</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_NewJersey</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_NewMexico</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!DummyDate_RAOnly},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!DummyDate_Do_Not_Create_Sales},
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 2, 4, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_NewYork</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_2yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!Default_2yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_NorthCarolina</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 15),
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!DummyDate_Do_Not_Create_Sales},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!DummyDate_RAOnly}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_NorthDakota</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 11, 15),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 8, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 4, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Ohio</name>
+        <dataType>Date</dataType>
+        <expression>{!DummyDate_RAOnly}</expression>
+    </formulas>
+    <formulas>
+        <name>State_Oklahoma</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!DummyDate_RAOnly},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+{!Default_1yr_Anniv_ExactDay}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Oregon</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_ExactDay},
+
+{!Default_1yr_Anniv_ExactDay}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Pennsylvania</name>
+        <dataType>Date</dataType>
+        <expression>IF(RIGHT(TEXT(YEAR({!EntityOrgDate})),1) = &apos;0&apos;, {!Default_1yr_Anniv_MonthEnd},  DATE(VALUE((LEFT(TEXT((YEAR({!EntityOrgDate})+10)),3)&amp;&quot;1&quot;)),MONTH({!EntityOrgDate}), DAY({!OrgDateMonthEnd}))
+)</expression>
+    </formulas>
+    <formulas>
+        <name>State_RhodeIsland</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 11, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 3, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+DATE(YEAR({!EntityOrgDate}) + 1, 11, 11)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_SouthCarolina</name>
+        <dataType>Date</dataType>
+        <expression>{!DummyDate_RAOnly}</expression>
+    </formulas>
+    <formulas>
+        <name>State_SouthDakota</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!Default_1yr_Anniv_ExactDay}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Tennessee</name>
+        <dataType>Date</dataType>
+        <expression>{!DummyDate_Do_Not_Create_Sales}</expression>
+    </formulas>
+    <formulas>
+        <name>State_Texas</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 15),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 15),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 15),
+
+DATE(YEAR({!EntityOrgDate}) + 1, 5, 15)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Utah</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Vermont</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!DummyDate_Do_Not_Create_Sales},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!DummyDate_Do_Not_Create_Sales},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!DummyDate_RAOnly}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Virginia</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 10, 1),
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Washington</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_WestVirginia</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 7, 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 7, 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+DATE(YEAR({!EntityOrgDate}) + 1, 7, 1),
+
+DATE(YEAR({!EntityOrgDate}) + 1, 7, 1)
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Wisconsin</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;Corp&apos;,
+{!Default_1yr_Anniv_MonthEnd},
+
+IF({!EntityType} = &apos;LP&apos;,
+{!DummyDate_RAOnly},
+
+{!Default_1yr_Anniv_MonthEnd}
+)))</expression>
+    </formulas>
+    <formulas>
+        <name>State_Wyoming</name>
+        <dataType>Date</dataType>
+        <expression>IF({!EntityType} = &apos;LLC&apos;,
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1),
+
+IF({!EntityType} = &apos;Corp&apos;,
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1),
+
+IF({!EntityType} = &apos;LP&apos;,
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1),
+
+IF(MONTH({!OriginalEntityOrgDate}) = 3, DATE(YEAR({!EntityOrgDate})+1,02,28),
+DATE(YEAR( {!EntityOrgDate})+1,MONTH( {!OriginalEntityOrgDate}), 01) - 1)
+)))</expression>
+    </formulas>
+    <interviewLabel>Entity - State Anniversary Date Calculator {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Entity - State Anniversary Date Calculator</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Leap_Year_Day</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>DummyDate_Do_Not_Create_Sales</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <dateValue>1901-12-31</dateValue>
+        </value>
+    </variables>
+    <variables>
+        <description>This date is used to notify the invoking process that it only needs to create a Registered Agent Sale (RA).</description>
+        <name>DummyDate_RAOnly</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <dateValue>1900-12-31</dateValue>
+        </value>
+    </variables>
+    <variables>
+        <name>EntityOrgDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>EntityType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FutureAnniversaryDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>NextAnniversaryDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>OriginalEntityOrgDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>StateName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

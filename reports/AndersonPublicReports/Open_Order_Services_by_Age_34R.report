@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_55976543</developerName>
+        <masterLabel>Last activity</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>OrderItem.Days_Since_Last_Activity__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>7</to>
+            </sourceValues>
+            <value>No Activity in last 7 days</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>7</from>
+                <to>14</to>
+            </sourceValues>
+            <value>No Activity in last 14 days</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>14</from>
+                <to>30</to>
+            </sourceValues>
+            <value>No Activity in last 30 days</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>30</from>
+            </sourceValues>
+            <value>No Activity for more than 30 days</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>Donut</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>CDF1</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>false</showAxisLabels>
+        <showPercentage>true</showPercentage>
+        <showTotal>true</showTotal>
+        <showValues>true</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_TOTAL_AMOUNT</field>
+    </columns>
+    <columns>
+        <field>ORDER_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>UPDATEDBY.NAME</field>
+    </columns>
+    <customDetailFormulas>
+        <calculatedFormula>IF((TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE)) &gt;0 &amp;&amp; (TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE))&lt;=7 , &apos;No Activity in Last 7 days&apos;, if((TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE)) &gt;7 &amp;&amp; (TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE)) &lt;=14,&apos;No Activity in Last 14 days&apos;,IF( (TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE)) &gt;14 &amp;&amp; (TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE)) &lt;=30,&apos;No Activity in Last 30 days&apos;,IF((TODAY()- Datevalue(ORDER_ITEM_LAST_UPDATE)) &gt;30,&apos;No Activity More than 30 days&apos;,&apos;&apos;))))</calculatedFormula>
+        <dataType>Text</dataType>
+        <developerName>CDF1</developerName>
+        <label>Last Activity</label>
+        <scale>2</scale>
+    </customDetailFormulas>
+    <filter>
+        <criteriaItems>
+            <column>OrderItem.Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Informational Only</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed,N/A,Kitted,Refunded</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Platinum Membership,Asset Protection Event,Virtual Yearly,Anderson Tax Advantage Program,Stock Pro,360,Basic,Real Estate Pro,Anderson Tax Advantage Program - Lite</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>CDF1</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Open Order Services by Age</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2021-03-01</startDate>
+    </timeFrameFilter>
+</Report>

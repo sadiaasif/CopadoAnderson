@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	  <aura:attribute name="recordId" type="string"/>
+  <!--  <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />-->
+    <lightning:navigation aura:id="navService"/>
+     <aura:attribute name="pageReference" type="Object"/>
+    <b>Are you sure you want to delete this Record ?</b> &nbsp;&nbsp;&nbsp;
+    
+    <lightning:button label="Delete" title="Delete" onclick="{!c.doInit}"/> 
+   <lightning:flow aura:id="flowData"  onstatuschange="{!c.handleStatusChange}"/>
+    
+</aura:component>

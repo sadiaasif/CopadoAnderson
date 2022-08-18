@@ -1,0 +1,1270 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbProductSelectController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  
+<script>
+<apex:dynamicComponent componentValue="{!CordovaJS}"/>
+</script>
+<!--  <script src="{URLFOR($Resource.PaymentConnectMobile,'Cordova/cordova.ios.js')}"></script>  --> 
+<!-- script src="{!URLFOR($Resource.PaymentConnectMobile,'BarCodeScanner/barcodescanner.js')}"></script -->  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+         
+    <script>
+
+        $( document ).on( "deviceready", function() {
+            // If reader found, enable barcode scan button(s)
+            if (cordova.plugins.barcodeScanner) {
+                setTimeout(function(){
+                     $("#btnScan").show();
+                     $("#btnScanTest").show();
+                     $("#btnScanToCart").show();
+                
+                }, 1);       
+            }
+           
+        });
+
+        $( document ).on( "pagecreate", function() {
+           
+            // cancel the search form submit so the keyboard enter does not reload the page
+            $("#searchContactForm").submit(function() {return false;});
+            // set listener for enter or search button click on keyboard to invoke our own search method.
+            $("#search-contact").keydown(function(e) {
+                if (e.keyCode == 13) {
+                 $("#newContactForm").hide();
+                 $("#contactList").show();
+                findContacts();
+                }
+            }); 
+
+            
+            $("#contact-country").val("{!mobileSettings.pymt__Default_Country__c}");
+            $("#new-acct-country").val("{!mobileSettings.pymt__Default_Country__c}");
+            
+            // cancel the search form submit so the keyboard enter does not reload the page
+            $("#searchAccountForm").submit(function() {return false;});
+            // set listener for enter or search button click on keyboard to invoke our own search method.
+            $("#search-account").keydown(function(e) {
+                if (e.keyCode == 13) {
+                 $("#newAccountForm").hide();
+                 $("#accountList").show();
+                findAccounts();
+                }
+            });             
+                       
+            $( "#btnNewContact" ).bind( "click", function(event, ui) {
+                 $("#contactList").hide();
+                 toggleVisibility("newContactForm");
+            });
+            
+            $( "#btnFindContact" ).bind( "click", function(event, ui) {
+                 $("#newContactForm").hide();
+                 toggleVisibility("contactList");
+            });            
+                
+                
+            $( "#btnNewAccount" ).bind( "click", function(event, ui) {
+                 $("#accountList").hide();
+                 toggleVisibility("newAccountForm");
+            });
+            
+            $( "#btnFindAccount" ).bind( "click", function(event, ui) {
+                 $("#newAccountForm").hide();
+                 toggleVisibility("accountList");
+            });   
+             
+            // If contact was passed in, load it into the page
+            <apex:outputPanel layout="none" rendered="{!(NOT(ISNULL(contact.id)))}">
+                contacts = eval('[{!contactJson}]');
+                setSelectedContact('{!contact.id}');
+
+            </apex:outputPanel>                  
+            <apex:outputPanel layout="none" rendered="{!(NOT(ISNULL(account.id)))}">
+                accounts = eval('[{!accountJson}]');
+                setSelectedAccount('{!account.id}');
+
+            </apex:outputPanel>                  
+
+
+            // Set up the autocomplete filter on the product search box and associated product list
+            $("#search-1").on("filterableBeforeFilter", function (e, data) {
+                findProducts();
+            });
+
+            // cancel the search form submit so the keyboard enter does not reload the page
+            $("#searchForm").submit(function() {return false;});
+            // set listener for enter or search button click on keyboard to invoke our own search method.
+            $("#search-1").keydown(function(e) {
+                if (e.keyCode == 13) {
+                findProducts();
+                }
+            }); 
+                                         
+         });
+
+        $( document ).on( "pageinit", function() {
+           // console.log('Event : pageinit');
+        });
+        
+
+        $( document ).on( "pagebeforeshow", function() {
+           // console.log('Event : pagebeforeshow');
+        });
+
+        function loading(showOrHide) {
+            setTimeout(function(){
+                $.mobile.loading(showOrHide);
+            }, 1); 
+        }        
+
+
+        
+        </script>
+    
+<script>
+  
+ var shoppingCartItems = new Array();  // An array of objects used to hold selected cart items to submit to SF
+ var products = new Array();  // name, unitPrice, description, imageId, numAvail
+ var contacts = new Array();
+ var selectedContact;
+ var accounts = new Array();
+ var selectedAccount;
+ 
+ function refreshProductList()  {
+    var listItem; 
+    $("#productList").empty();
+    $.each(products, function( index, value ) {
+        //alert( index + ": " + value );
+        listItem = '<li>';
+        listItem += '<a href="#" onclick="javascript:addProductToCart(\''+value.prodId+'\');clearProductList()">';
+        if (typeof value.imageId != "undefined" && value.imageId !== "") {
+         listItem = listItem + '<img src="/servlet/servlet.FileDownload?file='+value.imageId+'"/>';
+        } else {
+         listItem = listItem + "<img src='/s.gif'/>";
+        }
+        listItem = listItem + '<h2>'+value.name+'</h2>';
+        if (typeof value.description !== 'undefined') {
+        listItem += '<p>'+value.description+'</p>';
+        }
+        listItem += '<p>'+value.unitPrice+'</p>';
+        listItem += '</a>';
+        listItem += '</li>';
+        
+        $("#productList").append(listItem);
+              
+    });
+
+    $("#productList").listview('refresh');
+ 
+ }
+ 
+  function refreshContactList() {
+    var listItem; 
+    $("#contactList").empty();
+    $.each(contacts, function( index, contact ) {
+        
+        //alert( index + ": " + value );
+        listItem = '<li><a href="#" onclick="javascript:setSelectedContact(\''+contact.Id+'\');">';
+        
+        listItem = listItem + '<h2>'+contact.Name+'</h2><p>';
+        if (typeof contact.Email !== 'undefined') { listItem += ''+contact.Email;}
+        if (typeof contact.Title !== 'undefined') { listItem += ' | '+contact.Title;}
+        if (typeof contact.Account !== 'undefined') { listItem += ' | '+contact.Account.Name;}
+        if (typeof contact.MailingStreet !== 'undefined') { listItem += ' | '+contact.MailingStreet;}
+        if (typeof contact.MailingCity !== 'undefined') { listItem += ' | '+contact.MailingCity+', '+contact.MailingState+' '+contact.MailingPostalCode;}
+        listItem += '</p>';
+        
+        listItem = listItem + '</a></li>';
+        
+        $("#contactList").append(listItem);
+              
+    });  
+    $("#contactList").listview('refresh');
+  }
+  
+  function refreshAccountList() {
+    var listItem; 
+    $("#accountList").empty();
+    $.each(accounts, function( index, account ) {
+        
+        //alert( index + ": " + value );
+        listItem = '<li><a href="#" onclick="javascript:assignContactToAccount(\''+account.Id+'\');">';
+        
+        listItem = listItem + '<h2>'+account.Name+'</h2><p>';
+        if (typeof account.BillingStreet !== 'undefined') { listItem += ''+account.BillingStreet;}
+        if (typeof account.BillingCity !== 'undefined') { listItem += ' | '+account.BillingCity;}
+        if (typeof account.BillingState !== 'undefined') { listItem += ' | '+account.BillingState;}
+        if (typeof account.BillingPostalCode !== 'undefined') { listItem += ' | '+account.BillingPostalCode;}
+        if (typeof account.BillingCountry !== 'undefined') { listItem += ' | '+account.BillingCountry;}
+        listItem += '</p>';
+        
+        listItem = listItem + '</a></li>';
+        
+        $("#accountList").append(listItem);
+              
+    });  
+    $("#accountList").listview('refresh'); 
+  }
+ 
+  function refreshShoppingCart()  {
+    var listItem; 
+    $("#shoppingCart").empty();
+    $.each(shoppingCartItems, function( index, value ) {
+        //alert( index + ": " + value );
+        listItem = '<li><a href="#">';
+        if (typeof value.imageId != "undefined" && value.imageId !== "") {
+         listItem = listItem + '<img src="/servlet/servlet.FileDownload?file='+value.imageId+'"/>';
+        } else {
+         //listItem = listItem + "<img src='/s.gif'/>";
+        }
+        listItem = listItem + '<h2>'+value.name+'</h2>';
+        if (typeof value.description !== 'undefined') { listItem += '<p>'+value.description+'</p>';}
+        listItem += '<p>'+value.unitPrice+'</p>';
+        
+        listItem = listItem + '<div style="font-size:1.1em;" class="ui-li-count">Qty:'+value.quantity+'</div>';
+        listItem = listItem + '</a><a href="#" onclick="javascript:removeProductFromCart(\''+value.prodId+'\');">Remove from Cart</a>'+
+        '</li>';
+        
+        $("#shoppingCart").append(listItem);
+              
+    });
+    if (shoppingCartItems.length < 1) {
+        $("#shoppingCart").append("<li>No cart items selected</li>");
+    }
+
+    $("#shoppingCart").listview('refresh');
+ 
+ }
+ 
+ function findProducts() {
+
+    var pricebookId = "{!mobileSettings.pymt__Pricebook_Id__c}";  // will default to standard pricebook
+    var searchString = $("#search-1").val();
+    
+    var prodFamily =  $("#select-choice-family").val();;
+    var orderByField = $("#slider-item-limit").val();
+    var direction = $("#flip-results-direction").val();  
+    var itemLimit = parseFloat($("#slider-item-limit").val());
+     
+    loading("show");
+    
+     // ProductWrapper[] searchProducts(Id pricebookId, String searchString, String prodFamily, String orderByField, String direction, Decimal itemLimit)
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.searchProducts}', 
+            pricebookId, 
+            searchString,
+            prodFamily,
+            orderByField,
+            direction,
+            itemLimit,
+            function(results, event){
+                loading("hide");
+                if (event.status) {
+                    
+                    products = new Array();
+                    $.each(results, function(i,result) {
+                        var prod = new Object();
+                        
+                        prod.prodId = result.prodId;
+                        prod.imageId = result.imageId;
+                        prod.description = result.description;
+                        prod.unitPrice = result.unitPrice;
+                        prod.opcTag = result.opcTag;
+                        prod.tangible = result.tangible;
+                        prod.taxable = result.taxable;
+                        prod.productCode = result.productCode;
+                        prod.name = result.name;
+                        
+                        products.push(prod);
+                    });
+                    refreshProductList();
+                    
+                    
+                } else if (event.type === 'exception') {
+                  
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        );
+
+}
+
+function assignContactToAccount(accountId) {
+   // Does a callback to link the selected contact to this account before updating the page 
+
+            
+        Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.MobileBaseController.assignContactToAccount}', 
+                selectedContact.Id, 
+                accountId, 
+                function(result, event){
+                    loading("hide");
+                    if (event.status) {
+                        
+                        if (result.success) {
+                            setSelectedAccount(accountId);                                
+                        
+                         } else {
+                               alert('Error assigning contact to account: '+result.message);
+                         }                            
+                    } else if (event.type === 'exception') {
+                      
+                      $("#error-popup-message").html(event.message);
+                      $("#error-popup").popup("open", {positionTo:"window"});
+                    } else {
+                      $("#error-popup-message").html(event.message);
+                      $("#error-popup").popup("open", {positionTo:"window"});
+                    }
+                }, 
+                {escape: true}
+            );
+            
+}
+
+function setSelectedAccount(accountId) {
+    $.each(accounts, function(i, account) {
+        if (account.Id === accountId) {
+            selectedAccount = account;
+            selectedContact.AccountId = selectedAccount.Id;
+            $("#accountDetails").html(selectedAccount.Name);
+            $("#btnAssignAccount").hide(); 
+
+ 
+            return false;  // break out of .each loop
+        }
+        });
+
+    $("#accountList").empty();
+}
+
+function setSelectedContact(contactId) {
+    $.each(contacts, function(i, contact) {
+        if (contact.Id === contactId) {
+            selectedContact = contact;
+            $("#contactDetails").html(selectedContact.Name);
+            $("#accountDetails").show();
+            if (typeof selectedContact.Account !== 'undefined') {
+              // if contact has an account, display the account name.
+                  $("#accountDetails").html(selectedContact.Account.Name);        
+            } else {
+              // otherwise, display option to select and assign an account to this contact.
+              $("#accountDetails").html("-- Contact Has No Account --");        
+              $("#assignAccount").show();
+            }
+        //alert("Set Selected Contact finished");
+            return false;  // break out of .each loop
+        }
+        });
+    
+
+    $("#contactList").empty();
+}
+
+function findAccounts() {
+
+    var searchString = $("#search-account").val();
+    
+     
+    loading("show");
+    
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.searchAccounts}', 
+            searchString,
+            "Name",
+            "Asc",
+            5,
+            function(results, event){
+                loading("hide");
+                if (event.status) {
+                    //alert('Got '+accounts.length+' records back!');
+                    accounts = results;
+                    refreshAccountList();
+                    
+                    
+                } else if (event.type === 'exception') {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        );
+
+}
+
+function toggleVisibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+}
+
+function findContacts() {
+
+    var searchString = $("#search-contact").val();
+    
+     
+    loading("show");
+        var orderByField = "Name";
+        var direction = "Asc";  
+        var itemLimit = 5;   
+            
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.searchContacts}', 
+            searchString,
+            orderByField,
+            direction,
+            itemLimit,
+            function(results, event){
+                loading("hide");
+                if (event.status) {
+                    //alert('Got '+contacts.length+' records back!');
+                    contacts = results;
+                    refreshContactList();
+                    
+                    
+                } else if (event.type === 'exception') {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        );
+
+}
+
+function clickScan() {
+   
+    cordova.plugins.barcodeScanner.scan(
+    function (result) {
+        alert("We got a barcode\n" +
+            "Result: " + result.text + "\n" +
+            "Format: " + result.format + "\n" +
+            "Cancelled: " + result.cancelled);
+    }, 
+      function (error) {
+          alert("Scanning failed: " + error);
+    });
+}
+
+ function doScan() {
+    if (typeof cordova == 'undefined') {
+       alert('Unable to find cordova object.');
+       return;
+    } else {
+       
+      //alert('Platform:'+cordova.platformId+ ', Version:'+cordova.version);
+      //$("#debug-message").val(JSON.stringify(cordova.plugins.barcodeScanner));
+      
+
+    }
+
+    //if (typeof device == 'undefined') {
+      // alert('Unable to connect with device.');
+      // return;
+    //}
+    var scanner = cordova.plugins.barcodeScanner;
+          
+     scanner.scan(
+          function (result) {
+           console.log('Scanner result:'+result);
+             $("#scanResults").html("We got a barcode\n" +
+                    "Result: " + result.text + "\n" +
+                    "Format: " + result.format + "\n" +
+                    "Cancelled: " + result.cancelled);
+            if (!result.cancelled) {        
+            // Use remoting to request product information from Salesforce
+            var productCode = result.text;
+            var pricebookId = "{!mobileSettings.pymt__Pricebook_Id__c}";
+            loading("show");
+            Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.MobileBaseController.productCodeLookup}', 
+                    productCode, 
+                    pricebookId,
+                    function(result, event){
+                        loading("hide");
+                        if (event.status) {
+                            //document.getElementById('testLog').innerHTML = result.Name;
+                            
+                            products = new Array();
+                            var prod = new Object();
+
+                            prod.prodId = result.prodId;
+                            prod.imageId = result.imageId;
+                            prod.description = result.description;
+                            prod.unitPrice = result.unitPrice;
+                            prod.opcTag = result.opcTag;
+                            prod.tangible = result.tangible;
+                            prod.taxable = result.taxable;
+                            prod.productCode = result.productCode;
+                            prod.name = result.name;
+                                                    
+                            
+                            products.push(prod);
+                            refreshProductList();
+                            
+                            
+                        } else if (event.type === 'exception') {
+                          $("#error-popup-message").html(event.message);
+                          $("#error-popup").popup("open", {positionTo:"window"});
+                        } else {
+                          $("#error-popup-message").html(event.message);
+                          $("#error-popup").popup("open", {positionTo:"window"});
+                        }
+                    }, 
+                    {escape: true}
+                );
+                        
+            //  alert("We got a barcode\n" +
+            //      "Result: " + result.text + "\n" +
+            //      "Format: " + result.format + "\n" +
+            //      "Cancelled: " + result.cancelled);
+            }
+        }, 
+        function (error) {
+           console.log('Scanning failed:'+error);
+        
+            alert("Scanning failed: " + error);
+        }
+    );
+    }
+  
+ function addNewContact() {
+     var contact = new Object();
+     contact.FirstName = $("#contact-firstname").val();
+     contact.LastName = $("#contact-lastname").val();
+     contact.Email = $("#contact-email").val();
+     contact.Phone = $("#contact-phone").val();
+     contact.MailingStreet = $("#contact-street").val();
+     contact.MailingCity = $("#contact-city").val();
+     contact.MailingState = $("#contact-state").val();
+     contact.MailingPostalCode = $("#contact-postalcode").val();
+     contact.MailingCountry = $("#contact-country  option:selected").val();
+     contact.AccountId = null;
+     loading("show");
+     Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.insertContact}', 
+            contact, 
+            true,
+            function(result, event){
+                loading("hide");
+                if (event.status) {
+                    contacts = new Array();
+                    if (result.success) {
+                        //alert("Done... contact id = "+result.recordId);
+
+                        contact.Id = result.recordId;
+                        contacts.push(contact);
+                        
+                        setSelectedContact(contact.Id);
+                        
+                                         
+                    } else {
+                        alert('Error encountered adding contact: '+result.message);
+                    }
+                    
+                } else if (event.type === 'exception') {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        );
+ }
+ 
+ function addNewAccount() {
+     var account = new Object();
+     account.Name = $("#new-acct-name").val();
+     account.BillingStreet = $("#new-acct-street").val();
+     account.BillingCity = $("#new-acct-city").val();
+     account.BillingState = $("#new-acct-state").val();
+     account.BillingPostalCode = $("#new-acct-postalcode").val();
+     account.BillingCountry = $("#new-acct-country  option:selected").val();
+     loading("show");
+     Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.insertAccount}', 
+            account,
+            selectedContact.Id, 
+            function(result, event){
+                loading("hide");
+                if (event.status) {
+                    accounts = new Array();
+
+                    if (result.success) {
+                        account.Id = result.recordId
+                        accounts.push(account);
+                        setSelectedAccount(account.Id);
+                    } else {
+                        alert('Error encountered adding account: '+result.message);
+                    }
+                    
+                } else if (event.type === 'exception') {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        ); 
+ }
+ function checkSDKVersion() {
+    var sdkinfo = cordova.require("com.salesforce.plugin.sdkinfo");
+    sdkinfo.getInfo(new function(info) {
+        alert("sdkVersion->" + info.sdkVersion);
+        alert("appName->" + info.appName);
+        alert("appVersion->" + info.appVersion);
+        alert("forcePluginsAvailable->" + 
+            JSON.stringify(info.forcePluginsAvailable));
+    });    
+ }
+      
+ function doScanToCart() {
+    if (typeof device == 'undefined') {
+       alert('Unable to connect with device.');
+       return;
+    }
+     var scanner = window.cordova.require("cordova/plugin/BarcodeScanner");
+     
+     // console.log('Scanner'+scanner);
+     
+     scanner.scan(
+          function (result) {
+           console.log('Scanner result:'+result);
+             $("#scanResults").html("We got a barcode\n" +
+                    "Result: " + result.text + "\n" +
+                    "Format: " + result.format + "\n" +
+                    "Cancelled: " + result.cancelled);
+            if (!result.cancelled) {        
+            // Use remoting to request product information from Salesforce
+            var productCode = result.text;
+            var pricebookId = "{!mobileSettings.pymt__Pricebook_Id__c}";
+            loading("show");
+            Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.MobileBaseController.productCodeLookup}', 
+                    productCode, 
+                    pricebookId,
+                    function(result, event){
+                        loading("hide");
+                        if (event.status) {
+                            //document.getElementById('testLog').innerHTML = result.Name;
+                            
+                             var inCart = false;
+                             $.each(shoppingCartItems, function( j, item) {
+                                 if (item.prodId === result.prodId) {
+                                   inCart = true;
+                                   item.quantity = item.quantity+1;
+                                   return false;
+                                 }});
+                             if (!inCart) {
+                                var prod = new Object();
+ 
+                                prod.prodId = result.prodId;
+                                prod.imageId = result.imageId;
+                                prod.description = result.description;
+                                prod.unitPrice = result.unitPrice;
+                                prod.opcTag = result.opcTag;
+                                prod.tangible = result.tangible;
+                                prod.taxable = result.taxable;
+                                prod.productCode = result.productCode;
+                                prod.name = result.name;
+                                                        
+                                prod.quantity = 1;
+                                
+                                shoppingCartItems.push(prod);
+                             
+                             }                           
+                            refreshShoppingCart();
+                            
+                            
+                        } else if (event.type === 'exception') {
+                          $("#error-popup-message").html(event.message);
+                          $("#error-popup").popup("open", {positionTo:"window"});
+                        } else {
+                          $("#error-popup-message").html(event.message);
+                          $("#error-popup").popup("open", {positionTo:"window"});
+                        }
+                    }, 
+                    {escape: true}
+                );
+                        
+            
+               // If set to do multiple scans restart scanner in a few milliseconds
+               // setTimeout(function(){
+               //     doScanToCart();
+               // }, 1000); 
+                           
+            }
+        }, 
+        function (error) {
+           console.log('Scanning failed:'+error);
+        
+            alert("Scanning failed: " + error);
+        }
+    );
+    }
+ 
+ function removeProductFromCart(prodId) {
+    var idx = 0;
+    var found = false;
+    var remove = false;
+     $.each(shoppingCartItems, function( j, item) {
+         if (item.prodId === prodId) {
+           found = true;
+           if (item.quantity <=1) {
+              remove = true;
+           } else {
+              item.quantity -= 1;
+           }
+           return false;
+         } 
+         idx = idx + 1;
+         });
+       if (remove) {
+         shoppingCartItems.splice(idx,1);
+       }
+       refreshShoppingCart();
+ }
+ 
+ function clearProductList() {
+    products = new Array();
+    refreshProductList();
+ }
+
+ function clearUnitPrice() {
+    $("#new_item_unit_price").val('');
+ }
+ function addNewItemToCart() {
+
+    var newItem = new Object();
+    newItem.quantity = $("#new_item_quantity").val();
+    //newItem.prodId = prodId;
+    newItem.name = $("#new_item_name").val();
+    //newItem.imageId = value.imageId;
+    newItem.unitPrice = $("#new_item_unit_price").val();
+    //newItem.productCode = value.productCode;
+    //newItem.tangible = value.tangible;
+    //newItem.taxable = value.taxable;
+    newItem.description = '';
+    shoppingCartItems.push(newItem);
+
+    $("#new_item_name").val('');
+    $("#new_item_quantity").val('1');
+    $("#new_item_unit_price").val('');
+
+    refreshShoppingCart();
+ }
+ 
+ function addProductToCart(prodId) {
+     $.each(products, function(i, value) {
+         if (value.prodId === prodId) {
+         //alert('Adding '+value.name);
+             var inCart = false;
+             $.each(shoppingCartItems, function( j, item) {
+                 if (item.prodId === prodId) {
+                   inCart = true;
+                   item.quantity = item.quantity+1;
+                   return false;
+                 }});
+             if (!inCart) {
+                var newItem = new Object();
+                newItem.quantity = 1;
+                newItem.prodId = prodId;
+                newItem.name = value.name;
+                newItem.imageId = value.imageId;
+                newItem.unitPrice = value.unitPrice;
+                newItem.productCode = value.productCode;
+                newItem.tangible = value.tangible;
+                newItem.taxable = value.taxable;
+                newItem.description = value.description;
+                shoppingCartItems.push(newItem);
+             }
+             return false;    
+         }
+         });
+       refreshShoppingCart();
+ }
+ 
+ 
+ //-------------------------------------------------
+ // Create In Process payment with cart items
+ //-------------------------------------------------
+ var paymentId; 
+ function createPayment() {
+    if (shoppingCartItems.length < 1) {
+        alert('Please select at least one item for checkout.');
+        return;
+    }
+    loading("true"); 
+    var cartTotal = 0;
+    $.each(shoppingCartItems, function(i, item) {
+       cartTotal += item.quantity * item.unitPrice;
+    });
+    // To do ... calculate sales tax
+    
+    // insertPaymentWithCartItems(String status, String name, Decimal amount, String contactId, String cartItems)
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.insertPaymentWithCartItems}', 
+            'In Process', 
+            'Payment',      // Hard coded values (while we test)
+            cartTotal,
+            selectedContact.Id,  // Hard coded contact Id 
+            shoppingCartItems,            
+            function(result, event){
+                loading("false");
+                if (event.status) {
+                    if (result.success) {
+                        paymentId = result.recordId;
+                        window.location.href="{!URLFOR($Page.MbCheckout)}?pid="+paymentId+"&finish_URL="+window.localStorage.getItem('homePageURL');
+                    
+                    } else {
+                       alert("Error inserting payment record: "+result.message);
+                    }
+                } else if (event.type === 'exception') {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        ); 
+ }
+
+ function appendUnitPrice(digit) {
+    //alert(digit);
+    $("#new_item_unit_price").val($("#new_item_unit_price").val() + digit);
+ }
+
+</script>    
+    
+    <style>
+
+        
+        .forceinline {
+          display:inline !important;
+        }
+        
+        #searchFilterControlGroup,
+        #scanControlGroup {
+           display:inline !important;
+           
+        }
+        #searchFilterControlGroup .ui-controlgroup-controls,
+        #scanControlGroup .ui-controlgroup-controls {
+            width:auto;
+            margin-left:10px;
+            margin-top:.3em;
+        }
+
+        .register-layout-breakpoint > .ui-block-b,
+        .register-layout-breakpoint > .ui-block-c,
+        .register-layout-breakpoint > .ui-block-d,
+        .register-layout-breakpoint > .ui-block-e {
+            padding-left:20px;
+        }
+
+        @media all and (max-width:50em) {
+            .register-layout-breakpoint > .ui-block-a,
+            .register-layout-breakpoint > .ui-block-b,
+            .register-layout-breakpoint > .ui-block-c,
+            .register-layout-breakpoint > .ui-block-d,
+            .register-layout-breakpoint > .ui-block-e {
+                width: 100%;
+                float:none;
+                padding-left:0px;
+            }
+
+        }
+
+        .keypad_key {
+            text-align:center;
+            font-size:2em;
+            background: #696969;
+            color:white;
+            margin:2px;
+            height:2em;
+            padding-top:1em;
+            border-radius:8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div data-role="page"  data-theme="a" id="selectContactPage">
+
+    <div data-role="header" data-position="fixed">
+        <h1>Product Checkout</h1>
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+
+    <h2>Contact and Account</h2>
+ 
+    Contact: <span id="contactDetails">-- No Contact Selected --</span>&nbsp;&nbsp;
+    <br/>
+        <form id="searchContactForm">
+            <table><tr><td>
+                <input data-inline="true" placeholder="Search Contacts" name="search-contact" id="search-contact"  value="" type="search" />
+                </td><td>
+                <a href="#" id="btnNewContact" data-inline="true" data-iconpos="notext" data-role="button" data-icon="edit" onclick='javascript: $("#contactList").empty();'>New</a>
+                </td></tr>
+            </table>
+        </form>
+         
+        <div class="ui-body ui-body-a" id="newContactForm" style="display:none;">
+        <div data-role="fieldcontain">
+            <label for="contact-firstname">First Name</label>
+            <input type="text" name="contact-firstname" id="contact-firstname" value="" />
+        </div>        
+        
+        <div data-role="fieldcontain">
+            <label for="contact-lastname">Last Name</label>
+            <input type="text" name="contact-lastname" id="contact-lastname" value="" />
+        </div>        
+        
+        <div data-role="fieldcontain">
+            <label for="contact-email">Email</label>
+            <input type="email" name="contact-email" id="contact-email" value="" />
+        </div>        
+
+        <div data-role="fieldcontain">
+            <label for="contact-phone">Phone</label>
+            <input type="tel" name="contact-phone" id="contact-phone" value="" />
+        </div>        
+
+        <div data-role="fieldcontain">
+            <label for="contact-street">Street</label>
+            <input type="text" name="contact-street" id="contact-street" value="" />
+        </div>        
+
+        <div data-role="fieldcontain">
+            <label for="contact-city">City</label>
+            <input type="text" name="contact-city" id="contact-city" value="" />
+        </div>        
+           
+
+        <div data-role="fieldcontain">
+            <label for="contact-state">State</label>
+            <input type="text" name="contact-state" id="contact-state" value="" />
+        </div>        
+
+        <div data-role="fieldcontain">
+            <label for="contact-postalcode">Postal Code</label>
+            <input type="text" name="contact-postalcode" id="contact-postalcode" value="" />
+        </div>  
+     
+        <div data-role="fieldcontain">
+            <label for="contact-country">Country</label>
+            <select name="contact-country" id="contact-country">
+                <apex:repeat value="{!countryPicklistOptions}" var="country">
+                    <option value="{!country.value}">{!country.label}</option>
+                </apex:repeat>
+            </select>
+        </div>           
+        <a href="#" data-role="button" onclick="javascript:addNewContact()">Save</a>
+        <br/>
+
+        </div>
+        
+        
+       <ul id="contactList" data-role="listview" data-icon="plus" data-inset="true">
+
+        </ul>
+         
+    Account: <span style="display:none;" id="accountDetails">-- Contact Has No Account --</span>&nbsp;&nbsp;
+
+    <div id="assignAccount" style="display:none;" >
+        <form id="searchAccountForm">
+            <table><tr><td>
+                <input name="search-account" id="search-account" data-inline="false" placeholder="Search Accounts (Optional)" value="" type="search" />
+            </td><td>  
+            <a href="#" id="btnNewAccount" data-inline="true" data-iconpos="notext" data-role="button" data-icon="edit" onclick='javascript: $("#contactList").empty();'>New</a>                    
+            </td></tr>
+            </table>        
+        </form>
+
+        <div class="ui-body ui-body-a" id="newAccountForm"  style="display:none;">
+        
+        <div data-role="fieldcontain">
+            <label for="new-acct-name">Account Name</label>
+            <input type="text" name="new-acct-name" id="new-acct-name" value="" />
+        </div>   
+                
+        <div data-role="fieldcontain">
+            <label for="new-acct-street">Street</label>
+            <input type="text" name="new-acct-street" id="new-acct-street" value="" />
+        </div>        
+
+        <div data-role="fieldcontain">
+            <label for="new-acct-city">City</label>
+            <input type="text" name="new-acct-city" id="new-acct-city" value="" />
+        </div>        
+
+
+        <div data-role="fieldcontain">
+            <label for="new-acct-state">State</label>
+            <input type="text" name="new-acct-state" id="new-acct-state" value="" />
+        </div>        
+
+        <div data-role="fieldcontain">
+            <label for="new-acct-postalcode">Postal Code</label>
+            <input type="text" name="new-acct-postalcode" id="new-acct-postalcode" value="" />
+        </div>        
+     
+        <div data-role="fieldcontain">
+            <label for="new-acct-country">Country</label>
+            <select name="new-acct-country" id="new-acct-country">
+                <apex:repeat value="{!countryPicklistOptions}" var="country">
+                    <option value="{!country.value}">{!country.label}</option>
+                </apex:repeat>
+            </select>            
+        </div>   
+             
+
+        <a href="#" data-role="button" onclick="javascript:addNewAccount()">Save</a>
+        </div>
+        
+        
+        <br/><br/> 
+       <ul id="accountList" data-role="listview" data-icon="plus" data-inset="true">
+
+        </ul>
+
+    </div>
+
+    <br/><br/>
+    <a href="#selectProductPage" data-role="button" data-inline="false">Continue</a>
+
+    </div><!-- /content -->
+
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link"  onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div><!-- /footer -->
+
+</div><!-- /page -->
+
+
+<div data-role="page" data-theme="a" id="selectProductPage">
+
+    <div data-role="header">
+        <h1>Mobile Register</h1>
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>
+        <a href="#panel-reveal" class="fawe-icon-hdr-link"><i class="fa fa-gear fa-2x"></i></a>      
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+ 
+
+    
+   <div class="ui-grid-a register-layout-breakpoint" >
+        <div class="ui-block-a">
+
+            <!-- depending on settings, either show the product search controls
+            and scan barcode buttons in the left column, or show product description input, qty and amount fields - with a touch keypad for entering the amount -->
+            <form id="keypadForm" >
+            <input type="text" id="new_item_name" placeholder="Item Description"/>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <input type="number" value="1" id="new_item_quantity"/>&nbsp;
+                </div>
+                <div class="ui-block-b">
+                    <input type="text" id="new_item_unit_price" placeholder="Unit Price"/>
+                </div>
+            </div>
+            </form>
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a">
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">7</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">4</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">1</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">00</div>
+
+                </div>
+
+                <div class="ui-block-b">
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">8</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">5</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">2</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">0</div>
+
+                </div>
+
+                <div class="ui-block-c">
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">9</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">6</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">3</div>
+                    <div class="keypad_key" onclick="appendUnitPrice(this.innerHTML);">.</div>
+
+                </div>
+
+                <div class="ui-block-d">
+                    <div class="keypad_key" onclick="addNewItemToCart();" style="height:4em;font-size=1em;">
+                    <i class="fa fa-plus fa-sm"></i>
+                    <br/>
+                    Add Item
+                    </div>
+                    <div class="keypad_key" onclick="clearUnitPrice();" style="height:4em;font-size=1em;">
+                    <i class="fa fa-times-circle fa-sm"></i>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="ui-block-b">
+
+        <form id="searchForm">
+
+        <div data-role="fieldcontain" style="text-align:center;">
+         <div style="display:inline-block;width:200px;margin:0px;padding:0px;vertical-align:middle;">
+         <input name="search-1" id="search-1"  data-mini="false" data-inline="true" value="" placeholder="Search Products" type="search"/>
+         </div>
+         
+              
+              <a href="#"  data-role="button" data-inline="true" data-icon="delete" data-iconpos="notext" data-mini="true" onclick="javascript:clearProductList();" >Clear Results</a>
+              
+           
+           <div id="scanControlGroup" data-role="controlgroup"  class="forceinline" data-type="horizontal" data-mini="false" data-inline="true" >         
+            <a href="#" id="btnScan" style="display:none;" class="ui-btn ui-corner-all ui-shadow ui-btn-inline " onclick="javascript:doScan();">Scan</a>
+            <a href="#" id="btnScanTest" style="display:none;" class="ui-btn ui-corner-all ui-shadow ui-btn-inline " onclick="javascript:clickScan();">Test</a>
+            <a href="#" id="btnScanToCart" style="display:none;"  class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-eye ui-btn-icon-left" onclick="javascript:doScanToCart();">Scan To Cart</a>
+           </div>
+
+        </div>
+        </form>
+
+        <ul data-role="listview" data-theme="c" data-icon="plus" data-inset="true" data-filter="true" data-input="#search-1" id="productList">
+        <!--
+            Filled with each search/scan
+            -->
+
+        </ul>
+
+        <h2>Cart Items</h2>
+
+            <ul id="shoppingCart" data-role="listview" data-split-icon="minus" data-inset="true">
+
+            <li>No Items Selected.
+            </li>
+
+        </ul>
+
+        <p>Show discount option, tax amount and total amount</p>
+
+        <a href="#" onclick="javascript:createPayment();" rel="external" class="ui-btn ui-corner-all ui-shadow" >Checkout</a>    
+
+        </div>
+   </div>
+
+
+   <br/><br/>
+        
+    <div style="display:block;">
+    <br/><br/>
+    <div class="app">
+        <div id="deviceready" class="blink">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received" style="display:none;">Device is Ready</p>
+        </div>
+    </div>    
+    <div id="scanResults">-- Scan Results --</div>
+    </div>
+
+    </div><!-- /content -->
+
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link"  onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+
+<div data-role="panel" data-position="right" data-display="overlay" id="panel-reveal">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+
+        </ul>
+<br/><br/>
+        <h3>Order Results By:</h3>
+        <select name="select-choice-orderby" id="select-choice-orderby" data-native-menu="false" >
+            <option value="Name">Name</option>
+            <option value="Family">Product Family</option>
+            <option value="ProductCode">Product Code</option>
+            <option value="CreatedDate">Created Date</option>
+            <option value="LastModifiedDate">Last Modified Date</option>
+        </select>
+            
+        <h3>Product Family:</h3>
+        <select name="select-choice-family" id="select-choice-family" data-native-menu="false" >
+            <option value="-- All --">-- All --</option>
+            <apex:repeat value="{!familyOptions}" var="opt">
+            <option value="{!opt.value}">{!opt.label}</option>
+            </apex:repeat>
+        </select>
+        
+        <div class="ui-field-contain">
+            <label for="flip-results-direction"></label>
+            <select name="flip-results-direction" id="flip-results-direction" data-role="slider">
+                <option value="Desc">Desc</option>
+                <option value="Asc">Asc</option>
+            </select>
+        </div>
+
+        <h3>Max Results Size:</h3>
+        <input type="range" name="slider-item-limit" id="slider-item-limit" value="5" min="0" max="100" data-highlight="true"/>
+                
+        <br/><br/>
+        <button class="ui-btn ui-corner-all ui-shadow"  onclick="javascript:findProducts();">Apply</button>
+    </div>    
+
+    
+ 
+
+ <div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>  
+
+
+
+</div><!-- /page -->
+
+
+
+</body>
+</html>
+
+</apex:page>

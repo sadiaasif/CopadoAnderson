@@ -1,0 +1,2013 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>How_many_sales</name>
+        <label>How many sales?</label>
+        <locationX>181</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>NoOfSales</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HowManySales</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>No_of_Sales</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Mailing_Services</name>
+        <label>Mailing Services</label>
+        <locationX>2014</locationX>
+        <locationY>584</locationY>
+        <defaultConnectorLabel>End</defaultConnectorLabel>
+        <rules>
+            <name>Corp_HQ</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>EntityMailing</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Corporate Headquarters</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EntityMailing</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Corporate Assistance Program</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GreenHQ</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Sale_CAP_or_CHQ</targetReference>
+            </connector>
+            <label>Corp HQ</label>
+        </rules>
+        <rules>
+            <name>Mail_Forwarding</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EntityMailing</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Mail Forwarding</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GreenHQ</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mail_Forwarding_Lookup</targetReference>
+            </connector>
+            <label>Mail Forwarding</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>More_Fees_0</name>
+        <label>More Fees?</label>
+        <locationX>1383</locationX>
+        <locationY>579</locationY>
+        <defaultConnector>
+            <targetReference>Account_Lookup</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes456_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>EntityOrgState</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Texas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EntityOrgState</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nevada</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_business_license_or_Franchise_Fee</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>No_of_Sales</name>
+        <label>No of Sales</label>
+        <locationX>164</locationX>
+        <locationY>506</locationY>
+        <defaultConnector>
+            <targetReference>Registered_Agent_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>One</defaultConnectorLabel>
+        <rules>
+            <name>Two</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NoOfSales</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Registered_Agent_Status_2</targetReference>
+            </connector>
+            <label>Two</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Nominee_Status_0_2</name>
+        <label>Nominee Status</label>
+        <locationX>2776</locationX>
+        <locationY>527</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes1_0_2</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>EntityNominee</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nominee</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EntityNominee</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Corp Nom</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Nominee_OLI</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Registered_Agent_Status</name>
+        <label>Registered Agent Status</label>
+        <locationX>442</locationX>
+        <locationY>576</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EntityRA</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>True</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Annual_List_Sale_0</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Registered_Agent_Status_2</name>
+        <label>Registered Agent Status</label>
+        <locationX>439</locationX>
+        <locationY>308</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EntityRA</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>True</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Annual_List_Sale_1_0</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Sale_exists</name>
+        <label>Sale exists?</label>
+        <locationX>2326</locationX>
+        <locationY>358</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>Yes15</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>MailSaleId</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>New_Sale_Entity</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountCorpHQ</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Green HQ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_CAP_Sale</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Sale_exists_0</name>
+        <label>Sale exists?</label>
+        <locationX>2188</locationX>
+        <locationY>890</locationY>
+        <defaultConnectorLabel>End</defaultConnectorLabel>
+        <rules>
+            <name>Yes15_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>MailSaleId</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Find_OLI</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>No_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>MailSaleId</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <conditions>
+                <leftValueReference>AccountCorpHQ</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Green HQ</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Mail_Sale</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>AnniversaryMothDateFormulaLeapYear</name>
+        <dataType>Date</dataType>
+        <expression>If(ISNull({!AnniversayMonthDateFormula}),Date(2021,01,31),{!AnniversayMonthDateFormula})</expression>
+    </formulas>
+    <formulas>
+        <name>AnniversayMonthDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Arizona&quot;,  IF(MONTH({!EntityOrgDate})=2 &amp;&amp; DAY({!EntityOrgDate})=29, DATE({!Currentyearplus1},01,28),DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))),
+&quot;Louisiana&quot;,  IF(MONTH({!EntityOrgDate})=2 &amp;&amp; DAY({!EntityOrgDate})=29, DATE({!Currentyearplus1},01,28),DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))),
+&quot;Massachusetts&quot;, IF(MONTH({!EntityOrgDate})=2 &amp;&amp; DAY({!EntityOrgDate})=29, DATE({!Currentyearplus1},01,28), DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))),
+&quot;Oregon&quot;,  IF(MONTH({!EntityOrgDate})=2 &amp;&amp; DAY({!EntityOrgDate})=29, DATE({!Currentyearplus1},01,28),DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))),
+&quot;South Dakota&quot;,  IF(MONTH({!EntityOrgDate})=2 &amp;&amp; DAY({!EntityOrgDate})=29, DATE({!Currentyearplus1},01,28),DATE(YEAR({!EntityOrgDate}) + 1, MONTH({!EntityOrgDate}), DAY({!EntityOrgDate}))),
+&quot;Wyoming&quot;,  IF(MONTH({!EntityOrgDate})=2 &amp;&amp; DAY({!EntityOrgDate})=29, DATE({!Currentyearplus1},01,31),DATE(YEAR({!EntityOrgDate}) + 1, IF( MONTH({!EntityOrgDate}) = 12, 12, MONTH({!EntityOrgDate})), 1) - 1),
+&quot;Illinois&quot;, DATE(YEAR({!EntityOrgDate}) + 1, IF( MONTH({!EntityOrgDate}) = 12, 12, MONTH({!EntityOrgDate})), 1) - 1,
+
+DATE(YEAR({!EntityOrgDate}) + IF( MONTH({!EntityOrgDate}) = 12, + 2, + 1), IF( MONTH({!EntityOrgDate}) = 12, 1, MONTH({!EntityOrgDate}) + 1), 1) - 1)</expression>
+    </formulas>
+    <formulas>
+        <name>AnnualListPriceOne</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Arkansas&quot;, 150,
+&quot;California&quot;, 20,
+&quot;Colorado&quot;, 10,
+&quot;Connecticut&quot;, 150,
+&quot;Hawaii&quot;, 15,
+&quot;Illinois&quot;, 154,
+&quot;Maryland&quot;, 300,
+&quot;Nevada&quot;, 150,
+&quot;New Jersey&quot;, 50,
+&quot;South Carolina&quot;, 0,
+&quot;Tennessee&quot;, 20,
+&quot;Utah&quot;, 15,
+&quot;Vermont&quot;, 45,
+&quot;Virginia&quot;, 100,
+&quot;Washington&quot;, 60,
+&quot;Wisconsin&quot;, 40,
+&quot;Wyoming&quot;, 52,
+&quot;Arizona&quot;, 45,
+&quot;Louisiana&quot;, 30,
+&quot;Massachusetts&quot;, 135,
+&quot;Oregon&quot;, 100,
+&quot;South Dakota&quot;, 50,
+0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>AnnualListPriceTwo</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Alaska&quot;, 100,
+&quot;California&quot;, 20,
+&quot;Delaware&quot;, 225,
+&quot;District of Columbia&quot;, 300,
+&quot;Florida&quot;, 138.75,
+&quot;Georgia&quot;, 50,
+&quot;Indiana&quot;, 22,
+&quot;Iowa&quot;, 45,
+&quot;Kansas&quot;, 50,
+&quot;Kentucky&quot;, 15,
+&quot;Maine&quot;, 85,
+&quot;Michigan&quot;, 25,
+&quot;Minnesota&quot;, 0,
+&quot;Mississippi&quot;, 23,
+&quot;Montana&quot;, 20,
+&quot;New Hampshire&quot;, 100,
+&quot;New Mexico&quot;, 25,
+&quot;New York&quot;, 9,
+&quot;North Carolina&quot;, 25,
+&quot;North Dakota&quot;, 25,
+&quot;Pennsylvania&quot;, 70,
+&quot;Rhode Island&quot;, 50,
+&quot;Texas&quot;, 0,
+&quot;West Virginia&quot;, 25,
+0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>CheckTrue</name>
+        <dataType>Boolean</dataType>
+        <expression>True</expression>
+    </formulas>
+    <formulas>
+        <name>Currentyearplus1</name>
+        <dataType>Number</dataType>
+        <expression>YEAR({!EntityOrgDate})+1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>EffDate2</name>
+        <dataType>Date</dataType>
+        <expression>{!SpecificDueDateTwoSales} + 1</expression>
+    </formulas>
+    <formulas>
+        <name>EndDate2</name>
+        <dataType>Date</dataType>
+        <expression>DATE(
+IF({!EntityOrgState} = &quot;California&quot;, YEAR({!SpecificDueDateTwoSales}) + 2, YEAR({!SpecificDueDateTwoSales}) + 1),
+MONTH({!SpecificDueDateTwoSales}),
+IF(MONTH({!SpecificDueDateTwoSales}) = 2, 28,
+DAY({!SpecificDueDateTwoSales})))</expression>
+    </formulas>
+    <formulas>
+        <name>GreenHQ</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+AND( 
+NOT(ISBLANK({!GreenCorpHQDate})), 
+TODAY() &lt; ({!GreenCorpHQDate} + 730), 
+ISBLANK({!NexusCurrent})),
+TRUE,
+FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>HowManySales</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Alaska&quot;, 2,
+&quot;California&quot;, 2,
+&quot;Delaware&quot;, 2,
+&quot;District of Columbia&quot;, 2,
+&quot;Florida&quot;, 2,
+&quot;Georgia&quot;, 2,
+&quot;Indiana&quot;, 2,
+&quot;Iowa&quot;, 2,
+&quot;Kansas&quot;, 2,
+&quot;Kentucky&quot;, 2,
+&quot;Maine&quot;, 2,
+&quot;Michigan&quot;, 2,
+&quot;Minnesota&quot;, 2,
+&quot;Montana&quot;, 2,
+&quot;Mississippi&quot;, 2,
+&quot;New Hampshire&quot;, 2,
+&quot;New Mexico&quot;, 2,
+&quot;New York&quot;, 2,
+&quot;North Carolina&quot;, 2,
+&quot;North Dakota&quot;, 2,
+&quot;Pennsylvania&quot;, 2,
+&quot;Rhode Island&quot;, 2,
+&quot;Texas&quot;, 2,
+&quot;West Virginia&quot;, 2,
+1)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>NomineePrice</name>
+        <dataType>Number</dataType>
+        <expression>IF({!EntityNominee} = &quot;Nominee&quot;, 195, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>NomineeProductPick</name>
+        <dataType>String</dataType>
+        <expression>IF({!EntityNominee} = &quot;Nominee&quot;, &quot;01tU00000006ebv&quot;, &quot;01tU0000000ykXN&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>OneSaleNaming</name>
+        <dataType>String</dataType>
+        <expression>IF( {!EntityOrgState} = &quot;Nevada&quot; &amp;&amp;  {!EntityNominee} = &quot;Nominee&quot;, 
+&quot;NV Annual List, Nom&quot;, 
+IF( {!EntityOrgState} = &quot;Nevada&quot; &amp;&amp;  {!EntityNominee} = &quot;Corp Nom&quot;,
+&quot;NV Annual List, Corp Nom&quot;, 
+IF( {!EntityOrgState} = &quot;Nevada&quot; &amp;&amp;  {!EntityNominee} = &quot;None&quot;,
+&quot;NV Annual List, No Nom&quot;,
+IF( {!EntityOrgState} = &quot;Wyoming&quot; &amp;&amp;  {!EntityNominee} = &quot;Nominee&quot;, 
+&quot;WY Annual List, Nom&quot;, 
+IF( {!EntityOrgState} = &quot;Wyoming&quot; &amp;&amp;  {!EntityNominee} = &quot;Corp Nom&quot;,
+&quot;WY Annual List, Corp Nom&quot;, 
+IF( {!EntityOrgState} = &quot;Wyoming&quot; &amp;&amp;  {!EntityNominee} = &quot;None&quot;,
+&quot;WY Annual List, No Nom&quot;,
+CASE(  {!EntityOrgState} ,
+&quot;Alabama&quot;, &quot;RA and State Renewal AL&quot;,
+&quot;Arizona&quot;, &quot;RA and State Renewal AZ&quot;,
+&quot;Arkansas&quot;, &quot;RA and State Renewal AR&quot;,
+&quot;California&quot;, &quot;RA and State Renewal CA&quot;,
+&quot;Colorado&quot;, &quot;RA and State Renewal CO&quot;,
+&quot;Connecticut&quot;, &quot;RA and State Renewal CT&quot;,
+&quot;Hawaii&quot;, &quot;RA and State Renewal HI&quot;,
+&quot;Idaho&quot;, &quot;RA and State Renewal ID&quot;,
+&quot;Illinois&quot;, &quot;RA and State Renewal IL&quot;,
+&quot;Louisiana&quot;, &quot;RA and State Renewal LA&quot;,
+&quot;Maryland&quot;, &quot;RA and State Renewal MD&quot;,
+&quot;Massachusetts&quot;, &quot;RA and State Renewal MA&quot;,
+&quot;Mississippi&quot;, &quot;RA and State Renewal MS&quot;,
+&quot;Missouri&quot;, &quot;RA and State Renewal MO&quot;,
+&quot;Nebraska&quot;, &quot;RA and State Renewal NE&quot;,
+&quot;New Hampshire&quot;, &quot;RA and State Renewal NH&quot;,
+&quot;New Jersey&quot;, &quot;RA and State Renewal NJ&quot;,
+&quot;Ohio&quot;, &quot;RA and State Renewal OH&quot;,
+&quot;Oklahoma&quot;, &quot;RA and State Renewal OK&quot;,
+&quot;Oregon&quot;, &quot;RA and State Renewal OR&quot;,
+&quot;South Carolina&quot;, &quot;RA Renewal SC&quot;,
+&quot;South Dakota&quot;, &quot;RA and State Renewal SD&quot;,
+&quot;Tennessee&quot;, &quot;RA and State Renewal TN&quot;,
+&quot;Utah&quot;, &quot;RA and State Renewal UT&quot;,
+&quot;Vermont&quot;, &quot;RA and State Renewal VT&quot;,
+&quot;Virginia&quot;, &quot;RA and State Renewal VA&quot;,
+&quot;Washington&quot;, &quot;RA and State Renewal WA&quot;,
+&quot;Wisconsin&quot;, &quot;RA and State Renewal WI&quot;,
+&quot;Critical Naming Error&quot;)
+
+))))))</expression>
+    </formulas>
+    <formulas>
+        <name>OpportunityEntityType</name>
+        <dataType>String</dataType>
+        <expression>CASE({!EntityType},
+&quot;012U0000000DE8mIAG&quot;, &quot;LLC&quot;,
+&quot;012U0000000DE8rIAG&quot;, &quot;LP&quot;,
+&quot;C-Corporation&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>OtherFeePrice</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Texas&quot;, 50,
+&quot;Nevada&quot;, 200,
+0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>OtherFees</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+{!EntityOrgState},
+&quot;Texas&quot;, &quot;01t0B000002EoUg&quot;,
+&quot;Nevada&quot;, &quot;01tU0000000ykYf&quot;,
+Null)</expression>
+    </formulas>
+    <formulas>
+        <name>PriceAdd250</name>
+        <dataType>Number</dataType>
+        <expression>{!OLIPrice} + 250</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>QuantityAddOne</name>
+        <dataType>Number</dataType>
+        <expression>{!OLI_Quantity} + 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>RAEffDate</name>
+        <dataType>Date</dataType>
+        <expression>{!AnniversayMonthDateFormula} + 1</expression>
+    </formulas>
+    <formulas>
+        <name>RAEndDate</name>
+        <dataType>Date</dataType>
+        <expression>DATE( YEAR({!AnniversayMonthDateFormula}) + 1, MONTH({!AnniversayMonthDateFormula}), DAY({!AnniversayMonthDateFormula}))</expression>
+    </formulas>
+    <formulas>
+        <name>RAName</name>
+        <dataType>String</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Alabama&quot;, &quot;RA Renewal AL&quot;,
+&quot;Alaska&quot;, &quot;RA Renewal AK&quot;,
+&quot;Arizona&quot;, &quot;RA Renewal AZ&quot;,
+&quot;Arkansas&quot;, &quot;RA Renewal AR&quot;,
+&quot;California&quot;, &quot;RA Renewal CA&quot;,
+&quot;Colorado&quot;, &quot;RA Renewal CO&quot;,
+&quot;Connecticut&quot;, &quot;RA Renewal CT&quot;,
+&quot;Delaware&quot;, &quot;RA Renewal DE&quot;,
+&quot;Florida&quot;, &quot;RA Renewal FL&quot;,
+&quot;Georgia&quot;, &quot;RA Renewal GA&quot;,
+&quot;Hawaii&quot;, &quot;RA Renewal HI&quot;,
+&quot;Idaho&quot;, &quot;RA Renewal ID&quot;,
+&quot;Illinois&quot;, &quot;RA Renewal IL&quot;,
+&quot;Indiana&quot;, &quot;RA Renewal IN&quot;,
+&quot;Iowa&quot;, &quot;RA Renewal IA&quot;,
+&quot;Kansas&quot;, &quot;RA Renewal KS&quot;,
+&quot;Kentucky&quot;, &quot;RA Renewal KY&quot;,
+&quot;Louisiana&quot;, &quot;RA Renewal LA&quot;,
+&quot;Maine&quot;, &quot;RA Renewal ME&quot;,
+&quot;Maryland&quot;, &quot;RA Renewal MD&quot;,
+&quot;Massachusetts&quot;, &quot;RA Renewal MA&quot;,
+&quot;Michigan&quot;, &quot;RA Renewal MI&quot;,
+&quot;Minnesota&quot;, &quot;RA Renewal MN&quot;,
+&quot;Mississippi&quot;, &quot;RA Renewal MS&quot;,
+&quot;Missouri&quot;, &quot;RA Renewal MO&quot;,
+&quot;Montana&quot;, &quot;RA Renewal MT&quot;,
+&quot;Nebraska&quot;, &quot;RA Renewal NE&quot;,
+&quot;Nevada&quot;, &quot;RA Renewal NV&quot;,
+&quot;New Hampshire&quot;, &quot;RA Renewal NH&quot;,
+&quot;New Jersey&quot;, &quot;RA Renewal NJ&quot;,
+&quot;New Mexico&quot;, &quot;RA Renewal NM&quot;,
+&quot;New York&quot;, &quot;RA Renewal NY&quot;,
+&quot;North Carolina&quot;, &quot;RA Renewal NC&quot;,
+&quot;North Dakota&quot;, &quot;RA Renewal ND&quot;,
+&quot;Ohio&quot;, &quot;RA Renewal OH&quot;,
+&quot;Oklahoma&quot;, &quot;RA Renewal OK&quot;,
+&quot;Oregon&quot;, &quot;RA Renewal OR&quot;,
+&quot;Pennsylvania&quot;, &quot;RA Renewal PA&quot;,
+&quot;Rhode Island&quot;, &quot;RA Renewal RI&quot;,
+&quot;South Carolina&quot;, &quot;RA Renewal SC&quot;,
+&quot;South Dakota&quot;, &quot;RA Renewal SD&quot;,
+&quot;Tennessee&quot;, &quot;RA Renewal TN&quot;,
+&quot;Texas&quot;, &quot;RA Renewal TX&quot;,
+&quot;Utah&quot;, &quot;RA Renewal UT&quot;,
+&quot;Vermont&quot;, &quot;RA Renewal VT&quot;,
+&quot;Virginia&quot;, &quot;RA Renewal VA&quot;,
+&quot;Washington&quot;, &quot;RA Renewal WA&quot;,
+&quot;West Virginia&quot;, &quot;RA Renewal WV&quot;,
+&quot;Wisconsin&quot;, &quot;RA Renewal WI&quot;,
+&quot;Wyoming&quot;, &quot;RA Renewal WY&quot;,
+&quot;Critical Naming Error&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>RAUnitPrice</name>
+        <dataType>Number</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Nevada&quot;, 110,
+&quot;Washington&quot;, 110,
+135)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>ServiceItem</name>
+        <dataType>String</dataType>
+        <expression>IF({!EntityOrgState} = &quot;California&quot;, &quot;01tU00000035D5e&quot;, &quot;01tU0000000yiLp&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SpecificDueDateTwoSales</name>
+        <dataType>Date</dataType>
+        <expression>Case({!EntityOrgState},
+
+&quot;Alaska&quot;, DATE(YEAR({!EntityOrgDate}) + 2, 1, 2),
+
+&quot;California&quot;, DATE(YEAR({!EntityOrgDate}) + IF( MONTH({!EntityOrgDate}) = 12, + 3, + 2), IF( MONTH({!EntityOrgDate}) = 12, 1, MONTH({!EntityOrgDate}) + 1), 1) - 1,
+
+&quot;Delaware&quot;, DATE(IF(MONTH({!EntityOrgDate}) = 1, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 3, 1),
+
+&quot;District of Columbia&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 1),
+
+&quot;Florida&quot;, DATE(YEAR({!EntityOrgDate}) + 1, 4, 30),
+
+&quot;Georgia&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 1),
+
+&quot;Indiana&quot;, DATE(YEAR({!EntityOrgDate}) + 2, IF( MONTH({!EntityOrgDate}) = 12, 1, MONTH({!EntityOrgDate}) + 1), 1) - 1,
+
+&quot;Iowa&quot;, DATE(IF(MOD(YEAR({!EntityOrgDate}),2) &lt;&gt; 0, YEAR({!EntityOrgDate}) + 1, YEAR({!EntityOrgDate}) + 2), 4, 1),
+
+&quot;Kansas&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 15),
+
+&quot;Kentucky&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 4, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 6, 30),
+
+&quot;Maine&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 4, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 6, 1),
+
+&quot;Michigan&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 3, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 5, 14),
+
+&quot;Minnesota&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 10, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 12, 31),
+
+&quot;Mississippi&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 15),
+
+&quot;Montana&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 13),
+
+&quot;New Hampshire&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 1),
+
+&quot;New Mexico&quot;, DATE(YEAR({!EntityOrgDate}) + 2, 3, 15),
+
+&quot;New York&quot;, DATE(YEAR({!EntityOrgDate}) + 2, IF( MONTH({!EntityOrgDate}) = 12, 1, MONTH({!EntityOrgDate}) + 1), 1) - 1,
+
+&quot;North Carolina&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 2, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 4, 15),
+
+&quot;North Dakota&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 6, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 8, 1),
+
+&quot;Pennsylvania&quot;, DATE(
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 0, YEAR( {!EntityOrgDate} ) + 1,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 1, YEAR( {!EntityOrgDate} ) + 10,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 2, YEAR( {!EntityOrgDate} ) + 9,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 3, YEAR( {!EntityOrgDate} ) + 8,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 4, YEAR( {!EntityOrgDate} ) + 7,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 5, YEAR( {!EntityOrgDate} ) + 6,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 6, YEAR( {!EntityOrgDate} ) + 5,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 7, YEAR( {!EntityOrgDate} ) + 4,
+IF(MOD(YEAR({!EntityOrgDate}), 10) = 8, YEAR( {!EntityOrgDate} ) + 3, YEAR( {!EntityOrgDate} ) + 2))))))))), IF( MONTH({!EntityOrgDate}) = 12, 1, MONTH({!EntityOrgDate}) + 1), 1) - 1,
+
+&quot;Rhode Island&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 1, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 3, 1),
+
+&quot;Texas&quot;, DATE( YEAR({!EntityOrgDate}) + 1, 5, 15),
+
+&quot;West Virginia&quot;, DATE(IF(MONTH({!EntityOrgDate}) &lt;= 4, YEAR({!EntityOrgDate}), YEAR({!EntityOrgDate}) + 1), 6, 30),
+
+DATE(1969,12,31))</expression>
+    </formulas>
+    <formulas>
+        <name>TwoSaleNaming</name>
+        <dataType>String</dataType>
+        <expression>CASE({!EntityOrgState},
+&quot;Alaska&quot;, &quot;State Renewal AK&quot;,
+&quot;California&quot;, &quot;State Renewal CA&quot;,
+&quot;Delaware&quot;, &quot;State Renewal DE&quot;,
+&quot;District of Columbia&quot;, &quot;State Renewal D.C.&quot;,
+&quot;Florida&quot;, &quot;State Renewal FL&quot;,
+&quot;Georgia&quot;, &quot;State Renewal GA&quot;,
+&quot;Indiana&quot;, &quot;State Renewal IN&quot;,
+&quot;Iowa&quot;, &quot;State Renewal IA&quot;,
+&quot;Kansas&quot;, &quot;State Renewal KS&quot;,
+&quot;Kentucky&quot;, &quot;State Renewal KY&quot;,
+&quot;Maine&quot;, &quot;State Renewal ME&quot;,
+&quot;Michigan&quot;, &quot;State Renewal MI&quot;,
+&quot;Minnesota&quot;, &quot;State Renewal MN&quot;,
+&quot;Montana&quot;, &quot;State Renewal MT&quot;,
+&quot;Mississippi&quot;, &quot;State Renewal MS&quot;,
+&quot;New Hampshire&quot;, &quot;State Renewal NH&quot;,
+&quot;New Mexico&quot;, &quot;State Renewal NM&quot;,
+&quot;New York&quot;, &quot;State Renewal NY&quot;,
+&quot;North Carolina&quot;, &quot;State Renewal NC&quot;,
+&quot;North Dakota&quot;, &quot;State Renewal ND&quot;,
+&quot;Pennsylvania&quot;, &quot;State Renewal PA&quot;,
+&quot;Rhode Island&quot;, &quot;State Renewal RI&quot;,
+&quot;Texas&quot;, &quot;State Renewal TX&quot;,
+&quot;West Virginia&quot;, &quot;State Renewal WV&quot;,
+&quot;Critical Naming Failure&quot;)</expression>
+    </formulas>
+    <interviewLabel>Renewal Sale LLC Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Renewal Sale LLC Flow - Green HQ</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Add_business_license_or_Franchise_Fee</name>
+        <label>Add business license or Franchise Fee</label>
+        <locationX>1693</locationX>
+        <locationY>775</locationY>
+        <connector>
+            <targetReference>Account_Lookup</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <elementReference>OtherFees</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>OtherFeePrice</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_Nominee_OLI</name>
+        <label>Add Nominee OLI</label>
+        <locationX>2945</locationX>
+        <locationY>524</locationY>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>MailSaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PricebookEntryId</field>
+            <value>
+                <stringValue>01u4P00000tC0tiQAC</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01t4P000007ZsyKQAS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <numberValue>297.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_OLI_1</name>
+        <label>Add OLI Annual List</label>
+        <locationX>977</locationX>
+        <locationY>573</locationY>
+        <connector>
+            <targetReference>Add_RA_OLI_2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PricebookEntryId</field>
+            <value>
+                <stringValue>01uU0000002acUmIAI</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01tU0000000yiLp</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>AnnualListPriceOne</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_OLI_1_2</name>
+        <label>Add OLI Annual List</label>
+        <locationX>1248</locationX>
+        <locationY>306</locationY>
+        <connector>
+            <targetReference>Add_RA_OLI_2_3</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <elementReference>ServiceItem</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>AnnualListPriceTwo</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_OLI_CAP</name>
+        <label>Add OLI CAP</label>
+        <locationX>2784</locationX>
+        <locationY>356</locationY>
+        <connector>
+            <targetReference>Nominee_Status_0_2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>MailSaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PricebookEntryId</field>
+            <value>
+                <stringValue>01u4P00000tBxCyQAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01t4P000007ZoKn</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <numberValue>795.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_OLI_Mail_Forwarding</name>
+        <label>Add OLI Mail Forwarding</label>
+        <locationX>2652</locationX>
+        <locationY>889</locationY>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>NewMailSale</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PricebookEntryId</field>
+            <value>
+                <stringValue>01uU0000002d2GxIAI</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01tU0000000ykTt</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <numberValue>250.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_RA_OLI_2</name>
+        <label>Add RA OLI</label>
+        <locationX>1145</locationX>
+        <locationY>574</locationY>
+        <connector>
+            <targetReference>More_Fees_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PricebookEntryId</field>
+            <value>
+                <stringValue>01uU0000001bwbUIAQ</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01tU0000000ykSM</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>RAUnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Add_RA_OLI_2_3</name>
+        <label>Add RA OLI</label>
+        <locationX>1421</locationX>
+        <locationY>307</locationY>
+        <connector>
+            <targetReference>More_Fees_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OpportunityId</field>
+            <value>
+                <elementReference>RASaleID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <stringValue>01tU0000000ykSM</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>RAUnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Annual_List_Sale_0</name>
+        <label>Create Annual List Sale</label>
+        <locationX>626</locationX>
+        <locationY>578</locationY>
+        <assignRecordIdToReference>SaleId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Create_Sale_Entity_1</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ChargentSFA__Gateway__c</field>
+            <value>
+                <elementReference>varChargentGatewayId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <dateValue>1969-12-31</dateValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity_Type__c</field>
+            <value>
+                <elementReference>OpportunityEntityType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Made_by_Automation__c</field>
+            <value>
+                <elementReference>CheckTrue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>OneSaleNaming</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <stringValue>01sU0000000DX8a</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012U0000000DhZQIA0</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Effective_Date__c</field>
+            <value>
+                <elementReference>RAEffDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_End_Date__c</field>
+            <value>
+                <elementReference>RAEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_State__c</field>
+            <value>
+                <elementReference>EntityOrgState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sale_Campaign__c</field>
+            <value>
+                <stringValue>7014P000001BSSuQAO</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Annual_List_Sale_1_0</name>
+        <label>Create Annual List Sale</label>
+        <locationX>666</locationX>
+        <locationY>305</locationY>
+        <assignRecordIdToReference>SaleId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Create_RA_Sale_1_1_1</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ChargentSFA__Gateway__c</field>
+            <value>
+                <elementReference>varChargentGatewayId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <dateValue>1969-12-31</dateValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity_Type__c</field>
+            <value>
+                <elementReference>OpportunityEntityType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Made_by_Automation__c</field>
+            <value>
+                <elementReference>CheckTrue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>TwoSaleNaming</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <stringValue>01sU0000000DX8a</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012U0000000DhZQIA0</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Effective_Date__c</field>
+            <value>
+                <elementReference>EffDate2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_End_Date__c</field>
+            <value>
+                <elementReference>EndDate2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_State__c</field>
+            <value>
+                <elementReference>EntityOrgState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sale_Campaign__c</field>
+            <value>
+                <stringValue>7014P000001BSSuQAO</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_CAP_Sale</name>
+        <label>Create CAP Sale</label>
+        <locationX>2492</locationX>
+        <locationY>368</locationY>
+        <assignRecordIdToReference>MailSaleId</assignRecordIdToReference>
+        <connector>
+            <targetReference>New_Sale_Entity_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ChargentSFA__Gateway__c</field>
+            <value>
+                <elementReference>varChargentGatewayId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>AnniversayMonthDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Made_by_Automation__c</field>
+            <value>
+                <elementReference>CheckTrue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>Corporate Assistance Program Renewal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <stringValue>01sU0000000DX8a</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012U0000000DhZzIAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Effective_Date__c</field>
+            <value>
+                <elementReference>RAEffDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_End_Date__c</field>
+            <value>
+                <elementReference>RAEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sale_Campaign__c</field>
+            <value>
+                <stringValue>7014P000001BSSuQAO</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Mail_Sale</name>
+        <label>Create Mail Sale</label>
+        <locationX>2359</locationX>
+        <locationY>890</locationY>
+        <assignRecordIdToReference>NewMailSale</assignRecordIdToReference>
+        <connector>
+            <targetReference>New_Sale_Entity_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ChargentSFA__Gateway__c</field>
+            <value>
+                <elementReference>varChargentGatewayId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>AnniversayMonthDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Made_by_Automation__c</field>
+            <value>
+                <elementReference>CheckTrue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>Mail Forwarding Renewal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <stringValue>01sU0000000DX8a</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012U0000000DhZzIAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Effective_Date__c</field>
+            <value>
+                <elementReference>RAEffDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_End_Date__c</field>
+            <value>
+                <elementReference>RAEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sale_Campaign__c</field>
+            <value>
+                <stringValue>7014P000001BSSuQAO</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_RA_Sale_1_1_1</name>
+        <label>Create RA Sale</label>
+        <locationX>814</locationX>
+        <locationY>307</locationY>
+        <assignRecordIdToReference>RASaleID</assignRecordIdToReference>
+        <connector>
+            <targetReference>Create_Sale_Entity_1_2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ChargentSFA__Gateway__c</field>
+            <value>
+                <elementReference>varChargentGatewayId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>AnniversayMonthDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Made_by_Automation__c</field>
+            <value>
+                <elementReference>CheckTrue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>RAName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <stringValue>01sU0000000DX8a</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012U0000000DhZzIAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Effective_Date__c</field>
+            <value>
+                <elementReference>RAEffDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_End_Date__c</field>
+            <value>
+                <elementReference>RAEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_State__c</field>
+            <value>
+                <elementReference>EntityOrgState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Sale_Entity_1</name>
+        <label>Create Sale Entity</label>
+        <locationX>790</locationX>
+        <locationY>577</locationY>
+        <assignRecordIdToReference>SaleEntityId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Add_OLI_1</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Sale_Entity_1_2</name>
+        <label>Create Sale Entity</label>
+        <locationX>963</locationX>
+        <locationY>306</locationY>
+        <assignRecordIdToReference>SaleEntityId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Create_Sale_Entity_2_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Sale_Entity_2_0_0</name>
+        <label>Create Sale Entity</label>
+        <locationX>1107</locationX>
+        <locationY>307</locationY>
+        <connector>
+            <targetReference>Add_OLI_1_2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>RASaleID</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>New_Sale_Entity</name>
+        <label>New Sale Entity</label>
+        <locationX>2337</locationX>
+        <locationY>180</locationY>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>MailSaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>New_Sale_Entity_0</name>
+        <label>New Sale Entity</label>
+        <locationX>2645</locationX>
+        <locationY>357</locationY>
+        <connector>
+            <targetReference>Add_OLI_CAP</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>MailSaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>New_Sale_Entity_0_0</name>
+        <label>New Sale Entity</label>
+        <locationX>2493</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>Add_OLI_Mail_Forwarding</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>NewMailSale</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>New_Sale_Entity_1</name>
+        <label>New Sale Entity</label>
+        <locationX>2507</locationX>
+        <locationY>1014</locationY>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>MailSaleId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+    </recordCreates>
+    <recordLookups>
+        <name>Account_Lookup</name>
+        <label>Account Lookup</label>
+        <locationX>1698</locationX>
+        <locationY>456</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Mailing_Services</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>AccountCorpHQ</assignToReference>
+            <field>Corporate_Headquarters__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>GreenCorpHQDate</assignToReference>
+            <field>Green_Corp_HQ_Date__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>NexusCurrent</assignToReference>
+            <field>Nexus_Current__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Check for an Existing CAP or CHQ renewal.</description>
+        <name>Check_Sale_CAP_or_CHQ</name>
+        <label>Chk For Existing Sale</label>
+        <locationX>2339</locationX>
+        <locationY>469</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sale_exists</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Corporate Headquarters Renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Corporate Assistance Program Renewal</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputAssignments>
+            <assignToReference>MailSaleId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Entity_Lookup</name>
+        <label>Entity Lookup</label>
+        <locationX>179</locationX>
+        <locationY>206</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>How_many_sales</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </filters>
+        <object>Entities__c</object>
+        <outputAssignments>
+            <assignToReference>EntityMailing</assignToReference>
+            <field>Mailing_Services__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityName</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityNominee</assignToReference>
+            <field>Nominee_Services__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityOrgState</assignToReference>
+            <field>Organization_State__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityOrgDate</assignToReference>
+            <field>Organizational_Date__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityPrimaryClientId</assignToReference>
+            <field>Primary_Client__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityType</assignToReference>
+            <field>RecordTypeId</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>EntityRA</assignToReference>
+            <field>Registered_Agent_Services__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Find_OLI</name>
+        <label>Find OLI</label>
+        <locationX>2195</locationX>
+        <locationY>1014</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_OLI</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>MailSaleId</elementReference>
+            </value>
+        </filters>
+        <object>OpportunityLineItem</object>
+        <outputAssignments>
+            <assignToReference>OLI_Id</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>OLI_Quantity</assignToReference>
+            <field>Quantity</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>OLIPrice</assignToReference>
+            <field>TotalPrice</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Mail_Forwarding_Lookup</name>
+        <label>Mail Forwarding Lookup</label>
+        <locationX>2190</locationX>
+        <locationY>771</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sale_exists_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityPrimaryClientId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Mail Forwarding Renewal</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputAssignments>
+            <assignToReference>MailSaleId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_OLI</name>
+        <label>Update OLI</label>
+        <locationX>2355</locationX>
+        <locationY>1015</locationY>
+        <connector>
+            <targetReference>New_Sale_Entity_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OLI_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <elementReference>QuantityAddOne</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TotalPrice</field>
+            <value>
+                <elementReference>PriceAdd250</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OpportunityLineItem</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Entity_Lookup</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AccountCorpHQ</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>EntityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityMailing</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityNominee</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityOrgDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityOrgState</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityPrimaryClientId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityRA</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EntityType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>GreenCorpHQDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>MailSaleId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>NewMailSale</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>NexusCurrent</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NoOfSales</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>OLI_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>OLI_Quantity</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>OLIPrice</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>RASaleID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>SaleEntityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>SaleId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varChargentGatewayId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>a0P0B000009O38F</stringValue>
+        </value>
+    </variables>
+</Flow>

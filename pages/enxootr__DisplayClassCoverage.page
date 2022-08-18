@@ -1,0 +1,17 @@
+<apex:page id="DisplayClassCoverage" showHeader="false" sidebar="false" standardcontroller="enxootr__Class__c"
+           extensions="enxootr.DisplayClassCoverageController" lightningStylesheets="true">
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=java&amp;skin=desert"></script>
+    <style>
+        li.L0, li.L1, li.L2, li.L3,
+        li.L5, li.L6, li.L7, li.L8 {
+          list-style-type: decimal !important;
+        }
+        <apex:repeat value="{!CoveredLines}" var="line">
+            #code li:nth-child({!line}) { background: GreenYellow }
+        </apex:repeat>
+
+    </style>
+    <pre class="prettyprint linenums:1" id="code">
+            {!Class__c.Class_Body__c}
+    </pre>
+</apex:page>

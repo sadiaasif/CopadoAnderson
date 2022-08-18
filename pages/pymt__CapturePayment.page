@@ -1,0 +1,99 @@
+<apex:page docType="html-5.0" standardController="pymt__PaymentX__c" extensions="pymt.CapturePaymentController" sideBar="{!IF($CurrentPage.parameters.hideSideBar == 'true',false,true)}" showHeader="{!IF($CurrentPage.parameters.hideHeader == 'true',false,true)}" cache="false" tabStyle="pymt__PaymentX__c">
+<style>
+.modalProgressBox {
+    display: block;
+    position: absolute;
+    z-index: 999;
+    text-align: center; 
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    padding-top:250px;
+    top: 0px;
+    left: 0px;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+    color: black;
+    font-size: 14pt;
+   }
+</style>
+<script>
+var enableValidation = false;
+function validateForm() {
+   if (enableValidation) {
+   // alert("Form submitted");
+   }
+
+    enableValidation = false;
+    return true;
+}
+
+</script>
+<apex:outputPanel id="pagePanel" >
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Capture Payment" help="{!$Page.pymt__Help}"/>
+
+<apex:pageMessages id="pageMessages" />
+<apex:pageMessage rendered="{!simulationMode}" strength="1" severity="warning" summary="PaymentConnect is currently in gateway simulation mode. In this mode PaymentConnect will simulate responses from your payment processor and by-pass actual credit card charges, refunds, etc. To run live transactions, have your Salesforce administrator turn gateway simulation mode off."/>
+    <apex:form id="capturePaymentForm" onsubmit="return validateForm();">
+        <apex:actionStatus id="modalActionStatus" >
+         <apex:facet name="start" > 
+           <apex:outputPanel styleClass="modalProgressBox">&nbsp; 
+           <br/><br/><br/>
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/spinner_med.gif')}"  style="vertical-align:middle;" alt="busy..." />
+              </apex:outputPanel>
+         </apex:facet> 
+         <apex:facet name="stop"  >
+         </apex:facet>
+    </apex:actionStatus>   
+    
+       <apex:pageBlock id="capturePageBlock" mode="edit">
+        <apex:pageBlockButtons id="pageButtons">
+           <apex:commandButton id="cancel" value="Cancel"
+               action="{!cancelFromPage}" onclick="enableValidation=false;"/> 
+            <apex:commandButton id="captureButton" 
+                                value="Capture" 
+                                status="modalActionStatus" 
+                                action="{!capturePayment}" 
+                                rerender="pagePanel"
+                                disabled="{!disableCaptureBtn}" 
+                                onclick="enableValidation=true;"/>
+        
+               <apex:actionStatus id="formActionStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel >&nbsp;
+                        <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                            style="vertical-align:middle;" alt="busy..." />
+                            &nbsp;Updating Page</apex:outputPanel>
+                </apex:facet>
+                <apex:facet name="stop">
+                    <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                </apex:facet>
+            </apex:actionStatus>
+        
+        </apex:pageBlockButtons>
+        
+            <apex:pageBlockSection id="transactionDetailsSection" showHeader="true" title="Transaction Details" collapsible="false">
+            
+                <apex:outputField value="{!payment.pymt__Contact__c}"/>
+                
+                <apex:outputField value="{!payment.pymt__Date__c}"/>
+                <apex:outputField value="{!payment.pymt__Status__c}"/>
+                
+                <apex:outputField value="{!payment.pymt__Processor_Connection__c}"/>
+                
+                <apex:outputField value="{!payment.pymt__Amount__c}"/>
+
+                <apex:outputField value="{!payment.pymt__Auth_Amount__c}"/>
+                
+                <apex:pageblocksectionitem >
+                   <apex:outputLabel value="Capture Amount"/>
+                   <apex:inputText value="{!captureAmount}"/>
+                </apex:pageblocksectionitem>
+            </apex:pageBlockSection>
+            </apex:pageBlock>    
+    
+    </apex:form>
+   </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,274 @@
+<apex:page standardController="n2de__Team__c" id="teamviewpage" extensions="n2de.TeamDetailController" tabStyle="n2de__Team__c" sidebar="false">
+
+    <c:CommonHeader />
+    <c:CommonHelp help_page="team-detail"/>
+    <script>
+    $(document).ready(function() {
+        $('.picklist_view').each(function() {
+            var string = $(this).text();
+            $(this).text(string.replace(/;/g , '; '));
+        });
+    });
+
+    </script>
+    <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+
+    <apex:form id="team_view_form">
+        <apex:sectionHeader title="Distribution Team" subtitle="{!team.Name}"/>
+        <apex:pageBlock title="Team Detail" id="page_block">
+
+            <apex:pageMessages />
+
+            <apex:pageBlockButtons >
+                <apex:commandButton id="edit_button_top" action="{!edit}" value="Edit" rendered="{!RecordAccess.HasEditAccess}"/>
+                <apex:commandButton id="delete_button_top" action="{!deleteTeam}" value="Delete" rendered="{!RecordAccess.HasDeleteAccess}" onclick="if (!window.confirm('Are you sure?')) return false;"/>
+                <apex:commandButton id="clone_button_top" action="{!cloneTeam}" value="Clone" rendered="{!$ObjectType.n2de__Team__c.Createable}"/>
+                <apex:commandButton id="back_button_top" action="{!backToSummary}" value="Back"/>
+                &nbsp;
+                <apex:commandButton id="toggle_team_active_button_top" action="{!toggleTeamActive}" value="{!IF(Team.n2de__Is_active__c, 'Deactivate Team', 'Activate Team')}" rendered="{!CanActivateTeam}"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="Information" columns="2" collapsible="false">
+                <apex:outputField id="info_team_name" value="{!team.Name}"/>
+                <apex:pageBlockSectionItem />
+                <apex:outputField id="info_is_active" value="{!team.n2de__Is_active__c}"/>
+                <apex:outputField id="info_is_distribute_to_queue" value="{!Team.n2de__Is_distribute_to_queue__c}" rendered="{!Team.n2de__Is_distribute_to_queue__c}"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="object_settings" title="Object settings" columns="2" collapsible="false">
+                <apex:pageBlockSectionItem />
+                <c:CommonInlineHelp help_page="active-status"/>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_name__c.InlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_name__c.Label}"/>
+                    <apex:outputText id="os_object" value="{!ObjectLabel}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem rendered="{!team.n2de__Is_Person_Accounts__c}" helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Is_Person_Accounts__c.InlineHelpText}">
+                    <apex:outputLabel value="Use Person Accounts"/>
+                    <apex:outputField id="os_use_person_accounts" value="{!team.n2de__Is_Person_Accounts__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="object_status_settings" columns="2">
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_active_status_field_name__c.InlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Object_active_status_field_name__c.Label}"/>
+                    <apex:outputText id="os_active_status_field" value="{!ActiveStatusFieldLabel}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                <apex:outputField id="os_active_status_values" value="{!team.n2de__Object_active_status_values_long__c}" styleClass="picklist_view"/>
+                <apex:outputField id="os_distribute_inactive" value="{!team.n2de__Inactive_object_not_filtered__c}"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection columns="1" collapsible="false" title="Team-level caps">
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Team_level_caps_enabled__c.InlineHelpText}">
+                    <apex:outputLabel value="Team-level caps enabled"/>
+                    <apex:outputField id="team_level_caps_enabled" value="{!Team.n2de__Team_level_caps_enabled__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="working_hours" title="Distribution hours" columns="1" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Shift_name__c.Label}"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_shift_name" value="{!DistributionHours.n2de__Shift_name__c}" rendered="{!DistributionHours.n2de__Is_shift_hours__c}"/>
+                        <apex:outputText id="dist_hours_custom_hours" value="--Custom hours--" rendered="{!NOT(DistributionHours.n2de__Is_shift_hours__c)}"/>
+                        &nbsp;&nbsp;&nbsp;<apex:outputLink id="dist_hours_manage_shift_hours" value="/apex/{!NamespacePrefix}ShiftHours?returnTo=TeamDetailView&obj={!Team.Id}">Manage shift hours</apex:outputLink>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Timezone__c.InlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Timezone__c.Label}"/>
+                    <apex:outputText id="dist_hours_timezone" value="{!TimezoneDescription}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Mon_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Monday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_monday" value="{!DistributionHours.n2de__Mon_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Mon_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_monday" value="{!DistributionHours.n2de__Mon_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_monday" value="{!DistributionHours.n2de__Mon_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_monday" value="{!DistributionHours.n2de__Mon_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_monday" value="{!DistributionHours.n2de__Mon_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Tue_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Tuesday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_tuesday" value="{!DistributionHours.n2de__Tue_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Tue_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_tuesday" value="{!DistributionHours.n2de__Tue_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_tuesday" value="{!DistributionHours.n2de__Tue_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_tuesday" value="{!DistributionHours.n2de__Tue_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_tuesday" value="{!DistributionHours.n2de__Tue_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Wed_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Wednesday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_wednesday" value="{!DistributionHours.n2de__Wed_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Wed_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_wednesday" value="{!DistributionHours.n2de__Wed_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_wednesday" value="{!DistributionHours.n2de__Wed_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_wednesday" value="{!DistributionHours.n2de__Wed_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_wednesday" value="{!DistributionHours.n2de__Wed_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Thu_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Thursday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_thursday" value="{!DistributionHours.n2de__Thu_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Thu_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_thursday" value="{!DistributionHours.n2de__Thu_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_thursday" value="{!DistributionHours.n2de__Thu_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_thursday" value="{!DistributionHours.n2de__Thu_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_thursday" value="{!DistributionHours.n2de__Thu_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Fri_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Friday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_friday" value="{!DistributionHours.n2de__Fri_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Fri_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_friday" value="{!DistributionHours.n2de__Fri_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_friday" value="{!DistributionHours.n2de__Fri_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_friday" value="{!DistributionHours.n2de__Fri_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_friday" value="{!DistributionHours.n2de__Fri_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Sat_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Saturday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_saturday" value="{!DistributionHours.n2de__Sat_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Sat_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_saturday" value="{!DistributionHours.n2de__Sat_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_saturday" value="{!DistributionHours.n2de__Sat_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_saturday" value="{!DistributionHours.n2de__Sat_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_saturday" value="{!DistributionHours.n2de__Sat_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Sun_availability__c.InlineHelpText}">
+                    <apex:outputLabel value="Sunday"/>
+                    <apex:outputPanel >
+                        <apex:outputText id="dist_hours_availability_sunday" value="{!DistributionHours.n2de__Sun_availability__c}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!DistributionHours.n2de__Sun_availability__c=='Set hours'}">
+                            <apex:outputText id="dist_hours_start_hour_sunday" value="{!DistributionHours.n2de__Sun_start_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_start_min_sunday" value="{!DistributionHours.n2de__Sun_start_min__c}"/>
+                            <apex:outputLabel value=" to "/>
+                            <apex:outputText id="dist_hours_end_hour_sunday" value="{!DistributionHours.n2de__Sun_end_hour__c}"/>
+                            <apex:outputText value=":"/>
+                            <apex:outputText id="dist_hours_end_min_sunday" value="{!DistributionHours.n2de__Sun_end_min__c}"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Holidays" columns="1" collapsible="false">
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Holiday_Group__c.InlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Holiday_Group__c.Label}"/>
+                    <apex:outputLink id="holiday_region" value="/apex/{!NamespacePrefix}Holiday?id={!Team.n2de__Holiday_Group__c}">{!Team.Holiday_Group__r.Name}</apex:outputLink>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="Advanced Settings" columns="2" collapsible="false" id="advanced_section">
+                <apex:outputField id="as_active_cap_and_balance_by_field" value="{!Team.n2de__Active_cap_and_balance_by__c}"/>
+                <apex:outputField id="as_distributed_record_value_field" value="{!Team.n2de__Distributed_record_value_field__c}" rendered="{!IsActiveCapLoadBalanceByTotalValue}"/>
+                <apex:pageBlockSectionItem rendered="{!NOT(IsActiveCapLoadBalanceByTotalValue)}"/>
+                <apex:outputField id="as_load_balancing_duration" value="{!Team.n2de__Load_balancing_duration__c}"/>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.n2de__Team__c.Fields.n2de__Assign_to_field__c.InlineHelpText}" rendered="{!Team.n2de__Is_distribute_to_queue__c != true}">
+                    <apex:outputLabel value="{!$ObjectType.n2de__Team__c.Fields.n2de__Assign_to_field__c.Label}"/>
+                    <apex:outputText value="{!AssignToFieldLabel}"/>
+                </apex:pageBlockSectionItem>
+                <apex:outputField id="as_logging_disabled" value="{!Team.n2de__Is_logging_disabled__c}"/>
+                <apex:outputField id="as_triggers_respect_dist_hours" value="{!Team.n2de__Is_triggers_respect_distribution_hours__c}" rendered="{!TriggersEnabled}"/>
+                <apex:pageBlockSectionItem rendered="{!NOT(TriggersEnabled)}"/>
+                <apex:outputField id="as_assignment_rejection_enabled" value="{!Team.n2de__Enable_assignment_rejection__c}" rendered="{!ObjectSupportsRejection}"/>
+                <apex:outputField id="as_rejection_request_limit" value="{!Team.n2de__Rejection_request_limit__c}" rendered="{!ObjectSupportsRejection && Team.n2de__Enable_assignment_rejection__c}"/>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="History" columns="2" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Created By" for="created_by"/>
+                    <apex:outputPanel >
+                        <apex:outputField id="created_by" value="{!team.CreatedById}"/>
+                        ,&nbsp;
+                        <apex:outputField value="{!team.CreatedDate}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Last Modified By" for="modified_by"/>
+                    <apex:outputPanel >
+                        <apex:outputField id="modified_by" value="{!team.LastModifiedById}"/>
+                        ,&nbsp;
+                        <apex:outputField value="{!team.LastModifiedDate}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+        <c:HistoryTable historyList="{!latestHistory}" blockTitle="Team History" sectionTitle="Team Change History"/>
+    </apex:form>
+
+    <style>
+        .tableHeader {
+            font-size: 11px;
+            color: #4A4A56;
+        }
+        .alertSeq {
+            width: 20px;
+        }
+        .alertCol {
+            padding-right: 40px;
+            min-width: 55px;
+        }
+        .alertAlertPeriodCol {
+            padding-right: 30px;
+        }
+        .alertConditionFieldCol {
+            padding-right: 10px;
+            min-width: 80px;
+        }
+        .alertConditionCol {
+            padding-right: 10px;
+        }
+        .alertAlertOperator {
+            font-size: 80%;
+            text-transform: uppercase;
+        }
+        .label {
+            font-weight: bold;
+            color: #4A4A56;
+        }
+
+    </style>
+    <c:StatusPanel />
+</apex:page>

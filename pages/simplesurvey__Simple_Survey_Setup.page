@@ -1,0 +1,2125 @@
+<apex:page title="Simple Survey Setup" id="pg" controller="simplesurvey.SimpleSurveySetupController" action="{!setupCustomSetting}" tabStyle="Simple_Survey_Setup__tab" sidebar="false" contentType="{!IF($CurrentPage.parameters.s != '1', '', 'text/plain')}">
+    <apex:outputText rendered="{!$CurrentPage.parameters.s=='1'}" value="{!$Api.Session_ID}"/>    
+
+    <apex:outputPanel rendered="{!$CurrentPage.parameters.s!='1'}" layout="none">
+        <apex:stylesheet value="{!URLFOR($Resource.simplesurvey__LightningDesignSystem, '/styles/salesforce-lightning-design-system-vf.min.css')}"/>  <!-- SLDS Version 2.8.1 -->
+        <apex:includeScript value="/support/console/42.0/integration.js"/>
+        <apex:includeScript value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Scripts,'script/navigation-tabs.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Scripts,'script/string-utils.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Scripts,'script/icon-util.js')}"/>
+        <!-- <apex:includeScript value="{!URLFOR($Resource.Simple_Survey_Scripts,'script/remove-console-padding.js')}"/> -->
+        <apex:includeScript value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Scripts,'script/action-overlays.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Scripts,'script/xml-entities.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Scripts, 'script/jsforce.js')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.simplesurvey__Simple_Survey_Setup_Style)}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.simplesurvey__SimpleSurveyAssets, 'roboto/roboto.css')}"/>
+        <style type="text/css">
+            .slds-scope a {
+                color: #8D31F7 !important;
+            }
+            .slds-scope a:hover, .slds-scope a:focus {
+                color: #6F1CD8 !important;
+            }
+
+            .slds-tabs_default__content .slds-box {
+                background-image: url('{!URLFOR($Resource.SimpleSurveyAssets, 'VicassoLight.svg')}') !important;
+                background-repeat: no-repeat;
+                background-position: right -12px bottom -12px;
+                background-size: 160px;
+            }
+
+            .slds-tabs_default__content .slds-box .slds-box {
+                background-image: none !important;
+            }
+
+            /** Set Text for Next and Previous Buttons **/
+            #next-button .buttonText::after {
+                content:' - ' attr(data-nextStep);
+            }
+
+            #previous-button::after {
+                content:' - ' attr(data-prevStep);
+            }
+
+            /** Keep all buttons inline **/
+            #navigationButtonsWrapper {
+                background-color: #FFF;
+                display:flex; 
+                justify-content: center;
+            }
+
+            /** Keep the next and previous buttons the same size and in the same place **/
+            #navigationButtonsWrapper > span, #navigationButtonsWrapper button {
+                width:300px;
+            }
+
+            /** Next and Previous Buttons in a Button Group **/
+            .slds .slds-button-group span + span {
+                margin-left: -1px;
+            }
+
+            .slds-button-group span > button {
+                border-radius: 0 !important;
+            }
+
+            .slds-button-group span:first-child > button {
+                border-radius: .25rem 0 0 .25rem !important;
+            }
+
+            .slds-button-group span:last-child > button {
+                border-radius: 0 .25rem .25rem 0 !important;
+            }
+
+            /** Remove padding from around page **/
+            
+            .sfdcBody {
+                padding-top: 0 !important;
+            }
+
+            .noSidebarCell {
+                padding: 0 !important;
+            }
+
+            /** Font **/
+
+            .italic {
+                font-style: italic;
+            }
+
+            .bold {
+                font-weight: bold;
+            }
+
+            /** Checkboxes **/
+
+            .slds-checkbox__label .bold {
+                color: #16325c;
+            }
+
+            /** Icon that shows up next to "Assign License and Permission Set" button **/
+
+            #assignSuccessIcon {
+                background-color: #04844b;
+                border-radius:50%;
+                padding:0.313rem;
+            }
+
+            /** "Saved Text" that appears and fades out next to the Set Default Web Address field **/
+
+            #web-address-saved {
+                display: inline-block;
+                color: #04844b;
+                opacity: 1;
+                padding-left: 8px;
+                animation: fadeout 4s;
+                animation-fill-mode: forwards;
+                -webkit-animation: fadeout 4s;
+                -webkit-animation-fill-mode: forwards;
+            }
+
+            .web-address-saved-hidden-no-animation {
+                opacity: 0 !important;
+                animation: none !important;
+                animation-fill-mode: none !important;
+                -webkit-animation: none !important;
+                -webkit-animation-fill-mode: none !important;
+            }
+
+            @keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: 0;
+                }
+            }
+
+            @-webkit-keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /** Star Rating Image Spinners **/
+            #oneSpinner, #twoSpinner, #threeSpinner, #fourSpinner, #fiveSpinner {
+                display: inline;
+                margin-left: 1rem;
+            }
+
+            /** Upload Buttons **/
+            .sldsc-input-file input[type="file"] {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+
+            .sldsc-input-file input[type="file"]:focus + label.slds-button_brand {
+                outline: 0;
+                box-shadow: 0 0 3px #0070D2;
+                text-decoration: none;
+                background-color: #005fb2;
+                color: #fff;
+            }
+
+            .sldsc-input-file label {
+                cursor: pointer;
+            }
+
+            .sldsc-input-file label[disabled="true"] {
+                cursor: not-allowed;
+            }
+
+            /** Text and Select Fields **/
+            .image-select, .url-input{
+                width:400px !important;
+            }
+
+            /** Branding Image Previews **/
+            .image-preview {
+                width: 200px !important;
+            }
+
+            .image-preview_box, .image-preview_spinner {
+                height: 200px !important;
+            }
+
+            .image-preview_image {
+                max-width: 200px !important;
+            }
+
+            /** Upload and refresh buttons explained in text **/
+
+            .slds-button.preview-button:hover, .slds-button.preview-button:active {
+                background-color: initial !important;
+                color: #54698d !important;
+            }
+
+            /** Sticky (Top of Page) Elements **/
+
+            .sticky {
+                position:fixed;
+                left: 0;
+                right: 0;
+                z-index:49;
+            }
+
+            #stickyNav {
+                padding-top: 70px !important;
+            }
+
+            #stickyNav.hasMotif{
+                margin: 0 10px !important;
+            }
+
+            #stickyPageAlert.hasMotif {
+                margin: 0 10px !important;
+            }
+
+            #stickyPageAlert {
+                padding-top: 110px;
+                z-index: 10;
+            }
+
+            .tab_content_wrapper {
+                padding-top: 126px !important;
+            }
+
+            #imageOverlay {
+                cursor: zoom-out;
+            }
+
+            .image-box-shadow {
+                box-shadow: 8px 8px 8px rgba(0,0,0,0.5);
+            }
+
+            .image-overlay-image-container {
+                height: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+            }
+
+            /*#imageOverlay img{
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            }*/
+
+            #logoRefreshButton, #thumbsUpRefreshButton, #thumbsDownRefreshButton {
+                min-width: 30px;    /* Quick Fix for an issue where the buttons were squeezed */
+            }
+
+            #header-save-button {
+                -webkit-transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+                -moz-transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+                -ms-transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+                -o-transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+                transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+            }
+
+            .slds-transition-hide {
+                visibility: hidden;
+            }
+
+            .setupImage {
+                cursor: zoom-in;
+            }
+
+            #actionOverlay {
+                position: absolute;
+                z-index: 9999;
+            }
+
+            #actionOverlay .slds-backdrop {
+                background-color: #fff;
+            }
+
+            img.checkImg {
+                margin-bottom: .25rem !important;
+            }
+        </style>
+        <div class="pg slds-scope">
+            <div id="actionOverlay">
+                <div class="slds-backdrop slds-backdrop_open" style="display:flex;">
+                    <div class="slds-align_absolute-center">
+                        <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand overlay-spinner" style="position:static;">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                        <div>
+                            <div id="actionOverlayTitle" class="slds-text-heading_large" style="font-weight:700;"></div>
+                            <div id="actionOverlaySubtitle" class="slds-text-align_center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="imageOverlay" style="display:none" onclick="hideImageOverlay();">
+                <div class="slds-backdrop slds-backdrop_open">
+                    <div class="image-overlay-image-container"></div>
+                </div>
+            </div>
+            <apex:form id="frm">
+                <apex:actionRegion >
+                    <apex:actionFunction name="stopUploading" action="{!stopUploading}" reRender=""/>
+                    <script type="text/javascript">
+                        function imagePreviewDidLoad(image, spinner, displayType) {
+                            if(typeof(displayType) === 'undefined') {
+                                displayType = 'block';  
+                            }
+                            spinner.style.display = 'none';
+                            image.style.display = displayType;
+                        }
+
+                        function imagePreviewLoadError(errorDiv, spinner, displayType) {
+                            if(typeof(displayType) === 'undefined') {
+                                displayType = 'flex';  
+                            }
+                            spinner.style.display = 'none';
+                            errorDiv.style.display = displayType;
+                        }
+
+                        if({!isUploading}) {
+                            window.location.hash = 'LegacyConfiguration';
+                            stopUploading();
+                        }
+                    </script>
+                
+                    <div id="stickyHeader" class="sticky hasMotif">
+                        <c:PageHeader appName="Simple Survey" title="Setup" showDefaultButtons="true">
+                            <apex:actionFunction name="savePage" action="{!save}" rerender="addressSaved, apex2js, recaptchaFields" oncomplete="hideActionOverlay();handleAlert();"/>
+                            <span class="theme-mismatch-only slds-hide">
+                                <a class="slds-button slds-button_brand slds-m-right_large" href="/home/home.jsp">
+                                    <svg class="slds-button__icon slds-button__icon_left" viewBox="0 0 24 24">
+                                        <path d="M22.4 10.6H7.1c-.4 0-.6-.5-.3-.8l4.4-4.4c.3-.3.3-.7 0-1l-1-1c-.3-.3-.7-.3-1 0l-8 8.1c-.3.3-.3.7 0 1l8 8.1c.3.3.7.3 1 0l1-1c.2-.3.2-.7 0-1l-4.5-4.4c-.2-.3-.1-.8.4-.8h15.3c.4 0 .7-.3.7-.7v-1.3c0-.4-.3-.8-.7-.8z"></path>
+                                    </svg>
+                                    Back to Salesforce
+                                </a>
+                            </span>
+                            <apex:outputPanel rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                                <button id="header-save-button" class="slds-button slds-button_brand slds-transition-hide" onclick="startSave(); return false;">Save</button>
+                            </apex:outputPanel>
+                        </c:PageHeader>
+                    </div>
+                    <div id="setup_nav" class="slds-tabs_default">
+                        <ul id="stickyNav" class="slds-tabs_default__nav sticky hasMotif" style="padding-top:70px; background-color:white; z-index:48 !important;">
+                            <apex:repeat value="{!tabNames}" var="tab">
+                                <li class="slds-tabs_default__item" onclick="switchNavigationTab(this)" data-navigation-id="setup_nav" data-tab-name="{!LOWER(tab)}">
+                                    <a id="tab-{!SUBSTITUTE(SUBSTITUTE(LOWER(tab), ' ', '_'),'.','')}__item" class="slds-tabs_default__link" tabindex="-1">{!tab}</a>
+                                </li>
+                            </apex:repeat>
+                        </ul>
+                        <div id="stickyPageAlert" class="sticky hasMotif">
+                            <c:PageAlert ></c:PageAlert>
+                        </div>
+
+                        <!-- 
+                            The content wrappers of each tab. Right now they are empty divs that will be appended to via javascript.
+                        -->
+                        <apex:repeat value="{!tabNames}" var="tab">
+                            <!-- For id, lowercase the tab name, replace all spaces with underscores, remove all periods (.) -->
+                            <div id="tab-{!SUBSTITUTE(SUBSTITUTE(LOWER(tab), ' ', '_'),'.','')}" class="slds-tabs_default__content slds-hide tab_content_wrapper" data-tab-name="{!LOWER(tab)}" data-navigation-id="setup_nav">
+                                <div class="slds-box slds-m-horizontal_small">
+                                </div>
+                            </div>
+                        </apex:repeat>
+
+                        <!--
+                            The Content of Each Tab
+                        -->
+
+                        <!-- Introduction -->
+                        <div class="tab_content slds-hide" data-tab-name="introduction" data-show-save="false">
+                            <div class="slds-text-longform slds-m-bottom_small">
+                                <p class="slds-text-title_caps">Welcome to Simple Survey</p>
+                                <p>Simple Survey is a 100% native Salesforce survey app used to measure customer satisfaction (CSat) related to Cases, Accounts, Contacts, and other standard &amp; custom objects. Simple Survey is quick to deploy and turnkey, yet customizable. A Force.com Site is required, and therefore Simple Survey is specifically available for customers with Enterprise Edition and up.</p>
+
+                                <p class="slds-text-title_caps">Features</p>
+
+                                <ul>
+                                    <li>Brandable email and landing page with your logo</li>
+                                    <li>Only 1 click is required to take a survey to encourage high response rates</li>
+                                    <li>Allow recipients to rate the service they received on a 0-10 Net Promoter System℠ rating, a 1-5 star rating, a thumbs up/down rating, or through a questionnaire.</li>
+                                    <li>All necessary components are included, like email templates, branded landing page for optional comments, and reports</li>
+                                    <li>100% native Salesforce app that is fully extensible with workflow, reporting, and Apex</li>
+                                </ul>
+                            </div>
+
+                            <div class="slds-grid">
+                                <div class="slds-size_1-of-4">
+                                    <div class="slds-text-align_center" >
+                                        <apex:outputText style="font-weight:bold;" value="0-10 Net Promoter System℠" />
+                                    </div>
+                                    <apex:image styleClass="setupImage" url="{!$Resource.simplesurvey__Simple_Survey_10pt_Intro}"/>
+                                </div>
+                                <div class="slds-size_1-of-4">
+                                    <div class="slds-text-align_center">
+                                        <apex:outputText style="font-weight:bold;" value="1-5 star rating" />
+                                    </div>
+                                    <apex:image styleClass="setupImage" url="{!$Resource.simplesurvey__Simple_Survey_Intro}"/>
+                                </div>
+                                <div class="slds-size_1-of-4">
+                                    <div class="slds-text-align_center">
+                                        <apex:outputText style="font-weight:bold;" value="Thumbs Up/Down" />
+                                    </div>
+                                    <apex:image styleClass="setupImage" url="{!$Resource.simplesurvey__Simple_Survey_Thumbs_Intro}"/>
+                                </div>
+                                <div class="slds-size_1-of-4">
+                                    <div class="slds-text-align_center">
+                                        <apex:outputText style="font-weight:bold;" value="Questionnaire (No Rating)" />
+                                    </div>
+                                    <apex:image styleClass="setupImage" url="{!$Resource.simplesurvey__Simple_Survey_Questionnaire_Intro}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Initial Setup -->
+                        <div class="tab_content slds-hide" data-tab-name="initial setup" data-show-save="true">
+
+                            <!-- Setup -->
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_5-of-8">
+                                    <div class="slds-text-longform">
+                                        <p class="slds-text-title_caps">Setup Force.com Site</p>
+                                        <p>Simple Survey requires a Force.com Site. Before you can create a Force.com Site, you must register a Force.com Domain. If your organization already uses Force.com Sites, your Domain is already established and you can skip to 2 below.</p>
+                                        <p>1. Click <a class="sites-view-link" href="javascript:void(0)" target="_blank">here</a> or navigate to 
+                                            <span class="classic-only slds-hide">
+                                                <span class="italic">Setup</span> | <span class="italic">Develop</span> | <span class="italic">Sites</span>
+                                            </span>
+                                            <span class="lightning-only slds-hide">
+                                                <span class="italic">Setup</span> | <span class="italic">User Interface</span> | <span class="italic">Sites and Domains</span> | <span class="italic">Sites</span> 
+                                            </span>
+                                            to verify that you have an existing Force.com Domain or register one:</p>
+                                        <ul>
+                                            <li>If you already have a Force.com Domain registered, proceed to step 2.</li>
+                                            <li>Enter a unique name for your Force.com domain. The name is case-sensitive. Only alphanumeric characters are allowed. Salesforce.com recommends using your company's name or a variation, such as "mycompany".</li>
+                                            <li><span class="bold">Caution: You cannot modify your Force.com domain name after you have registered it.</span></li>
+                                            <li>Follow the prompts to check availability, agree to terms, and complete your registration.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="slds-text-longform">
+                                        <apex:outputPanel id="stepTwoIntro">
+                                            <apex:outputPanel rendered="{!simpleSurveySiteId = null}">
+                                                <p>2. To create a Force.com site for Simple Survey, click the following "Create Site" button.</p>
+                                                <div class="slds-m-left_small slds-m-bottom_small">
+                                                    <button type="button" onclick="handleCreateSiteButtonOnClick(event)" class="slds-button slds-button_brand">Create Site</button>
+                                                </div>
+                                                <p class="slds-m-left_small">If you prefer to create the Force.com site manually, follow the steps below.</p>
+                                                <p class="slds-m-left_small">
+                                                    Click <a id="sites-edit-link" href="javascript:void(0)" target="_blank">here</a> or navigate to
+                                                    <span class="classic-only slds-hide">
+                                                        <span class="italic">Setup</span> | <span class="italic">Develop</span> | <span class="italic">Sites</span> 
+                                                    </span>
+                                                    <span class="lightning-only slds-hide">
+                                                        <span class="italic">Setup</span> | <span class="italic">User Interface</span> | <span class="italic">Sites and Domains</span> | <span class="italic">Sites</span> 
+                                                    </span>
+                                                    and click New. Complete the Site Edit page with the following values (see example on the right):
+                                                </p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!simpleSurveySiteId != null}">
+                                                <p>
+                                                    2. Click <a id="sites-edit-link" href="javascript:void(0)" target="_blank">here</a> or navigate to
+                                                    <span class="classic-only slds-hide">
+                                                        <span class="italic">Setup</span> | <span class="italic">Develop</span> | <span class="italic">Sites</span> 
+                                                    </span>
+                                                    <span class="lightning-only slds-hide">
+                                                        <span class="italic">Setup</span> | <span class="italic">User Interface</span> | <span class="italic">Sites and Domains</span> | <span class="italic">Sites</span> 
+                                                    </span>
+                                                    and click New. Complete the Site Edit page with the following values (see example on the right):
+                                                </p>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <ul>
+                                            <li>Site Label: Simple Survey</li>
+                                            <li>Site Name: Simple_Survey</li>
+                                            <li>Default Web Address: survey</li>
+                                            <li><span class="bold">Check the Active checkbox</span></li>
+                                            <li>Active Site Home Page: Simple Survey</li>
+                                            <li>Click Save</li>
+                                        </ul>
+                                    </div>
+
+                                    <apex:outputPanel id="nextSteps">
+                                        <apex:outputPanel layout="none"  rendered="{!NOT(showSiteConfigurationSteps)}">
+                                            <apex:actionFunction name="proceedToConfigurationSteps" action="{!proceedToConfigurationSteps}" oncomplete="handleProceedToConfigurationStepsOnComplete()" reRender="configureSteps, nextSteps, apex2js, pageAlertScript, recaptchaSiteUrlText, stepTwoIntro"/>
+                                            <button type="button" class="slds-button slds-button_neutral" onclick="handleProceedToConfigurationStepsButtonOnClick(event);" >Proceed to Site Configuration Steps</button>
+                                            (Please be sure you have completed the above steps before proceeding.)
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </div>
+                                <!--<apex:image styleClass="setupImage image-box-shadow" style="max-width: 500px;" url="{!$Resource.simplesurvey__Simple_Survey_Site_Config_Trimmed}"/>-->
+                                <div class="slds-col slds-size_3-of-8">
+                                    <apex:image styleClass="setupImage image-box-shadow" style="max-width: 500px;" url="{!$Resource.simplesurvey__Simple_Survey_Site_Config_Trimmed}"/>
+                                </div>
+                            </div>
+
+                            <!-- Configure -->
+                            <apex:outputPanel id="configureSteps">
+                                <apex:outputPanel rendered="{!showSiteConfigurationSteps}">
+                                    <div class="slds-text-longform">
+                                        <p class="slds-text-title_caps">Configure Force.com Site</p>
+                                        <p>3. The Guest User for the Simple Survey Force.com site will need a license for Simple Survey.  Without a license, survey respondents will receive an error saying "Authorization Required".</p>
+                                        <p>Note: If you are testing in a Sandbox, license assignment is not required. All users are assigned a license to Simple Survey by default.</p>
+                                    </div>
+                                    <apex:outputPanel rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                                        <apex:commandButton styleClass="slds-button slds-button_brand" id="assignLicPermSet" action="{!assignLicenseAndPermSet}" value="Assign License and Permission Set" reRender="apex2js" onclick="showAssignLicPermSetLoader();" oncomplete="handleShowAssignLicPermSetOnComplete()"/>
+                                        <span class="assignPermSetStatus">
+                                            <div id="assignSuccessSpinner" class="slds-is-relative slds-show_inline" style="display:none;">
+                                                <div class="slds-spinner slds-spinner_brand slds-spinner_x-small" style="margin-left:.8rem;margin-top: .065rem; z-index: 1;">
+                                                    <div class="slds-spinner__dot-a"></div>
+                                                    <div class="slds-spinner__dot-b"></div>
+                                                </div>
+                                            </div>
+                                            <span id="assignSuccessIcon" class="slds-icon_container" style="display:none;" title="Success">
+                                                <!-- Filled in with SVG -->
+                                            </span>
+                                        </span>
+                                        <div class="slds-m-vertical_small" style="margin-left: 5.5rem;">-- OR --</div>
+                                    </apex:outputPanel>
+                                    <div class="slds-text-longform">
+                                        <ul>
+                                            <li>
+                                                <apex:outputPanel rendered="{!simpleSurveyProfileId != null}">
+                                                    Click <a id="simple-survey-profile-link" href="javascript:void(0)" target="_blank">here</a> or navigate to the Simple Survey Profile by going to 
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!simpleSurveyProfileId = null}">
+                                                    Navigate to the Simple Survey Profile by going to 
+                                                </apex:outputPanel>
+                                                <span class="classic-only slds-hide">
+                                                    <span class="italic">Setup</span> | <span class="italic">Develop</span> | <span class="italic">Sites</span> 
+                                                </span>
+                                                <span class="lightning-only slds-hide">
+                                                    <span class="italic">Setup</span> | <span class="italic">User Interface</span> | <span class="italic">Sites and Domains</span> | <span class="italic">Sites</span> 
+                                                </span>
+                                                , click on the Site Label for the Simple Survey Site Detail page, then click on the Public Access Settings button.</li>
+                                            <li>Click the <span id="std-buttonName">View Users</span><span id="e-buttonName" style="display:none">Assigned Users</span> button at the top of the page.</li>
+                                            <li>Click on Site Guest User, Simple Survey under the Full Name heading.</li>
+                                            <li>Under Permission Set Assignments, click Edit Assignments.</li>
+                                            <li>Add Simple Survey Site Guest User to Enabled Permission Sets.</li>
+                                            <li>Click Save.</li>
+                                            <li>While still in Simple Survey Site Guest User, scroll down to the Managed Packages related list and click Assign Licenses.</li>
+                                            <li>Check Action box next to Simple Survey.</li>
+                                            <li>Click Add.</li>
+                                        </ul>
+                                        <p>4. Set the Default Web Address:</p>
+                                        <ul>
+                                            <li>Click <a class="sites-view-link" href="javascript:void(0)" target="_blank">here</a> or navigate manually to the Force.com Site edit page (
+                                                <span class="classic-only slds-hide">
+                                                    <span class="italic">Setup</span> | <span class="italic">Develop</span> | <span class="italic">Sites</span> 
+                                                </span>
+                                                <span class="lightning-only slds-hide">
+                                                    <span class="italic">Setup</span> | <span class="italic">User Interface</span> | <span class="italic">Sites and Domains</span> | <span class="italic">Sites</span> 
+                                                </span>
+                                            ), right click the "Site URL", located next to the "Site Label", then click "Copy Link Location" or "Copy Link Address", and paste it below and click Save.</li>
+                                        </ul>
+                                        <div class="slds-m-left_large">
+                                            <label class="slds-form-element__label bold">Default Web Address: &nbsp;</label>
+                                            <apex:inputText id="surveySiteUrl" styleClass="slds-input" style="width:500px;" value="{!setting.simplesurvey__Survey_Site_URL__c}" rendered="{!CAN_CUSTOMIZE_APPLICATION}"/>
+                                            <apex:outputPanel layout="none" rendered="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                <input type="text" class="slds-input" style="width: 500px;" value="{!setting.simplesurvey__Survey_Site_URL__c}" disabled="true"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                                                <button class="slds-button slds-button_brand" onclick="startSave(); return false;" style="margin-top:-2px; margin-left:1rem;">Save</button>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel id="addressSaved">
+                                                <apex:outputPanel rendered="{!saveClicked}" layout="none"><span id="web-address-saved">Saved</span></apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+
+                        <!-- Working with Surveys-->
+                        <div class="tab_content slds-hide" data-tab-name="working with surveys" data-show-save="false">
+                            <div class="slds-text-longform">
+
+                                <!-- Creating Surveys -->
+                                <p class="slds-text-title_caps">Creating Surveys</p>
+                                <p>It is easier than ever to create surveys with our Simple Survey Builder experience.</p>
+
+                                <div>
+                                    <a class="slds-button slds-button_brand survey-builder-link slds-hide" href="{!$Page.SurveyBuilder}" target="_blank" data-for-console="false">Go to Simple Survey Builder</a> 
+                                    <a class="slds-button slds-button_brand survey-builder-link slds-hide" href="javascript:void(0)" onclick="handleGoToSurveyBuilderConsoleBtnOnClick(event) " data-for-console="true">Go to Survey Builder</a> 
+                                </div>
+
+                                <!-- Emailing the survey -->
+                                <p class="slds-text-title_caps slds-m-top_large">Emailing the Survey</p>
+                                <p>
+                                    Local automation (such as Workflow, Process Builder, or Apex Trigger) will be required to email surveys. For further instructions
+                                    and guidance, <a href="https://support.vicasso.com/s/documentation/a1L40000000KsK9EAK" target="_blank">click here</a>
+                                </p>
+                                <!-- Viewing Surveys -->
+                                <p class="slds-text-title_caps slds-m-top_large">Viewing Surveys</p>
+                                <p>
+                                    Simple Survey comes packaged with a variety of reports and a dashboard to help analayze survey data. 
+                                    For more information and guidance, <a href="https://support.vicasso.com/s/documentation/a1L40000000KsKEEA0" target="_blank">click here</a>
+                                </p>
+
+                                <!-- Simple Survey Insights -->
+                                <div>
+                                    <p class="slds-text-title_caps slds-m-top_large">Simple Survey Insights (Open Beta)</p>
+                                    <p>
+                                        Simple Survey Insights provides a graphical means to explore customer feedback and compare trends.
+                                    </p>
+                                    <div>
+                                        <div class="lightning-only slds-hide">
+                                            <a class="slds-button slds-button_brand survey-insights-link slds-hide" href="/{!insightsKeyPrefix}" target="_blank" data-for-console="false">Go to Simple Survey Insights</a> 
+                                            <a class="slds-button slds-button_brand survey-insights-link slds-hide" href="javascript:void(0)" onclick="handleGoToInsightsConsoleBtnOnClick(event);" data-for-console="true">Go to Simple Survey Insights</a> 
+                                        </div>
+                                        <div class="classic-only slds-hide">
+                                            <button class="slds-button slds-button_brand" disabled="true">Go to Simple Survey Insights</button>
+                                            <div class="slds-m-top_x-small">
+                                                <span class="bold slds-text-color_error">*Note: Simple Survey Insights is only supported for Lightning Experience</span>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Optional Settings -->
+                        <div class="tab_content slds-hide" data-tab-name="optional settings" data-show-save="true">
+                            <div class="slds-text-longform">
+
+                                <!-- Avoid Survey Fatigue -->
+                                <div>
+                                    <label class="slds-form-element__label bold">Avoid Survey Fatigue</label>
+                                    <div class="slds-m-left_small">
+                                        <p>Over-surveying a single person can introduce survey fatigue, which can lower response rates. Simple Survey can track when you last sent a survey to a Case Contact so you can consider it in your Workflow criteria. The sample Workflow rule provided in our <a href="https://support.vicasso.com/s/documentation/a1L40000000Kvs3EAC" target="_blank">Documentation</a> has a default of 7 days which can be changed within the rule criteria. For surveys sent off of Cases, please review the following <a href="https://kb.vicasso.com/?kb=000002112" target="_blank">Knowledge Base</a> article which explains the full required setup for this feature. For surveys sent off of objects other than Case, please refer <a href="https://kb.vicasso.com/?kb=000002351" target="_blank">here</a>.</p>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                <apex:inputCheckbox id="avoidFatigue" value="{!setting.simplesurvey__Contact_Survey_Tracking__c}" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}"/>
+                                                    <label class="slds-checkbox__label" for="{!$Component.avoidFatigue}">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label bold">Enable for Case Contacts</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Capture Partial Responses -->
+                                <div class="slds-m-top_medium">
+                                    <label class="slds-form-element__label bold">Capture Partial Responses</label>
+                                    <div class="slds-m-left_small">
+                                        <p style="margin-bottom: 0;">With "Capture Partial Responses" enabled, Simple Survey will periodically save data entered by the survey recipient on the survey landing page. This data will be stored on the survey record with the status of "Partial." If the survey recipient abandons the completion of the survey, such as by closing the browser tab or browser window, the survey landing page will stop collecting data. Once the survey recipient clicks the "Submit" button, the survey record will reflect the "Complete" status. Please consult with local privacy laws concerning data collection.</p>
+                                        <p class="bold">
+                                            <apex:outputPanel rendered="{!hasLegacyConfiguration}">
+                                                Note: For surveys using the classic landing page design, partial responses cannot be captured if any question on the survey landing page is marked as required.
+                                            </apex:outputPanel>
+                                        </p>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                <apex:inputCheckbox id="partialResponses" value="{!setting.simplesurvey__Auto_Save_Partial_Responses__c}" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}"/>
+                                                    <label class="slds-checkbox__label" for="{!$Component.partialResponses}">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label bold">Enable Capture Partial Responses</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Privacy Disclaimer -->
+                                <div class="slds-m-top_medium">
+                                    <label class="slds-form-element__label bold">Privacy Disclaimer</label>
+                                    <div class="slds-m-left_small">
+                                        <p>Include a link to add a Privacy Disclaimer link to your survey. The label for the Privacy Disclaimer link can be updated in the "Privacy Disclaimer" Custom Label provided by Simple Survey.</p>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <apex:inputText id="privacyDisclaimer" value="{!setting.simplesurvey__Privacy_Disclaimer_URL__c}" styleClass="slds-input url-input" html-placeholder="Privacy Disclaimer URL" rendered="{!CAN_CUSTOMIZE_APPLICATION}" maxlength="255" />
+                                                <apex:outputPanel layout="none" rendered="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                    <input type="text" class="slds-input url-input" value="{!setting.simplesurvey__Privacy_Disclaimer_URL__c}" placeholder="Privacy Disclaimer URL" disabled="true"/>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Enable Diagnostic Tracking Information -->
+                                <div class="slds-m-top_medium">
+                                    <label class="slds-form-element__label bold">Diagnostic Tracking Information</label>
+                                    <div class="slds-m-left_small">
+                                        <p>With "Diagnostic Tracking Information" enabled, Simple Survey will save the IP Address, Referrer, and User Agent of the survey recipient to the survey record.</p>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                <apex:inputCheckbox id="diagnosticInfo" value="{!setting.simplesurvey__Diagnostic_Tracking__c}" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}"/>
+                                                    <label class="slds-checkbox__label" for="{!$Component.diagnosticInfo}">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label bold">Enable Diagnostic Tracking Information</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ReCaptcha for Surveys -->
+                                <div class="slds-m-top_medium">
+                                    <apex:actionFunction name="recapHelper" reRender="recaptchaFields"/>
+                                    <label class="slds-form-element__label bold" style="margin-right: 0;">reCAPTCHA for Simple Survey</label>
+                                    <span class="bold slds-text-color_error"><sup class="unhighlightable">NEW</sup></span>
+                                    <div class="slds-m-left_small">
+                                        <p>By enabling "reCAPTCHA for Simple Survey," Simple Survey utilizes Google's reCAPTCHA service to give Simple Survey records a "Human Confidence Score." Simple Survey uses reCAPTCHA v3, which allows you to verify whether a human has likely made an interaction without requiring any human input. You can read a general overview of reCAPTCHA here: <a href="https://developers.google.com/recaptcha/intro" target="_blank">https://developers.google.com/recaptcha/intro</a></p>
+                                        <apex:outputPanel id="recaptchaSiteUrlText">
+                                            <p style="{!IF(recaptchaSiteURL == '', 'display:none;', '')}">Your current site URL is: {!recaptchaSiteUrl}</p>
+                                        </apex:outputPanel>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                <apex:inputCheckbox id="recaptchaAllowed" value="{!setting.simplesurvey__Enable_reCAPTCHA__c}" onchange="recapHelper();" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}"/>
+                                                    <label class="slds-checkbox__label" for="{!$Component.recaptchaAllowed}">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                        <span class="bold">Enable ReCaptcha for Simple Survey</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <p class="slds-form-element__label bold slds-m-top_medium">1. Specify your Site &amp; Secret Keys</p> 
+                                        <div class="slds-m-left_small">
+                                            <p>Once you have created a new reCAPTCHA v3 site, you will enter the two provided keys below.</p> 
+                                            <apex:outputPanel id="recaptchaFields">
+                                                <div class="slds-m-top_medium slds-m-left_small">
+                                                    <label class="slds-form-element__label bold" for="{!$Component.recaptchaSiteKeyTextbox}">Site Key</label>
+                                                    <p>Simple Survey uses the Site Key to ask Google whether a user on the survey landing page is human.</p>
+                                                    <apex:inputText id="recaptchaSiteKeyTextbox" disabled="{!!setting.simplesurvey__Enable_reCAPTCHA__c || NOT(CAN_CUSTOMIZE_APPLICATION)}" html-autocomplete="off" value="{!setting.simplesurvey__reCAPTCHA_Site_Key__c}" styleClass="slds-input url-input {!IF(hasRecaptchaSiteError, 'slds-has-error', '')}" html-placeholder="reCAPTCHA Site Key"/>
+                                                </div>
+                                                <div class="slds-m-top_medium slds-m-left_small">
+                                                    <label class="slds-form-element__label bold" for="{!$Component.recaptchaSecretKeyTextbox}">Secret Key</label>
+                                                    <p>Simple Survey uses the Secret Key to decode Google's response to set the Survey record's Human Confidence Score.</p>
+                                                    <apex:inputText id="recaptchaSecretKeyTextbox" disabled="{!!setting.simplesurvey__Enable_reCAPTCHA__c || NOT(CAN_CUSTOMIZE_APPLICATION)}" html-autocomplete="off" value="{!setting.simplesurvey__reCAPTCHA_Secret_Key__c}" styleClass="slds-input url-input {!IF(hasRecaptchaSecretError, 'slds-has-error', '')}" html-placeholder="reCAPTCHA Secret Key"/>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <p class="slds-form-element__label bold slds-m-top_medium">2. Define Google as a Remote Site</p> 
+                                        <div class="slds-m-left_small">
+                                            <p>Since reCAPTCHA is hosted by Google, you must also authorize <a href="https://www.google.com" target="_blank">https://www.google.com</a> as a remote site in Salesforce. Click <a id="remote-site-link" href="javascript:void(0)" target="_blank">here</a> to define Google as a remote site.</p>
+
+                                            <p>More information on defining remote sites can be found here: <a href="https://help.salesforce.com/articleView?id=configuring_remoteproxy.htm&type=5" target="_blank">https://help.salesforce.com/articleView?id=configuring_remoteproxy.htm&amp;type=5</a></p>
+                                        </div>
+                                        <p class="slds-m-top_medium"><b>Note:</b> Google and the <a href="https://termsfeed.com/blog/caloppa/" target="_blank">California Online Privacy Protection Act</a> (CalOPPA) both require a Privacy Policy when a website or app integrates <a href="https://www.google.com/recaptcha/intro/" target="_blank">reCAPTCHA</a>. We recommend that you update your privacy policy to reflect the use of reCAPTCHA. Simple Survey provides the "Include Privacy Disclaimer" setting for you to specify a link to your privacy policy.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Legacy Configuration -->
+                        <apex:outputPanel layout="none" rendered="{!hasLegacyConfiguration}">
+                            <div class="tab_content slds-hide" data-tab-name="legacy configuration" data-show-save="true">
+                                <div class="slds-text-longform">
+                                    <p class="slds-text-title_caps">Legacy Configuration</p>
+                                    <p>The following settings apply to surveys built prior to version 2.68 of Simple Survey which have not been converted to the new email template and landing page designs.</p>
+                                </div>
+                                <div class="slds-m-top_x-large"></div>
+                                <div class="slds-text-longform">
+                                    <p class="slds-text-title_caps">Customize your Branding</p>
+                                    <p>While Simple Survey comes pre-configured with logo, thumbs up, thumbs down, and rating stars images, you probably want to use branding specific to your organization.</p>
+                                    <p>Upload any branding images by clicking one of the upload buttons (
+                                        <label class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small preview-button" style="margin-right: 0;">
+                                            <svg class="slds-button__icon slds-align_absolute-center" viewBox="0 0 24 24" style="height:100%;">
+                                                <path d="M22.4 14.3H21c-.4 0-.7.4-.7.7v4.6c0 .4-.3.7-.7.7H4.4c-.4 0-.7-.3-.7-.7V15c0-.3-.3-.7-.7-.7H1.6c-.4 0-.7.4-.7.7v6.2c0 1 .9 1.9 1.9 1.9h18.4c1 0 1.9-.9 1.9-1.9V15c0-.3-.3-.7-.7-.7zM12.5 1.1c-.3-.3-.7-.3-1 0L5.3 7.3c-.3.3-.3.7 0 1l.9 1c.3.3.7.3 1 0l2.6-2.6c.3-.3.8-.1.8.3v9.8c0 .4.3.7.7.7h1.3c.4 0 .8-.4.8-.7V7.1c0-.5.4-.6.8-.4l2.6 2.6c.2.3.6.3.9 0l1-.9c.3-.3.3-.7 0-1l-6.2-6.3z"></path>
+                                            </svg>
+                                        </label> ) 
+                                        to choose and upload images to the Simple Survey folder. After uploading, your image should appear in the image drop downs. Select your images and then save. Images must be of the types PNG, GIF or JPG and should have a maximum size of 200x100. The --URL-- option lets you use an image URL. The rating stars require a URL.</p>
+                                    <p>Alternatively, you may add images by uploading them directly to the
+                                        <apex:outputPanel rendered="{!simpleSurveyDocumentFolderId15 != null}">
+                                            <a href="/015?fcf={!simpleSurveyDocumentFolderId15}" target="_blank">Simple Survey folder</a>.
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!simpleSurveyDocumentFolderId15 = null}">
+                                            Simple Survey folder.
+                                        </apex:outputPanel>
+                                        
+                                        Be sure to <span class="bold">make the images externally available</span>. If the images are not appearing in the list, click that list's refresh button (
+                                        <label class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small preview-button" style="margin-right: 0;">
+                                            <svg class="slds-button__icon slds-align_absolute-center" viewBox="0 0 24 24" style="height:100%;">
+                                                <path d="M21.5 1.8h-1.4c-.4 0-.7.4-.7.7v3.3c0 .4-.2.6-.6.3-.1-.2-.2-.3-.4-.5-2.3-2.3-5.6-3.2-8.9-2.6-1.1.2-2.3.7-3.2 1.3-2.8 1.9-4.5 4.9-4.5 8.1 0 2.5.9 5 2.7 6.8 1.8 1.9 4.3 3 7 3 2.3 0 4.6-.8 6.3-2.3.3-.3.3-.7.1-1l-1-1c-.2-.2-.7-.3-.9 0-1.7 1.3-4 1.9-6.2 1.3-.6-.1-1.2-.4-1.8-.7-2.6-1.6-3.8-4.7-3.1-7.7.1-.6.4-1.2.7-1.8 1.3-2.2 3.6-3.5 6-3.5 1.8 0 3.6.8 4.9 2.1.2.2.4.4.5.6.2.4-.2.6-.6.6h-3.2c-.4 0-.7.3-.7.7v1.4c0 .4.3.6.7.6h8.4c.3 0 .6-.2.6-.6V2.5c0-.3-.4-.7-.7-.7z"></path>
+                                            </svg>
+                                        </label> ) 
+                                        to have them appear.</p>
+                                </div>
+        
+                                <div class="slds-grid slds-wrap slds-m-bottom_x-large">
+                                    <apex:inputHidden id="h_uploadFrom" value="{!uploadFrom}"/>
+                                    <apex:actionFunction name="uploadFile" action="{!uploadImage}"/>
+                                    <!-- Logo -->
+                                    <div class="image-select slds-m-top_medium">
+                                        <p class='slds-text-title_caps'>Logo</p>
+                                        <div class="slds-m-left_small slds-m-top_small">
+                                            <div class="image-preview">
+                                                <div class="slds-box slds-align_absolute-center image-preview_box slds-scrollable_none">
+                                                    <div id="logoSpinner" class="slds-is-relative image-preview_spinner">
+                                                        <div class="slds-spinner slds-spinner_brand slds-spinner_medium" style="z-index: 1;">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </div>
+                                                    <apex:image id="logoPreview" styleClass="slds-align_absolute-center image-preview_image" style="display:none;" url="{!IF(selectedLogo != null, selectedLogo, setting.simplesurvey__Survey_Site_Logo__c)}" html-onerror="imagePreviewLoadError(document.getElementById('logoError'),document.getElementById('logoSpinner'));" html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.logoPreview}'), document.getElementById('logoSpinner'));" />
+                                                    <div id="logoError" style="display:none;">
+                                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                                        </svg>
+                                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-m-top_small">
+                                                <span id="inputFileLogoWrapper" class="sldsc-input-file">
+                                                </span>
+                                                <apex:actionFunction action="{!refreshExternalImages}" name="refreshLogoExternalImages" reRender="logoSelectList,logoURLWrapper,logoPreview" status="logoSelect"/>
+                                                <apex:outputPanel layout="none" rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                                                    <button id="logoRefreshButton" class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small" title="Refresh List" onclick="updateLogoImage(); refreshLogoExternalImages(); return false;">
+                                                        <svg class="slds-button__icon" viewBox="0 0 24 24">
+                                                            <path d="M21.5 1.8h-1.4c-.4 0-.7.4-.7.7v3.3c0 .4-.2.6-.6.3-.1-.2-.2-.3-.4-.5-2.3-2.3-5.6-3.2-8.9-2.6-1.1.2-2.3.7-3.2 1.3-2.8 1.9-4.5 4.9-4.5 8.1 0 2.5.9 5 2.7 6.8 1.8 1.9 4.3 3 7 3 2.3 0 4.6-.8 6.3-2.3.3-.3.3-.7.1-1l-1-1c-.2-.2-.7-.3-.9 0-1.7 1.3-4 1.9-6.2 1.3-.6-.1-1.2-.4-1.8-.7-2.6-1.6-3.8-4.7-3.1-7.7.1-.6.4-1.2.7-1.8 1.3-2.2 3.6-3.5 6-3.5 1.8 0 3.6.8 4.9 2.1.2.2.4.4.5.6.2.4-.2.6-.6.6h-3.2c-.4 0-.7.3-.7.7v1.4c0 .4.3.6.7.6h8.4c.3 0 .6-.2.6-.6V2.5c0-.3-.4-.7-.7-.7z"></path>
+                                                        </svg>
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="{!'slds-select_container' + IF(CAN_CUSTOMIZE_APPLICATION, ' slds-m-left_xx-small slds-m-right_xx-small', '')}">
+                                                    <apex:selectList id="logoSelectList" size="1" value="{!selectedLogo}" styleClass="slds-select" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                        <apex:selectOption itemLabel="--URL--" itemValue=""/>
+                                                        <apex:selectOptions value="{!externalImages}"/>
+                                                        <apex:actionSupport event="onchange" reRender="logoURLWrapper,logoPreview" onsubmit="updateLogoImage();"/>
+                                                    </apex:selectList>
+                                                </div>
+                                                <apex:actionStatus id="logoSelect" layout="block" 
+                                                    onstart="disableElementsWithIds(['{!$Component.logoURLInput}','{!$Component.logoSelectList}','logoRefreshButton'])" 
+                                                    onstop="enableElementsWithIds(['{!$Component.logoURLInput}','{!$Component.logoSelectList}','logoRefreshButton']);">
+                                                    <apex:facet name="start">
+                                                        <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small slds-m-top_medium slds-m-left_xx-small" style="position:relative !important; z-index: 1;">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </div>
+                                            <apex:outputPanel id="logoURLWrapper" layout="block" styleClass="slds-m-top_small" style="margin-left:2.5rem">
+                                                <apex:inputText id="logoURLInput" rendered="{!selectedLogo = null}" styleClass="slds-input" value="{!setting.simplesurvey__Survey_Site_Logo__c}" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                    <apex:actionSupport event="onchange" reRender="logoPreview" onsubmit="updateLogoImage();"/>
+                                                </apex:inputText>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+        
+                                    <div class="slds-size_1-of-1 slds-m-top_medium"><!-- Filler --></div>
+                                    
+                                    <!-- Thumbs Up -->
+                                    <div class="image-select">
+                                        <p class='slds-text-title_caps'>Thumbs Up</p>
+                                        <div class="slds-m-left_small slds-m-top_small">
+                                            <div class="image-preview">
+                                                <div class="slds-box slds-align_absolute-center image-preview_box slds-scrollable_none">
+                                                    <div id="thumbsUpSpinner" class="slds-is-relative image-preview_spinner">
+                                                        <div class="slds-spinner slds-spinner_brand slds-spinner_medium" style="z-index: 1;">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </div>
+                                                    <apex:image styleClass="slds-align_absolute-center image-preview_image" style="display: none;" id="thumbsUpPreview" url="{!IF(selectedThumbsUp != null, selectedThumbsUp, setting.simplesurvey__Survey_Rate_Up_URL__c)}" 
+                                                    html-onerror="imagePreviewLoadError(document.getElementById('thumbsUpError'),document.getElementById('thumbsUpSpinner'));" 
+                                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.thumbsUpPreview}'), document.getElementById('thumbsUpSpinner'));" />
+                                                    <div id="thumbsUpError" style="display: none;">
+                                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                                        </svg>
+                                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-m-top_small">
+                                                <span id="inputFileThumbsUpWrapper" class="sldsc-input-file">
+                                                </span>
+                                                <apex:actionFunction action="{!refreshExternalImages}" name="refreshThumbsUpExternalImages" reRender="thumbsUpSelectList,thumbsUpURLWrapper,thumbsUpPreview" status="thumbsUpSelect"/>
+                                                <apex:outputPanel layout="none" rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                                                    <button id="thumbsUpRefreshButton" class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small" title="Refresh List" onclick="updateThumbsUpImage(); refreshThumbsUpExternalImages(); return false;">
+                                                        <svg class="slds-button__icon" viewBox="0 0 24 24">
+                                                            <path d="M21.5 1.8h-1.4c-.4 0-.7.4-.7.7v3.3c0 .4-.2.6-.6.3-.1-.2-.2-.3-.4-.5-2.3-2.3-5.6-3.2-8.9-2.6-1.1.2-2.3.7-3.2 1.3-2.8 1.9-4.5 4.9-4.5 8.1 0 2.5.9 5 2.7 6.8 1.8 1.9 4.3 3 7 3 2.3 0 4.6-.8 6.3-2.3.3-.3.3-.7.1-1l-1-1c-.2-.2-.7-.3-.9 0-1.7 1.3-4 1.9-6.2 1.3-.6-.1-1.2-.4-1.8-.7-2.6-1.6-3.8-4.7-3.1-7.7.1-.6.4-1.2.7-1.8 1.3-2.2 3.6-3.5 6-3.5 1.8 0 3.6.8 4.9 2.1.2.2.4.4.5.6.2.4-.2.6-.6.6h-3.2c-.4 0-.7.3-.7.7v1.4c0 .4.3.6.7.6h8.4c.3 0 .6-.2.6-.6V2.5c0-.3-.4-.7-.7-.7z"/>
+                                                        </svg>
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="{!'slds-select_container' + IF(CAN_CUSTOMIZE_APPLICATION, ' slds-m-left_xx-small slds-m-right_xx-small', '')}">
+                                                    <apex:selectList id="thumbsUpSelectList" size="1" value="{!selectedThumbsUp}" styleClass="slds-select" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                        <apex:selectOption itemLabel="--URL--" itemValue=""/>
+                                                        <apex:selectOptions value="{!externalImages}"/>
+                                                        <apex:actionSupport event="onchange" reRender="thumbsUpURLWrapper,thumbsUpPreview" onsubmit="updateThumbsUpImage();"/>
+                                                    </apex:selectList>
+                                                </div>
+                                                <apex:actionStatus id="thumbsUpSelect" layout="block" 
+                                                    onstart="disableElementsWithIds(['{!$Component.thumbsUpURLInput}','{!$Component.thumbsUpSelectList}','thumbsUpRefreshButton'])" 
+                                                    onstop="enableElementsWithIds(['{!$Component.thumbsUpURLInput}','{!$Component.thumbsUpSelectList}','thumbsUpRefreshButton']);">
+                                                    <apex:facet name="start">
+                                                        <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small slds-m-top_medium slds-m-left_xx-small" style="position:relative !important; z-index: 1;">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </div>
+                                            <apex:outputPanel id="thumbsUpURLWrapper" layout="block" styleClass="slds-m-top_small" style="margin-left:2.5rem">
+                                                <apex:inputText id="thumbsUpURLInput" rendered="{!selectedThumbsUp = null}" styleClass="slds-input" value="{!setting.simplesurvey__Survey_Rate_Up_URL__c}" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                    <apex:actionSupport event="onchange" reRender="thumbsUpPreview" onsubmit="updateThumbsUpImage();"/>
+                                                </apex:inputText>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+        
+                                    <!-- Thumbs Down -->
+                                    <div class="image-select">
+                                        <p class='slds-text-title_caps'>Thumbs Down</p>
+                                        <div class="slds-m-left_small slds-m-top_small">
+                                            <div class="image-preview">
+                                                <div class="slds-box slds-align_absolute-center image-preview_box slds-scrollable_none">
+                                                    <div id="thumbsDownSpinner" class="slds-is-relative image-preview_spinner" >
+                                                        <div class="slds-spinner slds-spinner_brand slds-spinner_medium" style="z-index: 1;">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </div>
+                                                    <apex:image styleClass="slds-align_absolute-center image-preview_image" style="display: none;" id="thumbsDownPreview" url="{!IF(selectedThumbsDown != null, selectedThumbsDown, setting.simplesurvey__Survey_Rate_Down_URL__c)}" 
+                                                    html-onerror="imagePreviewLoadError(document.getElementById('thumbsDownError'),document.getElementById('thumbsDownSpinner'));" 
+                                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.thumbsDownPreview}'), document.getElementById('thumbsDownSpinner'));" />
+                                                    <div id="thumbsDownError" style="display: none;">
+                                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                                        </svg>
+                                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-m-top_small">
+                                                <span id="inputFileThumbsDownWrapper" class="sldsc-input-file">
+        
+                                                </span>
+                                                <apex:actionFunction action="{!refreshExternalImages}" name="refreshThumbsDownExternalImages" reRender="thumbsDownSelectList,thumbsDownURLWrapper,thumbsDownPreview" status="thumbsDownSelect"/>
+                                                <apex:outputPanel layout="none" rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                                                    <button id="thumbsDownRefreshButton" class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small" title="Refresh List" onclick="updateThumbsDownImage(); refreshThumbsDownExternalImages(); return false;">
+                                                        <svg class="slds-button__icon" viewBox="0 0 24 24">
+                                                            <path d="M21.5 1.8h-1.4c-.4 0-.7.4-.7.7v3.3c0 .4-.2.6-.6.3-.1-.2-.2-.3-.4-.5-2.3-2.3-5.6-3.2-8.9-2.6-1.1.2-2.3.7-3.2 1.3-2.8 1.9-4.5 4.9-4.5 8.1 0 2.5.9 5 2.7 6.8 1.8 1.9 4.3 3 7 3 2.3 0 4.6-.8 6.3-2.3.3-.3.3-.7.1-1l-1-1c-.2-.2-.7-.3-.9 0-1.7 1.3-4 1.9-6.2 1.3-.6-.1-1.2-.4-1.8-.7-2.6-1.6-3.8-4.7-3.1-7.7.1-.6.4-1.2.7-1.8 1.3-2.2 3.6-3.5 6-3.5 1.8 0 3.6.8 4.9 2.1.2.2.4.4.5.6.2.4-.2.6-.6.6h-3.2c-.4 0-.7.3-.7.7v1.4c0 .4.3.6.7.6h8.4c.3 0 .6-.2.6-.6V2.5c0-.3-.4-.7-.7-.7z"/>
+                                                        </svg>
+                                                    </button>
+                                                </apex:outputPanel>
+                                                <div class="{!'slds-select_container' + IF(CAN_CUSTOMIZE_APPLICATION, ' slds-m-left_xx-small slds-m-right_xx-small', '')}">
+                                                    <apex:selectList id="thumbsDownSelectList" size="1" value="{!selectedThumbsDown}" styleClass="slds-select" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                        <apex:selectOption itemLabel="--URL--" itemValue=""/>
+                                                        <apex:selectOptions value="{!externalImages}"/>
+                                                        <apex:actionSupport event="onchange" reRender="thumbsDownURLWrapper,thumbsDownPreview" onsubmit="updateThumbsDownImage();"/>
+                                                    </apex:selectList>
+                                                </div>
+                                                <apex:actionStatus id="thumbsDownSelect" layout="block" 
+                                                    onstart="disableElementsWithIds(['{!$Component.thumbsDownURLInput}','{!$Component.thumbsDownSelectList}','thumbsDownRefreshButton'])" 
+                                                    onstop="enableElementsWithIds(['{!$Component.thumbsDownURLInput}','{!$Component.thumbsDownSelectList}','thumbsDownRefreshButton']);">
+                                                    <apex:facet name="start">
+                                                        <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small slds-m-top_medium slds-m-left_xx-small" style="position:relative !important; z-index: 1;">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </div>
+                                            <apex:outputPanel id="thumbsDownURLWrapper" layout="block" styleClass="slds-m-top_small" style="margin-left:2.5rem">
+                                                <apex:inputText id="thumbsDownURLInput" rendered="{!selectedThumbsDown = null}" styleClass="slds-input" value="{!setting.simplesurvey__Survey_Rate_Down_URL__c}" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                    <apex:actionSupport event="onchange" reRender="thumbsDownPreview" onsubmit="updateThumbsDownImage();"/>
+                                                </apex:inputText>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <!-- Stars -->
+                                <p class='slds-text-title_caps'>1-5 Star Rating</p>
+        
+                                <!-- Rating Stars -->
+                                <!-- Five Stars -->
+                                <div class="slds-m-top_small">
+                                    <label class="slds-form-element__label" for="{!$Component.fiveURL}">5/5 URL: &nbsp;</label>
+                                    <apex:inputField id="fiveURL" styleClass="slds-input url-input" value="{!setting.simplesurvey__Survey_Rate_5_IMG__c}">
+                                        <apex:actionSupport event="onchange" reRender="fiveImage" onsubmit="updateFiveStarImage();"/>
+                                    </apex:inputField>
+                                    <apex:image id="fiveImage" style="display:none;" value="{!setting.simplesurvey__Survey_Rate_5_IMG__c}" rendered="{!setting.simplesurvey__Survey_Rate_5_IMG__c<>NULL}" styleClass="slds-m-left_small" 
+                                    html-onerror="imagePreviewLoadError(document.getElementById('fiveError'),document.getElementById('fiveSpinner'),'inline');" 
+                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.fiveImage}'), document.getElementById('fiveSpinner'),'inline');"/>
+                                    <div id="fiveSpinner" class="slds-is-relative" style="z-index: 1;">
+                                        <div class="slds-spinner slds-spinner_brand slds-spinner_x-small">
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <div id="fiveError" style="display:none;" class="slds-m-left_small">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                        </svg>
+                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                    </div>
+                                </div>
+        
+                                <!-- Four Stars -->
+                                <div class="slds-m-top_small">
+                                    <label class="slds-form-element__label" for="{!$Component.fourURL}">4/5 URL: &nbsp;</label>
+                                    <apex:inputField id="fourURL" styleClass="slds-input url-input" value="{!setting.simplesurvey__Survey_Rate_4_IMG__c}">
+                                        <apex:actionSupport event="onchange" reRender="fourImage" onsubmit="updateFourStarImage();"/>
+                                    </apex:inputField>
+                                    <apex:image id="fourImage" style="display:none;" value="{!setting.simplesurvey__Survey_Rate_4_IMG__c}" rendered="{!setting.simplesurvey__Survey_Rate_4_IMG__c<>NULL}" styleClass="slds-m-left_small" 
+                                    html-onerror="imagePreviewLoadError(document.getElementById('fourError'),document.getElementById('fourSpinner'),'inline');" 
+                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.fourImage}'), document.getElementById('fourSpinner'),'inline');"/>
+                                    <div id="fourSpinner" class="slds-is-relative" style="z-index: 1;">
+                                        <div class="slds-spinner slds-spinner_brand slds-spinner_x-small">
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <div id="fourError" style="display:none;" class="slds-m-left_small">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                        </svg>
+                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                    </div>
+                                </div>
+        
+                                <!-- Three Stars -->
+                                <div class="slds-m-top_small">
+                                    <label class="slds-form-element__label" for="{!$Component.threeURL}">3/5 URL: &nbsp;</label>
+                                    <apex:inputField id="threeURL" styleClass="slds-input url-input" value="{!setting.simplesurvey__Survey_Rate_3_IMG__c}">
+                                        <apex:actionSupport event="onchange" reRender="threeImage" onsubmit="updateThreeStarImage();"/>
+                                    </apex:inputField>
+                                    <apex:image id="threeImage" style="display:none;" value="{!setting.simplesurvey__Survey_Rate_3_IMG__c}" rendered="{!setting.simplesurvey__Survey_Rate_3_IMG__c<>NULL}" styleClass="slds-m-left_small" 
+                                    html-onerror="imagePreviewLoadError(document.getElementById('threeError'),document.getElementById('threeSpinner'),'inline');" 
+                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.threeImage}'), document.getElementById('threeSpinner'),'inline');"/>
+                                    <div id="threeSpinner" class="slds-is-relative" style="z-index: 1;">
+                                        <div class="slds-spinner slds-spinner_brand slds-spinner_x-small">
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <div id="threeError" style="display:none;" class="slds-m-left_small">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                        </svg>
+                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                    </div>
+                                </div>
+        
+                                <!-- Two Stars -->
+                                <div class="slds-m-top_small">
+                                    <label class="slds-form-element__label" for="{!$Component.twoURL}">2/5 URL: &nbsp;</label>
+                                    <apex:inputField id="twoURL" styleClass="slds-input url-input" value="{!setting.simplesurvey__Survey_Rate_2_IMG__c}">
+                                        <apex:actionSupport event="onchange" reRender="twoImage" onsubmit="updateTwoStarImage();"/>
+                                    </apex:inputField>
+                                    <apex:image id="twoImage" style="display:none;" value="{!setting.simplesurvey__Survey_Rate_2_IMG__c}" rendered="{!setting.simplesurvey__Survey_Rate_2_IMG__c<>NULL}" styleClass="slds-m-left_small" 
+                                    html-onerror="imagePreviewLoadError(document.getElementById('twoError'),document.getElementById('twoSpinner'),'inline');" 
+                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.twoImage}'), document.getElementById('twoSpinner'),'inline');"/>
+                                    <div id="twoSpinner" class="slds-is-relative" style="z-index: 1;">
+                                        <div class="slds-spinner slds-spinner_brand slds-spinner_x-small">
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <div id="twoError" style="display:none;" class="slds-m-left_small">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                        </svg>
+                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                    </div>
+                                </div>
+        
+                                <!-- One Star -->
+                                <div class="slds-m-top_small">
+                                    <label class="slds-form-element__label" for="{!$Component.oneURL}">1/5 URL: &nbsp;</label>
+                                    <apex:inputField id="oneURL" styleClass="slds-input url-input" value="{!setting.simplesurvey__Survey_Rate_1_IMG__c}">
+                                        <apex:actionSupport event="onchange" reRender="oneImage" onsubmit="updateOneStarImage();"/>
+                                    </apex:inputField>
+                                    <apex:image id="oneImage" style="display:none;" value="{!setting.simplesurvey__Survey_Rate_1_IMG__c}" rendered="{!setting.simplesurvey__Survey_Rate_1_IMG__c<>NULL}" styleClass="slds-m-left_small" 
+                                    html-onerror="imagePreviewLoadError(document.getElementById('oneError'),document.getElementById('oneSpinner'),'inline');" 
+                                    html-onload="imagePreviewDidLoad(document.getElementById('{!$Component.frm.oneImage}'), document.getElementById('oneSpinner'),'inline');"/>
+                                    <div id="oneSpinner" class="slds-is-relative" style="z-index: 1;">
+                                        <div class="slds-spinner slds-spinner_brand slds-spinner_x-small">
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <div id="oneError" style="display:none;" class="slds-m-left_small">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-error" viewBox="0 0 24 24">
+                                            <path d="M23.7 19.6L13.2 2.5c-.6-.9-1.8-.9-2.4 0L.3 19.6c-.7 1.1 0 2.6 1.1 2.6h21.2c1.1 0 1.8-1.5 1.1-2.6zM12 18.5c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4zm1.4-4.2c0 .3-.2.5-.5.5h-1.8c-.3 0-.5-.2-.5-.5v-6c0-.3.2-.5.5-.5h1.8c.3 0 .5.2.5.5v6z"></path>
+                                        </svg>
+                                        <span class="slds-text-color_error slds-m-left_xx-small">Could not load image</span>
+                                    </div>
+                                </div>
+
+                                <!-- Display Picklist Options as Radio Buttons -->
+                                <div class="slds-m-top_medium">
+                                    <label class="slds-form-element__label bold">Display Picklist Options as Radio Buttons</label>
+                                    <div class="slds-m-left_small">
+                                        <p>Select this option if you would like to display picklist options as radio buttons instead of standard drop downs. Additionally, select the layout of the options. Vertical will display the items from top to bottom on separate lines and is recommended for most uses. Horizontal will display the items on a single line from left to right and is recommended for short values, such as single numbers. <span style="font-style:italic;">This option is not compatible with field dependencies. If enabled, all values will be available on dependent picklists, irrespective of their controlling fields.</span></p>
+                                        <div class="slds-form-element slds-show_inline-block">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                <apex:inputCheckbox id="radios" value="{!setting.simplesurvey__Radio_Picklist_Options__c}" onchange="updateDisableOrientation();" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}"/>
+                                                    <label class="slds-checkbox__label" for="{!$Component.radios}">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label bold">Display Picklist Options as Radio Buttons</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-show_inline-block slds-m-left_medium">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                <apex:selectList id="radioAlignment" styleClass="slds-select" value="{!radioAlignment}" size="1" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                        <apex:selectOption itemValue="vertical" itemLabel="Vertical"/>
+                                                        <apex:selectOption itemValue="horizontal" itemLabel="Horizontal"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <!-- Display Multi-select Picklist Options as Check Boxes -->
+                                <div class="slds-m-top_medium">
+                                    <label class="slds-form-element__label bold">Display Multi-select Picklist Options as Check Boxes</label>
+                                    <div class="slds-m-left_small">
+                                        <p>Select this option if you would like to display multi-select picklist options as check boxes instead of standard multi-select editors. Additionally, select the layout of the options. Vertical will display the items from top to bottom on separate lines and is recommended for most uses. Horizontal will display the items on a single line from left to right and is recommended for short values, such as single numbers. <span style="font-style:italic;">This option is not compatible with field dependencies. If enabled, all values will be available on dependent picklists, irrespective of their controlling fields.</span></p>
+                                        <div class="slds-form-element slds-show_inline-block">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                <apex:inputCheckbox id="checkboxes" value="{!setting.simplesurvey__Checkbox_Picklist_Options__c}" onchange="updateDisableOrientation();" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}"/>
+                                                    <label class="slds-checkbox__label" for="{!$Component.checkboxes}">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label bold">Display Multi-select Picklist Options as Check Boxes</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element slds-show_inline-block slds-m-left_small">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                <apex:selectList id="checkboxAlignment" styleClass="slds-select" value="{!checkboxAlignment}" size="1" disabled="{!NOT(CAN_CUSTOMIZE_APPLICATION)}">
+                                                        <apex:selectOption itemValue="vertical" itemLabel="Vertical"/>
+                                                        <apex:selectOption itemValue="horizontal" itemLabel="Horizontal"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+
+                    <!-- Modal -->
+                    <section id="modal" tabindex="-1" class="slds-modal">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button type="button" onclick="handleModalCloseButtonOnClick(event)" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="close" class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                        <path d="M14.3 11.7l6-6c.3-.3.3-.7 0-1l-.9-1c-.3-.2-.7-.2-1 0l-6 6.1c-.2.2-.5.2-.7 0l-6-6.1c-.3-.3-.7-.3-1 0l-1 1c-.2.2-.2.7 0 .9l6.1 6.1c.2.2.2.4 0 .6l-6.1 6.1c-.3.3-.3.7 0 1l1 1c.2.2.7.2.9 0l6.1-6.1c.2-.2.4-.2.6 0l6.1 6.1c.2.2.7.2.9 0l1-1c.3-.3.3-.7 0-1l-6-6c-.2-.2-.2-.5 0-.7z"></path>
+                                    </svg>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 class="slds-text-heading_medium slds-hyphenate slds-hide" data-modal-variants="cs,cse">Confirm Force.com Site Creation</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <p class="slds-hide" data-modal-variants="cs,cse">Creating a Force.com site cannot be undone. Are you sure you want to continue?</p>
+                                <p id="modal-error-text" class="slds-m-top_xx-small bold slds-text-color_error slds-hide" data-modal-variants="cse"></p>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <button type="button" onclick="handleModalContinueButtonOnClick(event)" data-modal-variants="cs" class="slds-button slds-button_brand slds-hide">Continue</button>
+                                <button type="button" onclick="handleModalTryAgainButtonOnClick(event)" data-modal-variants="cse" class="slds-button slds-button_brand slds-hide">Try Again</button>
+                                <button type="button" onclick="handleModalCancelButtonOnClick(event)" class="slds-button slds-button_neutral">Cancel</button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div id="modal-backdrop" class="slds-backdrop"></div>
+
+                    <div id="navigationButtonsWrapper" class="slds-p-top_medium">
+                        <span>
+                            <button id='previous-button' data-prevStep='' class='slds-button slds-button_neutral' style='visibility: hidden;' onclick="previousTab(); return false;">
+                                <svg class="slds-button__icon slds-button__icon_left" viewBox="0 0 24 24">
+                                    <path d="M22.4 10.6H7.1c-.4 0-.6-.5-.3-.8l4.4-4.4c.3-.3.3-.7 0-1l-1-1c-.3-.3-.7-.3-1 0l-8 8.1c-.3.3-.3.7 0 1l8 8.1c.3.3.7.3 1 0l1-1c.2-.3.2-.7 0-1l-4.5-4.4c-.2-.3-.1-.8.4-.8h15.3c.4 0 .7-.3.7-.7v-1.3c0-.4-.3-.8-.7-.8z"></path>
+                                </svg>
+                                Previous
+                            </button>
+                        </span>
+                        <span>
+                            <button id='next-button' class='slds-button slds-button_brand' onclick="nextTab(); return false;" style="visibility: hidden;">
+                                <span data-nextStep="{!tabNames[1]}" class="buttonText">Next</span>
+                                <svg class="slds-button__icon slds-button__icon_right" viewBox="0 0 24 24">
+                                    <path d="M1.6 13.4h15.3c.4 0 .6.5.3.8l-4.4 4.4c-.3.3-.3.7 0 1l1 1c.3.3.7.3 1 0l8-8.1c.3-.3.3-.7 0-1l-8-8.1c-.3-.3-.7-.3-1 0l-1 1c-.2.3-.2.7 0 1l4.5 4.4c.2.3.1.8-.4.8H1.6c-.4 0-.7.3-.7.7v1.3c0 .4.3.8.7.8z"></path>
+                                </svg>
+                            </button>
+                        </span>
+                    </div>
+                </apex:actionRegion>
+
+                <!-- 
+                    [BE] Add the apex:inputFile's back into their respective locations. Since they started outside of the apex:actionRegion, rerenders won't be an issue
+                -->
+                <apex:outputPanel rendered="{!CAN_CUSTOMIZE_APPLICATION}">
+                    <div id="logoHolder" class="slds-hide">
+                        <apex:inputFile id="fileUploadLogo" value="{!imgDoc.Body}" filename="{!imgDoc.Name}" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="setUploadFrom('logo');upload();" disabled="{!NOT(canUploadDocuments)}"/>
+                        <label id="logoUploadButton" for="{!$Component.fileUploadLogo}" class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small" title="Upload Image">
+                            <svg class="slds-button__icon slds-align_absolute-center" viewBox="0 0 24 24" style="height:100%;">
+                                <path d="M22.4 14.3H21c-.4 0-.7.4-.7.7v4.6c0 .4-.3.7-.7.7H4.4c-.4 0-.7-.3-.7-.7V15c0-.3-.3-.7-.7-.7H1.6c-.4 0-.7.4-.7.7v6.2c0 1 .9 1.9 1.9 1.9h18.4c1 0 1.9-.9 1.9-1.9V15c0-.3-.3-.7-.7-.7zM12.5 1.1c-.3-.3-.7-.3-1 0L5.3 7.3c-.3.3-.3.7 0 1l.9 1c.3.3.7.3 1 0l2.6-2.6c.3-.3.8-.1.8.3v9.8c0 .4.3.7.7.7h1.3c.4 0 .8-.4.8-.7V7.1c0-.5.4-.6.8-.4l2.6 2.6c.2.3.6.3.9 0l1-.9c.3-.3.3-.7 0-1l-6.2-6.3z"></path>
+                            </svg>
+                        </label>
+                    </div>
+
+                    <div id="thumbsUpHolder" class="slds-hide">
+                        <apex:inputFile id="fileUploadThumbsUp" value="{!imgDoc.Body}" filename="{!imgDoc.Name}" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="setUploadFrom('thumbsup');upload();" disabled="{!NOT(canUploadDocuments)}"/>
+                        <label id="thumbsUpUploadButton" for="{!$Component.fileUploadThumbsUp}" class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small" title="Upload Image">
+                            <svg class="slds-button__icon slds-align_absolute-center" viewBox="0 0 24 24" style="height:100%;">
+                                <path d="M22.4 14.3H21c-.4 0-.7.4-.7.7v4.6c0 .4-.3.7-.7.7H4.4c-.4 0-.7-.3-.7-.7V15c0-.3-.3-.7-.7-.7H1.6c-.4 0-.7.4-.7.7v6.2c0 1 .9 1.9 1.9 1.9h18.4c1 0 1.9-.9 1.9-1.9V15c0-.3-.3-.7-.7-.7zM12.5 1.1c-.3-.3-.7-.3-1 0L5.3 7.3c-.3.3-.3.7 0 1l.9 1c.3.3.7.3 1 0l2.6-2.6c.3-.3.8-.1.8.3v9.8c0 .4.3.7.7.7h1.3c.4 0 .8-.4.8-.7V7.1c0-.5.4-.6.8-.4l2.6 2.6c.2.3.6.3.9 0l1-.9c.3-.3.3-.7 0-1l-6.2-6.3z"></path>
+                            </svg>
+                        </label>
+                    </div>
+
+                    <div id="thumbsDownHolder" class="slds-hide">
+                        <apex:inputFile id="fileUploadThumbsDown" value="{!imgDoc.Body}" filename="{!imgDoc.Name}" accept="image/png, image/gif, image/jpg, image/jpeg" onchange="showActionOverlay();setUploadFrom('thumbsdown');upload();" disabled="{!NOT(canUploadDocuments)}"/>
+                        <label id="thumbsDownUploadButton" for="{!$Component.fileUploadThumbsDown}" class="slds-button slds-button_icon slds-button_icon-border slds-m-right_xx-small" title="Upload Image">
+                            <svg class="slds-button__icon slds-align_absolute-center" viewBox="0 0 24 24" style="height:100%;">
+                                <path d="M22.4 14.3H21c-.4 0-.7.4-.7.7v4.6c0 .4-.3.7-.7.7H4.4c-.4 0-.7-.3-.7-.7V15c0-.3-.3-.7-.7-.7H1.6c-.4 0-.7.4-.7.7v6.2c0 1 .9 1.9 1.9 1.9h18.4c1 0 1.9-.9 1.9-1.9V15c0-.3-.3-.7-.7-.7zM12.5 1.1c-.3-.3-.7-.3-1 0L5.3 7.3c-.3.3-.3.7 0 1l.9 1c.3.3.7.3 1 0l2.6-2.6c.3-.3.8-.1.8.3v9.8c0 .4.3.7.7.7h1.3c.4 0 .8-.4.8-.7V7.1c0-.5.4-.6.8-.4l2.6 2.6c.2.3.6.3.9 0l1-.9c.3-.3.3-.7 0-1l-6.2-6.3z"></path>
+                            </svg>
+                        </label>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel id="apex2js">
+                    <script type="text/javascript">
+                        var APEX = {
+                            surveyBuilderUrl : "{!JSENCODE($Page.simplesurvey__SurveyBuilder)}",
+                            surveyInsightsUrl : "/" + "{!JSENCODE(insightsKeyPrefix)}",
+                            uiThemeDisplayed : "{!$User.UIThemeDisplayed}",
+                            hasLegacyConfiguration : {!hasLegacyConfiguration},
+                            simpleSurveyProfileId : "{!JSENCODE(simpleSurveyProfileId)}",
+                            simpleSurveySiteId : "{!JSENCODE(simpleSurveySiteId)}",
+                            canCustomizeApplication : {!CAN_CUSTOMIZE_APPLICATION},
+                            canUploadDocuments: {!canUploadDocuments},
+                            pageAlert: {
+                                type: '{!JSENCODE(alertType)}',
+                                message: '{!JSENCODE(alertMessage)}'
+                            }
+                        };
+                    </script>
+                </apex:outputPanel>
+
+                <!-- Objects and Polyfills -->
+                <script type="text/javascript">
+                    var PageUtil = {    // Utility Functions
+                        forEach : function(arr, callback) {
+                            var doBreak;
+                            for(var i = 0; i < arr.length && !doBreak; i++) {
+                                doBreak = callback(arr[i], i, arr.length - 1);
+                            }
+                        },
+
+                        getUrlParametersMap : function() {
+                            var vars = {};
+                            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                                vars[key] = value;
+                            });
+                            return vars;
+                        },
+
+                        isUndefined : function(obj) {
+                            return typeof(obj) === 'undefined';
+                        },
+
+                        isDefined : function(obj) {
+                            return !this.isUndefined(obj);
+                        }, 
+
+                        // Returns a function, that, as long as it continues to be invoked, will not
+                        // be triggered. The function will be called after it stops being called for
+                        // N milliseconds. If `immediate` is passed, trigger the function on the
+                        // leading edge, instead of the trailing.
+                        //
+                        // From David Walsh
+                        debounce : function(func, wait, immediate) {
+                            var timeout;
+                            return function() {
+                                var context = this, args = arguments;
+                                var later = function() {
+                                    timeout = null;
+                                    if (!immediate) {
+                                        func.apply(context, args);
+                                    }
+                                };
+                                var callNow = immediate && !timeout;
+                                clearTimeout(timeout);
+                                timeout = setTimeout(later, wait);
+                                if (callNow) {
+                                    func.apply(context, args);
+                                }
+                            };
+                        },
+
+                        removeAllChildren : function(node) {
+                            while(node.lastChild) {
+                                node.removeChild(node.lastChild);
+                            }
+                        },
+
+                        // if the condition is true, add a class to an element, if not, remove the class
+                        addClassOnCondition : function(el, className, condition) {
+                            if(el && className) {
+                                (condition) ? el.classList.add(className) : el.classList.remove(className);
+                            }
+                        },
+
+                        // New Object Functions -- Based on http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html
+                        objEquals : function(obj1, obj2) {
+                            var obj1Props = Object.getOwnPropertyNames(obj1);
+                            var obj2Props = Object.getOwnPropertyNames(obj2);
+
+                            if(obj1Props.length !== obj2Props.length) {
+                                return false;
+                            }
+
+                            var equal = true;
+                            PageUtil.forEach(obj1Props, function(propName) {
+                                if(obj1[propName] !== obj2[propName]) {
+                                    equal = false;
+                                    return true;    // return true to end PageUtil.forEach early
+                                }
+                            });
+
+                            return equal;
+                        }
+
+                    }
+
+                    function SalesforceUX() {   // Keeps track of which experience you are in, without using UIThemeDisplayed
+                        var themeIsLightningBased = PageUtil.isDefined(sforce && sforce.one);
+
+                        this.IN_CONSOLE = sforce && sforce.console && sforce.console.isInConsole();
+                        this.IN_CLASSIC_CONSOLE = this.IN_CONSOLE && !themeIsLightningBased;
+                        this.IN_LIGHTNING_CONSOLE = this.IN_CONSOLE && themeIsLightningBased;
+                        this.IN_LIGHTNING_EXPERIENCE = !this.IN_LIGHTNING_CONSOLE && themeIsLightningBased;
+                        this.IN_CLASSIC = !this.IN_CONSOLE && !this.IN_LIGHTNING_EXPERIENCE;
+                    }
+                </script>
+
+                <!-- Globals -->
+                <script>
+                    var SF_UX = new SalesforceUX();
+                    var INITIAL_HEADER_OFFSET_TOP = document.getElementById("stickyHeader").offsetTop;
+                    var SETUP_NAVIGATION_CONTENT_WRAPPERS = document.querySelectorAll('#setup_nav .tab_content_wrapper');
+                    var SETUP_NAVIGATION_CONTENT = document.querySelectorAll('#setup_nav .tab_content');
+                    var MODAL_VARIANTS = {
+                        CREATE_SITE : 'cs',
+                        CREATE_SITE_ERROR : 'cse'
+                    };
+                    var actionOverlayId = 'actionOverlay';
+                    var actionOverlayTitleId = 'actionOverlayTitle';
+                    var actionOverlaySubtitleId = 'actionOverlaySubtitle';
+
+                    var conn = new jsforce.Connection({ accessToken: '{!$API.Session_Id}', version : '47.0'});
+                </script>
+
+                <!-- Handlers -->
+                <script type="text/javascript">
+                    function handlePageOnLoad(e) {
+                        setupInternalLinks();
+                        showThemeExclusiveElements();
+                        showThemeMismatchElements();
+                        updateNavigationButtonPadding();
+                        updateLightningConsoleOnThemeMismatch();
+                        removeHeaderMargins();
+                        positionBrandingFileUploads();
+                        disableStarInputsIfNeeded();
+                        positionTabContentIntoTabs();
+                        setSimpleSurveyProfileLinkHref();
+                        setSitesViewLinksHref();
+                        setSitesEditLinkHref();
+                        setRemoteSiteLinkHref();
+                        setupEventListeners();
+
+                        var activeTabIndex = getActiveTabIndex();
+                        NAVIGATION_TABS.showTabContent(SETUP_NAVIGATION_CONTENT_WRAPPERS[activeTabIndex]);
+                        document.querySelectorAll('#setup_nav .' + NAVIGATION_TABS.TAB_ITEM_CLASS)[activeTabIndex].classList.add(NAVIGATION_TABS.ACTIVE_TAB_CLASS);
+
+                        var tabContentDivs = document.querySelectorAll('#setup_nav div.tab_content');
+                        for(var i = 0; i < tabContentDivs.length; i++) {
+                            tabContentDivs[i].classList.remove(NAVIGATION_TABS.HIDE_CLASS);
+                        }
+
+                        if(SF_UX.IN_CONSOLE) {
+                            sforce.console.setTabTitle("Simple Survey Setup");
+                        }
+
+                        updateDisableOrientation();
+                        updateNavigationButtonLabels();
+                        showSaveButton();
+                        handleAlert();
+                        hideActionOverlay();
+                    }
+
+                    function handleCreateSiteButtonOnClick(e) {
+                        showModalVariant(MODAL_VARIANTS.CREATE_SITE);
+                    }
+
+                    function handleModalCloseButtonOnClick(e) {
+                        hideModal();
+                    }
+
+                    function handleModalCancelButtonOnClick(e) {
+                        hideModal();
+                    }
+
+                    function handleModalContinueButtonOnClick(e) {
+                        createSimpleSurveySite();
+                    }
+
+                    function handleModalTryAgainButtonOnClick(e) {
+                        createSimpleSurveySite();
+                    }
+
+                    function handleProceedToConfigurationStepsOnComplete() {
+                        showThemeExclusiveElements();
+                        setSimpleSurveyProfileLinkHref();
+                        setSitesViewLinksHref();
+                        setSitesEditLinkHref();
+                        hideActionOverlay();
+                    }
+
+                    function handleGoToSurveyBuilderConsoleBtnOnClick(e) {
+                        if(SF_UX.IN_CONSOLE) {
+                            sforce.console.getEnclosingPrimaryTabId(function(r1) {
+                                if(r1.success) {
+                                    sforce.console.openSubtab(r1.id, APEX.surveyBuilderUrl, true);
+                                }
+                                else {
+                                    sforce.console.openPrimaryTab(null, APEX.surveyBuilderUrl, true);
+                                }
+                            });
+                        }
+                    }
+
+                    function handleGoToInsightsConsoleBtnOnClick(e) {
+                        if(SF_UX.IN_LIGHTNING_CONSOLE) {
+                            sforce.console.getEnclosingPrimaryTabId(function(r1) {
+                                if(r1.success) {
+                                    sforce.console.openSubtab(r1.id, APEX.surveyInsightsUrl, true);
+                                }
+                                else {
+                                    sforce.console.openPrimaryTab(null, APEX.surveyInsightsUrl, true);
+                                }
+                            });
+                        }
+                    }
+
+                    function updateLogoImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.logoPreview}'),document.getElementById('logoSpinner'), document.getElementById('logoError'));
+                    }
+
+                    function updateThumbsUpImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.thumbsUpPreview}'),document.getElementById('thumbsUpSpinner'), document.getElementById('thumbsUpError'));
+                    }
+
+                    function updateThumbsDownImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.thumbsDownPreview}'),document.getElementById('thumbsDownSpinner'), document.getElementById('thumbsDownError'));
+                    }
+
+                    function updateOneStarImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.oneImage}'),document.getElementById('oneSpinner'), document.getElementById('oneError'),'inline');
+                    }
+
+                    function updateTwoStarImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.twoImage}'),document.getElementById('twoSpinner'), document.getElementById('twoError'),'inline');
+                    }
+
+                    function updateThreeStarImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.threeImage}'),document.getElementById('threeSpinner'), document.getElementById('threeError'),'inline');
+                    }
+
+                    function updateFourStarImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.fourImage}'),document.getElementById('fourSpinner'), document.getElementById('fourError'),'inline');
+                    }
+
+                    function updateFiveStarImage() {
+                        imagePreviewOnChange(document.getElementById('{!$Component.frm.fiveImage}'),document.getElementById('fiveSpinner'), document.getElementById('fiveError'),'inline');
+                    }
+
+                    function handleProceedToConfigurationStepsButtonOnClick(e) {
+                        e.currentTarget.disabled = true;
+                        setActionOverlayTitle('Checking for Site \'Simple Survey\'');
+                        showActionOverlay();
+                        proceedToConfigurationSteps();
+                    }
+
+                    // Change Image
+                    function imagePreviewOnChange(image, spinner, errorDiv, displayType) {
+                        if(typeof(displayType) === 'undefined') {
+                            displayType = 'block';  
+                        }
+                        spinner.style.display = displayType;
+                        errorDiv.style.display = 'none';
+                        image.style.display = 'none';
+                    }
+
+                    function changeTabOnComplete() {
+                        setCurrentTabInHash();
+                        updateNavigationButtonLabels();
+                        showSaveButton();
+                        scrollToTop();
+                        PAGE_ALERT.quickHideAlert();
+                        // Stop the 'Saved' fading animation from playing every time you return to the tab.
+                        var webAddressSavedSpan = document.getElementById('web-address-saved');
+                        if(webAddressSavedSpan !== null) {
+                            webAddressSavedSpan.classList.add('web-address-saved-hidden-no-animation');
+                        }
+                    }
+
+                    function handleSetupImageOnClick(event) {
+                        var imgUrl = event.target.src;
+                        document.getElementById("imageOverlay").querySelector(".image-overlay-image-container").style.backgroundImage = "url('" + imgUrl + "')";
+                        showImageOverlay();
+                    }
+                </script>
+
+                <!-- Helpers -->
+                <script type="text/javascript">
+                    function setupEventListeners() {
+                        NAVIGATION_TABS.setupArrowKeyListeners(changeTabOnComplete);
+                        setupImageClickListeners();
+                        setupImageOverlayListeners();
+                        document.addEventListener('scroll',setStickyHeader);
+                    }
+
+                    function setStickyHeader(event) {
+                        var windowScrollTop = document.querySelector('html').scrollTop;
+                        if(windowScrollTop < INITIAL_HEADER_OFFSET_TOP) {
+                            var newPos = INITIAL_HEADER_OFFSET_TOP - windowScrollTop;
+                            document.getElementById("stickyHeader").style.top = newPos + 'px';
+                            document.getElementById("stickyNav").style.top = newPos + 'px';
+                            document.getElementById("stickyPageAlert").style.top = newPos + 'px';
+                        }
+                        else {
+                            document.getElementById("stickyHeader").style.top = '0';
+                            document.getElementById("stickyNav").style.top = '0';
+                            document.getElementById("stickyPageAlert").style.top = '0';
+                        }
+                    }
+
+                    function setSimpleSurveyProfileLinkHref() {
+                        if(APEX.simpleSurveyProfileId && APEX.simpleSurveySiteId) {
+                            var url = '/' + APEX.simpleSurveyProfileId;
+                            if(SF_UX.IN_LIGHTNING_EXPERIENCE || SF_UX.IN_LIGHTNING_CONSOLE) {
+                                url = '/one/one.app?source=aloha#/setup/EnhancedProfiles/page?address=' + encodeURIComponent(url);
+                            }
+                            document.getElementById('simple-survey-profile-link').href = url;
+                        }
+                    }
+
+                    function setSitesViewLinksHref() {
+                        var url = getSitesUrl(false);
+                        PageUtil.forEach(document.querySelectorAll(".sites-view-link"), function(link) {
+                            link.href = url;
+                        });
+                    }
+
+                    function setSitesEditLinkHref() {
+                        var url = getSitesUrl(true);
+                        var link = document.getElementById("sites-edit-link").href = url;
+                    }
+
+                    function setRemoteSiteLinkHref() {
+                        var url = generateRemoteURL();
+                        var link = document.getElementById("remote-site-link").href = url;
+                    }
+
+                    function generateRemoteURL(){
+                        var url;
+                        if(SF_UX.IN_LIGHTNING_CONSOLE || SF_UX.IN_LIGHTNING_EXPERIENCE) {
+                            url = '/lightning/setup/SecurityRemoteProxy/home';
+                        }
+                        else{
+                            url = '/0rp?spl1=1&setupid=SecurityRemoteProxy&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DSecurity';
+                        }
+                        return url;
+                    }
+
+                    function getSitesUrl(edit) {
+                        edit = edit && !!(APEX.simpleSurveySiteId);
+                        if(edit) {
+                            url = '/' + APEX.simpleSurveySiteId + '/e';
+                        }
+                        else {
+                            url = '/0DM/o';
+                        }
+
+                        if(SF_UX.IN_LIGHTNING_CONSOLE || SF_UX.IN_LIGHTNING_EXPERIENCE) {
+                            url = '/lightning/setup/CustomDomain/page?address=' + encodeURIComponent(url);
+                        }
+                        return url;
+                    }
+
+                    function removeHeaderMargins() {
+                        if(SF_UX.IN_LIGHTNING_EXPERIENCE || SF_UX.IN_CONSOLE) {
+                            PageUtil.forEach(document.querySelectorAll(".hasMotif"), function(el) {
+                                el.classList.remove("hasMotif")
+                            });
+                        }
+                    }
+
+                    function positionBrandingFileUploads() {
+                        if(APEX.hasLegacyConfiguration && APEX.canCustomizeApplication) {
+                            var holderIds = ['logoHolder','thumbsUpHolder','thumbsDownHolder'];
+                            var pageLocationIds = ['inputFileLogoWrapper','inputFileThumbsUpWrapper','inputFileThumbsDownWrapper'];
+                            var buttonIds = ['logoUploadButton', 'thumbsUpUploadButton', 'thumbsDownUploadButton'];
+                            for(var i = 0; i < holderIds.length; i++) {
+                                var holder = document.getElementById(holderIds[i]);
+                                var pageLocation = document.getElementById(pageLocationIds[i]);
+                                while(holder.children.length > 0) {
+                                    pageLocation.appendChild(holder.children[0]);
+                                }
+                                holder.parentElement.removeChild(holder);
+
+                                if(!APEX.canUploadDocuments) {
+                                    let button = document.getElementById(buttonIds[i]);
+                                    if(button) {
+                                        button.setAttribute("disabled", "true");    // These are not actually buttons, but labels made to look like buttons.
+                                        button.title = 'You do not have the permissions to upload Documents.';
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    function disableStarInputsIfNeeded() {
+                        if(APEX.hasLegacyConfiguration && !APEX.canCustomizeApplication) {
+                            var idList = ['{!$Component.fiveURL}', '{!$Component.fourURL}', '{!$Component.threeURL}', '{!$Component.twoURL}', '{!$Component.oneURL}']
+                            for(var i = 0; i < idList.length; i++) {
+                                var el = document.getElementById(idList[i]);
+                                if(el.classList.contains("slds-input")) {   // If <input>
+                                    el.disabled = true;
+                                }
+                                else if(el.querySelector(".slds-input")) {  // If <span>
+                                    el.querySelector(".slds-input").setAttribute("disabled", "true");
+                                }
+                                
+                            }
+                        }
+                    }
+
+                    function positionTabContentIntoTabs() {
+                        for(var i = 0; i < SETUP_NAVIGATION_CONTENT.length; i++) {
+                            var snc = SETUP_NAVIGATION_CONTENT[i];
+                            var sncTabName = snc.getAttribute(NAVIGATION_TABS.TAB_NAME_ATTR);
+                            for(var j = 0; j < SETUP_NAVIGATION_CONTENT_WRAPPERS.length; j++) {
+                                var sncw = SETUP_NAVIGATION_CONTENT_WRAPPERS[j];
+                                if(sncw.getAttribute(NAVIGATION_TABS.TAB_NAME_ATTR) === sncTabName) {
+                                    sncw.querySelector('.slds-box').appendChild(snc);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    function getActiveTabIndex() {
+                        var tabName;
+                        if(SF_UX.IN_LIGHTNING_EXPERIENCE) {
+                            var url = PageUtil.getUrlParametersMap()['sfdcIFrameOrigin'];
+                            if(url) {
+                                var urlParts = url.split('#');
+                                if(urlParts.length > 1) {
+                                    tabName = urlParts[urlParts.length - 1];
+                                }
+                            }
+                        }
+                        else {
+                            tabName = window.location.hash.substr(1);
+                        }
+                        
+                        if(tabName && tabName.length > 0) {
+                            for(var i = 0; i < SETUP_NAVIGATION_CONTENT_WRAPPERS.length; i++) {
+                                var sncw = SETUP_NAVIGATION_CONTENT_WRAPPERS[i];
+                                if(tabName === removeSpaces(toTitleCase(sncw.getAttribute(NAVIGATION_TABS.TAB_NAME_ATTR)))) {
+                                    return i;
+                                }
+                            }
+                        }
+
+                        return 0;
+                    }
+
+                    function setupInternalLinks() {
+                        PageUtil.forEach(document.querySelectorAll(".survey-builder-link[data-for-console='" + SF_UX.IN_CONSOLE + "'], .survey-insights-link[data-for-console='" + SF_UX.IN_CONSOLE + "']"), function(link) {
+                            link.classList.remove("slds-hide");
+                        });
+                    }
+
+                    function showThemeExclusiveElements() {
+                        PageUtil.forEach(document.querySelectorAll(".lightning-only, .classic-only"), function(el) {
+                            // If class is "lightning-only", show in Lightning or Lightning Console
+                            // If class is "classic-only", show in Classic or Classic Console
+                            PageUtil.addClassOnCondition(el, "slds-hide", !((el.classList.contains('lightning-only') && (SF_UX.IN_LIGHTNING_CONSOLE || SF_UX.IN_LIGHTNING_EXPERIENCE)) || (el.classList.contains('classic-only') && (SF_UX.IN_CLASSIC_CONSOLE || SF_UX.IN_CLASSIC))));
+                        });
+                    }
+
+                    function showThemeMismatchElements() {
+                        if((APEX.uiThemeDisplayed === 'Theme3' && (SF_UX.IN_LIGHTNING_CONSOLE || SF_UX.IN_LIGHTNING_EXPERIENCE)) || (APEX.uiThemeDisplayed.indexOf('Theme4') > -1) && (SF_UX.IN_CLASSIC || SF_UX.IN_CLASSIC_CONSOLE)) {
+                            PageUtil.forEach(document.querySelectorAll(".theme-mismatch-only"), function(el) {
+                                el.classList.remove("slds-hide");
+                            });
+                        }
+                    }
+
+                    function updateNavigationButtonPadding() {
+                        if(SF_UX.IN_LIGHTNING_CONSOLE || SF_UX.IN_LIGHTNING_EXPERIENCE || SF_UX.IN_CLASSIC_CONSOLE) {
+                            document.getElementById("navigationButtonsWrapper").classList.add("slds-p-bottom_medium");
+                        }
+                    }
+
+                    function updateLightningConsoleOnThemeMismatch() {
+                        if(APEX.uiThemeDisplayed === 'Theme3' && SF_UX.IN_LIGHTNING_CONSOLE) {
+                            var page = document.querySelector(".pg.slds-scope");
+                            page.style.position = "absolute";
+                            page.style.left = 0;
+                            page.style.right = 0;
+                        }
+                    }
+
+                    // uploadFrom
+                    function getUploadFromHiddenInput() {
+                        return document.getElementById('{!$Component.frm.h_uploadFrom}');
+                    }
+
+                    function setUploadFrom(text) {
+                        getUploadFromHiddenInput().value = text;
+                    }
+
+                    // Overlay
+                    // Ignore Tabs and Arrow Keys to change navigation tabs.
+                    function disableBackgroundListeners() {
+                        ACTION_OVERLAYS.setEnableTabsForPage(false);
+                        NAVIGATION_TABS.disableArrowMovement();
+                    }
+
+                    function enableBackgroundListeners() {
+                        ACTION_OVERLAYS.setEnableTabsForPage(true);
+                        NAVIGATION_TABS.enableArrowMovement();
+                    }
+                    
+                    // Action Overlays
+                    function showActionOverlay() {
+                        var actionOverlay = getActionOverlay();
+                        actionOverlay.style.display = 'block';
+                        disableBackgroundListeners();
+                    }
+
+                    function setActionOverlayTitle(text) {
+                        document.getElementById(actionOverlayTitleId).innerText = text;
+                    }
+
+                    function setActionOverlaySubtitle(text) {
+                        document.getElementById(actionOverlaySubtitleId).innerText = text;
+                    }
+
+                    function getActionOverlay() {
+                        return document.getElementById(actionOverlayId);
+                    }
+
+                    function hideActionOverlay() {
+                        var actionOverlay = getActionOverlay();
+                        actionOverlay.style.display = 'none';
+                        setActionOverlayTitle('');
+                        setActionOverlaySubtitle('');
+                        enableBackgroundListeners();
+                    }
+
+                    // Image Overlay
+                    function showImageOverlay() {
+                        var imgOverlay = document.getElementById('imageOverlay');
+                        imgOverlay.style.display = 'block';
+                        disableBackgroundListeners();
+                    }
+
+                    function hideImageOverlay() {
+                        var imgOverlay = document.getElementById('imageOverlay');
+                        imgOverlay.style.display = 'none';
+                        enableBackgroundListeners();
+                    }
+
+                    // Modal
+                    function showModalVariant(variant, options) {
+                        var modal = document.getElementById("modal");
+                        var modalBackdrop = document.getElementById("modal-backdrop");
+                        modal.classList.add("slds-fade-in-open");
+                        modalBackdrop.classList.add("slds-backdrop_open");
+                        
+                        var modalVariantElements = modal.querySelectorAll("[data-modal-variants]");
+                        for(var i = 0; i < modalVariantElements.length; i++) {
+                            if(modalVariantElements[i].getAttribute("data-modal-variants").split(',').indexOf(variant) > -1) {
+                                modalVariantElements[i].classList.remove("slds-hide");
+                            }                        
+                        }
+
+                        if(variant === MODAL_VARIANTS.CREATE_SITE_ERROR) {
+                            updateModalErrorText(options.errorMessage);
+                        }
+                        ACTION_OVERLAYS.setEnableTabsForPageExceptDiv(false, "modal");
+                    }
+
+                    function hideModal() {
+                        var modal = document.getElementById("modal");
+                        var modalBackdrop = document.getElementById("modal-backdrop");
+                        modal.classList.remove("slds-fade-in-open");
+                        modalBackdrop.classList.remove("slds-backdrop_open");
+
+                        var modalVariantElements = modal.querySelectorAll("[data-modal-variants]");
+                        for(var i = 0; i < modalVariantElements.length; i++) {
+                            modalVariantElements[i].classList.add("slds-hide");
+                        }
+                        ACTION_OVERLAYS.setEnableTabsForPage(true);
+                    }
+
+                    function updateModalVariant(variant, options) {
+                        var modalVariantElements = modal.querySelectorAll("#modal [data-modal-variants]");
+                        for(var i = 0; i < modalVariantElements.length; i++) {
+                            if(modalVariantElements[i].getAttribute("data-modal-variants").split(',').indexOf(variant) > -1) {
+                                modalVariantElements[i].classList.remove("slds-hide");
+                            }
+                            else {
+                                modalVariantElements[i].classList.add("slds-hide");
+                            }
+                        }
+
+                        if(variant === MODAL_VARIANTS.CREATE_SITE_ERROR) {
+                            updateModalErrorText(options.errorMessage);
+                        }
+                    }
+
+                    function updateModalErrorText(msg) {
+                        document.getElementById("modal-error-text").textContent = 'Error: ' + msg;
+                    }
+
+                    // Site Creation
+                    function createSimpleSurveySite() {
+                        setActionOverlayTitle('Creating Force.com site for Simple Survey...');
+                        showActionOverlay();
+                        var metadata = [{
+                            "fullName": "Simple_Survey",
+                            "active": true,
+                            "allowHomePage": false,
+                            "allowStandardAnswersPages": false,
+                            "allowStandardIdeasPages": false,
+                            "allowStandardLookups" : false,
+                            "allowStandardPortalPages" : true,
+                            "allowStandardSearch": false,
+                            "browserXssProtection": true,
+                            "clickjackProtectionLevel": "SameOriginOnly",
+                            "contentSniffingProtection": true,
+                            "cspUpgradeInsecureRequests": true,
+                            "enableAuraRequests": true,
+                            "indexPage": "simplesurvey__Simple_Survey",
+                            "masterLabel": "Simple Survey",
+                            "referrerPolicyOriginWhenCrossOrigin" : true,
+                            "requireHttps": true,
+                            "requireInsecurePortalAccess": false,
+                            "siteType": "Visualforce",
+                            "urlPathPrefix" : "survey",
+                            "siteAdmin" :   "{!$User.Username}",	// Username of site admin
+                        }];
+                        conn.metadata.create('CustomSite', metadata, function(err, result) {
+                            processJSForceResults(err, result, handleCreateSimpleSurveySiteOnSuccess, handleCreateSimpleSurveySiteOnError);
+                        });
+                    }
+
+                    function handleCreateSimpleSurveySiteOnSuccess() {
+                        hideModal();
+                        proceedToConfigurationSteps();
+                    }
+
+                    function handleCreateSimpleSurveySiteOnError(errorMessage) {
+                        if(errorMessage === 'limit exceeded') { // License limit exceeded error returns a pretty vague message. Instead use the error message that appears in the UI.
+                            errorMessage = 'You have exceeded the number of licenses for your organization. You must first acquire a new license to create a new site.';
+                        }
+                        updateModalVariant(MODAL_VARIANTS.CREATE_SITE_ERROR, {errorMessage : errorMessage});
+                        hideActionOverlay();
+                    }
+                    
+                    function processJSForceResults(error, result, successCallback, errorCallback) {
+                        if(error || !result.success) {
+                            var errMsg = extractErrorMessage(error, result);
+                            errorCallback(errMsg);
+                        }
+                        else {
+                            successCallback();
+                        }
+                    }
+
+                    function extractErrorMessage(error, result) {
+                        if(error) {
+                            return error.message;
+                        }
+                        else {
+                            var errorsArray = (result.hasOwnProperty('errors')) ? [result.errors] : result.errors;
+                            var errors = [];
+                            for(var i = 0; i < errorsArray.length; i++) {
+                                var error = errorsArray[i];
+                                errors.push(error.message);
+                            }
+                            return errors.join("\n");
+                        }
+                    }
+
+                    //----------
+                    function upload() {
+                        setActionOverlayTitle('Uploading');
+                        showActionOverlay();
+                        uploadFile();
+                    }
+
+                    function startSave() {
+                        setActionOverlayTitle('Saving');
+                        showActionOverlay();
+                        savePage();
+                    }
+
+                    function setFocusOnLoad() {}
+
+                    function showAssignLicPermSetLoader(){
+                        var btn = document.querySelector('input[id*="assignLicPermSet"]')
+                        btn.disabled = 'true';
+                        document.querySelector('.assignPermSetStatus #assignSuccessSpinner').style.display = '';
+                        document.querySelector('.assignPermSetStatus #assignSuccessIcon').style.display = 'none';
+                    }
+
+                    function handleShowAssignLicPermSetOnComplete() {
+                        var btn = document.querySelector('input[id*="assignLicPermSet"]')
+                        btn.disabled = null;
+                        document.querySelector('.assignPermSetStatus #assignSuccessSpinner').style.display = 'none';
+                        if(APEX.pageAlert.type !== 'error') {
+                            showAssignLicPermSetSuccess();
+                        }
+                        handleAlert();
+                    }
+
+                    function showAssignLicPermSetSuccess(){
+                        var icon = document.querySelector('.assignPermSetStatus #assignSuccessIcon');
+                        icon.style.display = '';
+                        icon.innerHTML = '<svg class="slds-icon slds-icon_x-small" viewBox="0 0 24 24"><path d="M8.8 19.6L1.2 12c-.3-.3-.3-.8 0-1.1l1-1c.3-.3.8-.3 1 0L9 15.7c.1.2.5.2.6 0L20.9 4.4c.2-.3.7-.3 1 0l1 1c.3.3.3.7 0 1L9.8 19.6c-.2.3-.7.3-1 0z"></path></svg>';
+                    }
+
+                    function scrollToTop() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    }
+
+                    // Orientation
+                    function updateDisableOrientation() {
+                        if(APEX.hasLegacyConfiguration) {
+                            var useRadios = document.getElementById('pg:frm:radios').checked;
+                            var useCheckboxes = document.getElementById('pg:frm:checkboxes').checked;
+
+                        document.getElementById('pg:frm:radioAlignment').disabled = !useRadios || {!NOT(CAN_CUSTOMIZE_APPLICATION) == true};
+                        document.getElementById('pg:frm:checkboxAlignment').disabled = !useCheckboxes || {!NOT(CAN_CUSTOMIZE_APPLICATION) == true};
+                        }
+                    }
+
+                    // Disable/Enable Elements
+                    function disableElementsWithIds(idList) {
+                        for(var i = 0; i < idList.length; i++) {
+                            var el = document.getElementById(idList[i]);
+                            if(el !== null) {
+                                el.setAttribute('disabled', 'disabled');
+                            }
+                        }
+                    }
+
+                    function enableElementsWithIds(idList) {
+                        for(var i = 0; i < idList.length; i++) {
+                            var el = document.getElementById(idList[i]);
+                            if(el !== null) {
+                                el.removeAttribute('disabled');
+                            }
+                        }
+                    }
+                    // Sections
+                    function toggleSection(sectionDiv) {
+                        sectionDiv.classList.toggle('slds-is-open');
+                    }
+
+                    // Tab Navigation
+                    function switchNavigationTab(newActiveNavigationTab) {
+                        NAVIGATION_TABS.switchNavigationTab(newActiveNavigationTab);
+                        changeTabOnComplete();
+                    }
+
+                    function previousTab() {
+                        NAVIGATION_TABS.moveToAdjacentTab(NAVIGATION_TABS.DIRECTION_PREVIOUS);
+                        changeTabOnComplete();
+                    }
+
+                    function nextTab() {
+                        NAVIGATION_TABS.moveToAdjacentTab(NAVIGATION_TABS.DIRECTION_NEXT);
+                        changeTabOnComplete();
+                    }
+
+                    function updateNavigationButtonLabels() {
+                        var activeTab = NAVIGATION_TABS.getActiveTab();
+                        var prevButton = document.getElementById('previous-button');
+                        var nextButton = document.getElementById('next-button');
+
+                        var nextTab = activeTab.nextElementSibling;
+                        var prevTab = activeTab.previousElementSibling;
+
+                        var bothButtonsShowing = true;
+
+                        if(nextTab === null) {
+                            nextButton.style.visibility = 'hidden';
+                            bothButtonsShowing = false;
+                        }
+                        else {
+                            nextButton.style.visibility = 'visible';
+                            nextButton.querySelector('.buttonText').setAttribute('data-nextStep', toTitleCase(nextTab.getAttribute(NAVIGATION_TABS.TAB_NAME_ATTR)));
+                        }
+
+                        if(prevTab === null) {
+                            prevButton.style.visibility = 'hidden';
+                            bothButtonsShowing = false;
+                        }
+                        else {
+                            prevButton.style.visibility = 'visible';
+                            prevButton.setAttribute('data-prevStep', toTitleCase(prevTab.getAttribute(NAVIGATION_TABS.TAB_NAME_ATTR)));
+                        }
+
+                        var navigationButtonsWrapper = document.getElementById('navigationButtonsWrapper');
+                        if(bothButtonsShowing) {
+                            navigationButtonsWrapper.classList.add('slds-button-group');
+                        }
+                        else {
+                            navigationButtonsWrapper.classList.remove('slds-button-group');
+                        }
+                    }
+
+                    function showSaveButton() {
+                        var headerSaveButton = document.getElementById('header-save-button');
+                        if(headerSaveButton) {
+                            var show = document.querySelector(".tab_content[data-tab-name='" + NAVIGATION_TABS.getActiveTab().getAttribute('data-tab-name') + "']").getAttribute('data-show-save');
+                            if(show === 'true') {
+                                headerSaveButton.classList.add("slds-transition-show");
+                                headerSaveButton.classList.remove("slds-transition-hide");
+                            }
+                            else {
+                                headerSaveButton.classList.add("slds-transition-hide");
+                                headerSaveButton.classList.remove("slds-transition-show");
+                            }
+                        }
+                    }
+
+                    function setCurrentTabInHash() {
+                        var newTabName = NAVIGATION_TABS.getActiveTab().getAttribute(NAVIGATION_TABS.TAB_NAME_ATTR);
+                        var baseUrl = window.location.href.split('#')[0];
+                        window.location.replace( baseUrl + '#' + removeSpaces(toTitleCase(newTabName)));
+                    }
+
+                    function setupImageClickListeners() {
+                        var setupImages = document.querySelectorAll('.setupImage');
+                        for(var i = 0; i < setupImages.length; i++) {
+                            setupImages[i].addEventListener('click',handleSetupImageOnClick);
+                        }
+                    }
+
+                    function setupImageOverlayListeners() {
+                        document.addEventListener('keyup', function(event) {
+                            if(event.keyCode === 27) {
+                                hideImageOverlay();
+                            }
+                        });
+                    }
+
+                    function handleAlert() {
+                        switch(APEX.pageAlert.type) {
+                            case 'error':
+                                PAGE_ALERT.setTheme(PAGE_ALERT.THEMES.ERROR);
+                                break;
+                            case 'success':
+                                PAGE_ALERT.setTheme(PAGE_ALERT.THEMES.SUCCESS);
+                                break;
+                            case 'warning':
+                                PAGE_ALERT.setTheme(PAGE_ALERT.THEMES.WARNING);
+                                break;
+                            case 'none':
+                                PAGE_ALERT.hideAlert();
+                                return;
+                            default:
+                                console.error('Invalid Page Alert Type "' + APEX.pageAlert.type + '". Hiding Page Alert.');
+                                PAGE_ALERT.hideAlert();
+                                return;
+                        }
+
+                        var alertMessage = unescapeXMLEntities(APEX.pageAlert.message);
+
+                        PAGE_ALERT.setMessages([alertMessage]);
+                        PAGE_ALERT.showAlert();
+                        if(PAGE_ALERT.theme == PAGE_ALERT.THEMES.SUCCESS) {
+                            setTimeout(function() {
+                                PAGE_ALERT.hideAlert();
+                            }, 2500);
+                        }
+                    }
+                </script>
+
+                <script type="text/javascript">
+                    window.addEventListener("load", handlePageOnLoad);
+                </script>
+            </apex:form>
+        </div>
+
+        <!-- END SLDS -->
+    </apex:outputPanel>
+</apex:page>

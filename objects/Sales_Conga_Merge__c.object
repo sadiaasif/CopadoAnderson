@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Conga_401k_Merge_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FXcrCQAT&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB4P000000fyj5WAA&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conga  401k Merge Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Platinum_Receipt_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU000000DaQ6s&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB4P000000fyj5WAA&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conga Platinum Receipt Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Receipt_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000002FRJL&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conga Receipt Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Receipt__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Renewal Receipt</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Deed_Prep_Agreement_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z6f00000U4FDF&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Deed Prep Agreement Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deed_Prep_Agreement__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Deed Prep Agreement</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Filing_Fee_Invoice_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000EqZVB&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Filing Fee Invoice Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filing_Fee_Invoice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Filing Fee Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Filing_Fee_Receipt_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005Pb9Z&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Filing Fee Receipt Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filing_Fee_Receipt__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Filing Fee Receipt</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Network_ID_Of_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( $Profile.Id,
+&quot;00e4P000000ydyf&quot;, &quot;0DB4P000000fyj5WAA&quot;,
+&quot;00e6f000000SF39&quot;, &quot;0DB6f000000TOB3GAO&quot;,
+&quot;00e6f000001IzW2&quot;, &quot;0DB4P000000fyoUWAQ&quot;,
+&quot;00e6f000001IzWR&quot;, &quot;0DB6f000000TOAoGAO&quot;, 
+&quot;00e6f000001IzVi&quot;, &quot;0DB6f000000TOAjGAO&quot;, 
+&quot;00e6f000000SF2a&quot;, &quot;0DB4P000000fykrWAA&quot;, 
+&quot;00e6f000001IzWb&quot;, &quot;0DB6f000000TOAtGAO&quot;, 
+&quot;00e6f000000SF2u&quot;, &quot;0DB4P000000fykwWAA&quot;, 
+&quot;00e6f000001IzWW&quot;, &quot;0DB4P000000fyojWAA&quot;, 
+&quot;00e6f000000SEzv&quot;, &quot;0DB4P000000fyj0WAA&quot;, 
+&quot;00e6f000000SF2k&quot;, &quot;0DB4P000000fyn7WAA&quot;,
+&quot;0DB0B0000004EF4WAM&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Network ID Of User</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opportunity Invoice Name</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Sales Conga Merges</relationshipLabel>
+        <relationshipName>Sales_Conga_Merges</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Pension_PSP_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FXcdD&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB4P000000fyj5WAA&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Pension PSP Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pension_Tax_Mailer_401k_Merge__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Pension Tax Mailer - 401k Merge</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Pension_Tax_Mailer_PSP_Merge__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Pension Tax Mailer - PSP Merge</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Platinum_Receipt__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Platinum Receipt</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Texas_Corp_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FWylQ&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quote - Texas - Corp - Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quote_Texas_Corp__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Texas - Corp Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Texas_LLC_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FWymO&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quote Texas LLC Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quote_Texas_LLC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Texas - LLC Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Texas_No_franchise_Tax_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FXjBI&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quote Texas (No franchise Tax) Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quote_Texas_No_franchise_Tax__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Texas (No franchise Tax) Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RA_Resignation_Notice_Non_Payment_Trig__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FX0Bw&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RA Resignation Notice - Non Payment Trig</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RA_Resignation_Notice_Non_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>RA Resignation Notice - Non Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Standard_Renewal_Quote_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FXmoX&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Standard Renewal Quote Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Standard_Renewal_Quote__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Standard Renewal Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>State_Renewal_Quote_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Opportunity_Invoice__r.Id +
+&quot;&amp;queryid=[Transaction]a100B00000CI1Y0,[SalesEntity1]a10U0000003H6zr, [PensionRenewal]a100B00000GyCMY,[Entity]a100B00000DJQ5B&quot; + 
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FXmoS&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=&quot; + Network_ID_Of_User__c +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>State Renewal Quote Trigger</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State_Renewal_Quote__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State Renewal Invoice</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Sales Conga Merge</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Nolan_Daigle_Sales_Conga_Merge</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Nolan Daigle</label>
+        <queue>Nolan_Daigle</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Sales Conga Merge Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Sales Conga Merges</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

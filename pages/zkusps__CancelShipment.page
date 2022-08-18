@@ -1,0 +1,53 @@
+<apex:page tabStyle="zkusps__Shipment__c" showHeader="false" sidebar="false" standardController="zkusps__Shipment__c" extensions="zkusps.CancelShipmentButtonController" action="{! init }">
+    
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+    
+    <apex:sectionHeader title="Cancel USPS Shipment" help="http://www.zenkraft.com/support/usps/docs/managing-shipments"/>
+    
+    <apex:form >
+        <apex:pageBlock id="cancelShipmentPageBlock">
+            
+            <!-- Messages -->
+            <apex:outputPanel id="CancelShipmentMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+            
+            
+            <!-- Cancel Shipment Button Section -->
+            <apex:pageBlockSection collapsible="false" columns="1" rendered="{! NOT(cancelShipmentDisabled) }">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Cancel USPS Shipment "/>
+                        <apex:actionStatus id="cancelShipmentStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+                
+                <!-- Description --> 
+                This will cancel the entire shipment from USPS. The shipment will be marked as <b>Shipment Deleted</b> in the Shipment record and you will be credited back the amount of the shipment cost. <br/>
+                <b>Note:</b> This will not delete the Shipment record from Salesforce. You can delete the Shipment record by pressing the <b>Delete</b> button on the Shipment record.
+                <p/>
+                
+                <!-- Cancel Button -->
+                <apex:pageBlockSectionItem rendered="{! webServiceType == 'Express1' }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! cancelShipment }" value="Cancel Shipment" disabled="{! cancelShipmentDisabled }" 
+                        rerender="cancelShipmentPageBlock" status="cancelShipmentStatus" />
+                </apex:pageBlockSectionItem>
+
+                <!-- Cancel Endicia Button -->
+                <apex:pageBlockSectionItem rendered="{! webServiceType == 'Endicia' }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! cancelEndiciaShipment }" value="Cancel Endicia Shipment" disabled="{! cancelShipmentDisabled }" 
+                        rerender="cancelShipmentPageBlock" status="cancelShipmentStatus" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection><p/>
+             
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

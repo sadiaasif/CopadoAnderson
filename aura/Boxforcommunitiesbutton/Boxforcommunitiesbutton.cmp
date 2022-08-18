@@ -1,0 +1,7 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Boxforcommunitiesbutton" >
+    <aura:attribute name="BoxLink" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="accountRecord" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+ 
+</aura:component>

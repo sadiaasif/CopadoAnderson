@@ -1,0 +1,86 @@
+<apex:page controller="HomeToDos" showHeader="false">
+<apex:form >
+	<apex:pageBlock id="Block" >
+	<apex:pageBlockSection columns="2">
+	<apex:pageBlockSectionItem >
+		
+      </apex:pageBlockSectionItem>
+	<apex:pageBlockSectionItem >
+		<apex:outputPanel >
+		<apex:outputLabel value="Completed?"/>
+		<apex:selectList value="{!OptionSelected}" multiselect="false" size="1" style="right:0px;">
+	               	<apex:selectOptions value="{!Completed}"/>
+	               	<apex:actionSupport event="onchange" rerender="Block" />
+	      </apex:selectList>
+	      </apex:outputPanel>
+	      <apex:outputPanel >
+		<apex:outputLabel value="Sales Rep"/>
+		<apex:inputField value="{!ToDo.Sales_Rep__c}">
+	               	<apex:actionSupport event="onchange" rerender="Block" />
+	      </apex:inputField>
+	      </apex:outputPanel>
+      </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+		<apex:PageBlockTable value="{!TodoList}" var="t">
+			<apex:column >
+				<apex:facet name="header">Completed?</apex:facet>
+				<apex:outputField value="{!t.Completed__c}"></apex:outputField>
+			</apex:column>
+			<apex:column >
+				<apex:facet name="header">Name</apex:facet>
+				<apex:outputLink value="/{!t.id}"  target="_parent">{!t.Name}</apex:outputLink>
+			</apex:column>
+			<apex:column >
+				
+				 <apex:facet name="header">   
+           <apex:commandLink action="{!ViewData}" value="Sales Rep{!IF(sortExpression=='Sales_Rep__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort">
+             <apex:param value="Sales_Rep__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+				<apex:outputLink value="/{!t.Sales_Rep__r.id}"  target="_parent">{!t.Sales_Rep__r.Name}</apex:outputLink>
+				
+			</apex:column>
+			<apex:column >
+				<apex:facet name="header">   
+           <apex:commandLink action="{!ViewData}" value="Date{!IF(sortExpression=='Date__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort12">
+             <apex:param value="Date__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+				<apex:outputField value="{!t.Date__c}"></apex:outputField>
+				
+			</apex:column>
+			<apex:column >
+				
+				 <apex:facet name="header">   
+           <apex:commandLink action="{!ViewData}" value="Client{!IF(sortExpression=='Client__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort1">
+             <apex:param value="Client__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+				<apex:outputLink value="/{!t.Client__r.id}"  target="_parent">{!t.Client__r.Name}</apex:outputLink>
+			</apex:column>
+			<apex:column >
+				
+				<apex:facet name="header">   
+           <apex:commandLink action="{!ViewData}" value="Entity{!IF(sortExpression=='Entity__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort2">
+             <apex:param value="Entity__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+				<apex:outputLink value="/{!t.Entity__r.id}"  target="_parent">{!t.Entity__r.Name}</apex:outputLink>
+			</apex:column>
+			<apex:column >
+				
+				<apex:facet name="header">   
+           <apex:commandLink action="{!ViewData}" value="Sales{!IF(sortExpression=='Sales__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort3">
+             <apex:param value="Sales__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+				<apex:outputLink value="/{!t.Sales__r.id}"  target="_parent">{!t.Sales__r.Name}</apex:outputLink>
+			</apex:column>
+			<apex:column >
+				<apex:facet name="header">Lead</apex:facet>
+				<apex:outputLink value="/{!t.Lead__r.id}"  target="_parent">{!t.Lead__r.Name}</apex:outputLink>
+			</apex:column>
+		</apex:PageBlockTable>
+	</apex:pageBlock>
+</apex:form>
+</apex:page>

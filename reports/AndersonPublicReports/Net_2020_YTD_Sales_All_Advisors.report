@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>AMOUNT:SUM - Opportunity.Refunded_Amount__c:SUM - ChargentSFA__Transaction__c.Filing_Fee_Check__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>false</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Net Sales</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>ChargentSFA__Transaction__c.ChargentSFA__Amount__c:SUM - ChargentSFA__Transaction__c.Filing_Fee_Check__c:SUM</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA2</developerName>
+        <isActive>false</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Net Sales Total</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Opportunity.Net_Transactions_net_of_Fees__c:SUM - Opportunity.Registered_Agent__c:SUM</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>FORMULA3</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Net Transactions - RA, Credit, FF</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_84858255</developerName>
+        <masterLabel>Advisors</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Sales_Rep__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Al Caiazza</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michael Hackler</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Corey Posgay</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Seth Perlman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kelly Allison</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kendall O&apos;Leary</sourceValue>
+            </sourceValues>
+            <value>Sr. Strategist</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Shaena Aguilar</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shane Broyard</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michelle Merritt</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ricardo Gonzalez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Brian Bowman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chuck Hall</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Josh Terry</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Justin Cortes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Charles Hall</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mike Tracey</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Serena Cervantes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Joey Felix</sourceValue>
+            </sourceValues>
+            <value>Sr. Advisor</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Leah Pocoroba</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michael Ciuffetelli</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nicolo Nisbett</sourceValue>
+            </sourceValues>
+            <value>Business Advisor</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c.Transaction_date__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sale_Campaign__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Opportunity.Net_Transactions_net_of_Fees__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Charge,Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Payment_Method__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Client Referral Credit,Credit to be used</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_84858255</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Sr. Strategist,Sr. Advisor,Business Advisor</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Net 2020 YTD Sales - All Advisors</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</dateColumn>
+        <endDate>2020-12-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2020-01-01</startDate>
+    </timeFrameFilter>
+</Report>

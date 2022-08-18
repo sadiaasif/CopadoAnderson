@@ -1,0 +1,67 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController" sidebar="false" showHeader="false" lightningStylesheets="true">    
+ <apex:slds />
+    <style>
+     @media (min-width: 1024px){
+            .sidebar {display: block;
+            }
+            }
+     div {
+    	word-wrap: break-word;
+			}
+     footer.container-fluid.text-center {
+            padding: 2px;
+        }   
+     .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select, .slds-scope textarea {
+       color: white;
+        }   
+        
+    </style>
+     <div class="slds-scope">
+    <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            	<meta charset="utf-8" />
+              	<meta http-equiv="Mobile compatible" content="ie=edge" />
+              	<title>Anderson Business Advisors</title>
+              	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+            
+            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            <title>Anderson Advisors</title>            
+            <!-- Bootstrap -->
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+            <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+            <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>            
+        </head>
+        <body>     
+           
+                <apex:include pageName="AndersonHeader"/>
+                <div class="container main-container">  
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="gray-block">
+                           <!-- <apex:iframe id="embedVal" src="{!$CurrentPage.parameters.param}"/>-->
+                            <iframe id ='embedVal' class="full-page" src="{!$CurrentPage.parameters.param}"></iframe>
+                        </div>
+                    </div> 
+                </div>
+                <apex:include pageName="AndersonFooter"/>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>     
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.marquee.js')}"/>
+            <apex:includeScript value="https://apis.google.com/js/platform.js"/>
+                <script>
+                $(document).ready(function() {
+                    document.getElementById('embedVal').height = window.innerHeight; 
+                }); 
+                </script> 
+                
+        </body>
+    </html>
+ </div>
+</apex:page>

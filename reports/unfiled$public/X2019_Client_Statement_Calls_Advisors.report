@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>CUST_LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>Client_Statement__c.Client__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Client_Statement__c.I_d_like_my_entity_tax_returns_filed_by__c</field>
+    </columns>
+    <columns>
+        <field>Client_Statement__c.Are_we_doing_your_personal_taxes__c</field>
+    </columns>
+    <columns>
+        <field>Client_Statement__c.Additional_Tax_Entities__c</field>
+    </columns>
+    <columns>
+        <field>Client_Statement__c.I_d_like_my_bookkeeping_completed_by__c</field>
+    </columns>
+    <columns>
+        <field>Client_Statement__c.Additional_Bookkeeping_Entities__c</field>
+    </columns>
+    <description>Calls by Sales to determine Tax and Bookkeeping requests</description>
+    <filter>
+        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+        <criteriaItems>
+            <column>Client_Statement__c.I_d_like_my_entity_tax_returns_filed_by__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Anderson Tax Department</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Client_Statement__c.I_d_like_my_entity_tax_returns_filed_by__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Contact me</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Client_Statement__c.I_d_like_my_bookkeeping_completed_by__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Contact me</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Client_Statement__c.I_d_like_my_bookkeeping_completed_by__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Anderson</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Client_Statement__c.Additional_Tax_Entities__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Client_Statement__c.Additional_Bookkeeping_Entities__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>2019 Client Statement Calls - Advisors</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Client_Statement__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Client_Statement__c.Client__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

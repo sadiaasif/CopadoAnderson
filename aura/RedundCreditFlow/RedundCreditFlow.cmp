@@ -1,0 +1,22 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+	  <aura:attribute name="recordId" type="string"/>
+    <aura:attribute name="RefundRecord" type="Object"/> 
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+  <aura:html tag="style">
+     .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        } 
+    </aura:html>
+     
+    <!--Component Start-->
+    <div class="slds-m-around--xx-large">
+        <div class="slds-align_absolute-center">
+          <lightning:flow aura:id="flowData" />
+        </div>
+    </div>
+  
+    
+    
+</aura:component>

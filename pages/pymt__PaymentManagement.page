@@ -1,0 +1,75 @@
+<apex:page standardController="pymt__PaymentX__c" extensions="pymt.PaymentManagementController" showHeader="false" sidebar="false" standardStyleSheets="true" >
+<style>
+    body {
+       font-size:.75em;
+    }
+    p {
+       margin:6px 0px 6px 0px;
+       padding:0;
+    }
+
+    .pbBody {
+     /*   background:#f3f3ec; */
+    }
+    .pmtMgtForm .btnSharing {
+        font-size:1.1em;
+        padding-top:2px;
+        color: wheat;
+    }
+    .pmtMgtForm .btn {
+        font-size:0.9em;
+        padding-top:2px;
+        color: #e0e0e0;
+    }
+    .pmtMgtForm a.btn  {
+        color: #404040;
+        text-decoration:none;
+    }
+    .pmtMgtForm a.btnSharing  {
+        color: white;
+        text-decoration:none;
+    }
+
+    .pmtMgtForm a.btnSharing:hover, .pmtMgtForm a.btn:hover {
+        text-decoration:none;
+    }
+    .modalProgressBox {
+        display: block;
+        position: absolute;
+        z-index: 999;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        background-color: #FFF;
+        top: 0px;
+        left: 0px;
+        filter:alpha(opacity=50);
+        -moz-opacity:0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        color: black;
+        font-size: 14pt;
+    }
+
+
+</style>
+
+<apex:form id="paymentManagementForm" styleClass="pmtMgtForm">
+
+<apex:pageBlock mode="maindetail" title=""  >
+
+<apex:pageBlockButtons location="top" >
+<apex:outputLink styleClass="btn" disabled="{!disablePaymentTerminalBtn}" rendered="{!renderPaymentTerminalBtn}" target="_top"  value="{!URLFOR($Page.pymt__PaymentTerminal,null,[id=payment.Id,cancelURL='/'+payment.Id])}">Payment Terminal</apex:outputLink>
+<apex:outputLink styleClass="btn" disabled="{!disableCaptureBtn}" rendered="{!renderCaptureBtn}" target="_top"  value="{!URLFOR($Page.pymt__CapturePayment,null,[id=payment.Id])}">Capture</apex:outputLink>
+<apex:outputLink styleClass="btn" disabled="{!disableVoidBtn}" rendered="{!renderVoidBtn}" target="_top"  value="{!URLFOR($Page.pymt__RefundPayment,null,[id=payment.Id])}">Void</apex:outputLink>
+<apex:outputLink styleClass="btn" disabled="{!disableRefundBtn}" rendered="{!renderRefundBtn}" target="_top"  value="{!URLFOR($Page.pymt__RefundPayment,null,[id=payment.Id])}">Refund</apex:outputLink>
+<apex:outputLink styleClass="btn" disabled="{!disableGetDetailsBtn}" rendered="{!renderGetDetailsBtn}" target="_top" value="{!URLFOR($Page.pymt__PaymentDetails,null,[id=payment.Id])}">Get Payment Details</apex:outputLink>
+
+
+</apex:pageBlockButtons>
+
+
+</apex:pageBlock>
+</apex:form>
+
+</apex:page>

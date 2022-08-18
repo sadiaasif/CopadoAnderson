@@ -1,0 +1,37 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:hasSObjectName" access="global" >
+    <aura:attribute name="sobjecttype" type="String" default="{!v.sObjectName}"/>
+     <aura:attribute name="DepSelected" type="Boolean"  default="false"/>
+      <aura:attribute name="recordId" type="Id"/>
+     <aura:attribute name="Link" type="string"/>
+     <aura:attribute name="LightningandclssicLink" type="string"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!--- <ui:outputText value="Please select the Department"/>
+                     <br/>
+	<lightning:select name="Department" label="Department" required="true" aura:id="DepList"  onchange="{!c.onDepChange}">
+        <option value="None">choose one...</option>
+        <option value="Renewal">Renewal</option>
+        <option value="Processing">Processing</option>
+        <option value="Service">Service</option>
+         <option value="Tax">Tax</option>
+        <option value="Advisor Admins">Advisor Admins</option>
+         <option value="Accounting Coordinators">Accounting Coordinators</option>
+         <option value="Bookkeeping">Bookkeeping</option>
+        <option value="Estate Planning">Estate Planning</option>
+        <option value="Professional Advisors">Professional Advisors</option>
+        <option value="Renewal Advisors">Renewal Advisors</option>
+        <option value="Advisors">Advisors</option>
+        
+    </lightning:select>-->
+   <!-- <aura:if isTrue="{!v.DepSelected}">-->
+        <b><ui:outputText value="Share the below link with community Users"/></b>
+        <br/>
+        <ui:outputText value="{!v.Link}"/>
+    <br/>
+    <br/>
+    <b> <ui:outputText value="Share the below link with lightning/classic  Users"/></b>
+      <br/>
+        <ui:outputText value="{!v.LightningandclssicLink}"/>
+        
+
+  <!--  </aura:if>-->
+</aura:component>

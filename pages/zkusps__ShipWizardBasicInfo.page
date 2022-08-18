@@ -1,0 +1,629 @@
+<apex:page tabStyle="zkusps__Shipment__c" standardController="zkusps__Shipment__c" extensions="zkusps.ShippingController" sidebar="false">
+
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+ 
+    <apex:sectionHeader title="USPS Shipment Edit"  subtitle="New USPS Shipment"/>
+    
+    <apex:form >
+        
+        <script>
+            function IsLoading(whichLoading) {
+                $j('.' + whichLoading).toggle(); 
+            };
+        </script>
+        
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+            
+                $j(document).ready(function() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                });
+            </script>
+        </apex:outputPanel>
+    
+    
+        <apex:pageBlock id="shipWizardBasicInfoPageBlock" mode="detail">
+        
+            <!-- Messages -->
+            <apex:outputPanel id="basicInfoPageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+                <!-- TODO: determine why commandButtons below work in dev org, but not in installed packages. Will need Salesforce help -->
+                <!--
+                <apex:commandButton action="/apex/BillingPreferenceNewEdit" value="New Billing Preference" rendered="{!ShowNewBillingPrefButton}" />
+                <apex:commandButton action="/apex/ShippingPreferenceNewEdit" value="New Shipping Preference" rendered="{!ShowNewShippingPrefButton}" />
+                -->
+            </apex:outputPanel>
+            
+            
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons rendered="{!ShowWizard}">
+                <apex:commandButton action="{!nextToClassSelect}" value="Continue >>" onclick="IsLoading('loadingContinueButton');"/>
+                <apex:image id="loadingContinueButton" styleClass="loadingContinueButton" value="{!$Resource.zkusps__LoadingImage}"/>
+            </apex:pageBlockButtons>
+            
+            
+            <apex:outputPanel rendered="{!ShowWizard}">
+                
+                <!-- Shipment Details Section -->
+                <apex:pageBlockSection id="shipmentDetailsSection" columns="1" collapsible="true">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Details "/>
+                            <apex:actionStatus id="shipmentDetailsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Preference -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Shipping Preference"/>
+                        <apex:inputField style="width:350px" value="{!Shipment.zkusps__shippingPreference__c}">
+                            <apex:actionSupport event="onchange" action="{!shippingPreferenceSelectRefresh}" rerender="requiredIndicatorScript,basicInfoPageMessages,shipmentDetailsSection,fromSection" status="shipmentDetailsStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Return Shipment -->
+                    <apex:inputField value="{!shipment.zkusps__replyPostage__c}">
+                        <apex:actionSupport event="onchange" action="{!replyPostageSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="shipmentDetailsStatus"/>
+                    </apex:inputField>
+                    
+                    <!-- Ship Date -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(shipment.zkusps__replyPostage__c)}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Ship Date"/>
+                        <apex:selectList id="selectShipDate" value="{!SelectedShipDateAdvance}" size="1" multiselect="false" >
+                            <apex:selectOptions value="{!ShipDateOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+                
+                
+                <!-- From Section, Recipient for Return shipments -->
+                <apex:outputPanel id="fromSection">
+                <apex:pageBlockSection collapsible="true">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="{!ShipFromSectionTitle} "/>
+                            <apex:actionStatus id="fromSectionStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Explain Required -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:outputText styleClass="inputFieldRequiredText" value="*Name or Company required"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem />
+                    
+                    <!-- Name -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Name"/>
+                        <apex:inputField value="{!Shipment.zkusps__fromName__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Email -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Email"/>
+                        <apex:inputField value="{!Shipment.zkusps__fromEmail__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Company -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Company"/>
+                        <apex:inputField value="{!Shipment.zkusps__fromCompany__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Phone -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Phone"/>
+                        <apex:inputText value="{!fromPhone}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Street -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Street"/>
+                        <apex:inputField style="width:350px" value="{!Shipment.zkusps__fromStreet__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- City -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="City"/>
+                        <apex:inputField value="{!Shipment.zkusps__fromCity__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- State -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="State"/>
+                        <apex:inputText value="{!FromState}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Zip/Postal Code -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Zip/Postal Code"/>
+                        <apex:inputField value="{!Shipment.zkusps__fromPostalCode__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                
+                <!-- To Section -->
+                <apex:outputPanel id="toSection">
+                <apex:pageBlockSection collapsible="true">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="{!ShipToSectionTitle} "/>
+                            <apex:actionStatus id="toSectionStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Address Source -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Address Source"/>
+                        <apex:selectList id="selectedAddressSource" value="{!SelectedAddressSource}" size="1" multiselect="false" >
+                            <apex:actionSupport event="onchange" action="{!addressSourceSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                            <apex:selectOptions value="{!AddressSourceOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem />
+                    
+                    <!-- Lead Address Source Input -->
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsLeads}">
+                        <apex:outputLabel value="Lead"/>
+                        <apex:inputField value="{!Shipment.zkusps__toLead__c}">
+                            <apex:actionSupport event="onchange" action="{!leadSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsLeads}"/>
+                    
+                    <!-- Contact Address Source Input -->
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsContacts}">
+                        <apex:outputLabel value="Contact"/>
+                        <apex:inputField value="{!Shipment.zkusps__toContact__c}">
+                            <apex:actionSupport event="onchange" action="{!contactSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsContacts}"/>
+                    
+                    <!-- Account Address Source Input -->
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsAccounts}">
+                        <apex:outputLabel value="Account"/>
+                        <apex:inputField value="{!Shipment.zkusps__toAccount__c}">
+                            <apex:actionSupport event="onchange" action="{!accountSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsAccounts}"/>
+                    
+                    <!-- Opportunity Address Source Input -->
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsOpportunities}">
+                        <apex:outputLabel value="Opportunity"/>
+                        <apex:inputField value="{!Shipment.zkusps__toOpportunity__c}">
+                            <apex:actionSupport event="onchange" action="{!opportunitySelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsOpportunities}"/>
+                    
+                    <!-- Custom Address Source Input -->
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsCustomAddressSource}">
+                        <apex:outputLabel value="Search"/>
+                        <apex:outputPanel >
+                            <!-- Search filter input -->
+                            <apex:inputText value="{!SelectedDestFilter}"/>
+                            <!-- Go! Button -->
+                            <apex:commandButton action="{!destFilterRefresh}" value="Go!" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                            <!-- Clear Button -->
+                            <apex:commandButton action="{!destFilterClearRefresh}" value="Clear" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsCustomAddressSource}"/>
+                    
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsCustomAddressSource}">
+                        <!-- Custom Address Source record select list -->
+                        <apex:outputLabel value="Address Source Value"/>
+                        <apex:selectList style="width:350px" value="{!SelectedCustomAddressSourceValue}" size="1" multiselect="false">
+                            <apex:actionSupport event="onchange" action="{!customAddressSourceValueSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                            <apex:selectOptions value="{!CustomAddressSourceValueOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!AddressSourceIsCustomAddressSource}"/>
+                    
+                    <!-- Client in Account -->
+                    <apex:pageBlockSectionItem rendered="{!ContactInAccountRendered}">
+                        <apex:outputLabel value="Select Contact"/>
+                        <apex:selectList id="selectContactToName" value="{!SelectedContactInAccount}" size="1" multiselect="false">
+                            <apex:actionSupport event="onchange" action="{!contactInAccountSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                            <apex:selectOptions value="{!ContactInAccountOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!ContactInAccountRendered}"/>
+                    
+                    <apex:pageBlockSectionItem rendered="{!IsSwapAddressCheckboxRendered}">
+                        <apex:outputLabel value="{!SwapAddressCheckboxTitle}"/>
+                        <apex:inputCheckbox id="swapAddress" value="{!SwapAddressCheckbox}">
+                            <apex:actionSupport event="onchange" action="{!swapAddressCheckboxSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputCheckbox>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsSwapAddressCheckboxRendered}"/>
+                    
+                    <apex:pageBlockSectionItem rendered="{!IsAllowEditRendered}">
+                        <apex:outputLabel value="Allow Edit"/>
+                        <apex:inputField value="{!Shipment.zkusps__userAllowedEditOfRecipientInfo__c}">
+                            <apex:actionSupport event="onchange" action="{!allowEditSelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsAllowEditRendered}"/>
+                    
+                    <!-- blank to align inputText boxes correctly -->
+                    <apex:pageBlockSectionItem />
+                    <apex:pageBlockSectionItem />
+                    
+                    <!-- Explain Required -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:outputText styleClass="inputFieldRequiredText" value="*Name or Company required"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem />
+                    
+                    <!-- Name -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToNameReadOnly)}">
+                        <apex:outputLabel value="Name"/>
+                        <apex:inputField value="{!Shipment.zkusps__toName__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToNameReadOnly}">
+                        <apex:outputLabel value="Name"/>
+                        <apex:outputField value="{!Shipment.zkusps__toName__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Email -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToEmailReadOnly)}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Email"/>
+                        <apex:inputField value="{!Shipment.zkusps__toEmail__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToEmailReadOnly}">
+                        <apex:outputLabel value="Email"/>
+                        <apex:outputField value="{!Shipment.zkusps__toEmail__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Company -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToCompanyReadOnly)}">
+                        <apex:outputLabel value="Company"/>
+                        <apex:inputField value="{!Shipment.zkusps__toCompany__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToCompanyReadOnly}">
+                        <apex:outputLabel value="Company"/>
+                        <apex:outputField value="{!Shipment.zkusps__toCompany__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Phone -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToPhoneReadOnly)}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Phone"/>
+                        <apex:inputText value="{!ToPhone}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToPhoneReadOnly}">
+                        <apex:outputLabel value="Phone"/>
+                        <apex:outputText value="{!ToPhone}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Street -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToStreetReadOnly)}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Street"/>
+                        <apex:inputField style="width:350px" value="{!Shipment.zkusps__toStreet__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToStreetReadOnly}">
+                        <apex:outputLabel value="Street"/>
+                        <apex:outputField value="{!Shipment.zkusps__toStreet__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- City -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToCityReadOnly)}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="City"/>
+                        <apex:inputField value="{!Shipment.zkusps__toCity__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToCityReadOnly}">
+                        <apex:outputLabel value="City"/>
+                        <apex:outputField value="{!Shipment.zkusps__toCity__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- State -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToStateReadOnly)}">
+                        <apex:outputLabel styleClass="{!ToStateCssStyleClass}" value="State"/>
+                        <apex:inputText value="{!ToState}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToStateReadOnly}">
+                        <apex:outputLabel value="State"/>
+                        <apex:outputText value="{!ToState}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Zip/Postal Code -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToPostalCodeReadOnly)}">
+                        <apex:outputLabel styleClass="{!ToPostalCodeCssStyleClass}" value="Zip/Postal Code"/>
+                        <apex:inputField value="{!Shipment.zkusps__toPostalCode__c}">
+                            <apex:actionSupport event="onchange" action="{!toPostalCodeChangeRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToPostalCodeReadOnly}">
+                        <apex:outputLabel value="Zip/Postal Code"/>
+                        <apex:outputField value="{!Shipment.zkusps__toPostalCode__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Country -->
+                    <apex:pageBlockSectionItem rendered="{!NOT(IsToCountryReadOnly)}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Country"/>
+                        <apex:selectList value="{!SelectedToCountry}" size="1" multiselect="false">
+                            <apex:actionSupport event="onchange" action="{!toCountrySelectRefresh}" rerender="requiredIndicatorScript,shipWizardBasicInfoPageBlock" status="toSectionStatus"/>
+                            <apex:selectOptions value="{!ToCountryOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!IsToCountryReadOnly}">
+                        <apex:outputLabel value="Country"/>
+                        <apex:outputField value="{!Shipment.zkusps__toCountry__c}"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Bypass Validate Address -->
+                    <apex:pageBlockSectionItem />
+                    <apex:inputField value="{!Shipment.zkusps__bypassAddressValidation__c}"/>
+                    
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                
+                <!-- Mail Piece Section -->
+                <apex:outputPanel id="mailPieceSection" >
+                <!-- TODO: For the future. Change title to say Flat/Regional Rate Service once Regional supported -->
+                <apex:pageBlockSection collapsible="false" columns="1">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Select Flat Rate Packaging -OR- Mail Piece Shape Packaging "/>
+                            <apex:actionStatus id="mailPieceStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Mail Piece Shape -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Select a Mail Piece Type"/>
+                        <apex:selectList id="selectMailPiece" value="{!SelectedMailPiece}" size="1" multiselect="false" >
+                            <apex:actionSupport event="onchange" action="{!mailPieceSelectRefresh}" rerender="requiredIndicatorScript,basicInfoPageMessages,mailPieceSection,weightSection,DimensionSection" status="mailPieceStatus"/>
+                        <apex:selectOptions value="{!MailPieceOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <!-- Non-Machinable -->
+                    <apex:pageBlockSectionItem rendered="{!NonMachinableInputRendered}">
+                        <apex:outputLabel value="Non-Machinable"/>
+                        <apex:inputField value="{!MailPiece.zkusps__nonMachinable__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                
+                <!-- Weight Section -->
+                <apex:outputPanel id="weightSection" >
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{!WeightSectionRendered}">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Weight "/>
+                            <apex:actionStatus id="weightSectionStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Explain Required -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:outputText styleClass="inputFieldRequiredText" value="*Pounds or Ounces required"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Pounds -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Pounds"/>
+                        <apex:inputField value="{!MailPiece.zkusps__weightPounds__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Ounces -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Ounces"/>
+                        <apex:inputField value="{!MailPiece.zkusps__weightOunces__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                
+                <!-- Dimension Section -->
+                <apex:outputPanel id="DimensionSection" >
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{!DimensionSectionRendered}">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Dimensions "/>
+                            <apex:actionStatus id="dimmSectionStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Length -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Length (IN)"/>
+                        <apex:inputField value="{!MailPiece.zkusps__length__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Width -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Width (IN)"/>
+                        <apex:inputField value="{!MailPiece.zkusps__width__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <!-- Height -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Height (IN)"/>
+                        <apex:inputField value="{!MailPiece.zkusps__height__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                
+                <!-- Value of Content Section -->
+                <apex:outputPanel id="valueSection">
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{!NOT(CustomsDetailsRendered)}">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Value of Content "/>
+                            <apex:actionStatus id="valueSectionStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Explain Required -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:outputText styleClass="inputFieldRequiredText" value="*Value of Content required for Insured Mail or COD"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Value of Content -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Value of Content (USD)"/>
+                        <apex:inputField value="{!MailPiece.zkusps__valueOfContents__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+                
+                <!-- Customs Details Section -->
+                <apex:outputPanel id="customsDetailsSection">
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{!CustomsDetailsRendered}">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Customs Details "/>
+                            <apex:actionStatus id="customsDetailsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Customs Information -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel styleClass="inputFieldRequired" value="Customs Information"/>
+                        <apex:inputField value="{!shipment.zkusps__customsInformation__c}"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Customs Information New Button -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:commandButton value="Create New" onClick="window.open('/apex/CustomsInformationNewEdit');" />
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Add a spacer -->
+                    <apex:pageBlockSectionItem />
+                    
+                    <!-- Explain Required -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:outputText styleClass="inputFieldRequiredText" value="*At least one Customs Item required"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Customs Item Input -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Add Customs Item to List"/>
+                        <apex:inputField style="width:350px" value="{!InputShipmentCustomsItem.zkusps__customsItem__c}">
+                            <apex:actionSupport event="onchange" action="{!addShipmentCustomsItemsRow}" rerender="requiredIndicatorScript,basicInfoPageMessages,customsDetailsSection" status="customsDetailsStatus"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Customs Item New Button -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:commandButton value="Create New" onClick="window.open('/apex/CustomsItemNewEdit');" />
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- Shipment Customs Item Table -->
+                    <apex:pageBlockTable id="shipmentCustomsItemTable" value="{!SelectableShipmentCustomsItems}" var="selectableShipmentCustomsItem" cellpadding="4" border="1" >
+                        <apex:column >
+                            <apex:facet name="header"></apex:facet>
+                            <apex:inputCheckbox id="customsItemSelect" value="{!selectableShipmentCustomsItem.selected}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Customs Item</apex:facet>
+                            <apex:outputField value="{!selectableShipmentCustomsItem.CustomsItem.Name}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Quantity</apex:facet>
+                            <apex:inputField value="{!selectableShipmentCustomsItem.ShipmentCustomsItem.zkusps__quantity__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Weight Pounds</apex:facet>
+                            <apex:outputField value="{!selectableShipmentCustomsItem.CustomsItem.zkusps__weightPounds__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Weight Ounces</apex:facet>
+                            <apex:outputField value="{!selectableShipmentCustomsItem.CustomsItem.zkusps__weightOunces__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Country of Origin</apex:facet>
+                            <apex:outputField value="{!selectableShipmentCustomsItem.CustomsItem.zkusps__countryOfOrigin__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">HS Tariff Number</apex:facet>
+                            <apex:outputField value="{!selectableShipmentCustomsItem.CustomsItem.zkusps__hsTariffNumber__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Description</apex:facet>
+                            <apex:outputField value="{!selectableShipmentCustomsItem.CustomsItem.zkusps__description__c}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    
+                    <!-- Remove Selected Shipment Customs Item -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value=""/>
+                        <apex:commandButton action="{!deleteSelectedShipmentCustomsItemsRow}" value="Remove Selected" rerender="basicInfoPageMessages,customsDetailsSection" status="customsDetailsStatus"/>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+            
+            <!-- Close for ShowWizard -->
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+        
+        
+        <!-- Shipment Notes -->
+        <apex:outputPanel rendered="{!ShowWizard}">
+            <apex:pageBlock mode="detail">
+                <apex:pageBlockSection collapsible="false" columns="1" >
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Notes "/>
+                            <apex:actionStatus id="shipmentNotesStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Shipment Notes -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Shipment Notes"/>
+                        <apex:inputField required="false" style="width:350px" value="{!Shipment.zkusps__shipmentNotes__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+      
+    </apex:form>
+</apex:page>

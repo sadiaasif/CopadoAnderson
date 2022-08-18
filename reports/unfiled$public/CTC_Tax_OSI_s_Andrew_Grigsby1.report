@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.Accounting_Coordinators__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Entity__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>Order.Stage__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <column>OrderItem.Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Non Profit Tax,Anderson Tax Advantage Program,No Activity First Year Tax Package,Anderson Tax Advantage Program - Lite,Tax Prep - Final Return</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Assigned to Tax Coordinator,Not Started,Welcome Call Attempted,Welcome Call Scheduled</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Accounting_Coordinators__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Andrew Grigsby</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>OrderItem.Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>CTC Tax OSI&apos;s - Andrew Grigsby</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <sortColumn>ACCOUNT_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>ORDER_EFFECTIVE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

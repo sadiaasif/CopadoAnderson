@@ -1,0 +1,28 @@
+<apex:page standardController="smagicinteract__smsMagic__c"  extensions="smagicinteract.OutgoingSMSController" tabStyle="smagicinteract__smsMagic__c">
+    <apex:form >
+        <apex:pageMessages escape="false" id="pageMessagesSection"/>
+        
+        <apex:pageBlock title="{!$Label.smagicinteract__error_title}" rendered="{!smagicinteract__smsMagic__c.smagicinteract__Direction__c != 'IN'}">
+            <apex:outputPanel id="errorPanel" >
+                {!$Label.smagicinteract__out_err_msg}
+            </apex:outputPanel>
+            <apex:pageBlockButtons >
+                <apex:commandButton title="{!$Label.smagicinteract__cancel_button_title}" value="{!$Label.smagicinteract__cancel_button_title}" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="{!$Label.smagicinteract__incoming_sms_page_block_title}" mode="edit" rendered="{!smagicinteract__smsMagic__c.smagicinteract__Direction__c == 'IN'}">
+            <apex:pageBlockSection columns="2">
+                <apex:repeat value="{!outgoingFields}" var="field">
+                    <apex:inputField value="{!outgoingSMSObject[field.name]}" rendered="{!field.defaultSelected}"/> 
+                    <apex:outputField value="{!outgoingSMSObject[field.name]}" rendered="{!!field.defaultSelected}"/> 
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton title="{!$Label.smagicinteract__save_button}" value="{!$Label.smagicinteract__save_button}" action="{!save}"/>
+                <apex:commandButton title="{!$Label.smagicinteract__cancel_button_title}" value="{!$Label.smagicinteract__cancel_button_title}" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        
+    </apex:form>
+</apex:page>

@@ -1,0 +1,161 @@
+<apex:page controller="evt.EventManagementSettingsController" tabstyle="evt__Special_Event__c" sidebar="false">
+<apex:sectionHeader title="Linvio Events" subtitle="Application Settings" help="{!URLFOR($Page.evt__EventManagementHelp)}"/>
+<apex:form >
+<apex:pageMessages />
+<apex:pageBlock mode="{!IF(editMode == true, 'edit','mainDetail')}">
+<apex:pageBlockButtons >
+<apex:commandButton value="Edit" action="{!editSettings}"  rendered="{!editMode == false}"/>
+<apex:commandButton value="Return" action="{!gotoRetURL}" rendered="{!If(((retURL == null || retURL =='') || editMode == true),false, true)}"/>
+<apex:commandButton value="Save" action="{!save}"  rendered="{!editMode}"/>
+<apex:commandButton value="Cancel" action="{!cancelEditSettings}" rendered="{!editMode}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockSection columns="1" title="QR & Barcode Generation" collapsible="false" rendered="{!editMode}">
+	<apex:pageBlockSectionItem helptext="URL to use when creating event ticket QR code images.  URLs used in Sites should begin with 'https:'" >
+		<apex:outputLabel value="QR Code Generator URL"/>
+		<apex:outputPanel >
+		<apex:inputText value="{!settings.evt__QR_Code_Generator__c}" style="width:250px;"/><br/><br/>
+		Insert &quot;{data}&quot; in the URL where Linvo Events should insert the data to be encoded. Be sure to add the server to your Salesforce Remote Sites settings.   
+		<br/><br/>Example: https://api.qrserver.com/v1/create-qr-code/?data={data}&amp;size=230x230
+		</apex:outputPanel>
+		
+	</apex:pageBlockSectionItem>
+
+	<apex:pageBlockSectionItem helptext="URL to use when creating event barcode images.  URLs used in Sites should begin with 'https:'" >
+		<apex:outputLabel value="Barcode Generator URL"/>
+		<apex:outputPanel >
+		<apex:inputText value="{!settings.evt__Barcode_Generator__c}"
+		style="width:250px;"/>
+		<br/><br/>Example: https://www.barcodesinc.com/generator/image.php?code={data}&amp;style=196&amp;type=C128B&amp;width=128&amp;height=75&amp;xres=1&amp;font=4
+		</apex:outputPanel>
+	</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="2" title="QR & Barcode Generation" collapsible="false" rendered="{!editMode == false}">
+	<apex:pageBlockSectionItem helptext="URL to use when creating event ticket QR code images.  URLs used in Sites should begin with 'https:'" >
+		<apex:outputLabel value="QR Code Generator URL"/>
+		<apex:outputPanel >
+		<apex:outputText value="{!settings.evt__QR_Code_Generator__c}" style="width:250px;"/>
+		</apex:outputPanel>
+		
+	</apex:pageBlockSectionItem>
+	<apex:pageBlockSectionItem >
+		<apex:outputLabel value="Preview"/>
+		<apex:outputPanel >
+  				<img src="{!SUBSTITUTE(settings.evt__qr_code_generator__c, '{data}',URLENCODE('http://www.salesforce.com'))}" /> 			
+		</apex:outputPanel>	
+	</apex:pageBlockSectionItem>
+
+	<apex:pageBlockSectionItem helptext="URL to use when creating event barcode images.  URLs used in Sites should begin with 'https:'" >
+		<apex:outputLabel value="Barcode Generator URL"/>
+		<apex:outputPanel >
+		<apex:outputText value="{!settings.evt__Barcode_Generator__c}"
+		style="width:250px;"/>
+		</apex:outputPanel>
+	</apex:pageBlockSectionItem>
+	<apex:pageBlockSectionItem >
+		<apex:outputLabel value="Preview"/>
+		<apex:outputPanel >
+  				<img src="{!SUBSTITUTE(settings.evt__barcode_generator__c, '{data}',URLENCODE('123456789'))}" /> 			
+		</apex:outputPanel>	
+	</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" title="Public Events Calendar" collapsible="false">
+	<apex:pageBlockSectionItem helptext="Specify the calendar view to show when the public event listing page is first displayed.">
+		<apex:outputLabel value="Default Calendar View"/>
+		<apex:selectList value="{!settings.evt__Default_Public_Calendar_View__c}" multiselect="false" size="1" disabled="{!editMode == false}">
+		   <apex:selectOption itemValue="Month" itemLabel="Month"/>
+		   <apex:selectOption itemValue="Week" itemLabel="Week"/>
+		   <apex:selectOption itemValue="Day" itemLabel="Day"/>
+		   <apex:selectOption itemValue="List" itemLabel="List"/>
+		</apex:selectList>
+	</apex:pageBlockSectionItem>
+	
+	<apex:pageBlockSectionItem >
+	</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection id="EventCheckinSettings" columns="1" title="Event Check-In" collapsible="false">
+
+	<apex:pageBlockSectionItem helptext="Method to use during check-in. Sites URL - can be read from a QR code by any standard mobile QR reader. Id Lookup - requires an app that can read the Id and interact with Linvio Events through the Salesforce API.">
+		<apex:outputLabel value="Event Check-In Method"/>
+		<apex:selectList value="{!settings.evt__Event_Check_In_Method__c}" multiselect="false" size="1" disabled="{!editMode == false}">
+		   <apex:selectOption itemValue="Sites URL" itemLabel="Sites URL"/>
+		   <apex:selectOption itemValue="Id Lookup" itemLabel="Id Lookup"/>
+		   <apex:actionSupport event="onchange" reRender="EventCheckinSettings"/>
+		</apex:selectList>
+	</apex:pageBlockSectionItem>
+
+	<apex:pageBlockSectionItem helptext="URL to use when creating event pass QR codes (for mobile device check-in/scan). Use the merge string {id} to indicate where the attendee invitation code should be inserted. e.g. https://mycompany.secure.force.com/site/evt__CheckIn?id={id}"
+	rendered="{!settings.evt__Event_Check_In_Method__c <> 'Id Lookup'}">
+		<apex:outputLabel value="Event Check-In URL"/>
+		<apex:outputPanel >
+		<apex:inputText value="{!settings.evt__Event_Check_In_URL__c}" style="width:250px;" rendered="{!editMode}"/>
+		<apex:outputText value="{!settings.evt__Event_Check_In_URL__c}" style="width:250px;" rendered="{!editMode == false}"/>
+		</apex:outputPanel>
+	</apex:pageBlockSectionItem>
+	
+	<apex:pageBlockSectionItem helptext="Verify IP address against list of registered IPs before allowing online check-in."
+	rendered="{!settings.evt__Event_Check_In_Method__c <> 'Id Lookup'}">
+		<apex:outputLabel value="Verify IP"/>
+		<apex:outputPanel >		
+		<apex:inputField value="{!settings.evt__Verify_IP__c}" rendered="{!editMode}"/>
+		<apex:outputField value="{!settings.evt__Verify_IP__c}" rendered="{!editMode == false}"/>
+		</apex:outputPanel>		
+	</apex:pageBlockSectionItem>
+
+	<apex:pageBlockSectionItem helptext="Passcode required to enable access from a device's IP address." 
+	rendered="{!settings.evt__Event_Check_In_Method__c <> 'Id Lookup'}">
+		<apex:outputLabel value="Device Access Code"/>
+		<apex:outputPanel >			
+		<apex:inputField value="{!settings.evt__Device_Access_Code__c}"  rendered="{!editMode}"/>
+		<apex:outputField value="{!settings.evt__Device_Access_Code__c}"  rendered="{!editMode == false}"/>
+		</apex:outputPanel>			
+	</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" title="Event Registration" collapsible="false">
+	<apex:pageBlockSectionItem helptext="When auto-creating contacts - this setting determines whether an account should also be created. 'Individual Accounts' are accounts given the same name as the Contact and marked 'Convert To Person Account' so they can be batch converted later.">
+		<apex:outputLabel value="Auto-Create Account"/>
+		<apex:selectList value="{!settings.evt__Auto_Create_Account__c}" multiselect="false" size="1" disabled="{!editMode == false}">
+		<apex:selectOption itemValue="" itemLabel="--- Select One ---"/>
+		<apex:selectOption itemValue="Use Default Account" itemLabel="Use Default Account"/>
+		<apex:selectOption itemValue="Create Individual Account" itemLabel="Create Individual Account"/>
+		<apex:selectOption itemValue="Create Business Account" itemLabel="Create Business Account"/>
+		<apex:selectOption itemValue="Create Business Account or Use Default" itemLabel="Create Business Account or Use Default"/>
+		<apex:selectOption itemValue="Create Individual or Business Account" itemLabel="Create Individual or Business Account"/>
+		</apex:selectList>
+	</apex:pageBlockSectionItem>
+	
+	<apex:pageBlockSectionItem helptext="Default Account (Id) to use when auto-creating Contacts">
+		<apex:outputLabel value="Default Account Id"/>
+		<apex:outputPanel >
+			<apex:inputField value="{!settings.evt__Default_Account__c}" rendered="{!editMode}"/>
+			<apex:outputField value="{!settings.evt__Default_Account__c}" rendered="{!editMode == false}"/>
+		</apex:outputPanel>
+	</apex:pageBlockSectionItem>	
+
+	<apex:pageBlockSectionItem helptext="Specify the page(s) that attendees can use to self-cancel registrations in the portal.">
+		<apex:outputLabel value="Cancel Registration"/>
+		<apex:selectList value="{!settings.evt__Cancel_Registration__c}" multiselect="false" size="1" disabled="{!editMode == false}">
+		   <apex:selectOption itemValue="Disabled" itemLabel="Disabled"/>
+		   <apex:selectOption itemValue="Default" itemLabel="Default"/>
+		   <apex:selectOption itemValue="Custom" itemLabel="Custom"/>
+		   <apex:selectOption itemValue="Custom or Default" itemLabel="Custom or Default"/>
+		</apex:selectList>
+	</apex:pageBlockSectionItem>
+
+	<apex:pageBlockSectionItem helptext="Custom page to use for event registration cancellations (by attendee)">
+		<apex:outputLabel value="Cancel Registration Page"/>
+		<apex:outputPanel >
+			<apex:inputField value="{!settings.evt__Cancel_Registration_Page__c}" rendered="{!editMode}"/>
+			<apex:outputField value="{!settings.evt__Cancel_Registration_Page__c}" rendered="{!editMode == false}"/>
+		</apex:outputPanel>
+	</apex:pageBlockSectionItem>	
+	
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

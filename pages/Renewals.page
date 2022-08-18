@@ -1,0 +1,59 @@
+<apex:page standardController="Entities__c" extensions="RenewalController" tabStyle="Entities__c" sidebar="false">
+ <apex:outputPanel id="datePanelContainer">
+  <apex:form >
+    <apex:pageBlock title="Entity" mode="edit" id="ent">
+      <apex:pageMessages />
+      <apex:pageBlockButtons >
+        <apex:commandButton value="Save" action="{!save}" rerender="ents" status="ajaxStatus"/>
+        <apex:commandButton action="{!cancel}" value="Cancel"/>
+        <apex:commandButton value="AutoFillTodaysDate" action="{!autofill}" rerender="datePanelContainer"/>   
+      </apex:pageBlockButtons>
+      
+     <apex:commandButton value="Change Month" action="{!resetdate}" rerender="datePanelContainer">
+          
+             <apex:inputText value="{!contIdChosen}" id="theTextInput" />           
+         
+     </apex:commandButton>
+          
+             
+      <apex:dataTable value="{!myents}" rendered="True" var="opp" id="ents">
+      
+      <apex:column headerValue="Entity">{!opp.Name}&nbsp;</apex:column>
+        <apex:column headerValue="Renewal Due Date">
+        <apex:inputField value="{!opp.State_Renewal__c}" id="renew"/>
+        </apex:column>
+        <apex:column headerValue="Renewal Received">
+        <apex:inputField value="{!opp.Renewal_Received_From_State__c}"/>
+        </apex:column>
+        <apex:column headerValue="Printed Renewal">
+         <apex:inputField value="{!opp.Renewal_Printed__c}" id="print"/>
+        </apex:column>
+        <apex:column headerValue="Emailed Renewal">
+        <apex:inputField value="{!opp.Renewal_Emailed__c}"/>
+        </apex:column>
+        <apex:column headerValue="Rec Pay For Renewal">
+        <apex:inputField value="{!opp.Received_Payment_For_Renewal__c}"/>
+        </apex:column>
+        <apex:column headerValue="List Filed With State">
+        <apex:inputField value="{!opp.List_Filed_with_State__c}"/>
+        </apex:column>
+       <!-- <apex:column headerValue="Stamped List Received">
+        <apex:inputField value="{!opp.Stamped_List_Received_from_State__c}"/>
+        </apex:column>-->
+        <apex:column headerValue="Packet Sent">
+       <apex:inputField value="{!opp.Packet_Sent__c}"/>
+        </apex:column>
+      </apex:dataTable>
+
+     
+    
+      <script>
+          function CopyShipInfo()
+          {
+            document.getElementById('{!$Component.ents.renew}').value = document.getElementById('datefield1').value;
+        </script>
+         
+    </apex:pageBlock>
+  </apex:form>
+  </apex:outputPanel>
+</apex:page>

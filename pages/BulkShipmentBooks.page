@@ -1,0 +1,26 @@
+<apex:page standardController="Opportunity" extensions="zkmulti.BulkShipmentController" recordSetVar="recordSet" lightningStylesheets="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0">
+   <script>
+       var casId = 'a4Y4P000002BlBKUA0';
+
+       var records = {! recordIds };
+       console.log('records', records);
+       if (records.length < 1) { 
+           alert("Please select at least 1 record."); 
+       } else { 
+           var ids = records.join(','); 
+           var url = "{!URLFOR('/apex/zkmulti__BulkShipmentList')}";
+           if (url.indexOf('?') !== -1) {
+               url += '&recIds=' + ids;    
+           } else {
+               url += '?recIds=' + ids; 
+           }           
+           url += '&casId=' + casId;
+
+           if (window.sforce && sforce.one) {
+               sforce.one.navigateToURL(url, true);
+           } else {
+               window.location.replace(url);
+           }
+       }
+   </script>
+</apex:page>

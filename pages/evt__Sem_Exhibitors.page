@@ -1,0 +1,54 @@
+<apex:page docType="html-5.0" id="siteSemExhibitorsPage" controller="evt.SemExhibitorsController" title="{!event.Name} Exhibitors"   showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>
+    {!IF($Label.SemExhibitors_Heading == '-','Exhibitors',SUBSTITUTE($Label.SemExhibitors_Heading,'{eventname}',event.Name))}
+</title></head>
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_sem_exhibitors_page">
+  <div class="evt_page_content_top">
+    <c:SemTemplateNav event="{!event}"  currentTab="exhibitors"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+<apex:form >
+
+<div id="evt_sem_exhibitors_box" class="evt_h1_outer_box">
+    <div class="evt_box_header">
+<apex:outputPanel rendered="{!$Label.evt__SemExhibitors_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__SemExhibitors_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+<apex:outputPanel rendered="{!NOT($Label.evt__SemExhibitors_Message == '-')}">
+<p>{!$Label.evt__SemExhibitors_Message}</p>
+</apex:outputPanel> 
+<apex:repeat value="{!listItems}" var="item">
+<div class="evt_exhibitor_logo_box">
+    <apex:outputPanel rendered="{!AND(NOT(ISBLANK(item.imageId)),ISBLANK(item.imageURL))}" >
+         <apex:outputLink value="{!item.website}" target="_blank" disabled="{!ISNULL(item.website)}">
+         <img class="evt_exhibitor_logo"  src="{!URLFOR($Action.Attachment.Download,item.imageId)}" />
+         </apex:outputLink>
+         
+    </apex:outputPanel>
+ 
+    <apex:outputPanel rendered="{!NOT(ISBLANK(item.imageURL))}" >
+         <apex:outputLink value="{!item.website}" target="_blank" disabled="{!ISNULL(item.website)}">
+         <img class="evt_exhibitor_logo"  src="{!item.imageURL}" />
+         </apex:outputLink>
+
+    </apex:outputPanel>
+</div>
+</apex:repeat>
+    </div>
+    <div class="evt_box_bottom"/>
+    </div>
+    
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+</apex:define>
+</apex:composition>
+</apex:page>

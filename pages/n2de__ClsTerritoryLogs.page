@@ -1,0 +1,235 @@
+<apex:page id="ClsTerritoryLogs" tabStyle="Distribution_Classifier__tab" sideBar="false" standardStylesheets="false" docType="html-5.0" controller="n2de.ClsTerritoryLogsController" action="{!init}">
+    <apex:slds />
+    <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.n2Components, 'css/n2.min.css')}"/>
+        <style>
+            div#n2__select-log-condition {
+                width: 10rem;
+            }
+            div#n2__input-log-condition {
+                width: 25rem;
+            }
+        </style>
+        <script>
+            window.n2__sldsIconsPrefix = '{!JSENCODE(URLFOR($Asset.SLDS, "assets/icons"))}';
+            window.n2__locale = '{!JSENCODE(Locale)}';
+            window.n2__timeZone = '{!JSENCODE(TimeZone)}';
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.n2Components, '/js/thirdParty.min.js')}"></script>
+        <script onload="initComponents();" defer="defer" src="{!URLFOR($Resource.n2Components, '/js/n2.min.js')}"></script>
+        <script>
+            initComponents = function() {
+                initNav('Territory Logs');
+
+                if ({!LoggingDisabled}) {
+                    n2j$('div#n2__no-logging-info').removeClass('slds-hide');
+                }
+
+                n2.cm.addComponent('button', {
+                    id: 'button-settings-link',
+                    selector: '#button-settings-link',
+                    text: 'Advanced Settings',
+                    style: 'link',
+                    handlers: {
+                        'click': function() {
+                            n2.sf.util.navigate('{!Namespace}ClassifierSettings');
+                        }
+                    }
+                });
+                n2.cm.addComponent('select', {
+                    id: 'select-log-condition',
+                    selector: '#select-log-condition',
+                    label: 'Filter',
+                    required: true,
+                    defaultValue: 'ALL',
+                    data: [{
+                        label: 'All',
+                        value: 'ALL'
+                    }, {
+                        label: 'Unknown territory',
+                        value: 'UNKNOWN_TERRITORY'
+                    }, {
+                        label: 'Territory is',
+                        value: 'TERRITORY'
+                    }, {
+                        label: 'Record id is',
+                        value: 'RECORD_ID'
+                    }, {
+                        label: 'In error',
+                        value: 'IN_ERROR'
+                    }],
+                    handlers: {
+                        'change': function(value) {
+                            if (value === 'TERRITORY' || value === 'RECORD_ID') {
+                                n2.cm.enable('input-log-condition');
+                            } else {
+                                n2.cm.disable('input-log-condition');
+                            }
+                        }
+                    }
+                });
+                n2.cm.addComponent('input', {
+                    id: 'input-log-condition',
+                    selector: '#input-log-condition',
+                    disabled: true,
+                    label: 'Filter value',
+                    cls: 'slds-m-left_medium'
+                });
+                n2.cm.addComponent('button', {
+                    id: 'button-log-condition',
+                    selector: '#button-log-condition',
+                    tooltip: 'Search Classifier Territory Logs',
+                    icon: 'search',
+                    iconSprite: 'utility',
+                    handlers: {
+                        'click': function() {
+                            n2.cm.refresh('data-table-logs');
+                        }
+                    },
+                    cls: 'slds-m-left_medium slds-m-top_large'
+                });
+                n2.cm.addComponent('data-table', {
+                    id: 'data-table-logs',
+                    selector: '#data-table-logs',
+                    paging: true,
+                    defaultRowsPerPage: 25,
+                    key: 'Id',
+                    storeData: true,
+                    sortColumn: 'CreatedDate',
+                    sortAscending: false,
+                    columns: [{
+                            name: 'CreatedDate',
+                            title: 'Log Date',
+                            format: 'datetime',
+                            width: '12rem'
+                        }, {
+                            name: '{!Namespace}Record_id__c',
+                            title: 'Record Id',
+                            width: '12rem',
+                            action: function(id, rowNum, data) {
+                                n2.sf.util.navigateToObject(data['{!Namespace}Record_id__c']);
+                            }
+                        }, {
+                            name: '{!Namespace}sObject_Name__c',
+                            title: 'Record Type',
+                            width: '10rem'
+                        }, {
+                            name: '{!Namespace}Matched_territory__c',
+                            title: 'Matched Territory'
+                        }, {
+                            name: '{!Namespace}Matched_territory_level__c',
+                            title: 'Matched Level',
+                            width: '10rem'
+                        }, {
+                            name: '{!Namespace}Clean_country__c',
+                            title: 'Cleaned Country'
+                        }, {
+                            name: '{!Namespace}Clean_state__c',
+                            title: 'Cleaned State/Province'
+                        }, {
+                            name: '{!Namespace}Clean_zip__c',
+                            title: 'Cleaned Zip/Postal'
+                        }, {
+                            name: '{!Namespace}In_error__c',
+                            title: 'In Error?',
+                            format: 'boolean',
+                            width: '6rem'
+                        }, {
+                            name: '{!Namespace}Error_message__c',
+                            title: 'Error Message'
+                        }
+                    ],
+                    data: function(page, rowsPerPage, sortColumn, sortAscending, callback) {
+                        var condition = n2.cm.getValue('select-log-condition');
+                        var conditionValue = n2.cm.getValue('input-log-condition');
+                        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritoryLogsController.getClsTerritoryLogs}', rowsPerPage, (page - 1) * rowsPerPage, sortColumn, sortAscending, condition || null, conditionValue || null, function(response, event) {
+                            if (event.statusCode === 200 && response) {
+                                callback(response.territoryLogs, response.totalRows);
+                            } else {
+                                n2.message.error('Error getting Classifier territory logs: ' + event.message);
+                                callback([], 0);
+                            }
+                        }, { 
+                            escape: false
+                        });
+                    }
+                });
+            };
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    </head>
+
+    <div class="slds-scope n2__root-container n2__full-height">
+        <div class="n2__root-container-row n2__full-height">
+            <div class="slds-grid n2__full-height">
+                <div>
+                    <c:ClsNavigation pkgNamespace="{!Namespace}"/>
+                </div>
+                <div class="slds-col slds-brand-band slds-brand-band_medium slds-p-around_medium n2__brand-background">
+                    <div class="slds-page-header slds-has-bottom-magnet">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-standard-logging">
+                                        <svg class="slds-icon" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#logging')}"/>
+                                        </svg>
+                                    </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <nav>
+                                            <ol class="slds-breadcrumb slds-line-height_reset">
+                                                <li class="slds-breadcrumb__item">
+                                                    <span>Distribution Engine Classifier</span>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <h1 title="Territories > Logs" class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate">Territories > Logs</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <article class="slds-card slds-has-top-magnet">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body slds-grid slds-grid_vertical">
+                                    <div id="n2__no-logging-info" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-hide" role="status">
+                                        <div class="slds-media__figure">
+                                            <span class="slds-icon_container slds-icon-utility-info" title="Information">
+                                                <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#info')}"/>
+                                                </svg>
+                                                <span class="slds-assistive-text">Information</span>
+                                            </span>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <p>Logging is currently disabled, visit <span id="button-settings-link"></span> to review the current setting.</p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid">
+                                        <span id="select-log-condition"></span>
+                                        <span id="input-log-condition"></span>
+                                        <span id="button-log-condition"></span>
+                                    </div>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <span id="data-table-logs"></span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </html>
+
+</apex:page>

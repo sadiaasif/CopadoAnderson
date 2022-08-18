@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Follow_up_on_Refund_emails</name>
+        <label>Follow up on Refund emails</label>
+        <locationX>624</locationX>
+        <locationY>489</locationY>
+        <actionName>Refund__c.Follow_up_on_Refund</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>53.0</apiVersion>
+    <formulas>
+        <name>NOWDate</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>Scheduled Refund Emails {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Scheduled Refund Emails</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>55</locationX>
+        <locationY>51</locationY>
+        <connector>
+            <targetReference>Follow_up_on_Refund_emails</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2 OR 3 ) AND 4</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Review</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Need More Info</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Waiting on info</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Number_of_hrs__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>24.0</numberValue>
+            </value>
+        </filters>
+        <object>Refund__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2022-01-13</startDate>
+            <startTime>09:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

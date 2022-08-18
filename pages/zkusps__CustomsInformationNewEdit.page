@@ -1,0 +1,118 @@
+<apex:page tabStyle="zkusps__CustomsInformation__c" standardController="zkusps__CustomsInformation__c" extensions="zkusps.CustomsInformationController" sidebar="true">
+
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+    
+    <apex:sectionHeader title="USPS Customs Information Edit"  subtitle="New USPS Customs Information" rendered="{!NOT(IsEditMode)}"/>
+    <apex:sectionHeader title="USPS Customs Information Edit"  subtitle="Edit USPS Customs Information" rendered="{!IsEditMode}"/>
+    
+    <apex:form >
+        
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+            
+                $j(document).ready(function() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                });
+            </script>
+        </apex:outputPanel>
+        
+        
+        <apex:pageBlock id="customsInformationPageBlock" mode="detail">
+        
+            <!-- Messages -->
+            <apex:outputPanel id="customsInformationPageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+            
+            
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveCustomsInformation}" value="Save"/>
+                <apex:commandButton action="{!backToPreviousPage}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+            
+            
+            <!-- Customs Information Details Section -->
+            <apex:pageBlockSection id="customsInformationDetailsSection" columns="1" collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Customs Information Details "/>
+                        <apex:actionStatus id="ciDetailsStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+                
+                <!-- Name -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Customs Information Name"/>
+                    <apex:inputField value="{!CustomsInformation.Name}"/>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Contents Type -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Contents Type"/>
+                    <apex:selectList value="{!SelectedContentsType}" size="1" multiselect="false">
+                        <apex:actionSupport event="onchange" action="{!contentsTypeSelectRefresh}" rerender="requiredIndicatorScript,customsInformationDetailsSection" status="ciDetailsStatus"/>
+                        <apex:selectOptions value="{!ContentsTypeOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Contents Explanation -->
+                <apex:pageBlockSectionItem rendered="{!ContentsExplanationRendered}">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Contents Explanation"/>
+                    <apex:inputField value="{!customsInformation.zkusps__contentsExplanation__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Restriction Type -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Restriction Type"/>
+                    <apex:selectList value="{!SelectedRestrictionType}" size="1" multiselect="false">
+                        <apex:actionSupport event="onchange" action="{!restrictionTypeSelectRefresh}" rerender="requiredIndicatorScript,customsInformationDetailsSection"  status="ciDetailsStatus"/>
+                        <apex:selectOptions value="{!RestrictionTypeOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Restriction Comments -->
+                <apex:pageBlockSectionItem rendered="{!RestrictionCommentsRendered}">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Restriction Comments"/>
+                    <apex:inputField value="{!customsInformation.zkusps__restrictionComments__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <!-- Sender's Customs Reference -->
+                <apex:inputField value="{!customsInformation.zkusps__sendersCustomsReference__c}"/>
+                
+                <!-- Importer's Customs Reference -->
+                <apex:inputField value="{!customsInformation.zkusps__importersCustomsReference__c}"/>
+                
+                <!--  License Number -->
+                <apex:inputField value="{!customsInformation.zkusps__licenseNumber__c}"/>
+                
+                <!--  Certificate Number -->
+                <apex:inputField value="{!customsInformation.zkusps__certificateNumber__c}"/>
+                
+                <!--  Invoice Number -->
+                <apex:inputField value="{!customsInformation.zkusps__invoiceNumber__c}"/>
+                
+                <!-- Non Delivery Instructions -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Non-Delivery Instructions"/>
+                    <apex:selectList value="{!SelectedNonDeliveryOptionType}" size="1" multiselect="false">
+                        <apex:selectOptions value="{!NonDeliveryOptionTypeOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <!-- EEL/PFC -->
+                <apex:inputField value="{!customsInformation.zkusps__eelPfc__c}"/>
+                
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

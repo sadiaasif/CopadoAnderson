@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <customHelpPage>evt__EventManagementHelp</customHelpPage>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Sessions associated with an event.  Classes, workshops, luncheons,</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>evt__Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines whether or not the session is visible to attendees and available for signup</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>evt__Attendance__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Shows the ratio of confirmed attendees to max attendees.</description>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISNULL(evt__Max_Attendees__c),evt__Max_Attendees__c = 0),IMAGE(&quot;/s.gif&quot;,&quot;&quot;),IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;green&quot;, 15, MIN(evt__Confirmed_Attendees__c,evt__Max_Attendees__c)/evt__Max_Attendees__c * 100) &amp; IMAGE(&quot;/s.gif&quot;, &quot;white&quot;, 15, 100 - (MIN(evt__Confirmed_Attendees__c,evt__Max_Attendees__c)/evt__Max_Attendees__c * 200)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Shows the ratio of confirmed attendees to max attendees.</inlineHelpText>
+        <label>Attendance</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Confirmed_Attendees__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of session assignees with status = &apos;Confirmed&apos;</inlineHelpText>
+        <label>Confirmed Attendees</label>
+        <summaryFilterItems>
+            <field>evt__Session_Assignment__c.evt__Status__c</field>
+            <operation>equals</operation>
+            <value>Confirmed</value>
+        </summaryFilterItems>
+        <summaryForeignKey>evt__Session_Assignment__c.evt__Event_Session__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>evt__Date_Format__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Format to use in displaying session dates on the public website.  Leave blank to use default event settings.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Format to use in displaying session dates on the public website.  Leave blank to use default event settings.</inlineHelpText>
+        <label>Date Format</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>MM/dd/yyyy</fullName>
+                    <default>false</default>
+                    <label>MM/dd/yyyy</label>
+                </value>
+                <value>
+                    <fullName>dd/MM/yyyy</fullName>
+                    <default>false</default>
+                    <label>dd/MM/yyyy</label>
+                </value>
+                <value>
+                    <fullName>yyyy/MM/dd</fullName>
+                    <default>false</default>
+                    <label>yyyy/MM/dd</label>
+                </value>
+                <value>
+                    <fullName>EEE</fullName>
+                    <default>false</default>
+                    <label>EEE</label>
+                </value>
+                <value>
+                    <fullName>EEEEE</fullName>
+                    <default>false</default>
+                    <label>EEEEE</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Detail__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Session abstract or full detail page content.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Session abstract or full detail page content.</inlineHelpText>
+        <label>Detail</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>50</visibleLines>
+    </fields>
+    <fields>
+        <fullName>evt__End__c</fullName>
+        <deprecated>false</deprecated>
+        <description>End date/time for session.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>End date/time for session.</inlineHelpText>
+        <label>End</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>evt__Event__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Event</label>
+        <referenceTo>evt__Special_Event__c</referenceTo>
+        <relationshipLabel>Event Sessions</relationshipLabel>
+        <relationshipName>Event_Sessions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>evt__Max_Attendees__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Maximum number of confirmed attendess allowed.  Leave blank for unlimited.</inlineHelpText>
+        <label>Max Attendees</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__On_Payment_Completed__c</fullName>
+        <deprecated>false</deprecated>
+        <description>On-payment-completed tag(s) to assign to shopping cart items created when this session is purchased.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On-payment-completed tag(s) to assign to shopping cart items created when this session is purchased.</inlineHelpText>
+        <label>On Payment Completed</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Order__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Used to sort sessions when displayed on the Sites registration pages.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to sort sessions when displayed on the Sites registration pages.</inlineHelpText>
+        <label>Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Overview__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Session overview or brief description for display in the session list online.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Session overview or brief description for display in the session list online.</inlineHelpText>
+        <label>Overview</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>evt__Session_Details__c</fullName>
+        <deprecated>false</deprecated>
+        <description>HTML content to display on session details page on site.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>HTML content to display on session details page on site.</inlineHelpText>
+        <label>Session Details</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>evt__Session_Fee__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Session Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>evt__Session_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Session Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Event Sessions</relationshipLabel>
+        <relationshipName>Event_Sessions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>evt__Short_Description__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Text description of the session.  Displayed on the registration page in the session selection area.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Text description of the session.  Displayed on the registration page in the session selection area.</inlineHelpText>
+        <label>Short Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>evt__Start__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Start date/time for session.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Start date/time for session.</inlineHelpText>
+        <label>Start</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>evt__Time_Format__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Format to use in displaying session times on the public website.  Leave blank to use default event settings.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Format to use in displaying session times on the public website.  Leave blank to use default event settings.</inlineHelpText>
+        <label>Time Format</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>hh:mm a</fullName>
+                    <default>false</default>
+                    <label>hh:mm a</label>
+                </value>
+                <value>
+                    <fullName>hh:mm a z</fullName>
+                    <default>false</default>
+                    <label>hh:mm a z</label>
+                </value>
+                <value>
+                    <fullName>h:mm a</fullName>
+                    <default>false</default>
+                    <label>h:mm a</label>
+                </value>
+                <value>
+                    <fullName>h:mm a z</fullName>
+                    <default>false</default>
+                    <label>h:mm a z</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Track__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to group sessions into &apos;Tracks&apos; or categories of content.</inlineHelpText>
+        <label>Track</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Event Session</label>
+    <listViews>
+        <fullName>evt__All</fullName>
+        <columns>NAME</columns>
+        <columns>evt__Event__c</columns>
+        <columns>evt__Start__c</columns>
+        <columns>evt__Active__c</columns>
+        <columns>evt__Attendance__c</columns>
+        <columns>evt__Track__c</columns>
+        <columns>evt__Session_Fee__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Session Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Event Sessions</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>evt__Start__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__End__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Max_Attendees__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Confirmed_Attendees__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Active__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+</CustomObject>

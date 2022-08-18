@@ -1,0 +1,106 @@
+<aura:component controller="updateWordpress" implements="flexipage:availableforRecordHome,forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global">
+	
+    <aura:attribute name="recordId" type="Id" />
+     <aura:attribute name="Updateuser"  type="Boolean" default="false" />
+     <aura:attribute name="contactRecord" type="Object"/>
+     <aura:attribute name="isContactPrimary"  type="Boolean" default="false" />
+    <aura:attribute name="platinumFields" type="String[]" default="FirstName,LastName,Platinum_Email__c"/>
+    <aura:attribute name="platinumPaaswordFields" type="String[]" default="FirstName,LastName,Platinum_Password__c"/>
+	<aura:attribute name="spin" type="Boolean" default="false"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <force:recordData aura:id="recordLoader"
+      recordId="{!v.recordId}"
+      fields="Platinum_Wordpress_Id__c,Account_Roles__c"
+                        targetFields="{!v.contactRecord}"
+                       
+                      recordUpdated="{!c.doInit}"
+     
+      />
+     <br/>
+     <br/>
+     <aura:if isTrue="{!v.isContactPrimary}">
+     <aura:if isTrue="{!v.Updateuser}">
+    <div>
+    Updating either the first or last name will update the first or last name of both the contact and account page. <br></br>
+    You may directly set a client's password here. <br></br>
+    The Platinum password field will never show the client's password, only the last password we manually set for them.<br></br>
+    If you manually set a password for a client to get them access to the portal, encourage them to change it afterwards. <br></br><br></br>
+    </div>
+   <lightning:recordForm id="PlatinumWordPressForm"
+                         recordId="{!v.recordId}"
+                         objectApiName="Contact"
+                         fields="{!v.platinumFields}"
+                         columns="1"
+                         mode="view"
+                         >
+
+    </lightning:recordForm>
+        <br></br><br></br>
+	<lightning:button variant="brand" label="Update User" title="updatebutton" onclick="{!c.updateClick}"/>
+         	<lightning:button variant="brand" label="Reset The Pasword" title="Resetpsswordbutton" onclick="{!c.resetPasswordpopup}"/>
+          <div class="slds-m-around_xx-large">
+        
+        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+        <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal/PopUp Box</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><lightning:recordForm id="PlatinumWordPressForm"
+                         recordId="{!v.recordId}"
+                         objectApiName="Contact"
+                         fields="{!v.platinumPaaswordFields}"
+                         columns="1"
+                         mode="view"
+                         >
+                              </lightning:recordForm>
+                            
+                           
+                        </p>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="Update Password"
+                                          title="Resetpsswordbutton"
+                                          onclick="{!c.resetPasswordCmp}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+          <aura:set attribute="else">
+           
+               This contact has No Platinum user account.
+         
+       </aura:set>
+         </aura:if>
+         
+             <aura:set attribute="else">
+           
+              Please select the primary contact.
+         
+       </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.spin}">
+    <div class="loadSpinner">
+        <lightning:spinner aura:id="mySpinner" />
+    </div>
+   </aura:if>
+</aura:component>

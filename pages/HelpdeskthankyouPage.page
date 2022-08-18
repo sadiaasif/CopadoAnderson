@@ -1,0 +1,34 @@
+<apex:page showHeader="false" standardController="Case" title="HelpDesk Ticket System Thank You Page" sidebar="false" extensions="HelpDeskClass" docType="html-5.0"> 
+       <script type="text/javascript">
+$(window).on('beforeunload', function(){
+  $(window).scrollTop(0);
+});
+</script>  
+     <apex:slds />
+   
+        <apex:form >
+  <center>
+             <apex:outputPanel style="font-size: 20px; float: center; text-align: center; width: 100%;"   styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform"  rendered="{!casecreated}">
+                 <br/>
+                 <br/>
+                 <br/>
+               <apex:outputText value="Thank you!!! Your Case has been created.Your case number is:" style="font-weight:900;" />
+             <apex:outputLink value="/{!selectedValueid}">{!selectedValue}</apex:outputLink>
+              
+
+              </apex:outputPanel>    
+      
+        <apex:outputPanel style="font-size: 20px; float: center; text-align: center; width: 100%;"   styleClass="slds-panel slds-grid slds-grid--vertical slds-nowrap slds-form--compound"
+   html-aria-labelledby="newaccountform"  rendered="{!NOT(casecreated)}">
+                 <br/>
+                 <br/>
+                 <br/>
+               <apex:outputText value="Whoops! We broke something..." style="font-weight:900;" />
+             <apex:outputText value="Please return to the home page and try again!!!!" style="font-weight:900;" />
+
+              </apex:outputPanel>  
+            </center>
+            </apex:form>
+   
+</apex:page>

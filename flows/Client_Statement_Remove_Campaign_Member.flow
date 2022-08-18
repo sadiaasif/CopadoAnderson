@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <interviewLabel>Client Statement - Remove Campaign Member {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Client Statement - Remove Campaign Member</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Remove_From_Campaign</name>
+        <label>Remove From Campaign</label>
+        <locationX>455</locationX>
+        <locationY>189</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CampaignMemberId</elementReference>
+            </value>
+        </filters>
+        <object>CampaignMember</object>
+    </recordDeletes>
+    <recordLookups>
+        <name>Lookup_Campaign_Member</name>
+        <label>Lookup Campaign Member</label>
+        <locationX>244</locationX>
+        <locationY>192</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Remove_From_Campaign</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ContactId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CampaignId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>7010B000001Sj4YQAS</stringValue>
+            </value>
+        </filters>
+        <object>CampaignMember</object>
+        <outputAssignments>
+            <assignToReference>CampaignMemberId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <startElementReference>Lookup_Campaign_Member</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>CampaignMemberId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ContactId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

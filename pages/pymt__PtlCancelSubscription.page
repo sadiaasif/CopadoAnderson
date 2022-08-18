@@ -1,0 +1,85 @@
+<apex:page docType="HTML-5.0" controller="pymt.SiteCancelSubscriptionController" id="ptlCancelSubscription" showHeader="true" sidebar="false" cache="false" standardStylesheets="false" title="{!$Label.pymt__SiteCancelSubscription_Heading}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_ptlcancelsubscription_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+
+		<apex:form id="mainForm">
+		<apex:pageMessages id="messages"/>
+    <h1>{!$Label.pymt__SiteCancelSubscription_Heading}</h1>
+
+    <apex:outputPanel id="notSupportedPanel" rendered="{!NOT(OR(recordTypeDevName == 'Scheduled_Payment',
+                          recordTypeDevName == 'PayPal_Recurring_Payment',
+                        recordTypeDevName == 'AuthNet_Subscription'))}">
+    <p>{!$Label.pymt__SiteCancelSubscription_DefaultInstructions}</p>
+    <br/><br/>
+    <div class="pc_button_container">
+    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+      <apex:commandButton value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, nativeSubscriptionPanel" />
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+      <apex:commandLink styleClass="css-button" value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, nativeSubscriptionPanel" />
+    </apex:outputPanel>
+  </div>
+    </apex:outputPanel>
+
+		<apex:outputPanel id="nativeSubscriptionPanel" rendered="{!recordTypeDevName == 'Scheduled_Payment'}">
+		<h2>Native recurring subscription: {!subscription.Name}</h2>
+    <br/><br/>
+    <div class="pc_button_container">
+    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+  		<apex:commandButton value="Cancel Subscription" action="{!cancelNativeRecurring}" rendered="{!NOT(subscription.pymt__Subscription_Status__c == 'Cancelled')}" rerender="messages, nativeSubscriptionPanel"/>
+  		<apex:commandButton value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, nativeSubscriptionPanel" />
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+      <apex:commandLink styleClass="css-button" value="Cancel Subscription" action="{!cancelNativeRecurring}" rendered="{!NOT(subscription.pymt__Subscription_Status__c == 'Cancelled')}" rerender="messages, nativeSubscriptionPanel"/>
+      <apex:commandLink styleClass="css-button" value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, nativeSubscriptionPanel" />
+    </apex:outputPanel>
+  </div>
+		</apex:outputPanel>
+
+		<apex:outputPanel id="paypalRecurringPaymentPanel" rendered="{!recordTypeDevName == 'PayPal_Recurring_Payment'}">
+		<h2>PayPal Recurring Payment Profile: {!subscription.Name}</h2>
+    <br/><br/>
+    <div class="pc_button_container">
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+  		  <apex:commandButton value="Cancel Subscription" action="{!cancelPayPalRecurring}" rendered="{!NOT(subscription.pymt__Subscription_Status__c == 'Cancelled')}"  rerender="messages, paypalRecurringPaymentPanel"/>
+  		  <apex:commandButton value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, paypalRecurringPaymentPanel" />
+      </apex:outputPanel>
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+        <apex:commandLink styleClass="css-button" value="Cancel Subscription" action="{!cancelPayPalRecurring}" rendered="{!NOT(subscription.pymt__Subscription_Status__c == 'Cancelled')}"  rerender="messages, paypalRecurringPaymentPanel"/>
+        <apex:commandLink styleClass="css-button" value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, paypalRecurringPaymentPanel" />
+      </apex:outputPanel>
+    </div>
+  	</apex:outputPanel>
+
+		<apex:outputPanel id="authnetRecurringPaymentPanel" rendered="{!recordTypeDevName == 'AuthNet_Subscription'}">
+		<h2>PayPal Recurring Payment Profile: {!subscription.Name}</h2>
+    <br/><br/>
+    <div class="pc_button_container">
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+    		<apex:commandButton value="Cancel Subscription" action="{!cancelAuthNetRecurring}" rendered="{!NOT(subscription.pymt__Subscription_Status__c == 'Cancelled')}"  rerender="messages, paypalRecurringPaymentPanel"/>
+    		<apex:commandButton value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, authnetRecurringPaymentPanel" />
+      </apex:outputPanel>
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+        <apex:commandLink styleClass="css-button" value="Cancel Subscription" action="{!cancelAuthNetRecurring}" rendered="{!NOT(subscription.pymt__Subscription_Status__c == 'Cancelled')}"  rerender="messages, paypalRecurringPaymentPanel"/>
+        <apex:commandLink styleClass="css-button" value="Return" action="{!returnToPrevPage}" rendered="{!NOT(ISBLANK(returnURL))}" rerender="messages, authnetRecurringPaymentPanel" />
+      </apex:outputPanel>
+    </div>
+  </apex:outputPanel>
+
+		</apex:form>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:page>

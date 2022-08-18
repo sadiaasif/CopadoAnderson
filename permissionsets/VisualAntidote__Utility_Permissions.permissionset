@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>VisualAntidote__ProcessBuilderGeneratePrefill</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Permissions required to generate Formstack prefill links through a non-licensed user.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VisualAntidote__Previous_Form__c.VisualAntidote__API_Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VisualAntidote__Previous_Form__c.VisualAntidote__Draft_Form__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VisualAntidote__Previous_Form__c.VisualAntidote__FastFormID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VisualAntidote__Previous_Form__c.VisualAntidote__Is_Native__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>VisualAntidote__Previous_Form__c.VisualAntidote__Prefill_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Formstack Utility Permissions</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>VisualAntidote__Previous_Form__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+</PermissionSet>

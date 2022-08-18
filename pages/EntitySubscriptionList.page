@@ -1,0 +1,14 @@
+<apex:page showHeader="false" sidebar="false" standardController="Opportunity" tabStyle="Opportunity"  extensions="ctrlEntitySubscriptionList">
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!lstSubscrEntity}" var="se">
+            <apex:column headerValue="Subscription">
+                <apex:outputLabel value="{!se.Subscription__r.Name}"></apex:outputLabel>
+            </apex:column>
+             <apex:column headerValue="Entity">
+                <apex:outputLabel value="{!se.Entity__r.Name}"></apex:outputLabel>
+                
+            </apex:column>
+            
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

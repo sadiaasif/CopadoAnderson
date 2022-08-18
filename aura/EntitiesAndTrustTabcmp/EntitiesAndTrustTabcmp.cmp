@@ -1,0 +1,93 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"  access="global" controller="EntitiesAndTrustTabctrl">
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="EntityID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="EntityLivingTrustRecords" type="Entities__c[]" />
+    <aura:attribute name="Entitycolumns" type="List"/> 
+     <aura:attribute name="TrusoLivingTrustRecords" type="Trust__c[]" />
+    <aura:attribute name="trustcolumns" type="List"/> 
+      <aura:attribute name="searchKeyTrustword" type="String" description="use for store user search input"/>
+          <aura:attribute name="searchKeyEntityword" type="String" description="use for store user search input"/>
+    <aura:attribute name="hasrelatedLivingTrustonEntityobj" type="boolean"/>
+     <aura:attribute name="hasrelatedLivingTrustonTrustobj" type="boolean"/>
+     <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+     <aura:attribute name="isCommunity" type="boolean" default="false" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   
+     <aura:attribute name="activeSections" type="List" default="['Entity','Trust']" />
+   
+      <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+         
+            <lightning:accordionSection name="Entity" label="Entity" >
+
+        <aura:if isTrue="{!v.hasrelatedLivingTrustonEntityobj}">
+             <lightning:layout verticalAlign="end" class="slds-form slds-form_horizontal">
+        <lightning:layoutitem padding="around-small" size="5" flexibility="auto">
+               <lightning:input value="{!v.searchKeyEntityword}"
+                                label="Entity Search"
+                                 placeholder="Enter search term here!"
+                                 aura:id="searchEntityField"
+                                 />
+     </lightning:layoutitem>
+    <lightning:layoutitem padding="around-small" size="2" flexibility="auto"> 
+                <span>   <lightning:button variant="brand" title="Click to retrieve fields" label="Search" type="Submit" iconName="utility:search" iconPosition="left" onclick="{!c.SearchEntity}"
+                                
+                                          /> </span>
+     </lightning:layoutitem>
+                </lightning:layout>
+            
+                 <lightning:datatable aura:id="EntityTable"  
+                                    
+                         data="{!v.EntityLivingTrustRecords }"     
+                         columns="{!v.Entitycolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                         /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust Entity Associated!</center>
+             </div>
+        </aura:set></aura:if>
+     
+                   </lightning:accordionSection>
+     <br/>
+          <br/>
+            <lightning:accordionSection name="Trust" label="Trust" >
+   <lightning:layout verticalAlign="end" class="slds-form slds-form_horizontal">
+        <lightning:layoutitem padding="around-small" size="5" flexibility="auto">
+               <lightning:input value="{!v.searchKeyTrustword}"
+                                label="Trust Search"
+                                 placeholder="Enter search term here!"
+                                 aura:id="searchTrustField"
+                                 />
+     </lightning:layoutitem>
+    <lightning:layoutitem padding="around-small" size="2" flexibility="auto"> 
+                <span>   <lightning:button variant="brand" title="Click to retrieve fields" label="Search" type="Submit" iconName="utility:search" iconPosition="left" onclick="{!c.SearchTrust}"
+                                
+                                          /> </span>
+     </lightning:layoutitem>
+                </lightning:layout>
+      <aura:if isTrue="{!v.hasrelatedLivingTrustonTrustobj}">
+                 <lightning:datatable aura:id="TrustTable"  
+                                    
+                             data="{!v.TrusoLivingTrustRecords }"     
+                         columns="{!v.trustcolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                                      /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust Entity Associated!</center>
+             </div>
+        </aura:set></aura:if>
+                
+     
+                   </lightning:accordionSection>
+       <br/>
+          <br/>
+    </lightning:accordion>
+</aura:component>

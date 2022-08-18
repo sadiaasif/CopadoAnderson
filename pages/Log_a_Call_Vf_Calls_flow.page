@@ -1,0 +1,5 @@
+<apex:page standardController="Account">
+    <flow:interview name="Task_Log_a_call_Task_For_Mail_Room" finishLocation="/{!Account.Id}">
+        <apex:param name="AccountId" value="{!Account.Id}" />
+    </flow:interview>
+</apex:page>

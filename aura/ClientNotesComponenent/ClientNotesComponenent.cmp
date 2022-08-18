@@ -1,0 +1,158 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="ClientNotesComponentctrl">
+	 <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    <aura:attribute name="recordId" type="Id"/> 
+     <aura:attribute name="StructureNotesRecords" type="Note__c[]" />
+     <aura:attribute name="StructureNotescolumns" type="List"/>
+    
+     <aura:attribute name="TaxNotesRecords" type="Note__c[]" />
+    <aura:attribute name="TaxNotescolumns" type="List"/>
+    
+    <aura:attribute name="ClientOverviewNotes" type="String[]" default="Important_Notes__c"/>
+    <aura:attribute name="NotesTypeList" type="Map" />
+      <aura:attribute name="HideSpinner" type="Boolean" default="false"/>
+       <aura:attribute name="NotesTypeSelected" type="Boolean"  default="false"/>
+     <aura:attribute name="NotestexArea" type="String" />
+     <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+     <aura:attribute name="structureNotesID" type="id" />
+      <aura:attribute name="TaxNotesID" type="id" />
+    <lightning:tabset selectedTabId="StructureNotes">
+        
+        <lightning:tab label="Structure Notes" id="StructureNotes">
+            
+                 <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                      
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                       <lightning:recordForm aura:id="brokerForm"
+                        recordId="{!v.structureNotesID}"
+                        objectApiName="Note__c"
+                        columns="2"
+                        layoutType="Full"/>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="OK"
+                                          title="OK"
+                                          onclick="{!c.submitDetails}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+                <br/>
+                <br/>
+             <lightning:datatable aura:id="StructureNotesTable"  
+                           data="{!v.StructureNotesRecords}"     
+                                     columns="{!v.StructureNotescolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                     onrowaction="{!c.OpenstructureDetail}"
+                                      onsave="{! c.onStructureNotesRecordSave }"
+                                    />
+          
+        </lightning:tab>
+        <lightning:tab label="Tax Notes" id="TaxNotes">
+                  <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                      
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                       <lightning:recordForm aura:id="brokerForm"
+                        recordId="{!v.TaxNotesID}"
+                        objectApiName="Note__c"
+                        columns="2"
+                        layoutType="Full"/>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand"
+                                          label="OK"
+                                          title="OK"
+                                          onclick="{!c.submitDetails}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+                <br/>
+                <br/>
+            
+             <lightning:datatable aura:id="TaxNotesTable"  
+                           data="{!v.TaxNotesRecords}"     
+                                     columns="{!v.TaxNotescolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                                    onrowaction="{!c.OpenstructureDetail}"
+                                   onsave="{! c.onTaxNotesRecordSave }"
+                                    
+                                    />
+        </lightning:tab>
+        <lightning:tab label="Important Notes" id="ImportantNotes">
+               <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.ClientOverviewNotes}"
+                                          columns="2"
+                                          
+                                           mode="View" />
+        </lightning:tab>
+          <lightning:tab label="Create New Notes" id="CreateNewNotes">
+                 <aura:renderIf isTrue="{!v.HideSpinner}">
+    <div class="slds-spinner_container" >
+        <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+            <span class="slds-assistive-text">Loading, Please Wait...</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:renderIf>
+               <ui:outputText value="Please select the type of notes to Create New Notes"/>
+                     <br/>
+                       <lightning:select label="Notes Type" aura:id="NotestypeList" onchange="{!c.onSelectNoteTypeChange}">
+                                           <option value="None">--None--</option>
+        <aura:iteration items="{!v.NotesTypeList}" var="Note" indexVar="key">
+           <option text="{!Note.value}" value="{!Note.key}"  />
+        </aura:iteration>
+    </lightning:select>
+                     <br/>
+                     <aura:if isTrue="{!v.NotesTypeSelected}">
+                         <lightning:inputRichText label="Enter the Notes:" value="{!v.NotestexArea}" placeholder="type here..."/>
+                         <br/>
+                         <lightning:button variant="brand" label="Update" title="Upate Notes" onclick="{!c.UpateNotes}" class="slds-m-left_x-small"></lightning:button>
+                     </aura:if>
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

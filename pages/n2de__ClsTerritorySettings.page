@@ -1,0 +1,478 @@
+<apex:page id="ClsTerritorySettings" tabStyle="Distribution_Classifier__tab" sideBar="false" standardStylesheets="false" docType="html-5.0" controller="n2de.ClsTerritorySettingsController" action="{!init}">
+    <apex:slds />
+    <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.n2Components, '/css/n2.min.css')}"/>
+        <style>
+            .n2__settings-fields span.slds-form-element__label {
+                width: 200px;
+            }
+        </style>
+        <script>
+            window.n2__sldsIconsPrefix = '{!JSENCODE(URLFOR($Asset.SLDS, 'assets/icons'))}';
+            window.n2__locale = '{!JSENCODE(Locale)}';
+            window.n2__timeZone = '{!JSENCODE(TimeZone)}';
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.n2Components, 'js/thirdParty.min.js')}"></script>
+        <script onload="initComponents();" defer="defer" src="{!URLFOR($Resource.n2Components, 'js/n2.min.js')}"></script>
+        <script>
+                showHideClassifierFailedMessage = function(hasClassifierFailed) {
+                    if (hasClassifierFailed) {
+                        n2j$('div#n2__classifier-failed-needs-restart').removeClass('slds-hide');
+                    } else {
+                        n2j$('div#n2__classifier-failed-needs-restart').addClass('slds-hide');
+                    }
+                };
+                showHideMaintenanceModeMessage = function(isUnderMaintenance) {
+                    if (isUnderMaintenance) {
+                        n2j$('div#n2__enable-maintenance-mode-warn').removeClass('slds-hide');
+                    } else {
+                        n2j$('div#n2__enable-maintenance-mode-warn').addClass('slds-hide');
+                    }
+                };
+
+                initComponents = function() {
+                    initNav('Territory Settings');
+
+                    showHideClassifierFailedMessage({!ClassifierFailed});
+                    showHideMaintenanceModeMessage({!IsUnderMaintenance});
+
+                    n2.cm.addComponent('checkbox-toggle', {
+                        id: 'checkbox-territory-enabled',
+                        selector: '#checkbox-territory-enabled',
+                        label: 'Territory processing',
+                        onLabel: 'Enabled',
+                        offLabel: 'Disabled',
+                        defaultValue: {!TerritoriesEnabled},
+                        cls: 'slds-m-bottom_medium n2__settings-fields',
+                        handlers: {
+                            'change': function(value) {
+                                n2.spinner.show();
+                                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.toggleTerritoriesEnabled}', value, function(response, event) {
+                                    n2.spinner.hide();
+                                    if (event.statusCode === 200) {
+                                        n2.toast.show({
+                                            text: 'Your changes have been saved'
+                                        });
+                                        showHideClassifierFailedMessage(response.hasClassifierFailed);
+                                    } else {
+                                        //Reset value if an exception occurs
+                                        n2.cm.setValue('checkbox-territory-enabled', !value);
+                                        n2.message.error('Error: ' + event.message);
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    var toggleHerokuProcessing = function(value) {
+                        n2.spinner.show();
+                        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.toggleHerokuProcessing}', value, function(response, event) {
+                            n2.spinner.hide();
+                            if (event.statusCode === 200) {
+                                n2.toast.show({
+                                    text: 'Your changes have been saved'
+                                });
+                                showHideClassifierFailedMessage(response.hasClassifierFailed);
+                            } else {
+                                //Reset value if an exception occurs
+                                n2.cm.setValue('checkbox-process-heroku', !value);
+                                n2.message.error('Error: ' + event.message);
+                            }
+                        });
+                    };
+                    if ({!IsExtensionPackageInstalled}) {
+                        n2.cm.addComponent('checkbox-toggle', {
+                            id: 'checkbox-process-heroku',
+                            selector: '#checkbox-process-heroku',
+                            label: 'Process on Salesforce Heroku',
+                            onLabel: 'Enabled',
+                            offLabel: 'Disabled',
+                            defaultValue: {!ProcessOnHeroku},
+                            cls: 'slds-m-bottom_medium n2__settings-fields',
+                            help: 'Salesforce Heroku is a platform for scalable and high speed processing. The DE classifier can use Heroku for its processing in order to run quicker and take some of the load off your Salesforce org.',
+                            handlers: {
+                                'change': function(value) {
+                                    if (!value) {
+                                        toggleHerokuProcessing(value);
+                                    }
+                                    else if (!{!IsExtensionPackageInstalled}) {
+                                        n2.message.show({
+                                            text: 'Salesforce Heroku is a platform for scalable and high speed processing. The DE classifier can use Heroku for its processing in order to run quicker and take some of the load off your Salesforce org.<br/><br/>To enable Heroku you will need to install an extension package and then you will be able to turn Heroku processing on and off.<br/><br/>Please contact <a href="mailto:support@nc-squared.com">support@nc-squared.com</a> who can provide the install link and help you with any questions.',
+                                            heading: 'Process on Salesforce Heroku',
+                                            html: true,
+                                            theme: 'info'
+                                        });
+                                        n2.cm.setValue('checkbox-process-heroku', false);
+                                    } else {
+                                        n2.message.show({
+                                            text: 'Enabling processing on Salesforce Heroku will allow for more work to be performed in a shorter period of time. To do this we will need to send some data to our Heroku servers to perform the processing. The Salesforce records <b>will not</b> be stored by us in any way, but we will securely keep hold of the map configuration to improve performance.<br/><br/>To learn more about the extension package and Heroku click <a href="https://help.nc-squared.com/de_heroku_extension" target="_blank">here</a>.',
+                                            heading: 'Process on Salesforce Heroku',
+                                            html: true,
+                                            theme: 'info',
+                                            buttons: 'yesno',
+                                            handlers: {
+                                                'yes': function() {
+                                                    toggleHerokuProcessing(value);
+                                                },
+                                                'no': function() {
+                                                    n2.cm.setValue('checkbox-process-heroku', false);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    n2.cm.addComponent('button', {
+                        id: 'btn-backfill',
+                        selector: '#btn-backfill',
+                        text: 'Backfill Records Wizard',
+                        tooltip: 'Wizard to trigger the territory processing on a selection of records',
+                        cls: 'slds-m-bottom_medium',
+                        disabled: {!BackfillDisabled}
+                    });
+
+                    // Backfill wizard
+                    var wizardSelectedObject = null;
+                    var wizardCriteria = '';
+                    var wizardCriteriaDefault = {
+                        filters: [],
+                        logic: ''
+                    };
+                    var wizardCriteriaData = wizardCriteriaDefault;
+                    var wizardCriteriaDefaults = {
+                        'not-processed': {
+                            filters: [{
+                                "name": "{!Namespace}DE_Status__c",
+                                "op": "equals",
+                                "val": "{!NotProcessedStatus}",
+                                "type": "STRING"
+                            }],
+                            logic: '1'
+                        },
+                        'unknown': {
+                            filters: [{
+                            "name": "{!Namespace}Distribution_engine_details__r.{!Namespace}Territory__c",
+                            "op": "equals",
+                            "val": "Unknown",
+                            "type": "STRING"
+                            }],
+                            logic: '1'
+                        }
+                    };
+                    n2.cm.addComponent('radio-group', {
+                        id: 'radio-group-wizard-objects',
+                        selector: '#radio-group-wizard-objects',
+                        required: true,
+                        data: function() {
+                            // Return a promise to get the objects
+                            var objectsDeferred = n2.util.promise();
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.getLinkedObjects}', function(response, event) {
+                                if (event.statusCode === 200 && response) {
+                                    var values = n2.util.map(response, function(value) {
+                                        return value.Name;
+                                    });
+                                    objectsDeferred.resolve(values);
+                                } else {
+                                    n2.message.error('Error getting linked objects: ' + event.message);
+                                    objectsDeferred.resolve([]);
+                                }
+                            }, {
+                                escape: false
+                            });
+                            return objectsDeferred;
+                        }
+                    });
+                    n2.cm.addComponent('radio-group', {
+                        id: 'radio-group-wizard-criteria',
+                        selector: '#radio-group-wizard-criteria',
+                        required: true,
+                        sort: false,
+                        data: [{
+                            label: 'All records',
+                            value: 'all'
+                        }, {
+                            label: 'Records not processed',
+                            value: 'not-processed'
+                        }, {
+                            label: 'Processed with unknown territories',
+                            value: 'unknown'
+                        }, {
+                            label: 'Custom',
+                            value: 'custom'
+                        }]
+                    });
+                    n2.cm.addComponent('logic-filters', {
+                        id: 'logic-filters-wizard-criteria',
+                        selector: '#logic-filters-wizard-criteria',
+                        excludedOperators: '{!NotOperatorsDisabled}' === 'true' ? n2.const.SF.NOT_OPERATORS : [],
+                        includeFiscalPeriods: false,
+                        maxRows: 5,
+                        data: function(callback) {
+                            callback(wizardCriteriaData);
+                        },
+                        dataFieldsList: function() {
+                            // Create a promise to get the object fields depending on the object selected
+                            var fieldsDeferred = n2.util.promise();
+                            wizardSelectedObject = n2.cm.getValue('radio-group-wizard-objects');
+                            if (wizardSelectedObject) {
+                                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.getObjectFields}', wizardSelectedObject, function(response, event) {
+                                    if (event.statusCode === 200 && response) {
+                                        fieldsDeferred.resolve(response);
+                                    } else {
+                                        n2.message.error('Error getting object fields: ' + event.message);
+                                        fieldsDeferred.resolve([]);
+                                    }
+                                }, {
+                                    escape: false
+                                });
+                            } else {
+                                fieldsDeferred.resolve([]);
+                            }
+                            return fieldsDeferred;
+                        },
+                        dataValuesList: function(fieldName, fieldType, operator) {
+                            // Return a promise to get the field values for the selected field, if there is no field name just return null
+                            if (!fieldName) {
+                                return null;
+                            }
+                            var fieldValuesDeferred = n2.util.promise();
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.getFieldValues}', wizardSelectedObject, fieldName, function(response, event) {
+                                if (event.statusCode === 200 && response) {
+                                    fieldValuesDeferred.resolve(response);
+                                } else {
+                                    n2.message.error('Error getting field values: ' + event.message);
+                                    fieldValuesDeferred.resolve([]);
+                                }
+                            }, {
+                                escape: false
+                            });
+                            return fieldValuesDeferred;
+                        }
+                    });
+                    var wizard = n2.cm.addComponent('modal-wizard', {
+                        id: 'wizard-backfill',
+                        selector: '#n2__btn-backfill',
+                        bodySelector: '#wizard-backfill',
+                        size: 'medium',
+                        heading: 'Backfill Records',
+                        steps: [{
+                            name: 'Select Object',
+                            selector: '#n2__wizard-backfill-step-1'
+                        }, {
+                            name: 'Select Criteria',
+                            selector: '#n2__wizard-backfill-step-2'
+                        }, {
+                            name: 'Confirm Criteria',
+                            selector: '#n2__wizard-backfill-step-3'
+                        }, {
+                            name: 'Summary',
+                            selector: '#n2__wizard-backfill-step-4'
+                        }],
+                        handlers: {
+                            'show': function() {
+                                // Reset the state
+                                wizardSelectedObject = null;
+                                wizardCriteria = '';
+                                wizardCriteriaData = wizardCriteriaDefault;
+                            },
+                            'showStep': function(stepNumber, previousStep) {
+                                switch (stepNumber) {
+                                    case 3:
+                                        // Update the logic criteria if the criteria selection has changed
+                                        var currentSelectedObject = n2.cm.getValue('radio-group-wizard-objects');
+                                        var currentCriteria = n2.cm.getValue('radio-group-wizard-criteria');
+                                        if (currentCriteria !== wizardCriteria || currentSelectedObject !== wizardSelectedObject) {
+                                            wizardCriteria = currentCriteria;
+                                            wizardCriteriaData = wizardCriteriaDefaults[wizardCriteria] || wizardCriteriaDefault;
+                                            n2.cm.refresh('logic-filters-wizard-criteria');
+                                        }
+
+                                        // If all skip this step
+                                        if (wizardCriteria === 'all') {
+                                            wizard.goToStep(previousStep === 2 ? 4 : 2);
+                                        }
+                                        break;
+                                    case 4:
+                                        // Get a summary of the records to process
+                                        var deferred = n2.util.promise();
+                                        wizardSelectedObject = n2.cm.getValue('radio-group-wizard-objects');
+                                        var filters = n2.cm.getValue('logic-filters-wizard-criteria');
+                                        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.getBackfillCount}', wizardSelectedObject, filters, function(response, event) {
+                                            deferred.resolve();
+                                            if (event.statusCode === 200) {
+                                                n2j$('span#wizard-number-records').text(response);
+                                            } else {
+                                                n2.message.error('Error getting number of records to backfill: ' + event.message);
+                                            }
+                                        }, {
+                                            escape: false
+                                        });
+                                        return deferred;
+                                        break;
+                                }
+                            },
+                            'finish': function() {
+                                var deferred = n2.util.promise();
+                                var filters = n2.cm.getValue('logic-filters-wizard-criteria');
+                                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsTerritorySettingsController.performBackfill}', wizardSelectedObject, filters, function(response, event) {
+                                    deferred.resolve();
+                                    if (event.statusCode === 200 && response) {
+                                        n2.message.show({
+                                            text: 'Batch ' + response + ' has been successfully submitted to backfill the selected records',
+                                            heading: 'Backfill Records',
+                                            theme: 'success'
+                                        });
+                                        n2.cm.disable('btn-backfill');
+                                    } else {
+                                        n2.message.error('Error submitting backfill batch: ' + event.message);
+                                    }
+                                }, {
+                                    escape: false
+                                });
+                                return deferred;
+                            }
+                        }
+                    });
+                };
+
+            </script>
+        <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    </head>
+
+    <div class="slds-scope n2__root-container n2__full-height">
+        <div class="n2__root-container-row n2__full-height">
+            <div class="slds-grid n2__full-height">
+                <div>
+                    <c:ClsNavigation pkgNamespace="{!Namespace}"/>
+                </div>
+                <div class="slds-col slds-brand-band slds-brand-band_medium slds-p-around_medium n2__brand-background">
+                    <div class="slds-page-header slds-has-bottom-magnet">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-location">
+                            <svg class="slds-icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#location')}"/>
+                            </svg>
+                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <nav>
+                                            <ol class="slds-breadcrumb slds-line-height_reset">
+                                                <li class="slds-breadcrumb__item">
+                                                    <span>Distribution Engine Classifier</span>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <h1 title="Territories > Settings" class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate">Territories > Settings</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <article class="slds-card slds-has-top-magnet">
+                        <div class="slds-card__body slds-card__body_inner slds-p-top_small">
+                            <div class="slds-form">
+                                <div id="n2__classifier-failed-needs-restart" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-hide" role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-warning" title="Warning">
+                                            <svg class="slds-icon slds-icon_small slds-icon-text-warning" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"/>
+                                            </svg>
+                                            <span class="slds-assistive-text">Warning</span>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p>The classifier has aborted. Please restart.</p>
+                                    </div>
+                                </div>
+                                <div id="n2__enable-maintenance-mode-warn" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-is-relative slds-hide" role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-info" title="Warning">
+                                            <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"/>
+                                            </svg>
+                                            <span class="slds-assistive-text">Warning</span>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <span id="n2__enable-maintenance-mode-warning-message">
+                                            <p>{!MaintenanceModeMessage}</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span id="checkbox-territory-enabled"></span>
+                                <span id="checkbox-process-heroku"></span>
+                                <span id="btn-backfill"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div id="wizard-backfill" class="slds-form slds-form_compound">
+                <div id="n2__wizard-backfill-step-1">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <span class="slds-text-body_regular">Select which of the configured objects to backfill records for</span>
+                    </div>
+                    <div class="slds-form slds-form_compound">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row slds-grid_align-center">
+                                    <span id="radio-group-wizard-objects"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="n2__wizard-backfill-step-2">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <span class="slds-text-body_regular">Select one of the predefined criteria to start narrowing down which records to backfill, you can fine-tune your criteria on the next step</span>
+                    </div>
+                    <div class="slds-form slds-form_compound">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row slds-grid_align-center">
+                                    <span id="radio-group-wizard-criteria"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="n2__wizard-backfill-step-3">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <span class="slds-text-body_regular">Update the predefined criteria based on your selection in the previous step to select which records to backfill</span>
+                    </div>
+                    <div class="slds-form slds-form_compound">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <span id="logic-filters-wizard-criteria"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="n2__wizard-backfill-step-4">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <h3 class="slds-text-heading_large slds-p-bottom_small">Summary</h3>
+                        <p class="slds-text-body_regular">Using the criteria you have specified, <b><span id="wizard-number-records"></span></b> records would be processed for territory assignment.</p>
+                        <p>&nbsp;</p>
+                        <p class="slds-text-body_regular">If you are happy click Finish and a batch job will be created to perform the backfill processing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </html>
+
+</apex:page>

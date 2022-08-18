@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Audience xmlns="http://soap.sforce.com/2006/04/metadata">
+    <audienceName>Role - Processing</audienceName>
+    <container>Anderson Internal</container>
+    <criteria>
+        <criterion>
+            <criteriaNumber>1</criteriaNumber>
+            <criterionValue>
+                <entityField>$User.Community_View__c</entityField>
+                <entityType>User</entityType>
+                <fieldValue>Processing</fieldValue>
+            </criterionValue>
+            <operator>Equal</operator>
+            <type>FieldBased</type>
+        </criterion>
+    </criteria>
+    <formulaFilterType>AllCriteriaMatch</formulaFilterType>
+    <isDefaultAudience>false</isDefaultAudience>
+    <targets>
+        <target>
+            <groupName>f0ba6bf2-e601-457e-9d56-8a24b0ea5437</groupName>
+            <priority>9</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Home_Entity_Processing_Home_Page</targetValue>
+        </target>
+        <target>
+            <groupName>a4eb8c9f-effe-4533-9c8b-d1a49a2860a5</groupName>
+            <priority>1</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Sale_Detail_Sale_Two_Column_Page</targetValue>
+        </target>
+        <target>
+            <groupName>f62c2b7a-7298-4162-b3d1-acc25c795f30</groupName>
+            <priority>2</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Entity_Detail_Entity_Detail_Entity_Processing_Page</targetValue>
+        </target>
+        <target>
+            <groupName>62e47baa-cc3b-40ea-8368-badb98518e63</groupName>
+            <priority>4</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Client_Detail_Client_Detail_Entity_Processing_Page</targetValue>
+        </target>
+    </targets>
+</Audience>

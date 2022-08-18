@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_98918341</developerName>
+        <masterLabel>Status</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>STATUS</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>New Lead</sourceValue>
+            </sourceValues>
+            <value>Not Contacted</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Existing Client</sourceValue>
+            </sourceValues>
+            <value>Existing Client</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Reassigned</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Recycle</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Interested in Later Call</sourceValue>
+            </sourceValues>
+            <value>Reassigned</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>DELETE</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>No Interest</sourceValue>
+            </sourceValues>
+            <value>Dead Lead</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Qualified</sourceValue>
+            </sourceValues>
+            <value>Converted to Opp</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>NC2</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>NC3</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>NC1</sourceValue>
+            </sourceValues>
+            <value>Contacted</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <columns>
+        <field>CREATED</field>
+    </columns>
+    <columns>
+        <field>Lead.Main_Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>Lead.pi__utm_content__c</field>
+    </columns>
+    <columns>
+        <field>Lead.pi__utm_medium__c</field>
+    </columns>
+    <columns>
+        <field>Lead.pi__utm_source__c</field>
+    </columns>
+    <columns>
+        <field>Lead.pi__utm_term__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>LAST_N_DAYS:21</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_98918341</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Not Contacted,Existing Client,Reassigned,Dead Lead,Converted to Opp,Contacted,3</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_98918341</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Leads by Owner and Status Daily</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

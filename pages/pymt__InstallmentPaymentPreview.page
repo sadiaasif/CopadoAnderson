@@ -1,0 +1,82 @@
+<apex:page id="installmentPmtPreview" controller="pymt.InstallmentPaymentsController" tabStyle="pymt__Payment_Profile__c"  sideBar="{!IF($CurrentPage.parameters.hideSideBar == 'true',false,true)}" showHeader="{!IF($CurrentPage.parameters.hideHeader == 'true',false,true)}">
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Installment Payments Terminal" help="{!$Page.pymt__Help}"/>
+
+<apex:pageMessages id="pageMessages"/>
+&nbsp;
+<apex:form id="terminalForm" onsubmit="return validateForm();">
+<script language="javascript">
+
+
+
+var enableValidation=false;
+function validateForm() {
+
+    if (!enableValidation) return true;
+    enableValidation=false;  
+    
+
+
+    
+
+
+    
+    return true;
+}
+</script>
+
+<apex:pageBlock id="terminalPageBlock" mode="edit">
+    <apex:pageBlockButtons >
+        <apex:commandButton id="cancel" value="Cancel" action="{!cancelFromTerminal}" onclick="enableValidation=false;" immediate="true"/>&nbsp;&nbsp;&nbsp;
+        <apex:commandButton id="preview" value="Back" action="{!backToFirstPage}" disabled="{!disableForm}" onclick="return confirm('Going back to the previous page will lose any changes you may have made to your scheduled payments.  Continue?');"/>
+        <apex:commandButton id="continue" value="Create Scheduled Payments" action="{!createPaymentsAfterPreview}" disabled="{!disableForm}" onclick="enableValidation=true;"/>
+        &nbsp;
+        <apex:actionStatus id="formActionStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel >&nbsp;
+              <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                            style="vertical-align:middle;" alt="busy..." />
+              &nbsp;Updating Page</apex:outputPanel>
+                </apex:facet>
+                <apex:facet name="stop">
+                    <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                </apex:facet>
+            </apex:actionStatus>    
+    </apex:pageBlockButtons>
+
+    <div style="padding:20px;">
+    <apex:pageBlockTable value="{!scheduledPmts}" var="pmt" >
+
+
+    <apex:column value="{!pmt.pymt__Scheduled_Payment_Number__c}"/> 
+
+    <apex:column headervalue="Record Name">
+    <apex:inputField value="{!pmt.Name}"/>
+    </apex:column> 
+
+    <apex:column headervalue="Contact">
+    <apex:outputField value="{!pmt.pymt__Contact__c}"/>
+    </apex:column> 
+
+    <apex:column headervalue="Scheduled Date">
+    <apex:inputField value="{!pmt.pymt__Scheduled_Payment_Date__c}"/>
+    </apex:column> 
+    <apex:column headervalue="Tax" rendered="{!(masterPayment.pymt__Tax__c >0)}">
+    <apex:inputField value="{!pmt.pymt__Tax__c}"/>
+    </apex:column> 
+    <apex:column headervalue="Shipping" rendered="{!(masterPayment.pymt__Shipping__c >0)}">
+    <apex:inputField value="{!pmt.pymt__Shipping__c}"/>
+    </apex:column> 
+    <apex:column headervalue="Total Amount">
+    <apex:inputField value="{!pmt.pymt__Amount__c}"/>
+    </apex:column> 
+        
+    <apex:column headervalue="Action">
+    <apex:outputField value="{!pmt.pymt__Batch_Processing_Action__c}"/>
+    </apex:column> 
+
+    </apex:pageBlockTable>
+</div>
+    
+</apex:pageBlock>
+</apex:form>
+</apex:page>

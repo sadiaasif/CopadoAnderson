@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <customHelpPage>evt__EventManagementHelp</customHelpPage>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Used to define fees for different types of attendees (e.g. single day attendee, full event attendee, platinum exhibitor...)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>evt__Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enable/disable this fee on the registration landing pages.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enable/disable this fee on the registration landing pages.</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>evt__Amount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>evt__Category__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Attendee</fullName>
+                    <default>false</default>
+                    <label>Attendee</label>
+                </value>
+                <value>
+                    <fullName>Sponsor</fullName>
+                    <default>false</default>
+                    <label>Sponsor</label>
+                </value>
+                <value>
+                    <fullName>Exhibitor</fullName>
+                    <default>false</default>
+                    <label>Exhibitor</label>
+                </value>
+                <value>
+                    <fullName>Volunteer</fullName>
+                    <default>false</default>
+                    <label>Volunteer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Days_Before_or_After__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Number of days to add to the Pay Later Date.  (Use a negative value to set days BEFORE the Pay Later Date)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days to add to the Pay Later Date.  (Use a negative value to set days BEFORE the Pay Later Date)</inlineHelpText>
+        <label>Days Before or After</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Description__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>evt__Event_Fee_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Event Fee Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Event Fees</relationshipLabel>
+        <relationshipName>Event_Fees</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>evt__Event__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Event</label>
+        <referenceTo>evt__Special_Event__c</referenceTo>
+        <relationshipLabel>Event Fees</relationshipLabel>
+        <relationshipName>Event_Fees</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>evt__Limit_Per_Purchase__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Optional limit to the number of registrations that can be completed with this event fee for an individual registrant.  Applies only in scenarios where the registrant is allowed to register multiple attendees.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional limit to the number of registrations that can be completed with this event fee for an individual registrant.  Applies only in scenarios where the registrant is allowed to register multiple attendees.</inlineHelpText>
+        <label>Limit Per Purchase</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Limit__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Optional limit to the number of registrations that can be completed with this event fee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional limit to the number of registrations that can be completed with this event fee.</inlineHelpText>
+        <label>Limit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Members_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Flags this event fee as a special fee, visible only to logged-in contacts with pymt__Member_Pricing_Enabled__c set to true.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flags this event fee as a special fee, visible only to logged-in contacts with pymt__Member_Pricing_Enabled__c set to true.</inlineHelpText>
+        <label>Members Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>evt__On_Payment_Completed__c</fullName>
+        <deprecated>false</deprecated>
+        <description>On-payment-completed tag(s) to assign to shopping cart items created when this fee is paid.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On-payment-completed tag(s) to assign to shopping cart items created when this fee is paid.</inlineHelpText>
+        <label>On Payment Completed</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Value used to determine the order of event fees when listed on the web.</inlineHelpText>
+        <label>Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Pay_Later_Attendee_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Invitation Status value to assign new attendee records when the selected fee is a &quot;Pay Later&quot; fee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Invitation Status value to assign new attendee records when the selected fee is a &quot;Pay Later&quot; fee.</inlineHelpText>
+        <label>Pay Later Attendee Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>evt__Terms__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Payment Pending</fullName>
+                    <default>false</default>
+                    <label>Payment Pending</label>
+                </value>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Pay Online</controllingFieldValue>
+                <controllingFieldValue>Pay Later</controllingFieldValue>
+                <controllingFieldValue>Pay Online or Pay Later</controllingFieldValue>
+                <valueName>Registered</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pay Later</controllingFieldValue>
+                <controllingFieldValue>Pay Online or Pay Later</controllingFieldValue>
+                <valueName>Payment Pending</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Pay_Later_Description__c</fullName>
+        <defaultValue>&quot;Pay By Check&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Explanation of pay later option, displayed on the registration landing page (e.g. &quot;Invoice Me&quot; or &quot;Pay At The Door.&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Explanation of pay later option, displayed on the registration landing page (e.g. &quot;Invoice Me&quot; or &quot;Pay At The Door.&quot;</inlineHelpText>
+        <label>Pay Later Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Pay_Later_Options__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date or reference date for scheduled payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date or reference date for scheduled payment.</inlineHelpText>
+        <label>Pay Later Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>evt__Terms__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Day of Event</fullName>
+                    <default>false</default>
+                    <label>Day of Event</label>
+                </value>
+                <value>
+                    <fullName>Day of Registration</fullName>
+                    <default>false</default>
+                    <label>Day of Registration</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Pay Later</controllingFieldValue>
+                <controllingFieldValue>Pay Online or Pay Later</controllingFieldValue>
+                <valueName>Day of Event</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pay Later</controllingFieldValue>
+                <controllingFieldValue>Pay Online or Pay Later</controllingFieldValue>
+                <valueName>Day of Registration</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Refund_Policy__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Refund Policy</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>evt__Terms__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Controls whether or not the registration page prompts for payment online, or sets up a scheduled payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Controls whether or not the registration page prompts for payment online, or sets up a scheduled payment.</inlineHelpText>
+        <label>Terms</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pay Online</fullName>
+                    <default>true</default>
+                    <label>Pay Online</label>
+                </value>
+                <value>
+                    <fullName>Pay Later</fullName>
+                    <default>false</default>
+                    <label>Pay Later</label>
+                </value>
+                <value>
+                    <fullName>Pay Online or Pay Later</fullName>
+                    <default>false</default>
+                    <label>Pay Online or Pay Later</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Event Fee</label>
+    <nameField>
+        <label>Event Fee Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Event Fees</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>evt__Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Event__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+</CustomObject>

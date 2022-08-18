@@ -1,0 +1,6 @@
+<aura:component controller="Filing_Changes" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	  <aura:attribute name="recordId" type="string"/>
+     <aura:attribute name="Invoiceid" type="string" />    
+        <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />     
+   <lightning:flow aura:id="flowData"/>
+</aura:component>

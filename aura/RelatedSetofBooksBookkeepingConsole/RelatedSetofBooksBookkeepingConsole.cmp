@@ -1,0 +1,51 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="BookkeepingCtrl">
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="SetofBooksID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="SetofBooksRecords" type="Set_of_Books__c[]" />
+    <aura:attribute name="SetofBookscolumns" type="List"/> 
+    <aura:attribute name="RelatedToSetofBooks" type="boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+     <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    
+     <aura:attribute name="activeSections" type="List" default="['SetofBooks']" />
+     <aura:if isTrue="{!v.RelatedToSetofBooks}">
+      <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+           <lightning:layout verticalAlign="end" class="slds-form slds-form_horizontal">
+        <lightning:layoutitem padding="around-small" size="5" flexibility="auto">
+               <lightning:input value="{!v.searchKeyword}"
+                                label="Fiscal Year End / Name"
+                                 placeholder="Search Set of Books.."
+                                 aura:id="searchField"
+                                 />
+     </lightning:layoutitem>
+    <lightning:layoutitem padding="around-small" size="2" flexibility="auto"> 
+                <span>   <lightning:button variant="brand" title="Click to retrieve fields" label="Search" type="Submit" iconName="utility:search" iconPosition="left" onclick="{!c.Search}"
+                                
+                                          /> </span>
+     </lightning:layoutitem>
+                </lightning:layout>
+            <lightning:accordionSection name="SetofBooks" label="Set of Books" >
+
+     
+                 <lightning:datatable aura:id="SetofBooksTable"  
+                                    
+                         data="{!v.SetofBooksRecords }"     
+                         columns="{!v.SetofBookscolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                     
+                         />
+     
+                   </lightning:accordionSection>
+    </lightning:accordion>
+         <aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> You do not have any set of books related to this client !</center>
+             </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

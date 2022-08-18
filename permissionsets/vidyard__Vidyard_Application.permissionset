@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>vidyard__vidyard_Email</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>vidyard__vidyard_testClass</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Permission Set for access to Vidyard Integration Application</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>vidyard__Video_View__c.vidyard__Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>vidyard__Video_View__c.vidyard__Lead__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>vidyard__Video_View__c.vidyard__Video_Amount_Watched__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Vidyard Application</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>vidyard__Video_View__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <pageAccesses>
+        <apexPage>vidyard__vySendContactEmail</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>vidyard__vySendLeadEmail</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>

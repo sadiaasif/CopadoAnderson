@@ -1,0 +1,15 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="ReportLink" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="accountRecord" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="Accounturl" type="List" default="Base_Url_for_Report__c"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Base_Url_for_Report__c"
+                      targetFields="{!v.accountRecord}"
+                      recordUpdated="{!c.doInit}" 
+                      
+                      />
+</aura:component>

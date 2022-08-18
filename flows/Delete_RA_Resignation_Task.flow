@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Records_Found</name>
+        <label>Records Found</label>
+        <locationX>506</locationX>
+        <locationY>275</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TaskId</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Task</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>BackInTime55Minutes</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW() - (1/26)</expression>
+    </formulas>
+    <interviewLabel>Delete RA Resignation Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Delete RA Resignation Task</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Delete_Task</name>
+        <label>Delete Task</label>
+        <locationX>653</locationX>
+        <locationY>133</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TaskId</elementReference>
+            </value>
+        </filters>
+        <object>Task</object>
+    </recordDeletes>
+    <recordLookups>
+        <name>Look_Up_Task</name>
+        <label>Look Up Task</label>
+        <locationX>385</locationX>
+        <locationY>137</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Records_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0120B000000t7ppQAA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subject</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>RA Resignation -</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityId</elementReference>
+            </value>
+        </filters>
+        <object>Task</object>
+        <outputAssignments>
+            <assignToReference>TaskId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Wait_5_Minutes</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>OpportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>TaskId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <waits>
+        <name>Wait_5_Minutes</name>
+        <label>Wait 5 Minutes</label>
+        <locationX>121</locationX>
+        <locationY>161</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>Always_Pause</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Look_Up_Task</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>BackInTime55Minutes</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>Always Pause</label>
+        </waitEvents>
+    </waits>
+</Flow>

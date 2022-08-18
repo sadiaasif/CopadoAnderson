@@ -1,0 +1,163 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbContactDetailController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+              
+    <script>
+        $( document ).on( "pagecreate", function() {
+
+          $(window).on("orientationchange",function(){
+            alert("The orientation has changed!");
+          });            
+
+
+        });
+
+    
+    </script>
+ 
+
+</head>
+<body>
+<div data-role="page"  data-theme="a" id="contactdetailpage">
+
+    <div data-role="header">
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>
+        <h1>Contact Detail</h1>
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+
+
+
+     <h1>{!contact.Name}</h1>
+Account: {!contact.Account.Name}<br/>
+{!contact.MailingStreet}, {!contact.MailingCity}<br/>
+{!contact.MailingState}&nbsp;{!contact.MailingPostalCode}&nbsp;{!contact.MailingCountry}<br/>
+{!contact.Email}<br/>
+<a href="tel:{!contact.Phone}">{!contact.Phone}</a><br/>
+<br/>
+<a href="#" onclick="javascript: window.location='{!URLFOR($Page.MbProductSelect)}?cid={!contact.id}';" data-role="button" >Product Checkout</a>
+
+<br/>
+<apex:outputPanel rendered="{!hasCompletedPmts}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+    <h2>Completed Payments</h2>
+    <table data-role="table" id="completed-payments-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!completedPmts}" var="cpmt">
+      <tbody>
+        <tr>
+          <td>{!MONTH(cpmt.pymt__Date__c)}/{!DAY(cpmt.pymt__Date__c)}/{!YEAR(cpmt.pymt__Date__c)}</td>
+          <td>{!cpmt.pymt__Amount__c} {!cpmt.pymt__Currency_ISO_Code__c}</td>
+          <td><a href="{!URLFOR($Page.pymt__MbPaymentDetail)}?id={!cpmt.Id}" rel="external">{!cpmt.Name}</a></td>
+          <td>{!cpmt.pymt__Status__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+
+
+    </table>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasScheduledPmts}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+    <h2>Scheduled Payments</h2>
+    <table data-role="table" id="scheduled-payments-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Scheduled Date</th>
+          <th>Amount</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!scheduledPmts}" var="spmt">
+      <tbody>
+        <tr>
+          <td>{!MONTH(spmt.pymt__Scheduled_Payment_Date__c)}/{!DAY(spmt.pymt__Scheduled_Payment_Date__c)}/{!YEAR(spmt.pymt__Scheduled_Payment_Date__c)}</td>
+          <td>{!spmt.pymt__Amount__c} {!spmt.pymt__Currency_ISO_Code__c}</td>
+          <td>{!spmt.Name}</td>
+          <td>{!spmt.pymt__Status__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+    </table>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasCartItems}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+    <h2>Shopping Cart Items</h2>
+    <table data-role="table" id="cart-item-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!cartItems}" var="lineItem">
+      <tbody>
+        <tr>
+          <td>{!lineItem.Name}</td>
+          <td>{!lineItem.pymt__Unit_Price__c}</td>
+          <td>{!lineItem.pymt__Quantity__c}</td>
+          <td>{!lineItem.pymt__Total__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+
+
+    </table>
+   
+</div>
+</apex:outputPanel> 
+
+        
+    </div><!-- /content -->
+    
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link" onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>
+
+</div><!-- /page -->
+
+
+  
+</body>
+</html>
+
+</apex:page>

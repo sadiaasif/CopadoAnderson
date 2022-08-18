@@ -1,0 +1,231 @@
+<apex:page controller="TSS_StickIt_MR1.stickItReportController" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+	<html>
+		<head>
+			<apex:stylesheet value="{!URLFOR($Resource.TSS_StickIt_MR1__StickIt_Resources, 'bulma/bulma.0.7.1.min.css')}"/>
+	        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+	        <apex:includeScript value="{!URLFOR($Resource.TSS_StickIt_MR1__StickIt_Resources, 'jquery-3.2.1.min.js')}"/>
+	        <apex:includeScript value="{!URLFOR($Resource.TSS_StickIt_MR1__StickIt_Resources, 'angular/angular.min.js')}"/>
+	        <apex:includeScript value="{!URLFOR($Resource.TSS_StickIt_MR1__StickIt_Resources, 'angular/angular-sanitize.min.js')}"/>
+	        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
+	        <apex:includeScript value="{!URLFOR($Resource.TSS_StickIt_MR1__StickIt_Resources, 'lodash/lodash.min.js')}"/>
+		</head>
+		<body>
+			<div ng-app="stickItReportApp" ng-controller="mainCtrl" class="ng-cloak">
+				<div class="notification is-radiusless is-marginless">
+					<div class="level">
+						<div class="level-left">
+							<div class="level-item" ng-if="'{!$User.UIThemeDisplayed}' == 'Theme3'">
+								<a href="/home/home.jsp" class="button is-light" title="Return to Salesforce">
+									<span class="icon">
+										<i class="fa fa-arrow-left has-text-grey"></i>
+									</span>
+								</a>
+							</div>
+							<div class="level-item">
+								<p><b>StickIt!</b> Print from Reports</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="notification is-white is-radiusless is-marginless slide" ng-if="vm.showFilters">
+					<div class="columns is-multiline">
+						<div class="column is-12">
+							<article class="message is-link">
+								<div class="message-body">
+									<div class="columns is-multiline">
+										<div class="column is-6">
+											<label for="folder" class="label is-small">Folder</label>
+											<div class="field has-addons">
+												<div class="control has-icons-left is-expanded">
+													<div class="select is-small is-fullwidth">
+														<select name="folder" id="folder" ng-options="folder as folder.Name for folder in vm.data.folders" ng-model="vm.selected.folder" ng-change="fetchReports()">
+														</select>
+													</div>
+													<div class="icon is-small is-left">
+														<i class="fa fa-folder-open"></i>
+													</div>
+												</div>
+												<div class="control" ng-if="vm.selected.folder" >
+													<a class="button is-small" ng-click="clearFolder()">
+														<span class="icon is-small">
+															<i class="fa fa-times has-text-danger"></i>
+														</span>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="column is-6">
+											<div class="field">
+												<label class="label is-small">Search</label>
+												<div class="control has-icons-left">
+													<input class="input is-small" type="text" ng-keyup="doSearch('%'+$event.target.value)"/>
+													<span class="icon is-small is-left">
+														<i class="fa fa-search" aria-hidden="true"></i>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</article>
+						</div>
+						<div class="column is-12">
+							<div class="tabs is-small is-centered">
+								<ul>
+									<li ng-repeat="tab in vm.tabs" ng-class="{'is-active':tab.active}" ng-click="setTab(tab)">
+										<a ng-class="{'has-text-weight-bold':tab.active}">{{tab.value}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="column is-12">
+							<div class="content is-small">
+								<table class="table is-narrow is-fullwidth is-bordered">
+									<thead>
+										<tr>
+											<th>Report Name</th>
+											<th>Description</th>
+											<th>Folder</th>
+											<th class="has-text-centered">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-if="vm.data.reports.length" ng-repeat="report in vm.data.reports">
+											<td style="vertical-align: middle;">{{report.Name}}</td>
+											<td style="vertical-align: middle;">{{report.Description}}</td>
+											<td style="vertical-align: middle;">{{report.FolderName}}</td>
+											<td style="vertical-align: middle;" class="has-text-centered">
+												<a class="button is-small" ng-click="runReport(report)" ng-class="{'is-loading':report.loading}">
+													<span class="icon is-small">
+														<i class="fa fa-rocket"></i>
+													</span>
+													<span>Launch</span>
+												</a>
+												<a class="button is-small" ng-click="viewReport(report.Id)">
+													<span class="icon is-small">
+														<i class="fa fa-eye"></i>
+													</span>
+													<span>View</span>
+												</a>
+											</td>
+										</tr>
+										<tr ng-if="!vm.data.reports.length">
+											<td colspan="4">
+												<div class="notification">
+													<p class="title is-size-6">No Reports Found</p>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section" ng-if="vm.data.report.loading">
+					<p class="has-text-centered">
+						<span class="icon is-large">
+							<i class="fa fa-spinner fa-spin fa-pulse fa-5x has-text-link"></i>
+						</span>
+					</p>
+				</div>
+				<div class="hero is-light" ng-if="!vm.data.report.loading && vm.data.report.columns.length">
+					<a class="notification is-radiusless is-marginless is-white title is-size-7 has-text-link has-text-centered" ng-click="vm.showFilters = !vm.showFilters">
+						<i class="fa" ng-class="(vm.showFilters)?'fa-chevron-up':'fa-chevron-down'"></i> {{(vm.showFilters)?'Hide':'Show'}} Control Panel <i class="fa" ng-class="(vm.showFilters)?'fa-chevron-up':'fa-chevron-down'"></i>
+					</a>
+					<div class="hero-body">
+						<div class="columns is-multiline">
+							<div class="column is-12">
+								<p class="title is-size-6 has-text-centered">{{vm.selected.report}} ({{vm.data.report.data.length}} {{(vm.data.report.data.length==1)?'record':'records'}})</p>
+								<nav class="pagination is-centered is-rounded is-small" role="navigation" aria-label="pagination" ng-if="getPages().length > 1">
+									<a class="pagination-previous" ng-click="changePage('previous',$event)" ng-disabled="vm.selected.page==0">Previous</a>
+									<a class="pagination-next" ng-click="changePage('next',$event)" ng-disabled="vm.selected.page==getPages().length-1">Next page</a>
+									<ul class="pagination-list">
+										<li ng-repeat="i in getPages() track by $index"><a class="pagination-link" ng-click="goToPage($index)" ng-class="{'is-current has-text-white':vm.selected.page==$index}">{{$index+1}}</a></li>
+									</ul>
+								</nav>
+							</div>
+							<div class="column is-12" ng-if="vm.data.report.data.length">
+								<div class="columns is-vcentered">
+									<div class="column">
+										<button class="button is-small is-danger is-outlined" ng-if="getSelected().length" ng-click="clearAll()">Clear Selected</button>
+										<button class="button is-small is-dark is-outlined" ng-if="getSelected().split(',').length!=vm.data.report.data.length" ng-click="selectAll()">Select All Records</button>
+										<button class="button is-small is-link is-outlined" ng-if="getSelected().length" onclick="setSelected(document.getElementById('selectedIds').value)">
+											Generate Labels for {{vm.selected.records.length}} {{(vm.selected.records.length==1)?'Record':'Records'}}
+										</button>
+										<apex:form id="theForm" html-ng-non-bindable="true">
+											<apex:actionFunction name="navigate" action="{!doRedirect}" />
+											<apex:actionFunction name="setSelected" action="{!setSelected}" oncomplete="navigate()" reRender="">
+												<apex:param name="selected" assignTo="{!selectedIds}" value=""/>
+											</apex:actionFunction>
+										</apex:form>
+										<input type="text" style="display:none;" id="selectedIds" ng-value="getSelected()"/>
+									</div>
+									<div class="column is-narrow">
+										<p class="title is-size-7">{{(vm.selected.page*vm.selected.pageLimit)+1}}-{{
+											(vm.selected.page==(getPages().length-1))
+											?vm.data.report.data.length
+											:(vm.selected.page*vm.selected.pageLimit)+vm.selected.pageLimit
+										}} of {{vm.data.report.data.length}}</p>
+									</div>
+									<div class="column is-narrow">
+										<div class="field">
+											<div class="select is-small">
+												<select name="pageLimit" id="pageLimit" ng-model="vm.selected.pageLimit" ng-options="+limit as limit for limit in vm.pageLimits" ng-change="vm.selected.page=0">
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="column is-12">
+								<div class="content is-small">
+									<table class="table is-narrow is-bordered is-fullwidth" ng-if="vm.data.report.data.length">
+										<thead>
+											<tr>
+												<th class="has-text-centered">
+													<label class="checkbox">
+														<input type="checkbox" ng-model="vm.selected.allRecords" ng-change="selectPage()"/>
+													</label>
+												</th>
+												<th ng-repeat="column in vm.data.report.columns">{{column.label}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="row in vm.data.report.data | startFrom: vm.selected.page*vm.selected.pageLimit | limitTo: vm.selected.pageLimit">
+												<td class="has-text-centered">
+													<label class="checkbox">
+														<input type="checkbox" ng-model="row.selected"/>
+													</label>
+												</td>
+												<td ng-repeat="data in row.dataCells">{{data.label}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="column is-12" ng-if="vm.data.report.data.length">
+								<button class="button is-small is-danger is-outlined" ng-if="getSelected().length" ng-click="clearAll()">Clear Selected</button>
+								<button class="button is-small is-dark is-outlined" ng-if="getSelected().split(',').length!=vm.data.report.data.length" ng-click="selectAll()">Select All Records</button>
+								<button class="button is-small is-link is-outlined" ng-if="getSelected().length" onclick="setSelected(document.getElementById('selectedIds').value)">
+									Generate Labels for {{vm.selected.records.length}} {{(vm.selected.records.length==1)?'Record':'Records'}}
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Global Vars -->
+	        <script>
+	            var config = {
+	            	org: {
+	                    method_ns: '{!$RemoteAction.stickItReportController.getReports}'.split('.').length > 2 ? '{!$RemoteAction.stickItReportController.getReports}'.split('.')[0] + '.' : '',
+	                    objFld_ns: '{!$RemoteAction.stickItReportController.getReports}'.split('.').length > 2 ? '{!$RemoteAction.stickItReportController.getReports}'.split('.')[0] + '__' : ''
+	                }
+	            };
+	        </script>
+			<script src="{!URLFOR($Resource.StickIt_Resources, 'remotingFactory.js')}"></script>
+			<script src="{!URLFOR($Resource.StickIt_Resources, 'stickItPrintFromReportApp.min.js')}"></script>
+		</body>
+	</html>
+</apex:page>

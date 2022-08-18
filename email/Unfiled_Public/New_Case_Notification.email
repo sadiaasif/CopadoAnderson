@@ -1,0 +1,114 @@
+<messaging:emailTemplate subject="New Case - {!relatedTo.RecordType.Name}" recipientType="User" relatedToType="Case">
+<messaging:htmlEmailBody >
+Hi Edgar, <br/><br/>
+
+A new Help Desk case has been created. <br/><br/>
+Case Number: <a href="{!$Site.BaseUrl}/{!relatedTo.Id} " target="_blank">{!relatedTo.CaseNumber}</a>
+<br/><br/>
+
+
+<!--Events-->
+<apex:outputPanel rendered="{!relatedTo.RecordType.Name='Events'}" >
+         
+               <apex:outputLabel style="font-weight:900">Event Advisors And Speakers List </apex:outputLabel>   <br/>
+               <apex:outputText value="{!relatedTo.Event__c}" escape="false"/><br/>
+               
+         <apex:outputLabel style="font-weight:900"> Event Case Details </apex:outputLabel>   <br/>   
+               <apex:outputText value="{!relatedTo.Event_Case_Details__c}" escape="false"/><br/>
+         
+                   <apex:outputLabel style="font-weight:900">  Event Needs </apex:outputLabel>   <br/>       
+           <apex:outputText value="{!relatedTo.Event_Needs__c}" escape="false"/><br/>
+           
+                  <apex:outputLabel style="font-weight:900"> Event Start Date choice 1: </apex:outputLabel>  <apex:outputText value=" "></apex:outputText>   
+         <apex:outputText value="{0,date,MM/dd/yyyy h:mm:a}">
+                    
+
+    <apex:param value="{!relatedTo.Event_Start_Date_and_Time__c - 7/24}" />
+                    
+
+   </apex:outputText> <br/> 
+   
+      <apex:outputLabel style="font-weight:900">Event End Date Choice 1: </apex:outputLabel> <apex:outputText value=" "></apex:outputText>     
+                    <apex:outputText value="{0,date,MM/dd/yyyy h:mm:a }">
+                    
+
+    <apex:param value="{!relatedTo.Event_End_Date_And_Time__c - 7/24}" />
+                    
+
+   </apex:outputText><br/>
+   
+    <apex:outputLabel style="font-weight:900">Event Start Date choice 2: </apex:outputLabel><apex:outputText value=" "></apex:outputText>   
+  <apex:outputText value="{0,date,MM/dd/yyyy h:mm:a}">
+                    
+
+    <apex:param value="{!relatedTo.Event_Start_Date_and_Time_choice_2__c - 7/24}" />
+                    
+
+   </apex:outputText><br/>
+    <apex:outputLabel style="font-weight:900">  
+Event End Date Choice 2: </apex:outputLabel><apex:outputText value=" "></apex:outputText>   
+  <apex:outputText value="{0,date,MM/dd/yyyy h:mm:a}">
+                    
+
+    <apex:param value="{!relatedTo.Event_End_Date_And_Time_Choice_2__c - 7/24 }" />
+                    
+
+   </apex:outputText>      
+                  
+   
+<br/>
+        
+</apex:outputPanel>
+
+<!--Affiliate-->
+<apex:outputPanel rendered="{!relatedTo.RecordType.Name='Affiliate On-boarding'}" >
+         
+               <apex:outputLabel style="font-weight:900">Contact Details </apex:outputLabel>   <br/>
+               <apex:outputText value="{!relatedTo.Primary_Contact_Details_AffOnboarding__c}" escape="false"/><br/>
+               
+         <apex:outputLabel style="font-weight:900">  Affiliate Details </apex:outputLabel>   <br/>   
+               <apex:outputText value="{!relatedTo.Affiliate_Details__c}" escape="false"/><br/>
+    
+</apex:outputPanel>
+
+<!--Marketing-->
+<apex:outputPanel rendered="{!relatedTo.RecordType.Name='Marketing'}" >
+         
+               <apex:outputLabel style="font-weight:900"> Marketing Case Details </apex:outputLabel>   <br/>
+               <apex:outputText value="{!relatedTo.Marketing_Case_Details__c}" escape="false"/><br/>
+               
+        <apex:outputLabel style="font-weight:900">  
+Requested Due Date: </apex:outputLabel>  <apex:outputText value=" "></apex:outputText>   
+         <apex:outputText value="{0,date,MM/dd/yyyy}">
+                    
+
+    <apex:param value="{!relatedTo.Requested_Due_Date__c}" />
+                    
+
+   </apex:outputText> <br/> 
+    
+</apex:outputPanel>
+
+<!--Website-->
+<apex:outputPanel rendered="{!relatedTo.RecordType.Name='Help Desk'}" >
+         
+               <apex:outputLabel style="font-weight:900"> Subject: </apex:outputLabel><apex:outputText value=" "></apex:outputText>   
+               <apex:outputText value="{!relatedTo.Subject}" escape="false"/><br/>
+               <apex:outputLabel style="font-weight:900"> Category: </apex:outputLabel>  <apex:outputText value=" "></apex:outputText>    
+               <apex:outputText value="{!relatedTo.Category__c}" escape="false"/><br/>
+               <apex:outputLabel style="font-weight:900"> Severity Level:  </apex:outputLabel> <apex:outputText value=" "></apex:outputText>     
+               <apex:outputText value="{!relatedTo.Severity_Level__c}" escape="false"/><br/>
+               
+        <apex:outputLabel style="font-weight:900">  
+Requested Due Date: </apex:outputLabel> <apex:outputText value=" "></apex:outputText>    
+         <apex:outputText value="{0,date,MM/dd/yyyy}">
+                    
+
+    <apex:param value="{!relatedTo.Requested_Due_Date__c}" />
+                    
+
+   </apex:outputText> <br/> 
+    
+</apex:outputPanel>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

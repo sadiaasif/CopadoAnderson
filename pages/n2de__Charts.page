@@ -1,0 +1,693 @@
+<apex:page controller="n2de.ChartDistributionController" sidebar="false" tabstyle="Distribution_Analytics__tab" action="{!init}">
+    <head>
+        <c:CommonHeader />
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.DEResources, 'css/c3.min.css')}"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.DEResources, 'css/visavail.min.css')}"/>
+        <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/d3.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/moment.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/c3.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/visavail.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'jstree/jquery.jstree.js')}"></script>
+        <style>
+.chart{
+    float: left;
+    min-width: 500px;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border: 1px solid lightgray;
+}
+#chart_settings{
+    float: left;
+    border: 1px solid lightgray;
+    padding: 5px;
+    min-width: 210px;
+    height: 70%;
+    right: -5px;
+    top: 120px;
+    display: none;
+}
+
+#chart_settings .title{
+    color: gray;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.jstree-default.jstree-focused{
+    background: none !important;
+}
+.setting{
+    border: solid 1px lightgray;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.setting_label{
+    color: gray;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+#chart_header{
+    border-radius: 5px;
+    width: 70%;
+    color: black;
+    margin: 10px;
+    text-align: center;
+    padding: 10px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+#reset_chart{
+    display: none;
+}
+#engine_container{
+    height: 100%;
+}
+#filler{
+    float: left;
+    clear: both;
+    padding: 10px;
+}
+#select_distributor{
+    display: none;
+}
+#select_users_tree{
+    display: none;
+}
+#chart_container{
+    float: left;
+    display:none;
+}
+#clear{
+    clear: both;
+}
+.sf_button{
+    color: #333;
+    margin: 1px;
+    padding: 3px 5px;
+    border: 1px solid #B5B5B5;
+    border-bottom-color: #7F7F7F;
+    background: #E8E8E9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;
+    font-weight: bold;
+    font-size: .9em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    min-width: 60px;
+}
+        .c3-axis-x text,
+        .c3-axis-y text  {
+            font-size: 11px;
+        }
+        text.c3-axis-x-label,
+        text.c3-axis-y-label,
+        .c3-legend-item text {
+            font-size: 12px;
+        }
+        .activity_log_in {
+            fill: #9dcc58
+        }
+        .activity_log_out {
+            fill: #708090
+        }
+
+        </style>
+        <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    </head>
+    <div id="engine_container">
+        <apex:sectionHeader title="Analytics" subtitle="Distribution"/>
+        <c:CommonHelp help_page="distribution-analytics"/>
+        <c:CommonMask />
+        <apex:pageBlock title="Distribution data">
+            <apex:pageMessages />
+            <apex:form >
+                <div id="chart_settings">
+                    <apex:actionFunction name="updateTeam" action="{!updateSettings}"/>
+
+                    <p class="setting_label">Team</p>
+                    <div class="setting">
+                        <table>
+                            <tr>
+                                <td>
+                                    <apex:selectList id="team_id" value="{!currentTeamId}" onchange="updateTeam()" size="1">
+                                        <apex:selectOptions value="{!teams}"/>
+                                    </apex:selectList>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p class="setting_label">Chart type</p>
+                    <div class="setting">
+                        <table>
+                            <tr>
+                                <td>
+                                    <apex:selectList id="trend_type" styleClass="trend_type" onchange="resetChart();" size="1">
+                                        <apex:selectOptions value="{!chartTypeOptions}"/>
+                                    </apex:selectList>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p class="setting_label chart-type">Split data by</p>
+                    <div class="setting chart-type">
+                        <table>
+                            <tr>
+                                <td>
+                                    <select id="chart_type" onchange="resetChart();">
+                                        <option value="Distributor">By distributor</option>
+                                        <option value="User">By user</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p class="setting_label">Date range</p>
+                    <div class="setting">
+                        <table>
+                            <tr>
+                                <td>
+                                    <select id="period" onchange="resetChart();">
+                                        <option value="0">Today</option>
+                                        <option value="7">Last 7 days</option>
+                                        <option value="15">Last 15 days</option>
+                                        <option value="30">Last 30 days</option>
+                                        <option value="60">Last 60 days</option>
+                                        <option value="90">Last 90 days</option>
+                                    </select>
+
+                                    <select id="date_range" style="display: none;" onchange="resetChart()">
+                                        <option value="today">Today</option>
+                                        <option value="yesterday">Yesterday</option>
+                                        <option value="this_week">This week</option>
+                                        <option value="last_week">Last week</option>
+                                        <option value="this_month">This month</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="select_distributors_tree">
+                        <p class="setting_label">Distributors</p>
+                        <div id="distributors" class="setting tree">
+                            <ul class="team_node">
+                                <apex:repeat value="{!distributors}" var="distributor">
+                                    <li id="{!distributor.id}" class="jstree-checked_not ">
+                                        <a href="#">{!distributor.name}</a>
+                                    </li>
+                                </apex:repeat>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="select_users_tree">
+                        <p class="setting_label">Users</p>
+                        <div id="users" class="setting tree">
+                            <ul class="team_node">
+                                <apex:repeat value="{!users}" var="thisUser">
+                                    <li id="{!thisUser.id}" class="jstree-checked_not ">
+                                        <a href="#">{!thisUser.name}</a>
+                                    </li>
+                                </apex:repeat>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="select_user">
+                        <p class="setting_label">Filter by user</p>
+                        <div class="setting">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select id="userId" onchange="resetChart();">
+                                            <option value="All">All users</option>
+                                            <apex:repeat value="{!users}" var="u">
+                                                <option value="{!u.id}">{!u.Name}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="select_distributor">
+                        <p class="setting_label">Filter by distributor</p>
+                        <div class="setting">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select id="distributorId" onchange="resetChart();">
+                                            <option value="All">All distributors</option>
+                                            <apex:repeat value="{!distributors}" var="d">
+                                                <option value="{!d.id}">{!d.Name}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </apex:form>
+
+            <div id="chart_container">
+                <div id="chartBlock" class="chart"></div>
+                <div id="chart_header">
+                    <span id="chart_title"></span>
+                    <input type="button" id="reset_chart" class="sf_button" value="Back"/>
+                </div>
+            </div>
+            <div id="activity_container" style="display: none; float:left; width: 75%; margin-left: 10px; margin-bottom: 5px;">
+                <div id="error_cont"></div>
+                <div id="user_activity" class="visavail">
+                    <div id="user_activity_chart" style="width: 100%;"></div>
+                </div>
+            </div>
+            <div id="clear"></div>
+        </apex:pageBlock>
+
+        <script type="text/javascript">
+    /* Global variables */
+    var daySelected = '';
+    var chartType = '';
+    var trendType = '';
+    var period = '7';
+    var timezone = '{!JSENCODE(timezone)}';
+    var windowHeight;
+    var windowWidth;
+    var viewportHeight;
+    var viewportWidth;
+    showMask();
+
+    function calculateSize() {
+        windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        viewportHeight = windowHeight - 350;
+        viewportWidth = windowWidth - $("#chart_settings").width() - 200;
+        if((/msie/).test(navigator.userAgent.toLowerCase()) || (/Trident\/7\./).test(navigator.userAgent)){
+            viewportWidth -= 200;
+        }
+    }
+    calculateSize();
+
+    window.addEventListener("load", initCharts);
+    window.addEventListener("resize", calculateSize);
+
+    /* Charts initialisation callback function */
+    function initCharts() {
+        //initiate the tree control 
+        initTreeControl();
+        
+        //Default charting period
+        $("#period").val(period);
+
+        trendType = $('.trend_type').val();
+        if ('{!JSENCODE(currentTeamId)}' != '' || trendType == 'User activity') {
+            resetChart();
+        } else {
+            hideMask();
+        }
+        
+        //Show the settings - hidden while tree control loads
+        $("#chart_settings").show();
+        
+        //Setup the back button to reset chart from hourly view to date view
+        $("#reset_chart").click(function(){
+            daySelected = '';
+            period = $("#period").val();
+            drawChart();
+        });
+
+    }
+    
+    /* Initialise the tree control, including event handling toggling check boxes */
+    function initTreeControl(eventHandler){
+        /* Bind to change checkbox event */
+        $(".tree").bind("change_state.jstree", function (e, d) {
+            var tagName = d.args[0].tagName;
+            var refreshing = d.inst.data.core.refreshing;
+            if ((tagName == "A" || tagName == "INS") &&
+                (refreshing != true && refreshing != "undefined")) {
+                resetChart();
+            }
+        });
+      
+        /* Instantiate the tree control */
+        $(".tree").jstree({
+            "themes" : {
+            "theme" : "default",
+            "dots" : false,
+            "icons" : false},
+            checkbox : {
+                "real_checkboxes" : "false",
+                "real_checkboxes_names" : function(n){
+                    return[(n[0].id),n[0].id];
+                }
+            },
+            "plugins" : [ "themes", "html_data", "checkbox" ]
+        });
+    }
+    
+    /* Set the chart title depending on the period and whether they have clicked into a specific day */
+    function setTitle(){
+        var titleText = $("#period option:selected").text().toLowerCase();
+        var filterText = $("#userId option:selected").text();
+        if(chartType == 'User'){
+            filterText = $("#distributorId option:selected").text();
+        }
+        
+        if(daySelected != ''){
+            titleText = daySelected;
+            $("#reset_chart").show();
+        }else{
+            $("#reset_chart").hide();
+        }
+        
+        titleText += ' - ' + filterText;
+        $("#chart_title").text('Showing data for ' + titleText);
+    }
+    
+    /* Reset and redraw chart when a setting changes */
+    function resetChart(){
+        
+        showMask();
+        
+        daySelected = '';
+        
+        chartType = $("#chart_type").val();
+        trendType = $(".trend_type").val();
+        period = $("#period").val();
+
+        $("#chart_container").hide();
+        $('#chartBlock').html('');
+        $("#activity_container").hide();
+        $('#user_activity_chart').html('');
+
+        if (trendType === 'User activity') {
+            chartType = 'User';
+            $('.chart-type').hide();
+            $('#period').hide();
+            $('#date_range').show();
+        } else {
+            $('.chart-type').show();
+            $('#period').show();
+            $('#date_range').hide();
+        }
+        
+        if (chartType === 'User'){
+            if (trendType === 'User activity') {
+                $("#select_distributor").hide();
+            } else {
+                $("#select_distributor").show();
+            }
+            $("#select_users_tree").show();
+            $("#select_distributors_tree").hide();
+            $("#select_user").hide();
+        } else {
+            $("#select_distributor").hide();
+            $("#select_users_tree").hide();
+            $("#select_distributors_tree").show();
+            $("#select_user").show();
+        }
+        makeChart();
+    }
+    
+    function makeChart() {
+        if (trendType == 'User activity') {
+            drawUserActivityChart();
+        } else {
+            drawChart();
+        }
+    }
+    
+    /** 
+     * Overall method to redraw the chart retrieving the relevant settings, calling the apex javascript remote
+     * method and then calling loadChartData to load and draw the chart
+     **/
+    function drawChart(){
+        trendType = $(".trend_type").val();
+        var groupByFn;
+        var selectedIdList;
+        var teamId = $("[id$='team_id']").val();
+        var userId = $("#userId").val();
+        var distributorId = $("#distributorId").val();
+        
+        if (chartType == 'User'){
+            selectedIdList = $("#users .jstree-checked");
+        } else {
+            selectedIdList = $("#distributors .jstree-checked");
+        }
+        
+        //Set the selected id comma separated list
+        var selectedIds = '';
+        if (selectedIdList.size() == 0){
+            selectedIds = 'All';
+        } else {
+            selectedIdList.each(function(index) {
+                selectedIds += $(this).attr("id") + ',';
+            });
+        }
+        
+        if (daySelected != ''){
+            period = daySelected;
+            groupByFn = 'HOUR_IN_DAY';
+        } else if(period == '0'){
+            groupByFn = 'HOUR_IN_DAY';
+        } else{
+            groupByFn = 'DAY_IN_YEAR';
+        }
+        
+        if (trendType == 'Hour'){
+            groupByFn = 'HOUR_IN_DAY';
+        }
+        
+        if(chartType == 'User'){
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChartDistributionController.loadDistributionTrendByUserRO}',
+                teamId, trendType, period, groupByFn, selectedIds, distributorId,
+                function(result, event){
+                    loadChartData(result);
+                }, {escape:true}
+            );
+        } else {
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChartDistributionController.loadDistributionTrendBySourceRO}', 
+                teamId, trendType, period, groupByFn, selectedIds, userId,
+                function(result, event){  
+                    loadChartData(result);
+                }, {escape:true}
+            );
+        }
+        
+        setTitle();
+    }
+
+    function loadChartData(data){
+        data = formatChartData(data);
+        if (!data.length) {
+            hideMask();
+            return;
+        }
+
+        var culling = trendType === 'Time' && parseInt(period, 10) > 15;
+        var xTitle;
+        var clickHandler;
+        if (trendType === 'Hour' || daySelected || period === '0') {
+            xTitle = 'Time';
+        } else {
+            xTitle = 'Date';
+            clickHandler = function (d) {
+                daySelected = days[d.x + 1];
+                if (daySelected) {
+                    drawChart();
+                }
+            }
+        }
+        xTitle += ' (' + timezone + ')';
+        var days = data[0];
+        c3.generate({
+            bindto: '#chartBlock',
+            axis: {
+                x: {
+                    type: 'category',
+                    label: {
+                        text: xTitle,
+                        position: 'outer-center'
+                    },
+                    tick: {
+                        centered: true,
+                        culling: culling,
+                        multiline: false,
+                        rotate: -45
+                    }
+                },
+                y: {
+                    label: {
+                        text: 'Records distributed',
+                        position: 'outer-middle'
+                    }
+                }
+            },
+            data: {
+                columns: data,
+                type: 'area',
+                x: 'days',
+                onclick: clickHandler
+            },
+            grid: {
+                y: {
+                    show: true
+                }
+            },
+            legend: {
+                position: 'right'
+            },
+            point: {
+                r: 4
+            },
+            size: {
+                height: viewportHeight,
+                width: viewportWidth
+            },
+            transition: {
+                duration: 1000
+            }
+        });
+
+        $("#chart_container").show();
+        hideMask();
+    }
+
+    function formatChartData(data) {
+        if (data.length === 0 || data[0].DistributionData.length === 0) {
+            return [];
+        }
+
+        // Add the x axis titles as the first "row"
+        var formattedData = [];
+        var source = data[0];
+        var distData = source.DistributionData;
+        var colsLength = distData.length;
+        var row = ['days'];
+        for (var i = 0; i < colsLength; i++) {
+            row.push(distData[i].dayOfYear);
+        }
+        formattedData.push(row);
+
+        // Add a row for each source
+        var rowsLength = data.length;
+        for (var i = 0; i < rowsLength; i++) {
+            source = data[i];
+            distData = source.DistributionData;
+            row = [source.sourceName];
+            for (var j = 0; j < colsLength; j++) {
+                row.push(distData[j].recordCount);
+            }
+            formattedData.push(row);
+        }
+
+        return formattedData;
+    }
+     
+    function drawUserActivityChart() {
+        var dateRange = $("#date_range").val();
+        var selectedIdList = $("#users .jstree-checked");
+        var selectedUserIds = [];
+        if (selectedIdList.length > 0){
+            selectedIdList.each(function(index) {
+                selectedUserIds.push($(this).attr("id"));
+            });
+        }
+
+        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChartDistributionController.getUserActivity}', '{!JSENCODE(currentTeamId)}', dateRange,
+            selectedUserIds, function(result, event) {
+                loadUserActivityChartData(result, selectedUserIds);
+            }, {escape:true}
+        );
+    }
+
+    function loadUserActivityChartData(data, selectedUserIds) {
+        $('#activity_container').show();
+        if (!data || !data.length) {
+            var msg = 'No user activity data for the selected team or period.';
+            if (selectedUserIds.length > 0) {
+                msg = 'No user activity data for the selected users for this period.';
+            }
+            $('#error_cont').html('<span>' + msg + '</span>');
+            hideMask();
+            return;
+        }
+
+        $('#error_cont').html('');
+
+        data = formatUserActivityData(data);
+        visavail.generate({
+            custom_categories: true,
+            id_div_container: 'user_activity',
+            id_div_graph: 'user_activity_chart',
+            custom_time_format: {
+                format_hour: '%-I%p',
+                format_minute: '%-I:%M%p'
+            },
+            sub_title: {
+                enabled: false
+            },
+            title: {
+                enabled: false
+            },
+            tooltip: {
+                date_plus_time: true,
+                position: 'overlay'
+            }
+        }, data);
+
+        hideMask();
+    }
+
+    function formatUserActivityData(data) {
+        var categories = {
+            'Log out': {
+                class: 'activity_log_out'
+            },
+            'Log in': {
+                class: 'activity_log_in'
+            }
+        }
+
+        var formattedData = [];
+        var rowsLength = data.length;
+        for (var i = 0; i < rowsLength; i++) {
+            var row = {};
+            var user = data[i];
+            row.measure = user.userName;
+            row.categories = categories;
+            row.data = [];
+            row.description = [];
+
+            var activityLength = user.activityList.length;
+            for (var j = 0; j < activityLength; j++) {
+                var activity = user.activityList[j];
+                var start = createUserActivityDate(activity.startDate);
+                var end = createUserActivityDate(activity.endDate);
+                row.data.push([start.toDate(), activity.actionName, end.toDate()]);
+                var duration = moment.duration(end.diff(start)).humanize();
+                row.description.push('<hr>Duration: ' + duration);
+            }
+
+            formattedData.push(row);
+        }
+
+        return formattedData;
+    }
+
+    function createUserActivityDate(dateParts) {
+        return moment({y: dateParts.year, M: dateParts.month - 1, d: dateParts.day, h: dateParts.hour, m: dateParts.minute, s: dateParts.second});
+    }
+
+        </script>
+    </div>
+    <c:StatusPanel />
+</apex:page>

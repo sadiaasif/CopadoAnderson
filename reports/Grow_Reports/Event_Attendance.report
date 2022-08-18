@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>evt__Attendee__c$Id</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$evt__Is_Primary__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$evt__Event__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$evt__Attended__c</field>
+    </columns>
+    <description>All event attendees registered from 2015-Present [Used in conjunction w/ Event Campaigns]</description>
+    <filter>
+        <criteriaItems>
+            <column>evt__Attendee__c$evt__Attended__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Event Attendance</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Attendees__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>evt__Attendee__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-01-01</startDate>
+    </timeFrameFilter>
+</Report>

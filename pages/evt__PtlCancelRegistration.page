@@ -1,0 +1,56 @@
+<apex:page docType="html-5.0" id="siteViewEventPass" controller="evt.SiteCancelRegistrationController"  title="{!$Label.evt__CancelRegistration_Heading}"  showHeader="true" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>{!$Label.evt__CancelRegistration_Heading}</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="evt_ptl_cancel_registration_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+    
+	<apex:form >   
+ 
+    <apex:pageMessages id="messages"/>  
+ 
+    <h1>{!$Label.evt__CancelRegistration_Heading}</h1> 
+    <apex:outputPanel layout="none" rendered="{!NOT($Label.evt__CancelRegistration_Message == '-')}">
+    <p>{!$Label.evt__CancelRegistration_Message}</p>
+    </apex:outputPanel>
+ 	Event: {!eventName}<br/>
+ 	Attendee: {!attendeeName}<br/>
+ 	<br/>
+    <apex:outputPanel id="buttons">
+        <div class="pc_button_container"> 
+        <apex:commandButton id="submitButton" 
+                        value="{!$Label.site.submit}" 
+                        action="{!cancelRegistration}"
+                        status="formActionStatus" 
+                        disabled="{!disableSubmitButton}" />
+         <apex:actionStatus id="formActionStatus">
+                 <apex:facet name="start">
+                     <apex:outputPanel >&nbsp;
+                         <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                             style="vertical-align:middle;" alt="" />
+                             &nbsp;Processing...
+                     </apex:outputPanel>
+                 </apex:facet>
+                 <apex:facet name="stop">
+                     <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" /> 
+                 </apex:facet> 
+         </apex:actionStatus>  
+        </div>
+    </apex:outputPanel>
+
+    </apex:form>
+    
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page --> 
+</div> <!--  page pc_lang_xxx div -->        
+          
+    
+</apex:page>

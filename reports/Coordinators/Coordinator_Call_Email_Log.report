@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_43322955</developerName>
+        <masterLabel>Assigned</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>ASSIGNED</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Amanda Miller</sourceValue>
+            </sourceValues>
+            <value>Amanda Miller</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Bobbie Coughlin</sourceValue>
+            </sourceValues>
+            <value>Bobbie Coughlin</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Ghassan Jabali</sourceValue>
+            </sourceValues>
+            <value>Ghassan Jabali</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Holly Malloy</sourceValue>
+            </sourceValues>
+            <value>Holly Malloy</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Janey Agustin</sourceValue>
+            </sourceValues>
+            <value>Janey Agustin</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jazzmine Macias</sourceValue>
+            </sourceValues>
+            <value>Jazzmine Macias</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jennifer Scott</sourceValue>
+            </sourceValues>
+            <value>Jennifer Scott</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Mary Borden</sourceValue>
+            </sourceValues>
+            <value>Mary Borden</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Samantha Franco</sourceValue>
+            </sourceValues>
+            <value>Samantha Franco</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Joseph Sacco</sourceValue>
+            </sourceValues>
+            <value>Joseph Sacco</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Mayra De Arcos</sourceValue>
+            </sourceValues>
+            <value>Mayra DeArcos</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Kambria Stephen</sourceValue>
+            </sourceValues>
+            <value>Kambria Stephen</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Erica Terrell</sourceValue>
+            </sourceValues>
+            <value>Erica Terrell</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Deborah Lewis</sourceValue>
+            </sourceValues>
+            <value>Deborah Lewis</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumnStackedLine</chartType>
+        <enableHoverLabels>true</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>LAST_UPDATE</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <location>CHART_TOP</location>
+        <secondaryGroupingColumn>BucketField_43322955</secondaryGroupingColumn>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Huge</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT</field>
+    </columns>
+    <description>Completed call and email tasks.</description>
+    <filter>
+        <criteriaItems>
+            <column>ASSIGNED</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>jabali,borden,coughlin,agustin,sacco,mayra,stephen,chambers,roberta</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notContain</operator>
+            <value>unresolved,Email: &lt;&lt;</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_43322955</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>LAST_UPDATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Coordinator Call &amp; Email Log</name>
+    <params>
+        <name>closed</name>
+        <value>closed</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>te</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>ACCOUNT</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>LAST_UPDATE</dateColumn>
+        <interval>INTERVAL_LAST7</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,132 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="RelatedEstateplanningcommunitiesctrl">
+	 <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="EntityID" type="Id"/>
+    <aura:attribute name="flag" type="boolean" default="true" />
+    <aura:attribute name="EntityLivingTrustRecords" type="Entities__c[]" />
+    <aura:attribute name="Entitycolumns" type="List"/> 
+     <aura:attribute name="TrusoLivingTrustRecords" type="Trust__c[]" />
+    <aura:attribute name="trustcolumns" type="List"/> 
+     <aura:attribute name="SaleLivingTrustRecords" type="opportunity[]" />
+    <aura:attribute name="Salecolumns" type="List"/> 
+     <aura:attribute name="TaskLivingTrustRecords" type="task[]" />
+    <aura:attribute name="Taskcolumns" type="List"/> 
+     <aura:attribute name="CaseLivingTrustRecords" type="Case[]" />
+    <aura:attribute name="Casecolumns" type="List"/> 
+    <aura:attribute name="hasrelatedLivingTrustonEntityobj" type="boolean"/>
+     <aura:attribute name="hasrelatedLivingTrustonTrustobj" type="boolean"/>
+     <aura:attribute name="hasrelatedLivingTrustonSaleobj" type="boolean"/>
+     <aura:attribute name="hasrelatedLivingTrustonTaskobj" type="boolean"/>
+     <aura:attribute name="hasrelatedLivingTrustonCaseobj" type="boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+   
+     <aura:attribute name="activeSections" type="List" default="['Entity','Trust','Cases','Sales','Task']" />
+   
+      <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+         
+            <lightning:accordionSection name="Entity" label="Entity- With Living Trust" >
+
+        <aura:if isTrue="{!v.hasrelatedLivingTrustonEntityobj}">
+                 <lightning:datatable aura:id="EntityTable"  
+                                    
+                         data="{!v.EntityLivingTrustRecords }"     
+                         columns="{!v.Entitycolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                         /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust Entity Associated!</center>
+             </div>
+        </aura:set></aura:if>
+     
+                   </lightning:accordionSection>
+     <br/>
+          <br/>
+            <lightning:accordionSection name="Trust" label="Trust -With Living Trust" >
+
+      <aura:if isTrue="{!v.hasrelatedLivingTrustonTrustobj}">
+                 <lightning:datatable aura:id="TrustTable"  
+                                    
+                         data="{!v.TrusoLivingTrustRecords }"     
+                         columns="{!v.trustcolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                                      /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust Entity Associated!</center>
+             </div>
+        </aura:set></aura:if>
+                
+     
+                   </lightning:accordionSection>
+       <br/>
+          <br/>
+            <lightning:accordionSection name="Sales" label="Sale -With Living Trust" >
+
+      <aura:if isTrue="{!v.hasrelatedLivingTrustonSaleobj}">
+                 <lightning:datatable aura:id="SalesTable"  
+                                    
+                         data="{!v.SaleLivingTrustRecords }"     
+                         columns="{!v.Salecolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                                      /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust Sales Associated!</center>
+             </div>
+        </aura:set></aura:if>
+                
+     
+                   </lightning:accordionSection>
+           <br/>
+          <br/>
+            <lightning:accordionSection name="Cases" label="Cases -With Living Trust" >
+
+      <aura:if isTrue="{!v.hasrelatedLivingTrustonCaseobj}">
+                 <lightning:datatable aura:id="CasesTable"  
+                                    
+                         data="{!v.CaseLivingTrustRecords }"     
+                         columns="{!v.Casecolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                                      /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust Case Associated!</center>
+             </div>
+        </aura:set></aura:if>
+                
+     
+                   </lightning:accordionSection>
+           <br/>
+          <br/>
+            <lightning:accordionSection name="Task" label="Task -With Living Trust" >
+
+      <aura:if isTrue="{!v.hasrelatedLivingTrustonTaskobj}">
+                 <lightning:datatable aura:id="TaskTable"  
+                                    
+                         data="{!v.TaskLivingTrustRecords }"     
+                         columns="{!v.Taskcolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                        onrowaction="{! c.handleRowAction }"
+                                     
+                                      /><aura:set attribute="else">
+             <div style="font-weight:bold;">
+                <center> The Related Client Does not have living trust task Associated!</center>
+             </div>
+        </aura:set></aura:if>
+                
+     
+                   </lightning:accordionSection>
+    </lightning:accordion>
+         
+</aura:component>

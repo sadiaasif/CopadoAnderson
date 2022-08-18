@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Sales Rep</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Sales Reps</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commission Schedule --></label>
+        <name>Commission_Schedule__c</name>
+        <picklistValues>
+            <masterLabel>Schedule 1</masterLabel>
+            <translation><!-- Schedule 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schedule 2</masterLabel>
+            <translation><!-- Schedule 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schedule 3</masterLabel>
+            <translation><!-- Schedule 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>Community_User__c</name>
+        <relationshipLabel><!-- Sales Reps (User) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- E-Mail --></label>
+        <name>E_Mail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Employee # --></label>
+        <name>Employee__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Name --></label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Name --></label>
+        <name>Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Number --></label>
+        <name>Mobile_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other Address --></label>
+        <name>Other_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+        <picklistValues>
+            <masterLabel>Manager</masterLabel>
+            <translation><!-- Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Owner</masterLabel>
+            <translation><!-- Owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Staff</masterLabel>
+            <translation><!-- Staff --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Supervisor</masterLabel>
+            <translation><!-- Supervisor --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sales Rep Profile ID --></label>
+        <name>Sales_Rep_Profile_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title_SalesRep__c</name>
+    </fields>
+    <fields>
+        <help><!-- Should be the same name as Sales Rep --></help>
+        <label><!-- Old LEX User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Sales Reps (Old LEX User) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Workflow --></label>
+        <name>Workflow__c</name>
+    </fields>
+    <fields>
+        <label><!-- 18 Digit ID --></label>
+        <name>X18_Digit_ID__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Cannot save the record until the User field is assigned. --></errorMessage>
+        <name>Cant_have_a_blank_user</name>
+    </validationRules>
+</CustomObjectTranslation>

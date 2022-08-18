@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_15644791</developerName>
+        <masterLabel>Service Name</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>PRODUCT_NAME</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Corp Headquarters, 1 Year, Renewal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Corp Headquarters, 3-month Plan, Renewal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>BOSS Holding Company Package NV, 1 Year, Renewal</sourceValue>
+            </sourceValues>
+            <value>Corp Headquarters</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Anderson Mail Forwarding, 1 Year, Renewal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>BOSS Office Anywhere, 1 Year, Renewal</sourceValue>
+            </sourceValues>
+            <value>Mail Forwarding</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Nominee Service - Corporation, 1 year, Renewal (2)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nominee Service - Renewal</sourceValue>
+            </sourceValues>
+            <value>Nominee</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Annual List</sourceValue>
+            </sourceValues>
+            <value>Annual List</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Business License, Nevada Fee</sourceValue>
+            </sourceValues>
+            <value>Business License, NV</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Registered Agent, 1 Yr Renewal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Registered Agent, 1 Year Renewal</sourceValue>
+            </sourceValues>
+            <value>Registered Agent</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Corporate Concierge Service Renewal 1 Yr</sourceValue>
+            </sourceValues>
+            <value>Corporate Concierge</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_26864322</developerName>
+        <masterLabel>Status</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>STAGE_NAME</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Closed Won</sourceValue>
+            </sourceValues>
+            <value>Paid</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Qualification</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Closed Lost</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Agreement Sent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined-</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Fulfillment/Partial Payment</sourceValue>
+            </sourceValues>
+            <value>To Renew</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>TOTAL_PRICE</field>
+    </columns>
+    <description>number of ra clients and other renewal numbers</description>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.State_Renewal,Opportunity.Standard_Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Due_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>NEXT_N_DAYS:365</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_26864322</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>To Renew,Paid</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>PRODUCT_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notContain</operator>
+            <value>,Reinstatement,State Late Fee,State Filing Fee,Bookkeeping,Admin,Books,Elite,Inital,Discount,Parent,Merchant,Digital,Agent Fee</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>PRODUCT_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Administrative Fee,State Filing Fees</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Year</dateGranularity>
+        <field>Opportunity.Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_15644791</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_26864322</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Renewal KPI by Product</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityProduct</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Opportunity.Due_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

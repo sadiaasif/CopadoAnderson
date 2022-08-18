@@ -1,0 +1,26 @@
+<apex:page docType="HTML-5.0" showHeader="false" title="{!$Label.site.file_not_found}" cache="false" standardStylesheets="false">
+<apex:composition template="{!$Site.Template}">
+
+    <apex:define name="body">
+    
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_pagenotfound_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+
+
+    <apex:pageMessage summary="Warning" detail="{!SUBSTITUTE($Label.site.page_not_found_detail,'{0}', $Site.OriginalUrl)}" severity="warning" />   
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+     </div><!--  pc_page_content_inner -->
+        </div><!--  pc_page_content -->
+        </div><!--  pc_page --> 
+    </div> <!--  page pc_lang_xxx div -->
+    </div> <!--  page pc_context_xxx div -->
+    
+    </apex:define>
+  </apex:composition>
+  <site:previewAsAdmin />
+</apex:page>
