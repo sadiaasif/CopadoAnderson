@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_3124559</developerName>
+        <masterLabel>Client Source</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Account.Campaign__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Nick Vertucci</sourceValue>
+            </sourceValues>
+            <value>Nick Vertucci</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Don Pendleton</sourceValue>
+            </sourceValues>
+            <value>Don Pendleton</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Elite Education</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy -- 01.15.16 -- Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy -- 09.30.2016 -- Dallas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Parent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Parents</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP -- 04.29.2016 -- Las Vegas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP -- 07.11.2016 -- Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; Asset Protection Aug 2017</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; Asset Protection Nov 2017</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; Asset Protection Oct 2017</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; Asset Protection Sept 2017</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Training</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>elitetrainingap.com</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad Poor Dad (Kiasaki)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad Super Pack</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad Telesales</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>richdadassetprotection.com</sourceValue>
+            </sourceValues>
+            <value>Elite Legacy</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Pat James</sourceValue>
+            </sourceValues>
+            <value>Pat James</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Dani Johnson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dani Johnson Dynasty May 2017</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dynasty Platinum 11-10-2016</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dynasty-Stewards 11-13-2016</sourceValue>
+            </sourceValues>
+            <value>Dani Johnson</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Dave Lindahl</sourceValue>
+            </sourceValues>
+            <value>Dave Lindahl</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Account.Platinum__c</field>
+    </columns>
+    <columns>
+        <field>Account.Platinum_Type__c</field>
+    </columns>
+    <columns>
+        <field>Account.Teams__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_ID</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CAM__c</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CSR__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Original_Campaign_Source_Mirror__c</field>
+    </columns>
+    <columns>
+        <field>RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>Account.Routing_8x8__c</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>Account.Open_Sales_Amount__c</field>
+    </columns>
+    <columns>
+        <field>Account.Unlimited_LLC__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Account.Platinum__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Teams__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>,Team Renewals</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Original_Campaign_Source_Mirror__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Vertucci</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Assigned_CAM__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>VIP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Teams__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>VIP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Routing_8x8__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>lessThan</operator>
+            <value>1/1/2019 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Unlimited_LLC__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Client Team Assignment</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CREATED_DATE</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

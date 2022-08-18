@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleTypeChannelDisplay>
+        <articleTypeTemplates>
+            <channel>App</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Prm</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Csp</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Pkb</channel>
+            <template>Toc</template>
+        </articleTypeTemplates>
+    </articleTypeChannelDisplay>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <fields>
+        <fullName>Article_category_type__c</fullName>
+        <externalId>false</externalId>
+        <label>Article category type</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Forms</fullName>
+                    <default>false</default>
+                    <label>Forms</label>
+                </value>
+                <value>
+                    <fullName>Videos</fullName>
+                    <default>false</default>
+                    <label>Videos</label>
+                </value>
+                <value>
+                    <fullName>Document</fullName>
+                    <default>false</default>
+                    <label>Document</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Content__c</fullName>
+        <externalId>false</externalId>
+        <label>Content</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Keywords__c</fullName>
+        <externalId>false</externalId>
+        <label>Keywords</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Knowledge_Article_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Knowledge Article Category</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Article_category_type__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Tax Organizers</fullName>
+                    <default>false</default>
+                    <label>Tax Organizers</label>
+                </value>
+                <value>
+                    <fullName>Assignments of Interest</fullName>
+                    <default>false</default>
+                    <label>Assignments of Interest</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping Templates</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping Templates</label>
+                </value>
+                <value>
+                    <fullName>Business Agreements</fullName>
+                    <default>false</default>
+                    <label>Business Agreements</label>
+                </value>
+                <value>
+                    <fullName>CA Business Forms</fullName>
+                    <default>false</default>
+                    <label>CA Business Forms</label>
+                </value>
+                <value>
+                    <fullName>Deeds</fullName>
+                    <default>false</default>
+                    <label>Deeds</label>
+                </value>
+                <value>
+                    <fullName>Estate Planning</fullName>
+                    <default>false</default>
+                    <label>Estate Planning</label>
+                </value>
+                <value>
+                    <fullName>General Documents</fullName>
+                    <default>false</default>
+                    <label>General Documents</label>
+                </value>
+                <value>
+                    <fullName>Multi-State Business Forms</fullName>
+                    <default>false</default>
+                    <label>Multi-State Business Forms</label>
+                </value>
+                <value>
+                    <fullName>Promissory Notes</fullName>
+                    <default>false</default>
+                    <label>Promissory Notes</label>
+                </value>
+                <value>
+                    <fullName>Real Estate Forms</fullName>
+                    <default>false</default>
+                    <label>Real Estate Forms</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>E-Books</fullName>
+                    <default>false</default>
+                    <label>E-Books</label>
+                </value>
+                <value>
+                    <fullName>Coffee with Carl</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Coffee with Carl</label>
+                </value>
+                <value>
+                    <fullName>Espanol</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Espanol</label>
+                </value>
+                <value>
+                    <fullName>Podcasts</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Podcasts</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Tax Organizers</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Assignments of Interest</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Bookkeeping Templates</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Business Agreements</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>CA Business Forms</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Deeds</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Estate Planning</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>General Documents</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Multi-State Business Forms</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Promissory Notes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Real Estate Forms</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forms</controllingFieldValue>
+                <valueName>E-Books</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Knowledge_Video_Link__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>You can upload Knowledge article link, video link, box video link and google drive link</inlineHelpText>
+        <label>Knowledge Link (Video/Document/Form)</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Knowledge_video_FAQ_category__c</fullName>
+        <description>Field add under the FAQ Section</description>
+        <externalId>false</externalId>
+        <label>Knowledge video FAQ category</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Knowledge_video_category__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Entity Structuring</fullName>
+                    <default>false</default>
+                    <label>Entity Structuring</label>
+                </value>
+                <value>
+                    <fullName>Estate Planning</fullName>
+                    <default>false</default>
+                    <label>Estate Planning</label>
+                </value>
+                <value>
+                    <fullName>Asset Protection</fullName>
+                    <default>false</default>
+                    <label>Asset Protection</label>
+                </value>
+                <value>
+                    <fullName>Taxes</fullName>
+                    <default>false</default>
+                    <label>Taxes</label>
+                </value>
+                <value>
+                    <fullName>Real Estate</fullName>
+                    <default>false</default>
+                    <label>Real Estate</label>
+                </value>
+                <value>
+                    <fullName>Business Strategies</fullName>
+                    <default>false</default>
+                    <label>Business Strategies</label>
+                </value>
+                <value>
+                    <fullName>Business Formalities</fullName>
+                    <default>false</default>
+                    <label>Business Formalities</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Entity Structuring</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Estate Planning</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Asset Protection</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Taxes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Real Estate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Business Strategies</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FAQs</controllingFieldValue>
+                <valueName>Business Formalities</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Knowledge_video_category__c</fullName>
+        <externalId>false</externalId>
+        <label>Knowledge video category</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Article_category_type__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Courses</fullName>
+                    <default>false</default>
+                    <label>Courses</label>
+                </value>
+                <value>
+                    <fullName>FAQs</fullName>
+                    <default>false</default>
+                    <label>FAQs</label>
+                </value>
+                <value>
+                    <fullName>Real Estate</fullName>
+                    <default>false</default>
+                    <label>Real Estate</label>
+                </value>
+                <value>
+                    <fullName>Stock Trading</fullName>
+                    <default>false</default>
+                    <label>Stock Trading</label>
+                </value>
+                <value>
+                    <fullName>Tax Strategies</fullName>
+                    <default>false</default>
+                    <label>Tax Strategies</label>
+                </value>
+                <value>
+                    <fullName>Retirement</fullName>
+                    <default>false</default>
+                    <label>Retirement</label>
+                </value>
+                <value>
+                    <fullName>Entrepreneurship</fullName>
+                    <default>false</default>
+                    <label>Entrepreneurship</label>
+                </value>
+                <value>
+                    <fullName>Past Webinars</fullName>
+                    <default>false</default>
+                    <label>Past Webinars</label>
+                </value>
+                <value>
+                    <fullName>Tax Tuesday</fullName>
+                    <default>false</default>
+                    <label>Tax Tuesday</label>
+                </value>
+                <value>
+                    <fullName>Podcasts</fullName>
+                    <default>false</default>
+                    <label>Podcasts</label>
+                </value>
+                <value>
+                    <fullName>Espanol</fullName>
+                    <default>false</default>
+                    <label>Espanol</label>
+                </value>
+                <value>
+                    <fullName>Coffee with Carl</fullName>
+                    <default>false</default>
+                    <label>Coffee with Carl</label>
+                </value>
+                <value>
+                    <fullName>Toni Talks</fullName>
+                    <default>false</default>
+                    <label>Toni Talks</label>
+                </value>
+                <value>
+                    <fullName>Tax Tuesday Q &amp; A</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Tax Tuesday Q &amp; A</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Courses</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>FAQs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Real Estate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Stock Trading</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Tax Strategies</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Retirement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Entrepreneurship</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Past Webinars</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Tax Tuesday</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Podcasts</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Espanol</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Coffee with Carl</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Videos</controllingFieldValue>
+                <valueName>Toni Talks</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Long_Description__c</fullName>
+        <description>Long Description for Article</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Long Description for Article</inlineHelpText>
+        <label>Long Description</label>
+        <length>131072</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Permissions__c</fullName>
+        <externalId>false</externalId>
+        <label>Permissions</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Client</fullName>
+                    <default>false</default>
+                    <label>Client</label>
+                </value>
+                <value>
+                    <fullName>Internal</fullName>
+                    <default>false</default>
+                    <label>Internal</label>
+                </value>
+                <value>
+                    <fullName>Both</fullName>
+                    <default>false</default>
+                    <label>Both</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Revision_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Revision Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Short_Description__c</fullName>
+        <description>Short Description for Article</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Short Description for Article</inlineHelpText>
+        <label>Short Description</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Special_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Special Notes</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Upload_File__c</fullName>
+        <externalId>false</externalId>
+        <label>Upload File</label>
+        <required>false</required>
+        <type>File</type>
+    </fields>
+    <label>Knowledge</label>
+    <pluralLabel>Knowledge</pluralLabel>
+</CustomObject>

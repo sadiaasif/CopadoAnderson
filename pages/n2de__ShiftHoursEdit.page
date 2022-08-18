@@ -1,0 +1,100 @@
+<apex:page controller="n2de.ShiftHoursEditController" sidebar="false" tabStyle="n2de__Team__c">
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-3.5.1.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-migrate-3.3.0.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/jquery-ui-1.10.4.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/requiredBlockUtil.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.DEResources, 'css/jquery-ui-1.10.4.css')}" type="text/css"/>
+    <c:CommonMask />
+
+    <style>
+        .tableHeader {
+            font-size: 11px;
+            color: #4A4A56;
+        }
+        .alertCol {
+            padding-right: 10px;
+        }
+        .alertSeq {
+            width: 20px;
+        }
+        .alertOperator {
+            width: 110px;
+        }
+        .addRowLink {
+            padding-top: 4px;
+            padding-bottom: 10px;
+        }
+        .label {
+            font-weight: bold;
+            color: #4A4A56;
+        }
+        .alertMsg {
+            color: red;
+            font-weight: bold;
+            padding-left: 40px;
+        }
+        .hours_table th {
+            text-align: right;
+            width: 310px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+        .hours_table th label.labelCol {
+            padding-right: 0px !important;
+        }
+        .hours_table td {
+            padding-left: 15px;
+        }
+
+    </style>
+
+    <script>
+    $(document).ready(function($){
+        //Add default required field identifier
+        RequiredBlockUtil.addRequiredBlock('.requiredIndicator');
+
+        $('.hours_form').on("keyup keypress", function(e) {
+              var code = e.keyCode || e.which;
+              if (code  == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+    });
+
+    </script>
+    <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+
+    <apex:form styleClass="hours_form">
+        <apex:sectionHeader title="Shift Hours Edit" subtitle="{!shiftHours.n2de__Shift_name__c}" rendered="{!shiftHours.n2de__Shift_name__c != null}"/>
+        <apex:sectionHeader title="Shift Hours Edit" subtitle="New shift hours" rendered="{!shiftHours.n2de__Shift_name__c == null}"/>
+        <apex:pageBlock title="Shift Hours" id="new_hours" mode="edit">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton id="save_button_top" value="Save" action="{!saveShiftPattern}"/>
+                <apex:commandButton id="cancel_button_top" value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection id="working_hours" title="Shift details" columns="1" collapsible="false">
+                <apex:outputPanel layout="block" style="padding-left: 32px">
+                    <table class="hours_table">
+                        <tbody>
+                        <tr>
+                            <th>
+                                <apex:outputLabel styleClass="labelCol vfLabelColTextWrap " value="{!$ObjectType.n2de__Distribution_hours__c.Fields.n2de__Shift_name__c.Label}"/>
+                            </th>
+                            <td>
+                                <apex:inputText id="shift_name" label="" value="{!shiftHours.n2de__Shift_name__c}" styleClass="requiredIndicator" size="40" maxlength="80"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <c:CommonHoursSelect shiftHours="{!shiftHours}" timezones="{!TimezoneOptionList}" availability="{!DistributionHoursAvailabilityOptionList}" startHours="{!DistributionHoursStartHoursOptionList}" endHours="{!DistributionHoursEndHoursOptionList}" minutes="{!DistributionHoursMinutesOptionList}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <c:StatusPanel />
+</apex:page>

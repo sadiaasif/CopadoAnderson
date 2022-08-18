@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Tax</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Taxes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Bookkeeper Time --></label>
+        <name>Bookkeeper_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Rollup Attorney --></label>
+        <name>Budget_Rollup_Attorney__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Rollup Bookkeeper --></label>
+        <name>Budget_Rollup_Bookkeeper__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Rollup CPA --></label>
+        <name>Budget_Rollup_CPA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Rollup EA --></label>
+        <name>Budget_Rollup_EA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Rollup Tax Preparer --></label>
+        <name>Budget_Rollup_Tax_Preparer__c</name>
+    </fields>
+    <fields>
+        <help><!-- How is budgeting done for this project? --></help>
+        <label><!-- Budget --></label>
+        <name>Budget__c</name>
+        <picklistValues>
+            <masterLabel>Hours per person</masterLabel>
+            <translation><!-- Hours per person --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hours per task</masterLabel>
+            <translation><!-- Hours per task --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No budget</masterLabel>
+            <translation><!-- No budget --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Total project fees</masterLabel>
+            <translation><!-- Total project fees --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Total project hours</masterLabel>
+            <translation><!-- Total project hours --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Client Name --></label>
+        <name>Client_Name__c</name>
+        <relationshipLabel><!-- Taxes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Client Statement --></label>
+        <name>Client_Statement__c</name>
+        <relationshipLabel><!-- Taxes --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Date the first time card was logged. --></help>
+        <label><!-- Earliest Time Logged --></label>
+        <name>EarliestTimeLogged__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email 1 Date --></label>
+        <name>Email_1_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email 2 Date --></label>
+        <name>Email_2_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Harvest&apos;s Unique ID for the Harvest Project. This value can retrieved from the the URL of Harvest&apos;s Project screen. --></help>
+        <label><!-- Harvest Project ID --></label>
+        <name>HarvestProjectID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Method --></label>
+        <name>InvoiceMethod__c</name>
+        <picklistValues>
+            <masterLabel>This project is billable</masterLabel>
+            <translation><!-- This project is billable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>This project is not billable</masterLabel>
+            <translation><!-- This project is not billable --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Time cards which have been marked as &quot;invoiced&quot; (lock) in Harvest. --></help>
+        <label><!-- Invoiced Time --></label>
+        <name>InvoicedTime__c</name>
+    </fields>
+    <fields>
+        <help><!-- Most recent date of time cards logged. --></help>
+        <label><!-- Last Time Logged --></label>
+        <name>LastTimeLogged__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Years Taxes --></label>
+        <name>Last_Years_Taxes__c</name>
+        <relationshipLabel><!-- Other Tax Years --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Project Name --></label>
+        <name>Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- number of time cards created by HarvestSync and manually. --></help>
+        <label><!-- # of Entries --></label>
+        <name>NoOfEntries__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Burn --></label>
+        <name>Package_Burn__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Burn % --></label>
+        <name>Package_Burnpercent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Package Hours Used --></label>
+        <name>Package_Hours_Used__c</name>
+    </fields>
+    <fields>
+        <help><!-- If project budget reaches this percentage, send email alerts. Leave blank to disable alerts --></help>
+        <label><!-- % of Budget Alert --></label>
+        <name>PercentOfBudgetAlert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact Child Notes --></label>
+        <name>Primary_Contact_Child_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact Child --></label>
+        <name>Primary_Contact_Child__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact Notes --></label>
+        <name>Primary_Contact_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact Spouse Notes --></label>
+        <name>Primary_Contact_Spouse_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact Spouse --></label>
+        <name>Primary_Contact_Spouse__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Contact --></label>
+        <name>Primary_Contact__c</name>
+    </fields>
+    <fields>
+        <help><!-- Auto-assigned project ID.  Used to sync to Harvest. --></help>
+        <label><!-- Project Code --></label>
+        <name>ProjectCode__c</name>
+    </fields>
+    <fields>
+        <help><!-- If this is a billable by a project hourly rate, what is the rate?  Leave blank otherwise. --></help>
+        <label><!-- Project Hourly Rate --></label>
+        <name>ProjectHourlyRate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project invoiced by --></label>
+        <name>ProjectInvoicedBy__c</name>
+        <picklistValues>
+            <masterLabel>Do not apply hourly rate</masterLabel>
+            <translation><!-- Do not apply hourly rate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Person hourly rate</masterLabel>
+            <translation><!-- Person hourly rate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Project hourly rate</masterLabel>
+            <translation><!-- Project hourly rate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Task hourly rate</masterLabel>
+            <translation><!-- Task hourly rate --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Notes are displayed on the complete project report in Harvest and, only administrator or a project manager can see them. --></help>
+        <label><!-- Project Notes --></label>
+        <name>ProjectNotes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stage --></label>
+        <name>Stage__c</name>
+        <picklistValues>
+            <masterLabel>Complete Final Call</masterLabel>
+            <translation><!-- Complete Final Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Filed</masterLabel>
+            <translation><!-- Filed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Initial Contact Made</masterLabel>
+            <translation><!-- Initial Contact Made --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Review</masterLabel>
+            <translation><!-- Review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If this project is budgeted based on total fees, what is the total fee budget? Leave blank otherwise. --></help>
+        <label><!-- Total Project Fees --></label>
+        <name>TotalProjectFees__c</name>
+    </fields>
+    <fields>
+        <help><!-- If this project is budgeted by hours, what is the budget in hours for the project. Leave blank otherwise. --></help>
+        <label><!-- Total Project Hours --></label>
+        <name>TotalProjectHours__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total of time cards logged in Harvest (both invoiced and uninvoiced) --></help>
+        <label><!-- Total Time --></label>
+        <name>TotalTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Current</masterLabel>
+            <translation><!-- Current --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Current Bookkeeping</masterLabel>
+            <translation><!-- Current Bookkeeping --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Current Tax Package</masterLabel>
+            <translation><!-- Current Tax Package --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Active</masterLabel>
+            <translation><!-- Not Active --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Total of time cards in Harvest which are NOT marked as invoiced. --></help>
+        <label><!-- Uninvoiced Time --></label>
+        <name>UninvoicedTime__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

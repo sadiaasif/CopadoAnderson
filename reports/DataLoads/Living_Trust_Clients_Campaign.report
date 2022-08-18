@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$Id</field>
+    </columns>
+    <columns>
+        <field>Account$Add_Primary_to_Campaign__c</field>
+    </columns>
+    <crossFilters>
+        <criteriaItems>
+            <column>Product2Id__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>01tU0000000yCEi,01tU00000010S0E,01tU00000006AS2,01tU00000006ARx</value>
+        </criteriaItems>
+        <operation>with</operation>
+        <primaryTableColumn>Account.Opportunities$Id</primaryTableColumn>
+        <relatedTable>OpportunityLineItem</relatedTable>
+        <relatedTableJoinColumn>Opportunity</relatedTableJoinColumn>
+    </crossFilters>
+    <format>Tabular</format>
+    <name>Living Trust Clients</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Clients_with_Sales__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Account$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

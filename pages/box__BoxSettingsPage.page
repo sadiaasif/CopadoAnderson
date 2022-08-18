@@ -1,0 +1,35 @@
+<apex:page sidebar="false" standardStylesheets="false" controller="box.BoxSettingsController">
+    <style type="text/css">
+        .vf-padding-top {
+            padding-top: 14px;
+        }
+
+        .options {
+            margin-top: -28px !important;
+        }
+
+        .optionsDay {
+            margin-top: -28px !important;
+        }
+    </style>
+
+    <apex:slds />
+    <apex:includeLightning />
+
+    <div id="appContainer" class="visualforce-container" />
+
+    <script>
+        $Lightning.use('{!namespace}:BoxSettingsApp', function () {
+            $Lightning.createComponent(
+                '{!namespace}:boxSettings',
+                {
+                    isVisualforce: true, visualforcePageParams: '{!pageParams}'
+                },
+                'appContainer',
+                function (cmp, status, errorMessage) {
+                    // created
+                }
+            );
+        });
+    </script>
+</apex:page>

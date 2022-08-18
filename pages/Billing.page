@@ -1,0 +1,1122 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController,PlatinumInvoiceController" rendered="{!(acc.Platinum_Client_View__c != 'Tax Team' && acc.Platinum_Client_View__c != 'Infinity Only' && acc.Platinum_Client_View__c !='Mastermind Only')}" sidebar="false" showHeader="false" lightningStylesheets="true">    
+    <apex:slds />
+
+    <div class="slds-scope">
+        <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">            
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Business Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/footable.bootstrap.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>  
+                
+                <script async='async' src="https://www.googletagmanager.com/gtag/js?id=UA-43972311-23"></script>
+                <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-43972311-23'); </script> 
+            </head> 
+
+            <style>
+                .card_input{width: 100%;
+                margin: 0px;
+                padding: 0px;}
+                .card_input input[type=text]{width:100%;padding:6px; border:solid 1px #e1e1e1;}
+                
+                div {
+                word-wrap: break-word;
+                }
+                #cardMsg{ color: green; }
+                #errorCardMsg{ color: red; }
+                #invoiceIdMsg{ color: red; }
+                #invoiceMsg{ color: green; }
+                #cardIdMsg{ color: red; }
+                #errordeleteCardMsg{ color: red; text-align:center; }
+                #deleteCardMsg{ color: green; text-align:center; }
+                
+                
+                .detailList tr:nth-child(4n+0) th{
+                vertical-align:top !important;
+                }
+                
+                .detailList tr:nth-last-child(2) th {
+                
+                }
+                .detailList input[type="checkbox"]{  
+                width: auto;
+                }
+                
+                
+                
+                .detailList tr th {
+                
+                vertical-align:top !important;
+                }
+                
+                
+                
+                @media (min-width: 1024px){
+                
+                .sidebar {display: block;}
+                
+                
+                }            
+                @media (max-width: 1024px){
+                .page-inner-sec{ margin:0px;
+                padding: 10px 0px;
+                }
+                #invoice-list{
+                width:100%;
+                float:left;
+                padding:0;
+                margin:0;
+                } 
+                #invoice-list h2{
+                width:100%;
+                float:left;
+                text-align:left;
+                } 
+                .panel-default, .p-10, .panel-heading, .panel-body, .apexp, .individualPalette, .userBlock, .pbBody, .pbSubsection{
+                width:100%;
+                float:left;
+                
+                box-sizing:border-box;
+                }
+                
+                
+                .pbBody{
+                margin:0;
+                }
+                .page-inner-sec h2{
+                font-size:15px;
+                }
+                .panel-body{
+                padding:0px ;
+                }
+                .apexp .bPageBlock .detailList , .apexp .bPageBlock .detailList tbody, .apexp .bPageBlock .detailList tbody tr,  .apexp .bPageBlock .detailList tbody tr td, .apexp .bPageBlock .detailList tbody tr th{
+                width:100%;
+                float:left;
+                }
+                .apexp .bPageBlock.apexDefaultPageBlock .pbBody{
+                margin:0;}
+                .mj-column-per-50{
+                width:100% !important;
+                float:left;
+                }
+                
+                .text-right{
+                width:100%;
+                float:left;
+                
+                }
+                .text-right button {
+                display:inline-block !important; 
+                margin: 0 10px !important;
+                }
+                body .text-right .popup_btn{
+                margin: 0 0px !important;
+                }
+                body{padding-bottom:0px;}
+                #my-tab .tab-content{
+                padding: 5px 10px 35px;
+                border: solid 1px #ddd;
+                width: 100%;
+                float: left;
+                position: relative;
+                }
+                #Billing-History .pbHeader{
+                bottom:0;
+                left:10px;
+                }
+                .page_row_count{
+                bottom:0;
+                right:10px;
+                }
+                .page-inner-sec{
+                min-height:320px;}
+                }
+                
+                @media (max-width: 440px)     {
+                .slds-scope table{
+                width:auto;
+                max-width: inherit;
+                }
+                .slds-scope  table.footable-details {
+                width: 100%;
+                }
+                
+                }
+                body .bPageBlock .pbBody .dataCol {
+                width: 0px;
+                padding:0px 0px;
+                }
+                
+                tr td:first-child{ border:none;}
+                
+                footer.container-fluid.text-center {
+                padding: 2px;
+                }    
+                .bPageBlock .labelCol, body .print .topics-label {
+                text-align: Left; 
+                }
+                @media screen and (min-device-width: 320px) and (max-device-width: 1024px) {
+                .slds-scope input {
+                line-height: inherit;
+                width: inherit;
+                }
+                }
+                
+                #loaderTab{
+                width:100%;
+                height:100%;
+                position:absolute;
+                z-index:9999;
+                background:url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center rgba(0,0,0,0.25)
+                }
+                .loader { 
+                z-index: 999 !important;
+                }
+                
+                
+            </style>
+            <body>
+                <apex:include pageName="AndersonHeader"/>
+                <div style="display:none" id="loaderTab"></div>
+                <div class="container main-container">
+                    
+                    <div class="page-inner-sec">
+                        
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div id="my-tab">
+                                <ul  class="nav nav-pills">
+                                    <li class="active">
+                                        <a  href="#My-Invoices" data-toggle="tab">My Invoices</a>
+                                    </li>
+                                    <li><a href="#Billing-History" data-toggle="tab">Billing History</a>
+                                    </li>
+                                </ul>
+                                
+                                <div class="tab-content clearfix">
+                                    <div class="tab-pane active" id="My-Invoices">
+                                        <div id="invoice-list">
+                                            <a data-toggle="modal" id="pay-alert" data-target="#paymentAlert" href=""></a>
+                                            <h2><i class="fa fa-file-text-o" aria-hidden="true"></i> My Invoices </h2> 
+                                            <p>
+                                                Have a question? Please call us at (725) 605-8923 or email us directly at paymentportal@andersonadvisors.com
+                                            </p>
+                                            <br/>
+                                            <p>
+                                               We're available M-F 8 AM to 5 PM Pacific Time.
+                                            </p>
+                                            <br/>
+                                            <apex:actionStatus id="myInvoiceLogs" style="align:center;">      
+                                                <apex:facet name="start">                                                        
+                                                    <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                </apex:facet>
+                                                <apex:facet name="stop"></apex:facet>
+                                            </apex:actionStatus>
+                                            <div class="panel panel-default">                                        
+                                                <div class="panel-heading">
+                                                    <div class="text-center p-10">
+                                                        <a class="btn btn-simple" href="" id="mngCreditCardBtnId">Manage My Credit Cards</a>                                                
+                                                      <a class="btn btn-simple" id="mp" onclick="onCheck()" disabled="disabled">Make Payment</a>
+                                                    </div>
+                                                </div>
+                                                      
+                                                <apex:pageMessages id="showmsg"></apex:pageMessages>
+                                                <div id="invoiceIdMsg"></div>  
+                                                <div id="TaskCreationMsg" style="font-size:20px"></div>
+                                                <div class="panel-body">
+                                                    <apex:form > 
+                                                        <apex:pageBlock >
+                                                            <apex:actionFunction name="invoiceAction" action="{!TestCall}" rerender="myRepeater" status="myInvoiceLogs" />
+                                                        </apex:pageBlock>
+                                                        <!-- <div class="table-responsive"> -->
+                                                        <apex:outputPanel id="myRepeater">
+                                                            <table class="table table-bordered table-striped invcTbl">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th data-breakpoints="xs">Action</th>
+                                                                        <th data-breakpoints="xs">Invoice Number</th>
+                                                                        <th>Invoice Name</th>
+                                                                        <th data-breakpoints="xs">Due Date</th>                                                                            
+                                                                        <th data-breakpoints="xs sm">Renewal Effective Date</th>
+                                                                        <th data-breakpoints="xs sm">Renewal End Date</th>
+                                                                        <th data-breakpoints="xs sm md">Entity</th>
+                                                                        <th>Amount Due</th>
+                                                                    </tr>
+                                                                </thead>                                                                    
+                                                                <apex:repeat value="{!UpdatedInvoice}" var="invoice">
+                                                                    <tr data-expanded="true">
+                                                                        <td>
+                                                                            <input type="checkbox" onclick="getValueUsingClass();" id="{!invoice.Name}" name="{!invoice.id}" value="{!invoice.Amount}" class="chk"/> Check to Pay
+                                                                        </td>
+                                                                        <td><apex:outputField value="{!invoice.QB_Invoice_Number__c}" /></td>
+                                                                        <td><apex:outputField value="{!invoice.Name}" /></td>
+                                                                        <td><apex:outputField value="{!invoice.Due_Date__c}" /></td>
+                                                                        <td><apex:outputField value="{!invoice.Renewal_Effective_Date__c}" /></td>
+                                                                        <td><apex:outputField value="{!invoice.Renewal_End_Date__c}" /></td>
+                                                                        <td><apex:outputField value="{!invoice.Entity__r.Name}" /></td>
+                                                                        <td><apex:outputField value="{!invoice.Amount}" /></td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                                <apex:outputPanel rendered="{!IF(UpdatedInvoice.size<=0,'true','false')}">
+                                                                    <tr>
+                                                                        <td colspan="8">No Invoices Found</td>
+                                                                    </tr>
+                                                                </apex:outputPanel>                                                
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                        <!-- </div> -->                                           
+                                                    </apex:form>                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div id="paymentAlert" class="modal fade" role="dialog">                                    
+                                            <div class="modal-dialog entities-section">                                        
+                                                <!--Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Payment Info</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="invoiceMsg"></div>
+                                                    </div> 
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        <div id="Payment-Summary" class="hide">
+                                            <apex:actionStatus id="btnLoader" style="align:center;">      
+                                                <apex:facet name="start">                                                        
+                                                    <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                </apex:facet>
+                                                <apex:facet name="stop"></apex:facet>
+                                            </apex:actionStatus>                                    
+                                            <apex:actionStatus id="paymentLoader" style="align:center;">      
+                                                <apex:facet name="start">                                                        
+                                                    <!--<apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" /> -->
+                                                </apex:facet>
+                                                <apex:facet name="stop"></apex:facet>
+                                            </apex:actionStatus>
+                                            <apex:form >
+                                                <h2><i class="fa fa-file-text-o" aria-hidden="true"></i> Summary of Payment </h2>
+                                                <p>
+                                                Have a question? Please call us at (725) 605-8923 or email us directly at paymentportal@andersonadvisors.com
+                                            </p>
+                                            <br/>
+                                            <p>
+                                               We're available M-F 8 AM to 5 PM Pacific Time.
+                                            </p>
+                                            <br/>
+                                                <div class="table-responsive" id="paymentTable">
+                                                </div>
+                                                
+                                                <div id="cardIdMsg"></div>
+                                                <div id="quesMsg" style="font-size:20px"></div>
+                                                
+                                                <h3>Card Detail</h3>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-striped card-info">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Select Card</th>
+                                                                <th>Card Type</th> 
+                                                                <th>Name on Card</th>
+                                                                <th>Card Number</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <input type="hidden" name="oppids" id="oppids" value="" />
+                                                        <apex:repeat value="{!cardList}" var="cl" rendered="{!IF(cardList.size>0,'true','false')}">
+                                                            <tr>
+                                                                
+                                                                <td><input type="radio" onclick="getParam();" id="{!cl.Id}" name="cardToPay" value="{!cl.Id}" class="rad"/> {!cl.Name}</td>
+                                                                <td>{!cl.Card_Type__c }</td>
+                                                                <td>{!cl.Name}</td>                                       
+                                                                <td>{!cl.Card_Number__c}</td>
+                                                            </tr>
+                                                        </apex:repeat>    
+                                                        <apex:outPutPanel rendered="{!IF(cardList.size<=0,'true','false')}">
+                                                            <tr>
+                                                                <td colspan="5">No Credit Card Found</td>
+                                                            </tr>
+                                                        </apex:outPutPanel>
+                                                    </table>
+                                                </div>
+                                                <div class="text-left">
+                                                    <input type="button" class="btn back-btn" id="summary-back" value="Go Back" />
+                                                    <!--  <button class="btn" id="summary-back">Go Back</button>-->
+                                                    <div id="cmdBtn" style="display:none;" class="text-right pull-right">                                                         
+                                                        <apex:outputPanel ><apex:actionSupport event="onclick" status="paymentLoader" rerender="pb"><input type="button" id="payment_button" class="btn popup_btn pull-right" value="Payment" onClick="setCardInOpportunity();"/> 
+                                                            </apex:actionSupport>
+                                                        </apex:outputPanel>                                                        
+                                                    </div> 
+                                                </div>                                                
+                                            </apex:form>
+                                        </div>
+                                        <div id="card-details" class="hide">      
+                                            <div id="editUpdateCreditCard" class="modal fade" role="dialog">
+                                                <div class="modal-dialog entities-section">                                        
+                                                    
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" id="clsedbtn" class="close" data-dismiss="modal" >&#215;</button>
+                                                            <h4 class="modal-title">Edit Card</h4>
+                                                        </div>
+                                                        <div class="modal-body">  
+                                                            <apex:pageMessages id="messages" />
+                                                            <div class="table-scroll">
+                                                                <apex:actionStatus id="profileLoader" style="align:center;">      
+                                                                    <apex:facet name="start">                                                        
+                                                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                                    </apex:facet>
+                                                                    <apex:facet name="stop"></apex:facet>
+                                                                </apex:actionStatus>
+                                                                <apex:form id="editpro">
+                                                                    <div id="editCardMsg"></div>
+                                                                    <!-- <div id="errorEditCardMsg"></div>-->
+                                                                    <apex:pageBlock id="userpb">
+                                                                        <h2>Edit card Information</h2>
+                                                                        
+                                                                        <apex:pageBlockSection >
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Card Holder Name" /><span style="color:red">*</span>
+                                                                                <input type="text" value=" " id="nameEditVal" styleClass="form-control" placeholder="Card Name"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Credit Card Type" /><span style="color:red">*</span>
+                                                                                <input type="text" value=" " id="typeEditVal" styleClass="form-control" placeholder="Card Type"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Credit Card Number" /><span style="color:red">*</span><div id="cardTypeEdit" style="color:green"></div>
+                                                                                <input type="text" value="" id="cardEditnumberVal" styleClass="form-control" maxlength="19" placeholder="Card Number"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Billing Zip / Postal" /><span style="color:red">*</span><div id="zipcodeEdit" style="color:green"></div>
+                                                                                <input type="text" value="" id="ZIPEditCodeVal" styleClass="form-control" maxlength="10" placeholder="ZIP Code"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Expiration Month" /><span style="color:red">*</span>
+                                                                                <input type="text" value="" id="expiryEditMonthVal" styleClass="form-control" maxlength="2" placeholder="01" />
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Expiration Year" /><span style="color:red">*</span>
+                                                                                <input type="text" value=" " id="expiryEditYearVal" styleClass="form-control" maxlength="4" placeholder="2020" />
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="CVV Code" /><span style="color:red">*</span>
+                                                                                <input type="text" value=" " id="cvvEditVal" styleClass="form-control" maxlength="4" placeholder="Card Cvv"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:outputLabel value="Card Note" />
+                                                                                <input type="text" value="" id="noteEditVal" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'');" styleClass="form-control" placeholder="Card Note"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <input type="checkbox" id="editPlatinumCard"/> 
+                                                                                <apex:outputLabel value="Check this box if you would like to use this card for your platinum subscription" />
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <input type ="hidden" value=" " id="cidVal" styleClass="form-control" />
+                                                                            </apex:pageBlockSectionItem>
+                                                                            <apex:pageBlockSectionItem >
+                                                                                <apex:inputHidden value="{!accId}" id="userAccountId"/>
+                                                                            </apex:pageBlockSectionItem>
+                                                                        </apex:pageBlockSection>
+                                                                        <apex:outputPanel >
+                                                                            <div class="text-right">
+                                                                                <apex:actionSupport event="onclick" status="profileLoader" reRender="" ><input type="button" id="save_edit_card" class="btn popup_btn" value="Save" onClick="saveEditCard();" /> 
+                                                                                </apex:actionSupport>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </apex:pageBlock>
+                                                                </apex:form>
+                                                            </div>
+                                                        </div> 
+                                                    </div>                                        
+                                                </div>
+                                            </div> 
+                                            <div id="cardLists">
+                                                <apex:actionStatus id="myCardLogs" style="align:center;">      
+                                                    <apex:facet name="start">                                                        
+                                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                    </apex:facet>
+                                                    <apex:facet name="stop"></apex:facet>
+                                                </apex:actionStatus>
+                                                <h2><i class="fa fa-file-text-o" aria-hidden="true"></i> Card details</h2>                                    
+                                                <div class="panel panel-default">                                        
+                                                    <div class="panel-heading">
+                                                        <div class="text-center p-10">
+                                                            <a class="btn btn-simple" id="addCreditCardId" >Add Card</a>
+                                                        </div>
+                                                    </div>
+                                                    <apex:outputPanel id="cardl">
+                                                        <div class="panel-body">
+                                                            <apex:form >
+                                                                <apex:pageBlock >
+                                                                    <apex:actionFunction name="cardAction" action="{!CardCall}" rerender="cardl" status="myCardLogs" />
+                                                                </apex:pageBlock>
+                                                                <div id="deleteCardMsg"></div>
+                                                                <div id="errordeleteCardMsg"></div>
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Card Name</th> 
+                                                                                <th>Name on Card</th>
+                                                                                <th>Card Number</th>
+                                                                                <th>Billing Zip/Postal</th>
+                                                                                <th>Expiration Month</th>
+                                                                                <th>Expiration Year</th>
+                                                                                <th>Action</th>
+                                                                                
+                                                                            </tr> 
+                                                                        </thead>
+                                                                        
+                                                                        <apex:repeat value="{!cardList}" var="cl">
+                                                                            <tr>
+                                                                                <td>{!cl.Name}</td>
+                                                                                <td>{!cl.Name}</td>
+                                                                                <td>{!cl.Card_Number__c}</td>
+                                                                                <td>{!cl.Billing_Zip_Postal__c}</td>
+                                                                                <td>{!cl.Card_Month__c}</td>
+                                                                                <td>{!cl.Card_Year__c}</td>
+                                                                                <td><div class="edit_user pull-right">
+                                                                                    <!-- <a data-toggle="modal" data-target="#editUpdateCreditCard" id="{!cl.Id}" class="a-elem" href="#"><i class="fa fa-edit"></i> Remove Credit Card </a>-->
+                                                                                    <apex:actionSupport event="onclick" status="myCardLogs" reRender="" > <a data-toggle="modal"  id="{!cl.Id}" class="a-elem" href="#" onclick="deleteCard('{!cl.Id}')"><i class="fa fa-trash"></i> Remove Credit Card </a>
+                                                                                    </apex:actionSupport> </div></td>
+                                                                            </tr>
+                                                                        </apex:repeat>                                                                
+                                                                    </table>
+                                                                </div>
+                                                            </apex:form>                                                
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </div>     
+                                            </div>
+                                            <div class="text-right">
+                                                <button class="btn back-btn" id="go-back">Go Back</button>
+                                            </div>
+                                        </div>                                
+                                        <div id="add-credit-card" class="hide">
+                                            
+                                            <h2><i class="fa fa-file-text-o" aria-hidden="true"></i> Card details</h2>                                    
+                                            <div class="panel panel-default">                                        
+                                                <div class="panel-heading">
+                                                    <div class="text-center p-10">
+                                                        <a class="btn btn-simple" id="mp" onclick="chargePay()">Add Card</a>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <apex:form id="paymentForm">  
+                                                        <apex:actionStatus id="imgLoader" style="align:center;">      
+                                                            <apex:facet name="start">                                                        
+                                                                <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                            </apex:facet>
+                                                            <apex:facet name="stop"></apex:facet>
+                                                        </apex:actionStatus> 
+                                                        <div id="cardMsg"></div>
+                                                        <div id="errorCardMsg"></div>
+                                                        <apex:pageBlock id="userpb">                                    
+                                                            <h2>Credit Card Information </h2>
+                                                            <!--<h3> <b>Note</b></h3>-->
+                                                            <head>
+                                                                
+                                                            </head>
+                                                            <p style="color:#0070d2; border:1px solid lightgray ; padding:4px"><b>The credit card address and zip code must match the billing address and zip code of the bank account or credit card billing statement the card is linked to.</b></p>
+                                                            
+                                                            <div aria-labelledby="mj-column-per-50" class="mj-column-per-50" style="vertical-align:bottom;display:inline-block;font-size:13px;text-align:left;width:100%;">
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <label for="user">Card Name :<span style="color:red">*</span></label>
+                                                                                <input type="text" class="form-control" id="nameVal" placeholder="Card Name"/>
+                                                                                <label for="user">Credit Card Type :<span style="color:red">*</span></label>
+                                                                                <input type="text" class="form-control" id="typeVal" placeholder="Card Type"/>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label for="user">Credit Card Number :<span style="color:red">*</span><div id="cardType" style="color:green"></div></label>
+                                                                                <input type="text" class="form-control" id="cardnumberVal"  maxlength="19" placeholder="Card Number"/>                                                                                
+                                                                                <label for="user">Expiration Month :<span style="color:red">*</span></label>
+                                                                                <input type="text" class="form-control" id="expiryMonthVal" maxlength="2" placeholder="01"/>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label for="user">Expiration Year:<span style="color:red">*</span></label>
+                                                                                <input type="text" class="form-control" id="expiryYearVal" maxlength="4" placeholder="2020"/>
+                                                                                <label for="user">CVV Code :<span style="color:red">*</span></label>
+                                                                                <input type="text" class="form-control" id="cvvVal" maxlength="4" placeholder="Card Cvv"/>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label for="user">Card Note:</label>
+                                                                                <input type="text" class="form-control" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'');" id="noteVal" placeholder="Card Note"/>
+                                                                                <label for="user">Billing Zip/Postal :<span style="color:red">*</span><div id="zipcode" style="color:green"></div></label>
+                                                                                <input type="text" class="form-control" id="zipcodeVal"  maxlength="5" placeholder="ZIP Code"/>   
+                                                                                <div class="checkbox">
+                                                                                    <label><input type="checkbox" id="platinumCard"/> Platinum Card</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <apex:inputHidden value="{!accId}" id="userAccountId"/>  
+                                                                <apex:outputPanel >
+                                                                    <div class="text-right">
+                                                                        <!--<button class="btn" id="go-back-credit-card">Go Back</button>-->
+                                                                        <input type="button" class="btn back-btn" id="go-back-credit-card" value="Go Back"/>
+                                                                        <apex:actionSupport event="onclick" status="imgLoader" reRender="" ><input type="button" id="save_card" class="btn popup_btn" value="Save" onClick="saveCard();" /> 
+                                                                        </apex:actionSupport>
+                                                                    </div>
+                                                                </apex:outputPanel>
+                                                            </div>
+                                                        </apex:pageBlock>
+                                                    </apex:form>
+                                                </div>
+                                            </div>
+ 
+                                        </div>
+                                    </div>                            
+                                    <div class="tab-pane" id="Billing-History">                                
+                                        <apex:form >
+                                            <apex:pageBlock >    
+                                                <apex:outputPanel id="myPanell">
+                                                    <div class="table-responsive">                                                
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Transaction Name</th> 
+                                                                    <th>Payment Date</th>
+                                                                    <th>Type</th>
+                                                                    <th>Response Status</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Entity Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <apex:repeat value="{!BillingHistory}" var="bh">
+                                                                
+                                                                <tr>
+                                                                    <td>{!bh.transactionName}</td>
+                                                                    <td>{!bh.gatewayDate}</td>                                       
+                                                                    <td>{!bh.transactionType}</td>
+                                                                    <td>{!bh.responseStatus}</td>
+                                                                    <td>{!bh.responseAmount}</td>
+                                                                    <td>{!bh.entityName}</td>
+                                                                </tr>
+                                                                
+                                                            </apex:repeat>
+                                                        </table>
+                                                    </div> 
+                                                    <p class="page_row_count invoice_rowCount">
+                                                        {!countInvoice+1} to {!IF(countInvoice+ListSizeInvoice >= Total_sizeInvoice, Total_sizeInvoice, countInvoice+ListSizeInvoice)} of {!Total_sizeInvoice}
+                                                        
+                                                    </p>
+                                                </apex:outputPanel> 
+                                                <apex:actionFunction action="{!refreshGridInvoice}" name="queryByPageInvoice" reRender="myPanell,myInvoiceButtons">
+                                                    <apex:param name="firstParam" assignTo="{!selectedPageInvoice}" value="" />                                                            
+                                                </apex:actionFunction>
+                                                <apex:dynamicComponent componentValue="{!invoicePaginationButtons}"/> 
+                                            </apex:pageBlock>
+                                        </apex:form>                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+                <apex:include pageName="AndersonFooter"/>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                <apex:includeScript value="/soap/ajax/31.0/connection.js"/>
+                <apex:includeScript value="/soap/ajax/31.0/apex.js"/>                
+                <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/footable.min.js')}"/>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $("[id$='zipcodeVal'],[id$='ZIPEditCodeVal'],[id$='cardnumberVal'],[id$='cardEditnumberVal'],[id$='expiryMonthVal'],[id$='expiryEditMonthVal'],[id$='expiryYearVal'],[id$='expiryEditYearVal'],[id$='cvvVal'],[id$='nameVal'],[id$='typeVal'],[id$='noteVal'], [id$='noteEditVal'], [id$='nameEditVal'], [id$='typeEditVal'], [id$='cvvEditVal']").on("cut copy paste",function(e) {                      
+                        e.preventDefault();
+                        return false;
+                    });
+                    $("[id$='zipcodeVal'],[id$='ZIPEditCodeVal'],[id$='cardnumberVal'],[id$='cardEditnumberVal'],[id$='expiryMonthVal'],[id$='expiryEditMonthVal'],[id$='expiryYearVal'],[id$='expiryEditYearVal'],[id$='cvvVal'],[id$='cvvEditVal']").on('keypress',function(e){
+                        var deleteKeyCode = 8;
+                        var backspaceKeyCode = 46;
+                        var regex = new RegExp("^[0-9-]+$");
+                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                        if (regex.test(str)) {
+                            console.log('ee'+e.charCode);
+                            $(this).removeClass('error');
+                            return true;
+                        }else{
+                            e.preventDefault();
+                            $(this).addClass('error');
+                            return false;
+                        }
+                    });
+                });
+                function saveCard() { 
+                    $('#save_card').attr("disabled", "disabled");
+                    var d = new Date();
+                    var n = d.getFullYear();
+                    var r = '';
+                    for(i=n;i<=9999;i++){
+                        r += i+'|';
+                    }
+                    var yearRegEx =  r.substring(0, r.length - 1);
+                    var myReg = new RegExp('^' + yearRegEx + '$');
+                    var regName = /^[a-z ,.'-]+$/i;
+                    var regMonth = /^01|02|03|04|05|06|07|08|09|10|11|12$/;
+                    var regYear = myReg;
+                    var regCVV = /^[0-9]{3,3}$/;
+                    var nameVal = $("[id$='nameVal']").val();
+                    var typeVal = $("[id$='typeVal']").val();
+                    var cardnumberVal = $("[id$='cardnumberVal']").val();
+                    var zipcodeVal = $("[id$='zipcodeVal']").val();
+                    var expiryMonthVal = $("[id$='expiryMonthVal']").val();
+                    var expiryYearVal = $("[id$='expiryYearVal']").val();
+                    var cvvVal = $("[id$='cvvVal']").val();
+                    var noteVal = $("[id$='noteVal']").val();
+                    var userAccountId = $("[id$='userAccountId']").val();                
+                    if($("#platinumCard").is(':checked')){ 
+                        var isChk = true;
+                    } else { 
+                        var isChk = false; 
+                    }
+                    
+                    // Added by Sunil Dangi
+                    if(cardnumberVal != ''){
+                        if(cardnumberVal.length <= 11){   
+                            $('#save_card').removeAttr("disabled");
+                            document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter valid Card Number</span>";
+                            setTimeout(function() { $("#errorCardMsg span").fadeOut(1500); }, 5000); 
+                            return false;
+                        }
+                    }
+                    if(zipcodeVal != ''){
+                        if(zipcodeVal.length <= 4){   
+                            $('#save_card').removeAttr("disabled");
+                            document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter valid Zip Code</span>";
+                            setTimeout(function() { $("#errorCardMsg span").fadeOut(1500); }, 5000); 
+                            return false;
+                        }
+                    }
+                    if(cvvVal != ''){
+                        if(cvvVal.length <= 2){  
+                            $('#save_card').removeAttr("disabled");
+                            document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter valid Card Cvv</span>";
+                            setTimeout(function() { $("#errorCardMsg span").fadeOut(1500); }, 5000); 
+                            return false;
+                        }
+                    }
+                    // Added by Sunil Dangi
+                    
+                    if(nameVal != '') {
+                        if(cardnumberVal != '') {
+                            if(zipcodeVal !=''){
+                                if(typeVal != '') {           
+                                    if(expiryMonthVal != '') {
+                                        if (regMonth.test(expiryMonthVal)) {
+                                            if(expiryYearVal != '') {
+                                                if (regYear.test(expiryYearVal)) {
+                                                    if(cvvVal != '') {                                                    
+                                                        Visualforce.remoting.Manager.invokeAction(
+                                                            '{!$RemoteAction.PlatinumInvoiceController.saveCardDetails}',
+                                                            zipcodeVal,nameVal,typeVal,cardnumberVal,expiryMonthVal,expiryYearVal,cvvVal,noteVal,userAccountId,isChk,
+                                                            function(result, event){  
+                                                                $("[id$='nameVal']").val('');
+                                                                $("[id$='typeVal']").val('');
+                                                                $("[id$='cardnumberVal']").val('');
+                                                                $("[id$='zipcodeVal']").val('');
+                                                                $("[id$='expiryMonthVal']").val('');
+                                                                $("[id$='expiryYearVal']").val('');
+                                                                $("[id$='cvvVal']").val('');
+                                                                $("[id$='noteVal']").val('');
+                                                                $("#platinumCard").attr('checked', false);
+                                                                if(event.status){
+                                                                    $('#save_card').removeAttr("disabled");
+                                                                    document.getElementById("cardMsg").innerHTML = "<span>Card Saved Successfully</span>"; 
+                                                                    setTimeout(function() { 
+                                                                        cardAction();
+                                                                        $("#card-details").removeClass("hide");
+                                                                        $("#invoice-list").addClass("hide");
+                                                                        $("#add-credit-card").addClass("hide");
+                                                                    }, 3000);
+                                                                } else if (event.type === 'exception'){
+                                                                    $('#save_card').removeAttr("disabled");
+                                                                    document.getElementById("errorCardMsg").innerHTML = "<span>Error !!!</span>";
+                                                                } else {
+                                                                    $('#save_card').removeAttr("disabled");
+                                                                    document.getElementById("errorCardMsg").innerHTML = "<span>There Is Some Problem</span>";
+                                                                }                                                                     
+                                                            }, 
+                                                            {escape: true}
+                                                        );
+                                                        
+                                                    } else {  
+                                                        $('#save_card').removeAttr("disabled");
+                                                        document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Card Cvv</span>";
+                                                    }
+                                                } else {  
+                                                    $('#save_card').removeAttr("disabled");
+                                                    document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Valid Card Expiry Year</span>";
+                                                }
+                                            } else {  
+                                                $('#save_card').removeAttr("disabled");
+                                                document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Card Expiry Year</span>";
+                                            }
+                                        } else {  
+                                            $('#save_card').removeAttr("disabled");
+                                            document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Valid Card Expiry Month</span>";
+                                        }
+                                    } else {  
+                                        $('#save_card').removeAttr("disabled");
+                                        document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Card Expiry Month</span>";
+                                    }
+                                } else {  
+                                    $('#save_card').removeAttr("disabled");
+                                    document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Card Type</span>";
+                                }  
+                            } else {  
+                                $('#save_card').removeAttr("disabled");
+                                document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter ZIP Code</span>";
+                            }  
+                        }else{
+                            $('#save_card').removeAttr("disabled");
+                            document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Card Number</span>";
+                        }
+                        
+                    }  else {  
+                        $('#save_card').removeAttr("disabled");
+                        document.getElementById("errorCardMsg").innerHTML = "<span>Please Enter Card Name</span>";
+                    }
+                    setTimeout(function() { $("#cardMsg span").fadeOut(1500); }, 5000);
+                    setTimeout(function() { $("#errorCardMsg span").fadeOut(1500); }, 5000);                
+                }                 
+                
+                function getParam(){
+                    if ($("input[name='cardToPay']").is(':checked')) {
+                        $("#cmdBtn").show();
+                        return true;
+                    } else {  
+                        $("#cmdBtn").hide();
+                        document.getElementById("cardIdMsg").innerHTML = "<span >Please Select a Card to Pay</span>";
+                        return false;
+                    }
+                    setTimeout(function() { $("#cardIdMsg span").fadeOut(1500); }, 5000);
+                }
+                function onCheck() { 
+                    var html = '';
+                    if($('.chk').is(':checked')){ 
+                        var oppArray = [];
+                        /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */                
+                        html += '<table class="table table-bordered table-striped"><thead><tr><th>Name</th><th>Description</th><th>Amount Due</th></tr></thead><tbody>';
+                        var totalAmt = 0;
+                        $(".chk:checked").each(function() {
+                            var amountPay = $(this).val();
+                            var paymentName = $(this).attr('id');
+                            // var paymentDate = $(this).attr('name');
+                            oppArray.push($(this).attr('name'));
+                            totalAmt += parseFloat(amountPay);
+                            //html += '<tr><td>'+paymentDate+'</td><td>'+paymentName+'</td><td>None</td><td>$'+amountPay+'</td></tr>';
+                            html += '<tr><td>'+paymentName+'</td><td>None</td><td>$'+amountPay+'</td></tr>';
+                        });
+                        var selectedIds;
+                        selectedIds = oppArray.join(',') ;                               
+                        html += '<tr><td colspan="2">Total Amount Payable</td><td>$'+totalAmt+'</td></tr></tbody></table>';
+                        //$('#invoice-list').hide();       
+                        $("#invoice-list").addClass("hide");
+                        $('#paymentTable').append(html);
+                        $("#Payment-Summary").removeClass("hide");                    
+                        $('#oppids').val(selectedIds);
+                        /* } else {  
+                        document.getElementById("cardIdMsg").innerHTML = "<span >Please Select a Card to Pay</span>";
+                    }*/
+                    } else {  
+                        document.getElementById("invoiceIdMsg").innerHTML = "<span >Please Select One Invoice</span>";
+                    }
+                    
+                    setTimeout(function() { $("#invoiceIdMsg span").fadeOut(1500); }, 5000);
+                    
+                }
+                
+                function getValueUsingClass(){
+                    /* declare an checkbox array */
+                    var chkArray = [];                
+                    /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+                    $(".chk:checked").each(function() {
+                        //chkArray.push($(this).val());
+                        chkArray.push($(this).attr('name'));
+                    });                
+                    /* we join the array separated by the comma */
+                    var selected;
+                    selected = chkArray.join(',');      
+                    //alert(selected);
+                    /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+                    if(selected.length > 0){
+                        $("#mp").attr("disabled", false);        
+                    }else{                                                  
+                        $("#mp").attr("disabled", true);
+                    }
+                }
+                
+                $("#mngCreditCardBtnId").click(function(){               
+                    $("#card-details").removeClass("hide");
+                    $("#invoice-list").addClass("hide");
+                    $("#Payment-Summary").addClass("hide");
+                });
+                $("#addCreditCardId").click(function(){               
+                    $("#card-details").addClass("hide");
+                    $("#invoice-list").addClass("hide");
+                    $("#add-credit-card").removeClass("hide");
+                });
+                $("#go-back").click(function(){
+                    $("#card-details").addClass("hide");
+                    $( "#invoice-list").removeClass("hide");
+                });
+                
+                $("#go-back-credit-card").click(function(){
+                    $("#card-details").removeClass("hide");
+                    $("#invoice-list").addClass("hide");
+                    $("#add-credit-card").addClass("hide");
+                    
+                });
+                $("#summary-back").click(function(){
+                    $( "#paymentTable" ).html('');
+                    $("#Payment-Summary").addClass("hide");
+                    $( "#invoice-list").removeClass("hide");
+                });
+                
+                
+                $(document).on('click', '.a-elem', function(){
+                    var id = $(this).attr('id');
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PlatinumInvoiceController.getCardDetailsId}',
+                        id,
+                        function(result, event){ 
+                            for (var n=0; n<result.length; n++){
+                                
+                                $('#nameEditVal').val(result[n].Name);
+                                $('#typeEditVal').val(result[n].Card_Type__c);
+                                $('#cardEditnumberVal').val(result[n].Card_Number__c);
+                                $('#ZIPEditCodeVal').val(result[n].Billing_Zip_Postal__c);
+                                $('#expiryEditMonthVal').val(result[n].Card_Month__c);
+                                $('#expiryEditYearVal').val(result[n].Card_Year__c);
+                                $('#cvvEditVal').val(result[n].Card_Security__c);
+                                $('#noteEditVal').val(result[n].Credit_Card_Notes__c);
+                                var psCard = result[n].Platinum_Subscription_Card__c;
+                                //alert(psCard);
+                                //alert(result[n].Platinum_Subscription_Card__c);
+                                if(psCard == true) {
+                                    $('#editPlatinumCard').prop('checked', true);
+                                } else { 
+                                    $('#editPlatinumCard').prop('checked', false);
+                                }
+                                $('#cidVal').val(result[n].Id);
+                            }
+                            
+                            
+                        }, 
+                        {escape: true}
+                    );
+                });
+                
+                function deleteCard(cardId) {   
+                    if (confirm("Are you sure you want to delete this Card?")) {
+                        var cardIId = cardId;
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.PlatinumInvoiceController.deleteCard}',
+                            cardIId,
+                            function(result, event){  
+                                //  alert(result);
+                                if(event.status){
+                                    cardAction();
+                                    document.getElementById("deleteCardMsg").innerHTML = "<span>Card deleted Successfully</span>";
+                                } else if (event.type === 'exception'){
+                                    document.getElementById("errordeleteCardMsg").innerHTML = "<span>Error !!!</span>";
+                                } else {
+                                    $('#save_edit_cardd').removeAttr("disabled");
+                                    document.getElementById("errordeleteCardMsg").innerHTML = "<span>There Is Some Problem</span>";
+                                }                                                                     
+                            }, 
+                            {escape: true}
+                        );  
+                        setTimeout(function() { $("#deleteCardMsg span").fadeOut(1500); }, 5000);
+                        setTimeout(function() { $("#errordeleteCardMsg span").fadeOut(1500); }, 5000);   
+                    }
+                } 
+                </script> 
+                 <script type="text/javascript">            
+                function setCardInOpportunity() { 
+                    $('#payment_button').attr("disabled", "disabled");
+                    $('#loaderTab').show();
+                    var cardId = $("input[name='cardToPay']:checked").val();
+                    var oppId = $("#oppids").val();
+                    var chargeMsg = '';
+                    document.getElementById("invoiceMsg").innerHTML = '';
+                    var arr = oppId.split(',');
+                    var arrLength = arr.length;
+                    //var sNum = '';
+                    $.each(arr,function (i) {
+                        //sNum = parseInt(i) + parseInt(1);
+                        
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.PlatinumInvoiceController.MyOpportunities}',
+                            arr[i],cardId,
+                            function(result, event){  
+                                var n1 = parseInt(i);
+                                var n2 = parseInt(1);
+                                var sNum = n1 + n2;
+                                if(event.status){
+                                    if(i == 0) { 
+                                        document.getElementById("quesMsg").innerHTML = "<span id='successQuesMsg'>Please wait for your transaction response...</span>"; 
+                                        //Please wait for your transaction response...
+                                    }
+                                        Visualforce.remoting.Manager.invokeAction(
+                                        '{!$RemoteAction.PlatinumInvoiceController.Charge}',
+                                        arr[i],
+                                        function(results, events){ 
+                                            alert('Your payment was successful. Please allow 24 hours for your payment to process..');
+                                            //document.getElementById("TaskCreationMsg").innerHTML = "<span id='successQuesMsg'>Your payment was successful. Please allow 24 hours for your payment to process..</span>"; 
+                                            if(events.status){ 
+                                                $('#loaderTab').hide();
+                                                $('#payment_button').removeAttr("disabled");
+                                                $("#Payment-Summary").addClass("hide");
+                                                //$("#invoice-list").css("display","block");
+                                                $( "#invoice-list").removeClass("hide");
+                                                var transactionArray = results.split(',');
+                                                var myTrans = transactionArray[0];
+                                                var myTransMsg = transactionArray[1];
+                                                var myTransAmt = transactionArray[2];
+                                                var transNo = myTrans.replace(/[{()}]/g, '');
+                                                var transMsg = myTransMsg.replace(/[{()}]/g, '');
+                                                var transAmt = myTransAmt.replace(/[{()}]/g, ''); 
+                                                //document.getElementById("TaskCreationMsg").innerHTML = 'Task created';
+                                                
+                                                if(transMsg.trim() == "Approved") {
+                                                    $("#errs").addClass("alert alert-success");
+                                                    chargeMsg += '<span>'+ sNum +' Payment successful for transaction no. '+ transNo + ' for $'+ transAmt + '</span></br>';
+                                                } else {
+                                                    $("#errs").addClass("alert alert-danger");
+                                                    chargeMsg += '<span>'+ sNum +'. '+' Payment failed ! ' + transactionArray[3] + '</span></br>';
+                                                }                      
+                                                if(i+1 == arrLength) 
+                                                { 
+                                                    invoiceAction();
+                                                    document.getElementById("invoiceMsg").innerHTML = chargeMsg;
+                                                    document.getElementById("quesMsg").innerHTML = '';
+                                                    $('#pay-alert')[0].click(); 
+                                                    $("#mp").attr("disabled", true);
+                                                }
+                                                
+                                            } else if (events.type === 'exception'){
+                                                document.getElementById("invoiceMsg").innerHTML = "<span id='errorQuesMsg'>Error !!!</span>";
+                                                
+                                                $('#loaderTab').hide();
+                                                $('#payment_button').removeAttr("disabled");
+                                            } else {
+                                                document.getElementById("invoiceMsg").innerHTML = "<span id='errorQuesMsg'>There Is Some Problem</span>";
+                                                $('#loaderTab').hide();
+                                                $('#payment_button').removeAttr("disabled");
+                                            }
+                                        });
+                                } else if (event.type === 'exception'){
+                                    document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Error !!!</span>";
+                                    $('#loaderTab').hide();
+                                    $('#payment_button').removeAttr("disabled");
+                                } else {
+                                    document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>There Is Some Problem</span>";
+                                    $('#loaderTab').hide();
+                                    $('#payment_button').removeAttr("disabled");
+                                }     
+                            });
+                    });
+                }
+                
+                $('.invcTbl').footable({
+                    "paging": {
+                        "enabled": true
+                    }
+                    
+                });
+                </script> 
+                <script>    
+                $(document).ready(function() {
+                    
+                    $('#cardnumberVal').keyup(function() {
+                        var dInput = this.value;
+                        var strrr = GetCardType(dInput);                        
+                        $('#typeVal').val(strrr);
+                    });
+                    
+                    $('#cardEditnumberVal').keyup(function() {
+                        var dInput = this.value;
+                        var strrr = GetCardType(dInput);  
+                        $('#typeEditVal').val(strrr);
+                    });
+                    
+                    function GetCardType(number)
+                    {            
+                        var re = new RegExp("^4");
+                        if (number.match(re) != null)
+                            return "Visa";                        
+                        
+                        re = new RegExp("^(3528|3589)");
+                        if (number.match(re) != null)
+                            return "JCB";
+                        
+                        re = new RegExp("^(34|37)");
+                        if (number.match(re) != null)
+                            return "American Express";
+                        
+                        re = new RegExp("^5[1-5]");
+                        if (number.match(re) != null)
+                            return "MasterCard";
+                        
+                        re = new RegExp("^6011");
+                        if (number.match(re) != null)
+                            return "Discover";
+                        
+                        //Added Apr 2 2019
+                        
+                        re = new RegExp("^30[0-5]");
+                        if (number.match(re) != null)
+                            return "DinersClubCarteBlanche";
+                        
+                        re = new RegExp("^6(304|7(71|0[69]))");
+                        if (number.match(re) != null)
+                            return "Laser";
+                        
+                        re = new RegExp("^4(17500|(026|405|508|844|91[37]))");
+                        if (number.match(re) != null)
+                            return "VisaElectron";
+                        
+                        re = new RegExp("^5019");
+                        if (number.match(re) != null)
+                            return "Dankort";
+                        
+                        re = new RegExp("^636");
+                        if (number.match(re) != null)
+                            return "InterPayment";
+                        
+                        re = new RegExp("^(0604|5(0(18|20|38)|612|893)|6(3(04|90)|7(59|6[1-3])))");
+                        if (number.match(re) != null)
+                            return "Maestro";
+                        
+                        return "";
+                    }
+                });  
+                </script>
+            </body>
+        </html>
+    </div>
+</apex:page>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Active_Advisor__c</field>
+    </columns>
+    <columns>
+        <field>Account.Senior_Advisor_Picklist__c</field>
+    </columns>
+    <columns>
+        <field>Account.Last_Closed_Sale_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.First_Closed_Sale_Date__c</field>
+    </columns>
+    <description>To do an audit of clients from the last 6 months who have sales but their OCS is Client Referral or Referral</description>
+    <filter>
+        <criteriaItems>
+            <column>Account.Original_Campaign_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Client Referral,Referral</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Total_Value_of_All_Sales__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Client Referral OCS Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2021-10-25</startDate>
+    </timeFrameFilter>
+</Report>

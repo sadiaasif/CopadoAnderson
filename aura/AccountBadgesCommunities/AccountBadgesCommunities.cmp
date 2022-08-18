@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,force:hasRecordId,flexipage:availableForAllPageTypes" access="global" >
+     <aura:attribute name="recordId" type="Id"/>
+	  <aura:attribute name="AccountBadgesFields" type="String[]" default="Corporate_Assistance_Program__c,Corporate_Headquarters__c,Platinum__c,Credit__c,Filing_Fees__c,Unlimited_LLC__c,ULT_Image__c,Unlimited_Living_Trust_Amendments__c,Trustee__c,WY_Statutory_Trust__c"/>
+          <lightning:recordForm
+                                          recordId="{!v.recordId}"
+                                          objectApiName="Account"
+                                          
+                                          fields="{!v.AccountBadgesFields}"
+                                          columns="3"
+                                          
+                                           mode="view" />
+</aura:component>

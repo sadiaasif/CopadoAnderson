@@ -1,0 +1,29 @@
+<apex:page docType="html-5.0" id="siteViewEventPass"   title="Event Pass"  showHeader="true" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>Event Pass</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="evt_ptleventpass_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+    
+    <apex:pageMessages id="messages"/>  
+ 
+    <h1>Event Pass</h1> 
+
+        <div class="eventPassBox" >
+        <c:EventPass attendeeId="{!$CurrentPage.parameters.aid}" passFormat="default"/> 
+        </div>
+    
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page --> 
+</div> <!--  page pc_lang_xxx div -->        
+          
+    
+</apex:page>

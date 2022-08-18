@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account.Opportunities$First_Opportunity__c</field>
+    </columns>
+    <columns>
+        <field>Account.Opportunities$Name</field>
+    </columns>
+    <columns>
+        <field>Account.Opportunities$Sales_Rep__c</field>
+    </columns>
+    <columns>
+        <field>Account$Structure_Reviewed_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account$Structure_Reviewed_By__c</field>
+    </columns>
+    <crossFilters>
+        <criteriaItems>
+            <column>Product_Family__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Entity Formation,Trusts</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Product_Entity_Type__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Series LLC,Joint Venture LLC,LLC,LP,S-Corp,C- Corp,Land Trust,Unlimited LLC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Service_Name__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Pat James Entity Fulfillment,Vertucci Fulfillment,Dave Lindahl Free LLC,Unlimited Land Trust Fulfillment</value>
+        </criteriaItems>
+        <operation>with</operation>
+        <primaryTableColumn>Account.Opportunities$Id</primaryTableColumn>
+        <relatedTable>OpportunityLineItem</relatedTable>
+        <relatedTableJoinColumn>Opportunity</relatedTableJoinColumn>
+    </crossFilters>
+    <filter>
+        <criteriaItems>
+            <column>Account.Opportunities$RecordType</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Entity_Formation</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Opportunities$First_Transaction__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Structure Audit</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Clients_with_Sales__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Account.Opportunities$First_Transaction__c</dateColumn>
+        <interval>INTERVAL_LAST30</interval>
+    </timeFrameFilter>
+</Report>

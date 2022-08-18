@@ -1,0 +1,603 @@
+<apex:page standardController="zkfedex__Shipment__c" extensions="zkfedex.ShippingController" sidebar="false">
+  
+  <c:Loading id="LoadingControl"/>
+  
+  <apex:sectionHeader title="{!SectionHeaderTitle}" subtitle="Step 5 - Review & Submit" help="{!HelpLinks.HelpLinkRateStep5}"/>
+    <apex:form >
+    
+      <apex:image url="{!URLFOR($Resource.zkfedex__stepTimelines, 'stepTimelines/timeline6.png')}"/><p/>
+      
+      <apex:pageBlock mode="detail">
+        
+        <!-- pageBlockButtons -->
+        <apex:pageBlockButtons >
+          <apex:outputPanel id="domPageBlockButtons" rendered="{!NOT(InternationalRendered)}">
+            <apex:commandButton action="{!prevToRateStep5}" value="<<" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep1}" value="1" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep2}" value="2" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep4}" value="3" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep5}" value="4" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton style="border-style:solid; border-color:yellow" value="5" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton value=">>" disabled="true"/>
+          </apex:outputPanel>
+          <apex:outputPanel id="intlPageBlockButtons" rendered="{!InternationalRendered}">
+            <apex:commandButton action="{!prevToRateStep5}" value="<<" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep1}" value="1" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep2}" value="2A" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep3}" value="2B" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep4}" value="3" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep5}" value="4" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton style="border-style:solid; border-color:yellow" value="5" disabled="{!RateStep6.PrevButtonsDisabled}" onclick="IsLoading();"/>
+            <apex:commandButton value=">>" disabled="true"/>
+          </apex:outputPanel>
+        </apex:pageBlockButtons>
+        <apex:pageBlockButtons >
+          <apex:outputPanel >
+            <apex:commandButton action="{!RateStep6.shipmentSubmit}" value="{!RateStep6.ShipButtonTitle}" disabled="{!RateStep6.SubmitButtonDisabled}" onclick="IsLoading();"/>
+          </apex:outputPanel>
+        </apex:pageBlockButtons>
+        
+         
+        <!-- If needed, a section's top right section item is the action status -->
+        <apex:outputPanel id="rateStep6Msg">
+          <!--  make each a seperate apex:pageMessage so they can be utilized at the same time if needed -->
+          <apex:pageMessage title="Info:" summary="{!RateStep6.RateStep6ContinueMsg}" rendered="{!RateStep6.RateStep6ContinueMsgRendered}" severity="info" strength="1"/>
+          <apex:pageMessage title="Complete:" summary="{!RateStep6.RateStep6CompleteMsg}" rendered="{!RateStep6.RateStep6CompleteMsgRendered}" severity="confirm" strength="1"/>
+          <apex:pageMessage title="Error:" summary="{!RateStep6.RateStep6Msg}" rendered="{!RateStep6.RateStep6MsgRendered}" severity="error" strength="1"/>
+          <apex:pageMessage title="Note:" summary="FedEx labels must be printed in portrait orientation." rendered="{!RateStep6.RateStep6CompleteMsgRendered}" severity="info" strength="1"/>
+        </apex:outputPanel>
+        
+          
+        <!-- Error Messages -->
+        <!-- Custom Component: MessageDisplay -->
+        <apex:outputPanel id="webServiceMsg">
+          <c:MessageDisplay reply="{!RateStep6.CurrentWebServiceReply}" hideSuccess="true"/>
+        </apex:outputPanel>
+        
+        
+        <!-- Label Image Type Section -->
+        <apex:pageBlockSection collapsible="false" columns="1" title="Label Image Type">
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Label Image Type"/>
+            <apex:inputField value="{!Shipment.zkfedex__LabelImageType__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Label Image Type"/>
+            <apex:outputField value="{!Shipment.zkfedex__LabelImageType__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandLink target="_blank" immediate="true" value="Help Me Choose" action="http://www.zenkraft.com/docs-shipmate-fedex-thermal-help-me-choose"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection><p/>
+
+        <!-- EMail Recipients -->
+        <apex:pageBlockSection collapsible="false" title="Email Recipients">
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Recipient 1"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailRecipient1__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Recipient 1"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailRecipient1__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Recipient 2"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailRecipient2__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Recipient 2"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailRecipient2__c}"/>
+          </apex:pageBlockSectionItem>
+                    
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Recipient 3"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailRecipient3__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Recipient 3"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailRecipient3__c}"/>
+          </apex:pageBlockSectionItem>
+                    
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Recipient 4"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailRecipient4__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Recipient 4"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailRecipient4__c}"/>
+          </apex:pageBlockSectionItem>
+                    
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Recipient 5"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailRecipient5__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Recipient 5"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailRecipient5__c}"/>
+          </apex:pageBlockSectionItem>
+                    
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Recipient 6"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailRecipient6__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Recipient 6"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailRecipient6__c}"/>
+          </apex:pageBlockSectionItem>
+
+                    
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Notify On Exception"/>
+            <apex:inputfield value="{!Shipment.zkfedex__EMailNotifyOnExceptionAlso__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Notify On Exception"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailNotifyOnExceptionAlso__c}"/>
+          </apex:pageBlockSectionItem><p/>
+                              
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Notify On Delivery"/>
+            <apex:inputfield value="{!Shipment.zkfedex__EMailNotifyOnDeliveryAlso__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Notify On Delivery"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailNotifyOnDeliveryAlso__c}"/>
+          </apex:pageBlockSectionItem><p/>
+          
+          <apex:pageBlockSectionItem helpText="{!HelpLinks.EMailMessageHelpText}" rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Email Message"/>
+            <apex:inputfield style="width:350px" value="{!Shipment.zkfedex__EMailMessage__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Email Message"/>
+            <apex:outputfield value="{!Shipment.zkfedex__EMailMessage__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        
+        <!-- Review "Ship From" Section -->
+        <apex:pageBlockSection collapsible="false" title="{!RateStep6.SenderSectionTitle}">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Name"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderName__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderEMail__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Company"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderCompany__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Phone"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderPhone__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Street"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderStreet__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="City"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderCity__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="State/Province"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderState__c}"/>
+          </apex:pageBlockSectionItem>          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Zip/Postal Code"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderPostalCode__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Country"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderCountry__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Address is Residential"/>
+            <apex:outputField value="{!Shipment.zkfedex__SenderIsResidential__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection><p/>
+
+        
+        <!-- Review "Ship To" Section -->
+        <apex:pageBlockSection collapsible="false" title="{!RateStep6.RecipientSectionTitle}">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Name"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientName__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientEMail__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Company"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientCompany__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Phone"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientPhone__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Street"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientStreet__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="City"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientCity__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="State/Province"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientState__c}"/>
+          </apex:pageBlockSectionItem>          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Zip/Postal Code"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientPostalCode__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Country"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientCountry__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Address is Residential"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientIsResidential__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="Recipient Tax ID"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientTaxId__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="Recipient Tax ID Type"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientTaxIdType__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!AND(InternationalRendered,ShipmentIsToBrazil)}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!AND(InternationalRendered,ShipmentIsToBrazil)}">
+            <apex:outputLabel value="Recipient Customs ID Type"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientBrazilianTaxIdType__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection><p/>
+
+
+        <!-- Review "Package Details" Section -->
+        <apex:pageBlockSection collapsible="false" title="Package Details">
+          <!--  Ship Date -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Ship Date & Time"/>
+            <apex:outputField value="{!Shipment.zkfedex__ShipDate__c}"/>
+          </apex:pageBlockSectionItem><p/>
+          <!-- Service Type -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Service Type"/>
+            <apex:outputText value="{!RateStep6.ServiceTypeName}"/>
+          </apex:pageBlockSectionItem>
+          <!-- Freight Booking Confirmation Number -->
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <apex:outputLabel value="Booking Confirmation No."/>
+            <apex:outputField value="{!Shipment.zkfedex__FreightBookingConfNumber__c}"/>
+          </apex:pageBlockSectionItem>
+          <!-- Freight Packing List Enclosed -->
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <apex:outputLabel value="Packing List Enclosed"/>
+            <apex:outputField value="{!Shipment.zkfedex__FreightPackingListEnclosed__c}"/>
+          </apex:pageBlockSectionItem>
+          <!-- Document Content Type -->
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="Package Contents"/>
+            <apex:outputText value="{!RateStep6.DocumentContentTypeName}"/>
+          </apex:pageBlockSectionItem>
+          <!-- Total Customs Value -->
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem> 
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="Total Customs Value"/>
+            <apex:outputField value="{!Shipment.zkfedex__TotalCustomsValue__c}"/>
+          </apex:pageBlockSectionItem>
+          <!-- Currency -->
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="Currency"/>
+            <apex:outputField value="{!Shipment.zkfedex__Currency__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection><p/>
+        
+
+        <!-- Review "Package Information" Section -->
+        <apex:pageBlockSection collapsible="false" title="Package Information">
+          <!-- Package List -->
+          <apex:pageBlockTable id="packageListBlockTable" value="{!PackageEntries}" var="packageEntry" cellpadding="10">
+            <apex:column >
+              <apex:facet name="header">Entry No.</apex:facet>
+              <apex:outputText value="{!packageEntry.EntryNumber}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Packaging Type</apex:facet>
+              <apex:outputText value="{!packageEntry.PackagingTypeName}"/>
+            </apex:column>
+            <apex:column rendered="{!NOT(FreightRendered)}">
+              <apex:facet name="header">Quantity</apex:facet>
+              <apex:outputText value="{!packageEntry.PackageQty}"/>
+            </apex:column>
+            <apex:column rendered="{!FreightRendered}">
+              <apex:facet name="header">No. of Skids</apex:facet>
+              <apex:outputText value="{!packageEntry.PackageQty}"/>
+            </apex:column>
+            <apex:column rendered="{!FreightRendered}">
+              <apex:facet name="header">Total Pieces<br/> on Skid</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__TotalPiecesOnSkid__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Weight<br/> {!PerPkgOrSkidTitle}</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Weight__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Weight Units</apex:facet>
+              <apex:outputField value="{!shipment.zkfedex__WeightUnits__c}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">Length</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Length__c}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">Width</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Width__c}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">Height</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__Height__c}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DimensionUnitsInputRendered}">
+              <apex:facet name="header">Dimension<br/> Units</apex:facet>
+              <apex:outputField value="{!shipment.zkfedex__DimensionUnits__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">{!RateStep2.DeclaredValueHeader}<br/> {!PerPkgOrSkidTitle}</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__DeclaredValue__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">{!RateStep2.DeclaredValueHeader}<br/> Currency</apex:facet>
+              <apex:outputField value="{!Shipment.zkfedex__Currency__c}"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep6.NonStandardPackagingRendered}">
+              <apex:facet name="header">Non Standard Packaging</apex:facet>
+              <apex:outputField value="{!packageEntry.Pkg.zkfedex__SsNonStandardPackaging__c}"/>
+            </apex:column>
+            <apex:column >
+              <apex:facet name="header">Save For<br/> ReUse</apex:facet>
+              <apex:inputCheckbox value="{!packageEntry.SaveForReuse}" disabled="true"/>
+            </apex:column>
+            <apex:column rendered="{!RateStep2.DescriptionInputRendered}">
+              <apex:facet name="header">Package Description</apex:facet>
+              <apex:outputText value="{!packageEntry.SaveProfileDescription}"/>
+            </apex:column>
+          </apex:pageBlockTable><p/>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total Weight"/>
+            <apex:outputText value="{!RateStep2.TotalWeight}"/>
+          </apex:pageBlockSectionItem><p/>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total {!RateStep2.DeclaredValueHeader}"/>
+            <apex:outputText value="{!RateStep2.TotalDeclaredValue}"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection><p/>
+        
+        
+        <!-- Review "Billing Information" Section -->
+        <apex:pageBlockSection collapsible="false" title="Billing Information">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Bill Transportation To"/>
+            <apex:outputText value="{!RateStep6.PaymentTypeName}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.HideFedExAccountNumber)}">
+            <apex:outputLabel value="{!RegisteredNameData.FedexName} Account Number"/>
+            <apex:outputField value="{!Shipment.zkfedex__PayorAccount__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!InternationalRendered}">
+            <apex:outputLabel value="Bill Duties/Taxes/Fees To"/>
+            <apex:outputText value="{!RateStep6.DutiesPaymentTypeName}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!AND(InternationalRendered,NOT(RateStep6.HideFedExAccountNumber))}">
+            <apex:outputLabel value="{!RegisteredNameData.FedexName} Account Number"/>
+            <apex:outputField value="{!Shipment.zkfedex__DutiesPayorAccount__c}"/>
+          </apex:pageBlockSectionItem>
+          <!-- References -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Your Reference"/>
+            <apex:outputField value="{!Shipment.zkfedex__ReferenceYourReference__c}"/>
+          </apex:pageBlockSectionItem><p/>
+          <apex:pageBlockSectionItem rendered="{!shipment.zkfedex__SsProcessReturnShipment__c}">
+            <apex:outputLabel value="RMA no."/>
+            <apex:outputField value="{!Shipment.zkfedex__ReferenceRmaNumber__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!shipment.zkfedex__SsProcessReturnShipment__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="P.O. no."/>
+            <apex:outputField value="{!Shipment.zkfedex__ReferencePoNumber__c}"/>
+          </apex:pageBlockSectionItem><p/>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Invoice no."/>
+            <apex:outputField value="{!Shipment.zkfedex__ReferenceInvoiceNumber__c}"/>
+          </apex:pageBlockSectionItem><p/>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Department no."/>
+            <apex:outputField value="{!Shipment.zkfedex__ReferenceDeptNumber__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection><p/>
+        
+        
+        <apex:pageBlockSection collapsible="false" title="Special Services">
+          <!-- Saturday Delivery -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__SaturdayDelivery__c}">
+            <apex:outputLabel value="Saturday Delivery"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__SaturdayDelivery__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__SaturdayDelivery__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!-- Saturday Pickup -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__SaturdayPickup__c}">
+            <apex:outputLabel value="Saturday Pickup"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__SaturdayPickup__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__SaturdayPickup__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!-- Saturday Hold -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__SaturdayHold__c}">
+            <apex:outputLabel value="Saturday Hold"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__SaturdayHold__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__SaturdayHold__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!-- COD -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__Cod__c}">
+            <apex:outputLabel value="{!RegisteredNameData.FedexCodName}"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__Cod__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__Cod__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!-- Inside Delivery -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__FreightInsideDelivery__c}">
+            <apex:outputLabel value="Inside Delivery"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__FreightInsideDelivery__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__FreightInsideDelivery__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!--  Inside pickup -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__FreightInsidePickup__c}">
+            <apex:outputLabel value="Inside Pickup"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__FreightInsidePickup__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__FreightInsidePickup__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!--  Home Delivery Premium -->
+          <apex:pageBlockSectionItem rendered="{!RateStep6.HdpRendered}">
+            <apex:outputLabel value="{!RateStep6.HdpTypeName}"/>
+            <apex:inputCheckbox value="{!RateStep6.HdpRendered}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.HdpRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!--  Hold at Location -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__Hal__c}">
+            <apex:outputLabel value="Hold at {!RegisteredNameData.FedexAuthorizedShipCenterName} Location"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__Hal__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__Hal__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <!--  International Broker Select -->
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__Bso__c}">
+            <apex:outputLabel value="{!RegisteredNameData.FedexInternationalBrokerSelectName}"/>
+            <apex:inputCheckbox value="{!ShipmentSS.zkfedex__Bso__c}" disabled="true"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!ShipmentSS.zkfedex__Bso__c}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>  
+        
+        <!-- Processed Shipment Details -->
+        <apex:outputPanel >
+        <apex:pageBlockSection collapsible="false" title="Processed Shipment Details" rendered="{!RateStep6.ProcessedShipmentDetailsRendered}">
+	      <apex:pageBlockTable value="{!RateStep6.ProcessShipmentReplyForTable}" var="processShipmentReply" cellpadding="10">
+	        <apex:column >
+	          <apex:facet name="header">Service Type</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.ServiceTypeName}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Delivery Day<br/> of Week</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.DeliveryDayOfWeek}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Delivery Date</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.DeliveryDateString}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Transit Time</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.TransitTime}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Base Charge</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.BaseChargeAmount}"/>
+	        </apex:column>
+	        <apex:column rendered="{!RateStep6.DiscountsRendered}">
+	          <apex:facet name="header">Discounts</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.DiscountsAmount}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Surcharges</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.SurchargesAmount}"/>
+	        </apex:column>
+	        <apex:column rendered="{!RateStep6.TaxesRendered}">
+	          <apex:facet name="header">Taxes</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.TaxesAmount}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Net Charge</apex:facet>
+	          <apex:outputText style="font-weight:bold" value="{!processShipmentReply.NetChargeAmount}"/>
+	        </apex:column>
+	        <apex:column rendered="{!RateStep6.RebatesRendered}">
+	          <apex:facet name="header">Rebates</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.RebatesAmount}"/>
+	        </apex:column>
+	        <apex:column >
+	          <apex:facet name="header">Currency</apex:facet>
+	          <apex:outputText value="{!processShipmentReply.NetChargeAmountCurrency}"/>
+	        </apex:column>
+	      </apex:pageBlockTable>
+          <!-- Total Surcharge Descriptions -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Surcharge Types"/>
+            <apex:outputField value="{!Shipment.zkfedex__TotalSurchargeDescriptions__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+      </apex:pageBlock>
+      
+      <!-- Custom Component: RateReplyPageBlock -->
+      <c:RateReplyPageBlock wsiListRef="{!wsiList}" shipmentRef="{!Shipment}" shipmentSsRef="{!ShipmentSS}" packageEntriesRef="{!packageEntries}" validatePkg="true" listRates="false"/>
+      
+      
+      <!-- Shipment Notes -->
+      <apex:pageBlock mode="detail">
+        <apex:pageBlockSection collapsible="false" columns="1" title="Shipment Notes">
+          <apex:pageBlockSectionItem rendered="{!NOT(RateStep6.PrevButtonsDisabled)}">
+            <apex:outputLabel value="Shipment Notes"/>
+            <apex:inputField required="false" style="width:350px" value="{!Shipment.zkfedex__ShipmentNotes__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep6.PrevButtonsDisabled}">
+            <apex:outputLabel value="Shipment Notes"/>
+            <apex:outputField value="{!Shipment.zkfedex__ShipmentNotes__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      
+    </apex:form>
+</apex:page>

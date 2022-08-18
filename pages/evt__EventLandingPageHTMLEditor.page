@@ -1,0 +1,82 @@
+<apex:page standardcontroller="evt__Special_Event__c" extensions="evt.EventHTMLEditorController">
+<style>
+body {
+   background:#f3f3ec;
+   }
+
+  /* tab panel styles */
+.rich-tabpanel-content {
+    background: #f3f3ec;
+    font-size:1.02em;
+}
+.rich-tab-active {
+    background-image:none;
+    background: #f3f3ec;
+}
+.rich-tab-inactive {
+    background-image:none;
+    background: steelblue;
+    color:white;
+
+}
+.rich-tab-header {
+    padding:6px;
+    font-size:1.02em;
+}
+</style>
+<apex:sectionHeader title="{!evt__Special_Event__c.name}" subtitle="Content Editor" description="Edit content to be displayed on this event's Sites landing pages."/>
+<apex:form >
+<apex:tabPanel >
+<apex:tab label="Event Summary/Detail Page">
+<c:richeditor value="{!evt__Special_Event__c.evt__Landing_Page_HTML__c}" height="600px" />
+</apex:tab>
+<apex:tab label="Agenda">
+<c:richeditor value="{!evt__Special_Event__c.evt__Agenda_HTML__c}" height="600px" />
+</apex:tab>
+<apex:tab label="Confirmation Page (Pd)">
+<p>Enter confirmation page content here to override the default message for attendees who have paid.</p>
+<c:richeditor value="{!evt__Special_Event__c.evt__Confirmation_HTML__c}" height="600px" />
+</apex:tab>
+<apex:tab label="Confirmation Page (Sched)">
+<p>Enter confirmation page content here to override the default message for attendees with scheduled payment (e.g. pay-at-event, or mail-in).</p>
+<c:richeditor value="{!evt__Special_Event__c.evt__Confirmation_Sched_HTML__c}" height="600px" />
+</apex:tab>
+<apex:tab id="eventPassTemplateTab" label="Event Passes">
+<p>Build your own HTML template to use when creating event pass PDF files or use the package default.  Be sure to preview the template using a test event registration to ensure that the generated PDF recognizes your HTML formatting and CSS tags.  </p>
+<apex:outputPanel layout="block" id="mergeFieldOptions">
+<apex:selectList size="1" onchange="document.getElementById('{!$Component.mergeStringInput}').value= this.options[this.selectedIndex].value;">
+<apex:selectOption itemLabel="-- Merge Field --" itemValue=""/>
+<apex:selectOption itemLabel="Attendee First Name" itemValue="{AttendeeFirstName}"/>
+<apex:selectOption itemLabel="Attendee Last Name" itemValue="{AttendeeLastName}"/>
+<apex:selectOption itemLabel="Attendee Registration Type" itemValue="{AttendeeRegistrationType}"/>
+<apex:selectOption itemLabel="Attendee Status" itemValue="{AttendeeStatus}"/>
+<apex:selectOption itemLabel="Venue Name" itemValue="{VenueName}"/>
+<apex:selectOption itemLabel="Venue Street" itemValue="{VenueStreet}"/>
+<apex:selectOption itemLabel="Venue City" itemValue="{VenueCity}"/>
+<apex:selectOption itemLabel="Venue State" itemValue="{VenueState}"/>
+<apex:selectOption itemLabel="Venue Postal Code" itemValue="{VenuePostalCode}"/>
+<apex:selectOption itemLabel="Venue Country" itemValue="{VenueCountry}"/>
+<apex:selectOption itemLabel="Venue Phone" itemValue="{VenuePhone}"/>
+<apex:selectOption itemLabel="Check-In QR Code" itemValue="{CheckInQR}"/>
+<apex:selectOption itemLabel="Check-In Bar Code" itemValue="{CheckInBarcode}"/>
+<apex:selectOption itemLabel="Event Name" itemValue="{EventName}"/>
+<apex:selectOption itemLabel="Event Date & Time" itemValue="{EventDateTime}"/>
+<apex:selectOption itemLabel="Event Start Date" itemValue="{EventStartDate}"/>
+<apex:selectOption itemLabel="Event Start Time" itemValue="{EventStartTime}"/>
+<apex:selectOption itemLabel="Event Start Date" itemValue="{EventEndDate}"/>
+<apex:selectOption itemLabel="Event Start Time" itemValue="{EventEndTime}"/>
+
+</apex:selectList>&nbsp;<apex:outputText />&nbsp;&nbsp;Merge String&nbsp;<apex:inputText id="mergeStringInput" />
+<br/><br/>
+</apex:outputPanel>
+<c:richeditor value="{!evt__Special_Event__c.evt__Event_Pass_HTML__c}" height="600px" />
+</apex:tab>
+
+</apex:tabPanel>
+
+<apex:commandButton action="{!returnToEvent}" value="Cancel"/>&nbsp;
+<apex:commandButton action="{!saveRecord}" value="Quick Save"/>&nbsp;
+<apex:commandButton action="{!saveAndReturn}" value="Save and Return"/>&nbsp;&nbsp;&nbsp;
+<apex:commandButton action="{!loadDefaultEventPassTemplate}" value="Load Default Template"/>&nbsp;
+</apex:form>
+</apex:page>

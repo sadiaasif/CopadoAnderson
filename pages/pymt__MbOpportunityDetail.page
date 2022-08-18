@@ -1,0 +1,174 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbOppDetailController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+              
+    <script>
+        $( document ).on( "pagecreate", function() {
+            
+
+
+        });
+
+    
+    </script>
+ 
+
+</head>
+<body>
+<div data-role="page"  data-theme="a" id="oppdetailpage">
+
+    <div data-role="header" data-position="fixed">
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>
+        <h1>Opportunity Detail</h1>
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+
+
+
+     <h1>{!opportunity.Name}</h1>
+     Account: {!opportunity.account.Name}<br/>
+{!opportunity.account.BillingStreet}, {!opportunity.account.BillingCity}<br/>
+{!opportunity.account.BillingState}&nbsp;{!opportunity.account.BillingPostalCode}&nbsp;{!opportunity.account.BillingCountry}<br/>
+<a href="tel:{!opportunity.account.Phone}">{!opportunity.account.Phone}</a><br/>
+
+Description: {!opportunity.Description}
+<br/><br/>
+Opportunity Stage: {!opportunity.StageName}
+<br/>
+Tax: {!opportunity.pymt__Tax__c}
+<br/>
+Shipping: {!opportunity.pymt__Shipping__c}
+<br/>
+Total Amount: {!opportunity.pymt__Total_Amount__c}
+<br/>
+Payments Made: ({!opportunity.pymt__Payments_Made__c})
+<br/>
+
+Balance: {!opportunity.pymt__Balance__c}
+<br/>
+Recurring: 
+{!opportunity.pymt__SiteQuote_Recurring_Setup__c}
+
+<a href="#" data-role="button" onclick="javascript: alert('Feature not yet implemented');" >Opportunity Checkout</a>
+<br/>
+<apex:outputPanel rendered="{!hasLineItems}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+    <h2>Opportunity Line Items</h2>
+    <table data-role="table" id="line-items-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Product Code</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!oppLineItems}" var="item">
+      <tbody>
+        <tr>
+          <td>{!item.PricebookEntry.Name}<br/>{!item.Description}</td>
+          <td>{!item.PricebookEntry.ProductCode}</td>
+          <td>{!item.Quantity}</td>
+          <td>{!item.UnitPrice}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+
+
+    </table>
+</div>
+</apex:outputPanel> 
+
+<apex:outputPanel rendered="{!hasCompletedPmts}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+    <h2>Completed Payments</h2>
+    <table data-role="table" id="completed-payments-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!completedPmts}" var="cpmt">
+      <tbody>
+        <tr>
+          <td>{!MONTH(cpmt.pymt__Date__c)}/{!DAY(cpmt.pymt__Date__c)}/{!YEAR(cpmt.pymt__Date__c)}</td>
+          <td>{!cpmt.pymt__Amount__c} {!cpmt.pymt__Currency_ISO_Code__c}</td>
+          <td><a href="{!URLFOR($Page.pymt__MbPaymentDetail)}?id={!cpmt.Id}" rel="external">{!cpmt.Name}</a></td>
+          <td>{!cpmt.pymt__Status__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+
+
+    </table>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasScheduledPmts}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+    <h2>Scheduled Payments</h2>
+    <table data-role="table" id="scheduled-payments-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Scheduled Date</th>
+          <th>Amount</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!scheduledPmts}" var="spmt">
+      <tbody>
+        <tr>
+          <td>{!MONTH(spmt.pymt__Scheduled_Payment_Date__c)}/{!DAY(spmt.pymt__Scheduled_Payment_Date__c)}/{!YEAR(spmt.pymt__Scheduled_Payment_Date__c)}</td>
+          <td>{!spmt.pymt__Amount__c} {!spmt.pymt__Currency_ISO_Code__c}</td>
+          <td>{!spmt.Name}</td>
+          <td>{!spmt.pymt__Status__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+    </table>
+</div>
+</apex:outputPanel>
+        
+    </div><!-- /content -->
+
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link" onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+    
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>
+
+</div><!-- /page -->
+
+
+  
+</body>
+</html>
+
+</apex:page>

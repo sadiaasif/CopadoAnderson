@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>System Changes</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>System Changes</value>
+    </caseValues>
+    <fields>
+        <help><!-- Summarize the changes for an Admin or Developer audience. --></help>
+        <label><!-- Admin &amp; Dev Notes --></label>
+        <name>Admin_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- List the name of any Apex classes or triggers that were created or changed. --></help>
+        <label><!-- Apex Changes --></label>
+        <name>Apex_System_Changes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Approval Process
+		&gt;Review in Sandbox before Prod --></help>
+        <label><!-- Approval Status --></label>
+        <name>Approval_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Builder - Bulk Tests --></label>
+        <name>Builder_Bulk_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I confirmed my changes work when dozens of database updates occur</masterLabel>
+            <translation><!-- I confirmed my changes work when dozens of database updates occur --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Builder - Cross Training --></label>
+        <name>Builder_Cross_Training__c</name>
+        <picklistValues>
+            <masterLabel>I recorded and uploaded a useful training video to the team library</masterLabel>
+            <translation><!-- I recorded and uploaded a useful training video to the team library --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Builder - Final --></label>
+        <name>Builder_Final__c</name>
+        <picklistValues>
+            <masterLabel>I&apos;m willing to be held personally responsible if these changes fail in production</masterLabel>
+            <translation><!-- I&apos;m willing to be held personally responsible if these changes fail in production --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Builder - Negative Tests --></label>
+        <name>Builder_Negative_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I confirmed my changes don&apos;t appear when and where they&apos;re not supposed to</masterLabel>
+            <translation><!-- I confirmed my changes don&apos;t appear when and where they&apos;re not supposed to --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Builder - Null Tests --></label>
+        <name>Builder_Null_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I confirm my changes don&apos;t occur in null scenarios</masterLabel>
+            <translation><!-- I confirm my changes don&apos;t occur in null scenarios --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Builder - Positive Tests --></label>
+        <name>Builder_Positive_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I confirmed my change is working in positive test scenarios</masterLabel>
+            <translation><!-- I confirmed my change is working in positive test scenarios --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Status --></label>
+        <name>Case_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Subject --></label>
+        <name>Case_Subject0__c</name>
+    </fields>
+    <fields>
+        <label><!-- Change Complete? --></label>
+        <name>Change_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Change Reviewer --></label>
+        <name>Change_Reviewer__c</name>
+        <picklistValues>
+            <masterLabel>Caleb</masterLabel>
+            <translation><!-- Caleb --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grady</masterLabel>
+            <translation><!-- Grady --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nick</masterLabel>
+            <translation><!-- Nick --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phil</masterLabel>
+            <translation><!-- Phil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sally</masterLabel>
+            <translation><!-- Sally --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sami</masterLabel>
+            <translation><!-- Sami --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shobi</masterLabel>
+            <translation><!-- Shobi --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Changes from the Setup menu - Fields / validation rules / permission sets, etc. --></help>
+        <label><!-- Setup or Configuration Changes --></label>
+        <name>Configuration_Changes_Made__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By --></label>
+        <name>Created_By__c</name>
+        <relationshipLabel><!-- System Changes (Created By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Be specific, but write for User audience --></help>
+        <label><!-- Description of Change --></label>
+        <name>Description_of_Change__c</name>
+    </fields>
+    <fields>
+        <help><!-- Body of description from the case &gt; Auto - Created with Quick Action --></help>
+        <label><!-- Case Description --></label>
+        <name>Description_of_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Did you confirm functionality with user? --></label>
+        <name>Did_you_confirm_functionality_with_user__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Give granular instruction to User on how to use the change --></help>
+        <label><!-- End User Instructions --></label>
+        <name>End_User_Instructions__c</name>
+    </fields>
+    <fields>
+        <help><!-- List the names of any new or updated flow builders. --></help>
+        <label><!-- Flow Builder Changes --></label>
+        <name>Flow_Builder_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Helpdesk_Case__c</name>
+        <relationshipLabel><!-- System Changes --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Write a minimum of 1 sentence on how you believe we can make this process 1% better. --></help>
+        <label><!-- How can we make this process 1% better? --></label>
+        <name>How_can_we_make_this_process_1_better__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link to Training Video --></label>
+        <name>Link_to_Training_Video__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Changed --></label>
+        <name>Object_Changed__c</name>
+        <picklistValues>
+            <masterLabel>Bookkeeping Records</masterLabel>
+            <translation><!-- Bookkeeping Records --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Campaign</masterLabel>
+            <translation><!-- Campaign --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case</masterLabel>
+            <translation><!-- Case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client</masterLabel>
+            <translation><!-- Client --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contact</masterLabel>
+            <translation><!-- Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card Detail</masterLabel>
+            <translation><!-- Credit Card Detail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Entity</masterLabel>
+            <translation><!-- Entity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lead</masterLabel>
+            <translation><!-- Lead --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Meeting Minutes</masterLabel>
+            <translation><!-- Meeting Minutes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunity Product (Line Item)</masterLabel>
+            <translation><!-- Opportunity Product (Line Item) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product</masterLabel>
+            <translation><!-- Product --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Refund</masterLabel>
+            <translation><!-- Refund --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sale</masterLabel>
+            <translation><!-- Sale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Set of Books</masterLabel>
+            <translation><!-- Set of Books --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Survey</masterLabel>
+            <translation><!-- Survey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Task</masterLabel>
+            <translation><!-- Task --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Other code changes outside of Apex. Visualforce, Lightning Components...etc. --></help>
+        <label><!-- Other Code Changes --></label>
+        <name>Other_Code_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other System Changes --></label>
+        <name>Other_System_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pair Programmer --></label>
+        <name>Pair_Programmer__c</name>
+        <picklistValues>
+            <masterLabel>Caleb</masterLabel>
+            <translation><!-- Caleb --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grady</masterLabel>
+            <translation><!-- Grady --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kazim</masterLabel>
+            <translation><!-- Kazim --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nick</masterLabel>
+            <translation><!-- Nick --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Needed</masterLabel>
+            <translation><!-- Not Needed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rabeea</masterLabel>
+            <translation><!-- Rabeea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Romel</masterLabel>
+            <translation><!-- Romel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sami</masterLabel>
+            <translation><!-- Sami --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shobi</masterLabel>
+            <translation><!-- Shobi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Swarna</masterLabel>
+            <translation><!-- Swarna --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Umar</masterLabel>
+            <translation><!-- Umar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wakeel</masterLabel>
+            <translation><!-- Wakeel --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Has the solution solved the problem so new help requests no longer need to be created for this issue? --></help>
+        <label><!-- Permanently Fixed? --></label>
+        <name>Permanently_Fixed__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Were positive, negative, bulk, and Null tests performed? And did they pass? --></help>
+        <label><!-- Tested? --></label>
+        <name>Positive_Negative_Null_and_Bulk_test__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- List any new or updated process builder along with the criteria that were changed or added. --></help>
+        <label><!-- Process Builder Changes --></label>
+        <name>Process_Builder_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Date --></label>
+        <name>Released_to_Production_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Review --></label>
+        <name>Request_Review__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested By --></label>
+        <name>Requested_By0__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requested By --></label>
+        <name>Requested_By__c</name>
+        <relationshipLabel><!-- System Changes (Requested By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Complicated change that needs more communication to business --></help>
+        <label><!-- Requires Training --></label>
+        <name>Requires_Training__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reviewer - Bulk Tests --></label>
+        <name>Reviewer_Bulk_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I independently confirmed these changes work when dozens of database updates occur</masterLabel>
+            <translation><!-- I independently confirmed these changes work when dozens of database updates occur --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reviewer - Cross Training --></label>
+        <name>Reviewer_Cross_Training__c</name>
+        <picklistValues>
+            <masterLabel>I honestly watched the training video and provided one meaningful improvement below</masterLabel>
+            <translation><!-- I honestly watched the training video and provided one meaningful improvement below --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reviewer - Final --></label>
+        <name>Reviewer_Final__c</name>
+        <picklistValues>
+            <masterLabel>I&apos;m willing to be held personally responsible if these changes fail in production</masterLabel>
+            <translation><!-- I&apos;m willing to be held personally responsible if these changes fail in production --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reviewer - Negative Tests --></label>
+        <name>Reviewer_Negative_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I confirmed these changes don&apos;t appear when and where they&apos;re not supposed to</masterLabel>
+            <translation><!-- I confirmed these changes don&apos;t appear when and where they&apos;re not supposed to --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reviewer - Null Tests --></label>
+        <name>Reviewer_Null_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I independently confirmed these changes don&apos;t occur in null scenarios</masterLabel>
+            <translation><!-- I independently confirmed these changes don&apos;t occur in null scenarios --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Reviewer - Positive Tests --></label>
+        <name>Reviewer_Positive_Tests__c</name>
+        <picklistValues>
+            <masterLabel>I independently confirmed this change is working in positive test scenarios</masterLabel>
+            <translation><!-- I independently confirmed this change is working in positive test scenarios --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Provide details on how to undo these changes. --></help>
+        <label><!-- Rollback Instructions --></label>
+        <name>Rollback_Instructions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status of Change --></help>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Deployment</masterLabel>
+            <translation><!-- Pending Deployment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Released to Production</masterLabel>
+            <translation><!-- Released to Production --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Review Requested</masterLabel>
+            <translation><!-- Review Requested --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Subject line from case. Auto-created from Quick Action. --></help>
+        <label><!-- Case Subject --></label>
+        <name>Summary__c</name>
+    </fields>
+    <fields>
+        <help><!-- Good to use as a guide for the level of testing needed --></help>
+        <label><!-- System Risk --></label>
+        <name>System_Risk__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Target Release Date --></label>
+        <name>Target_Release_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Scenario Spreadsheet --></label>
+        <name>Test_Scenario_Spreadsheet__c</name>
+    </fields>
+    <fields>
+        <help><!-- Depends on complexity. Screenshot only or Multi-Step test plan. --></help>
+        <label><!-- Testing Evidence --></label>
+        <name>Testing_Evidence__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Change --></label>
+        <name>Type_of_Change__c</name>
+        <picklistValues>
+            <masterLabel>Apex</masterLabel>
+            <translation><!-- Apex --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Application Install</masterLabel>
+            <translation><!-- Application Install --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approval Process</masterLabel>
+            <translation><!-- Approval Process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Load</masterLabel>
+            <translation><!-- Data Load --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Field Creation/Change</masterLabel>
+            <translation><!-- Field Creation/Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Field Set</masterLabel>
+            <translation><!-- Field Set --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flow / Process</masterLabel>
+            <translation><!-- Flow / Process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>List View</masterLabel>
+            <translation><!-- List View --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Object Creation</masterLabel>
+            <translation><!-- Object Creation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Page Layout</masterLabel>
+            <translation><!-- Page Layout --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Permissions</masterLabel>
+            <translation><!-- Permissions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Profile / Role</masterLabel>
+            <translation><!-- Profile / Role --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Record Type</masterLabel>
+            <translation><!-- Record Type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Report / Dashboard</masterLabel>
+            <translation><!-- Report / Dashboard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Settings</masterLabel>
+            <translation><!-- System Settings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Table Update / Creation</masterLabel>
+            <translation><!-- Table Update / Creation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Template</masterLabel>
+            <translation><!-- Template --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trigger</masterLabel>
+            <translation><!-- Trigger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation Rule</masterLabel>
+            <translation><!-- Validation Rule --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VisualForce Page</masterLabel>
+            <translation><!-- VisualForce Page --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Workflow</masterLabel>
+            <translation><!-- Workflow --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <label><!-- Cross Training --></label>
+        <name>Cross_Training</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Testing --></label>
+        <name>Testing</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,43 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="ActivitySearchtabctrl" >
+	<aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="data" type="List" />
+     <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    <aura:attribute name="searchKey" type="String"/>
+     <aura:attribute name="activeSections" type="List" default="['ActivitySearch']" />
+     <aura:attribute name="ActivitySearchRecords" type="Task[]" />
+    <aura:attribute name="ActivitySearchcolumns" type="List"/> 
+    <aura:attribute name="filter" type="String" />
+     <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+     <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+       <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"
+      
+        activeSectionName="{! v.activeSections }">
+          
+            <lightning:accordionSection name="ActivitySearch" label="Activity Search" >
+ <lightning:layout verticalAlign="end" class="slds-form slds-form_horizontal">
+        <lightning:layoutitem padding="around-small" size="5" flexibility="auto">
+               <lightning:input value="{!v.searchKeyword}"
+                                label="Task Search"
+                                 placeholder="Enter search term here!"
+                                 aura:id="searchField"
+                                 />
+     </lightning:layoutitem>
+    <lightning:layoutitem padding="around-small" size="2" flexibility="auto"> 
+                <span>   <lightning:button variant="brand" title="Click to retrieve fields" label="Search" type="Submit" iconName="utility:search" iconPosition="left" onclick="{!c.Search}"
+                                
+                                          /> </span>
+     </lightning:layoutitem>
+                </lightning:layout>
+     
+                 <lightning:datatable aura:id="ActivitySearchTable"  
+                                    
+                         data="{!v.ActivitySearchRecords }"     
+                         columns="{!v.ActivitySearchcolumns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="true"
+                                       onsave="{! c.onActivitySearchSave }"
+                         />
+     
+                   </lightning:accordionSection>
+    </lightning:accordion>
+</aura:component>

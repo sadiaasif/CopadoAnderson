@@ -1,0 +1,40 @@
+<apex:page standardController="Entities__c" extensions="clsNewEntity">
+<apex:form >
+    <apex:sectionHeader title="Entity Edit" subtitle="New Entity"/>
+    <apex:pageBlock title="Entity Edit" mode="Edit">
+        
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Next" action="{!NextToStep2}"/>
+            <apex:commandButton value="Cancel" action="{!Cancel}" immediate="true"/>
+        </apex:pageBlockButtons>
+
+        <apex:pageBlockSection collapsible="false" title="Basic Information">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Primary Client"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.Primary_Client__c}"/>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Entity Type"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.Entity_Type__c}"/>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Entity Name"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.Name}" required="true"/>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Professional Entity"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.Professional_Entity__c}"/>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="EIN #"></apex:outputLabel>
+                <apex:inputField value="{!objEntity.EIN__c}"/>
+            </apex:pageBlockSectionItem>
+            
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,40 @@
+<apex:page standardController="evt__Special_Event__c" extensions="evt.CheckInSheetController" standardStylesheets="false" sidebar="false" showheader="false" renderAs="pdf">
+<h2>{!event.name}</h2>
+Check-In Sheet<br/>
+<table style="padding:10px;width:100%;">
+<apex:repeat value="{!attendees}" var="attendee">
+<tr style="page-break-inside:avoid;">
+<td style="vertical-align:top;border-top:1px solid #e0e0e0;">
+<apex:outputText value="{!attendee.evt__Last_Name__c}, {!attendee.evt__First_Name__c}"/>
+</td>
+<td style="vertical-align:top;border-top:1px solid #e0e0e0;">
+<apex:outputPanel rendered="{!NOT(ISBLANK(attendee.evt__Company__c))}">{!attendee.evt__Company__c}<br/></apex:outputPanel>
+<apex:outputPanel rendered="{!NOT(AND(ISBLANK(attendee.evt__Mailing_City__c),ISBLANK(attendee.evt__Mailing_State__c),ISBLANK(attendee.evt__Mailing_Country__c)))}">
+{!attendee.evt__Mailing_City__c}
+<apex:outputText value=", " rendered="{!NOT(ISBLANK(attendee.evt__Mailing_City__c))}"/>{!attendee.Mailing_State__c}&nbsp;<apex:outputText value="{!attendee.evt__Mailing_Country__c}" rendered="{!NOT(ISBLANK(attendee.evt__Mailing_Country__c))}"/><br/>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!showContactInfo == true}">
+<apex:outputText value="{!attendee.evt__Email__c}" rendered="{!NOT(ISBLANK(attendee.evt__Email__c))}"/><br/>
+<apex:outputText value="{!attendee.evt__Phone__c}" rendered="{!NOT(ISBLANK(attendee.evt__Phone__c))}"/><br/>
+</apex:outputPanel>
+
+</td>
+<td style="vertical-align:top;border-top:1px solid #e0e0e0;">
+<apex:outputText value="{!attendee.evt__Category__c}"/><br/>
+<apex:outputText value="{!attendee.evt__Registration_Type__c}"/><br/>
+<apex:outputText value="{!attendee.evt__Invitation_Status__c}"/>
+</td>
+<td style="vertical-align:top;white-space:nowrap;border-top:1px solid #e0e0e0;">
+    <apex:outputPanel rendered="{!AND(NOT(ISBLANK(checkInURL)),showQRCode)}" >
+        <img style="width:{!qrWidth}px;margin-top:5px;margin-bottom:20px;" 
+        src="{!SUBSTITUTE(settings.QR_Code_Generator__c, '{data}',(URLENCODE(SUBSTITUTE(checkInURL,'{id}',attendee.Invitation_Code__c))))}"/>  
+                
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!OR(ISBLANK(checkInURL),showQRCode == false)}" >
+       <div style="width:20px;height:20px;margin-top:10px;margin-bottom:10px;border:solid 2px black;">&nbsp;</div>         
+    </apex:outputPanel>
+</td>
+</tr>
+</apex:repeat>
+</table>
+</apex:page>

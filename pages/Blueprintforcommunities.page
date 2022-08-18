@@ -1,0 +1,252 @@
+<apex:page doctype="html-5.0" standardController="Account" extensions="Paginationcontrollerforcommunities"  sidebar="false" showHeader="false" lightningStylesheets="true">
+     <apex:slds />
+    <style>
+        @media (min-width: 1024px) {
+        .sidebar {
+        display: block;
+        } 
+        }
+        
+        div {
+        word-wrap: break-word;
+        }
+        
+        @media (max-width: 1024px) {
+        .sidebar {
+        display: block;
+        }
+        .main2 {
+        position: relative;
+        padding: 0px 0px 30px 0px;
+        margin-bottom: 10px;
+        }
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody {
+        margin: 0px;
+        }
+        .panel-body {
+        padding: 10px 5px;
+        }
+        .main2 {
+        padding: 0px;
+        }
+        .apexp,
+        .individualPalette,
+        .userBlock {
+        width: 100%;
+        float: left;
+        }
+        .main1 {
+        padding: 0px 20px 45px 20px;
+        }
+        .table-responsive {
+        margin-bottom: 8px;
+        }
+        .page_row_count {
+        position: absolute;
+        bottom: -37px;
+        right: 17px;
+        }
+        .entities .userBlock .pbHeader {
+        bottom: 0px;
+        left: 17px;
+        }
+        .static-data {
+        overflow: auto;
+        }
+        .static-data table {
+        width: auto;
+        max-width: inherit;
+        }
+        .panel-body,
+        .pbBody {
+        width: 100%;
+        float: left;
+        }
+        }
+        
+        .mid-inner-sec table tr td {
+        //background: white;
+        font-size: 12px;
+        }
+        
+        .modal-body {
+        background: white;
+        }
+        
+        footer.container-fluid.text-center {
+        padding: 0px;
+        }
+        
+        body .bPageBlock .pbBody {
+        overflow: auto;
+        }
+        
+        .container,
+        .container-fluid {
+        padding-right: 17px;
+        }
+        #quesMsg{
+        display:block;
+        }
+        
+        .headingBlock {
+        font-size:18px;
+        }
+        
+        table { page-break-inside:auto; }
+        tr    { page-break-inside:auto; }
+        .loader{
+        position: relative !important;
+        }
+    </style>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <!-- Include all compiled plugins (below), or include individual files as needed -->           
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.tablesorter.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.tablesorter.widgets.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/html2canvas.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.flexslider.js')}"/>
+                <apex:includeScript value="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"/>
+                    <script>
+                $(document).ready(function() {
+                 var Id = '{!$CurrentPage.parameters.Id}';
+                    Visualforce.remoting.Manager.invokeAction(
+                     
+                        '{!$RemoteAction.Paginationcontrollerforcommunities.getBlueprintAttachment}',Id,                            
+                        function(result, event){   
+                            if(event.status){ 
+                                var blueprintHtml = '';
+                                var quesmsg = '';
+                                var imgDownload = '';
+                                var blueprintWithHeader = '';
+                                var width = '';
+                                var height = '';
+                                var img = '';
+                                var disclaimer = '';
+                                var disclaimerPart1 = '';
+                                var disclaimerPart2 = '';
+                                
+                                for(i=0;i<result.length;i++){ 
+                                    var idd = '';
+                                    var BpName = '';
+                                    var preparedBy = '';
+                                    idd = result[i].attachementId;
+                                    BpName = result[i].attachmentName;
+                                    //console.log('BpName=========')
+                                    console.log(result[i]);
+                                    if(result[i].preparedBy != null){
+                                        preparedBy = result[i].preparedBy;
+                                    }
+                                    else
+                                        preparedBy = '';
+                                    imgs = "<img class='sky' src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img>";                                                                   
+                                    var u = "{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}";
+                                    var img = new Image; 
+                                    //console.log('geqwegqgewqgee')
+                                    img.onload = function() {
+                                        width = img.width;
+                                    };
+                                    img.src = u;
+                                    console.log('after image src')
+                                    //setTimeout(function(){ 
+                                    var VIEW_URL = '{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file=';
+                                    blueprintHtml += " <li><img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img></li>";
+                                    blueprintWithHeader += "<img style='width: 101%;height: 93;' src='{!URLFOR($Resource.images, 'images/header-img.jpg')}' styleClass='Header' /><img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img><div class='col-sm-12' style='height:90px; background-color:#555555'></div>"; 
+                                    //console.log('width ' + width); 
+                                    quesmsg += "<img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img>"+ '<br>';
+                                    imgDownload += '<a href="'+ VIEW_URL + idd +'" download="'+BpName+'" class="mulImg" target="_blank">'+BpName+'</a>';                                    
+                                    //}, 100);
+                                    document.getElementById("bpDisclaimerPart1").innerHTML = 'Preparedby: <b>'+preparedBy;
+                                }
+                                
+                                document.getElementById("image-gallery").innerHTML = blueprintHtml; 
+                               
+                            
+                                $(".multiImg").html(imgDownload);
+                            } 
+                            $('.flexslider').flexslider({
+                                
+                                start: function(slider){
+                                    $('body').removeClass('loading');
+                                }
+                            });  
+                        
+                        });   
+                    $("#owl-demo").owlCarousel({                    
+                        loop: true,
+                        navigation : true, 
+                        autoPlay: true,
+                        autoplayTimeout: 500,
+                        autoplayHoverPause: true,
+                        touchDrag: true,
+                        dots: true,
+                        slideSpeed : 300,
+                        paginationSpeed : 400,
+                        singleItem: true,
+                        pagination: false         
+                        
+                    });
+                    
+                });            
+                </script>
+    <div class="slds-scope">
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/theme.default.min.css')}"/>  
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/flexslider.css')}"/>
+            </head>
+            <body> 
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingtwo">
+                                            <h4 class="panel-title">
+                                                <a id="bpsection" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" aria-controls="collapseThree">
+                                                    Blueprint
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div>
+                                       
+                                            
+                                           
+                                            <div id="container" class="cf">                                                
+                                                <div id="main" role="main">
+                                                    <section class="slider">
+                                                        <div class="flexslider">
+                                                            <ul class="slides" id="image-gallery"> 
+                                                            </ul>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                    <div id="quesMsg" >
+                                        <span id="bpIMG">   
+                                        </span>
+                                        <span id="bpDisclaimerPart1">
+                                        </span>
+                                        <span id="bpDisclaimerPart2">
+                                        </span>
+                                    </div> 
+          
+            </body>
+        </html> 
+    </div>
+</apex:page>

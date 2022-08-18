@@ -1,0 +1,52 @@
+<apex:page sidebar="false" tabStyle="Converse_App__tab">
+  <apex:includeLightning />
+
+  <div id="lightning" />
+
+  <script>
+    $Lightning.use("smagicinteract:conversationApp", function () {
+      $Lightning.createComponent("smagicinteract:createProgramForm", {
+          programObject: getProgramObject()
+        },
+        "lightning",
+        function (cmp) {
+          // do some stuff
+        });
+    });
+
+    function getProgramObject() {
+      var programObject;
+      var programJSON;
+      try {
+        programJSON = getParameterByName('programObject');
+        programObject = JSON.parse(decodeURI(programJSON));
+      } catch (error) {}
+      return programObject;
+    }
+
+    function sanitizeUrl(url) {
+        if(!url || !url.indexOf('script:') !== -1 && url.indexOf('data:') !== -1) {
+            return '';
+        }
+        var el = document.createElement('a'); 
+        el.href = url;    
+        if (el.protocol === 'https:') { 
+            return encodeURI(url);
+        } 
+        return '';
+    }
+
+
+    function getParameterByName(name, url) {
+      if (!url){
+        url = sanitizeUrl(window.location.href);
+      } 
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+  </script>
+</apex:page>

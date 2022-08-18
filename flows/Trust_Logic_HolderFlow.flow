@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>Update_2nd_Entity_details</name>
+        <label>Update 2nd Entity details</label>
+        <locationX>151</locationX>
+        <locationY>496</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Second_Entity_Beneficiary_Org_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_2nd_Entity_Change.OrgState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Second_Beneficiary_Signor_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_2nd_Entity_Change.Signor_1_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Second_Beneficiary_Signor_2_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_2nd_Entity_Change.Signor_2_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Second_Beneficiary_Signor_3_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_2nd_Entity_Change.Signor_3_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Second_Beneficiary_Signor_Title__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_2nd_Entity_Change.Signor_Title</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_3rd_Entity_Details</name>
+        <label>Update 3rd Entity Details</label>
+        <locationX>143</locationX>
+        <locationY>634</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Third_Beneficiary_Signor_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_3rd_Entity_Details.Signor_1_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Third_Entity_Beneficiary_Org_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_3rd_Entity_Details.OrgState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Third_Beneficiary_Signor_2_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_3rd_Entity_Details.Signor_2_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Third_Beneficiary_Signor_Title__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_3rd_Entity_Details.Signor_Title</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_First_Entity_Beneficiary_details</name>
+        <label>Update First Entity Beneficiary details</label>
+        <locationX>159</locationX>
+        <locationY>368</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.First_Entity_Beneficiary_Org_State__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_New_Trust_Signor_Name_And_Title_flow.OrgState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.First_Beneficiary_Signor_2_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_New_Trust_Signor_Name_And_Title_flow.Signor_2_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.First_Beneficiary_Signor_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_New_Trust_Signor_Name_And_Title_flow.Signor_1_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.First_Beneficiary_Signor_3_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_New_Trust_Signor_Name_And_Title_flow.Signor_3_name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.First_Beneficiary_Signor_Title__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Call_New_Trust_Signor_Name_And_Title_flow.Signor_Title</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_all_trust_updates</name>
+        <label>Check all trust updates</label>
+        <locationX>509</locationX>
+        <locationY>522</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Updates_on_trust</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000N9KlQAK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OSI_Comments_Section__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Client_Success_Coordinator__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processor__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>OSI_Stage</targetReference>
+            </connector>
+            <label>Updates on trust</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>EntityChange</name>
+        <label>EntityChange</label>
+        <locationX>448</locationX>
+        <locationY>364</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X1st_Entity_Change</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.First_Entity_Beneficiary_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_New_Trust_Signor_Name_And_Title_flow</targetReference>
+            </connector>
+            <label>1st Entity Change</label>
+        </rules>
+        <rules>
+            <name>X2nd_Entity_Change</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Second_Entity_Beneficiary_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_2nd_Entity_Change</targetReference>
+            </connector>
+            <label>2nd Entity Change</label>
+        </rules>
+        <rules>
+            <name>X3rd_Entity_Change</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Third_Beneficiary_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_3rd_Entity_Details</targetReference>
+            </connector>
+            <label>3rd Entity Change</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsCaseUpdate1</name>
+        <label>IsCaseUpdate1</label>
+        <locationX>774</locationX>
+        <locationY>394</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsCaseUpdate</name>
+            <conditionLogic>(1 AND 2 AND 3 AND 4) OR (1 AND 2 AND 3 AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Case__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__r.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Living_Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NewValueCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>TrustCase</targetReference>
+            </connector>
+            <label>IsCaseUpdate</label>
+        </rules>
+        <rules>
+            <name>IsReceiveddateUpdate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Signed_Docs_Received_date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Signed_Docs_Received_date__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000N9KlQAK</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetOSI</targetReference>
+            </connector>
+            <label>IsReceiveddateUpdate</label>
+        </rules>
+        <rules>
+            <name>Calling_Wy_Statutory_Trust_Renewals</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Organization_Date__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Organization_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Wy_Statutory_Trust_Renewals</targetReference>
+            </connector>
+            <label>Calling Wy Statutory Trust Renewals</label>
+        </rules>
+        <rules>
+            <name>If_LivingTrustParralegal_Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Living_Trust_Paralegal__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Living_Trust_Paralegal__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assigned_Paralegal_Living_Trust_Paralegal</targetReference>
+            </connector>
+            <label>If LivingTrustParralegal Updated?</label>
+        </rules>
+        <rules>
+            <name>check_stage</name>
+            <conditionLogic>(1 OR 3 OR 4 OR 5 OR 6)  AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0120B000000N9KlQAK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OSI_Comments_Section__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Client_Success_Coordinator__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Processer__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_all_trust_updates</targetReference>
+            </connector>
+            <label>check stage change</label>
+        </rules>
+        <rules>
+            <name>Is_Entity_Changed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.First_Entity_Beneficiary_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Second_Entity_Beneficiary_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Third_Entity_Beneficiary_Name__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EntityChange</targetReference>
+            </connector>
+            <label>Is Entity Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Wy_Statutory_Trust_Renewals</name>
+        <label>Wy Statutory Trust Renewals</label>
+        <locationX>1307</locationX>
+        <locationY>558</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Trust_WY_Statuary_Trust_Renewal_Sale_creation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Organization_Date__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Organization_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Organization_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Trust_WY_Statuary_Trust_Renewal_Sale_creation1</targetReference>
+            </connector>
+            <label>Trust - WY Statuary Trust Renewal Sale creation</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>NewValueCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>Orderitemlink</name>
+        <dataType>String</dataType>
+        <expression>&quot;https://andersonadvisors.my.salesforce.com/&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>UserID</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.Processor__c},
+&quot;0056f00000ALomhAAD&quot;,	&quot;Alan Lam&quot;,
+&quot;0056f00000AH2D3AAL&quot;,	&quot;Amanda Phillips&quot;,
+&quot;0056f00000AGzezAAD&quot;,	&quot;Amanda Wynalda&quot;,
+&quot;0056f00000BFmYaAAL&quot;,	&quot;Amanda Wynalda&quot;,
+&quot;0056f00000AbBlXAAV&quot;,	&quot;Amina Barraj&quot;,
+&quot;0054P00000AgNY2QAN&quot;,	&quot;Andrew Nguyen&quot;,
+&quot;0056f00000AH2D8AAL&quot;,	&quot;Andrew Nguyen&quot;,
+&quot;0056f00000AMDflAAH&quot;,	&quot;Ari Vogan&quot;,
+&quot;0056f00000Aur0gAAB&quot;,	&quot;Benjamin Sacco&quot;,
+&quot;0056f00000AKrtoAAD&quot;,	&quot;Brittany Rains&quot;,
+&quot;0056f00000BFONTAA5&quot;,	&quot;Brittany Rains&quot;,
+&quot;0056f00000AuX8VAAV&quot;,	&quot;Caleb Nichols&quot;,
+&quot;0054P000009SkFmQAK&quot;,	&quot;Carly Coons&quot;,
+&quot;0056f00000AubznAAB&quot;,	&quot;Carly Coons&quot;,
+&quot;0056f00000AaiuBAAR&quot;,	&quot;Catherine Hernandez&quot;,
+&quot;0056f00000AH47bAAD&quot;,	&quot;Chase Caindec&quot;,
+&quot;0056f00000AH2EBAA1&quot;,	&quot;Christian Abraham&quot;,
+&quot;0056f00000AXGNDAA5&quot;,	&quot;Claudette Pendleton&quot;,
+&quot;0056f00000AKttbAAD&quot;,	&quot;Crayton Olivieri&quot;,
+&quot;0056f00000AaBdvAAF&quot;,	&quot;Dalton Luong&quot;,
+&quot;0056f00000AH2E6AAL&quot;,	&quot;Danielle Dennie&quot;,
+&quot;0056f00000AH2C0AAL&quot;,	&quot;Deborah Lewis&quot;,
+&quot;005U0000000P85aIAC&quot;,	&quot;Deborah Lewis&quot;,
+&quot;0056f00000AKttgAAD&quot;,	&quot;Dominique McGhee&quot;,
+&quot;0050B000007a3meQAA&quot;,	&quot;James Morris&quot;,
+&quot;0056f00000AZiOhAAL&quot;,	&quot;James Morris&quot;,
+&quot;0056f00000AH2DcAAL&quot;,	&quot;Jasmine Barkum&quot;,
+&quot;0056f00000AH47RAAT&quot;,	&quot;Jasmine Grayson&quot;,
+&quot;0050B000007aAb4QAE&quot;,	&quot;Joyce Johnson&quot;,
+&quot;0056f000009sisdAAA&quot;,	&quot;Joyce Johnson&quot;,
+&quot;0056f00000AH2DXAA1&quot;,	&quot;Lauren Thornton&quot;,
+&quot;0056f00000AuKoEAAV&quot;,	&quot;Leah Singh&quot;,
+&quot;0056f00000AWegWAAT&quot;,	&quot;Lindsay Haggie&quot;,
+&quot;0056f00000ALomXAAT&quot;,	&quot;Lisa Williams&quot;,
+&quot;0056f00000AKumlAAD&quot;,	&quot;Maria Centeno&quot;,
+&quot;0056f00000AH2CKAA1&quot;,	&quot;Marissa Flannery&quot;,
+&quot;0056f00000AH2DSAA1&quot;,	&quot;Mary Brooks&quot;,
+&quot;0056f00000A9GUcAAN&quot;,	&quot;Mary Goodwin&quot;,
+&quot;0056f00000A9fnoAAB&quot;,	&quot;Mary Goodwin&quot;,
+&quot;0056f00000AH2CPAA1&quot;,	&quot;Megan Fenn&quot;,
+&quot;0056f00000AH2DNAA1&quot;,	&quot;Melina Bell&quot;,
+&quot;0056f00000AH2DIAA1&quot;,	&quot;Melissa Barnes&quot;,
+&quot;0056f00000AH2DDAA1&quot;,	&quot;Morgan Winkler&quot;,
+&quot;0056f00000ALK0dAAH&quot;,	&quot;Nathaly Baltimore&quot;,
+&quot;0056f00000AZj8MAAT&quot;,	&quot;Randall Ritchie&quot;,
+&quot;0056f000009sq1IAAQ&quot;,	&quot;Rebecca Curren&quot;,
+&quot;0056f00000AH2DTAA1&quot;,	&quot;Seth Blomquist&quot;,
+&quot;0056f00000ALdP8AAL&quot;,	&quot;Skye Lovelace&quot;,
+&quot;0056f00000AH2EGAA1&quot;,	&quot;Sydney Grice&quot;,
+&quot;0056f00000ALBdqAAH&quot;,	&quot;Tomas Diaz-Marin&quot;,
+&quot;0056f00000AHMMeAAP&quot;,	&quot;Traci Craig&quot;,&quot;Anderson Advisors&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>ValueofAssignedParalegal</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!$Record.Living_Trust_Paralegal__c})=   &quot;Lisa Pickle&quot;,CASESAFEID(&quot;0056f00000BFbL6&quot;),
+IF(TEXT({!$Record.Living_Trust_Paralegal__c})=   &quot;Lora Caindec&quot;,CASESAFEID(&quot;0050B000006oqXN&quot;),
+IF(TEXT({!$Record.Living_Trust_Paralegal__c})=   &quot;Bev Cormier&quot;,CASESAFEID(&quot;0056f00000AH2B2&quot;),null)))</expression>
+    </formulas>
+    <interviewLabel>TrustLogicholder {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Trust - Logic HolderFlow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>GetOSI</name>
+        <label>GetOSI</label>
+        <locationX>1273</locationX>
+        <locationY>371</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>UpdateOSI</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Trust__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Assigned_Paralegal_Living_Trust_Paralegal</name>
+        <label>Assigned Paralegal = Living Trust Paralegal</label>
+        <locationX>791</locationX>
+        <locationY>676</locationY>
+        <connector>
+            <targetReference>Wy_Statutory_Trust_Renewals</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Assigned_Paralegal__c</field>
+            <value>
+                <elementReference>ValueofAssignedParalegal</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Processor__c</field>
+            <value>
+                <elementReference>ValueofAssignedParalegal</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>OSI_Stage</name>
+        <label>OSI Stage</label>
+        <locationX>508</locationX>
+        <locationY>762</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Trust__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Comments__c</field>
+            <value>
+                <elementReference>$Record.OSI_Comments_Section__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Land_Trust_Reviewer__c</field>
+            <value>
+                <elementReference>$Record.Land_Trust_Reviewer__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Law_Coordinator__c</field>
+            <value>
+                <elementReference>$Record.Client_Success_Coordinator__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Processing_Stage__c</field>
+            <value>
+                <elementReference>$Record.Stage__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Processor__c</field>
+            <value>
+                <elementReference>$Record.Land_Trust_Processer__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OrderItem</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>TrustCase</name>
+        <label>TrustCase</label>
+        <locationX>674</locationX>
+        <locationY>757</locationY>
+        <connector>
+            <targetReference>Wy_Statutory_Trust_Renewals</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Case__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Trust__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateOSI</name>
+        <label>UpdateOSI</label>
+        <locationX>1237</locationX>
+        <locationY>280</locationY>
+        <connector>
+            <targetReference>Check_all_trust_updates</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetOSI.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Processing_Stage__c</field>
+            <value>
+                <stringValue>Need Nominee Signature</stringValue>
+            </value>
+        </inputAssignments>
+        <object>OrderItem</object>
+    </recordUpdates>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>IsCaseUpdate1</targetReference>
+        </connector>
+        <object>Trust__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Call_2nd_Entity_Change</name>
+        <label>Call 2nd Entity Change</label>
+        <locationX>299</locationX>
+        <locationY>486</locationY>
+        <connector>
+            <targetReference>Update_2nd_Entity_details</targetReference>
+        </connector>
+        <flowName>New_Trust_Signor_Name_And_Title_flow</flowName>
+        <inputAssignments>
+            <name>EntityId</name>
+            <value>
+                <elementReference>$Record.Second_Entity_Beneficiary_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Call_3rd_Entity_Details</name>
+        <label>Call 3rd Entity Details</label>
+        <locationX>290</locationX>
+        <locationY>629</locationY>
+        <connector>
+            <targetReference>Update_3rd_Entity_Details</targetReference>
+        </connector>
+        <flowName>New_Trust_Signor_Name_And_Title_flow</flowName>
+        <inputAssignments>
+            <name>EntityId</name>
+            <value>
+                <elementReference>$Record.Third_Beneficiary_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Call_New_Trust_Signor_Name_And_Title_flow</name>
+        <label>Call New Trust- Signor Name And Title flow</label>
+        <locationX>272</locationX>
+        <locationY>359</locationY>
+        <connector>
+            <targetReference>Update_First_Entity_Beneficiary_details</targetReference>
+        </connector>
+        <flowName>New_Trust_Signor_Name_And_Title_flow</flowName>
+        <inputAssignments>
+            <name>EntityId</name>
+            <value>
+                <elementReference>$Record.First_Entity_Beneficiary_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Trust_WY_Statuary_Trust_Renewal_Sale_creation1</name>
+        <label>Trust - WY Statuary Trust Renewal Sale creation</label>
+        <locationX>1197</locationX>
+        <locationY>700</locationY>
+        <connector>
+            <targetReference>Check_all_trust_updates</targetReference>
+        </connector>
+        <flowName>Trust_WY_Statuary_Trust_Renewal_Sale_creation</flowName>
+        <inputAssignments>
+            <name>AccountID</name>
+            <value>
+                <elementReference>$Record.Primary_Client__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Trust</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>LisaPickle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>0050B000006nZHH</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>LoraCaindec</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>0050B000006oqXN</stringValue>
+        </value>
+    </variables>
+</Flow>

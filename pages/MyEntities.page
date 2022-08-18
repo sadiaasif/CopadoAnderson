@@ -1,0 +1,1086 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController,PaginationController" action="{!forwardToCustomAuthPage}" rendered="{!(acc.Platinum_Client_View__c != 'Tax Team' && acc.Platinum_Client_View__c != 'Infinity Only' && acc.Platinum_Client_View__c !='Mastermind Only')}" sidebar="false" showHeader="false" lightningStylesheets="true">       
+    <apex:slds />
+    <style>
+        @media (min-width: 1024px) {
+        .sidebar {
+        display: block;
+        } 
+        }
+        
+        div {
+        word-wrap: break-word;
+        }
+        
+        @media (max-width: 1024px) {
+        .sidebar {
+        display: block;
+        }
+        .main2 {
+        position: relative;
+        padding: 0px 0px 30px 0px;
+        margin-bottom: 10px;
+        }
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody {
+        margin: 0px;
+        }
+        .panel-body {
+        padding: 10px 5px;
+        }
+        .main2 {
+        padding: 0px;
+        }
+        .apexp,
+        .individualPalette,
+        .userBlock {
+        width: 100%;
+        float: left;
+        }
+        .main1 {
+        padding: 0px 20px 45px 20px;
+        }
+        .table-responsive {
+        margin-bottom: 8px;
+        }
+        .page_row_count {
+        position: absolute;
+        bottom: -37px;
+        right: 17px;
+        }
+        .entities .userBlock .pbHeader {
+        bottom: 0px;
+        left: 17px;
+        }
+        .static-data {
+        overflow: auto;
+        }
+        .static-data table {
+        width: auto;
+        max-width: inherit;
+        }
+        .panel-body,
+        .pbBody {
+        width: 100%;
+        float: left;
+        }
+        }
+        
+        .mid-inner-sec table tr td {
+        //background: white;
+        font-size: 12px;
+        }
+        
+        .modal-body {
+        background: white;
+        }
+        
+        footer.container-fluid.text-center {
+        padding: 0px;
+        }
+        
+        body .bPageBlock .pbBody {
+        overflow: auto;
+        }
+        
+        .container,
+        .container-fluid {
+        padding-right: 17px;
+        }
+        #quesMsg{
+        display:block;
+        }
+        
+        .headingBlock {
+        font-size:18px;
+        }
+        
+        table { page-break-inside:auto; }
+        tr    { page-break-inside:auto; }
+        .loader{
+        position: relative !important;
+        }
+    </style>
+    
+    <div class="slds-scope">
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/theme.default.min.css')}"/>  
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/flexslider.css')}"/>
+                
+                 <script async='async' src="https://www.googletagmanager.com/gtag/js?id=UA-43972311-23"></script>
+                <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-43972311-23'); </script> 
+            </head>
+            <body> 
+                <apex:include pageName="AndersonHeader"/>  
+                <apex:form id="pageForm">                    
+                    <div class="container main-container">    
+                        <div class="mid-inner-sec entities login-history-table-grid">
+                            <h2>Entities</h2>                        
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 min-height"> 
+                                        <apex:actionStatus id="entityLoader" style="align:center;">      
+                                            <apex:facet name="start">                                                        
+                                                <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                            </apex:facet>
+                                            <apex:facet name="stop"></apex:facet>
+                                        </apex:actionStatus>
+                                        <apex:pageblock >  
+                                            <div> 
+                                                <apex:outputPanel id="myPanel">                                                            
+                                                    <table id="EntTable" class="table table-bordered table-responsive tablesorter">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Entity Name</th>
+                                                                <th>Record Type</th>
+                                                                <th>Tax Status</th>
+                                                                <th>Organization State </th>
+                                                                <th>Business Purpose</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:repeat value="{!AllEntities}" var="ent" >
+                                                                <tr>                                                
+                                                                    <td>
+                                                                        <apex:outputPanel ><apex:actionSupport event="onclick" status="entityLoader" rerender="myModal"/><a data-toggle="modal" data-target="#myModal" id="{!ent.Id}" onclick="getRemoteEntity(this.id)" style="color:blue;" href="#">
+                                                                            {!ent.Name}</a>                                    
+                                                                        </apex:outputPanel>
+                                                                    </td>                                                        
+                                                                    <td>{!ent.RecordType.Name}</td>
+                                                                    <td>{!ent.Tax_Status__c}</td>
+                                                                    <td>{!ent.Organization_State__c}</td>  
+                                                                    <td>{!ent.Business_Purpose__c}</td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody> 
+                                                    </table>
+                                                    
+                                                    <div class="col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 text-right">
+                                                                <apex:selectList value="{!ListSize}" multiselect="false" size="1" styleClass="marginB10">
+                                                                    <apex:selectOptions value="{!PageSize}"/>                                                            
+                                                                    <apex:actionSupport event="onchange" status="entityLoader" onComplete="reInitializeTableSorter()" rerender="myPanel,myButtons"/>                                                            
+                                                                </apex:selectList>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-5 text-center">
+                                                                <p class="page_row_count">
+                                                                    {!count+1} to {!IF(count+ListSize >= total_size, total_size, count+ListSize)} of {!total_size}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </apex:outputPanel>                                           
+                                                <apex:actionFunction action="{!refreshGrid}" onComplete="reInitializeTableSorter()" name="queryByPage" reRender="myPanel,myButtons">
+                                                    <apex:param name="firstParam" assignTo="{!selectedPage}" value="" /> 
+                                                </apex:actionFunction>
+                                                <apex:dynamicComponent componentValue="{!paginationButtons}"/>
+                                            </div>                                        
+                                        </apex:pageblock>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="myModal" class="modal fade" role="dialog"> 
+                                <div id="entity-details-popup" class="responsive">                                    
+                                    
+                                    <div class="modal-dialog entities-section ">                                        
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Entity Details</h4>
+                                            </div>
+                                            <apex:pageblock >                                    
+                                                <div class="modal-body">
+                                                    <div id="entErrors"></div>
+                                                    <div id="entInfo">
+                                                    </div>
+                                                </div> 
+                                            </apex:pageblock>   
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <!-- <apex:image url="/servlet/servlet.FileDownload?file={!BluePrint}"/>-->
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingone">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseone" aria-expanded="true" aria-controls="collapseThree">
+                                                    Review the Important Tax Deadlines
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        
+                                        <div id="collapseone" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingone">
+                                            <apex:pageblock >  
+                                                <div class="panel-body">                                               
+                                                    <div>
+                                                        <div class="table-responsive static-data">
+                                                            <table class="table table-bordered table-striped">
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>Tax Year End</th>
+                                                                    <th>Tax Return Due Date*</th>
+                                                                    <th>Extended Filing Due Date**</th>
+                                                                    <th>Tax Organizers Sent to Anderson After This Date Will Incur an Expedite Fee</th>
+                                                                </tr>
+                                                                <apex:repeat value="{!td}" var="txd">
+                                                                    <tr>
+                                                                        <td>{!txd.Name}</td>
+                                                                        <td>{!txd.Tax_Year_End__c}</td>
+                                                                        <td>{!txd.Tax_Return_Due_Date__c}</td>
+                                                                        <td>{!txd.Extended_Filing_Due_Date__c}</td>
+                                                                        <td>{!txd.Expedite__c}</td>
+                                                                    </tr>      
+                                                                </apex:repeat>
+                                                                <input type="hidden" id="sitedomain" value= "{!$Site.CurrentSiteUrl}" />
+                                                            </table>
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                                            </apex:pageblock>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert alert-danger" style="display:none" id="Alert">
+                                        <strong>Alert!</strong> Session has Expired! Redirecting to login page in 5 seconds
+                                    </div>
+                                    
+                                    <div id="printLoader" style="display:none" >
+                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />                                                      
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingtwo">
+                                            <h4 class="panel-title">
+                                                <a id="bpsection" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsetwo" aria-expanded="false" aria-controls="collapseThree">
+                                                    Blueprint
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        
+                                        <div id="collapsetwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingtwo">
+                                            <div class="text-right" id="bpBTNS">
+                                                <a class="btn" style="text-decoration: none;" id="btn-Convert-Html2Image" href="">Download<i class="fa fa-download" aria-hidden="true"></i></a>                                                
+                                                <a class="btn" onclick="PrintDiv()">Print <i class="fa fa-print" aria-hidden="true"></i></a>
+                                                
+                                            </div>
+                                            
+                                            <div class="multiImg" style="display:none;">                                                
+                                            </div>
+                                            <div id="container" class="cf">                                                
+                                                <div id="main" role="main">
+                                                    <section class="slider">
+                                                        <div class="flexslider">
+                                                            <ul class="slides" id="image-gallery"> 
+                                                            </ul>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                    <div id="quesMsg" style="display:none;">
+                                        <span id="bpIMG">   
+                                        </span>
+                                        <span id="bpDisclaimerPart1">
+                                        </span>
+                                        <span id="bpDisclaimerPart2">
+                                        </span>
+                                    </div> 
+                                </div>
+                            </div> 
+                        </div>
+                        <apex:actionStatus id="bpLoader" style="align:center;">      
+                            <apex:facet name="start">                                                        
+                                <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                            </apex:facet>
+                            <apex:facet name="stop"></apex:facet>
+                        </apex:actionStatus>
+                        <!--    <div id="mybpModal" class="modal fade" role="dialog">                        
+<div class="modal-dialog entities-section">                                        
+
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Blueprint</h4>
+</div>
+<apex:pageblock >                                    
+<div class="modal-body">
+<div class="text-right" id="dndpnt"> 
+<button type="button" class="btn"><a href="" id="dndbtn" target="_blank" docType="html-5.0" download="">Download</a> <i class="fa fa-download" aria-hidden="true"></i></button>                                             
+<button type="button" id="" class="btn" onclick="printBlueprint('bpInfo')">Print <i class="fa fa-print" aria-hidden="true"></i></button>
+</div>
+<div id="bpErrors"></div>
+<div id="bpInfo">                                            
+</div>
+</div> 
+</apex:pageblock>    
+<apex:pageblock rendered="{!if(Blueprint.Id==null,true,false)}">  
+<div class="panel-body">
+<div class="text-right">
+<span>No Blueprint Found</span>
+</div>  
+</div>
+</apex:pageblock>
+</div>                                        
+</div>
+</div> -->
+                        
+                    </div>
+                    <apex:include pageName="AndersonFooter"/>  
+                    <!--<apex:inputHidden id="preparedByName" value="{!preparedByName}"/>-->
+                </apex:form>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <!-- Include all compiled plugins (below), or include individual files as needed -->           
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.tablesorter.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.tablesorter.widgets.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/html2canvas.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.flexslider.js')}"/>
+                <apex:includeScript value="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"/>
+                
+                <script>
+                $(document).ready(function() {
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PaginationController.getBlueprintAttachment}',                            
+                        function(result, event){   
+                            if(event.status){ 
+                                var blueprintHtml = '';
+                                var quesmsg = '';
+                                var imgDownload = '';
+                                var blueprintWithHeader = '';
+                                var width = '';
+                                var height = '';
+                                var img = '';
+                                var disclaimer = '';
+                                var disclaimerPart1 = '';
+                                var disclaimerPart2 = '';
+                                
+                                for(i=0;i<result.length;i++){ 
+                                    var idd = '';
+                                    var BpName = '';
+                                    var preparedBy = '';
+                                    idd = result[i].attachementId;
+                                    BpName = result[i].attachmentName;
+                                    //console.log('BpName=========')
+                                    console.log(result[i]);
+                                    if(result[i].preparedBy != null){
+                                        preparedBy = result[i].preparedBy;
+                                    }
+                                    else
+                                        preparedBy = '';
+                                    imgs = "<img class='sky' src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img>";                                                                   
+                                    var u = "{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}";
+                                    var img = new Image; 
+                                    //console.log('geqwegqgewqgee')
+                                    img.onload = function() {
+                                        width = img.width;
+                                    };
+                                    img.src = u;
+                                    console.log('after image src')
+                                    //setTimeout(function(){ 
+                                    var VIEW_URL = '{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file=';
+                                    blueprintHtml += " <li><img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img></li>";
+                                    blueprintWithHeader += "<img style='width: 101%;height: 93;' src='{!URLFOR($Resource.images, 'images/header-img.jpg')}' styleClass='Header' /><img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img><div class='col-sm-12' style='height:90px; background-color:#555555'></div>"; 
+                                    //console.log('width ' + width); 
+                                    quesmsg += "<img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img>"+ '<br>';
+                                    imgDownload += '<a href="'+ VIEW_URL + idd +'" download="'+BpName+'" class="mulImg" target="_blank">'+BpName+'</a>';                                    
+                                    //}, 100);
+                                    document.getElementById("bpDisclaimerPart1").innerHTML = 'Preparedby: <b>'+preparedBy;
+                                }
+                                
+                                disclaimerPart1 = '<p> Wealth Planning Blueprint<br><br>Customized for:<b>{!$User.FirstName}&nbsp;{!$User.LastName}</b><br>'
+                                disclaimerPart2 = '</b><br><br>Anderson Business Advisors<br>Drafting a Wealth Planning Blueprint is about putting together a plan for your current situation and future goals. The purpose of the Blueprint is to: <br>Minimize your tax liability by using the best available entity structures for your situation<br>Decrease your risk of losing personal or business assets in the event of a negative lawsuit result<br>Build an estate plan that protects your current and future wealth and establishes decision-making power regarding you, your family, and assets <br>Create a plan for running your business<br>The Wealth Planning Blueprint is just one stage of the Anderson System and is your roadmap for running your businesses, investments, and estate. <br>The other stages of the Anderson System will be introduced to you by your Platinum team.<br> Included in this packet are diagrams that explain the various types of entity structures we utilize; these diagrams may include the structure found <br>on your specific Blueprint.<br>Furthermore, we’d like to share one of the important lessons we cover at our Tax and Asset Protection Workshop: the concept of inside and outside liability. <br>Understanding this concept will empower you to understand why your Blueprint is structured the way it is.<br><br><br>Two Types of Liability: Inside & Outside<br>If an asset protection plan is properly implemented, inside and outside liability remain separate.<br>“Inside liability” is liability that originates from within a certain sphere, such as a limited liability entity like an LLC. For example, if you are a real estate investor and have a real estate entity structure in place, inside liability would be considered a trip and fall on one of your properties. The liability originates from and stays within that particular sphere (the entity holding the property in question).<br>“Outside liability” is liability that originates from outside a certain sphere, such as when you are personally liable in a car accident. Outside liability originates from outside of the sphere, but the assets inside the sphere are protected!<br>The general purpose of asset protection is to isolate liabilities to certain spheres and protect assets from the liabilities generated in other spheres. Using the previous example, if a slip and fall occurs at a rental property held in an LLC, the liability will be contained within the LLC. Therefore, the maximum loss will be the value of the property.<br>Asset protection structures generally utilize Limited Liability Companies (LLCs) to create these spheres to limit liability exposure.<br>To further illustrate this, consider the following example: if you have three pieces of real estate that are separated using three LLCs and a slip and fall occurs on property one, properties two and three will remain outside property one’s liability zone. Thus, properties two and three will not be affected by the liability created by property one. <br>If you did not use an LLC for your real estate, all of your assets are contained in the same sphere. There is no shield between your personal assets and your real estate. A single slip and fall at one of your properties could cause a complete loss of all assets. In order to avoid this situation, your real estate should be separated by placing properties into different LLCs.<br><br><br>br>Favorable Jurisdictions for LLCs<br><br>In addition, in the real estate realm, the use of LLCs allows us to shop for the best possible jurisdiction to hold the beneficial interest in the real estate.  In some states, such as Nevada or Wyoming, the SOLE remedy for a creditor of an individual who has a membership interest in an LLC is a charging order. A charging order is a lien against the LLC. The creditor is prohibited from taking away your ownership interest in the LLC. The result of this is that the creditor will have an extremely difficult time collecting from you. Often, this situation will lead to a favorable settlement for the LLC owner. <br>As an example, if John has a charging order placed against his LLC by Abe in the amount of $50K, this means that Abe is entitled to all distributions made to John from the LLC. However, as the manager of the LLC, John does not need to take distributions as long as there are restrictive provisions in the LLC operating agreement.<br>Theoretically, this would result in Abe being more willing to settle his claim against John.  Thus, in real estate structuring, it is wise to have a holding entity (an LLC that owns the interests of the real estate LLCs) in a jurisdiction where the sole remedy is a charging order. Nevada and Wyoming have statutory charging order protection. This is why we generally recommend a holding entity in Nevada or Wyoming. <br>"Pursuant to recently-enacted U.S. Treasury Department Regulations, we are now required to advise you that, unless otherwise expressly indicated, any federal tax advice contained in this communication, including attachments and enclosures, is not intended or written to be used, and may not be used, for the purpose of (i) avoiding tax-related penalties under the Internal Revenue Code or (ii) promoting, marketing or recommending to another party any tax-related matters addressed herein."</p>';
+                                document.getElementById("image-gallery").innerHTML = blueprintHtml; 
+                                document.getElementById("bpIMG").innerHTML = blueprintWithHeader + disclaimerPart1;
+                                document.getElementById("bpDisclaimerPart2").innerHTML = disclaimerPart2;
+                                $(".multiImg").html(imgDownload);
+                            } 
+                            $('.flexslider').flexslider({
+                                animation: "slide",
+                                start: function(slider){
+                                    $('body').removeClass('loading');
+                                }
+                            });  
+                            $(function(){
+                                $('#btn-Convert-Html2Image').click(function(){                                   
+                                    $('.multiImg').find('a').each(function() {
+                                        this.click();
+                                    });
+                                    
+                                });
+                            });
+                        });   
+                    $("#owl-demo").owlCarousel({                    
+                        loop: true,
+                        navigation : true, 
+                        autoPlay: true,
+                        autoplayTimeout: 500,
+                        autoplayHoverPause: true,
+                        touchDrag: true,
+                        dots: true,
+                        slideSpeed : 300,
+                        paginationSpeed : 400,
+                        singleItem: true,
+                        pagination: false         
+                        
+                    });
+                    
+                });            
+                </script>
+                <script>
+                function getRemoteEntity(callingentId) {
+                    var entVal = callingentId;
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PaginationController.getEntityDetail}',
+                        entVal, 
+                        function(result, event){
+                            
+                            if (event.status) {
+                                var entHtml = '';                                               
+                                document.getElementById("entInfo").innerHTML = "";                           
+                                
+                                if(result[0].Name!='undefined' && result[0].Name!=null){ 
+                                    var resName = result[0].Name;
+                                } else {
+                                    var resName = '';
+                                }
+                                if(result[0].EIN__c!='undefined' && result[0].EIN__c!=null){ 
+                                    var resEin = result[0].EIN__c;
+                                } else {
+                                    var resEin = '';
+                                }
+                                if(result[0].SOS_Number__c!='undefined' && result[0].SOS_Number__c!=null){ 
+                                    var resSOSNumber = result[0].SOS_Number__c;
+                                } else {
+                                    var resSOSNumber = '';
+                                }
+                                if(result[0].Tracking_Number__c!='undefined' && result[0].Tracking_Number__c!=null){ 
+                                    var resTrackingNumber = result[0].Tracking_Number__c;
+                                } else {
+                                    var resTrackingNumber = '';
+                                }
+                                if(result[0].Shipping_Method__c!='undefined' && result[0].Shipping_Method__c!=null){ 
+                                    var resShippingMethod = result[0].Shipping_Method__c;
+                                } else {
+                                    var resShippingMethod = '';
+                                }
+                                if(result[0].Articles_Prepared__c!='undefined' && result[0].Articles_Prepared__c!=null){ 
+                                    // var resArticlesPrepared = artpredate;
+                                    var resArticlesPrepared = getFormattedDate(result[0].Articles_Prepared__c);
+                                } else {
+                                    var resArticlesPrepared = '';
+                                }
+                                if(result[0].Articles_Sent__c!='undefined' && result[0].Articles_Sent__c!=null){ 
+                                    //var resArticlesSent = artsentdate;
+                                    // var resArticlesSent = getFormattedDate(result[0].Articles_Sent__c);
+                                    var orgd = new Date();
+                                    orgd.setTime(result[0].Articles_Sent__c);
+                                    var orgdt = orgd.toGMTString();
+                                    var gm = orgdt.substring(0, orgdt.length - 13);
+                                    var orgDate = new Date(gm.replace(/-/g,"/"));
+                                    var resArticlesSent = moment(orgDate).format('YYYY-MM-DD');
+                                } else {
+                                    var resArticlesSent = '';
+                                }
+                                
+                                var AdressInfo = '';
+                                
+                                if(result[0].Business_Location__c !='undefined' && result[0].Business_Location__c !=null){                                    
+                                    var resBusinessAddress = result[0].Business_Location__c;
+                                    AdressInfo=  '<td><div class="row"><div class="col-xs-12"><strong class="text-bold">Business Address -</strong> '+resBusinessAddress+'</div></div>';
+                                } else {                                    
+                                    var resBusinessAddress = '';
+                                    AdressInfo=  '<td><div class="row"><div class="col-xs-12"><strong class="text-bold">Business Address -</strong> '+resBusinessAddress+'</div></div>';
+                                } 
+                                
+                                if(result[0].Mailing_Address__c!='undefined' && result[0].Mailing_Address__c!=null){
+                                    var resBusinessMailingAddress = result[0].Mailing_Address__c;
+                                    
+                                } else {
+                                    var resBusinessMailingAddress = '';
+                                    
+                                }
+                                
+                                if(resBusinessMailingAddress != '' && resBusinessMailingAddress != resBusinessAddress){ 
+                                    // var resBusinessAddress = resBusinessMailingAddress;
+                                    AdressInfo+= '<div class="row"><div class="col-xs-12"><strong class="text-bold">Business Mailing Address -</strong> '+resBusinessMailingAddress +'</div></div></td>';
+                                } else {
+                                    //var resBusinessAddress = resBusinessAddress;
+                                    AdressInfo+= '<div class="row"></div></td>';
+                                }
+                                /**
+                                if(resBusinessMailingAddress != resBusinessAddress){ 
+                                    var resBusinessAddress = resBusinessMailingAddress;
+                                } else {
+                                    var resBusinessAddress = resBusinessAddress;
+                                } ***/
+                                
+                                if(result[0].Organization_State__c!='undefined' && result[0].Organization_State__c!=null){ 
+                                    var resOrganizationState = result[0].Organization_State__c;
+                                } else {
+                                    var resOrganizationState = '';
+                                } 
+                                if(result[0].Date_Shipped__c    !='undefined' && result[0].Date_Shipped__c  !=null){ 
+                                    // var resDateShipped = dsdate;
+                                    //var resDateShipped = getFormattedDate(result[0].Date_Shipped__c);
+                                    var orgd = new Date();
+                                    orgd.setTime(result[0].Date_Shipped__c);
+                                    var orgdt = orgd.toGMTString();
+                                    var gm = orgdt.substring(0, orgdt.length - 13);
+                                    var orgDate = new Date(gm.replace(/-/g,"/"));
+                                    var resDateShipped = moment(orgDate).format('YYYY-MM-DD');
+                                } else {
+                                    var resDateShipped = '';
+                                }  
+                                if(result[0].Tax_Form__c    !='undefined' && result[0].Tax_Form__c  !=null){ 
+                                    var resTaxForm = result[0].Tax_Form__c;
+                                } else {
+                                    var resTaxForm = '';
+                                }  
+                                if(result[0].Tax_Year_Ended__c  !='undefined' && result[0].Tax_Year_Ended__c !=null){ 
+                                    var resTaxYearEnded = result[0].Tax_Year_Ended__c;
+                                } else {
+                                    var resTaxYearEnded = '';
+                                } 
+                                if(result[0].Federal_Return__c!='undefined' && result[0].Federal_Return__c !=null){ 
+                                    //var resFederalReturn = frdate;
+                                    var resFederalReturn = result[0].Federal_Return__c;
+                                } else {
+                                    var resFederalReturn = '';
+                                }
+                                if(result[0].Organizational_Date__c !='undefined' && result[0].Organizational_Date__c !=null){ 
+                                    // var resOrgDate = orgdate;
+                                    //var resOrgDate = getFormattedDate(result[0].Organizational_Date__c);
+                                    var orgd = new Date();
+                                    orgd.setTime(result[0].Organizational_Date__c);
+                                    var orgdt = orgd.toGMTString();
+                                    var gm = orgdt.substring(0, orgdt.length - 13);
+                                    var orgDate = new Date(gm.replace(/-/g,"/"));
+                                    var resOrgDate = moment(orgDate).format('YYYY-MM-DD');
+                                    
+                                } else {
+                                    var resOrgDate = '';
+                                }
+                                if(result[0].Tax_Status__c  !='undefined' && result[0].Tax_Status__c !=null){ 
+                                    var resTaxStatus = result[0].Tax_Status__c;
+                                } else {
+                                    var resTaxStatus = '';
+                                }
+                                if(result[0].Articles_Sent__c != null){
+                                    var divOne = 'done';
+                                } else {
+                                    var divOne = '';
+                                }
+                                if(result[0].Organizational_Date__c != null){
+                                    var divTwo = 'done';
+                                } else {
+                                    var divTwo = '';
+                                }
+                                if(result[0].EIN_Received__c != null){
+                                    var divThree = 'done';
+                                } else {
+                                    var divThree = '';
+                                }
+                                if(result[0].Documents_Complete__c != null){
+                                    var divFour = 'done';
+                                } else {
+                                    var divFour = '';
+                                }
+                                if(result[0].Date_Shipped__c != null){
+                                    var divFive = 'done';
+                                } else {
+                                    var divFive = '';
+                                } 
+                                if(result[0].Shareholder__c!='undefined' && result[0].Shareholder__c != null ) {
+                                    var shareHolder = result[0].Shareholder__c;
+                                } else {
+                                    var shareHolder = '';
+                                } 
+                                /* if(result[0].LLC_Members__c != 'undefined' && result[0].LLC_Members__c != null ) {
+                                    var memberInfo = result[0].LLC_Members__c;
+                                } else {
+                                    var memberInfo = '';
+                                } */
+                                var memberInfo = '';
+                                if(result[0].Structure__c != 'undefined' && result[0].Structure__c != null ) {
+                                    var structureInfo = result[0].Structure__c;
+                                } else {
+                                    var structureInfo = '';
+                                }
+                                if(result[0].Nominee__c != 'undefined' && result[0].Nominee__c != null ) {
+                                    var nomineeInfo = result[0].Nominee__c;
+                                } else {
+                                    var nomineeInfo = '';
+                                }
+                                if(result[0].State_Renewal__c != 'undefined' && result[0].State_Renewal__c != null ) {
+                                    var stRn = getFormattedDate(result[0].State_Renewal__c);
+                                    var srdInfo = stRn;
+                                } else {
+                                    var srdInfo = '';
+                                }
+                                
+                                if(result[0].Registered_Agent_Name__c != 'undefined' && result[0].Registered_Agent_Name__c != null ) {
+                                    var regAgentName = result[0].Registered_Agent_Name__c;
+                                } else {
+                                    var regAgentName = '';
+                                }
+                                if(result[0].Registered_Agent_Address__c != 'undefined' && result[0].Registered_Agent_Address__c != null ) {
+                                    var regAgentAddress = result[0].Registered_Agent_Address__c;
+                                } else {
+                                    var regAgentAddress = '';
+                                }
+                                
+                                if(result[0].President__c != 'undefined' && result[0].President__c != null ) {
+                                    var presInfo = result[0].President__c;
+                                } else {
+                                    var presInfo = '';
+                                }
+                                if(result[0].Treasurer__c != 'undefined' && result[0].Treasurer__c != null ) {
+                                    var tresInfo = result[0].Treasurer__c;
+                                } else {
+                                    var tresInfo = '';
+                                }
+                                if(result[0].Vice_President__c != 'undefined' && result[0].Vice_President__c != null ) {
+                                    var vpInfo = result[0].Vice_President__c;
+                                } else {
+                                    var vpInfo = '';
+                                }
+                                if(result[0].Secretary__c != 'undefined' && result[0].Secretary__c != null ) {
+                                    var secInfo = result[0].Secretary__c;
+                                } else {
+                                    var secInfo = '';
+                                }
+                                if(result[0].Director_1__c != 'undefined' && result[0].Director_1__c != null ) {
+                                    var dir1 = result[0].Director_1__c;
+                                } else {
+                                    var dir1 = '';
+                                }
+                                if(result[0].Director_2__c != 'undefined' && result[0].Director_2__c != null ) {
+                                    var dir2 = result[0].Director_2__c;
+                                } else {
+                                    var dir2 = '';
+                                }
+                                if(result[0].Director_3__c != 'undefined' && result[0].Director_3__c != null ) {
+                                    var dir3 = result[0].Director_3__c;
+                                } else {
+                                    var dir3 = '';
+                                }
+                                if(result[0].Director_4__c != 'undefined' && result[0].Director_4__c != null ) {
+                                    var dir4 = result[0].Director_4__c;
+                                } else {
+                                    var dir4 = '';
+                                }
+                                if(result[0].Director_5__c != 'undefined' && result[0].Director_5__c != null ) {
+                                    var dir5 = result[0].Director_5__c;
+                                } else {
+                                    var dir5 = '';
+                                }
+                                if(result[0].Director_6__c != 'undefined' && result[0].Director_6__c != null ) {
+                                    var dir6 = result[0].Director_6__c;
+                                } else {
+                                    var dir6 = '';
+                                }
+                                
+                                // new code by sunil
+                                
+                                if(result[0].Share_Holder_1__c != 'undefined' && result[0].Share_Holder_1__c != null ) {
+                                    var shareholder1 = result[0].Share_Holder_1__c;
+                                } else {
+                                    var shareholder1 = '';
+                                }
+                                
+                                if(result[0].Share_Holder_2__c != 'undefined' && result[0].Share_Holder_2__c != null ) {
+                                    var shareholder2 = result[0].Share_Holder_2__c;
+                                } else {
+                                    var shareholder2 = '';
+                                }
+                                
+                                if(result[0].Share_Holder_3__c != 'undefined' && result[0].Share_Holder_3__c != null ) {
+                                    var shareholder3 = result[0].Share_Holder_3__c;
+                                } else {
+                                    var shareholder3 = '';
+                                }
+                                
+                                if(result[0].Share_Holder_4__c != 'undefined' && result[0].Share_Holder_4__c != null ) {
+                                    var shareholder4 = result[0].Share_Holder_4__c;
+                                } else {
+                                    var shareholder4 = '';
+                                }
+                                
+                                if(result[0].Shareholder__c != 'undefined' && result[0].Shareholder__c != null ) {
+                                    var shareholderPer1 = result[0].Shareholder__c+'%';
+                                } else {
+                                    var shareholderPer1 = '';
+                                }
+                                
+                                if(result[0].Second_Shareholder__c != 'undefined' && result[0].Second_Shareholder__c != null ) {
+                                    var shareholderPer2 = result[0].Second_Shareholder__c+'%';
+                                } else {
+                                    var shareholderPer2 = '';
+                                }
+                                
+                                if(result[0].Third_Shareholder__c != 'undefined' && result[0].Third_Shareholder__c != null ) {
+                                    var shareholderPer3 = result[0].Third_Shareholder__c+'%';
+                                } else {
+                                    var shareholderPer3 = '';
+                                }
+                                
+                                if(result[0].Fourth_Shareholder__c != 'undefined' && result[0].Fourth_Shareholder__c != null ) {
+                                    var shareholderPer4 = result[0].Fourth_Shareholder__c+'%';
+                                } else {
+                                    var shareholderPer4 = '';
+                                }
+                                
+                                if(result[0].Manager_1__c != 'undefined' && result[0].Manager_1__c != null ) {
+                                    var manager1 = result[0].Manager_1__c;
+                                } else {
+                                    var manager1 = '';
+                                }
+                                
+                                if(result[0].Manager_2__c != 'undefined' && result[0].Manager_2__c != null ) {
+                                    var manager2 = result[0].Manager_2__c;
+                                } else {
+                                    var manager2 = '';
+                                }
+                                
+                                if(result[0].Manager_3__c != 'undefined' && result[0].Manager_3__c != null ) {
+                                    var manager3 = result[0].Manager_3__c;
+                                } else {
+                                    var manager3 = '';
+                                }
+                                
+                                if(result[0].Member_1__c != 'undefined' && result[0].Member_1__c != null ) {
+                                    var member1 = result[0].Member_1__c;
+                                } else {
+                                    var member1 = '';
+                                }
+                                
+                                if(result[0].Member_2__c != 'undefined' && result[0].Member_2__c != null ) {
+                                    var member2 = result[0].Member_2__c;
+                                } else {
+                                    var member2 = '';
+                                }
+                                
+                                if(result[0].Member_3__c != 'undefined' && result[0].Member_3__c != null ) {
+                                    var member3 = result[0].Member_3__c;
+                                } else {
+                                    var member3 = '';
+                                }
+                                
+                                if(result[0].Member_4__c != 'undefined' && result[0].Member_4__c != null ) {
+                                    var member4 = result[0].Member_4__c;
+                                } else {
+                                    var member4 = '';
+                                }
+                                
+                                if(result[0].Member_5__c != 'undefined' && result[0].Member_5__c != null ) {
+                                    var member5 = result[0].Member_5__c;
+                                } else {
+                                    var member5 = '';
+                                }
+                                
+                                if(result[0].Ownership__c != 'undefined' && result[0].Ownership__c != null ) {
+                                    var memberOwn1 = result[0].Ownership__c+'%';
+                                } else {
+                                    var memberOwn1 = '';
+                                }
+                                
+                                if(result[0].Ownership1__c != 'undefined' && result[0].Ownership1__c != null ) {
+                                    var memberOwn2 = result[0].Ownership1__c+'%';
+                                } else {
+                                    var memberOwn2 = '';
+                                }
+                                
+                                if(result[0].Ownership2__c != 'undefined' && result[0].Ownership2__c != null ) {
+                                    var memberOwn3 = result[0].Ownership2__c+'%';
+                                } else {
+                                    var memberOwn3 = '';
+                                }
+                                
+                                if(result[0].Ownership3__c != 'undefined' && result[0].Ownership3__c != null ) {
+                                    var memberOwn4 = result[0].Ownership3__c+'%';
+                                } else {
+                                    var memberOwn4 = '';
+                                }
+                                
+                                if(result[0].Ownership4__c != 'undefined' && result[0].Ownership4__c != null ) {
+                                    var memberOwn5 = result[0].Ownership4__c+'%';
+                                } else {
+                                    var memberOwn5 = '';
+                                }
+                                
+                                if(result[0].Tax_Matter_Representative__c != 'undefined' && result[0].Tax_Matter_Representative__c != null ) {
+                                    var taxMatter = result[0].Tax_Matter_Representative__c;
+                                } else {
+                                    var taxMatter = '';
+                                }
+                                
+                                //var progressBar = '<div class="progress"><div class="circle '+divOne+'"><span class="label">1</span><span class="title">Articles Sent</span></div><span class="bar"></span><div class="circle '+divTwo+'"><span class="label">2</span><span class="title">Organizational Date</span></div><span class="bar"></span><div class="circle '+divThree+'"><span class="label">3</span><span class="title">EIN Received</span></div><span class="bar"></span><div class="circle '+divFour+'"><span class="label">4</span><span class="title">Documents Complete</span></div><span class="bar"></span><div class="circle '+divFive+'"><span class="label">5</span><span class="title">Shipped</span></div></div>';
+                                var progressBar = '<div class="progress"><div class="circle '+divOne+'"><span class="label"></span><span class="title">Articles Sent</span></div><span class="bar"></span><div class="circle '+divTwo+'"><span class="label"></span><span class="title">Organizational Date</span></div><span class="bar"></span><div class="circle '+divThree+'"><span class="label"></span><span class="title">EIN Received</span></div><span class="bar"></span><div class="circle '+divFour+'"><span class="label"></span><span class="title">Documents Complete</span></div><span class="bar"></span><div class="circle '+divFive+'"><span class="label"></span><span class="title">Shipped</span></div></div>';
+                                var progressTxt = '<div style="background-color: #f7f7f7;width: 98%;margin-left: 10px;"><p><b>Articles Sent -</b> The Articles have been submitted to the Secretary of State. The Articles will be returned after they have been reviewed and approved by the Secretary of State. <br> <b>Organizational Date - </b>This is the Formation Date of the entity, given by the Secretary of State when they stamp the Articles Filed. This will generally be considered the "Start Date" of the entity.<br><b> EIN Received - </b>The Entity Employer Identification Number has been issued by the IRS. The IRS will send an EIN Letter will be sent to the entitys mailing address. The EIN may be used before the EIN Letter is received. <br><b>Documents Complete - </b>The Entity Binder has been drafted. The Binder includes the entitys Operating Agreement, SOS Docs, IRS Docs, as well as any other extra documents they require. The Binder Documents will be immediately available in the client-viewable folder, and will be shipped out to the client shortly. <br><b>Shipped - </b>The Entity Binder has been shipped to the client shipping address.</p></div>';
+                                entHtml += progressBar + progressTxt + '<br><table class="table table-bordered table-responsive"><th class="headingBlock" colspan="2">Entity Information</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Entity Name -</strong> '+resName+'</div><div class="col-xs-12"><strong class="text-bold">Organization State -</strong> '+resOrganizationState+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Type -</strong> '+resOrganizationState+'</div><div class="col-xs-12"><strong class="text-bold">Organizational Date -</strong> '+resOrgDate+'</div></div></td></tr><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">EIN # -</strong> '+resEin+'</div><div class="col-xs-12"><strong class="text-bold">SOS Number -</strong> '+resSOSNumber+'</div></div></td>'+AdressInfo +'</tr><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">RA Name -</strong> '+regAgentName+'</div></div><div class="row"><div class="col-xs-12"><strong class="text-bold">Tax Matter Representative -</strong>'+taxMatter+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">RA Address  -</strong> '+regAgentAddress+'</div></div><div class="row"><div class="col-xs-12"><strong class="text-bold">Nominee Info -</strong> '+nomineeInfo+'</div></div></td></tr><th class="headingBlock" colspan="2">Tax Information</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Tax Status -</strong> '+resTaxStatus+'</div><div class="col-xs-12"><strong class="text-bold">Year End Month -</strong> '+resTaxYearEnded+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Tax Form -</strong> '+resTaxForm+'</div><div class="col-xs-12"><strong class="text-bold">Federal Return Due Date -</strong> '+resFederalReturn+'</div></div></td></tr><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Tax Period Type -</strong> '+resTaxYearEnded+'</div><div class="col-xs-12"><strong class="text-bold">State Renewal due date -</strong> '+srdInfo+'</div></div></td></tr><th class="headingBlock" colspan="2">Formation Progress</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Tracking Number -</strong> '+resTrackingNumber+'</div><div class="col-xs-12"><strong class="text-bold">Shipping Method -</strong> '+resShippingMethod+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Articles Prepared -</strong> '+resArticlesPrepared+'</div><div class="col-xs-12"><strong class="text-bold">Articles Sent -</strong> '+resArticlesSent+'</div></div></td></tr><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Date Shipped -</strong> '+resDateShipped+'</div></div></td><td><div class="row"></div></td></tr><th class="headingBlock" colspan="2">Officer Info</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">President -</strong> '+presInfo+'</div><div class="col-xs-12"><strong class="text-bold">Vice President -</strong> '+vpInfo+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Treasurer  -</strong> '+tresInfo+'</div><div class="col-xs-12"><strong class="text-bold">Secretary -</strong> '+secInfo+'</div></div> </td></tr><th class="headingBlock" colspan="2">Director Info</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Director 1 -</strong> '+dir1+'</div><div class="col-xs-12"><strong class="text-bold">Director 3 -</strong> '+dir3+'</div><div class="col-xs-12"><strong class="text-bold">Director 5 -</strong> '+dir5+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Director 2  -</strong> '+dir2+'</div><div class="col-xs-12"><strong class="text-bold">Director 4 -</strong> '+dir4+'</div><div class="col-xs-12"><strong class="text-bold">Director 6 -</strong> '+dir6+'</div></div> </td></tr><th class="headingBlock" colspan="2">Shareholder info</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Shareholder 1 -</strong> '+shareholder1+'</div><div class="col-xs-12"><strong class="text-bold">Shareholder 2 -</strong> '+shareholder2+'</div><div class="col-xs-12"><strong class="text-bold">Shareholder 3 -</strong> '+shareholder3+'</div><div class="col-xs-12"><strong class="text-bold">Shareholder 4 -</strong> '+shareholder4+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong> '+shareholderPer1+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong> '+shareholderPer2+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong> '+shareholderPer3+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong> '+shareholderPer4+'</div></div></td></tr><th class="headingBlock" colspan="2">Management Structure for LLCs - '+structureInfo+' </th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Manager 1 -</strong>'+manager1+'</div><div class="col-xs-12"><strong class="text-bold">Manager 3 -</strong>'+manager3+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Manager 2 -</strong>'+manager2+'</div><div class="col-xs-12"><strong class="text-bold"></strong></div></div></td></tr><th class="headingBlock" colspan="2">Member Info</th><tr><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Member 1 -</strong>'+member1+'</div><div class="col-xs-12"><strong class="text-bold">Member 2 -</strong>'+member2+'</div><div class="col-xs-12"><strong class="text-bold">Member 3 -</strong>'+member3+'</div><div class="col-xs-12"><strong class="text-bold">Member 4 -</strong>'+member4+'</div><div class="col-xs-12"><strong class="text-bold">Member 5 -</strong>'+member5+'</div></div></td><td><div class="row"><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong>'+memberOwn1+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong>'+memberOwn2+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong>'+memberOwn3+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong>'+memberOwn4+'</div><div class="col-xs-12"><strong class="text-bold">Ownership % -</strong>'+memberOwn5+'</div></div></td></tr></table>';
+                                document.getElementById("entInfo").innerHTML = entHtml;
+                                Visualforce.remoting.Manager.invokeAction(
+                                    '{!$RemoteAction.PaginationController.getEntityLLCs}',
+                                    entVal, 
+                                    function(results, event){
+                                        if (event.status) {
+                                            var entLLC = '';
+                                            //alert(results.length);
+                                            entLLC += '<h5 style="font-size: large;background-color: #e8e8e8;">LLCs Cell Information</h5><br/>';
+                                            entLLC += '<table class="table table-bordered table-striped"><thead><tr><th>Name</th><th>EIN</th><th>Manager</th><th>Member</th><th>Address</th></tr></thead>';
+                                            if(results.length >0) {
+                                                for (var n=0; n<results.length; n++){
+                                                    
+                                                    if(results[n].Member_1__c != null && results[n].Member_1__c != 'undefined'){
+                                                        var member1 = results[n].Member_1__c+'<br>';
+                                                    }else{
+                                                        var member1 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Member_2__c != null && results[n].Member_2__c != 'undefined'){
+                                                        var member2 = results[n].Member_2__c+'<br>';
+                                                    }else{
+                                                        var member2 = '';
+                                                    }
+                                                    if(results[n].Member_3__c != null && results[n].Member_3__c != 'undefined'){
+                                                        var member3 = results[n].Member_3__c+'<br>';
+                                                    }else{
+                                                        var member3 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Member_4__c != null && results[n].Member_4__c != 'undefined'){
+                                                        var member4 = results[n].Member_4__c+'<br>';
+                                                    }else{
+                                                        var member4 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Member_5__c != null && results[n].Member_5__c != 'undefined'){
+                                                        var member5 = results[n].Member_5__c+'<br>';
+                                                    }else{
+                                                        var member5 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Member_6__c != null && results[n].Member_6__c != 'undefined'){
+                                                        var member6 = results[n].Member_6__c+'<br>';
+                                                    }else{
+                                                        var member6 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Member_7__c != null && results[n].Member_7__c != 'undefined'){
+                                                        var member7 = results[n].Member_7__c+'<br>';
+                                                    }else{
+                                                        var member7 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Manager_1__c != null && results[n].Manager_1__c != 'undefined'){
+                                                        var manger1 = results[n].Manager_1__c+'<br>';
+                                                    }else{
+                                                        var manger1 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Manager_2__c != null && results[n].Manager_2__c != 'undefined'){
+                                                        var manger2 = results[n].Manager_2__c+'<br>';
+                                                    }else{
+                                                        var manger2 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Manager_3__c != null && results[n].Manager_3__c != 'undefined'){
+                                                        var manger3 = results[n].Manager_3__c+'<br>';
+                                                    }else{
+                                                        var manger3 = '';
+                                                    }
+                                                    
+                                                    if(results[n].Manager_4__c != null && results[n].Manager_4__c != 'undefined'){
+                                                        var manger4 = results[n].Manager_4__c+'<br>';
+                                                    }else{
+                                                        var manger4 = '';
+                                                    }
+                                                    
+                                                    if(results[n].EIN__c != null && results[n].EIN__c != 'undefined'){
+                                                        var ein = results[n].EIN__c+'<br>';
+                                                    }else{
+                                                        var ein = '';
+                                                    }
+                                                    if(results[n].Address__c != null && results[n].Address__c != 'undefined'){
+                                                        var add = results[n].Address__c+'<br>';
+                                                    }else{
+                                                        var add = '';
+                                                    }
+                                                    //entLLC += '<tr><td>'+results[n].Name__c+'</td><td>'+results[n].EIN__c+'</td><td>'+results[n].Manager_1__c+'<br>'+results[n].Manager_2__c+'<br>'+results[n].Manager_3__c+'<br>'+results[n].Manager_4__c+'</td><td>'+results[n].Member_1__c+'<br>'+results[n].Member_2__c+'<br>'+results[n].Member_3__c+'<br>'+results[n].Member_4__c+'</td></tr>';
+                                                    entLLC += '<tr><td>'+results[n].Name+'</td><td>'+ein+'</td><td>'+ manger1 + manger2 + manger3 + manger4 +'</td><td>'+ member1 + member2 + member3 + member4 + member5 + member6 + member7 +'</td><td>'+add+'</td></tr>'; 
+                                                }
+                                            } else {
+                                                entLLC += '<tr><td colspan="8">No LLCs Found</td></tr>';
+                                            }
+                                            entLLC += '</table>'; 
+                                            document.getElementById("entInfo").innerHTML = entHtml + entLLC;
+                                            
+                                        } else {
+                                            document.getElementById("entErrors").innerHTML = event.message;
+                                        }
+                                    }, 
+                                    {escape: true}
+                                );
+                                
+                            } else {
+                                document.getElementById("entErrors").innerHTML = event.message;
+                            }
+                        }, 
+                        {escape: true}
+                    );
+                }
+                function getBluePrintImage(blueprintId) {
+                    var bpVal = blueprintId; 
+                    var sitedomain = document.getElementById("sitedomain").value; 
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PaginationController.getPrintImage}',
+                        bpVal, 
+                        function(result, event){
+                            if (event.status) {
+                                var bpHtml = ''; 
+                                var buttonHtml = '';
+                                document.getElementById("bpInfo").innerHTML = "";                       
+                                bpHtml += '<apex:image url="/servlet/servlet.FileDownload?file='+result+'"/>';                        
+                                document.getElementById("bpInfo").innerHTML = bpHtml;
+                                document.getElementById("dndbtn").download = result;
+                                document.getElementById("dndbtn").href = sitedomain+'servlet/servlet.FileDownload?file='+result;
+                            }  else if (event.type === 'exception') {
+                                document.getElementById("bpErrors").innerHTML = 
+                                    event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                            } else {
+                                document.getElementById("bpErrors").innerHTML = event.message;
+                            }
+                        }, 
+                        {escape: true}
+                    );
+                } 
+                
+                function printBlueprint(elem) {
+                    /* var printContent = document.getElementById(elem).innerHTML;
+                    //alert(printContent);
+                    var w = window.open();
+                    w.document.write(printContent);
+                    w.print();
+                    w.close(); */
+                }
+                
+                </script>
+                <script>
+                $(function(){
+                    $('table').tablesorter({
+                        widgets        : ['zebra', 'columns'],
+                        usNumberFormat : false,
+                        sortReset      : true,
+                        sortRestart    : true
+                    });
+                });
+                </script>
+                <script type="text/javascript">
+                function reInitializeTableSorter() {
+                    
+                    $('table').tablesorter({
+                        widgets        : ['zebra', 'columns'],
+                        usNumberFormat : false,
+                        sortReset      : true,
+                        sortRestart    : true
+                    });
+                    
+                }
+                </script>
+                <script language="javascript" type="text/javascript">
+                function PrintDiv() {
+                    $("#printLoader").css("display", "block");
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PaginationController.getSessionId}',
+                        function(result, event){
+                            $("#printLoader").css("display", "none");
+                            if (event.status) {
+                                var divToPrint=document.getElementById('quesMsg');
+                                
+                                var newWin=window.open('','Print-Window');
+                                
+                                newWin.document.open();
+                                
+                                newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+                                
+                                newWin.document.close();
+                                
+                                setTimeout(function(){
+                                    newWin.close();
+                                },0);
+                                
+                            }
+                        else {
+                        $("#Alert").css("display", "block");
+                        window.setTimeout(function() {
+                        window.location.href = 'https://comm-platinum.cs19.force.com/dashboard/Anderson_Login';
+                    }, 5000);
+                }
+                }, 
+                    {escape: true}
+                ); 
+                /*   var content = document.getElementById('quesMsg').innerHTML;
+                    var mywindow = window.open('', 'Print', 'height=600,width=800');
+                    
+                    mywindow.document.write('<html><head></head><body >');
+                    mywindow.document.write(content);
+                    mywindow.document.write('</body></html>');
+                    
+                    mywindow.document.close();
+                    mywindow.focus()
+                    mywindow.print();
+                    mywindow.close();
+                    return true;*/
+                
+                
+                /*  var divToPrint=document.getElementById('quesMsg').innerHTML;
+                     console.log(divToPrint);
+                     var newWin=window.open('','Print-Window');
+                    
+                    newWin.document.open();
+                    
+                    newWin.document.write('<html><body>'+divToPrint+'</body></html>');
+                   
+                    newWin.document.close(); 
+                    newWin.focus();
+                    newWin.print();
+                    newWin.close();
+                    
+
+
+                    return true;   */                 
+                /*   var printContents = document.getElementById('quesMsg').innerHTML;
+                    var originalContents = document.body.innerHTML;
+                    
+                    document.body.innerHTML = printContents;
+                    
+                    window.print();
+                    
+                    document.body.innerHTML = originalContents;*/
+                }
+                
+                </script>
+                
+            </body>
+        </html>
+    </div>
+</apex:page>

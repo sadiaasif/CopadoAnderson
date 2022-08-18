@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ORDER_ITEM_NUMBER</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Entity__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Law_Coordinator__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND 3 AND 2 AND 4</booleanFilter>
+        <criteriaItems>
+            <column>ORDER_ITEM_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>1/13/2021 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed,N/A,Kitted,BCP Scheduled</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Duncan Bjerke</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Back to CSR,Back to LC,Stalled - Client,Stalled - Internal,Waiting on Client,Waiting on Confirmation</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OrderItem.Active_User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ACCOUNT_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ORDER_NUMBER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Duncan -  Back to LC Order/Stall</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>OrderItem.Due_Date__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

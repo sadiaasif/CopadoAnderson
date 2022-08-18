@@ -1,0 +1,28 @@
+<apex:page sidebar="false">
+    <apex:includeLightning rendered="true" />
+    <div id="lightning" />
+
+    <script>
+        // var theme = "{!$User.UITheme}";
+        $Lightning.use("smagicinteract:conversationApp", function () {
+            $Lightning.createComponent("smagicinteract:conversationView", {}, "lightning", function (component) {
+                // $A.eventService.addHandler({
+                //     event: 'force:navigateToObjectHome',
+                //     handler: function (event) {
+                //         component.getSObjectPrefix(event.getParams().scope).then(function (objectPrefix) {
+                //             if (theme == 'Theme4t' || theme == 'Theme4d') {
+                //                 // The Visualforce page is in S1 or Lightning Experience
+                //                 sforce.one.navigateToURL('/' + objectPrefix);
+                //             } else if (theme == 'Theme3') {
+                //                 // The Visualforce page is  running in Classic
+                //                 window.parent.location = '/' + objectPrefix;
+                //             } else {
+                //             }
+                //         });
+                //     }
+                // });
+            });
+        });
+    </script>
+
+</apex:page>

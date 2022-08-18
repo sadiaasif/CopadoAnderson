@@ -1,0 +1,8 @@
+<apex:page standardController="Opportunity">
+ <flow:interview name="Refund_Request_Flow" finishLocation="/{!Opportunity.Id}">
+      <apex:param name="AccountId" value="{!Opportunity.AccountId}"/>
+       <apex:param name="SaleType" value="{!Opportunity.RecordType}"/>
+        <apex:param name="SaleId" value="{!Opportunity.Id}"/>
+        <apex:param name="SaleName" value="{!Opportunity.Name}"/>
+ </flow:interview>
+</apex:page>

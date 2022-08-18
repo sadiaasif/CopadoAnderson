@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_17912171</developerName>
+        <masterLabel>Action Alert</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>OrderItem.Action_Alert__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Red</sourceValue>
+            </sourceValues>
+            <value>1) Red - Past Due</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Yellow</sourceValue>
+            </sourceValues>
+            <value>2) Yellow - Due Date &lt; 14 From Today</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Green</sourceValue>
+            </sourceValues>
+            <value>3) Green - Due date &gt; 14 Days From Today</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>OrderItem.Action_Alert__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_NUMBER</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Entity__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Law_Coordinator__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Active_User__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_CREATED_DATE</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ORDER_ITEM_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>1/13/2021 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Savannah Wallace</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Submitted to Processing,Completed,N/A,Kitted,BCP Scheduled,Refunded</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completing through Case</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ACCOUNT_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>mctest,apples7</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>OrderItem.Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Open Order Services - Savannah</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <sortColumn>OrderItem.Entity__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

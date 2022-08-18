@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_76854847</developerName>
+        <masterLabel>Reviewers</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>ASSIGNED</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Emily Dacanay</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lindsey Vaughn</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mariel Garvin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ronnie Withaeger</sourceValue>
+            </sourceValues>
+            <value>Ronnie</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jennifer Phipps</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tracy Cooklin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ian Hanuscin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Christos Zattas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Eric Day</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Charles Rogler</sourceValue>
+            </sourceValues>
+            <value>Jennifer</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Toni Covey</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Maria Mendiola</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Petros Leventis</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Eliot Thomas</sourceValue>
+            </sourceValues>
+            <value>Toni</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>CREATED_BY</field>
+    </columns>
+    <columns>
+        <field>Activity.Tax_Reviewer__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT</field>
+    </columns>
+    <columns>
+        <field>CASE</field>
+    </columns>
+    <columns>
+        <field>CASE_SUBJECT</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
+        <field>TASK</field>
+    </columns>
+    <columns>
+        <field>DESCRIPTION</field>
+    </columns>
+    <columns>
+        <field>WHAT_NAME</field>
+    </columns>
+    <description>Tax prep returns</description>
+    <filter>
+        <criteriaItems>
+            <column>STATUS</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Tax-Prep</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ASSIGNED</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notContain</operator>
+            <value>Janey,Joseph,Maggie</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ASSIGNED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_76854847</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax Returns in Tax Prep</name>
+    <params>
+        <name>closed</name>
+        <value>open</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>te</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_98807555</developerName>
+        <masterLabel>Tax Status</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Case.Activities$Status</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Not Started</sourceValue>
+            </sourceValues>
+            <value>Not Started</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Waiting on someone else</sourceValue>
+            </sourceValues>
+            <value>Stalled</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>In Progress</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tax-Prep</sourceValue>
+            </sourceValues>
+            <value>In-Progress</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Tax-Review</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tax-Review Complete</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tax-Review Notes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tax-Filing</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tax-Waiting on 8879</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tax-Invoice</sourceValue>
+            </sourceValues>
+            <value>Review / Invoice</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Completed</sourceValue>
+            </sourceValues>
+            <value>Completed</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case.Activities$Subject</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case.Activities$Subject</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>1120,1120S,990,1040,1065,5500,1041</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.Activities$Owner</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Gatesman,Dacanay,Hanuscin,Garvin,Mendiola,Mcevoy,Zattas,Butler,Stagg,Withaeger,Covey,Stuck,Riggs,Dochev,Webb</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_98807555</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Activities$Status</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case.Activities$Owner</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax Dept, returns by preparer</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Cases_with_Tasks__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Case.Activities$ActivityDate</dateColumn>
+        <endDate>2018-01-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2017-01-01</startDate>
+    </timeFrameFilter>
+</Report>

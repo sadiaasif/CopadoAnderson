@@ -1,0 +1,111 @@
+<apex:page docType="html-5.0" id="sitePayScheduledPmt" action="{!onloadAction}" controller="pymt.SitePayScheduledPmtController" showHeader="false" sidebar="false" cache="false" standardStylesheets="false" title="{!$Label.pymt__SitePayScheduled_MakePmtHeading}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="pymt_sitepayscheduled_page">
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+    <apex:form id="mainForm">
+    <script>
+    // HTML5 validation fallback code - for Safari, ios and android devices
+    function hasHtml5Validation () {
+      return typeof document.createElement('input').checkValidity === 'function';
+    }
+
+    if (hasHtml5Validation()) {
+      $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+        if (!this.checkValidity()) {
+          e.preventDefault();
+          $j(this).addClass('invalid');
+          $j('#status').html('invalid');
+        } else {
+          $j(this).removeClass('invalid');
+          $j('#status').html('submitted');
+        }
+      });
+    }
+    // end HTML5 validation fallback code
+    </script>
+    <apex:pageMessages />
+    <h1>{!$Label.pymt__SitePayScheduled_MakePmtHeading}</h1>
+
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SitePayScheduled_Instructions=='-')}">
+    <p class="pc_pay_scheduled_instructions">{!$Label.pymt__SitePayScheduled_Instructions}</p>
+    </apex:outputPanel>
+
+    <apex:outputPanel styleClass="pc_cart_details">
+    <apex:outputPanel rendered="{!NOT(hasCartItems)}" >
+            <table class="pc_cart_item_table">
+            <tr>
+                <th class="itemDescriptionColumn">{!$Label.pymt__Label_Description}</th>
+                <th class="currency_column">{!$Label.pymt__Label_Amount}</th>
+            </tr>
+            <tr>
+                <td class="itemDescriptionColumn"><apex:outputText value="{!payment.name}" /></td>
+                <td class="currency_column"><apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!subtotal}"/></apex:outputText></td>
+            </tr>
+            </table>
+
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!hasCartItems}" >
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SiteCheckout_ItemListHeading == '-')}">
+    <h2>{!$Label.pymt__SiteCheckout_ItemListHeading}</h2>
+    </apex:outputPanel>
+    <c:CartItemDataTable cartItems="{!attachedCartItems}" currencyFormat="{!currencyShortFormatExpression}" id="cartItemTable"/>
+    </apex:outputPanel>
+
+    <div class="pc_checkout_totals" >
+    <apex:panelGrid columns="2" columnClasses="totalsLabelColumn,currency_column">
+        <apex:outputText value="{!$Label.pymt__Label_DiscountAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Discount__c),payment.pymt__Discount__c==0))}"/>
+        <apex:outputText styleClass="discountAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Discount__c),payment.pymt__Discount__c==0))}"
+            value="{!currencyFormatExpression}" >
+           <apex:param value="{!payment.pymt__Discount__c}"/>
+        </apex:outputText>
+
+        <apex:outputText value="{!$Label.pymt__Label_TaxAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Tax__c),payment.pymt__Tax__c==0))}"/>
+        <apex:outputText styleClass="taxAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Tax__c),payment.pymt__Tax__c==0))}"
+            value="{!currencyFormatExpression}" >
+           <apex:param value="{!payment.pymt__Tax__c}"/>
+        </apex:outputText>
+
+        <apex:outputText value="{!$Label.pymt__Label_ShippingAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Shipping__c),payment.pymt__Shipping__c==0))}"/>
+        <apex:outputText styleClass="shippingAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Shipping__c),payment.pymt__Shipping__c==0))}"
+            value="{!currencyFormatExpression}" >
+           <apex:param value="{!payment.pymt__Shipping__c}"/>
+        </apex:outputText>
+
+        <apex:outputText value="{!$Label.pymt__Label_TotalAmount}"/>
+        <apex:outputText styleClass="totalAmount"
+            value="{!currencyFormatExpression}" >
+           <apex:param value="{!payment.pymt__Amount__c}"/>
+        </apex:outputText>
+
+
+    </apex:panelGrid>
+
+    </div>
+    <br/>
+    </apex:outputPanel><!-- end of pc_cart_details -->    
+
+    <div class="pc_button_container">
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+        <apex:commandButton value="{!$Label.pymt__SitePayScheduled_CheckoutBtn}" action="{!gotoDefaultCheckout}" rendered="{!showCheckoutBtn == true}"/>
+        <apex:commandButton value="{!$Label.pymt__SitePayScheduled_AlternateCheckoutBtn}" action="{!gotoPayPalExpressCheckout}"  rendered="{!showPayPalExpressCheckoutBtn == true}"/>
+      </apex:outputPanel>
+      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+        <apex:commandLink styleClass="css-button" value="{!$Label.pymt__SitePayScheduled_CheckoutBtn}" action="{!gotoDefaultCheckout}" rendered="{!showCheckoutBtn == true}"/>
+        <apex:commandLink styleClass="css-button" value="{!$Label.pymt__SitePayScheduled_AlternateCheckoutBtn}" action="{!gotoPayPalExpressCheckout}"  rendered="{!showPayPalExpressCheckoutBtn == true}"/>
+      </apex:outputPanel>
+    </div>
+
+    </apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div><!--  pc_lang -->
+</apex:define>
+</apex:composition>
+</apex:page>

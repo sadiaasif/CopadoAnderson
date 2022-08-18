@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Audience xmlns="http://soap.sforce.com/2006/04/metadata">
+    <audienceName>Role - Professional Advisor</audienceName>
+    <container>Anderson Internal</container>
+    <criteria>
+        <criterion>
+            <criteriaNumber>1</criteriaNumber>
+            <criterionValue>
+                <entityField>$User.Community_View__c</entityField>
+                <entityType>User</entityType>
+                <fieldValue>Estate Planning</fieldValue>
+            </criterionValue>
+            <operator>Equal</operator>
+            <type>FieldBased</type>
+        </criterion>
+        <criterion>
+            <criteriaNumber>1</criteriaNumber>
+            <criterionValue>
+                <entityField>$User.Community_View__c</entityField>
+                <entityType>User</entityType>
+                <fieldValue>Professional Advisor</fieldValue>
+            </criterionValue>
+            <operator>Equal</operator>
+            <type>FieldBased</type>
+        </criterion>
+    </criteria>
+    <formulaFilterType>AllCriteriaMatch</formulaFilterType>
+    <isDefaultAudience>false</isDefaultAudience>
+    <targets>
+        <target>
+            <groupName>f0ba6bf2-e601-457e-9d56-8a24b0ea5437</groupName>
+            <priority>10</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Home_Professional_Advisors_Home_Page</targetValue>
+        </target>
+        <target>
+            <groupName>0d4897f8-4799-43ba-8714-12d441f78dec$#$15e7afc9-cd83-46ec-95ad-9501c6243d5b</groupName>
+            <priority>3</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Default_Navigation_Menu_2_Component_Properties</targetValue>
+        </target>
+        <target>
+            <groupName>153f5362-7f2d-4cd1-af96-06a2804a4b58</groupName>
+            <priority>2</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Case_Detail_Case_Pro_Advisors_Page</targetValue>
+        </target>
+        <target>
+            <groupName>62e47baa-cc3b-40ea-8368-badb98518e63</groupName>
+            <priority>3</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Client_Detail_Client_Professional_Advisors_Page</targetValue>
+        </target>
+    </targets>
+</Audience>

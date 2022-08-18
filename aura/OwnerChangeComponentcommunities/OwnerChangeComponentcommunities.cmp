@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName" access="global"  controller="OwnerChangeComponentComCtrl">
+	  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="sobjecttype" type="String" default="{!v.sObjectName}"/>
+     <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <c:customLookup objectAPIName="user" IconName="standard:user" selectedRecord="{!v.selectedLookUpRecord}" label="Select User"/>
+    <br/> 
+      
+    <button class="slds-utton slds-button_brand" onclick="{!c.ChangeOwner}">Change Owner</button>    
+</aura:component>

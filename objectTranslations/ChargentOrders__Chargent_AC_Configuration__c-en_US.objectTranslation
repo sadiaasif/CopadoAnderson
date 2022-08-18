@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- This is the field on the Chargent Order record that controls whether this AC Process applies. This AC Process will only apply to Chargent Order records where the “AC Criteria” field’s value matches the “Value” entered in the configuration of this AC Process. --></help>
+        <label><!-- Controlling Field --></label>
+        <name>ChargentOrders__Controlling_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Choose “All Chargent Orders” if you want this AC Process to apply to all Chargent Order records in your Org. Choose “Rule-based” if you wish to limit this AC Process to a specific criteria. --></help>
+        <label><!-- Criteria --></label>
+        <name>ChargentOrders__Criteria__c</name>
+        <picklistValues>
+            <masterLabel>All Chargent Orders</masterLabel>
+            <translation><!-- All Chargent Orders --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rule-based</masterLabel>
+            <translation><!-- Rule-based --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This AC Process will run each day when enabled. --></help>
+        <label><!-- Enabled --></label>
+        <name>ChargentOrders__Enabled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operator --></label>
+        <name>ChargentOrders__Operator__c</name>
+        <picklistValues>
+            <masterLabel>Equals to</masterLabel>
+            <translation><!-- Equals to --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This field displays the name of the Payment Request Page used (if any) when this AC Process triggered. This should be pulled from the “Payment Request Page Name” field from the Payment Request Page. --></help>
+        <label><!-- PR Page --></label>
+        <name>ChargentOrders__PR_Page__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process Name --></label>
+        <name>ChargentOrders__Process_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the email address that emails sent from this AC Process will come from. --></help>
+        <label><!-- Sender Email Address --></label>
+        <name>ChargentOrders__Sender_Email_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- When “Rule-based” is chosen from the “Criteria” picklist in the AC Configuration, this is the value that must be found in the “AC Criteria” field the Chargent Order record in order for this AC Process to apply. --></help>
+        <label><!-- Value --></label>
+        <name>ChargentOrders__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

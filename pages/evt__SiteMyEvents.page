@@ -1,0 +1,106 @@
+<apex:page docType="html-5.0" id="siteMyEventsPage"  controller="evt.SiteMyEventsController" title="My Events"  showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+
+<head>
+<title>My Events</title>
+</head>
+<apex:composition template="{!$Site.Template}">
+
+
+<apex:define name="body">
+
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="evt_sitemyevents_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+    
+    <apex:pageMessages id="messages"/>  
+ 
+    <h1>My Events</h1> 
+        <apex:dataTable value="{!eventsMap}" var="mapKey" styleclass="evt_event_list_table">
+            <apex:column >    
+            <apex:variable value="{!eventsMap[mapKey]}" var="item"/>
+            <apex:variable value="{!item.event}" var="eventRec"/>
+                <apex:outputPanel layout="none" rendered="{!NOT(hasIcons)}" >
+                     <div class="evt_list_calendar_icon"  >
+                         <div class="evt_cal_icon_month">
+                         {!item.Month}</div>
+                         <div class="evt_cal_icon_day">
+                         <div class="day_of_month">
+                         {!item.Day}
+                         </div>
+                         <div class="day_of_week">{!item.dayOfWeek}</div>
+                         </div>
+                     </div>
+                 </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!AND(hasIcons,NOT(ISBLANK(item.imageId)),ISBLANK(item.imageURL))}" >
+                     <img class="evt_list_thumbnail"  src="{!URLFOR($Action.Attachment.Download,item.imageId)}" />
+                 </apex:outputPanel>
+                 <apex:outputPanel rendered="{!AND(hasIcons,NOT(ISBLANK(item.imageURL)))}" >
+                     <img class="evt_list_thumbnail"  src="{!item.imageURL}" />
+                 </apex:outputPanel>          
+
+            </apex:column>    
+            <apex:column >    
+            <apex:variable value="{!eventsMap[mapKey]}" var="item"/>
+            <apex:variable value="{!item.event}" var="eventRec"/>
+
+                <span class="evt_event_list_item_name">
+                <apex:outputLink value="{!eventRec.Event_Landing_Page__c}" rendered="{!eventRec.RecordType.DeveloperName=='Concert'}"><apex:outputField value="{!eventRec.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__Conf_Detail)}?id={!eventRec.id}" rendered="{!eventRec.RecordType.DeveloperName=='Conference'}"><apex:outputField value="{!eventRec.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__Sem_Detail)}?id={!eventRec.id}" rendered="{!eventRec.RecordType.DeveloperName=='Seminar'}"><apex:outputField value="{!eventRec.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__SiteWebMeeting)}?id={!eventRec.id}" rendered="{!eventRec.RecordType.DeveloperName=='Web_Meeting'}"><apex:outputField value="{!eventRec.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__QuickEvent)}?id={!eventRec.id}" rendered="{!eventRec.RecordType.DeveloperName=='Quick_Event'}"><apex:outputField value="{!eventRec.Name}" /></apex:outputLink>  
+                
+                </span><br/>
+                <div class="evt_formatted_date">
+                <apex:outputText value="{!item.startDate} {!item.startTime} - {!item.endTime}" rendered="{!NOT(item.multiday)}"/>
+                <apex:outputText value="{!item.startDate} - {!item.endDate}" rendered="{!item.multiday}"/>
+                </div>
+                <apex:outputPanel layout="block" styleClass="evt_event_location" rendered="{!NOT(ISBLANK(eventRec.evt__Venue_Name__c))}">
+                {!eventRec.evt__Venue_Name__c}
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleClass="evt_contact_event_planner_link" rendered="{!NOT(ISBLANK(eventRec.evt__Event_Planner__c))}">
+                <apex:outputLink value="{!URLFOR($Page.evt__SiteContactEventPlanner)}?eid={!item.eventId}">
+                            <i class="fa fa-envelope-o"></i> Contact Event Planner
+                </apex:outputLink>
+                </apex:outputPanel>
+                
+                <apex:repeat value="{!item.attendees}" var="attRec">
+                <div class="evt_myevents_attendee_box" >
+                    <div class="evt_flex_item_left" >
+                        <div class="evt_attendee_name">
+                        {!attRec.name}
+                        </div>
+                        <div class="evt_attendee_status">
+                        {!attRec.status}
+                        </div>
+                        <apex:outputPanel layout="block" rendered="{!NOT(ISBLANK(attRec.category))}">
+                        {!attRec.Category}
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" rendered="{!NOT(ISBLANK(attRec.registrationType))}">
+                        {!attRec.registrationType}
+                        </apex:outputPanel>
+                    </div>
+                    <div class="evt_flex_item_right" >
+                            <apex:outputPanel layout="block" rendered="{!NOT(ISBLANK(attRec.cancelURL))}">
+                            <apex:outputLink value="{!attRec.cancelURL}"><apex:outputText value="Cancel" /></apex:outputLink>
+                            </apex:outputPanel>
+
+                            <apex:outputLink value="{!URLFOR($Page.evt__SiteViewEventPass)}?aid={!attRec.attendeeId}"
+                                rendered="{!attRec.showEventPass}"><apex:outputText value="Event Pass" /></apex:outputLink>
+                    </div>
+                    </div>
+                </apex:repeat>
+                
+
+            </apex:column>    
+        </apex:dataTable>
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page --> 
+</div> <!--  page pc_lang_xxx div -->        
+</apex:define>
+</apex:composition>            
+    
+</apex:page>

@@ -1,0 +1,639 @@
+<!-- <apex:page controller="BillOfLadingController" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" action="{! doInit }" docType="html-5.0"> -->
+<apex:page renderAs="pdf" controller="zkmulti.BillOfLadingController" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" action="{! doInit }" docType="html-5.0">
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Bill of Lading</title>
+	<style media="all" type="text/css">
+	@page {
+		size: A4;
+		margin: 20px 20px 50px 20px;
+		@top-right {
+			content: "Page " counter(page) " of " counter(pages);
+		}
+	}
+
+	body {
+		display: inline;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+		font-family: sans-serif;
+	}
+
+	.header-table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	.header-table tr {
+		border: 2px solid black;
+	}
+
+	.header-table td {
+		padding:5px;
+	}
+
+	.table-ship-to {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table-ship-to td {
+		border: 2px solid black;
+	}
+
+	.table {
+		display:block;
+	}
+
+	.table-items {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table-items td {
+		border: 2px solid black;
+	}
+
+	.table-items th {
+		border: 2px solid black;
+	}
+
+	.table-items tr.alternate-row-background {background: #EFEFEF}
+
+
+	.table-packages {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table-packages td {
+		border: 2px solid black;
+	}
+
+	.table-packages th {
+		border: 2px solid black;
+	}
+
+	.table-packages tr.alternate-row-background {background: #EFEFEF}
+
+
+	.table-info {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table-info td {
+		border: 2px solid black;
+	}
+
+	.table-info th {
+		border: 2px solid black;
+	}
+
+	.table-info tr.alternate-row-background {background: #EFEFEF}
+
+	.row {
+		display:block;
+		width: 100%;
+	}
+	.cell {
+		display:inline-block;
+	}
+
+	.row-border {
+		border: 2px solid black;
+	}
+
+	.cell-border {
+		border-right: 2px solid black;
+	}
+
+	.cell-header {
+		background: black;
+		color: white;
+		text-align: center;
+		padding: 0px;
+	}
+
+	.row-count-3 {
+		width: 31%;
+	}
+
+	.row-count-2 {
+		width: 49%;
+	}
+
+	.text-font-0 {
+		font-size: 30px;
+	}
+
+	.text-font-1 {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.text-font-2 {
+		font-size: 10px;
+		font-weight: bold;
+	}
+
+	.text-font-main {
+		font-size: 12px;
+	}
+
+	.text-font-3 {
+		font-size: 10px;
+	}
+
+	.text-font-4 {
+		font-size: 8px;
+	}
+
+	.circle {
+		color: #fff;
+		padding: 5px 20px;
+		border-radius: 50%;
+		font-size: 12px;
+	}
+
+	.text-font-5 {
+		font-size: 8px;
+	}
+
+	.ship-from-padding {
+		padding-top: 3px;
+	}
+
+	.bol-number-padding {
+		padding-top: 17px;
+	}
+
+	
+
+	</style>
+</head>
+<body>
+	<table class="header-table">
+		<tr>
+			<td class="text-font-3">
+				Date: 05/25/2020
+			</td>
+			<td class="text-font-1">
+				BILL OF LADING
+			</td>
+			<!-- <td class="cell row-count-3 text-font-2" style="text-align: right;">
+				Page 1 of 1
+			</td> -->
+		</tr>
+	</table>
+	<table class="table-ship-to">  
+		<tbody>
+			<tr>
+				<td style="width: 50%;">
+					<div>
+						<div class="text-font-main cell-header">
+							SHIP FROM
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							Name: {! info.shipment.Sender_Company__c }
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							Address: {! info.shipment.Sender_Street__c }
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							City/State/Zip: {! info.shipment.Sender_City__c } <br />
+							{! info.shipment.Sender_State_Province__c } {! info.shipment.Sender_Zip_Postal_Code__c }
+						</div>
+						<div class="row text-font-main" style="padding-left: 5px;">
+							<div class="cell" style="width: 79%;">
+								SID#: 
+							</div>
+							<div class="cell" style="width: 19%;">
+								FOB: <img src="/img/checkbox_unchecked.gif"/> <!-- <img src="/img/checkbox_checked.gif"/> -->
+							</div>
+						</div>
+					</div>
+				</td>
+				<td style="width: 50%;">
+					<div>
+						<div class="text-font-main" style="margin-bottom: 20px; padding-left: 5px; font-weight: bold;">
+							Bill of Lading Number: {! info.shipment.Tracking_Number__c }
+						</div>
+						<div class="text-font-0" style="color: gray; text-align: center;">
+							<img src="{! barCodeUrl }" style="width: 350px; height: 90px;"></img>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table-ship-to">  
+		<tbody>
+			<tr>
+				<td style="width: 50%;">
+					<div>
+						<div class="text-font-main cell-header">
+							SHIP TO
+						</div>
+						<div class="row text-font-main" style="padding-left: 5px;">
+							<div class="cell" style="width: 55%;">
+								Name: {! info.shipment.Recipient_Name__c }
+							</div>
+							<div class="cell" style="width: 40%;">
+								Location #:
+							</div>
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							Address: {! info.shipment.Recipient_Street__c }
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							City/State/Zip: {! info.shipment.Recipient_City__c } <br />
+							{! info.shipment.Recipient_State_Province__c } {! info.shipment.Recipient_Zip_Postal_Code__c }
+						</div>
+						<div class="row text-font-main" style="padding-left: 5px">
+							<div class="cell" style="width: 79%;">
+								CID#: 
+							</div>
+							<div class="cell" style="width: 19%;">
+								FOB: <img src="/img/checkbox_unchecked.gif"/> <!-- <img src="/img/checkbox_checked.gif"/> -->
+							</div>
+						</div>
+					</div>
+				</td>
+				<td style="width: 50%; border-bottom: 0px;">
+					<div style="padding-left: 5px;">
+						<div class="text-font-main" style="font-weight: bold;">
+							Carrier Name: {! info.shipment.Carrier__c }
+						</div>
+						<div class="text-font-main" style="border-bottom: 1px;">
+							Trailer Number: {! info.shipment.Reference1_Value__c }
+						</div>
+						<div class="text-font-main">
+							Seal number(s): {! info.shipment.Reference2_Value__c }
+						</div>
+						<div class="text-font-main" style="border-top: 1px solid black; font-weight: bold;">
+							SCAC: {! info.shipment.Reference3_Value__c }
+						</div>
+						<div class="text-font-main" style="font-weight: bold;">
+							Pro number: {! info.shipment.Reference4_Value__c }
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table-ship-to">  
+		<tbody>
+			<tr>
+				<td style="width: 50%;">
+					<div>
+						<div class="text-font-main cell-header">
+							THIRD PARTY FREIGHT CHARGES BILL TO:
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							Name: {! info.shipmentInfo.Billing_Name__c }
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							Address: {! info.shipmentInfo.Billing_Street__c }
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							City/State/Zip: {! info.shipmentInfo.Billing_City__c } <br />
+							{! info.shipmentInfo.Billing_State__c } {! info.shipment.Billing_Zip_Postal_Code__c }
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px; border-top: 1px solid black;">
+							SPECIAL INSTRUCTIONS:
+						</div>
+						<div class="text-font-main ship-from-padding" style="padding-left: 5px;">
+							{! info.shipment.Shipment_Notes__c }
+						</div>
+					</div>
+				</td>
+				<td style="width: 50%; border-top: 0px;">
+					<div style="padding-left: 5px;">
+						<div class="text-font-0" style="color: gray; text-align: center;">
+							<!-- BAR CODE SPACE -->
+							<!-- <img src="{! barCodeUrl }" style="width: 200px; height: 70px;"></img> -->
+						</div>
+						<div style="border-top: 1px solid black;">
+							<div class="row-count-2 text-font-main" style="font-weight: bold;">
+								Freight Charge Terms: 
+							</div>
+							<div class="row-count-2 text-font-4">
+								(freight charges are prepaid unless marked otherwise)
+							</div>
+						</div>
+						<div class="row text-font-main" style="border-bottom: 1px solid black;">
+							<div class="cell row-count-3" style="font-weight: bold;">
+								Prepaid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{! IF(info.shipment.Payment_Type__c == 'SENDER', 'X', '') }			
+							</div>
+							<div class="cell row-count-3" style="font-weight: bold;">
+								Collect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{! IF(info.shipment.Payment_Type__c == 'RECIPIENT', 'X', '') }
+							</div>
+							<div class="cell row-count-3" style="font-weight: bold;">
+								3rd Party&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{! IF(info.shipment.Payment_Type__c == 'THIRD_PARTY', 'X', '') }
+							</div>
+						</div>
+						<div class="row text-font-4" style="margin-top: 5px;">
+							<div class="cell" style="float: left;">
+								<img src="/img/checkbox_unchecked.gif"/>
+							</div>
+							<div class="cell" style="float: right;">
+								Master Bill of Lading: with attached underlying<br />Bills of Lading
+							</div>
+						</div>						
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<!-- 	<table class="table-ship-to">  
+		<tbody>
+			<tr>
+				<td>
+					<div class="text-font-main cell-header">
+						CUSTOMER ORDER INFORMATION
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table-items">  
+		<tr>
+			<th class="text-font-3" style="text-align: center;">
+				CUSTOMER ORDER NUMBER
+			</th>
+			<th class="text-font-3" style="text-align: center;">
+				# PKGS
+			</th>
+			<th class="text-font-3" style="text-align: center;">
+				WEIGHT
+			</th>
+			<th class="text-font-3" colspan="2" style="text-align: center;">
+				PALLET/SLIP
+				(YES / NO)
+			</th>
+			<th class="text-font-3" style="text-align: center;">
+				ADDITIONAL SHIPPER INFO
+			</th>
+		</tr>
+		<tr style="height: 20px;">
+			<td width="20%">
+				
+			</td>
+			<td width="10%">
+				
+			</td>
+			<td width="10%">
+				
+			</td>
+			<td width="5%">
+				<div class="text-font-3" style="text-align: center;">
+					Y
+				</div>
+			</td>
+			<td width="5%">
+				<div class="text-font-3" style="text-align: center;">
+				</div>
+			</td>
+			<td width="50%">
+			</td>
+		</tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr style="height: 20px;">
+			<td>
+				<div class="text-font-3" style="font-weight: bold;">
+					GRAND TOTAL
+				</div>
+			</td>
+			<td></td><td></td>
+			<td class="cell-header">
+			</td>
+			<td class="cell-header"></td>
+			<td class="cell-header"></td>
+		</tr>
+	</table> -->
+	<table class="table-ship-to">  
+		<tbody>
+			<tr>
+				<td>
+					<div class="text-font-main cell-header">
+						CARRIER INFORMATION
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table-packages">
+		<colgroup span="2"></colgroup>
+		<colgroup span="2"></colgroup>
+		<col />
+		<col />
+		<col />
+		<colgroup span="2"></colgroup>
+		<tr>
+			<th colspan="2" scope="colgroup" class="text-font-3" style="text-align: center;">
+				HANDLING UNIT
+			</th>
+			<th colspan="2" scope="colgroup" class="text-font-3" style="text-align: center;">
+				PACKAGES
+			</th>
+			<th rowspan="2" scope="col" class="text-font-3" style="text-align: center;">
+				WEIGHT
+			</th>
+			<th rowspan="2" scope="col" class="text-font-3" style="text-align: center;">
+				H.M.<br />
+				(x)
+			</th>
+			<th rowspan="2" scope="col" style="text-align: center;">
+				<div class="text-font-3">
+					COMMODITY DESCRIPTION
+				</div>
+				<div class="text-font-5">
+					Commodities requiring special or additional care or attention in handling or stowing must be so <br />
+					marked and packaged as to ensure safe transportation with ordinary care. <br />
+					See Section 2(e) of NMFC Item 36
+				</div>
+			</th>
+			<th colspan="2" scope="colgroup" class="text-font-3" style="text-align: center;">
+				LTL ONLY
+			</th>
+		</tr>
+		<tr>
+			<th scope="col" class="text-font-3">QTY</th>
+			<th scope="col" class="text-font-3">TYPE</th>
+			<th scope="col" class="text-font-3">QTY</th>
+			<th scope="col" class="text-font-3">TYPE</th>
+			<th scope="col" class="text-font-3">NMFC #</th>
+			<th scope="col" class="text-font-3">CLASS</th>
+		</tr>
+		<apex:repeat value="{! info.groupedContainters }" var="grp">
+			<tr style="height: 20px;">
+				<td class="text-font-3">1</td>
+				<td class="text-font-3">{! grp.handlingUnit.zkmulti__Packaging_Type__c }</td>
+				<td class="text-font-3">{! grp.item.zkmulti__Quantity__c }</td>
+				<td class="text-font-3">{! grp.item.zkmulti__Package_Type__c }</td>
+				<td class="text-font-3">{! grp.item.zkmulti__Weight__c }</td>
+				<td class="text-font-3"></td>
+				<td class="text-font-3">{! grp.item.zkmulti__Description__c }</td>
+				<td class="text-font-3">{! grp.item.zkmulti__NMFC_Number__c }</td>
+				<td class="text-font-3">{! grp.item.zkmulti__NMFC_Class__c }</td>
+			</tr>
+		</apex:repeat>
+		<apex:repeat value="{! info.emptyRows }" var="emptyRow">
+			<tr style="height: 20px;"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+		</apex:repeat>
+		<tr style="height: 20px;">
+			<td class="text-font-3" style="font-weight: bold;">{! info.totalGroupedContainter.handlingUnit.zkmulti__Quantity__c }</td>
+			<td class="cell-header"></td>
+			<td class="text-font-3" style="font-weight: bold;">{! info.totalGroupedContainter.item.zkmulti__Quantity__c }</td>
+			<td class="cell-header"></td>
+			<td class="text-font-3" style="font-weight: bold;">{! info.totalGroupedContainter.item.zkmulti__Weight__c }</td>
+			<td class="cell-header"></td>
+			<td>
+				<div class="text-font-3" style="font-weight: bold; text-align: center;">
+					GRAND TOTAL
+				</div>
+			</td>
+			<td class="cell-header"></td>
+			<td class="cell-header"></td>
+		</tr>
+	</table>
+	<table class="table-info">  
+		<tbody>
+			<tr>
+				<td>
+					<div class="text-font-5">
+						Where the rate is dependent on value, shippers are required to state specifically in writing the agreed or <br />
+						declared value of the property as follows:<br />
+						"The agreed or declared value of the property is specifically stated by the shipper to be not exceeding
+					</div>
+					<div class="row">
+						<div class="cell text-font-5" style="margin-left: 100px;">
+							per
+						</div>
+						<div class="cell text-font-5" style="margin-left: 100px;">
+							.""
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="text-font-3" style="font-weight: bold; margin-left: 10px;">
+						COD Amount: $
+					</div>
+					<div class="row" style="font-weight: bold; margin-left: 10px;">
+						<div class="cell text-font-3">
+							Fee Terms:
+						</div>
+						<div class="cell text-font-3">
+							Collect: <img src="/img/checkbox_unchecked.gif"/>
+						</div>
+						<div class="cell text-font-3">
+							Prepaid: <img src="/img/checkbox_unchecked.gif"/>
+						</div>
+					</div>
+					<div class="row text-font-3" style="font-weight: bold; margin-left: 10px;">
+						Customer check acceptable: <img src="/img/checkbox_unchecked.gif"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="text-font-3" style="text-align: center;">
+						<b>NOTE Liability Limitation for loss or damage in this shipment may be applicable. See 49 U.S.C. - 14706(c)(1)(A) and (B).</b>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="text-font-5">
+						RECEIVED, subject to individually determined rates or contracts that have been agreed upon in writing<br />
+						between the carrier and shipper, if applicable, otherwise to the rates, classifications and rules that have been<br />
+						established by the carrier and are available to the shipper, on request, and to all applicable state and federal<br />
+						regulations
+					</div>					
+				</td>
+				<td>
+					<div class="text-font-4">
+						The carrier shall not make delivery of this shipment without payment of freight<br />
+						and all other lawful charges.
+					</div>
+					<div class="text-font-4" style="margin-left: 200px;">
+						Shipper Signature
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table-info">  
+		<tbody>
+			<tr>
+				<td width="31%">
+					<div class="text-font-4" style="font-weight: bold;">
+						SHIPPER SIGNATURE / DATE
+					</div>
+					<div class="text-font-5">
+						This is to certify that the above named materials are properly classified,
+						packaged, marked and labeled, and are in proper condition for
+						transportation according to the applicable regulations of the DOT
+					</div>
+					<div style="margin-top: 50px;">
+					</div>
+				</td>
+				<td width="10%" style="border-right: none;">
+					<div class="text-font-4" style="margin-bottom: 50px;">
+						<div style="text-decoration: underline;">
+							Trailer Loaded:
+						</div>
+						<div>
+							<img src="/img/checkbox_unchecked.gif"/> By Shipper
+						</div>
+						<div>
+							<img src="/img/checkbox_unchecked.gif"/> By Driver
+						</div>
+					</div>
+				</td>
+				<td width="20%" style="border-left: none;">
+					<div class="text-font-4" style="margin-bottom: 40px; margin-left: 10px;">
+						<div style="text-decoration: underline;">
+							Freight Counted:
+						</div>
+						<div>
+							<img src="/img/checkbox_unchecked.gif"/> By Shipper
+						</div>
+						<div>
+							<img src="/img/checkbox_unchecked.gif"/> By Driver/pallets said to contain
+						</div>
+						<div>
+							<img src="/img/checkbox_unchecked.gif"/> By Driver/Pieces
+						</div>
+					</div>
+				</td>
+				<td width="31%">
+					<div class="text-font-4" style="font-weight: bold;">
+						CARRIER SIGNATURE / PICKUP DATE
+					</div>
+					<div class="text-font-5">
+						Carrier acknowledges receipt of packages and required placards. Carrier certifies
+						emergency response information was made available and/or carrier has the DOT
+						emergency response guidebook or equivalent documentation in the vehicle.
+						<b>Property described above is received in good order, except as noted</b>
+					</div>
+					<div style="margin-top: 50px;">
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
+</apex:page>

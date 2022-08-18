@@ -1,0 +1,152 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbPaymentDetailController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+    <script>
+
+        $( document ).ready( function() {
+
+            var pbheight = $("#mb_page_banner_content").height();
+            $("#mb_page_banner").height(pbheight);
+
+        });
+        $( window ).resize( function() {
+            var pbheight = $("#mb_page_banner_content").height();
+            $("#mb_page_banner").height(pbheight);
+
+        }); 
+
+        $( document ).on( "pagecreate", function() {
+            
+
+
+        });
+
+    
+    </script>
+ 
+
+</head>
+<body>
+<div data-role="page" data-theme="a" id="paymentdetailpage">
+
+    <div data-role="header" data-position="fixed">
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>
+        <h1>Payment Detail</h1>
+    </div><!-- /header -->
+
+    <div style="padding-top:0px;" class="ui-content" role="main">
+
+    <div id="mb_page_banner">
+    <div id="mb_page_banner_content">
+     <h1>{!payment.Name}</h1>
+    <p>{!payment.pymt__Amount__c}&nbsp;{!payment.pymt__Currency_ISO_Code__c}</p>
+    <br/>
+    </div>    
+    </div> 
+
+     <apex:outputPanel rendered="{!NOT(ISNULL(payment.pymt__Shipping__c))}">
+        <p>Shipping: {!payment.pymt__Shipping__c}</p>
+     </apex:outputPanel>
+
+     <apex:outputPanel rendered="{!NOT(ISNULL(payment.pymt__Tax__c))}">
+        <p>Tax: {!payment.pymt__Tax__c}</p>
+     </apex:outputPanel>
+
+<p>Amount: {!payment.pymt__Amount__c}&nbsp;{!payment.pymt__Currency_ISO_Code__c}</p>
+<apex:outputPanel rendered="{!NOT(payment.pymt__Is_Scheduled__c)}">
+<p>Date: {!MONTH(payment.pymt__Date__c)}/{!DAY(payment.pymt__Date__c)}/{!YEAR(payment.pymt__Date__c)}</p>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!payment.pymt__Is_Scheduled__c}">
+<p>Scheduled Date: {!MONTH(payment.pymt__Scheduled_Payment_Date__c)}/{!DAY(payment.pymt__Scheduled_Payment_Date__c)}/{!YEAR(payment.pymt__Scheduled_Payment_Date__c)}</p>
+</apex:outputPanel>
+
+<p>Status: {!payment.pymt__Status__c}</p>
+<p>Billing Name: {!payment.pymt__Billing_First_Name__c}&nbsp;{!payment.pymt__Billing_Last_Name__c}</p>
+
+<apex:outputPanel layout="none" rendered="{!OR(payment.pymt__Status__c == 'In Process', payment.pymt__Status__c == 'Scheduled',payment.pymt__Status__c == 'Error', payment.pymt__Status__c = 'Declined')}">
+<a href="#" data-role="button" onclick="javascript: alert('Feature not yet implemented');" >Process Payment</a>
+</apex:outputPanel>
+
+<apex:outputPanel layout="none" rendered="{!(payment.pymt__Status__c == 'Completed')}">
+    <a href="#" data-role="button" onclick="javascript:alert('Not implemented');"  data-inline="false">Email Receipt</a>
+    <a href="#" data-role="button" onclick="javascript:alert('Not implemented');" data-inline="false">Void</a>
+    <a href="#" data-role="button" onclick="javascript:alert('Not implemented');" data-inline="false">Refund</a>
+</apex:outputPanel>
+<br/>
+
+
+<apex:outputPanel rendered="{!NOT(signatureId == NULL)}">
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+<h2>Signature</h2>
+<apex:image width="50%" url="/servlet/servlet.FileDownload?file={!signatureId}" style="margin:5px auto 5px auto;"/>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(NOT(payment.pymt__Latitude__c == null),NOT(payment.pymt__Latitude__c == 0),NOT(payment.pymt__Longitude__c == null),NOT(payment.pymt__Longitude__c == 0) )}">
+<img style="margin:20px 0px;width:100%;" src="https://maps.google.com/maps/api/staticmap?markers=color:blue|label:S|{!TEXT(payment.pymt__Latitude__c)},{!TEXT(payment.pymt__Longitude__c)}&zoom=13&size=800x200&maptype=roadmap&sensor=false"/>
+</apex:outputPanel>
+
+
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+        <h2>Cart Items</h2>
+    <table data-role="table" id="cart-item-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!payment.R00N40000001tGNtEAM}" var="lineItem">
+      <tbody>
+        <tr>
+          <td>{!lineItem.Name}</td>
+          <td>{!lineItem.pymt__Unit_Price__c}</td>
+          <td>{!lineItem.pymt__Quantity__c}</td>
+          <td>{!lineItem.pymt__Total__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+
+
+    </table>
+</div>
+    
+        
+    </div><!-- /content -->
+    
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link" onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>
+
+</div><!-- /page -->
+
+
+  
+</body>
+</html>
+
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page standardController="evt__Special_Event__c"  docType="html-5.0" >
+ 
+   <p>Drag an image (jpg, png, gif) to the drop zone below to add or replace the event listing image attachment for this special event.</p>
+    <c:DragAndDropUploader DropZoneText="Drop Image Here" ParentId="{!evt__Special_Event__c.Id}" FileName="SpecialEventThumbnail" MaxSize="1000000"  AllowedTypes="image/jpg,image/jpeg,image/gif,image/png"  OverWrite="true"  DragDropHeight="100px" />
+
+</apex:page>

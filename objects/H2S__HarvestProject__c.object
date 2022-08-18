@@ -1,0 +1,1711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Project_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>H2S__Project_Compact_Layout</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>H2S__Project_Compact_Layout</fullName>
+        <fields>Name</fields>
+        <fields>H2S__Account__c</fields>
+        <fields>H2S__ProjectCodeExternalId__c</fields>
+        <fields>H2S__TotalTime__c</fields>
+        <fields>H2S__SyncStatus__c</fields>
+        <fields>H2S__LastHarvestSync__c</fields>
+        <fields>OwnerId</fields>
+        <label>Project Compact Layout</label>
+    </compactLayouts>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>HarvestSync for Salesforce - Project object used by the HarvestSync for Salesforce system integration when client does not already have a custom object for managing projects.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.Account_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billable_Time__c</fullName>
+        <description>Rollup of all billable time in harvest</description>
+        <externalId>false</externalId>
+        <label>Billable Time</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>notContain</operation>
+            <value>*</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Billing_City__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.BillingCity</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.BillingCountry</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_State__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.BillingState</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Street__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.BillingStreet</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Street</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bookkeeper_Assigned__c</fullName>
+        <description>Links to Case, congruently updates.</description>
+        <externalId>false</externalId>
+        <label>Bookkeeper Assigned</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Donna Hill</fullName>
+                    <default>false</default>
+                    <label>Donna Hill</label>
+                </value>
+                <value>
+                    <fullName>John Loncar</fullName>
+                    <default>false</default>
+                    <label>John Loncar</label>
+                </value>
+                <value>
+                    <fullName>Justin Claus</fullName>
+                    <default>false</default>
+                    <label>Justin Claus</label>
+                </value>
+                <value>
+                    <fullName>Marie Galligan</fullName>
+                    <default>false</default>
+                    <label>Marie Galligan</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>Sara Winter</fullName>
+                    <default>false</default>
+                    <label>Sara Winter</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeper_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeper Time</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>contains</operation>
+            <value>Bookkeep</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Duration_Rollup__c</fullName>
+        <description>This is the summary field for &quot;Combo Packages&quot; for all Bookkeeping work.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the summary field for &quot;Combo Packages&quot; for all Bookkeeping work.</inlineHelpText>
+        <label>Combo Bookkeeping Hours</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Bookkeeping Combo Work</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Attorney__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Attorney</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Package Attorney</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Bookkeeper__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Bookkeeper</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Package Bookkeeper</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Bookkeeping_Catch_up__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Bookkeeping  - Catch-up</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Bookkeeping - Catch-Up</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Bookkeeping_Training__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Bookkeeping Training</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Bookkeeping Training</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_CPA__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup CPA</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Package CPA</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_EA__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup EA</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Package EA</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Partner_Tax_Consult__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Partner Tax Consult</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Partner Tax Consult</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Tax_Consult_Package__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Tax Consult - Package</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Tax Consult - Package</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Tax_Preparation_Package__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Tax Preparation-Package</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Tax Preparation - Package</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Tax_Preparer__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Tax Preparer</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Package Tax Preparer, Base Rate</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Rollup_Tax_Review_Package__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Rollup Tax Review - Package</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Tax Review - Package</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Client_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.First_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.Last_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.E_Mail__c</formula>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity_Associated__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Any entity that this project is associated with, not to be used for tax packages.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Any entity that this project is associated with, not to be used for tax packages.</inlineHelpText>
+        <label>Entity Associated</label>
+        <referenceTo>Entities__c</referenceTo>
+        <relationshipLabel>Projects</relationshipLabel>
+        <relationshipName>Projects</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>H2S__Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of client account</inlineHelpText>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>HarvestProjects</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>H2S__Archived__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Archived</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>H2S__BudgetIncludesProjectExpenses__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If project expenses (e.g., travel) are included in the budget, then check this box.</inlineHelpText>
+        <label>Budget includes project expenses</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>H2S__Budget__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>How is budgeting done for this project?</inlineHelpText>
+        <label>Budget</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No budget</fullName>
+                    <default>false</default>
+                    <label>No budget</label>
+                </value>
+                <value>
+                    <fullName>Total project hours</fullName>
+                    <default>false</default>
+                    <label>Total project hours</label>
+                </value>
+                <value>
+                    <fullName>Total project fees</fullName>
+                    <default>false</default>
+                    <label>Total project fees</label>
+                </value>
+                <value>
+                    <fullName>Hours per task</fullName>
+                    <default>false</default>
+                    <label>Hours per task</label>
+                </value>
+                <value>
+                    <fullName>Hours per person</fullName>
+                    <default>false</default>
+                    <label>Hours per person</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>H2S__BurnPercent__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>if( H2S__TotalProjectHours__c &gt;0, H2S__TotalTime__c /  H2S__TotalProjectHours__c ,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Time Logged / Total Hour Budget</inlineHelpText>
+        <label>Burn %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>H2S__Burn__c</fullName>
+        <deprecated>false</deprecated>
+        <description>100 is the total max width in pixels; 15 is height in pixels.</description>
+        <externalId>false</externalId>
+        <formula>if(or( ISBLANK( H2S__TotalProjectHours__c ) ,H2S__TotalProjectHours__c=0),&quot;No Budget&quot;,
+if(H2S__TotalProjectHours__c&gt;0,if( H2S__TotalTime__c  /  H2S__TotalProjectHours__c  &gt; 1, IMAGE(&quot;/img/samples/color_red.gif&quot;, &quot;red&quot;, 15, 100) ,
+IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;green&quot;, 15, (H2S__TotalTime__c / H2S__TotalProjectHours__c ) * 100) &amp; IMAGE(&quot;/img/samples/color_yellow.gif&quot;, &quot;yellow&quot;, 15, 100 - ((H2S__TotalTime__c / H2S__TotalProjectHours__c) * 100))),&quot;&quot;)&amp;&quot; &quot;&amp;text( round(H2S__BurnPercent__c *100,0))&amp;&quot;%&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Logged Hours / Budgeted Hours</inlineHelpText>
+        <label>Burn</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__ClientProjectManager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Contact record who is serving as our point-contact at the Client for this project.</inlineHelpText>
+        <label>Client Project Manager</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Projects</relationshipLabel>
+        <relationshipName>HarvestProjects</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>H2S__DateCompleted__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the project was completed.  Used to stop ticker on Project Days.</inlineHelpText>
+        <label>Date Completed</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>H2S__DateStarted__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the project was officially started.  Used to calculate Project Days.</inlineHelpText>
+        <label>Date Started</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>H2S__DaysSinceLastActivity__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>today()- LastActivityDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Number of days since an activity (task, email, call notes, event, etc.) has been logged against this project</inlineHelpText>
+        <label>Days Since Last Activity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__DaysSinceTimeLastLogged__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>today()- H2S__LastTimeLogged__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Number of days since a time card has been logged.</inlineHelpText>
+        <label>Days Since Time Last Logged</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__EarliestTimeLogged__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the first time card was logged.</inlineHelpText>
+        <label>Earliest Time Logged</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Date__c</summarizedField>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>H2S__HarvestProjectID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Harvest&apos;s Unique ID for the Harvest Project. This value can retrieved from the the URL of Harvest&apos;s Project screen.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Harvest&apos;s Unique ID for the Harvest Project. This value can retrieved from the the URL of Harvest&apos;s Project screen.</inlineHelpText>
+        <label>Harvest Project ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__InvoiceMethod__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Invoice Method</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>This project is not billable</fullName>
+                    <default>false</default>
+                    <label>This project is not billable</label>
+                </value>
+                <value>
+                    <fullName>This project is billable</fullName>
+                    <default>false</default>
+                    <label>This project is billable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>H2S__InvoicedTime__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Time cards which have been marked as &quot;invoiced&quot; (lock) in Harvest.</inlineHelpText>
+        <label>Invoiced Time</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Invoiced__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>H2S__LastHarvestSync__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Last Harvest Sync</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>H2S__LastTimeLogged__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Most recent date of time cards logged.</inlineHelpText>
+        <label>Last Time Logged</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Date__c</summarizedField>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>H2S__NoOfEntries__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>number of time cards created by HarvestSync and manually.</inlineHelpText>
+        <label># of Entries</label>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>H2S__Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of related Opportunity</inlineHelpText>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipName>HarvestProjects</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>H2S__PercentOfBudgetAlert__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If project budget reaches this percentage, send email alerts.  Leave blank to disable alerts</inlineHelpText>
+        <label>% of Budget Alert</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectCodeExternalId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <inlineHelpText>If your Harvest project already has a PROJECT CODE, enter the project code here to use the code in Harvest as the external key. If you leave this field blank, then populate the Project Code in Harvest with the auto-generated Project Code from this record.</inlineHelpText>
+        <label>Project Code External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectCode__c</fullName>
+        <deprecated>false</deprecated>
+        <displayFormat>PID-{0}</displayFormat>
+        <externalId>false</externalId>
+        <inlineHelpText>Auto-assigned project ID.  Used to sync to Harvest.</inlineHelpText>
+        <label>Project Code</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectDays__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>if( ISBLANK( H2S__DateCompleted__c ) ,today()- H2S__DateStarted__c , H2S__DateCompleted__c -  H2S__DateStarted__c )</formula>
+        <inlineHelpText>Days from Date Started to Dated Completed (or TODAY if project is still active)</inlineHelpText>
+        <label>Project Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectHourlyRate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is a billable by a project hourly rate, what is the rate?  Leave blank otherwise.</inlineHelpText>
+        <label>Project Hourly Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectInvoicedBy__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is a billable project, how do we invoice for this project?</inlineHelpText>
+        <label>Project invoiced by</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>H2S__InvoiceMethod__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Task hourly rate</fullName>
+                    <default>false</default>
+                    <label>Task hourly rate</label>
+                </value>
+                <value>
+                    <fullName>Person hourly rate</fullName>
+                    <default>false</default>
+                    <label>Person hourly rate</label>
+                </value>
+                <value>
+                    <fullName>Project hourly rate</fullName>
+                    <default>false</default>
+                    <label>Project hourly rate</label>
+                </value>
+                <value>
+                    <fullName>Do not apply hourly rate</fullName>
+                    <default>false</default>
+                    <label>Do not apply hourly rate</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>This project is not billable</controllingFieldValue>
+                <valueName>N/A</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>This project is billable</controllingFieldValue>
+                <valueName>Task hourly rate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>This project is billable</controllingFieldValue>
+                <valueName>Person hourly rate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>This project is billable</controllingFieldValue>
+                <valueName>Project hourly rate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>This project is billable</controllingFieldValue>
+                <valueName>Do not apply hourly rate</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectNotes__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Notes are displayed on the complete project report in Harvest and, only administrator or a project manager can see them.</inlineHelpText>
+        <label>Project Notes</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectStage__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicate where in the work cycle we are with this Project</inlineHelpText>
+        <label>Project Stage</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0: Kick-off Process</fullName>
+                    <default>false</default>
+                    <label>0: Kick-off Process</label>
+                </value>
+                <value>
+                    <fullName>1: Discovery Process</fullName>
+                    <default>false</default>
+                    <label>1: Discovery Process</label>
+                </value>
+                <value>
+                    <fullName>2: Working</fullName>
+                    <default>false</default>
+                    <label>2: Working</label>
+                </value>
+                <value>
+                    <fullName>3: Training Process</fullName>
+                    <default>false</default>
+                    <label>3: Training Process</label>
+                </value>
+                <value>
+                    <fullName>4: Sign-off Process</fullName>
+                    <default>false</default>
+                    <label>4: Sign-off Process</label>
+                </value>
+                <value>
+                    <fullName>9: Completed</fullName>
+                    <default>false</default>
+                    <label>9: Completed</label>
+                </value>
+                <value>
+                    <fullName>X: Cancelled</fullName>
+                    <default>false</default>
+                    <label>X: Cancelled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>H2S__ProjectType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Type of project</inlineHelpText>
+        <label>Project Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Consulting</fullName>
+                    <default>false</default>
+                    <label>Consulting</label>
+                </value>
+                <value>
+                    <fullName>Implementation</fullName>
+                    <default>false</default>
+                    <label>Implementation</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>H2S__SyncStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the status of pairing the salesforce.co HarvestProject record to an associated Project record in Harvest.</inlineHelpText>
+        <label>Sync Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Status Unknown</fullName>
+                    <default>true</default>
+                    <label>Status Unknown</label>
+                </value>
+                <value>
+                    <fullName>Harvest Project Linked</fullName>
+                    <default>false</default>
+                    <label>Harvest Project Linked</label>
+                </value>
+                <value>
+                    <fullName>Harvest Project Not Found</fullName>
+                    <default>false</default>
+                    <label>Harvest Project Not Found</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>H2S__Time_Entries_Count__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Time Entries Count</label>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>H2S__TotalProjectFees__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If this project is budgeted based on total fees, what is the total fee budget?  Leave blank otherwise.</inlineHelpText>
+        <label>Total Project Fees</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>H2S__TotalProjectHours__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If this project is budgeted by hours, what is the budget in hours for the project.  Leave blank otherwise.</inlineHelpText>
+        <label>Total Project Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__TotalTime__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Total of time cards logged in Harvest (both invoiced and uninvoiced)</inlineHelpText>
+        <label>Total Time</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>H2S__UninvoicedTime__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Total of time cards in Harvest which are NOT marked as invoiced.</inlineHelpText>
+        <label>Uninvoiced Time</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Invoiced__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;https://andersonadvisors.my.salesforce.com/&quot;+Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_for_Communities__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;https://platinum.force.com/aba/s/detail/&quot;+ Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link for Communities</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Loss_on_Package__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__TotalProjectFees__c-Package_Hours_Used__c</formula>
+        <label>Loss on Package</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Made_by_Automation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Made by Automation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Max_Time_Entry_Date__c</fullName>
+        <description>Max date on Time Entry object</description>
+        <externalId>false</externalId>
+        <label>Max Time Entry Date</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Date__c</summarizedField>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Package_Burn__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(
+NOT(ISPICKVAL(H2S__Budget__c, &quot;Total Project Fees&quot;)) ,H2S__TotalProjectHours__c=0),&quot;No Budget&quot;,
+IF(
+H2S__TotalProjectFees__c&gt;0,
+IF(
+Package_Hours_Used__c/ H2S__TotalProjectFees__c&gt; 1,
+IMAGE(&quot;/img/samples/color_red.gif&quot;, &quot;red&quot;, 15, 100),
+IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;green&quot;, 15, (Package_Hours_Used__c/ H2S__TotalProjectFees__c) * 100) &amp; IMAGE(&quot;img/samples/color_yellow.gif&quot;, &quot;yellow&quot;, 15, 100 - ((Package_Hours_Used__c/ H2S__TotalProjectFees__c) * 100))),&quot;&quot;)&amp;&quot; &quot;&amp;text( round(Package_Burnpercent__c*100,0))&amp;&quot;%&quot;)</formula>
+        <label>Package Burn</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Package_Burnpercent__c</fullName>
+        <externalId>false</externalId>
+        <formula>Package_Hours_Used__c/ H2S__TotalProjectFees__c</formula>
+        <label>Package Burn %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Package_Hours_Used__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(DATEVALUE(CreatedDate)  &gt; DATE(2020,02,19), ISPICKVAL(H2S__Budget__c, &quot;Total Project Fees&quot;), ISPICKVAL(H2S__ProjectInvoicedBy__c, &quot;Task Hourly Rate&quot;),
+
+H2S__TotalProjectFees__c &gt; 152),
+
+/*new new formula*/
+ABS ( Budget_Rollup_Bookkeeper__c * 85 ) + ( Budget_Rollup_CPA__c * 250 ) + ( Budget_Rollup_Tax_Preparer__c * 150) + ( Budget_Rollup_EA__c * 175 ) + ( Budget_Rollup_Attorney__c * 300 )+(Budget_Rollup_Tax_Preparation_Package__c * 150)+(Budget_Rollup_Tax_Consult_Package__c * 300)+(Budget_Rollup_Tax_Review_Package__c * 200)+(Budget_Rollup_Partner_Tax_Consult__c * 375)+(Budget_Rollup_Bookkeeping_Training__c * 100)+(Budget_Rollup_Bookkeeping_Catch_up__c * 125),
+
+IF(AND(ISPICKVAL(H2S__Budget__c, &quot;Total Project Fees&quot;), ISPICKVAL(H2S__ProjectInvoicedBy__c, &quot;Task Hourly Rate&quot;),
+
+H2S__TotalProjectFees__c &gt; 152),
+
+/*new formula*/
+ABS ( Budget_Rollup_Bookkeeper__c * 80 )  + ( Budget_Rollup_CPA__c * 200 ) + ( Budget_Rollup_Tax_Preparer__c * 100) + ( Budget_Rollup_EA__c * 150 ) + ( Budget_Rollup_Attorney__c * 300 )+(Budget_Rollup_Tax_Preparation_Package__c * 150)+(Budget_Rollup_Tax_Consult_Package__c * 200)+(Budget_Rollup_Tax_Review_Package__c * 150)+(Budget_Rollup_Partner_Tax_Consult__c * 375)+(Budget_Rollup_Bookkeeping_Training__c * 100)+(Budget_Rollup_Bookkeeping_Catch_up__c * 125),
+
+/*old formula*/
+ABS ( Budget_Rollup_Bookkeeper__c * 0.8 ) + ( Budget_Rollup_CPA__c * 2 ) + ( Budget_Rollup_Tax_Preparer__c ) + ( Budget_Rollup_EA__c * 1.5 ) + ( Budget_Rollup_Attorney__c* 3 )+(Budget_Rollup_Tax_Preparation_Package__c * 1.5)+(Budget_Rollup_Tax_Consult_Package__c * 2)+(Budget_Rollup_Tax_Review_Package__c * 1.5 )+(Budget_Rollup_Partner_Tax_Consult__c * 3.75 )+(Budget_Rollup_Bookkeeping_Training__c )+(Budget_Rollup_Bookkeeping_Catch_up__c * 1.25)))</formula>
+        <label>Package Hours Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.PhoneText__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remaining_Project_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(  ISPICKVAL(H2S__Budget__c, &quot;Total Project Fees&quot;),  ISPICKVAL(H2S__ProjectInvoicedBy__c, &quot;Task Hourly Rate&quot;)), H2S__TotalProjectFees__c - Package_Hours_Used__c , NULL)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Remaining Project Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Spouse_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.Spouse_First_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Spouse First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Spouse_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>H2S__Account__r.Spouse_Last_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Spouse Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tax_Duration_Rollup__c</fullName>
+        <description>This is the summary field for &quot;Combo Packages&quot; for all Tax Prep work.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the summary field for &quot;Combo Packages&quot; for all Tax Prep work.</inlineHelpText>
+        <label>Combo Tax Hours</label>
+        <summarizedField>H2S__HarvestTimeEntry__c.H2S__Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+            <operation>equals</operation>
+            <value>Tax Combo Work</value>
+        </summaryFilterItems>
+        <summaryForeignKey>H2S__HarvestTimeEntry__c.H2S__HarvestProject__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Preparer_Assigned__c</fullName>
+        <description>Links to Case, congruently updates.</description>
+        <externalId>false</externalId>
+        <label>Tax Preparer Assigned</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Charles Rogler</fullName>
+                    <default>false</default>
+                    <label>Charles Rogler</label>
+                </value>
+                <value>
+                    <fullName>Christos Zattas</fullName>
+                    <default>false</default>
+                    <label>Christos Zattas</label>
+                </value>
+                <value>
+                    <fullName>Eliot Thomas</fullName>
+                    <default>false</default>
+                    <label>Eliot Thomas</label>
+                </value>
+                <value>
+                    <fullName>Emily Dacanay</fullName>
+                    <default>false</default>
+                    <label>Emily Dacanay</label>
+                </value>
+                <value>
+                    <fullName>Eric Day</fullName>
+                    <default>false</default>
+                    <label>Eric Day</label>
+                </value>
+                <value>
+                    <fullName>Ian Hanuscin</fullName>
+                    <default>false</default>
+                    <label>Ian Hanuscin</label>
+                </value>
+                <value>
+                    <fullName>Jeff Talbert</fullName>
+                    <default>false</default>
+                    <label>Jeff Talbert</label>
+                </value>
+                <value>
+                    <fullName>Jennifer Phipps</fullName>
+                    <default>false</default>
+                    <label>Jennifer Phipps</label>
+                </value>
+                <value>
+                    <fullName>Lulu Mendiola</fullName>
+                    <default>false</default>
+                    <label>Lulu Mendiola</label>
+                </value>
+                <value>
+                    <fullName>Petros Leventis</fullName>
+                    <default>false</default>
+                    <label>Petros Leventis</label>
+                </value>
+                <value>
+                    <fullName>Ronnie Withaeger</fullName>
+                    <default>false</default>
+                    <label>Ronnie Withaeger</label>
+                </value>
+                <value>
+                    <fullName>Toni Covey</fullName>
+                    <default>false</default>
+                    <label>Toni Covey</label>
+                </value>
+                <value>
+                    <fullName>Tracy Cooklin</fullName>
+                    <default>false</default>
+                    <label>Tracy Cooklin</label>
+                </value>
+                <value>
+                    <fullName>--None--</fullName>
+                    <default>true</default>
+                    <label>--None--</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tax_Team_Assigned__c</fullName>
+        <description>Links to Case, congruently updates.</description>
+        <externalId>false</externalId>
+        <label>Tax Team Assigned</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Jennifer Phipps</fullName>
+                    <default>false</default>
+                    <label>Jennifer Phipps</label>
+                </value>
+                <value>
+                    <fullName>--None--</fullName>
+                    <default>true</default>
+                    <label>--None--</label>
+                </value>
+                <value>
+                    <fullName>Ronnie Withaeger</fullName>
+                    <default>false</default>
+                    <label>Ronnie Withaeger</label>
+                </value>
+                <value>
+                    <fullName>Toni Covey</fullName>
+                    <default>false</default>
+                    <label>Toni Covey</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Total_Combo_Package_Hours_Used__c</fullName>
+        <externalId>false</externalId>
+        <formula>Bookkeeping_Duration_Rollup__c + Tax_Duration_Rollup__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Combo Package Hours Used</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Hours__c</fullName>
+        <externalId>false</externalId>
+        <formula>ABS( H2S__TotalProjectFees__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Project</label>
+    <listViews>
+        <fullName>Active_Projects</fullName>
+        <columns>NAME</columns>
+        <columns>H2S__DateCompleted__c</columns>
+        <columns>H2S__Archived__c</columns>
+        <columns>H2S__HarvestProjectID__c</columns>
+        <columns>H2S__Account__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>H2S__DaysSinceTimeLastLogged__c</columns>
+        <columns>H2S__InvoicedTime__c</columns>
+        <columns>H2S__UninvoicedTime__c</columns>
+        <columns>H2S__TotalTime__c</columns>
+        <columns>H2S__Burn__c</columns>
+        <columns>H2S__LastHarvestSync__c</columns>
+        <columns>H2S__Budget__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>H2S__DateCompleted__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Active Projects</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>H2S__All</fullName>
+        <columns>H2S__Account__c</columns>
+        <columns>NAME</columns>
+        <columns>H2S__ProjectCode__c</columns>
+        <columns>H2S__ProjectCodeExternalId__c</columns>
+        <columns>H2S__DaysSinceTimeLastLogged__c</columns>
+        <columns>H2S__InvoicedTime__c</columns>
+        <columns>H2S__UninvoicedTime__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>H2S__SyncStatus__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Projects - All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>H2S__My_Active_Projects</fullName>
+        <columns>NAME</columns>
+        <columns>H2S__DateStarted__c</columns>
+        <columns>H2S__DaysSinceTimeLastLogged__c</columns>
+        <columns>H2S__InvoicedTime__c</columns>
+        <columns>H2S__UninvoicedTime__c</columns>
+        <columns>H2S__TotalTime__c</columns>
+        <columns>H2S__Burn__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>H2S__DateCompleted__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>My Active Projects</label>
+    </listViews>
+    <listViews>
+        <fullName>H2S__My_Completed_Projects</fullName>
+        <columns>NAME</columns>
+        <columns>H2S__DateStarted__c</columns>
+        <columns>H2S__InvoicedTime__c</columns>
+        <columns>H2S__UninvoicedTime__c</columns>
+        <columns>H2S__TotalTime__c</columns>
+        <columns>H2S__Burn__c</columns>
+        <columns>H2S__DateCompleted__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>H2S__DateCompleted__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>My Completed Projects</label>
+    </listViews>
+    <listViews>
+        <fullName>H2S__Projects_Active</fullName>
+        <columns>NAME</columns>
+        <columns>H2S__DateCompleted__c</columns>
+        <columns>H2S__Archived__c</columns>
+        <columns>H2S__HarvestProjectID__c</columns>
+        <columns>H2S__Account__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>H2S__DaysSinceTimeLastLogged__c</columns>
+        <columns>H2S__InvoicedTime__c</columns>
+        <columns>H2S__UninvoicedTime__c</columns>
+        <columns>H2S__TotalTime__c</columns>
+        <columns>H2S__Burn__c</columns>
+        <columns>H2S__LastHarvestSync__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>H2S__Archived__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>H2S__DateCompleted__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>EXCEPTION: Archived w/No Date Completed</label>
+    </listViews>
+    <listViews>
+        <fullName>H2S__Projects_Completed</fullName>
+        <columns>NAME</columns>
+        <columns>H2S__DateStarted__c</columns>
+        <columns>H2S__ProjectDays__c</columns>
+        <columns>H2S__InvoicedTime__c</columns>
+        <columns>H2S__UninvoicedTime__c</columns>
+        <columns>H2S__TotalTime__c</columns>
+        <columns>H2S__Burn__c</columns>
+        <columns>H2S__DateCompleted__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>H2S__DateCompleted__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Projects - Completed</label>
+    </listViews>
+    <nameField>
+        <label>Project Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Projects</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>H2S__ProjectCode__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>H2S__Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>H2S__Budget__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>H2S__UninvoicedTime__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>H2S__TotalTime__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>H2S__DaysSinceTimeLastLogged__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>OWNER.ALIAS</customTabListAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>H2S__Budget_by_Hours_without_budget</fullName>
+        <active>true</active>
+        <description>If the project has an hourly budget, then require budgeted hours to be populated.</description>
+        <errorConditionFormula>and( ISPICKVAL( H2S__Budget__c , &quot;Total project hours&quot;) , ISBLANK( H2S__TotalProjectHours__c ) )</errorConditionFormula>
+        <errorDisplayField>H2S__TotalProjectHours__c</errorDisplayField>
+        <errorMessage>You must enter the Budget # of Hours for this project.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>H2S__Warn_on_Late_Start_Date</fullName>
+        <active>false</active>
+        <description>Provide warning if Date Started is AFTER the Earliest Time Logged date.</description>
+        <errorConditionFormula>H2S__DateStarted__c &gt;  H2S__EarliestTimeLogged__c</errorConditionFormula>
+        <errorDisplayField>H2S__DateStarted__c</errorDisplayField>
+        <errorMessage>Date Started must be ON or BEFORE Earliest Time Logged date</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>H2S__SyncHarvestTimeEntries</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Sync Harvest Time Entries</masterLabel>
+        <openType>sidebar</openType>
+        <page>H2S__HarvestSyncProjectEntries</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>H2S__Toggle_Open_Close_Project</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Toggle Open/Close Project</masterLabel>
+        <openType>sidebar</openType>
+        <page>H2S__ProjectToggleArchived</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Package_Burn</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Package Burn</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!H2S__HarvestProject__c.Id}
+&amp;TemplateGroup=Project
+&amp;SelectTemplates=0
+&amp;DefaultPDF=1
+&amp;OFN={!YEAR(TODAY())}.{!MONTH(TODAY())}.{!DAY(TODAY())} - +{!H2S__HarvestProject__c.H2S__Account__c}-+
+{Template.label}
+&amp;LG4=1
+&amp;DS3=0
+&amp;ReportID=[TimeEntries]00O0B000003gHFC</url>
+    </webLinks>
+</CustomObject>

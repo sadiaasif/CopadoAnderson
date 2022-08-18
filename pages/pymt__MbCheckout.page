@@ -1,0 +1,737 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbCheckoutController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+    
+    <script src="{!URLFOR($Resource.PaymentConnectMobile,'SignaturePad/signature_pad.js')}"></script>   
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'SignaturePad/signature_pad.css')}" />
+
+     
+ 
+  <apex:dynamicComponent componentValue="{!CordovaJS}"/>
+  <script src="{!URLFOR($Resource.PaymentConnectMobile,'UniMagSwipe/unimag.js')}"></script>  
+       
+    <script>
+        var paymentId = '{!payment.id}';
+    
+        var lat, lon;
+        var signatureDataURL;
+        
+        function findLatLon(position) {
+           
+
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            //$("#currentGeoPosition").html('Current position: '+lat+', '+lon);
+        }
+        
+        function showGeoError(error) {
+                  
+
+            var x = document.getelementById("currentGeoPosition");
+             switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred."
+                    break;
+            }       
+        }
+        
+        function getCardType(ccnumber)
+        {            
+            var cc = (ccnumber + '').replace(/\s/g, ''); //remove space
+         
+            if ((/^(34|37)/).test(cc) && cc.length == 15) {
+                return 'Amex'; //AMEX begins with 34 or 37, and length is 15.
+            } else if ((/^(51|52|53|54|55)/).test(cc) && cc.length == 16) {
+                return 'MasterCard'; //MasterCard beigins with 51-55, and length is 16.
+            } else if ((/^(4)/).test(cc) && (cc.length == 13 || cc.length == 16)) {
+                return 'Visa'; //VISA begins with 4, and length is 13 or 16.
+            } else if ((/^(300|301|302|303|304|305|36|38)/).test(cc) && cc.length == 14) {
+                return 'DinersClub'; //Diners Club begins with 300-305 or 36 or 38, and length is 14.
+            } else if ((/^(2014|2149)/).test(cc) && cc.length == 15) {
+                return 'enRoute'; //enRoute begins with 2014 or 2149, and length is 15.
+            } else if ((/^(6011)/).test(cc) && cc.length == 16) {
+                return 'Discover'; //Discover begins with 6011, and length is 16.
+            } else if ((/^(3)/).test(cc) && cc.length == 16) {
+                return 'JCB';  //JCB begins with 3, and length is 16.
+            } else if ((/^(2131|1800)/).test(cc) && cc.length == 15) {
+                return 'JCB';  //JCB begins with 2131 or 1800, and length is 15.
+            }
+            return '?'; //unknow type
+        }
+        
+    function loading(showOrHide) {
+        setTimeout(function(){
+            $.mobile.loading(showOrHide);
+        }, 1); 
+    }
+                    
+        
+        $( document ).on( "pagecreate", function() {
+
+
+            document.addEventListener('deviceready', umagInit, false);
+
+            $("#billingCountry option").each(function(i, opt) {
+               if (opt.value == "{!payment.pymt__Billing_Country__c}") {
+                  $("#billingCountry").prop('selectedIndex', i);
+                  $("#billingCountry").selectmenu('refresh');
+                  return false;
+               }
+            });            
+
+            // Hide card swipe button.  If Unimag SDK is active it will be displayed later           
+            $("#btnStartSwipe").hide();
+           
+            <apex:outputPanel layout="none" rendered="{!NOT(OR(isAndroid,isIOS))}">
+            if (navigator.geolocation) {
+               $("#currentGeoPosition").html('Checking position...');
+                navigator.geolocation.getCurrentPosition(findLatLon, showGeoError);
+            }
+            </apex:outputPanel>
+
+            // Disable autocomplete on sensitive fields
+            $("#cardNumber").attr("autocomplete", "off");
+
+            // -------------------------------------
+            // Init signature pad canvas and buttons
+            // -------------------------------------
+             var wrapper = document.getElementById("signature-pad");
+             var canvas = wrapper.querySelector("canvas");
+             var signaturePad;
+            
+            // Adjust canvas coordinate space taking into account pixel ratio,
+            // to make it look crisp on mobile devices.
+            // This also causes canvas to be cleared.
+            function resizeCanvas() {
+                var ratio =  window.devicePixelRatio || 1;
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+            }
+            
+            window.onresize = resizeCanvas;
+            resizeCanvas();
+            // Make sure resize is run when signaturePadPage is displayed
+            
+            $( "#signaturePadPage" ).on( "pageshow", function( event ) {
+                //alert("pageshow event"+event.type);
+                setTimeout(function(){
+                    resizeCanvas();
+                }, 1); 
+            });            
+
+                     
+            signaturePad = new SignaturePad(canvas);
+            $( "#signatureClear" ).on( "click", function( event ) {
+                signaturePad.clear();
+            });            
+
+     
+            
+            $( "#signatureSave" ).on( "click", function( event ) {
+            console.log('signature save - event = '+event.type);
+                if (signaturePad.isEmpty()) {
+                    alert("Please provide signature first.");
+                } else {
+                   // (Optional) Write payment record ID on signature
+                   //   var context = canvas.getContext("2d");
+                   //   context.fillStyle = "gray";
+                   //   context.font = "bold 16px Arial";
+                   //   context.fillText("Payment ID:"+paymentId, 10, 20);
+                                         
+                                         
+                   // window.open(signaturePad.toDataURL());  // opens signature image in a new window
+                   
+                   //$("#signature-view").html("<img style='width:75%;' src='"+signaturePad.toDataURL()+"' alt='Signature Image'/>");  // inserts signature image in page
+                   
+
+                   signatureDataURL = signaturePad.toDataURL();
+                   processPayment();
+                }
+            }); 
+                       
+            
+            // -------------------------------------            
+
+            $("#cardNumber").on("input", function() {
+                var cardNum = parseInt($("#cardNumber").val());
+                updateCardTypeList(cardNum);
+
+            });
+        });
+        
+        function updateCardTypeList(cardNum) {
+            if (isNaN(cardNum)) {
+                // ignore the input
+            } else {
+                var cardType = getCardType(cardNum);
+                if (cardType !== "?") {
+
+                    $("#select-choice-card-type option").each(function(i, opt) {
+                      
+                       if (opt.value == cardType) {
+                          $("#select-choice-card-type").prop('selectedIndex', i);
+                          $("#select-choice-card-type").selectmenu('refresh');
+                          return false;
+                       }
+                    });
+                }
+            }        
+        }
+    </script>
+    
+<script>
+//-----------------------------------------------------------------
+// Umag Setup Code
+//-----------------------------------------------------------------
+var readerStatus = 'Detached';
+
+
+function umagInit() {
+
+  
+  //activate SDK, setup notification callback
+  function activateSDK() {
+    //activate sdk and register notification callback
+    unimag.activateSDK(function(type) {
+      var d = {};
+      var E = unimag.NotifEnum;
+      d[E.Attach    ]='Disconnected'; //attached, but haven't connected
+      d[E.Detach    ]='Detached'    ; //reader detached
+      d[E.Connect   ]='Connected'   ; //reader connected, ready
+      d[E.Disconnect]='Disconnected'; //attached, but haven't connected
+      
+      readerStatus = d[type];
+    });
+    
+
+  }
+  
+    <apex:outputPanel layout="none" rendered="{!OR(isAndroid,isIOS)}">
+    // check location after "deviceready" event on mobile, to avoid "would like to use your current location" prompts every time page is loaded.
+    if (navigator.geolocation) {
+       $("#currentGeoPosition").html('Checking position...');
+        navigator.geolocation.getCurrentPosition(showPosition, showGeoError);
+    }
+    </apex:outputPanel>
+
+
+  $('#btnStartSwipe').on('vclick', function() {
+      if (! unimag.isSDKActive() ) {
+        // Need to activate SDK
+         alert('SDK is not active.  Attempting to activate...');
+         activateSDK();
+         return;
+      }
+      if (readerStatus === 'Detached') {
+        // display warning and ask to attach the reader
+         alert('No card reader found.  Please attach your card reader and try again.');
+         return;
+        
+      } else if (readerStatus === 'Disconnected') {
+         // Card reader is disconnected. Attempt to connect and then start swipe action
+         connectAndSwipe();
+         return;
+         
+      } else {
+        alert('Reader status = '+readerStatus);
+      }
+      
+      // Otherwise ok to start swipe action
+      
+    
+      doSwipe();
+      
+      
+  });
+
+    function connectAndSwipe() {
+        unimag.startTaskConnect(function(task, taskNotif, info) {
+          var E = unimag.TaskNotifEnum;
+          switch(taskNotif) {
+            case E.StartFailed:
+              $.mobile.loading("hide");           
+              //alert(task+' task failed to start: '+info.StartFailedReason);
+            break;
+            case E.Started:
+              //alert('ConnectAndSwipe task started: '+task);
+              loading("show");           
+              
+            break;
+            case E.Stopped:
+              //alert('ConnectAndSwipe task stopped: '+task);
+              loading("hide");           
+              
+              if (!info.ok) {
+                console.log('connection timed-out');
+                } else {
+                  // Connected, start swipe
+                  
+                  doSwipe();
+                }
+            break;
+          }
+        });    
+            
+    }
+    
+    
+    function doSwipe() {
+    
+      unimag.startTaskSwipe(function(task, taskNotif, info) {
+    
+          var E = unimag.TaskNotifEnum;
+          console.log('[MbHome Info] Start Swipe: Task: '+task+', TaskNotif:'+taskNotif+', info.ok:'+info.ok+', info.data:'+info.data);
+              switch(taskNotif) {
+                case E.StartFailed:
+                  console.log(task+' task failed to start: '+info.StartFailedReason);
+                  //$("#error-popup").html(info.StartFailedReason);
+                 // $("#error-popup").popup("open");
+        
+                break;
+                case E.Started:
+                  //alert("DoSwipe task started:"+task);
+                  $("#card-swipe-popup").popup({dismissible: false});
+                  $("#card-swipe-popup").popup("open");
+                break;
+                case E.Stopped:
+                  //alert("DoSwipe task stopped:"+task);
+                  
+                  $("#card-swipe-popup").popup("close");
+          
+                  
+                  if (!info.ok) {
+                    console.log('swipe failed');
+                  } 
+                  if (info.data) {
+                    console.log('command response:');
+                    //console.log('hex: '+getBase16 (info.data)+'');
+                    //console.log('ascii: '+getStrRepr(info.data)+'');
+                    var myregexp = /%B(\d+)\^([^\^]+)\^(\d{4})/;
+                    var mymatch = myregexp.exec(getStrRepr(info.data));
+                    //alert('Regex match: '+mymatch.length+', '+mymatch[1]+', '+mymatch[2]+', '+mymatch[3]);
+                    var fieldValue = mymatch[1];
+                    var yrmo = mymatch[3];
+                    
+                    $("#cardNumber").val(fieldValue);
+                    updateCardTypeList(fieldValue);
+                    
+                    var yr = "20"+yrmo.substring(0,2);
+                    var mo = yrmo.substring(2,4);
+                    //alert('yrmo: '+yrmo+' year: '+yr);
+                    $("#select-choice-year option").each(function(i, opt) {
+                       if (opt.value === yr) {
+                          $("#select-choice-year").prop('selectedIndex', i);
+                          $("#select-choice-year").selectmenu('refresh');
+                          return false;
+                       }
+                    });            
+
+                    $("#select-choice-month option").each(function(i, opt) {
+                       if (opt.value === mo) {
+                          $("#select-choice-month").prop('selectedIndex', i);
+                          $("#select-choice-month").selectmenu('refresh');
+                          return false;
+                       }
+                    });            
+                            
+                    
+                    
+                  }
+                break;
+              }
+        });
+    }  
+
+  $('#btnCancelSwipe').on('vclick', function() {
+    setTimeout(   // add delay so users finger does not tap page under cancel dialog
+      function() 
+      {
+        unimag.stopTask();
+      }, 1500);
+    
+  });
+  
+
+  //get base16 encoded string, given unsigned char (byte) array
+  function getBase16(array) {
+    var ret = [], a = array;
+    for (var i=0; i<a.length; i++) {
+      var hex = a[i].toString(16);
+      ret[i] = (hex.length==1?"0":"")+hex;
+      if (i%4==3)
+        ret[i] += " ";
+    }
+    return ret.join("");
+  }
+  
+  //get ASCII string, with escape chars, from unsigned char (byte) array
+  function getStrRepr(array) {
+    var ret = [], a = array;
+    for (var i=0; i<a.length; i++) {
+      if        (a[i] == '\t'.charCodeAt(0)) {
+          ret[i] = "\\t";
+      } else if (a[i] == '\n'.charCodeAt(0)) {
+          ret[i] = "\\n";
+      } else if (a[i] == '\r'.charCodeAt(0)) {
+          ret[i] = "\\r";
+      } else if (a[i] == '\\'.charCodeAt(0)) {
+          ret[i] = "\\\\";
+      //printable
+      } else if (a[i] >= 0x20 && a[i] <= 0x7E) {
+          ret[i] = String.fromCharCode(a[i]);
+      //use \hex for all others
+      } else {
+          var hex = a[i].toString(16);
+          ret[i] = "\\"+(hex.length==1?"0":"")+hex; // eg. 0xab => \ab instead of \xab
+      }
+    }
+    return ret.join("");
+  }
+  
+  //-----------------------------------------------------------------
+  //Start up code
+  //-----------------------------------------------------------------
+  
+  
+  activateSDK(); //activate SDK automatically on page ready
+   $("#btnStartSwipe").show();
+   //$("#btnStartSwipe").attr("data-theme",'g').removeClass("ui-btn-up-a").addClass("ui-btn-up-g").button("Refresh");
+   //$("#btnSubmitPayment").buttonMarkup({theme: "g"}).removeClass("ui-btn-up-a").addClass("ui-btn-up-g").button("Refresh");
+
+}
+
+//------------------------------------------------------------------
+// Process Payment and save lat/lon, signature, etc.
+//------------------------------------------------------------------
+function processPayment() {
+        // ProcessPaymentResult processPayment(String paymentId, String connectionId, String cardNumber, String cvv, Decimal amount, AddressInfo billingAddress, String signatureDataURL, Decimal latitude, Decimal longitude) 
+        var billingAddr = new Object();
+        billingAddr.firstName = $("#firstName").val();
+        billingAddr.lastName = $("#lastName").val();
+        billingAddr.street = $("#billingStreet").val();
+        billingAddr.city = $("#billingCity").val();
+        billingAddr.state = $("#billingState").val();
+        billingAddr.postalCode = $("#billingPostalCode").val();
+        billingAddr.country = $("#billingCountry option:selected").val();
+        //billingAddr.email = $("#emailAddress").val();
+        //billingAddr.phone = $("#phone").val();
+        
+        loading("show");
+        var connectionId = "{!mobileSettings.pymt__Processor_Connection_Id__c}";
+        var paymentTotal = "{!payment.pymt__Amount__c}";
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.MobileBaseController.processPayment}', 
+            paymentId,     // need to check to see if this is null before calling 
+            connectionId,  
+            $("#cardNumber").val(), // need to check to see if this is set before calling
+            $("#select-choice-month").val(),
+            $("#select-choice-year").val(),
+            $("#select-choice-card-type").val(),
+            $("#cvv").val(), // need to check to see if this is set before calling
+            paymentTotal,
+            billingAddr,
+            signatureDataURL,
+            lat,
+            lon,
+            function(result, event){
+               loading("hide");
+                if (event.status) {
+                    console.log('Payment record updated.  event.status = '+event.status);
+                    //alert('Payment record updated: '+ event.status + ' : '+result.message);
+                    //$("#cardNumber").val('');
+                    var newPageURL = "{!URLFOR($Page.MbConfirm)}?id="+paymentId;
+                    var finishURL = "{!finishURL}";
+                    if (finishURL !== "") {
+                       newPageURL += "&finish_URL={!URLENCODE(finishURL)}";
+                    }
+                    window.location.href = newPageURL;
+                } else if (event.type === 'exception') {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                } else {
+                  $("#error-popup-message").html(event.message);
+                  $("#error-popup").popup("open", {positionTo:"window"});
+                }
+            }, 
+            {escape: true}
+        );
+}
+
+
+ </script>    
+    
+<style>
+
+    
+    .forceinline {
+      display:inline !important;
+    }
+        
+        
+        /* iPhone 2G-4S in landscape */
+@media only screen and (min-device-width :320px) and (max-device-width : 480px) and (orientation : landscape) {
+    .m-signature-pad {
+        height:250px;
+    }
+}
+</style>
+    
+    
+</head>
+<body>
+<div data-role="page" data-theme="a" id="checkoutpage">
+
+    <div data-role="header" data-position="fixed">
+        <h1>Checkout</h1>
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>      
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+
+
+<h2>Checkout</h2>
+<div data-role="collapsible" data-content-theme="a">
+        <h2>Cart Items</h2>
+    <table data-role="table" id="cart-item-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!payment.R00N40000001tGNtEAM}" var="lineItem">
+      <tbody>
+        <tr>
+          <td>{!lineItem.Name}</td>
+          <td>{!lineItem.pymt__Unit_Price__c}</td>
+          <td>{!lineItem.pymt__Quantity__c}</td>
+          <td>{!lineItem.pymt__Total__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+    </table>
+
+    <table  id="cart-totals-table"  >
+        <apex:outputPanel layout="none" rendered="{!AND(NOT(payment.pymt__Discount__c == null),NOT(payment.pymt__Discount__c == 0))}">
+        <tr><td>Discount:</td><td>({!payment.pymt__Discount__c})</td></tr>
+        </apex:outputPanel> 
+
+        <apex:outputPanel layout="none" rendered="{!AND(NOT(payment.pymt__Shipping__c == null),NOT(payment.pymt__Shipping__c == 0))}">
+        <tr><td>Shipping:</td><td>{!payment.pymt__Shipping__c}</td></tr>
+        </apex:outputPanel> 
+
+        <apex:outputPanel layout="none" rendered="{!AND(NOT(payment.pymt__Tax__c == null),NOT(payment.pymt__Tax__c == 0))}">
+        <tr><td>Tax:</td><td>{!payment.pymt__Tax__c}</td></tr>
+        </apex:outputPanel> 
+
+        <tr><td>Total:</td><td>{!payment.pymt__Amount__c}&nbsp;{!payment.pymt__Currency_ISO_Code__c}</td></tr>
+    </table>
+</div>
+
+<div data-role="collapsible" data-content-theme="a" data-collapsed="false">
+        <h2>Billing Address</h2>
+        
+    <div class="ui-field-contain">
+      <label for="firstName">First Name:</label>
+      <input type="text" name="firstName" id="firstName" value="{!payment.pymt__Billing_First_Name__c}" data-clear-btn="true" />
+    </div>  
+
+    <div class="ui-field-contain">
+      <label for="lastName">Last Name:</label>
+      <input type="text" name="lastName" id="lastName" value="{!payment.pymt__Billing_Last_Name__c}" data-clear-btn="true" />
+    </div>  
+
+
+    <div class="ui-field-contain">
+      <label for="billingStreet">Street:</label>
+      <input type="text" name="billingStreet" id="billingStreet" value="{!payment.pymt__Billing_Street__c}" data-clear-btn="true" />
+    </div>  
+
+    <div class="ui-field-contain">
+      <label for="billingCity">City:</label>
+      <input type="text" name="billingCity" id="billingCity" value="{!payment.pymt__Billing_City__c}" data-clear-btn="true" />
+    </div>  
+
+
+    <div class="ui-field-contain">
+      <label for="billingState">State:</label>
+      <input type="text" name="billingState" id="billingState" value="{!payment.pymt__Billing_State__c}" data-clear-btn="true" />
+    </div>  
+
+
+    <div class="ui-field-contain">
+      <label for="billingPostalCode">Postal Code:</label>
+      <input type="text" name="billingPostalCode" id="billingPostalCode" value="{!payment.pymt__Billing_Postal_Code__c}" data-clear-btn="true" />
+    </div>  
+
+    <div class="ui-field-contain">
+      <label for="billingCountry">Country:</label>
+        <select name="billingCountry" id="billingCountry">
+            <apex:repeat value="{!countryPicklistOptions}" var="country">
+                <option value="{!country.value}">{!country.label}</option>
+            </apex:repeat>
+        </select>       
+    </div>  
+
+</div>
+
+
+<div data-role="collapsible" data-content-theme="a" data-collapsed="false">
+        <h2>Card Info</h2>
+    
+    <div class="ui-field-contain">
+      <label for="cardNumber">Card Number:</label>
+      <input type="number" name="cardNumber" id="cardNumber" value="" data-clear-btn="true" autocomplete="off"/>
+    </div>    
+    
+    <div class="ui-field-contain" id="swipeButtonPanel">
+        <label for="swipeButton"></label>
+        <a href="#" id="btnStartSwipe" data-inline="true" data-role="button" data-theme="g" >Swipe Credit Card</a>  
+         
+    </div>
+    
+    <div class="ui-field-contain">
+      <label for="select-choice-card_type">Type:</label>
+          <select name="select-choice-card-type" id="select-choice-card-type">
+        <option value="----">Card Type</option>
+        <option value="MasterCard">MasterCard</option>
+        <option value="Visa">Visa</option>
+        <option value="Amex">American Express</option>
+        <option value="Discover">Discover</option>
+    </select>
+    </div>  
+
+
+    
+    <div data-role="fieldcontain">
+    <fieldset data-role="controlgroup" data-type="horizontal">
+        <legend>Expiration:</legend>
+    
+        <label for="select-choice-month">Month</label>
+    <select name="select-choice-month" id="select-choice-month">
+        <option>Month</option>
+        <option value="01">January</option>
+        <option value="02">February</option>
+        <option value="03">March</option>
+        <option value="04">April</option>
+        <option value="05">May</option>
+        <option value="06">June</option>
+        <option value="07">July</option>
+        <option value="08">August</option>
+        <option value="09">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+    </select>
+    
+    
+    <label for="select-choice-year">Year</label>
+    <select name="select-choice-year" id="select-choice-year">
+        <option>Year</option>
+        <apex:repeat value="{!expYearOptions}" var="expYear">
+        <option value="{!expYear.value}">{!expYear.label}</option>
+        </apex:repeat>
+    </select>
+    </fieldset>
+    </div>
+    
+    <div class="ui-field-contain">
+      <label for="cvv">CVV:</label>
+      <input type="number" name="cvv" id="cvv" value="" data-clear-btn="true" />
+    </div>      
+    
+</div>
+
+
+<br/><br/>
+
+
+
+    
+<a href="#signaturePadPage" id="btnSubmitPayment" data-role="button" data-theme="a"  >Submit</a>      
+        
+    <!-- div id="currentGeoPosition"></div -->
+
+  
+    </div><!-- /content -->
+
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link"  onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div>
+
+
+<div data-role="popup"  id="card-swipe-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  
+    <div style="text-align:center;"><apex:image id="swipeReadyIcon" url="{!URLFOR($Resource.pymt__PaymentConnect,'images/generic-credit-card-icon.png')}" width="200" />
+    <br/>
+    <div id="swipe-popup-message"><h3>Waiting for card swipe...</h3></div> <br/></div>
+    <a href="#" id="btnCancelSwipe" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-delete">Cancel</a> 
+</div>
+</div><!-- /page -->
+
+
+<div data-role="page" id="signaturePadPage">
+
+    <div data-role="header">
+        <h1>Signature</h1>
+        <a href="#" data-rel="back" class="fawe-icon-hdr-link" ><i class="fa fa-angle-left fa-2x"></i></a>      
+    </div><!-- /header -->
+
+      
+      <div id="signature-view"></div>
+    <div data-role="content">   
+<br/><br/>
+  <div id="signature-pad" class="m-signature-pad">
+    <div class="m-signature-pad--body">
+      <canvas></canvas>
+    </div>
+    <div class="m-signature-pad--footer">
+     <!--  <div class="description">Sign above</div> -->
+      <a href="#checkoutpage" id="signatureCancel" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini">Cancel</a>
+
+      <a href="#" id="signatureClear" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini">Clear</a>
+      <a href="#" id="signatureSave" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini">Accept</a>
+    </div>
+  </div>    
+    </div><!-- /content -->
+
+
+</div><!-- /page -->
+
+
+</body>
+</html>
+
+</apex:page>

@@ -1,0 +1,19 @@
+<aura:component controller="renProcessCongaCmpController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="recordId" type="Id"/>
+	<aura:attribute name="congaObject" type="Renewal_Processing_Conga_Docs__c"/>
+    <aura:attribute name="congaFields" type="String[]" default="Name,X1244_Special_Directors_Meeting__c,Corp_Nominee_Packet_NV__c,Corp_Nominee_Packet_NV_Docusign__c,Corp_Nominee_Packet_WY__c,Nominee_Packet_WY_Docusign__c,Corporate_Annual_Meeting__c,Corp_Non_Profit_Special_Dirctors_Meeting__c,Corp_Non_Profit_Annual_Meeting__c,Corporate_Consent_to_Action__c,Corp_Resignation_of_Nominee__c,Corp_Special_Directors_Meeting__c,Corp_Special_Shareholder_Meeting__c,Dissolution_Meeting_Corp__c,Dissolution_Meeting_LLC_Man_Managed__c,Dissolution_Meeting_LLC_Member_Man__c,Dissolution_Meeting_LP_Corp_General_P__c,Dissolution_Meeting_LP_No_Corp__c,LLC_Annual_Meeting_Manager_Managed__c,LLC_Annual_Meeting_Member_Managed__c,LLC_Consent_to_Action__c,LLC_Initial_Resignation_of_Nominee__c,LLC_Nominee_Packet_Corp__c,LLC_Nominee_Packet_Individual__c,LLC_Special_Managers_Meeting__c,LLC_Special_Members_Meeting__c, LP_Annual_Meeting__c,LP_Emergency_Meeting_Election_of_new__c,LP_Nominee_Packet_Corp_Gp__c,LP_Nominee_Packet_Individual_GP__c,LP_Special_Partners_Meeting__c,RA_Resignation_California__c,RA_Resignation_Inactive_Entity__c"/>
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}"/>
+    
+    <lightning:recordForm id="renewalCongaForm"
+                         recordId="{!v.congaObject.Id}"
+                         objectApiName="Renewal_Processing_Conga_Docs__c"
+                         fields="{!v.congaFields}"
+                         columns="2"
+                         mode="view"
+                         >
+
+    </lightning:recordForm>
+    
+    
+</aura:component>

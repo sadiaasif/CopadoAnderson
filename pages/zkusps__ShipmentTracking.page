@@ -1,0 +1,19 @@
+<apex:page showHeader="true" sidebar="true" controller="zkusps.ShipmentTrackingController" docType="html-5.0">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Track Shipment" action="{!trackShipment}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Tracking number" columns="2">
+                <apex:outputLabel >Tracking number:</apex:outputLabel> <apex:input id="trackingNumber" value="{!trackingNumber}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Results" columns="1">
+                <label>Status:</label> {!status}
+                <br/>
+                <br/>
+                <label>Details:</label>
+                <apex:outputText escape="false" value="{!details}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

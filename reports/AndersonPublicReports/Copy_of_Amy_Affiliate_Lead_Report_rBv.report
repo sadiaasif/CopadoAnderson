@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_9834829</developerName>
+        <masterLabel>OCS</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Lead.Original_Campaign_Source__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Dave Lindahl 07.12.2019 &amp; 07.13.2019 DC &amp; Atlanta</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dave Lindahl 10.18.2019 Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dave Lindahl AP Event Promotion</sourceValue>
+            </sourceValues>
+            <value>Dave Lindahl</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jet Lending</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending - 2017.10.18 - Houston</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending 3.1.2018 Leads</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending - February Meeting</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending-Lead Call List</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending Meeting 01.15.2020 - BP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending Meeting 02.19.2020 - BP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending Meeting 08.21.2019</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending Meeting 09.18.2019 - BP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending Meeting 10.16.2019 - BP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending Meeting 11.20.2019 - BP</sourceValue>
+            </sourceValues>
+            <value>Jet Lending</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Pat James 02.21.2020 Email Blast - BP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pat James Preview Event 01.10.2020-01.11.2020 Houston - BP</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pat James San Francisco 02.10.2020 AP Email Promo</sourceValue>
+            </sourceValues>
+            <value>Pat James</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Lead.OCS_Parent_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Main_Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>LEAD_OWNER</field>
+    </columns>
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>CONVERTED_DATE</field>
+    </columns>
+    <columns>
+        <field>OPP_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sales_Rep__c</field>
+    </columns>
+    <columns>
+        <field>STAGE_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Opportunity.ChargentSFA__Transaction_Total__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Lead.Affiliate_Lead__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>DO_NOT_CALL</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Copy of Amy - Affiliate Lead Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityLead</reportType>
+    <scope>org</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CONVERTED_DATE</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CURY</interval>
+    </timeFrameFilter>
+</Report>

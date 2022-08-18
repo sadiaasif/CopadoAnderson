@@ -1,0 +1,1972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <customHelpPage>evt__EventManagementHelp</customHelpPage>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Event attendees</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>ABA_AP_Event__c</fullName>
+        <externalId>false</externalId>
+        <label>ABA AP Event</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_Paid__c</fullName>
+        <description>Converts Total Paid field (text field) to currency format</description>
+        <externalId>false</externalId>
+        <formula>VALUE(Total_Paid__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Amount Paid</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Arrival_Date__c</fullName>
+        <description>Date Client Will arrive for Event</description>
+        <externalId>false</externalId>
+        <label>Arrival Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Attended_Checkbox__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TEXT(evt__Invitation_Status__c) = &apos;Attended&apos;, TRUE, FALSE)</formula>
+        <label>Attended Check</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CVV_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>CVV Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Contact__r.AccountId</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client_State__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(evt__Contact__r.Account.BillingState), evt__Contact__r.Account.ShippingState, evt__Contact__r.Account.BillingState)</formula>
+        <label>Client State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://na48.salesforce.com/&quot; + evt__Contact__r.AccountId, evt__Contact__r.Account.Name  )</formula>
+        <label>Client</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Confirmation_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Confirmation Note</label>
+        <length>1000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Confirmation__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Contact__r.Confirmation__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Confirmation #</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Confirmed_by__c</fullName>
+        <externalId>false</externalId>
+        <label>Confirmed by</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Attendee_Confirmed_By</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Coupon_Code_Used__c</fullName>
+        <description>Coupon Code Used for Sale</description>
+        <externalId>false</externalId>
+        <label>Coupon Code Used</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Reservation__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Card Reservation #</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_Registered__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Registered</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Departure_Date__c</fullName>
+        <description>The Date the Client will be Departing</description>
+        <externalId>false</externalId>
+        <label>Departure Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Edit_Check_Box__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Edit Check Box</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Event_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Event__r.evt__Start__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Event Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Event_Rep__c</fullName>
+        <description>Name of rep who called the Client</description>
+        <externalId>false</externalId>
+        <label>Event Rep</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expiration_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expiration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_Contact_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date First Contact was attempted for Event</inlineHelpText>
+        <label>First Contact Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>First_Contact_Rep_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>First Contact Rep Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>First Contact Rep</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Left VM</fullName>
+                    <default>false</default>
+                    <label>Left VM</label>
+                </value>
+                <value>
+                    <fullName>No Answer</fullName>
+                    <default>false</default>
+                    <label>No Answer</label>
+                </value>
+                <value>
+                    <fullName>Spoke With Client</fullName>
+                    <default>false</default>
+                    <label>Spoke With Client</label>
+                </value>
+                <value>
+                    <fullName>Wrong Number</fullName>
+                    <default>false</default>
+                    <label>Wrong Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>First_Event_Note__c</fullName>
+        <description>First Contact About Event</description>
+        <externalId>false</externalId>
+        <label>First Event Note</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Guest_2__c</fullName>
+        <description>Name of 2nd guest coming to Event</description>
+        <externalId>false</externalId>
+        <label>Guest Name #2</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Guest_3__c</fullName>
+        <description>Name of 3rd guest</description>
+        <externalId>false</externalId>
+        <label>Guest Name #3</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Guest_Attendee__c</fullName>
+        <externalId>false</externalId>
+        <label>Guest Attendee ID</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Guests_Name__c</fullName>
+        <description>Name of 1st Guest coming to Event</description>
+        <externalId>false</externalId>
+        <label>Guests Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hotel_Air_Confirmation__c</fullName>
+        <description>Confirmation # of Attendee Hotel or Flight #</description>
+        <externalId>false</externalId>
+        <label>Hotel/Air Confirmation #</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Confirmed_By__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+TEXT(Confirmed_by__c) = &quot;Cynthia Markus&quot; &amp;&amp; $User.Id = &quot;0050B000006mAaF&quot;, 1,
+IF(
+TEXT(Confirmed_by__c) = &quot;Shea Mayo&quot; &amp;&amp; $User.Id = &quot;0050B000007ZKdw&quot;, 1,
+IF(
+TEXT(Confirmed_by__c) = &quot;Kerri Summey&quot; &amp;&amp; $User.Id = &quot;0050B000006nrc0&quot;, 1,
+IF(
+TEXT(Confirmed_by__c) = &quot;Eric Russell&quot; &amp;&amp; $User.Id = &quot;0050B000006ng3R&quot;, 1, 0))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Confirmed By</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Event_Rep__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+Event_Rep__c = &quot;Cynthia Markus&quot; &amp;&amp; $User.Id = &quot;0050B000006mAaF&quot;, 1,
+IF(
+Event_Rep__c = &quot;Tameka Fulton&quot; &amp;&amp; $User.Id = &quot;0050B000008Pt1q&quot;, 1,
+IF(
+Event_Rep__c = &quot;Kerri Summey&quot; &amp;&amp; $User.Id = &quot;0050B000006nrc0&quot;, 1,
+IF(
+Event_Rep__c = &quot;Eric Russell&quot; &amp;&amp; $User.Id = &quot;0050B000006ng3R&quot;, 1,
+IF(
+Event_Rep__c = &quot;Suzanne Wood&quot; &amp;&amp; $User.Id = &quot;0050B000008PksH&quot;, 1, 0)))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Event Rep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_Campaign_Source__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Contact__r.Account_Original_Campaign_Source__c</formula>
+        <label>Original Campaign Source</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_Event_Note__c</fullName>
+        <description>Note taken from event.</description>
+        <externalId>false</externalId>
+        <label>Original Event Note</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Parent_Campaign__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Contact__r.Account_Parent_Campaign__c</formula>
+        <label>Parent Campaign</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Payment__r.pymt__Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Coupon_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>evt__Payment__r.evt__Coupon_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Coupon Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Platinum__c</fullName>
+        <description>Checks to see if the guest&apos;s primary contact is a Platinum member.</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(evt__Contact__r.Account.Platinum__c), FALSE, TRUE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Checks to see if the guest&apos;s primary contact is a Platinum member.</inlineHelpText>
+        <label>Platinum</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Room_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Room Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>King</fullName>
+                    <default>false</default>
+                    <label>King</label>
+                </value>
+                <value>
+                    <fullName>Double Queen</fullName>
+                    <default>false</default>
+                    <label>Double Queen</label>
+                </value>
+                <value>
+                    <fullName>King Smoking</fullName>
+                    <default>false</default>
+                    <label>King Smoking</label>
+                </value>
+                <value>
+                    <fullName>Double Queen Non-Smoking</fullName>
+                    <default>false</default>
+                    <label>Double Queen Non-Smoking</label>
+                </value>
+                <value>
+                    <fullName>Suite</fullName>
+                    <default>false</default>
+                    <label>Suite</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>Handicap</fullName>
+                    <default>false</default>
+                    <label>Handicap</label>
+                </value>
+                <value>
+                    <fullName>Needs 2 Rooms</fullName>
+                    <default>false</default>
+                    <label>Needs 2 Rooms</label>
+                </value>
+                <value>
+                    <fullName>Other Accommodations</fullName>
+                    <default>false</default>
+                    <label>Other Accommodations</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Second_Call__c</fullName>
+        <externalId>false</externalId>
+        <label>Second Contact Rep</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Left VM</fullName>
+                    <default>false</default>
+                    <label>Left VM</label>
+                </value>
+                <value>
+                    <fullName>No Answer</fullName>
+                    <default>false</default>
+                    <label>No Answer</label>
+                </value>
+                <value>
+                    <fullName>Spoke With Client</fullName>
+                    <default>false</default>
+                    <label>Spoke With Client</label>
+                </value>
+                <value>
+                    <fullName>Wrong Number</fullName>
+                    <default>false</default>
+                    <label>Wrong Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Second_Contact_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Second Contact Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Second_Contact_Rep_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Second Contact Rep Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Second_Event_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Second Event Note</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Speaker__c</fullName>
+        <description>The speakers for the Original Campaign Source of the attendee&apos;s associated client.</description>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;Clint Coons&quot;), &quot;Clint Coons, &quot;, NULL) &amp;
+IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;Toby Mathis&quot;), &quot;Toby Mathis, &quot;, NULL) &amp;
+IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;Michael Bowman&quot;), &quot;Michael Bowman, &quot;, NULL) &amp;
+IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;Carl Zoellner&quot;), &quot;Carl Zoellner, &quot;, NULL) &amp;
+IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;Aaron Soffer&quot;), &quot;Aaron Soffer, &quot;, NULL) &amp;
+IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;Corey Posgay&quot;), &quot;Corey Posgay, &quot;, NULL) &amp;
+IF(INCLUDES( evt__Contact__r.Account.Original_Campaign_Source__r.Speakers__c , &quot;David Gass&quot;), &quot;David Gass&quot;,NULL)</formula>
+        <label>Speaker</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Third_Contact_Rep_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Third Contact Rep Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Third_Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>Third Contact Rep</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Left VM</fullName>
+                    <default>false</default>
+                    <label>Left VM</label>
+                </value>
+                <value>
+                    <fullName>No Answer</fullName>
+                    <default>false</default>
+                    <label>No Answer</label>
+                </value>
+                <value>
+                    <fullName>Spoke With Client</fullName>
+                    <default>false</default>
+                    <label>Spoke With Client</label>
+                </value>
+                <value>
+                    <fullName>Wrong Number</fullName>
+                    <default>false</default>
+                    <label>Wrong Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Third_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Third Contact Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Third_Event_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Third Event Note</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Titanium__c</fullName>
+        <description>Checks if the guest&apos;s primary contact has Titanium.</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK( evt__Contact__r.Account.Unlimited_LLC__c ), FALSE, TRUE)</formula>
+        <inlineHelpText>Checks if the guest&apos;s primary contact has Titanium.</inlineHelpText>
+        <label>Titanium</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Total_Guests_Attending__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Guests Attending</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Paid__c</fullName>
+        <description>Total Paid for tickets</description>
+        <externalId>false</externalId>
+        <label>Total Paid</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transportation__c</fullName>
+        <description>How the attendee with be arriving to the event</description>
+        <externalId>false</externalId>
+        <label>Transportation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Driving</fullName>
+                    <default>false</default>
+                    <label>Driving</label>
+                </value>
+                <value>
+                    <fullName>Flying</fullName>
+                    <default>false</default>
+                    <label>Flying</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>UTM_Data__c</fullName>
+        <description>This is the field that will display what campaign/ Affiliate we are getting attendees from.</description>
+        <externalId>false</externalId>
+        <label>UTM Data</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Attended__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Attended</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>evt__Category__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Attendee</fullName>
+                    <default>false</default>
+                    <label>Attendee</label>
+                </value>
+                <value>
+                    <fullName>Exhibitor</fullName>
+                    <default>false</default>
+                    <label>Exhibitor</label>
+                </value>
+                <value>
+                    <fullName>Sponsor</fullName>
+                    <default>false</default>
+                    <label>Sponsor</label>
+                </value>
+                <value>
+                    <fullName>Volunteer</fullName>
+                    <default>false</default>
+                    <label>Volunteer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Company__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK( evt__Contact__c ) , BLANKVALUE( evt__Lead__r.Company , &quot;&quot;) , BLANKVALUE( evt__Contact__r.Account.Name , &quot;&quot;))),evt__Reg_Company__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Company</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Attendees</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>evt__Email__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.Email , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.Email , &quot;&quot;))),evt__Reg_Email__c)</formula>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Event__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Event</label>
+        <referenceTo>evt__Special_Event__c</referenceTo>
+        <relationshipLabel>Attendees</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>evt__External_Attendee_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Id assigned to the attendee by a web meeting system or other external application.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Id assigned to the attendee by a web meeting system or other external application.</inlineHelpText>
+        <label>External Attendee ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__First_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.FirstName , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.FirstName , &quot;&quot;))),evt__Reg_First_Name__c)</formula>
+        <inlineHelpText>If the Reg Name fields are set, Attendee Info will display registration detail fields, otherwise, if Contact is assigned, contact mailing address details will be displayed. Finally, if only Lead has been assigned, lead address details will be displayed.</inlineHelpText>
+        <label>First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Id_Barcode_Attachment__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Record ID of the attachment containing this attendee&apos;s Id barcode image.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Record ID of the attachment containing this attendee&apos;s Id barcode image.</inlineHelpText>
+        <label>Id Barcode Attachment</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Id_Barcode_Image__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IMAGE(IF(ISBLANK(evt__Id_Barcode_Attachment__c),&apos;/s.gif&apos;,&apos;/servlet/servlet.FileDownload?file=&apos;+evt__Id_Barcode_Attachment__c), &apos;Image not available.&apos; )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Id Barcode Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Id_QR_Attachment__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Record ID of the attachment containing this attendee&apos;s Id QR code image.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Record ID of the attachment containing this attendee&apos;s Id QR code image.</inlineHelpText>
+        <label>Id QR Attachment</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Id_QR_Image__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IMAGE(IF(ISBLANK(evt__Id_QR_Attachment__c),&apos;/s.gif&apos;,&apos;/servlet/servlet.FileDownload?file=&apos;+evt__Id_QR_Attachment__c), &apos;Image not available.&apos; )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Id QR Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Image_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Attach an image file to this record to populate this field with an attachment Id. If a value has been set for the Image URL field, this value will be ignored.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Attach an image file to this record to populate this field with an attachment Id. If a value has been set for the Image URL field, this value will be ignored.</inlineHelpText>
+        <label>Image Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Image_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Add or edit an image attachment to this record to make an image available for display on the webside, or override any image attachments by entering the URL of an image on another server here. Clear this field to use image attachments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Add or edit an image attachment to this record to make an image available for display on the webside, or override any image attachments by entering the URL of an image on another server here. Clear this field to use image attachments.</inlineHelpText>
+        <label>Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>evt__Image__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IMAGE(BLANKVALUE(evt__Image_URL__c,IF(ISBLANK(evt__Image_Id__c),&apos;/s.gif&apos;,&apos;/servlet/servlet.FileDownload?file=&apos;+evt__Image_Id__c)), &apos;Image&apos; ,60 ,60)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Invitation_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>&quot;INV&quot; + Name + RIGHT( UPPER(Id), 3)</formula>
+        <label>Invitation Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Invitation_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Invitation Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Invited</fullName>
+                    <default>false</default>
+                    <label>Invited</label>
+                </value>
+                <value>
+                    <fullName>Declined</fullName>
+                    <default>false</default>
+                    <label>Declined</label>
+                </value>
+                <value>
+                    <fullName>Payment Pending</fullName>
+                    <default>false</default>
+                    <label>Payment Pending</label>
+                </value>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+                <value>
+                    <fullName>Canceled</fullName>
+                    <default>false</default>
+                    <label>Canceled</label>
+                </value>
+                <value>
+                    <fullName>Wait Listed</fullName>
+                    <default>false</default>
+                    <label>Wait Listed</label>
+                </value>
+                <value>
+                    <fullName>Confirmed</fullName>
+                    <default>false</default>
+                    <label>Confirmed</label>
+                </value>
+                <value>
+                    <fullName>Attended</fullName>
+                    <default>false</default>
+                    <label>Attended</label>
+                </value>
+                <value>
+                    <fullName>No-Show</fullName>
+                    <default>false</default>
+                    <label>No-Show</label>
+                </value>
+                <value>
+                    <fullName>Hard Confirmation</fullName>
+                    <default>false</default>
+                    <label>Hard Confirmation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>evt__Is_Primary__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is Primary</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>evt__Join_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>URL for the attendee to use in joining a web meeting event.  Set by the web meeting service during registration.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>URL for the attendee to use in joining a web meeting event.  Set by the web meeting service during registration.</inlineHelpText>
+        <label>Join URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>evt__Last_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.LastName , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.LastName , &quot;&quot;))),evt__Reg_Last_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>The lead invited to this event.  Leads are converted to Contacts when they register for an event.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The lead invited to this event.  Leads are converted to Contacts when they register for an event.</inlineHelpText>
+        <label>Lead</label>
+        <referenceTo>Lead</referenceTo>
+        <relationshipLabel>Attendees</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>evt__Mailing_City__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.City , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.MailingCity , &quot;&quot;))),evt__Reg_City__c)</formula>
+        <label>Mailing City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Mailing_Country__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.Country , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.MailingCountry , &quot;&quot;))),evt__Reg_Country__c)</formula>
+        <label>Mailing Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Mailing_Postal_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.PostalCode , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.MailingPostalCode , &quot;&quot;))),evt__Reg_Postal_Code__c)</formula>
+        <label>Mailing Postal Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Mailing_State__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.State , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.MailingState , &quot;&quot;))),evt__Reg_State__c)</formula>
+        <label>Mailing State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Mailing_Street__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK(  evt__Contact__c  ) ,  BLANKVALUE(  evt__Lead__r.Street , &quot;&quot;) ,  BLANKVALUE(  evt__Contact__r.MailingStreet , &quot;&quot;))),evt__Reg_Street__c)</formula>
+        <label>Mailing Street</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Payment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payment</label>
+        <referenceTo>pymt__PaymentX__c</referenceTo>
+        <relationshipLabel>Event Attendees</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>evt__Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK( evt__Reg_First_Name__c),ISBLANK( evt__Reg_Last_Name__c)),(IF( ISBLANK( evt__Contact__c ) , BLANKVALUE( evt__Lead__r.Phone , &quot;&quot;) , BLANKVALUE( evt__Contact__r.Phone , &quot;&quot;))),evt__Reg_Phone__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Primary_Attendee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Primary Attendee</label>
+        <referenceTo>evt__Attendee__c</referenceTo>
+        <relationshipLabel>Attendees</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_City__c</fullName>
+        <deprecated>false</deprecated>
+        <description>City supplied on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>City supplied on registration page.</inlineHelpText>
+        <label>Reg City</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Company__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Company name provided on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Company name provided on registration page.</inlineHelpText>
+        <label>Reg Company</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Country__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Country provided on registration form.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Country provided on registration form.</inlineHelpText>
+        <label>Reg Country</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Email__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Email address provided on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Email address provided on registration page.</inlineHelpText>
+        <label>Reg Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_First_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>First name supplied on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>First name supplied on registration page.</inlineHelpText>
+        <label>Reg First Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Last_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Last name supplied on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last name supplied on registration page.</inlineHelpText>
+        <label>Reg Last Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Phone number supplied on registration page form.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Phone number supplied on registration page form.</inlineHelpText>
+        <label>Reg Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Postal_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Postal code supplied on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Postal code supplied on registration page.</inlineHelpText>
+        <label>Reg Postal Code</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_State__c</fullName>
+        <deprecated>false</deprecated>
+        <description>State supplied on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>State supplied on registration page.</inlineHelpText>
+        <label>Reg State</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Street__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Street address supplied on registration page.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Street address supplied on registration page.</inlineHelpText>
+        <label>Reg Street</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>evt__Reg_Title__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Title provided at registration.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Title provided at registration.</inlineHelpText>
+        <label>Reg Title</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Registration_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Event fee name used to register this attendee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Event fee name used to register this attendee.</inlineHelpText>
+        <label>Registration Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Title__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK( evt__Reg_Title__c),(IF( ISBLANK( evt__Contact__c ) , BLANKVALUE( evt__Lead__r.Title , &quot;&quot;) , BLANKVALUE( evt__Contact__r.Title , &quot;&quot;))),evt__Reg_Title__c)</formula>
+        <label>Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__Website__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Website</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>evt__vCard_Memo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Memo value to insert in vCard QR Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Memo value to insert in vCard QR Code</inlineHelpText>
+        <label>vCard Memo</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>evt__vCard_QR_Attachment__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Record ID of the attachment containing this attendee&apos;s vCard QR code image.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Record ID of the attachment containing this attendee&apos;s vCard QR code image.</inlineHelpText>
+        <label>vCard QR Attachment</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__vCard_QR_Generator__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>evt__Event__r.evt__vCard_QR_Generator__c</formula>
+        <inlineHelpText>QR generator URL to use in building vCard QR for this attendee.</inlineHelpText>
+        <label>vCard QR Generator</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__vCard_QR_Image__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IMAGE(IF(ISBLANK(evt__vCard_QR_Attachment__c),&apos;/s.gif&apos;,&apos;/servlet/servlet.FileDownload?file=&apos;+evt__vCard_QR_Attachment__c), &apos;Image not available.&apos; )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>vCard QR Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>evt__vCard_QR_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Merged contact info and vCard QR generator url.  Used to create attendee badges with scannable QR codes.</inlineHelpText>
+        <label>vCard QR URL</label>
+        <length>4000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <label>Attendee</label>
+    <listViews>
+        <fullName>Attendee</fullName>
+        <columns>NAME</columns>
+        <columns>evt__Email__c</columns>
+        <columns>evt__Event__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Attendee</label>
+    </listViews>
+    <listViews>
+        <fullName>Call_list_view</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>Call list view</label>
+    </listViews>
+    <listViews>
+        <fullName>March_Elite_Orlando</fullName>
+        <columns>Event_Rep__c</columns>
+        <columns>evt__First_Name__c</columns>
+        <columns>evt__Last_Name__c</columns>
+        <columns>evt__Attended__c</columns>
+        <columns>evt__Primary_Attendee__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>evt__Event__c</field>
+            <operation>equals</operation>
+            <value>Elite Tax &amp; Asset Protection Mar 2017</value>
+        </filters>
+        <label>March Elite Orlando</label>
+        <sharedTo/>
+    </listViews>
+    <listViews>
+        <fullName>Structure_Implementation_Event_View</fullName>
+        <columns>evt__Event__c</columns>
+        <columns>evt__Contact__c</columns>
+        <columns>evt__Phone__c</columns>
+        <columns>evt__Email__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>evt__Invitation_Status__c</field>
+            <operation>contains</operation>
+            <value>attend</value>
+        </filters>
+        <filters>
+            <field>evt__Event__c</field>
+            <operation>contains</operation>
+            <value>asset</value>
+        </filters>
+        <filters>
+            <field>evt__Event__c</field>
+            <operation>notContain</operation>
+            <value>structure</value>
+        </filters>
+        <filters>
+            <field>evt__Is_Primary__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>evt__Event__c</field>
+            <operation>notContain</operation>
+            <value>NVREA</value>
+        </filters>
+        <label>Structure Implementation Event View</label>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Wise_Event_View</fullName>
+        <columns>evt__Event__c</columns>
+        <columns>evt__Contact__c</columns>
+        <columns>evt__Phone__c</columns>
+        <columns>evt__Email__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>evt__Invitation_Status__c</field>
+            <operation>contains</operation>
+            <value>attend</value>
+        </filters>
+        <filters>
+            <field>evt__Event__c</field>
+            <operation>notContain</operation>
+            <value>tax</value>
+        </filters>
+        <filters>
+            <field>evt__Event__c</field>
+            <operation>notContain</operation>
+            <value>NVREA</value>
+        </filters>
+        <filters>
+            <field>evt__Is_Primary__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Tax Wise Event View</label>
+    </listViews>
+    <listViews>
+        <fullName>evt__Registered_Attendees_Not_Attended</fullName>
+        <columns>NAME</columns>
+        <columns>evt__Event__c</columns>
+        <columns>evt__First_Name__c</columns>
+        <columns>evt__Last_Name__c</columns>
+        <columns>evt__Contact__c</columns>
+        <columns>evt__Lead__c</columns>
+        <columns>evt__Invitation_Status__c</columns>
+        <columns>evt__Attended__c</columns>
+        <columns>Confirmed_by__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>evt__Invitation_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Attended</value>
+        </filters>
+        <label>Registered Attendees (Not Attended)</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{000000}</displayFormat>
+        <label>Attendee Id</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Attendees</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>evt__Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__First_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Last_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Lead__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Invitation_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Attended__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>evt__Registration_Type__c</customTabListAdditionalFields>
+        <listViewButtons>evt__Mark_Attended</listViewButtons>
+        <lookupDialogsAdditionalFields>evt__Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Lead__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Event__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Invitation_Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>evt__Attended__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Lock_Confirmed_By</fullName>
+        <active>true</active>
+        <description>Locks the Confirmed By field after the first data entry.</description>
+        <errorConditionFormula>AND(
+
+$User.Id &lt;&gt; &quot;0050B000006naKlQAI&quot;,
+$User.Id &lt;&gt; &quot;0050B000006naKl&quot;,
+
+$User.Id &lt;&gt; &quot;0050B000006nrc0&quot;,
+$User.Id &lt;&gt; &quot;0050B000006nrc0QAA&quot;,
+
+$User.Id &lt;&gt; &quot;0050B000006ocbu&quot;,
+$User.Id &lt;&gt; &quot;0050B000006ocbuQAA&quot;,
+
+$User.Id &lt;&gt; &quot;005U0000003MP3m&quot;,
+$User.Id &lt;&gt; &quot;005U0000003MP3mIAG&quot;,
+
+$Profile.Id &lt;&gt; &quot;00eU0000000nGPz&quot;,
+$Profile.Id &lt;&gt; &quot;00eU0000000nGPzIAM&quot;,
+
+ISCHANGED(Confirmed_by__c),
+NOT(ISBLANK(PRIORVALUE(Confirmed_by__c)))
+)</errorConditionFormula>
+        <errorMessage>The Confirmed By field may not be edited once it has a value.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Lock_Event_Rep</fullName>
+        <active>true</active>
+        <description>Locks the event rep field after the first data entry.</description>
+        <errorConditionFormula>AND(
+
+$User.Id &lt;&gt; &quot;0050B000006okJaQAI&quot;,
+$User.Id &lt;&gt; &quot;0050B000006okJa&quot;,
+
+$User.Id &lt;&gt; &quot;0050B000006naKlQAI&quot;,
+$User.Id &lt;&gt; &quot;0050B000006naKl&quot;,
+
+$User.Id &lt;&gt; &quot;0050B000006nrc0&quot;,
+$User.Id &lt;&gt; &quot;0050B000006nrc0QAA&quot;,
+
+$User.Id &lt;&gt; &quot;0050B000006ocbu&quot;,
+$User.Id &lt;&gt; &quot;0050B000006ocbuQAA&quot;,
+
+$User.Id &lt;&gt; &quot;005U0000003MP3m&quot;,
+$User.Id &lt;&gt; &quot;005U0000003MP3mIAG&quot;,
+
+$Profile.Id &lt;&gt; &quot;00eU0000000nGPz&quot;,
+$Profile.Id &lt;&gt; &quot;00eU0000000nGPzIAM&quot;,
+
+ISCHANGED( Event_Rep__c ),
+NOT(ISBLANK(PRIORVALUE(Event_Rep__c)))
+)</errorConditionFormula>
+        <errorMessage>The Event Rep field may not be edited once it has a value.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>evt__Cancel_Registration</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Cancel Registration</masterLabel>
+        <openType>sidebar</openType>
+        <page>evt__CancelRegistration</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>evt__Email_Event_Pass</fullName>
+        <availability>online</availability>
+        <description>Sends an event pass to the attendee.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Email Event Pass</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/27.0/connection.js&quot;)}
+
+var emailTemplateDeveloperName = &quot;Event_Pass_PDF_Attendee&quot;; // This template name can be changed to any custom template you choose. Be sure to build your custom template around the evt__Attendee__c object.
+
+var query = &quot;Select id from EmailTemplate where isActive = true and DeveloperName = &apos;&quot;+emailTemplateDeveloperName+&quot;&apos; &quot;;
+var result = sforce.connection.query(query);
+var templates = result.getArray(&quot;records&quot;);
+
+if (templates.length == 0) {
+alert(&quot;Sorry, could not find an active email template named \&quot;&quot;+emailTemplateDeveloperName+&quot;\&quot;. Please contact your Salesforce administrator for help in setting up this template.&quot;);
+
+} else {
+   var abort = false;
+   if (&quot;{!evt__Attendee__c.evt__Invitation_Status__c}&quot; !== &quot;Registered&quot; ) {
+       abort = !confirm(&quot;This attendee is not yet registered.  Send event pass anyway?&quot;);
+   }
+   var templateId = templates[0].Id;
+   if (abort !== true) {
+window.location = &quot;/_ui/core/email/author/EmailAuthor?p3_lkid={!evt__Attendee__c.Id}&amp;p2_lkid={!evt__Attendee__c.evt__ContactId__c}&amp;template_id=&quot;+templateId+&quot;&amp;cancelURL=/{!evt__Attendee__c.Id}&amp;retURL=/{!evt__Attendee__c.Id}&amp;new_template=1&quot;;
+   }
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>evt__Email_Invitation</fullName>
+        <availability>online</availability>
+        <description>Sends an event invitation to the attendee.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Email Invitation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/27.0/connection.js&quot;)}
+
+var emailTemplateDeveloperName = &quot;Linvio_Events_Invitation_Attendee&quot;; // This template name can be changed to any custom template you choose. Be sure to build your custom template around the evt__Attendee__c object.
+
+var query = &quot;Select id from EmailTemplate where isActive = true and DeveloperName = &apos;&quot;+emailTemplateDeveloperName+&quot;&apos; &quot;;
+var result = sforce.connection.query(query);
+var templates = result.getArray(&quot;records&quot;);
+
+if (templates.length == 0) {
+alert(&quot;Sorry, could not find an active email template named \&quot;&quot;+emailTemplateDeveloperName+&quot;\&quot;. Please contact your Salesforce administrator for help in setting up this template.&quot;);
+
+} else if (&quot;{!evt__Attendee__c.evt__Invitation_Status__c}&quot; == &quot;Registered&quot; ) {
+alert(&quot;This attendee has already registered. &quot;);
+
+} else {
+var templateId = templates[0].Id;
+window.location = &quot;/_ui/core/email/author/EmailAuthor?p3_lkid={!evt__Attendee__c.Id}&amp;p2_lkid={!evt__Attendee__c.evt__ContactId__c}&amp;template_id=&quot;+templateId+&quot;&amp;cancelURL=/{!evt__Attendee__c.Id}&amp;retURL=/{!evt__Attendee__c.Id}&amp;new_template=1&quot;;
+
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>evt__Mark_Attended</fullName>
+        <availability>online</availability>
+        <description>Marks selected attendees records as &quot;Attended&quot;</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Mark Attended</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)}
+
+var records = {!GETRECORDIDS( $ObjectType.evt__Attendee__c )};
+
+if (records[0] == null) {
+  alert(&quot;Please select at least one record.&quot;) }
+else {
+
+	var newRecords = [];
+	for (var n in records) {
+	  var item = new sforce.SObject(&quot;evt__Attendee__c&quot;);
+	  item.id = records[n];
+	  item.evt__Attended__c = true;
+	  newRecords.push(item);
+	}
+	var result = sforce.connection.update(newRecords);
+	if (result &amp;&amp; result.length){
+	  var numFailed = 0;
+	  var numSucceeded = 0;
+	  for (var i = 0; i &lt; result.length; i++){
+	    var res = result[i];
+	    if (res &amp;&amp; res.success == &apos;true&apos;){
+	      numSucceeded++;
+	    } else {
+	      var es = res.getArray(&quot;errors&quot;);
+	      if (es.length &gt; 0) {
+	        errors.push(es[0].message);
+	      }
+	      numFailed++;
+	   }
+	 }
+	if (numFailed &gt; 0){
+	  alert(&quot;Failed: &quot; + numFailed + &quot;\nSucceeded: &quot; + numSucceeded + &quot; \n Due to: &quot; +   errors.join(&quot;\n&quot;));
+	} else {
+	  alert(&quot;Number of records updated: &quot; + numSucceeded);
+	}
+  }
+  window.location.reload();
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>evt__Rebuild_vCard_QR_Code</fullName>
+        <availability>online</availability>
+        <description>Deprecated</description>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Rebuild vCard QR Code</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>alert(&apos;Link has been deprecated. Please use the &quot;Update QR/Barcode Images&quot; button instead.&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>evt__Reset_Invitation</fullName>
+        <availability>online</availability>
+        <description>Changes eligible attendee records back to &quot;Invited&quot; status.</description>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Reset Invitation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)} 
+
+// Check status value: If Registered, don&apos;t change
+var status = &quot;{!evt__Attendee__c.evt__Invitation_Status__c}&quot;;
+
+if (status == &apos;Registered&apos;) {
+   alert(&apos;Attendee has already registered.  Cannot reset to &quot;Invited&quot; status.&apos;);
+} else {
+   // See if the attendee has a completed payment 
+    var hasPmt = &quot;{!BLANKVALUE(evt__Attendee__c.evt__Payment__c,&apos;&apos;)}&quot; !== &quot;&quot;;
+    // query
+    var results;
+    var pmt;
+    var status;
+    var pmtValue;
+    if (hasPmt) {
+        results = sforce.connection.query(&quot;Select Id, pymt__Status__c, pymt__Is_Scheduled__c, pymt__Amount__c From pymt__PaymentX__c where id = &apos;{!evt__Attendee__c.evt__PaymentId__c}&apos;&quot;);
+        pmt = results.getArray(&apos;records&apos;)[0];
+        status = pmt.pymt__Status__c;
+        pmtValue = pmt.pymt__Amount__c;
+    }
+    if (hasPmt &amp;&amp; status == &apos;Completed&apos;) {
+       alert(&apos;Attendee is attached to a completed payment (in the amount of &apos;+pmtValue+&apos;) indicating registration may have been completed. \n\nYou may want to change this attendee to &quot;Registered&quot; - or detach the payment before resetting this record\&apos;s invitation status to &quot;Invited&quot;.&apos;);
+    } else if (hasPmt &amp;&amp; pmt.getBoolean(&quot;pymt__Is_Scheduled__c&quot;)) {
+       alert(&apos;Attendee is attached to a scheduled payment (in the amount of &apos;+pmtValue+&apos;) indicating payment for registration is expected. \n\nVoid or detach the scheduled payment before resetting this record\&apos;s invitation status to &quot;Invited&quot;.&apos;);
+
+    } else {
+      
+
+      // If attendee has an &quot;In Process&quot; payment, warn before reset.
+      var cont = true;
+      if (hasPmt &amp;&amp; status == &apos;In Process&apos;) {
+          cont = confirm(&apos;Attendee is attached to an &quot;In Process&quot; payment indicating that a registration payment may be in process.  Do you still want to reset this record to invitation status &quot;Invited&quot; and separate it from the payment?&apos;);
+      }
+      if (cont == true) {
+
+     
+         // Reset attendee record
+         var newRecords = []; 
+         var item = new sforce.SObject(&quot;evt__Attendee__c&quot;); 
+         item.id = &apos;{!evt__Attendee__c.Id}&apos;; 
+         item.evt__Invitation_Status__c = &apos;Invited&apos;;
+         item.evt__Payment__c = null; 
+         newRecords.push(item); 
+         var result = sforce.connection.update(newRecords); 
+         if (result[0].getBoolean(&quot;success&quot;)) {
+               window.location.reload();
+         } else {
+            alert(&apos;Failed to update attendee record: &apos;+ result[0]); 
+         }
+      } 
+   }
+}</url>
+    </webLinks>
+</CustomObject>

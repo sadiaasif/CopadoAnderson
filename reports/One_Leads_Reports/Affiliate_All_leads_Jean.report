@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Lead.Main_Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <description>All Affiliate leads except for Qualified leads</description>
+    <filter>
+        <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+        <criteriaItems>
+            <column>Lead.Main_Lead_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Adduco Media,Affiliate,Anderson Event,Big Dog-Love American Homes,Calendly,Dani Johnson,Dave Lindahl,Don Pendleton,Elite Legacy,Employee Referral,Existing Client,Gene Guarino,Jet Lending,Nick Vertucci-NVREA,Online Organic,Online Marketing,Pat James,Real Wealth Network,Referral,Royal Media,Social Media,Webinar</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Affiliate_Lead__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>STATUS</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Qualified</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Original_Campaign_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>boots,tax-wise</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Affiliate All leads - Jean</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <endDate>2021-05-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2021-04-01</startDate>
+    </timeFrameFilter>
+</Report>

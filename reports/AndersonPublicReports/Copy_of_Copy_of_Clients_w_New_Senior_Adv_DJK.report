@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT_ID</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Senior_Advisor_Picklist__c</field>
+    </columns>
+    <columns>
+        <field>Account.Senior_Advisor__c</field>
+    </columns>
+    <columns>
+        <field>Account.Platinum__c</field>
+    </columns>
+    <columns>
+        <field>CDF1</field>
+    </columns>
+    <customDetailFormulas>
+        <calculatedFormula>If(Account.Senior_Advisor__c==TEXT(Account.Senior_Advisor_Picklist__c),&quot;True&quot;,&quot;False&quot;)</calculatedFormula>
+        <dataType>Text</dataType>
+        <developerName>CDF1</developerName>
+        <label>Senior Advisor  old and new compare</label>
+        <scale>2</scale>
+    </customDetailFormulas>
+    <filter>
+        <booleanFilter>1 AND 2 AND 3 AND (4 OR 5 OR 6)</booleanFilter>
+        <criteriaItems>
+            <column>Account.Senior_Advisor__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CDF1</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Senior_Advisor_Picklist__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Senior_Advisor__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Josh Terry,Kendall O&apos;Leary,Leah Pocoroba,Michael Hackler,Michael Ciuffetelli,Mike Tracey,Nicolo Nisbett,Bob Wilkinson,Bradford Embree,Brian Bowman,Charles Hall,Chance Truscott,Corey Posgay,Dan Shaker,Kelly Allison,David Corbin,Josh Heers,Jeremy Bavolek,Al Caiazza,Serena Cervantes</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Senior_Advisor__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Shaena Aguilar,Seth Perlman,Amanda Wynalda,Phil Barr,Carl Zoellner,David Monsivais,Ghassan Jabali,Gwendy Wolfe,Issac Noh,Jarom Hilary,Jason Zundel,Jeff Cottle,Jonathon Evans,Josh Robertson,Lauren Robins,Sergey Garanyants,Karim Hanafy,Savannah Wallace,Michael Bowman,Clint Coons</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Senior_Advisor__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Toby Mathis,David Gass,Joe Sacco-,Mayra De Arcos,Sara Winter,Lucas Turman,Alfonso Andino,Jennie Wilson (Moore),Hermina Certeza,Marwa Triggiani,Victor Mejordo,Razilee Zehri,Natasia Serna,Claire Johnson,Miguel Arce,June Talaid,Chuck Hall</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Copy of Copy of Clients w New Senior Adv</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Account.Senior_Advisor__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

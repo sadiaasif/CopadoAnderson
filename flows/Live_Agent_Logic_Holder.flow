@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>Live Agent Online Lead Creation</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Create Lead</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>Live_Agent_Online_Lead_Creation</actionName>
+        <actionType>flow</actionType>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>TranscriptId</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>TranscriptId</name>
+            <value>
+                <elementReference>myVariable_current.Id__NotFound</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>ContactId</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>ContactId</name>
+            <value>
+                <elementReference>myVariable_current.ContactId__NotFound</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>New Chat from Website</label>
+        </rules>
+    </decisions>
+    <description>Holds logic for Live Agent. Also look at Cases with Live Agent record type for more Live Agent logic.</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+TEXT([LiveChatTranscript].Status) = &quot;Completed&quot;,
+ISCHANGED([LiveChatTranscript].Status),
+NOT(ISBLANK([LiveChatTranscript].ContactId)),
+[LiveChatTranscript].Owner:User.ProfileId = CASESAFEID(&quot;00e0B000000JQEl&quot;),
+OR(
+[LiveChatTranscript].Contact.CreatedById = &quot;005U0000000lZEVIA2&quot;,
+[LiveChatTranscript].Contact.CreatedById = &quot;005U0000000lZEV&quot;),
+DATEVALUE([LiveChatTranscript].Contact.CreatedDate) = TODAY() )</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+TEXT({!myVariable_current.Status__NotFound}) = &quot;Completed&quot;,
+ISCHANGED({!myVariable_current.Status__NotFound}),
+NOT(ISBLANK({!myVariable_current.ContactId__NotFound})),
+{!myVariable_current.Owner:User__NotFound.ProfileId} = CASESAFEID(&quot;00e0B000000JQEl&quot;),
+OR(
+{!myVariable_current.Contact__NotFound.CreatedById} = &quot;005U0000000lZEVIA2&quot;,
+{!myVariable_current.Contact__NotFound.CreatedById} = &quot;005U0000000lZEV&quot;),
+DATEVALUE({!myVariable_current.Contact__NotFound.CreatedDate}) = TODAY() )</expression>
+    </formulas>
+    <interviewLabel>Live_Agent_Logic_Holder-7_InterviewLabel</interviewLabel>
+    <label>Live Agent Logic Holder</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value/>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <startElementReference>myDecision</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>LiveChatTranscript__NotFound</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>LiveChatTranscript__NotFound</objectType>
+    </variables>
+</Flow>

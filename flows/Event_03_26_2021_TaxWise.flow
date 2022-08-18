@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Add_4_Book_Bundle</name>
+        <label>Add 4 Book Bundle</label>
+        <locationX>1312</locationX>
+        <locationY>472</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.OpportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01t6f00000OG4DkAAL</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.TotalPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01u6f00000InEf8AAF</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_the_OpportunityLineItem_List_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Tax_Advantage_Program</name>
+        <label>Add Tax Advantage Program</label>
+        <locationX>1064</locationX>
+        <locationY>472</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.OpportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01t4P000007ZpCbQAK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.TotalPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>2995.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01u4P00000tBxGTQA0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_the_OpportunityLineItem_List</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Tax_Advantage_Program_0</name>
+        <label>Add Tax Advantage Program</label>
+        <locationX>1065</locationX>
+        <locationY>33</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.OpportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01t4P000007ZpCbQAK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.TotalPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>2995.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItem.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01u4P00000tBxGTQA0</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_the_OpportunityLineItem_List_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Campaign_IDs_0</name>
+        <label>Assign Campaign IDs</label>
+        <locationX>793</locationX>
+        <locationY>475</locationY>
+        <assignmentItems>
+            <assignToReference>CampaignMemberIDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>7014P000001BM4fQAG</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CampaignMemberIDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>7016f000001tV6jAAE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CampaignMemberIDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>7016f000001tdN8AAI</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Campaign_Member_Publish_Platform_Event_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Campaign_IDs_0_0</name>
+        <label>Assign Campaign IDs</label>
+        <locationX>784</locationX>
+        <locationY>33</locationY>
+        <assignmentItems>
+            <assignToReference>CampaignMemberIDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>7014P000001BM4fQAG</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Campaign_Member_Publish_Platform_Event_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_the_OpportunityLineItem_List</name>
+        <label>Assign to the OpportunityLineItem List</label>
+        <locationX>1195</locationX>
+        <locationY>472</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItemList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>OpportunityLineItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_4_Book_Bundle</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_the_OpportunityLineItem_List_0</name>
+        <label>Assign to the OpportunityLineItem List</label>
+        <locationX>1188</locationX>
+        <locationY>33</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItemList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>OpportunityLineItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_OpportunityLineItem_List_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_the_OpportunityLineItem_List_0_0</name>
+        <label>Assign to the OpportunityLineItem List</label>
+        <locationX>1434</locationX>
+        <locationY>472</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityLineItemList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>OpportunityLineItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_OpportunityLineItem_List</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Offer_Type</name>
+        <label>Offer Type</label>
+        <locationX>601</locationX>
+        <locationY>246</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Offer_Tax_Advantage_Program_with_Book_Bundle_3_26</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EventOfferAutomationText</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TaxWise 3/26</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Campaign_IDs_0</targetReference>
+            </connector>
+            <label>Offer - Tax Advantage Program with Book Bundle 3/26</label>
+        </rules>
+        <rules>
+            <name>Offer_Tax_Advantage_Program_Regular</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>EventOfferAutomationText</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tax Advantage Program Regular</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Campaign_IDs_0_0</targetReference>
+            </connector>
+            <label>Offer - Tax Advantage Program Regular</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>OfferPurchaseTextFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!EventOfferAutomationText} = &quot;SIS Real Estate Upgrade 3/2021&quot;,  {!PurchasedDescriptionOffer1},
+IF({!EventOfferAutomationText} = &quot;SIS Tax Bookkeeping Bundle 3/2021&quot;,  {!PurchasedDescriptionOffer2},
+IF({!EventOfferAutomationText} = &quot;SIS Legacy Bundle 3/2021 LIVING TRUST&quot;,  {!PurchasedDescriptionOffer3LivingTrust},
+IF({!EventOfferAutomationText} = &quot;SIS Legacy Bundle 3/2021 QRP&quot;,  {!PurchasedDescriptionOffer3QRP},
+&quot;Purchased package at SIS March 2021&quot;))))</expression>
+    </formulas>
+    <formulas>
+        <name>Wait</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime} - (1/24)</expression>
+    </formulas>
+    <interviewLabel>Event - 03.26.2021 - TaxWise {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Event - 03.26.2021 - TaxWise</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Insert_OpportunityLineItem_List</name>
+        <label>Insert OpportunityLineItem List</label>
+        <locationX>1587</locationX>
+        <locationY>472</locationY>
+        <connector>
+            <targetReference>Mailroom_Task</targetReference>
+        </connector>
+        <inputReference>OpportunityLineItemList</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Insert_OpportunityLineItem_List_0</name>
+        <label>Insert OpportunityLineItem List</label>
+        <locationX>1341</locationX>
+        <locationY>33</locationY>
+        <inputReference>OpportunityLineItemList</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Mailroom_Task</name>
+        <label>Mailroom Task</label>
+        <locationX>1737</locationX>
+        <locationY>472</locationY>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <dateValue>2021-04-14</dateValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>Book_Task_Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <stringValue>0056f000009sggaAAA</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012U0000000g5s9</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Tax Wise Workshop Book Offer - 4 Books</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Get_Sale.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Sale</name>
+        <label>Get Sale</label>
+        <locationX>339</locationX>
+        <locationY>231</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_Get_Primary_contact_flow</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SaleId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Wait_Wait1hour</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Account_Get_Primary_contact_flow</name>
+        <label>Account - Get Primary contact flow</label>
+        <locationX>472</locationX>
+        <locationY>235</locationY>
+        <connector>
+            <targetReference>Offer_Type</targetReference>
+        </connector>
+        <flowName>Account_Get_Primary_contact_flow</flowName>
+        <inputAssignments>
+            <name>AccountID</name>
+            <value>
+                <elementReference>Get_Sale.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Campaign_Member_Publish_Platform_Event_0</name>
+        <label>Campaign Member- Publish Platform Event</label>
+        <locationX>936</locationX>
+        <locationY>473</locationY>
+        <connector>
+            <targetReference>Add_Tax_Advantage_Program</targetReference>
+        </connector>
+        <flowName>Campaign_Member_Publish_Platform_Event</flowName>
+        <inputAssignments>
+            <name>CampaignIds</name>
+            <value>
+                <elementReference>CampaignMemberIDs</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>PrimaryContactID</name>
+            <value>
+                <elementReference>Account_Get_Primary_contact_flow.ConatctID</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Campaign_Member_Publish_Platform_Event_0_0</name>
+        <label>Campaign Member- Publish Platform Event</label>
+        <locationX>940</locationX>
+        <locationY>33</locationY>
+        <connector>
+            <targetReference>Add_Tax_Advantage_Program_0</targetReference>
+        </connector>
+        <flowName>Campaign_Member_Publish_Platform_Event</flowName>
+        <inputAssignments>
+            <name>CampaignIds</name>
+            <value>
+                <elementReference>CampaignMemberIDs</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>PrimaryContactID</name>
+            <value>
+                <elementReference>Account_Get_Primary_contact_flow.ConatctID</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>Book_Task_Description</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Copy of Taxwise Business Ownership 4th Edition
+Copy of Infinity Investing
+Copy of Asset Protection for Real Estate Investors
+Copy of How to Start and Run Your Business the Right Way</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Mailroom_Task_Due_Date</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>4/14/2021</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PurchasedDescriptionOffer1</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Purchased:
+SIS Real Estate Upgrade - March
+$8500
+Titanium Upgrade
+1 Corp (corp only, no option here)
+Tax Toolbox - Digital
+Anderson Funding Community
+Virtual Bookkeeping for 1 Year
+Bonus Land Trust</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PurchasedDescriptionOffer2</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Purchased:
+SIS Tax &amp; Bookkeeping Bundle - March
+$2995
+Tax Advantage Program
+Tax Toolbox - Digital
+2 Tickets to an upcoming Taxwise event in 2021
+Virtual Bookkeeping for 1 Year
+Anderson Funding Community
+Bonus Land Trust</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PurchasedDescriptionOffer3LivingTrust</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Purchased:
+Legacy Bundle at SIS - March
+$2500
+Living Trust or QRP - The client chose Living Trust
+Tax Toolbox - Digital
+Anderson Funding Community
+Virtual Bookkeeping for 1 Year
+Bonus Land Trust</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PurchasedDescriptionOffer3QRP</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Purchased:
+Legacy Bundle at SIS - March
+$2500
+Living Trust or QRP - The client chose a QRP
+Tax Toolbox - Digital
+Anderson Funding Community
+Virtual Bookkeeping for 1 Year
+Bonus Land Trust</text>
+    </textTemplates>
+    <variables>
+        <name>CampaignMemberIDs</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CreateAsCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CreateBKCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CreateFulfimentCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>EventOfferAutomationText</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OpportunityLineItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityLineItem</objectType>
+    </variables>
+    <variables>
+        <name>OpportunityLineItemList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityLineItem</objectType>
+    </variables>
+    <variables>
+        <name>PlatSaleCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>SaleId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <waits>
+        <name>Wait_Wait1hour</name>
+        <label>Wait (Wait1hour)</label>
+        <locationX>181</locationX>
+        <locationY>230</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>Instant_Pause</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Get_Sale</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>Wait</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>Instant Pause</label>
+        </waitEvents>
+    </waits>
+</Flow>

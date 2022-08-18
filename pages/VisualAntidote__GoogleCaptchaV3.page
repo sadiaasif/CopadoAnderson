@@ -1,0 +1,38 @@
+<apex:page showHeader="false">
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__googleCaptchaHelper,'/googleCaptchaHelper.js')}" />
+    
+    <script>
+
+        function setGoogleCaptchaHTML(data){
+        var divElem = document.createElement("div"); 
+            divElem.setAttribute('id','fs_googlecaptchav3');
+
+            divElem.appendChild(createElement('input','hidden','fs_googlecaptchav3_site',data.googleCaptchaSite));
+            divElem.appendChild(createElement('input','hidden','fs_googlecaptchav3_action',data.googleCaptchaAction));
+
+            document.documentElement.appendChild(divElem);
+
+            fs.GCH.loadGoogleCaptchaV3();
+        };
+        function createElement(tagName,type,id,value){  
+            var inputElem = document.createElement(tagName);
+            inputElem.setAttribute('type',type);
+            inputElem.setAttribute('id',id);
+            inputElem.setAttribute('value',value);
+
+            return inputElem;
+        }
+        window.addEventListener('message', function (event) {
+            var origin = event.origin == window.location.origin;
+            if (origin) {
+                    var data = event.data || event.message;
+                    var json = JSON.parse(data);
+                    if(json.resultType == 'loadGoogleCaptchaV3'){
+                        setGoogleCaptchaHTML(json);
+                    }else if(json.resultType == 'generateCaptchaToken'){
+                        fs.GCH.generateCaptchaToken(json.callback)
+                    }
+                }
+            });
+    </script>
+</apex:page>

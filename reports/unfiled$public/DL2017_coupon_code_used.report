@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>evt__Attendee__c.Client_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.evt__First_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.evt__Last_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.evt__Is_Primary__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c.Guests_Name__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>CHILD_NAME</field>
+    </columns>
+    <description>Kerri needed for an event</description>
+    <filter>
+        <criteriaItems>
+            <column>evt__Attendee__c.Coupon_Code_Used__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>dl2017</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Tax and Asset Protection 12.03.2018</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>DL2017 coupon code used</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$evt__Special_Event__c$evt__Attendee__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>evt__Special_Event__c.evt__End__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

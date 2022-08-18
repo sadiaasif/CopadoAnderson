@@ -1,0 +1,6 @@
+<apex:page standardController="evt__Attendee__c"  docType="html-5.0" >
+   <h2>Set Attendee Image</h2>
+   <p>Drag an image (jpg, png, gif) to the drop zone below to add or replace the exhibitor logo/attendee profile picture for this record.</p>
+    <c:DragAndDropUploader DropZoneText="Drop Image Here" ParentId="{!evt__Attendee__c.Id}" FileName="AttendeeProfilePic" MaxSize="1000000"  AllowedTypes="image/jpg,image/jpeg,image/gif,image/png"  OverWrite="true"  DragDropHeight="100px" />
+
+</apex:page>

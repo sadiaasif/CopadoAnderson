@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <aggregateTypes>Unique</aggregateTypes>
+        <field>Order$Account</field>
+    </columns>
+    <columns>
+        <field>Order$OrderNumber</field>
+    </columns>
+    <columns>
+        <field>Order$Id</field>
+    </columns>
+    <columns>
+        <field>Order.OrderItems$Client_Name__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Order$Order_Age__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <column>Order$Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed,Refunded</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order$Law_Coordinator__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Becky Seguin,Chelsea Bojewski,Colette Grier,Kim Austin,Kristy McElwain,Mars D&apos;Amico,Phoebe Keliikupakako,Shanika Fikes,Sheila Denos,Stephanie Sanchez</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order$Owner__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Shanika Fikes,Kim Austin,Chelsea Bojewski,Bridget Carlvin,Mars D&apos;amico,Sheila Denos,Kyla Galvan,Colette Grier,Phoebe Keliikupakako,Carrie Watson,Becky Seguin,Stephanie Sanchez,Kristy Mcelwain</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Order$Law_Coordinator__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Order$Stage__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Shanika Unique Client Open Orders</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Orders_2021__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Order$EffectiveDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

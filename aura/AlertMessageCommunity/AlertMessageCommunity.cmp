@@ -1,0 +1,6 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global"  controller="getAlertMessage">
+	<aura:attribute name="alertmessage" type="String" />
+    <aura:attribute name="recordId" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.getAlertMessage}"/>
+</aura:component>

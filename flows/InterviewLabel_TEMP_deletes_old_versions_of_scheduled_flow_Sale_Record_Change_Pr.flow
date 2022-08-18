@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <interviewLabel>InterviewLabel - TEMP deletes old versions of scheduled flow Sale_Record_Change_Process {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>InterviewLabel - TEMP deletes old versions of scheduled flow Sale_Record_Change_Process</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Delete_old_PB_flows</name>
+        <label>Delete old PB flows for close sales</label>
+        <locationX>243</locationX>
+        <locationY>94</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>InterviewLabel</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Transaction_Recent2</stringValue>
+            </value>
+        </filters>
+        <object>FlowInterview</object>
+    </recordDeletes>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Delete_old_PB_flows</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

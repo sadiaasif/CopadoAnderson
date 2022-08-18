@@ -1,0 +1,154 @@
+<apex:page id="ClassifierSettings" tabStyle="Distribution_Classifier__tab" sideBar="false" standardStylesheets="false" docType="html-5.0" controller="n2de.ClassifierSettingsController" action="{!init}">
+    <apex:slds />
+    <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.n2Components, '/css/n2.min.css')}"/>
+        <style>
+            .n2__settings-fields div.slds-select_container {
+                width: 230px;
+            }
+        </style>
+        <script>
+            window.n2__sldsIconsPrefix = '{!JSENCODE(URLFOR($Asset.SLDS, 'assets/icons'))}';
+            window.n2__locale = '{!Locale}';
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.n2Components, 'js/thirdParty.min.js')}"></script>
+        <script onload="initComponents();" defer="defer" src="{!URLFOR($Resource.n2Components, 'js/n2.min.js')}"></script>
+        <script>
+            var initialLogDuration = '{!JSENCODE(LogDuration)}';
+            initComponents = function() {
+                initNav('Classifier Settings');
+
+                showCancelSave = function() {
+                    n2j$('#n2__save-footer').removeClass('slds-hide');
+                };
+
+                hideCancelSave = function() {
+                    n2j$('#n2__save-footer').addClass('slds-hide');
+                };
+
+                n2.cm.addComponent('select', {
+                    id: 'select-log-duration',
+                    selector: '#select-log-duration',
+                    label: 'Classifier log duration',
+                    help: 'The amount of time we keep the logs that can be generated for classifier processing',
+                    defaultValue: initialLogDuration,
+                    required: true,
+                    data: function() {
+                        var deferred = n2.util.promise();
+                        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClassifierSettingsController.getLogDurationOptions}', function(response, event) {
+                            if (event.statusCode === 200) {
+                                deferred.resolve(response);
+                            } else {
+                                deferred.resolve([]);
+                                n2.message.error('Error getting log duration options: ' + event.message);
+                            }
+                        }, {
+                            escape: false
+                        });
+                        return deferred;
+                    },
+                    sort: false,
+                    handlers: {
+                        'change': function() {
+                            showCancelSave();
+                        }
+                    },
+                    cls: 'n2__settings-fields'
+                });
+
+                n2.cm.addComponent('button', {
+                    id: 'btn-cancel',
+                    selector: '#btn-cancel',
+                    text: 'Cancel',
+                    handlers: {
+                        'click': function() {
+                            hideCancelSave();
+                            n2.cm.setValue('select-log-duration', initialLogDuration);
+                        }
+                    }
+                });
+                n2.cm.addComponent('button', {
+                    id: 'btn-save',
+                    selector: '#btn-save',
+                    text: 'Save',
+                    style: 'brand',
+                    handlers: {
+                        'click': function() {
+                            var logDuration = n2.cm.getValue('select-log-duration');
+                            n2.spinner.show();
+
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClassifierSettingsController.saveLogDuration}', logDuration, function(response, event) {
+                                n2.spinner.hide();
+                                if (event.statusCode === 200) {
+                                    hideCancelSave();
+                                    initialLogDuration = logDuration;
+                                    n2.toast.show({
+                                        text: 'Your changes have been saved'
+                                    });
+                                } else {
+                                    n2.message.error('Error saving Classifier settings: ' + event.message);
+                                }
+                            });
+                        }
+                    }
+                });
+            };
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    </head>
+
+    <div class="slds-scope n2__root-container n2__full-height">
+        <div class="n2__root-container-row n2__full-height">
+            <div class="slds-grid n2__full-height">
+                <div>
+                    <c:ClsNavigation pkgNamespace="{!Namespace}"/>
+                </div>
+                <div class="slds-col slds-brand-band slds-brand-band_medium slds-p-around_medium n2__brand-background">
+                    <div class="slds-page-header slds-has-bottom-magnet">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-custom-custom3">
+                                            <svg class="slds-icon" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom3')}"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <nav>
+                                            <ol class="slds-breadcrumb slds-line-height_reset">
+                                                <li class="slds-breadcrumb__item">
+                                                    <span>Distribution Engine Classifier</span>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <h1 title="Advanced > Settings" class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate">Advanced > Settings</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <article class="slds-card slds-has-top-magnet">
+                        <div class="slds-card__body slds-card__body_inner slds-p-top_small">
+                            <div class="slds-form">
+                                <span id="select-log-duration"></span>
+                            </div>
+                            <div id="n2__save-footer" class="slds-docked-form-footer slds-hide">
+                                <span class="slds-m-right_small slds-align-middle"><b>You have unsaved changes</b></span>
+                                <span id="btn-cancel"></span>
+                                <span id="btn-save"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </html>
+</apex:page>

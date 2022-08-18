@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>true</allowRecall>
+    <allowedSubmitters>
+        <type>allInternalUsers</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>ChargentSFA__Opportunity__c</field>
+        <field>Name</field>
+        <field>Client__c</field>
+        <field>Sales_Rep__c</field>
+        <field>Sale_Type__c</field>
+        <field>ChargentSFA__Amount__c</field>
+        <field>Transaction_date__c</field>
+        <field>ChargentSFA__Card_Last_4__c</field>
+        <field>CreatedBy</field>
+        <field>Status__c</field>
+        <field>Refund_Request_Reason__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>dollman+lex@andersonadvisors.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Entity Formation</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Entity Formation</label>
+        <name>Entity_Formation</name>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>kstephen@andersonadvisors.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Platinum Subscription</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Infinity Subscription</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Platinum or Infinity Subscription</label>
+        <name>Platinum_or_Infinity_Subscription</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>crogler@andersonadvisors.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Standard Renewal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>State Renewal</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>State or Standard Renewal</label>
+        <name>State_or_Standard_Renewal</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>mpues@andersonadvisors.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Bookkeeping</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Bookkeeping Subscription</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Bookkeeping</label>
+        <name>Bookkeeping</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>crogler@andersonadvisors.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Insurance</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Pension Renewal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>Tax Compliance</value>
+            </criteriaItems>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Backup</label>
+        <name>Backup</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>crogler@andersonadvisors.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <entryCriteria>
+            <criteriaItems>
+                <field>ChargentSFA__Transaction__c.Sale_Type__c</field>
+                <operation>equals</operation>
+                <value>TBD</value>
+            </criteriaItems>
+        </entryCriteria>
+        <label>Second Backup</label>
+        <name>Second_Backup</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Client Refund Process</label>
+    <processOrder>1</processOrder>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

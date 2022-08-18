@@ -1,0 +1,42 @@
+<apex:page standardController="evt__Attendee__c" extensions="evt.AttendeeQRPreviewController" >
+<style>
+.componentPanel {
+  
+}
+.componentPanel table {
+	
+}
+.componentPanel table p {
+	
+}
+.inline_h2 {
+   font-weight: bold;
+   font-size:1.1em;
+   
+}
+</style>
+<apex:outputPanel layout="block" id="attendeeQRPreviewForm" styleclass="componentPanel">
+<apex:form >
+<apex:pageMessages />
+<table>
+<tr><td style="vertical-align: top;"><img src="{!evt__Attendee__c.evt__vCard_QR_URL__c}" style="padding-right:15px;"/></td>
+<td style="vertical-align: top;">
+		<div class="inline_h2">Attendee vCard QR Code</div>
+		<p>The attendee evt__vCard_QR_URL__c field (displayed as an image to the left) contains embedded vCard Data (first name, last name, address, email, etc.) submitted at the time of registration and can be scanned with a standard QR reader app to capture vCard information and create contacts in a mobile device. 
+		<a href="#" onclick="javascript:document.getElementById('moreText1').style.display='inline';this.style.display='none';">More...</a><span id="moreText1" style="display:none;">When creating badges in third-party document-merge applications, evt__vCard_QR_URL__c can be used to display this QR image in the merged output. If the image is not visible, or the attendees vCard Data is updated after registration, be sure to refresh the image/url using the "refresh" link below before creating your badges.</span>
+		</p> 
+		<apex:commandLink action="{!refreshVCardQRUrl}" value="Refresh vCard QR Image" oncomplete="alert('Done! Please refresh this page to view the updated QR image.');" status="refreshVCardStatus"/>&nbsp;<apex:actionStatus startText=" Processing ..."  id="refreshVCardStatus"
+            stopText="" /><br/><br/>
+        <apex:outputPanel rendered="false">
+		<div class="inline_h2">Barcode &amp; QR Image Attachments</div>
+		<p>Attendee barcode and QR images can be prebuilt and attached to each attendee record to improve the performance of native check-in sheet and badge generation for events with large numbers of attendees.  <a href="#" onclick="javascript:document.getElementById('moreText2').style.display='inline';this.style.display='none';">More...</a><span id="moreText2" style="display:none;">Typically, these images are generated as they are needed in creating attendee badges and check-in sheet PDFs.</span></p>
+		<apex:commandLink value="Build Image Attachments" action="{!buildCodeImages}" oncomplete="alert('Done! Please refresh this page to view the new attachments.');" status="prebuildStatus"/>&nbsp;<apex:actionStatus startText=" Processing ..."  id="prebuildStatus"
+            stopText="" />
+            </apex:outputPanel>
+
+</td>
+</tr>
+</table>
+</apex:form>
+</apex:outputPanel>
+</apex:page>

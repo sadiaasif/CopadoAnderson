@@ -1,0 +1,8 @@
+<apex:page controller="exportCSVController" cache="true" contentType="text/csv#Renewals.csv" language="en-US">
+    Entity,Price,State_Renewal,First,Last,Address,City,State,Zip,President,Vice_President,Treasurer,Secretary,Director_1,Director_2,Director_3,Director_4
+    <apex:repeat value="{!myList}" var="a">
+        <apex:repeat value="{!a}" var="asub">
+        {!asub.Entity},{!asub.Price},{!asub.State_Renewal},{!asub.first},{!asub.last},{!asub.Addr},{!asub.City},{!asub.State},{!asub.Zip},{!asub.President},{!asub.Vice_President},{!asub.Treasurer},{!asub.Secretary},{!asub.Director_1},{!asub.Director_2},{!asub.Director_3},{!asub.Director_4},
+       </apex:repeat>
+    </apex:repeat>
+</apex:page>

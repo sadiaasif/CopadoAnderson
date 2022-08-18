@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- This field indicates which stage of the Automated Collections process this record represents. (e.g., Stage 3) --></help>
+        <label><!-- AC Stage Number --></label>
+        <name>ChargentOrders__AC_Stage_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field indicates which stage of the Automated Collections process this record represents. (e.g., Stage 3/5) --></help>
+        <label><!-- AC Stage --></label>
+        <name>ChargentOrders__AC_Stage__c</name>
+    </fields>
+    <fields>
+        <help><!-- The email sent during this stage will also be sent to this address. --></help>
+        <label><!-- CC Email Address --></label>
+        <name>ChargentOrders__CC_Email_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Automated Collections Record --></label>
+        <name>ChargentOrders__Chargent_Automated_Collections__c</name>
+        <relationshipLabel><!-- Chargent Automated Collections Stages --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field indicates whether an email has been sent during this stage. --></help>
+        <label><!-- Email Sent --></label>
+        <name>ChargentOrders__Email_Sent__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No email scheduled for this stage</masterLabel>
+            <translation><!-- No email scheduled for this stage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This field displays the name of the email template used if an email was sent during this stage. --></help>
+        <label><!-- Email Template --></label>
+        <name>ChargentOrders__Email_Template__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field indicates the date on which this stage is scheduled to execute. --></help>
+        <label><!-- Execute Date --></label>
+        <name>ChargentOrders__Execute_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the next field scheduled to execute. --></help>
+        <label><!-- Next Stage --></label>
+        <name>ChargentOrders__Next_Stage__c</name>
+        <relationshipLabel><!-- Chargent Automated Collections Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field indicates the automatic retry status of this stage. This will display whether the charge is scheduled or not, and whether that retry resulted in a successful payment collection. --></help>
+        <label><!-- Payment Retry --></label>
+        <name>ChargentOrders__Payment_Retry__c</name>
+        <picklistValues>
+            <masterLabel>No retry scheduled for this stage</masterLabel>
+            <translation><!-- No retry scheduled for this stage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes - Payment Collected</masterLabel>
+            <translation><!-- Yes - Payment Collected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes - Payment Failed</masterLabel>
+            <translation><!-- Yes - Payment Failed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Organization wide email address Id for sending AC emails. --></help>
+        <label><!-- Sender Email Address --></label>
+        <name>ChargentOrders__Sender_Email_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field displays a link to the Transaction record generated if this stage executed a payment retry. --></help>
+        <label><!-- Transaction --></label>
+        <name>ChargentOrders__Transaction__c</name>
+        <relationshipLabel><!-- Chargent Automated Collections Stages --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

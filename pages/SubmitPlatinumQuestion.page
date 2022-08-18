@@ -1,0 +1,824 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController,RssFeedController,PaginationController,CaseController,KnowledgeCustomSearchController" sidebar="false" showHeader="false" lightningStylesheets="true"> 
+    <apex:form >
+        <input type="hidden" id="sitedomain" value= "{!$Site.CurrentSiteUrl}" />
+    </apex:form>
+    
+    <apex:slds />  
+    <style>
+        @media (min-width: 1024px){
+        .sidebar {display: block;
+        }
+        }
+        div {
+        word-wrap: break-word;
+        }
+        footer.container-fluid.text-center {
+        padding: 2px;
+        }     
+        .slds-scope input, .slds-scope optgroup, .slds-scope select, .slds-scope textarea {
+        color: Black;
+        }
+        .slds-scope button{
+        color: white;
+        }
+        .col-xs-4 {
+        width: 100%;
+        }
+        .pbBody .input-group-btn .btn {
+        float: inherit; 
+        }
+        .autocomplete {
+        position: relative;
+        display: inline-block;
+        }
+        
+        input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+        }
+        
+        input[type=text] {
+        background-color: #f1f1f1;
+        width: 100%;
+        }
+        
+        input[type=submit] {
+        background-color: DodgerBlue;
+        cursor: pointer;
+        }
+        
+        .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+        }
+        
+        .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+        }
+        
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+        background-color: #e9e9e9; 
+        }
+        
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+        background-color: DodgerBlue !important; 
+        color: #ffffff; 
+        }
+        
+        /* start 26.12.18*/
+        
+        body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock{
+        background:transparent;
+        }
+        .search #testinput{
+        width: 100%;
+        border: 1px solid #00000038;
+        line-height: 24px;
+        }
+        .search .btn-default{
+        padding: 11px 15px !important;
+        line-height: 24px !important;
+        margin-top: 35px;
+        }
+        
+        .main-block .search-heading {
+        width: 100%;
+        float: left;
+        font-size: 17px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        margin: 0 0 10px !important;
+        }
+        
+        .main-block .list
+        {
+        border:none !important;
+        background:none !important;
+        }
+        .main-block .list tr td
+        {
+        border: 1px solid #243b5b !important;
+        padding: 10px;
+        }
+        
+        
+        .main-block .list tr th 
+        {
+        padding: 10px !important;
+        background: #243b5b !important;
+        color: #fff !important;
+        border: 1px solid #243b5b !important;
+        border-collapse: collapse;
+        }
+        
+        .main-block .input-group, .main-block .input-group .pbSubsection{
+        display:inline-block;
+        width:100%;
+        }
+        .main-block .input-group .detailList,   .main-block .input-group .detailList tr,   .main-block .input-group .detailList tr td{
+        width:100%;
+        float:left;
+        }
+        .main-block .input-group .detailList .search1{
+        width: 80%;
+        float: left;           
+        }
+        .main-block .input-group .detailList .search1 #testinput{
+        border: 1px solid #8080807d;
+        padding: 9px 10px;
+        border-radius: 5px;
+        line-height: 19px;
+        }
+        .main-block .input-group .detailList .search2 input{
+        margin-left: -3px;
+        border: 1px solid #243b5b;
+        }
+        .main-block .list ~ label {
+        float: right;
+        }
+        .main-block .list ~ label input {
+        border: none;
+        border: 1px solid grey;
+        background: transparent;
+        /* padding: 6px 10px; */
+        width: 84px;
+        padding: 7px 0;
+        margin: 0;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px 3px 0;
+        }
+        .slds-scope ul li img{
+        
+        max-width: 50;
+        height: 50; 
+        }
+        .gray-block {
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: inset 0px 0px 2px 0px #656565;
+        }
+        .chat
+        {
+        width: 888px;
+        margin: auto;
+        }
+        .custom-body > .panel-body {
+        color: green;
+        
+        
+        
+    </style>
+    
+    <style type='text/css'>
+        
+        @font-face {
+        font-family: 'Salesforce Sans';
+        src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+        url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+        }
+    </style>
+    
+    <div class="slds-scope">
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Business Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>            
+            </head>
+            <body> 
+                <apex:include pageName="AndersonHeader"/>
+                <div class="container" id="stp">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            
+                            <div class="accordion-option">                            
+                                <a href="javascript:void(0)" class="toggle-accordion active" accordion-id="#accordion"></a>
+                            </div>
+                            
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="form-group">                  
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingThree">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    Submit a Question
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="paymentAlert" class="modal fade" role="dialog">                                    
+                                            <div class="modal-dialog entities-section">                                        
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Payment Info</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="errs"></div>  
+                                                    </div> 
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        <div id="" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingThree">
+                                            <apex:actionStatus id="myErrorLogs" style="align:center;">      
+                                                <apex:facet name="start">                                                        
+                                                    <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                </apex:facet>
+                                                <apex:facet name="stop"></apex:facet>
+                                            </apex:actionStatus>
+                                            <div class="panel-body" id="creditPb">  
+                                                <a data-toggle="modal" id="pay-alert" data-target="#paymentAlert" href=""></a>
+                                                <!--<div id="errs" ><apex:pagemessages /></div>-->                                            
+                                                <div id="quesMsg"></div>
+                                                <apex:form > 
+                                                    <!--<apex:pageMessages id="showmsg"/>-->
+                                                    <apex:actionFunction name="myAction" rerender="errs" status="myErrorLogs"/>
+                                                    <apex:pageBlock mode="edit">
+                                                        <apex:pageBlockSection title="Questions" columns="1" >
+                                                            <div class="gray-bg">
+                                                                Get your questions answered on a variety of topics including Bookkeeping, Tax, Living Trusts, Corporations, LLC’s, Retirement, and Insurance all included in your Platinum Membership. One of our expert Advisors will respond to your question via email. Please allow 2-3 business days for a response. Questions submitted after 5 PM are considered submitted the following business day. Some questions may require research or further clarification from you and additional time may be needed. If you need your question to be answered within 24 hours, a $250 fee will apply. Expedited questions submitted after 12 pm on Friday and the weekend or Holidays will be answered the next business day.  Please make sure to check mark the expedited option below.
+                                                            </div>
+                                                            <apex:outputLabel value="Expedited?" />                                                            
+                                                            <input type="checkbox" id="expedited"/> Yes
+                                                            <div id="expedited-question" class="m-t-10" style="display:none;">
+                                                                <span class="form-group">Expedited Question Fee</span>  
+                                                                <br/>
+                                                                <span>Price: $250.00</span>
+                                                            </div> 
+                                                        </apex:pageBlockSection>
+                                                        <apex:pageBlockSection title="My Case Section" columns="1"> 
+                                                            <apex:pageBlockSectionItem >
+                                                                <apex:outputLabel value="Subject" />
+                                                                <apex:selectList multiselect="false" size="1" id="subject" required="true" styleClass="form-control"  >
+                                                                    <apex:selectOptions value="{!items}"/>
+                                                                </apex:selectList>
+                                                            </apex:pageBlockSectionItem>
+                                                            <apex:pageBlockSectionItem >  
+                                                                <apex:inputHidden value="{!usObj.AccountId}" id="userAccountId"/>                                                                                                                        
+                                                                <apex:inputHidden value="{!RecordTypeId.ID}" id="userRecordTypeId"/>
+                                                                <!--<input type="hidden" id="userRecordTypeId" value="{!RecordTypeId.ID}" />-->
+                                                            </apex:pageBlockSectionItem>
+                                                            <apex:pageBlockSectionItem >
+                                                                <apex:outputLabel value="Description"/>
+                                                                <apex:inputTextarea id="description" required="true" styleClass="form-control" style="height:125px;"/>
+                                                            </apex:pageBlockSectionItem>
+                                                        </apex:pageBlockSection>
+                                                        <br/>                                                    
+                                                        <div id="showexpedited" style="display:none;">   
+                                                            <div class="pbSubheader tertiaryPalette"><h3>Credit Card</h3></div>
+                                                            <div class="pbSubsection">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group">Card Number </div>
+                                                                    <div class="col-sm-8 form-group"><input type="text" name="cardNumber" id="cardNumber" value="" class="form-control"/></div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group">Expiration Month </div>
+                                                                    <div class="col-sm-8 form-group">
+                                                                        <apex:selectList multiselect="false" size="1" id="expMonth" required="true" styleClass="form-control"  >
+                                                                            <apex:selectOptions value="{!months}"/>
+                                                                        </apex:selectList>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group">Expiration Year</div>
+                                                                    <div class="col-sm-8 form-group">
+                                                                        <apex:selectList multiselect="false" size="1" id="expYear" required="true" styleClass="form-control"  >
+                                                                            <apex:selectOptions value="{!years}"/>
+                                                                        </apex:selectList>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group">Card Security </div>
+                                                                    <div class="col-sm-8 form-group">
+                                                                        <input type="text" name="cardSecurity" id="cardSecurity" value="" class="form-control"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group">Card Holder Name </div>
+                                                                    <div class="col-sm-8 form-group">
+                                                                        <input type="text" name="cardHolderName" id="cardHolderName" value="" class="form-control"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <apex:commandButton action="{!save}" value="Save" styleClass="btn btn-primary popup_btn"/> -->
+                                                        
+                                                        <apex:outputPanel ><apex:actionSupport event="onclick" status="imgLoader" rerender="pb"><input type="button" class="btn popup_btn pull-right" value="Submit" onClick="saveQuestion();" /> 
+                                                            </apex:actionSupport>
+                                                        </apex:outputPanel>
+                                                    </apex:pageBlock>
+                                                </apex:form>                                       
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <apex:actionStatus id="imgLoader" style="align:center;">      
+                                    <apex:facet name="start">                                                        
+                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                    </apex:facet>
+                                    <apex:facet name="stop"></apex:facet>
+                                </apex:actionStatus>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                Question History
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="panel-body case-his">
+                                            <apex:form id="frm">
+                                                <apex:pageblock id="block">
+                                                    <input type="hidden" value="{!userId}" id="usid" />
+                                                    <apex:pageBlockTable value="{!CaseAnswer}" var="a" id="pb">                            
+                                                        <apex:column headerValue="Case Number">
+                                                            <apex:outputPanel ><apex:actionSupport event="onclick" status="imgLoader" rerender="caseDetail"/><a data-toggle="modal" data-target="#caseDetail" name="{!userId}" id="{!a.CaseNumber}" onclick="getRemoteAccount(this.id,this.name)" style="color:blue;" href="#">
+                                                                {!a.CaseNumber}</a>                                    
+                                                            </apex:outputPanel>
+                                                        </apex:column>
+                                                        <apex:column HeaderValue="Subject" value="{!a.Subject}"/>
+                                                        <apex:column HeaderValue="Status" value="{!a.Status}"/>  
+                                                        <apex:column HeaderValue="Priority" value="{!a.Priority}"/> 
+                                                    </apex:pageBlockTable>
+                                                    <div class="form-group">
+                                                        <apex:actionFunction action="{!refreshGridCase}" name="queryByPageCase" reRender="pb,myCaseButtons">
+                                                            <apex:param name="firstParams" assignTo="{!selectedPageCase}" value="" />                                                            
+                                                        </apex:actionFunction>
+                                                        <apex:dynamicComponent componentValue="{!casePaginationButtons}"/>                                                   
+                                                    </div>                                                
+                                                </apex:pageblock>
+                                            </apex:form>                                    
+                                        </div>
+                                    </div>
+                                    <div id="caseDetail" class="modal fade" role="dialog">                                                    
+                                        <div class="modal-dialog entities-section modal-lg"> 
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Case Detail</h4>
+                                                </div>
+                                                <div class="modal-body"> 
+                                                    <div id="responseErrors"></div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered">
+                                                            <tr id="caseResults">
+                                                                
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <div id="cmntMsg"></div>                                                            
+                                                                    <div class="row form-group">
+                                                                        <div class="col-xs-6" id="cmntBox">
+                                                                            <div class="form-group">
+                                                                                <label for="comment" class="form-group"><b>Comment:</b></label>
+                                                                                <textarea class="form-control" rows="5" id="commentdesc"></textarea>
+                                                                                <!--<apex:inputHidden id="userComment"/>-->
+                                                                                <input type="hidden" value="" id="userComment" />
+                                                                                <input type="hidden" value="" id="caseval" />
+                                                                            </div>
+                                                                            
+                                                                            <input type="button" class="btn popup_btn pull-right" value="Comment" onClick="saveCase();" />                                                                                     
+                                                                        </div>  
+                                                                        <div class="col-xs-6">
+                                                                            <div class="form-group">
+                                                                                <label for="comment" class="form-group"><b>Case Description:</b></label><br/>
+                                                                                <pre class="pre-text">
+<div id="commdesc"></div>
+</pre>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>   
+                                                                    <pre class="pre-text">
+<div class="row form-group" id="commentResults">
+</div>  
+</pre>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div> 
+                                                </div> 
+                                            </div>                                        
+                                        </div>                            
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="accordion-option">                            
+                                <a href="javascript:void(0)" class="toggle-accordion active" accordion-id="#accordion"></a>
+                            </div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="form-group">                  
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingSrk">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSrk" aria-expanded="false" aria-controls="collapseSrk">
+                                                    How to Submit A Platinum Question
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        
+                                        <div id="collapseSrk" class="panel-collapse collapse"  aria-labelledby="headingSrk">
+                                            <div class="panel-body">
+                                                <ul style="list-style-type:circle;text-align:left;">
+                                                    <li>1. There are two ways to submit a question. When the blue chat feature in the lower right hand corner reads “Ask Us Your Platinum Question”, you can open a chat with a Platinum Professional in real time to get an answer to your question.</li><br/><br/>
+                                                    <li><apex:image url="{!URLFOR($Resource.images, 'images/online.png')}" width="50" height="50" styleClass="img img-square img-responsive chat " /></li><br/><br/>
+                                                    <li>2. If the chat feature in the lower right hand corner reads “Platinum Professionals Offline” then all our professionals are currently offline.</li><br/><br/>
+                                                    <li><apex:image url="{!URLFOR($Resource.images, 'images/Offline.png')}" width="50" height="50" styleClass="img img-square img-responsive chat "/></li><br/><br/>
+                                                    <li>3. When our professionals are offline you can submit a question using the standard Submit A Question feature.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </body>
+        </html>
+    </div>
+    
+    <apex:include pageName="AndersonFooter"/>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.marquee.js')}"/>
+    <apex:includeScript value="https://apis.google.com/js/platform.js"/>
+    <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+    <script>    
+    $(document).ready(function() {                     
+        var availableTags =  [];
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.KnowledgeCustomSearchController.getUserKeywords}',                            
+            function(result, event){   
+                if(event.status){ 
+                    availableTags = result;
+                } 
+            });
+        $('#testinput').on("keypress", function() {
+            $( "#testinput" ).autocomplete({
+                source: availableTags
+            });
+        });
+    });  
+    </script>
+    
+    
+    <script type="text/javascript">
+    $("#expedited").change(function(){
+        $("#showexpedited").fadeToggle();
+        $("#expedited-question").fadeToggle();
+        
+    });
+    function saveCase() {
+        var cmnt = $('#commentdesc').val();
+        var usrCmnt = $('#userComment').val();
+        var caseval = $('#caseval').val();
+        if(cmnt != '') {
+            // Call the remote action to save the record data
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.CaseController.saveClientCase}',
+                cmnt,usrCmnt,
+                function(result, event){
+                    $('#commentdesc').val('');                        
+                    if(event.status){                            
+                        document.getElementById("cmntMsg").innerHTML = "<span id='successMsg'>Comment Added Successfully</span>";
+                    } else if (event.type === 'exception'){
+                        document.getElementById("cmntMsg").innerHTML = "<span id='errorMsg'>Error !!!</span>";
+                    } else {
+                        document.getElementById("cmntMsg").innerHTML = "<span id='errorMsg'>There Is Some Problem</span>";
+                    }              
+                    getRemoteAccount(caseval);
+                    queryByPageCase(0);
+                });
+        } else { 
+            document.getElementById("cmntMsg").innerHTML = "<span id='errorMsg'>Please Enter Comment</span>";                      
+        }
+        setTimeout(function() { $("#cmntMsg span").fadeOut(1500); }, 5000);
+    }
+    
+    function saveQuestion() { 
+        $('#cseBtn').prop('disabled', true);
+        var subj = $("[id$='subject']").val();
+        var descr = $("[id$='description']").val();
+        var usrAccId = $("[id$='userAccountId']").val();
+        var usrRecId = $("[id$='userRecordTypeId']").val();
+        if ($('#expedited').is(':checked')){
+            var crdNo = $("[id$='cardNumber']").val();
+            var expYear = $("[id$='expYear']").val();
+            var expMonth = $("[id$='expMonth']").val();
+            var cardHolderName = $("[id$='cardHolderName']").val();  
+            var cardSecurity = $("[id$='cardSecurity']").val();                    
+            if(crdNo != '') {
+                if(cardSecurity != '') {
+                    if(cardHolderName != '') {
+                        if(descr != '') { 
+                            Visualforce.remoting.Manager.invokeAction(
+                                '{!$RemoteAction.CaseController.saveClientQuestionWithPayment}',
+                                usrAccId,crdNo,expYear,expMonth,cardHolderName,cardSecurity,
+                                function(result, event){
+                                    alert(result);
+                                    $('#cseBtn').prop('disabled', false);
+                                    $("[id$='description']").val('');
+                                    $("[id$='cardNumber']").val('');
+                                    $("[id$='cardHolderName']").val('');
+                                    $("[id$='cardSecurity']").val('');
+                                    $("[id$='expYear']").prop('selectedIndex',0);
+                                    $("[id$='expMonth']").prop('selectedIndex',0);
+                                    $("[id$='subject']").prop('selectedIndex',0);
+                                    $('#expedited').prop('checked', false);
+                                    $("#expedited-question").fadeToggle();
+                                    if(event.status){                              
+                                        // document.getElementById("quesMsg").innerHTML = "<span id='successQuesMsg'>Question Added Successfully</span>";
+                                        document.getElementById("quesMsg").innerHTML = "<span id='successQuesMsg'>Please wait for your transaction response</span>";
+                                        ChargeCallout(result,subj,descr,usrAccId,usrRecId);
+                                    } else if (event.type === 'exception'){
+                                        document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Error !!!</span>";
+                                    } else {
+                                        document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>There Is Some Problem</span>";
+                                    }                            
+                                    queryByPageCase(0);
+                                });
+                            
+                        } else { 
+                            document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Please provide the Description</span>";
+                        }   
+                    } else { 
+                        document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Please provide Card Holder Name</span>";
+                    }  
+                } else { 
+                    document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Please provide Card Security</span>";
+                }                                  
+            } else { 
+                document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Please provide Card Number</span>";
+            }  
+            
+        } else {
+            if(descr != '') {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.CaseController.saveClientQuestion}',
+                    subj,descr,usrAccId,usrRecId,
+                    function(result, event){   
+                        $('#cseBtn').prop('disabled', false);
+                        $("[id$='description']").val('');
+                        $("[id$='subject']").prop('selectedIndex',0);
+                        if(event.status){                              
+                            document.getElementById("quesMsg").innerHTML = "<span id='successQuesMsg'>Question Added Successfully</span>";
+                        } else if (event.type === 'exception'){
+                            document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Error !!!</span>";
+                        } else {
+                            document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>There Is Some Problem</span>";
+                        }                            
+                        queryByPageCase(0);
+                    });
+            } else { 
+                document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Please provide the Description</span>";
+            }   
+            
+        }                     
+        
+        setTimeout(function() { $("#quesMsg span").fadeOut(1500); }, 5000);
+    } 
+    
+    function ChargeCallout(OpportunityId,subj,descr,usrAccId,usrRecId) {
+        var oppId = OpportunityId;                    
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.CaseController.ChargeExpedited}',
+            oppId,subj,descr,usrAccId,usrRecId,
+            function(result, event){        
+                //alert(result);       
+                var transactionArray = result.split(',');                        
+                var myTrans = transactionArray[0];
+                var myTransAmt = transactionArray[2];
+                //var transNo = myTrans.substring(1, myTrans.indexOf(')'));
+                //var transAmt = myTransAmt.substring(1, myTransAmt.indexOf(')'));
+                var transNo = myTrans.replace(/[{()}]/g, '');                        
+                var transAmt =myTransAmt.replace(/[{()}]/g, '');
+                if(event.status){    
+                    document.getElementById("quesMsg").innerHTML = "";
+                    if(transactionArray[1] == '(Approved)') { 
+                        $("#errs").addClass("alert alert-success");
+                        document.getElementById("errs").innerHTML = 'Payment successful for transaction no. '+ transNo + ' for Amount $'+ transAmt;                                        
+                    } else { 
+                        $("#errs").addClass("alert alert-danger");
+                        document.getElementById("errs").innerHTML = 'Payment failed ! ' + transactionArray[3];
+                    }
+                    $('#pay-alert')[0].click();
+                } else if (event.type === 'exception'){
+                    document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>Error !!!</span>";
+                } else {
+                    document.getElementById("quesMsg").innerHTML = "<span id='errorQuesMsg'>There Is Some Problem</span>";
+                }     
+            });
+        myAction();
+    }
+    function getRemoteAccount(callingCaseNumber,UsrId) {
+        var caseNo = callingCaseNumber;
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.CaseController.getCaseDetails}',
+            caseNo, 
+            function(result, event){
+                var commentHtml = '';
+                var caseHtml = '';                        
+                document.getElementById("commentResults").innerHTML = "";                        
+                document.getElementById("caseResults").innerHTML = "";                                               
+                var cdate=new Date(result[0].caseCreateDate).getDate();
+                var cmonth=new Date(result[0].caseCreateDate).getMonth()+1;
+                var cyear=new Date(result[0].caseCreateDate).getFullYear();
+                var hours = new Date(result[0].caseCreateDate).getHours();
+                var min = new Date(result[0].caseCreateDate).getMinutes();
+                var sec = new Date(result[0].caseCreateDate).getSeconds();                        
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                min = min < 10 ? '0'+min : min;
+                var strTime = hours + ':' + min + ' ' + ampm;
+                var original_date = cmonth + '/' + cdate + '/' + cyear +' '+ strTime;
+                //caseHtml += '<td width="65%"><div class="row"><div class="col-xs-6">Case Number- '+ result[0].CaseNumber +'</div><div class="col-xs-6">Created Date '+ original_date +'</div><div class="col-xs-12"><h4 class="h4">'+ result[0].caseName +'</h4></div></div> </td><td><div class="row"><div class="col-xs-12">Status- '+ result[0].caseStatus +'</div><div class="col-xs-12">Case Owner- '+ result[0].caseOwner +'</div></div></td>'; 
+                caseHtml += '<td width="65%"><div class="row"><div class="col-xs-6">Case Number- '+ result[0].CaseNumber +'</div><div class="col-xs-6">Created Date '+ original_date +'</div><div class="col-xs-12"><h4 class="h4">'+ result[0].caseName +'</h4></div></div> </td><td><div class="row"><div class="col-xs-12">Status- '+ result[0].caseStatus +'</div></div></td>'; 
+                if(result[0].caseStatus == 'Closed') { $("#cmntBox").hide(); } else { $("#cmntBox").show();}
+                $("#caseResults").append(caseHtml);     
+                if (typeof result[0].caseDesc=== "undefined") {
+                    result[0].caseDesc = '';
+                }
+                document.getElementById("commdesc").innerHTML = result[0].caseDesc;
+                for (var i = 0; i < result.length; i++) { 
+                    if (event.status) {                                
+                        $("#userComment").val(result[0].CaseId);
+                        $("#caseval").val(callingCaseNumber);                                
+                        if(result[i].commBody) {    
+                            var Uid = document.getElementById('usid').value;
+                            var comdate=new Date(result[i].commDate).getDate();
+                            var commonth=new Date(result[i].commDate).getMonth()+1;
+                            var comyear=new Date(result[i].commDate).getFullYear();
+                            var comhours = new Date(result[i].commDate).getHours();
+                            var commin = new Date(result[i].commDate).getMinutes();
+                            var comsec = new Date(result[i].commDate).getSeconds();                        
+                            var comampm = comhours >= 12 ? 'PM' : 'AM';
+                            comhours = comhours % 12;
+                            comhours = comhours ? comhours : 12; // the hour '0' should be '12'
+                            commin = commin < 10 ? '0'+commin : commin;
+                            var comTime = comhours + ':' + commin + ' ' + comampm;
+                            var original_com_date = commonth + '/' + comdate + '/' + comyear +' '+ comTime; 
+                            //alert('com by = ' + result[i].commById+' , User id = '+ Uid);
+                            if(result[i].commById == Uid) { var comId = result[i].commBy; } else { var comId = 'Anderson Business Advisors'; }
+                            //commentHtml += '<div class="col-xs-9"><div class="col-xs-12 comment-list"><div class="col-xs-4 form-group">'+ result[i].commBy +'</div><div class="col-xs-8 form-group">Update date- '+ original_com_date +'</div><div class="col-xs-12"> '+ result[i].commBody +'</div></div></div>';
+                            commentHtml += '<div class="col-xs-12"><div class="col-xs-12 comment-list"><div class="col-xs-4 form-group"><b>'+ comId +'</b></div><div class="col-xs-8 form-group"><b>Update date- '+ original_com_date +'</b></div><div class="col-xs-12"> '+ result[i].commBody +'</div></div></div>';                                
+                        }
+                    } else if (event.type === 'exception') {
+                        document.getElementById("responseErrors").innerHTML = 
+                            event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                    } else {
+                        document.getElementById("responseErrors").innerHTML = event.message;
+                    }
+                }
+                $("#commentResults").append(commentHtml);                           
+            }, 
+            {escape: true}
+        );
+    }
+    
+    </script>
+    
+            <style type='text/css'>
+                .embeddedServiceHelpButton .helpButton .uiButton {
+                background-color: #466d8c;
+                font-family: "Salesforce Sans", sans-serif;
+                }
+                .embeddedServiceHelpButton .helpButton .uiButton:focus .message{
+                outline: 1px solid #466d8c;
+                }
+                
+                .embeddedServiceSidebar button{
+                background:none;
+                border:none;
+                text-transform: none;
+                
+                }
+                .embeddedServiceSidebarMinimizedDefaultUI .minimizedText {  
+                overflow: visible;
+                text-transform: none;
+                }
+                
+                
+                
+                
+                .embeddedServiceHelpButton .uiButton .helpButtonLabel .message {
+                overflow: visible;
+                white-space: nowrap;
+                text-transform: none;
+                }
+                .message {
+                background-color: #466d8c;
+                overflow: visible;
+                border-style: none;
+                color: #fff;
+                }
+                @font-face {
+                font-family: 'Salesforce Sans';
+                src: url('https://c1.sfdcstatic.com/etc/clientlibs/sfdc-aem-master/clientlibs_base/fonts/SalesforceSans-Regular.woff') format('woff'),
+                url('https://c1.sfdcstatic.com/etc/clientlibs/sfdc-aem-master/clientlibs_base/fonts/SalesforceSans-Regular.ttf') format('truetype');
+                }
+                
+                .embeddedServiceHelpButton .uiButton{
+                max-width: 20em;
+                }
+                .embeddedServiceSidebarButton {
+                background: #466d8c !important;
+                
+                }
+                .embeddedServiceSidebarMinimizedDefaultUI {
+                min-width: 18em !important;
+                }
+            </style>
+            
+            <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+            
+            
+            <script type='text/javascript'>
+                var initESW = function(gslbBaseURL) {
+                    embedded_svc.settings.displayHelpButton = true; //Or false
+                    embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+                    
+                    embedded_svc.settings.defaultMinimizedText = 'Ask Us Your Platinum Question'; //(Defaults to Chat with an Expert)
+                    embedded_svc.settings.disabledMinimizedText = 'Platinum Professionals Offline'; //(Defaults to Agent Offline)
+                    
+                    //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+                    //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+                    
+                    // Settings for Chat
+                    //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+                    // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+                    // Returns a valid button ID.
+                    //};
+                    embedded_svc.settings.prepopulatedPrechatFields = {FirstName: "{!con.FirstName}", LastName: "{!con.LastName}", Email: "{!con.Email}"}; //Sets the auto-population of pre-chat form fields
+                    //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+                    embedded_svc.settings.offlineSupportMinimizedText = 'Platinum Agents Offline!'; //(Defaults to Contact Us)
+                    embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+                    embedded_svc.settings.entryFeature = 'LiveAgent';
+                    
+                    embedded_svc.init(
+                        'https://andersonadvisors.my.salesforce.com',
+                        'https://platinum.force.com/dashboard',
+                        gslbBaseURL,
+                        '00DU0000000JQSo',
+                        'Platinum_Advisor_Chat',
+                        {
+                            baseLiveAgentContentURL: 'https://c.la1-c2-ia5.salesforceliveagent.com/content',
+                            deploymentId: '5724P000000ghkO',
+                            buttonId: '5734P000000gisb',
+                            baseLiveAgentURL: 'https://d.la1-c2-ia5.salesforceliveagent.com/chat',
+                            eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I4P000000bpIKUAY_170120401c9',
+                            isOfflineSupportEnabled: false
+                        }
+                    );
+                };
+            
+            if (!window.embedded_svc) {  
+                var s = document.createElement('script');
+                s.setAttribute('src', 'https://andersonadvisors.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+                s.onload = function() { 
+                    initESW(null);
+                };
+                document.body.appendChild(s);
+            } else {
+                initESW('https://service.force.com');
+            }
+            </script>  
+</apex:page>

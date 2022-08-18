@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Audience xmlns="http://soap.sforce.com/2006/04/metadata">
+    <audienceName>External User</audienceName>
+    <container>Anderson Internal</container>
+    <criteria>
+        <criterion>
+            <criteriaNumber>1</criteriaNumber>
+            <criterionValue>
+                <entityField>$User.Community_View__c</entityField>
+                <entityType>User</entityType>
+                <fieldValue>External User</fieldValue>
+            </criterionValue>
+            <operator>Equal</operator>
+            <type>FieldBased</type>
+        </criterion>
+    </criteria>
+    <formulaFilterType>AllCriteriaMatch</formulaFilterType>
+    <isDefaultAudience>false</isDefaultAudience>
+    <targets>
+        <target>
+            <groupName>0d4897f8-4799-43ba-8714-12d441f78dec$#$15e7afc9-cd83-46ec-95ad-9501c6243d5b</groupName>
+            <priority>2</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Default_Navigation_Menu_1_Component_Properties</targetValue>
+        </target>
+        <target>
+            <groupName>02e654d4-9f4f-4398-bff8-1705f3290903</groupName>
+            <priority>1</priority>
+            <targetType>ExperienceVariation</targetType>
+            <targetValue>Campaign_Detail_Campaign_Details_External_User_Page</targetValue>
+        </target>
+    </targets>
+</Audience>

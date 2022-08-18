@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>Upgrade_the_Infinity_subscription</name>
+        <label>Upgrade the Infinity subscription</label>
+        <locationX>539</locationX>
+        <locationY>268</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Infinity_Subscription_Sale.Infinity_Memebership__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Membership_level__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Infinity_Subscription_Sale.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SaleName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>If_Event</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Upgrade_the_Infinity_subscription_0</name>
+        <label>Upgrade the Infinity subscription</label>
+        <locationX>697</locationX>
+        <locationY>446</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Infinity_Subscription_Sale.CloseDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Sale_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Infinity_Subscription_Sale.Infinity_Membership_Expiration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InfinityExpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Infinity_Subscription_Sale.Sale_Campaign__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Sale_Campaign__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Subscription_Sale_update</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_if_the_Client_Has_infinity_Subscription</name>
+        <label>Check if the Client Has infinity Subscription</label>
+        <locationX>361</locationX>
+        <locationY>266</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_for_infinity_Subscription</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Infinity_Subscription_Sale</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Infinity_Subscription_Sale.Infinity_Memebership__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Membership_level__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Upgrade_the_Infinity_subscription</targetReference>
+            </connector>
+            <label>Check for infinity Subscription</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Event</name>
+        <label>If Event</label>
+        <locationX>693</locationX>
+        <locationY>275</locationY>
+        <defaultConnector>
+            <targetReference>Subscription_Sale_update</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>EventofferAutomation_text_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Event_Offer_automaton_text__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Upgrade_the_Infinity_subscription_0</targetReference>
+            </connector>
+            <label>EventofferAutomation text Present?</label>
+        </rules>
+    </decisions>
+    <description>The Form assembly form will create a platform event, and this flow will check if the client has an infinity subscription and upgrade it based on the membership level</description>
+    <formulas>
+        <name>InfinityExpdate</name>
+        <dataType>Date</dataType>
+        <expression>DATE(
+YEAR({!$Record.Sale_Date__c})+1,
+MONTH({!$Record.Sale_Date__c}) ,
+DAY({!$Record.Sale_Date__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>SaleName</name>
+        <dataType>String</dataType>
+        <expression>If({!$Record.Membership_level__c}==&apos;360&apos;, &apos;Infinity Subscription - 360 Pro&apos;,{!Get_Infinity_Subscription_Sale.Name})</expression>
+    </formulas>
+    <interviewLabel>Subscription Upgrade platform Event - Sale Subscription upgrade {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Subscription Upgrade platform Event - Sale Subscription upgrade</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Infinity_Subscription_Sale</name>
+        <label>Get Infinity Subscription Sale</label>
+        <locationX>176</locationX>
+        <locationY>263</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_the_Client_Has_infinity_Subscription</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0120B000000N8E5QAK</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Infinity_Memebership__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.AccountId__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Subscription_Sale_update</name>
+        <label>Subscription Sale update</label>
+        <locationX>909</locationX>
+        <locationY>342</locationY>
+        <inputReference>Get_Infinity_Subscription_Sale</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Infinity_Subscription_Sale</targetReference>
+        </connector>
+        <object>Subscription_Upgrade__e</object>
+        <triggerType>PlatformEvent</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

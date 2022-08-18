@@ -1,0 +1,78 @@
+<apex:page standardController="evt__Special_Event__c" extensions="evt.UpdateCampaignMembersController" tabStyle="evt__Special_Event__c">
+<apex:sectionHeader title="Linvio Events" subtitle="Update Campaign Members" description="Push Special Event Attendee status and invitation codes campaign members in a Salesforce Campaign." />
+<apex:form id="mainform">
+<apex:inputHidden value="{!evt__Special_Event__c.Name}"/>
+<apex:inputHidden value="{!evt__Special_Event__c.evt__Campaign__c}"/>
+<apex:pageMessages />
+<apex:pageBlock > 
+    <apex:pageBlockButtons >
+        <apex:commandButton value="Return" action="{!gotoEventDetailPage}"/>
+        <apex:commandButton value="Update Members" action="{!updateMembers}" status="formStatus" rerender="mainform" />
+		<apex:actionStatus id="formStatus" >
+			                 <apex:facet name="start">
+                     <apex:outputPanel >&nbsp;
+                         <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                             style="vertical-align:middle;" alt="" />
+                             &nbsp;Updating...
+                     </apex:outputPanel>
+                 </apex:facet>
+                 <apex:facet name="stop">
+                     <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" /> 
+                 </apex:facet> 
+                 </apex:actionStatus>        
+    </apex:pageBlockButtons> 
+    <apex:pageBlockSection columns="1">
+ 		<apex:pageBlockSectionItem >
+ 			<apex:outputText value="Event"/>
+            <apex:outputPanel layout="inline">
+            <apex:outputField value="{!event.Name}" />&nbsp;({!attendeeCount} attendee records)
+            </apex:outputPanel>
+ 		</apex:pageBlockSectionItem>
+            
+            <apex:inputField value="{!event.evt__Campaign__c}" >
+            	<apex:actionSupport event="onchange" action="{!changeSelectedCampaign}" status="formStatus" rerender="mainform, memberStatusOptions, newMemberStatusOptions" />
+            </apex:inputField>  
+ 
+ 		<apex:pageBlockSectionItem >
+ 			<apex:outputText value="For Attendees with Status" />
+ 			<apex:outputPanel >
+ 			<apex:selectList size="1" multiselect="false" value="{!selectedAttendeeStatus}">
+ 				<apex:selectOptions value="{!attendeeStatusOptions}"/>
+ 			</apex:selectList> and Attended:&nbsp; <apex:selectList size="1" multiselect="false" value="{!selectedAttendedBoxOption}">
+ 				<apex:selectOptions value="{!attendedBoxOptions}"/>
+ 			</apex:selectList>
+ 			</apex:outputPanel>
+ 		</apex:pageBlockSectionItem> 
+    
+ 		<apex:pageBlockSectionItem id="memberStatusOptions" >
+ 			<apex:outputText value="Set Member Status To"/>
+ 			<apex:selectList size="1" multiselect="false" value="{!selectedMemberStatus}">
+ 				<apex:selectOptions value="{!memberStatusOptions}"/>
+ 			</apex:selectList>
+ 		</apex:pageBlockSectionItem>
+ 		    
+
+ 		<apex:pageBlockSectionItem >
+ 			<apex:outputText value=""/>
+ 			<apex:outputPanel layout="inline">
+ 			<apex:inputCheckbox value="{!addMissingMembers}"/>&nbsp;<apex:outputText value="Add missing campaign members to the Campaign	with status set to"/>&nbsp;<apex:selectList size="1" id="newMemberStatusOptions" multiselect="false" value="{!newMemberStatus}">
+ 				<apex:selectOptions value="{!newMemberStatusOptions}"/>
+ 			</apex:selectList>
+ 			</apex:outputPanel>
+ 		</apex:pageBlockSectionItem>
+
+ 		<apex:pageBlockSectionItem >
+ 			<apex:outputText value=""/>
+ 			<apex:outputPanel layout="inline">
+ 			<apex:inputCheckbox value="{!storeInvitationCode}"/>&nbsp;<apex:outputText value="Store invitation code on campaign member record (for mass emailing)."/>
+ 			</apex:outputPanel>
+ 		</apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+ 
+
+</apex:pageBlock>
+
+</apex:form>
+
+</apex:page>

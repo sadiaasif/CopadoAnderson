@@ -1,0 +1,201 @@
+<apex:page docType="html-5.0" controller="pymt.SiteHostedResultPayPalController" action="{!processNotification}" cache="false" sidebar="false" showHeader="false" standardStyleSheets="false" language="{!$CurrentPage.Parameters.lang}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+
+  <apex:define name="body">
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitehostedresultpaypal_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+      <div class="pc_page_content_inner">
+
+    <apex:form id="mainForm">
+       <apex:pageMessages />
+        <apex:outputPanel rendered="{!pageLayout=='BillingAgreement'}">
+        <apex:outputPanel rendered="{!success}">
+        <h2>Billing Agreement Created</h2>
+        <div class="pc_button_container">
+
+        <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+          <apex:commandButton value="{!$Label.pymt__Label_Continue}" rendered="{!NOT(ISBLANK(completedURL))}" action="{!finishButton}" />
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+          <apex:commandLink styleClass="css-button" value="{!$Label.pymt__Label_Continue}" rendered="{!NOT(ISBLANK(completedURL))}" action="{!finishButton}" />
+        </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!NOT(success)}">
+        <h2>Billing Agreement Failed</h2>
+        <div class="pc_button_container">
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+            <apex:commandButton value="{!$Label.pymt__Label_Retry}" rendered="{!NOT(ISBLANK(retryURL))}" action="{!retryButton}" />
+          </apex:outputPanel>
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+            <apex:commandLink styleClass="css-button" value="{!$Label.pymt__Label_Retry}" rendered="{!NOT(ISBLANK(retryURL))}" action="{!retryButton}" />
+          </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+        </apex:outputPanel>
+
+        <!-- Checkout Page Layout -->
+
+        <apex:outputPanel rendered="{!pageLayout=='Checkout'}">
+        <apex:outputPanel rendered="{!success}">
+
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteHostedResultPayPal_CheckoutHeading == '-')}">
+        <h1 class="pc_checkout_heading">{!$Label.pymt__SiteHostedResultPayPal_CheckoutHeading}</h1>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteHostedResultPayPal_CheckoutInstructions=='-')}">
+        <p class="pc_checkout_instructions">{!$Label.pymt__SiteHostedResultPayPal_CheckoutInstructions}</p>
+        </apex:outputPanel>
+
+        <apex:outputPanel styleClass="pc_cart_details">
+        <apex:outputPanel rendered="{!NOT(hasCartItems)}" >
+                <table class="pc_cart_item_table">
+                <tr>
+                    <th class="itemDescriptionColumn">{!$Label.pymt__Label_Description}</th>
+                    <th class="currency_column">{!$Label.pymt__Label_Amount}</th>
+                </tr>
+                <tr>
+                    <td class="itemDescriptionColumn"><apex:outputText value="{!payment.name}" /></td>
+                    <td class="currency_column"><apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!subtotal}"/></apex:outputText></td>
+                </tr>
+                </table>
+
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!hasCartItems}" >
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteCheckout_ItemListHeading == '-')}">
+        <h2>{!$Label.pymt__SiteCheckout_ItemListHeading}</h2>
+        </apex:outputPanel>
+        <c:CartItemDataTable cartItems="{!attachedCartItems}" currencyFormat="{!currencyShortFormatExpression}" id="cartItemTable"/>
+        </apex:outputPanel>
+
+        <div class="pc_checkout_totals" >
+        <apex:panelGrid columns="2" columnClasses="totalsLabelColumn,currency_column">
+            <apex:outputText value="{!$Label.pymt__Label_DiscountAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Discount__c),payment.pymt__Discount__c==0))}"/>
+            <apex:outputText styleClass="discountAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Discount__c),payment.pymt__Discount__c==0))}"
+                value="{!currencyFormatExpression}" >
+               <apex:param value="{!payment.pymt__Discount__c}"/>
+            </apex:outputText>
+
+            <apex:outputText value="{!$Label.pymt__Label_TaxAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Tax__c),payment.pymt__Tax__c==0))}"/>
+            <apex:outputText styleClass="taxAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Tax__c),payment.pymt__Tax__c==0))}"
+                value="{!currencyFormatExpression}" >
+               <apex:param value="{!payment.pymt__Tax__c}"/>
+            </apex:outputText>
+
+            <apex:outputText value="{!$Label.pymt__Label_ShippingAmount}" rendered="{!NOT(OR(ISNULL(payment.pymt__Shipping__c),payment.pymt__Shipping__c==0))}"/>
+            <apex:outputText styleClass="shippingAmount" rendered="{!NOT(OR(ISNULL(payment.pymt__Shipping__c),payment.pymt__Shipping__c==0))}"
+                value="{!currencyFormatExpression}" >
+               <apex:param value="{!payment.pymt__Shipping__c}"/>
+            </apex:outputText>
+
+            <apex:outputText value="{!$Label.pymt__Label_TotalAmount}"/>
+            <apex:outputText styleClass="totalAmount"
+                value="{!currencyFormatExpression}" >
+               <apex:param value="{!payment.pymt__Amount__c}"/>
+            </apex:outputText>
+
+
+        </apex:panelGrid>
+
+        </div>
+        <br/>
+        </apex:outputPanel><!-- end of pc_cart_details -->
+
+        <div class="pc_button_container">
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+            <apex:commandButton value="{!$Label.pymt__Label_Submit}" action="{!doExpressCheckout}" />
+          </apex:outputPanel>
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+            <apex:commandLink styleClass="css-button" value="{!$Label.pymt__Label_Submit}" action="{!doExpressCheckout}" />
+          </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!NOT(success)}">
+        <h2>Error</h2>
+        <div class="pc_button_container">
+        <apex:commandButton value="Try Again" rendered="{!NOT(ISBLANK(retryURL))}" action="{!retryButton}" />
+        </div>
+        </apex:outputPanel>
+        </apex:outputPanel>
+
+        <!-- Subscription Page Layout -->
+        <apex:outputPanel rendered="{!pageLayout=='Subscribe'}">
+        <h1>{!$Label.pymt__SiteSubscribe_CheckoutHeading}</h1>
+
+        <apex:panelGrid columns="2" columnClasses="labelColumn,term_column" id="subscription_terms">
+
+            <apex:outputText value="{!$Label.pymt__Label_SubscriptionFor}:" />
+            <apex:outputText value="{!profileName}"/>
+
+            <apex:outputText value="{!$Label.pymt__Label_Description}:" rendered="{!NOT(ISNULL(profileDescription))}" />
+            <apex:outputText value="{!profileDescription}" rendered="{!NOT(ISNULL(profileDescription))}"/>
+
+            <apex:outputText value="{!$Label.pymt__Label_StartDate}:" />
+            <apex:outputText value="{!startDateString}"/>
+
+            <apex:outputText value="{!$Label.pymt__Label_InitialAmount}:"  rendered="{!NOT(ISNULL(initialAmount))}"/>
+            <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(initialAmount))}">
+              <apex:outputText value="{!currencyFormatExpression}" >
+              <apex:param value="{!initialAmount}"/>
+              </apex:outputText>
+            </apex:outputPanel>
+
+
+            <apex:outputText value="{!$Label.pymt__Label_TrialAmount}:"  rendered="{!NOT(ISNULL(trialTerms))}"/>
+            <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(trialTerms))}">
+              <apex:outputText value="{!currencyFormatExpression}" >
+              <apex:param value="{!trialAmount}"/>
+              </apex:outputText>&nbsp;<apex:outputText value="{!trialTerms}"/>
+
+            </apex:outputPanel>
+
+            <apex:outputText value="{!$Label.pymt__Label_SubscriptionAmount}:"/>
+            <apex:outputPanel layout="inline">
+              <apex:outputText value="{!currencyFormatExpression}" >
+              <apex:param value="{!recurringAmount}"/>
+              </apex:outputText>&nbsp;<apex:outputText value="{!subscriptionTerms}"/>
+            </apex:outputPanel>
+
+        </apex:panelGrid>
+
+        <div class="pc_button_container">
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+            <apex:commandButton value="{!$Label.pymt__Label_Submit}" action="{!createRecurringPaymentsProfile}"/>
+          </apex:outputPanel>
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+            <apex:commandLink styleClass="css-button" value="{!$Label.pymt__Label_Submit}" action="{!createRecurringPaymentsProfile}"/>
+          </apex:outputPanel>
+        </div>
+
+        </apex:outputPanel>
+
+
+    </apex:form>
+
+    <apex:outputPanel rendered="{!siteSettings.pymt__Debug__c}">
+    <br/><br/>
+    <hr/>Debug:<br/>
+
+            <apex:repeat value="{!nvPairs}" var="nvpKey">
+                    <apex:outputText value="{!nvpKey}" /> =&nbsp;
+                    <apex:outputText value="{!nvPairs[nvpKey]}" /><br/>
+            </apex:repeat>
+    </apex:outputPanel>
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+    </apex:define>
+</apex:composition>
+
+
+</apex:page>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <aggregates>
+        <calculatedFormula>IF(OR(B1#H2S__HarvestProject__c.Package_Hours_Used__c:SUM=0, ISNULL(B1#H2S__HarvestProject__c.Package_Hours_Used__c:SUM)),
+B0#OpportunityLineItem.Total_Price_Paid__c:SUM,
+B0#OpportunityLineItem.Total_Price_Paid__c:SUM
+/
+B1#H2S__HarvestProject__c.Package_Hours_Used__c:SUM)</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>true</isCrossBlock>
+        <masterLabel>$ per Hour (Billable)</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(OR( B1#H2S__HarvestProject__c.H2S__TotalTime__c:SUM=0, ISNULL( B1#H2S__HarvestProject__c.H2S__TotalTime__c:SUM)),
+B0#OpportunityLineItem.Total_Price_Paid__c:SUM,
+B0#OpportunityLineItem.Total_Price_Paid__c:SUM
+/
+ B1#H2S__HarvestProject__c.H2S__TotalTime__c:SUM)</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA2</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>true</isCrossBlock>
+        <masterLabel>$ per Hour (All)</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <block>
+        <blockInfo>
+            <blockId>B1</blockId>
+            <joinTable>Account</joinTable>
+        </blockInfo>
+        <columns>
+            <field>Account.H2S__HarvestProjects__r$Name</field>
+        </columns>
+        <columns>
+            <field>Account.H2S__HarvestProjects__r$Package_Burn__c</field>
+        </columns>
+        <columns>
+            <field>Account.H2S__HarvestProjects__r$H2S__Archived__c</field>
+        </columns>
+        <columns>
+            <aggregateTypes>Sum</aggregateTypes>
+            <field>Account.H2S__HarvestProjects__r$Package_Hours_Used__c</field>
+        </columns>
+        <filter>
+            <criteriaItems>
+                <column>Account.H2S__HarvestProjects__r$H2S__Budget__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>equals</operator>
+                <value>Total project fees</value>
+            </criteriaItems>
+        </filter>
+        <format>Summary</format>
+        <name>Accounts with Projects block 1</name>
+        <params>
+            <name>co</name>
+            <value>1</value>
+        </params>
+        <reportType>Clients_with_Projects__c</reportType>
+        <scope>organization</scope>
+        <showGrandTotal>true</showGrandTotal>
+        <showSubTotals>true</showSubTotals>
+        <sortColumn>Account.H2S__HarvestProjects__r$Package_Burn__c</sortColumn>
+        <sortOrder>Asc</sortOrder>
+        <timeFrameFilter>
+            <dateColumn>Account$CreatedDate</dateColumn>
+            <interval>INTERVAL_CUSTOM</interval>
+        </timeFrameFilter>
+    </block>
+    <block>
+        <blockInfo>
+            <aggregateReferences>
+                <aggregate>FORMULA1</aggregate>
+            </aggregateReferences>
+            <aggregateReferences>
+                <aggregate>FORMULA2</aggregate>
+            </aggregateReferences>
+            <blockId>B0</blockId>
+            <joinTable>a</joinTable>
+        </blockInfo>
+        <columns>
+            <field>OPPORTUNITY_NAME</field>
+        </columns>
+        <columns>
+            <field>CREATED_DATE</field>
+        </columns>
+        <columns>
+            <field>PRODUCT_NAME</field>
+        </columns>
+        <columns>
+            <aggregateTypes>Sum</aggregateTypes>
+            <field>TOTAL_PRICE</field>
+        </columns>
+        <filter>
+            <criteriaItems>
+                <column>FAMILY</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>equals</operator>
+                <value>Tax Packages</value>
+            </criteriaItems>
+        </filter>
+        <format>Summary</format>
+        <name>Sales with Services block 2</name>
+        <params>
+            <name>open</name>
+            <value>closedwon</value>
+        </params>
+        <params>
+            <name>probability</name>
+            <value>&gt;0</value>
+        </params>
+        <params>
+            <name>co</name>
+            <value>1</value>
+        </params>
+        <reportType>OpportunityProduct</reportType>
+        <scope>organization</scope>
+        <showGrandTotal>true</showGrandTotal>
+        <showSubTotals>true</showSubTotals>
+        <timeFrameFilter>
+            <dateColumn>CLOSE_DATE</dateColumn>
+            <interval>INTERVAL_CUSTOM</interval>
+        </timeFrameFilter>
+    </block>
+    <blockInfo>
+        <blockId xsi:nil="true"/>
+        <joinTable>Account</joinTable>
+    </blockInfo>
+    <format>MultiBlock</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account$Campaign__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax Package Audit</name>
+    <params>
+        <name>lsk</name>
+        <value>1</value>
+    </params>
+    <reportType>Clients_with_Projects__c</reportType>
+    <showDetails>true</showDetails>
+</Report>

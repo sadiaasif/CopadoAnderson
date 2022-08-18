@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Coverage drop versus previous test run that triggers special email alert in percents --></help>
+        <label><!-- Alert Threshold Coverage --></label>
+        <name>enxootr__Alert_Threshold_Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of new failures in tests versus previous test run that trigger special email alert --></help>
+        <label><!-- Alert Threshold Test Failures --></label>
+        <name>enxootr__Alert_Threshold_Test_Failures__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this option to archive classes instead of deleting them when they were removed from the Organization. Archiving means checking archived checkbox that will exclude the classes from reports. --></help>
+        <label><!-- Archive deleted classes --></label>
+        <name>enxootr__Archive_deleted_classes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Overall coverage of the class on the last test run --></help>
+        <label><!-- Coverage --></label>
+        <name>enxootr__Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Who should receive email reports - separate email address by new line --></help>
+        <label><!-- Email Report receipients --></label>
+        <name>enxootr__Email_Report_receipients__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email addresses on which the notification will be sent only after alert threshold are breached. --></help>
+        <label><!-- Email Threshold Alert Recipients --></label>
+        <name>enxootr__Email_Threshold_Alert_Recipients__c</name>
+    </fields>
+    <fields>
+        <help><!-- Inculdes namespaced classes in tests run --></help>
+        <label><!-- Include namespaces --></label>
+        <name>enxootr__Include_namespaces__c</name>
+    </fields>
+    <fields>
+        <label><!-- OLD_Is Active --></label>
+        <name>enxootr__Is_Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked even if old runs are getting deleted we will still keep the test run header object and keep the the archival data about the coverage and test failures. --></help>
+        <label><!-- Keep Archival for old runs --></label>
+        <name>enxootr__Keep_Archival_for_old_runs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of last runs (ordered by created date) to keep, this is to safe space --></help>
+        <label><!-- Keep last N runs --></label>
+        <name>enxootr__Keep_last_N_runs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Full Run Date --></label>
+        <name>enxootr__Last_Full_Run_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of covered lines from the latest test run --></help>
+        <label><!-- Lines Covered --></label>
+        <name>enxootr__Lines_Covered__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of lines from the latest test run --></help>
+        <label><!-- Lines Total --></label>
+        <name>enxootr__Lines_Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of uncovered lines from the latest test run --></help>
+        <label><!-- Lines Uncovered --></label>
+        <name>enxootr__Lines_Uncovered__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mark if you want to run tests on local Organization --></help>
+        <label><!-- Local org --></label>
+        <name>enxootr__Local_org__c</name>
+    </fields>
+    <fields>
+        <help><!-- The URL of the instance - either https://login.salesforce.com or https://test.salesforce.com --></help>
+        <label><!-- Login URL --></label>
+        <name>enxootr__Login_Url__c</name>
+    </fields>
+    <fields>
+        <help><!-- Which namespaces should be included when looking for test classes - separate by new line. Leave empty to include all namespace (only when checkbox above is checked) --></help>
+        <label><!-- Namespace to include --></label>
+        <name>enxootr__Namespace_to_include__c</name>
+    </fields>
+    <fields>
+        <help><!-- When the next test run will run on this org --></help>
+        <label><!-- Next Scheduled Run --></label>
+        <name>enxootr__Next_Scheduled_Run__c</name>
+    </fields>
+    <fields>
+        <help><!-- How many test runs we have details on --></help>
+        <label><!-- Number of Test Runs --></label>
+        <name>enxootr__Number_of_Test_Runs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Password to the org --></help>
+        <label><!-- Password Encrypted --></label>
+        <name>enxootr__Password_Encrypted__c</name>
+    </fields>
+    <fields>
+        <label><!-- OLD_Password --></label>
+        <name>enxootr__Password__c</name>
+    </fields>
+    <fields>
+        <help><!-- Tells whether we have added instance url of this org to remote sites or not. If not please click in the custom link - validate remote site --></help>
+        <label><!-- Remote Site Status --></label>
+        <name>enxootr__Remote_Site_Status__c</name>
+        <picklistValues>
+            <masterLabel>Created</masterLabel>
+            <translation><!-- Created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Tells whether we have added instance url of this org to remote sites or not. If not please click in the custom link - validate remote site --></help>
+        <label><!-- Remote Site Status --></label>
+        <name>enxootr__Remote_Site_Status_img__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run Frequency --></label>
+        <name>enxootr__Run_Frequency__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Defines at what hour the test will start to run --></help>
+        <label><!-- Run at hour --></label>
+        <name>enxootr__Run_at_hour__c</name>
+    </fields>
+    <fields>
+        <help><!-- The name of the job in scheduled jobs --></help>
+        <label><!-- Schedule Job Name --></label>
+        <name>enxootr__Schedule_Job_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is the test running scheduled in scheduled jobs? --></help>
+        <label><!-- Schedule Status --></label>
+        <name>enxootr__Schedule_Status_Icon__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is the test running scheduled in scheduled jobs? --></help>
+        <label><!-- Schedule Status --></label>
+        <name>enxootr__Schedule_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- The id of the job in scheduled jobs - used to cancel the job if needed --></help>
+        <label><!-- Scheduled Job Id --></label>
+        <name>enxootr__Scheduled_Job_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Security token to login to the org --></help>
+        <label><!-- Security Token --></label>
+        <name>enxootr__Security_Token__c</name>
+    </fields>
+    <fields>
+        <help><!-- Stores detailed line coverage and code body so you can see visually which lines are covered and which are not --></help>
+        <label><!-- Store Detailed Line Coverage (Pilot) --></label>
+        <name>enxootr__Store_Detailed_Line_Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- You can define what is your test naming scheme. Use * as class name wildcard. For example if test classes on your org are suffixed with _TEST, enter *_TEST in this field. If you prefix classes with Test, then enter Test* --></help>
+        <label><!-- Test Class Naming Scheme --></label>
+        <name>enxootr__Test_Class_Naming_Scheme__c</name>
+    </fields>
+    <fields>
+        <help><!-- It sometimes happens that some test method stucks. This value determines how long the full test run should go before we cancel it automatically. --></help>
+        <label><!-- Test Run Timeout [min] --></label>
+        <name>enxootr__Test_Run_Timeout_min__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of failed tests from the latest test run --></help>
+        <label><!-- Total Tests Failed --></label>
+        <name>enxootr__Total_Tests_Failed__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of passed tests from the latest test run --></help>
+        <label><!-- Total Tests Passed --></label>
+        <name>enxootr__Total_Tests_Passed__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of tests from the latest test run --></help>
+        <label><!-- Total Tests Run --></label>
+        <name>enxootr__Total_Tests_Run__c</name>
+    </fields>
+    <fields>
+        <help><!-- Technical field that checks that no two same Organizations were created. --></help>
+        <label><!-- Unique Id --></label>
+        <name>enxootr__Unique_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Username used to login to the org --></help>
+        <label><!-- Username --></label>
+        <name>enxootr__Username__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Test class naming scheme has to consist only of characters valid for Apex class name AND contain exactly one wildcard character *. [ORG_VR01] --></errorMessage>
+        <name>enxootr__ORG_VR01_TestClassNamingScheme</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Unique Id is mandatory. [ORG_VR02] --></errorMessage>
+        <name>enxootr__ORG_VR02_UniqueIdMandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When Local Org checkbox is deselected, Login URL, Username and Password fields are mandatory. [ORG_VR03] --></errorMessage>
+        <name>enxootr__ORG_VR03_CredentialsMandatory</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Clear --></label>
+        <name>enxootr__Clear</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Run_Tests_Once --></label>
+        <name>enxootr__Run_Tests_Once</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Schedule_Tests --></label>
+        <name>enxootr__Schedule_Tests</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Test_Report --></label>
+        <name>enxootr__Send_Test_Report</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Validate_Connection --></label>
+        <name>enxootr__Validate_Connection</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Validate_Remote_Site --></label>
+        <name>enxootr__Validate_Remote_Site</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_Test_Report --></label>
+        <name>enxootr__View_Test_Report</name>
+    </webLinks>
+</CustomObjectTranslation>

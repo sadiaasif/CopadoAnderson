@@ -1,0 +1,279 @@
+<apex:page standardController="zkfedex__Shipment__c" extensions="zkfedex.ShippingController" sidebar="false">
+  
+  <c:Loading id="LoadingControl"/>
+  
+  <apex:sectionHeader title="{!SectionHeaderTitle}" subtitle="{!RateStep3.PageBlockTitle}" help="{!HelpLinks.HelpLinkRateStep2b}"/>
+    <apex:form >
+    
+      <apex:image url="{!URLFOR($Resource.zkfedex__stepTimelines, 'stepTimelines/timeline3.png')}"/><p/>
+      
+      <apex:pageBlock mode="detail">
+        
+        <!-- pageBlockButtons -->
+        <apex:pageBlockButtons >
+          <apex:outputPanel >
+            <apex:commandButton action="{!prevToRateStep2}" value="<<" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep1}" value="1" onclick="IsLoading();"/>
+            <apex:commandButton action="{!prevToRateStep2}" value="2A" onclick="IsLoading();"/>
+            <apex:commandButton style="border-style:solid; border-color:yellow" value="2B" onclick="IsLoading();"/>
+            <apex:commandButton action="{!nextToRateStep4}" value="3" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep5}" value="4" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!jumpToRateStep6}" value="5" disabled="{!InternationalRendered}" onclick="IsLoading();"/>
+            <apex:commandButton action="{!nextToRateStep4}" value=">>" onclick="IsLoading();"/>
+          </apex:outputPanel>
+        </apex:pageBlockButtons>
+        
+                 
+        <!-- Note -->
+        {!RateStep3.PageDescription}
+        <p/>
+        
+        <!-- Error Messages -->
+        <apex:outputPanel id="rateStep3Msg">
+          <apex:pageMessage title="Error:" summary="{!RateStep3.RateStep3Msg}" rendered="{!RateStep3.RateStep3MsgRendered}" severity="error" strength="1"/>
+          <apex:pageMessage title="Note:" summary="A commercial invoice must be provided for international shipments" rendered="{!InternationalRendered}" severity="info" strength="1"/>
+        </apex:outputPanel>
+        
+        
+        <!-- Commercial Invoice -->
+        <!-- NOTE: instructed to exclude in final app by FedEx  -->
+        <!--
+        <apex:outputPanel id="commercialInvoiceSection" rendered="{!AND(InternationalCommoditiesRendered,NOT(DocumentContentInputRendered))}">
+        <apex:pageBlockSection collapsible="false" title="Commercial Invoice Details">
+        
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Purpose of Shipment"/>
+            <apex:selectList value="{!Shipment.CiPurposeOfShipment__c}" size="1" multiselect="false">
+              <apex:selectOptions value="{!RateStep3.PurposeOfShipmentTypeOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+        
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Purpose of Shipment Description"/>
+            <apex:inputField value="{!Shipment.CiPurposeOfShipmentDescription__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Terms of Sale"/>
+            <apex:selectList value="{!Shipment.CiTermsOfSale__c}" size="1" multiselect="false">
+              <apex:actionSupport event="onchange" rerender="commercialInvoiceSection" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep3.TermsOfSaleTypeOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+                  
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Customer Invoice Number"/>
+            <apex:inputField value="{!Shipment.CiCustomerInvoiceNumber__c}"/>
+          </apex:pageBlockSectionItem>
+                  
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Comments"/>
+            <apex:inputField value="{!Shipment.CiComments__c}"/>
+          </apex:pageBlockSectionItem><p/>
+                  
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!RateStep3.FreightChargeLabel}"/>
+            <apex:inputField value="{!Shipment.CiFreightCharge__c}"/>
+          </apex:pageBlockSectionItem>
+                  
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!RateStep3.InsuranceChargeLabel}"/>
+            <apex:inputField value="{!Shipment.CiInsuranceCharge__c}"/>
+          </apex:pageBlockSectionItem>
+                  
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Taxes or Misc Charge"/>
+            <apex:inputField value="{!Shipment.CiTaxesOrMiscCharge__c}"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel>
+        -->
+        
+        
+        <!-- Select Package Entry To Add To Section -->
+        <apex:outputPanel id="pkgEntrySelectSection" rendered="{!RateStep3.PkgSelectRendered}">
+        <apex:pageBlockSection collapsible="false" title="Which Package Entry?">
+          
+          <!-- Current Package select -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Select Package Entry"/>
+            <apex:selectList value="{!RateStep3.SelectedPackage}" size="1" multiselect="false">
+              <apex:actionSupport event="onchange" rerender="rateStep3Msg,pkgEntrySelectSection,intlCommodityTable,intlCommodityListTotalsSection" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep3.PkgOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+  
+        </apex:pageBlockSection>
+
+        </apex:outputPanel><p/>
+
+        
+        <!-- Add Document Details Section -->
+        <apex:outputPanel id="documentDetailsSection" rendered="{!AND(InternationalCommoditiesRendered,DocumentContentInputRendered)}">
+        <apex:pageBlockSection collapsible="false" title="Document Details">
+        
+          <!-- Document Description Lookup -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Select Document Description"/>
+            <apex:inputField required="false" value="{!RateStep3.CurrentIntlCommodity.zkfedex__DocumentCommodityDescription__c}"/>
+          </apex:pageBlockSectionItem><p/>
+          
+          <!-- Add Document button -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandButton action="{!RateStep3.addIntlCommodityDocRefresh}" value="Add Document" rerender="rateStep3Msg,pkgEntrySelectSection,intlCommodityTable" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/> 
+        
+        
+        <!-- International Commodities -->
+        <apex:outputPanel id="intlCommodityTable" rendered="{!InternationalCommoditiesRendered}">
+        <apex:pageBlockSection collapsible="false" columns="1" title="International Commodity List for {!RateStep3.CurrentPackageEntryTitle}">
+          
+          <!-- International Commodities table -->
+          <apex:pageBlockTable value="{!RateStep3.CurrentIntlCommodityEntries}" var="intlCommodityEntry" cellpadding="10">
+            <!-- Remove Line Checkbox -->
+            <apex:column >
+              <apex:facet name="header"></apex:facet>
+              <apex:inputCheckbox value="{!intlCommodityEntry.RemoveLine}" disabled="{!intlCommodityEntry.IsReadOnly}"/>
+            </apex:column>
+            <!-- Description -->
+            <apex:column >
+              <apex:facet name="header">* Description</apex:facet>
+              <apex:inputField value="{!intlCommodityEntry.IntlCommodity.zkfedex__Description__c}" rendered="{!intlCommodityEntry.AllowDescriptionInput}"/>
+              <apex:outputField value="{!intlCommodityEntry.IntlCommodity.zkfedex__Description__c}" rendered="{!NOT(intlCommodityEntry.AllowDescriptionInput)}"/>
+            </apex:column>
+            <!-- Quantity -->
+            <apex:column >
+              <apex:facet name="header">* Quantity<br/> {!PerPkgOrSkidTitle}</apex:facet>
+              <apex:inputField style="width:75px" value="{!intlCommodityEntry.IntlCommodity.zkfedex__Quantity__c}"/>
+            </apex:column>
+            <!-- Quantity Units -->
+            <apex:column >
+              <apex:facet name="header">* Quantity Units</apex:facet>
+              <apex:selectList value="{!intlCommodityEntry.IntlCommodity.zkfedex__QuantityUnits__c}" size="1" multiselect="false" >
+                <apex:selectOptions value="{!RateStep3.QuantityUnitsOptions}"/>
+              </apex:selectList>
+            </apex:column>
+            <!-- Number of Pieces -->
+            <apex:column >
+              <apex:facet name="header">* Number of Pieces<br/> {!PerPkgOrSkidTitle}</apex:facet>
+              <apex:inputField style="width:75px" value="{!intlCommodityEntry.IntlCommodity.zkfedex__NumberOfPieces__c}"/>
+            </apex:column>
+            <!-- Country of Manufacture -->
+            <apex:column >
+              <apex:facet name="header">* Country of<br/> Manufacture</apex:facet>
+              <apex:inputField style="width:75px" value="{!intlCommodityEntry.IntlCommodity.zkfedex__CountryOfManufacture__c}"/>
+            </apex:column>
+            <!-- Weight -->
+            <apex:column >
+              <apex:facet name="header">* Weight<br/> per Unit</apex:facet>
+              <apex:inputField style="width:75px" value="{!intlCommodityEntry.IntlCommodity.zkfedex__Weight__c}"/>
+            </apex:column>
+            <!-- Weight Units -->
+            <apex:column >
+              <apex:facet name="header">Weight Units</apex:facet>
+              <apex:outputField value="{!Shipment.zkfedex__WeightUnits__c}"/>
+            </apex:column>
+            <!-- Unit Price -->
+            <apex:column >
+              <apex:facet name="header">* Unit Price</apex:facet>
+              <apex:inputField style="width:75px" value="{!intlCommodityEntry.IntlCommodity.zkfedex__UnitPrice__c}"/>
+            </apex:column>
+            <!-- Currency -->
+            <apex:column >
+              <apex:facet name="header">Currency</apex:facet>
+              <apex:outputField value="{!Shipment.zkfedex__Currency__c}"/>
+            </apex:column>
+            <!-- Harmonized Code -->
+            <apex:column >
+              <apex:facet name="header">Harmonized Code</apex:facet>
+              <apex:inputField style="width:75px" value="{!intlCommodityEntry.IntlCommodity.zkfedex__HarmonizedCode__c}"/>
+            </apex:column>
+            <!-- Export License Number -->
+            <apex:column >
+              <apex:facet name="header">Export License<br/> Number</apex:facet>
+              <apex:inputField value="{!intlCommodityEntry.IntlCommodity.zkfedex__ExportLicenseNumber__c}"/>
+            </apex:column>
+            <!-- Export License Expiration Date -->
+            <apex:column >
+              <apex:facet name="header">Export License<br/> Expiration Date</apex:facet>
+              <apex:inputField value="{!intlCommodityEntry.IntlCommodity.zkfedex__ExportLicenseExpirationDate__c}"/>
+            </apex:column>
+          </apex:pageBlockTable>
+          
+          <apex:outputPanel id="commodityListButtons">
+            <apex:commandButton action="{!RateStep3.addIntlCommodityLineRefresh}" value="Add Line" rerender="rateStep3Msg,pkgEntrySelectSection,intlCommodityTable" rendered="{!NOT(DocumentContentInputRendered)}" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+            <apex:commandButton action="{!RateStep3.removeIntlCommodityLineCheckboxRefresh}" value="Remove Selected" rerender="rateStep3Msg,pkgEntrySelectSection,intlCommodityTable" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:outputPanel>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+        <!-- Total Customs Value Section -->
+        <apex:outputPanel id="intlTotalCustomsValueSection" rendered="{!InternationalRendered}">
+        <apex:pageBlockSection collapsible="false" columns="1" title="Total Customs Value">
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Shipment Total Customs Value ({!Shipment.zkfedex__Currency__c})"/>
+            <apex:inputField value="{!Shipment.zkfedex__TotalCustomsValue__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandButton value="Assign Total from Commodity List" action="{!RateStep3.updateTotalCustomsValueBasedOnCommodityList}" rerender="rateStep3Msg,intlTotalCustomsValueSection" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+      
+      
+        <apex:outputPanel id="intlCommodityListTotalsSection" rendered="{!InternationalCommoditiesRendered}">
+        <apex:pageBlockSection collapsible="false" columns="1" title="Commodity List Totals">
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total {!RateStep2.DeclaredValueHeader} (from Step 2) ({!Shipment.zkfedex__Currency__c})"/>
+            <apex:outputText value="{!RateStep2.TotalDeclaredValue}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total Customs Value based on Commodity Lists ({!Shipment.zkfedex__Currency__c})"/>
+            <apex:outputText value="{!RateStep3.TotalIntlCommoditiesValue}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <apex:outputLabel value="Shipment Total Pieces on a Skid, for {!RateStep3.CurrentPackageEntryTitle} (from Step 2)"/>
+            <apex:outputText value="{!RateStep3.TotalPiecesOnSkid}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem rendered="{!FreightRendered}">
+            <apex:outputLabel value="Total Pieces on a Skid based on Commodity List, for {!RateStep3.CurrentPackageEntryTitle}"/>
+            <apex:outputText value="{!RateStep3.TotalCommodityPiecesOnSkid}"/>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandButton value="Update" rerender="rateStep3Msg,intlCommodityListTotalsSection" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+      </apex:pageBlock>
+    
+      
+      <!-- Shipment Notes -->
+      <apex:pageBlock mode="detail">
+        <apex:pageBlockSection collapsible="false" columns="1" title="Shipment Notes">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Shipment Notes"/>
+            <apex:inputField required="false" style="width:350px" value="{!Shipment.zkfedex__ShipmentNotes__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      
+    </apex:form>
+</apex:page>

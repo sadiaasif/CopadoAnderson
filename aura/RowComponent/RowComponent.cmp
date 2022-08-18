@@ -1,0 +1,279 @@
+<aura:component controller="RowController">
+    <!-- on component load, fetch picklist values dynamically from apex controller -->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--declare aura attributes-->
+    <aura:attribute name="objInfoForPicklistValues" type="OrderItem" default="{sobjectType : 'OrderItem'}" description="object information to fetch picklist values"/>
+    <aura:attribute name="stagePicklistOpts" type="Map" description="store picklist options values"/>
+    <aura:attribute name="processorPicklistOpts" type="string[]" description="store picklist options values"/>
+    <aura:attribute name="showSaveCancelBtn" type="boolean"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="showErrorClass" type="boolean" default="false"/>
+    <aura:attribute name="sNo" type="string" />
+    <aura:attribute name="dueDate" type="Date" access="GLOBAL"/>
+    <aura:attribute name="auditDueDate" type="Date" access="GLOBAL"/>
+    <aura:handler name="change" value="{!v.dueDate}" action="{!c.dateChange}"/>
+    <aura:handler name="change" value="{!v.auditDueDate}" action="{!c.dateChange2}"/>
+    <aura:attribute name="tempRecId" type="string" />
+    <aura:attribute name="singleRec" type="sobject" default="{'sobjectType' : 'OrderItem',
+                                                             'Action_Alert__c' : '',
+                                                             'Due_Date__c' : '',
+                                                             'Service_Name__c' : '',
+                                                             'Quantity' : '',
+                                                             'Processing_Stage__c' :'',
+                                                             'Entity__r.Name' : '',
+                                                             'Processor__c' : '',
+                                                             'Comments__c' : '',
+                                                             'Update_Comments__c' : '',
+                                                             'Audit_Completed__c' : '',
+                                                             }"/>
+    <aura:attribute name="stageEditMode" type="boolean" default="false" />
+    <aura:attribute name="entityEditMode" type="boolean" default="false" />
+    <aura:attribute name="quantityEditMode" type="boolean" default="false" />
+    <aura:attribute name="dateEditMode" type="boolean" default="false" />
+    <aura:attribute name="dateEditMode2" type="boolean" default="false" />
+    <aura:attribute name="commentEditMode" type="boolean" default="false" />
+    <aura:attribute name="commentsEditMode" type="boolean" default="false" />
+    <aura:attribute name="processorEditMode" type="boolean" default="false" />
+    <aura:attribute name="isCommunity" type="boolean" default="false" />
+    <div class="slds-m-around_large">
+    <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+    </div>
+    <!--Table Row Start-->  
+    <tr>
+        <td>
+            <div class="slds-truncate">
+               <aura:unescapedHtml value="{!v.singleRec.Action_Alert__c}"/>
+            </div>
+        </td>
+        
+        <td ondblclick="{!c.inlineEditDate}" class="{! v.showErrorClass == true ? 'slds-cell-edit slds-has-error' : 'slds-cell-edit'}">
+            <span class="slds-grid slds-grid_align-spread">
+                <!-- show input and output section based on boolean flag --> 
+                <aura:if isTrue="{!v.dateEditMode == false}">
+                    <span class="slds-truncate slds-cell-wrap" title="Name">{!v.dueDate}</span>
+                    <button onclick="{!c.inlineEditDate}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Date">
+                        <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    </button>
+                    
+                    <!-- Inline Edit Section in else case-->  
+                    <aura:set attribute="else">
+                        <section  tabindex="0" class="slds-popover slds-popover_edit" role="dialog" style="position: absolute; top: 0px">
+                            <div class="slds-popover__body">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-form-element__control slds-grow">
+                                        <ui:inputDate aura:id="expdate" 
+                                                      label="Due Date"
+                                                      
+                                                      class="field" 
+                                                      value="{!v.dueDate}" 
+                                                      displayDatePicker="true" 
+                                                      />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="form-end" tabindex="0"></span>
+                        </section>  
+                    </aura:set>  
+                </aura:if> 
+            </span>
+        </td>
+        
+        <td onclick="{!c.redirectToService}">
+            <div class="slds-truncate">
+                <a href="#">{!v.singleRec.Service_Name__c}</a>
+            </div>
+        </td>
+        
+        <td>
+            <div class="slds-truncate">
+                {!v.singleRec.Quantity}
+            </div>
+        </td>
+        
+        
+        
+        <td ondblclick="{!c.inlineEditStage}" class="slds-cell-edit">
+            <span class="slds-grid slds-grid_align-spread">
+                <!-- show input and output section based on boolean flag --> 
+                <aura:if isTrue="{!v.stageEditMode == false}">
+                    <span class="slds-truncate" title="Rating">{!v.singleRec.Processing_Stage__c}</span>
+                    <button onclick="{!c.inlineEditStage}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Stage">
+                        <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    </button>
+                    
+                    <!-- Inline Edit Section in else case-->  
+                    <aura:set attribute="else">
+                        <section  tabindex="0" class="slds-popover slds-popover_edit" role="dialog" style="position: absolute; top: 0px">
+                            <div class="slds-popover__body">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-form-element__control slds-grow">
+                                        <label class="slds-form-element__label">Stage</label>
+                                        <ui:inputSelect aura:id="accRating"
+                                                        class="slds-select inputFieldWidth"
+                                                        blur="{!c.closeStageBox}"
+                                                        change="{!c.onStageChange}"
+                                                        value="{!v.singleRec.Processing_Stage__c}"
+                                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="form-end" tabindex="0"></span>
+                        </section>  
+                    </aura:set>  
+                </aura:if> 
+            </span>
+        </td>
+        
+        <td onclick="{!c.redirectToEntity}">
+            <div class="slds-truncate">
+                <a href="#"> {!v.singleRec.Entity__r.Name} - {!v.singleRec.Entity_Organization_State__c} </a>
+            </div>
+        </td>
+        
+        <td ondblclick="{!c.inlineEditProcessor}" class="slds-cell-edit">
+            <span class="slds-grid slds-grid_align-spread">
+                <!-- show input and output section based on boolean flag --> 
+                <aura:if isTrue="{!v.processorEditMode == false}">
+                    <span class="slds-truncate" title="Processor">{!v.singleRec.Processor__c}</span>
+                    <button onclick="{!c.inlineEditProcessor}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Processor">
+                        <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    </button>
+                    
+                    <!-- Inline Edit Section in else case-->  
+                    <aura:set attribute="else">
+                        <section  tabindex="0" class="slds-popover slds-popover_edit" role="dialog" style="position: absolute; top: 0px">
+                            <div class="slds-popover__body">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-form-element__control slds-grow">
+                                        <label class="slds-form-element__label">Processor</label>
+                                        <ui:inputSelect aura:id="processorId"
+                                                        class="slds-select inputFieldWidth"
+                                                        blur="{!c.closeProcessorBox}"
+                                                        change="{!c.onProcessorChange}"
+                                                        value="{!v.singleRec.Processor__c}"
+                                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="form-end" tabindex="0"></span>
+                        </section>  
+                    </aura:set>  
+                </aura:if> 
+            </span>
+        </td>
+        
+        
+        
+        
+        <td ondblclick="{!c.inlineEditComments}" class="{! v.showErrorClass == true ? 'slds-cell-edit slds-has-error slds-cell-wrap' : 'slds-cell-edit slds-cell-wrap'}">
+            <span class="slds-grid slds-grid_align-spread">
+                <!-- show input and output section based on boolean flag --> 
+                <aura:if isTrue="{!v.commentsEditMode == false}">
+                    <span class="slds-truncate slds-cell-wrap" title="Name">{!v.singleRec.Comments__c}</span>
+                    <button onclick="{!c.inlineEditComments}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Comments">
+                        <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    </button>
+                    
+                    <!-- Inline Edit Section in else case-->  
+                    <aura:set attribute="else">
+                        <section  tabindex="0" class="slds-popover slds-popover_edit" role="dialog" style="position: absolute; top: 0px">
+                            <div class="slds-popover__body">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-form-element__control slds-grow">
+                                        <ui:inputTextArea class="slds-input inputFieldWidth"
+                                                      labelClass="slds-form-element__label slds-form-element__label_edit slds-no-flex"
+                                                      aura:id="inputId2"
+                                                      blur="{!c.closeCommentsBox}"
+                                                      change="{!c.onCommentChange}"
+                                                      required="true"
+                                                      rows="5"
+                                                      label="Update Comments"
+                                                      value="{!v.singleRec.Comments__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="form-end" tabindex="0"></span>
+                        </section>  
+                    </aura:set>  
+                </aura:if> 
+            </span>
+        </td>
+        
+        <td ondblclick="{!c.inlineEditComment}" class="{! v.showErrorClass == true ? 'slds-cell-edit slds-has-error' : 'slds-cell-edit'}">
+            <span class="slds-grid slds-grid_align-spread">
+                <!-- show input and output section based on boolean flag --> 
+                <aura:if isTrue="{!v.commentEditMode == false}">
+                    <span class="slds-truncate" title="Name">{!v.singleRec.Update_Comments_Utility__c}</span>
+                    <button onclick="{!c.inlineEditComment}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Quantity">
+                        <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    </button>
+                    
+                    <!-- Inline Edit Section in else case-->  
+                    <aura:set attribute="else">
+                        <section  tabindex="0" class="slds-popover slds-popover_edit" role="dialog" style="position: absolute; top: 0px">
+                            <div class="slds-popover__body">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-form-element__control slds-grow">
+                                        <ui:inputText class="slds-input inputFieldWidth"
+                                                      labelClass="slds-form-element__label slds-form-element__label_edit slds-no-flex"
+                                                      aura:id="inputId"
+                                                      blur="{!c.closeCommentBox}"
+                                                      change="{!c.onCommentChange}"
+                                                      required="true"
+                                                      label="Update Comments"
+                                                      value="{!v.singleRec.Update_Comments_Utility__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="form-end" tabindex="0"></span>
+                        </section>  
+                    </aura:set>  
+                </aura:if> 
+            </span>
+        </td>
+        
+        
+        <td ondblclick="{!c.inlineEditDate2}" class="{! v.showErrorClass == true ? 'slds-cell-edit slds-has-error' : 'slds-cell-edit'}">
+            <span class="slds-grid slds-grid_align-spread">
+                <!-- show input and output section based on boolean flag --> 
+                <aura:if isTrue="{!v.dateEditMode2 == false}">
+                    <span class="slds-truncate slds-cell-wrap" title="Name">{!v.auditDueDate}</span>
+                    <button onclick="{!c.inlineEditDate2}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Date">
+                        <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+                    </button>
+                    
+                    <!-- Inline Edit Section in else case-->  
+                    <aura:set attribute="else">
+                        <section  tabindex="0" class="slds-popover slds-popover_edit" role="dialog" style="position: absolute; top: 0px">
+                            <div class="slds-popover__body">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-form-element__control slds-grow">
+                                        <ui:inputDate aura:id="expdate2" 
+                                                      label="Due Date"
+                                                      
+                                                      class="field" 
+                                                      value="{!v.auditDueDate}" 
+                                                      displayDatePicker="true" 
+                                                      />
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="form-end" tabindex="0"></span>
+                        </section>  
+                    </aura:set>  
+                </aura:if> 
+            </span>
+        </td>
+    </tr>
+</aura:component>

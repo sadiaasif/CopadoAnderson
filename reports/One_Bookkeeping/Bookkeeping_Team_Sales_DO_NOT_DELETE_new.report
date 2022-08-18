@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_65778376</developerName>
+        <masterLabel>Bookkeepers</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Opportunity.Sales_Rep__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Maggie Khermandayan</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Blanca Lemus</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Heather Banner</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Natasha Waite</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Marie Pues</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Christina Chavez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Candy Austin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ashley Cloutier</sourceValue>
+            </sourceValues>
+            <value>Current</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Melissa Elias</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Goran Bozic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Matthew Esses</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sara Winter</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Justin Claus</sourceValue>
+            </sourceValues>
+            <value>Past</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_6989461</developerName>
+        <masterLabel>Rep</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Sales_Rep__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Leventis, Petros</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mendiola, Maria</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Thomas, Eliot</sourceValue>
+            </sourceValues>
+            <value>Tonis Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Withaeger, Ronnie</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Garvin, Mariel</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Vaughn, Lindsey</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dacanay, Emily</sourceValue>
+            </sourceValues>
+            <value>Ronnies Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Hanuscin, Ian</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Zattas, Christos</sourceValue>
+            </sourceValues>
+            <value>Jennifers Team</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>STAGE_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.X2nd_Sales_Rep__c</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_OWNER</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <filter>
+        <booleanFilter>((1 AND 2 AND 4 AND 5 AND 6) OR (1 AND 2 AND 3 AND 6)) AND 7</booleanFilter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Web Support</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Bookkeeping,Opportunity.Bookkeeping_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>book</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Entity_Formation,Opportunity.Pension_Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FULL_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Do Not Use</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sales_Rep__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>ChargentSFA__Transaction__c.Transaction_date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Bookkeeping Team Sales (DO NOT DELETE)</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c.Transaction_date__c</dateColumn>
+        <interval>INTERVAL_CURPREV1</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <acrossGroupingContext>ChargentSFA__Transaction__c$Transaction_date__c</acrossGroupingContext>
+        <calculatedFormula>IF(ChargentSFA__Transaction__c.ChargentSFA__Amount__c:SUM &gt;75000, 750, 
+IF(ChargentSFA__Transaction__c.ChargentSFA__Amount__c:SUM &gt; 50000, 500,
+IF(ChargentSFA__Transaction__c.ChargentSFA__Amount__c:SUM &gt; 35000, 250, 0)
+)
+)</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>FORMULA1</developerName>
+        <downGroupingContext>ChargentSFA__Transaction__c$Opportunity_Sales_Rep__c</downGroupingContext>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Bonus</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <columns>
+        <field>ChargentSFA__Transaction__c$Name</field>
+    </columns>
+    <columns>
+        <field>ChargentSFA__Transaction__c$ChargentSFA__Opportunity__c</field>
+    </columns>
+    <description>Non-Event Sales Volume Bonus</description>
+    <filter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$Opportunity_Primary_Campaign_Source__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>3rd Party Event,ABA Event</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$Sale_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Entity Formation,Tax Compliance</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$ChargentSFA__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Charge,Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$ChargentSFA__Payment_Method__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Credit to be used</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c$Opportunity_Sales_Rep__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Wilkinson</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>ChargentSFA__Transaction__c$Transaction_date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ChargentSFA__Transaction__c$Opportunity_Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Wilkinson - Sales Volume</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Chargent_Transactions__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c$Transaction_date__c</dateColumn>
+        <interval>INTERVAL_LASTMONTH</interval>
+    </timeFrameFilter>
+</Report>

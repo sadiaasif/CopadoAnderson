@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>evt__Attendee__c$Name</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$evt__Event__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$evt__First_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$evt__Last_Name__c</field>
+    </columns>
+    <columns>
+        <field>evt__Attendee__c$Id</field>
+    </columns>
+    <crossFilters>
+        <operation>without</operation>
+        <primaryTableColumn>evt__Attendee__c$Id</primaryTableColumn>
+        <relatedTable>CampaignMember</relatedTable>
+        <relatedTableJoinColumn>Attendee__c</relatedTableJoinColumn>
+    </crossFilters>
+    <format>Tabular</format>
+    <name>Attendees without Campaign Member</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Attendees__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>evt__Attendee__c$CreatedDate</dateColumn>
+        <endDate>2019-01-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2019-01-30</startDate>
+    </timeFrameFilter>
+</Report>

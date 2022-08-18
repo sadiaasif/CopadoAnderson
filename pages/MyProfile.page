@@ -1,0 +1,513 @@
+<apex:page doctype="html-5.0" standardController="Contact" extensions="CustomLandingController" action="{!forwardToCustomAuthPage}" sidebar="false" showHeader="false" lightningStylesheets="true">    
+    <apex:slds />
+    <style>
+        @media (min-width: 1024px){
+        .sidebar {display: block;
+        }
+        }
+        div {
+        word-wrap: break-word;
+        }
+        
+        @media (max-width: 767px){
+        .user_information, .pull-left , .edit_user{ width: 100% !important; text-align:center;
+        float: left;}
+        .pull-right{
+        flaot:right !important;}
+        .user_pic{
+        bottom: inherit;
+        top:-120px;
+        right: 0;
+        margin: auto;
+        }
+        .user_details {width: 100%;
+        float: left;
+        margin-top: 20px;
+        margin-left:0;
+        text-align:center;
+        }
+        }
+        .edit-profile-btn img {
+        width: 100%;
+        max-width: 100%;
+        }
+        footer.container-fluid.text-center {
+        padding: 2px;
+        } 
+        label.control-label {
+        text-align: left;
+        }
+        .user_pic {
+        left: 10px;
+        }
+    </style>
+    <div class="slds-scope">    
+        <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>    
+            </head>
+            <body> 
+                <apex:include pageName="AndersonHeader"/>
+                <div class="container main-container">
+                    <div class="cover_wrapper">
+                        <div class="upload_icon">   
+                            <a data-toggle="modal" data-target="#backgroundImage" href="#"><i class="fa fa-camera"></i></a>
+                        </div>
+                        <apex:outputField value="{!acc.Profile_background__c}" />
+                    </div>
+                    <div id="backgroundImage" class="modal fade" role="dialog">                    
+                        <div class="modal-dialog Image-section">                                        
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload Background Image</h4>
+                                </div>
+                                <div class="modal-body">                                                
+                                    <apex:form >
+                                        <div class="row form-group">
+                                            <div class="col-xs-12">
+                                                <apex:inputfield value="{!acc.Profile_background__c}" ></apex:inputfield>                                            
+                                            </div> 
+                                        </div> 
+                                        
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <apex:commandButton action="{!updateAccount}" value="Save" id="imgSave" styleClass="btn btn-primary popup_btn"/>
+                                            </div> 
+                                        </div> 
+                                    </apex:form>
+                                </div> 
+                            </div>                                        
+                        </div>                    
+                    </div> 
+                    
+                    <div id="editImage" class="modal fade" role="dialog">                    
+                        <div class="modal-dialog Image-section">                                        
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload Image</h4>
+                                </div>
+                                <div class="modal-body">                                                
+                                    <apex:form >
+                                        <div class="row form-group">
+                                            <div class="col-xs-12">
+                                                <apex:inputfield value="{!usObj.Client_Image__c}" ></apex:inputfield>                                           
+                                            </div> 
+                                        </div>                                    
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <apex:commandButton action="{!updateUser}" value="Save" id="imgSave" styleClass="btn btn-primary popup_btn"/>
+                                            </div> 
+                                        </div> 
+                                    </apex:form>
+                                </div> 
+                            </div>                                        
+                        </div>
+                        
+                    </div> 
+                    <div class="user_content">  
+                        <div class="user_information">
+                            <div class="user_pic">
+                                <apex:outputField styleClass="profile-img-sec" value="{!usObj.Client_Image__c}" />
+                                <div class="user_pic_uploder">
+                                    <a data-toggle="modal" data-target="#editImage" href="#"><i class="fa fa-camera"></i></a>
+                                </div>                               
+                            </div>
+                            <div class="user_details">
+                                <h3 class="pull-left">{!usObj.Name}</h3>
+                                <div class="edit_user pull-right">
+                                    <a data-toggle="modal" data-target="#editProfile" class="btn btn-default" href="#"><i class="fa fa-edit"></i> Edit Profile </a>
+                                </div>
+                                <div class="clearfix">
+                                    
+                                </div>
+                            </div>                        
+                        </div>
+                        
+                        <div id="editProfile" class="modal fade" role="dialog">
+                            <div class="modal-dialog entities-section">                                        
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" id="clsbtn" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit Profile</h4>
+                                    </div>
+                                    <div class="modal-body">  
+                                        <apex:pageMessages id="messages" />
+                                        <div class="table-scroll">
+                                            <apex:actionStatus id="profileLoader" style="align:center;">      
+                                                <apex:facet name="start">                                                        
+                                                    <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                                </apex:facet>
+                                                <apex:facet name="stop"></apex:facet>
+                                            </apex:actionStatus>
+                                            <apex:form id="editpro">
+                                                <apex:pageBlock id="userpb">
+                                                    <h2>Account Information</h2>
+                                                    <div class="col-xs-12 form-group detailList">
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="First Name" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.First_Name__c}" id="firstname" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Last Name" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.Last_Name__c}" id="lastname" styleClass="form-control"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Phone"/>
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.Phone}" id="phone" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <br/>
+                                                    <h2>Billing Address</h2>
+                                                    <div class="col-xs-12 form-group detailList">
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Billing Street" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.BillingStreet}" id="BillingStreet" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Billing City" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.BillingCity}" id="BillingCity" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Billing State" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.BillingState}" id="BillingState" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Billing PostalCode" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.BillingPostalCode}" id="BillingPostalCode" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Billing Country" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.BillingCountry}" id="BillingCountry" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <h2>Shipping Address</h2>
+                                                    <div class="col-xs-12 form-group detailList">
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Shipping Street" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.ShippingStreet}" id="ShippingStreet" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Shipping City" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.ShippingCity}" id="ShippingCity" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Shipping State" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.ShippingState}" id="ShippingState" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                            
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Shipping Country" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.ShippingCountry}" id="ShippingCountry" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-12">
+                                                                <div class="row form-group">
+                                                                    <div class="col-md-5 col-xs-12 p-t-b-5">
+                                                                        <apex:outputLabel value="Shipping PostalCode" />
+                                                                    </div>
+                                                                    <div class="col-md-7 col-xs-12">
+                                                                        <apex:inputField value="{!acc.ShippingPostalCode}" id="ShippingPostalCode" styleClass="form-control" />
+                                                                    </div>
+                                                                </div>                                                                                                                            
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+                                                    <apex:commandButton action="{!updateAccount}" status="profileLoader" value="Save" id="btnSave" styleClass="btn btn-primary popup_btn" rerender="userpb,messages"/>
+                                                </apex:pageBlock>
+                                            </apex:form>
+                                        </div>
+                                    </div> 
+                                </div>                                        
+                            </div>
+                        </div>                                                
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <div class="userinfo-inner-div">
+                                    <div><i class="fa fa-user m-r10"></i><strong>Member since</strong></div>
+                                    <div class="p-t5"><span id="CreatedOn"><apex:outputText value="{0, date, long}"><apex:param value="{!usObj.Partner_Create_Date__c}" /></apex:outputText></span></div>
+                                    <hr/>
+                                    <div><i class="fa fa-clock-o m-r10"></i><strong>Last Logged In</strong></div>
+                                    <div class="p-t5"><span id="CreatedOn"><apex:outputText value="{0, date, long}"><apex:param value="{!usObj.LastLoginDate}" /></apex:outputText></span></div> 
+                                    <hr/>
+                                    <div><i class="fa fa-envelope m-r10"></i><strong>Email</strong></div>
+                                    <div class="p-t5"><span id="CreatedOn"> <a href="#">{!acc.E_Mail__c}</a></span></div>                                
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 feed-container center-container">
+                                <div class="about-container container-fluid form-group white-card">
+                                    <div class="row card-header white-card">
+                                        <div class="col-md-12 col-sm-12 col-xs-7">
+                                            <h5 class="text-responsive">Contact Information</h5>
+                                        </div>                                    
+                                    </div>
+                                    <div class="personal-info clearfix">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Name</label>
+                                                    <div class="col-sm-6">
+                                                        {!acc.First_Name__c} {!acc.Last_Name__c}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Birthdate</label>
+                                                    <div class="col-sm-6">
+                                                        <apex:outputText value="{0,date,yyyy-MM-dd}"> <apex:param value="{!con.Birthdate}" /> </apex:outputText>
+                                                    </div>
+                                                </div>                                        
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Phone</label>
+                                                    <div class="col-sm-6">
+                                                        <a class="data-email color" href="#" id="">{!acc.Phone}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="about-container container-fluid form-group white-card">
+                                    <div class="row card-header white-card">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <h5 class="text-responsive">Billing Address(Update if credit card has changed)</h5>
+                                        </div>
+                                    </div>
+                                    <div class="personal-info clearfix">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Billing Street</label>
+                                                    <div class="col-sm-6">
+                                                        {!acc.BillingStreet}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Billing City</label>
+                                                    <div class="col-sm-6">
+                                                        {!acc.BillingCity}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Billing State/Province</label>                                            
+                                                    <div class="col-sm-6">
+                                                        {!acc.BillingState}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Billing Zip/Postal Code</label>                                            
+                                                    <div class="col-sm-6">
+                                                        {!acc.BillingPostalCode}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Billing Country</label>
+                                                    <div class="col-sm-6">
+                                                        {!acc.BillingCountry}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                                <div class="about-container container-fluid form-group white-card">
+                                    <div class="row card-header white-card">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <h5 class="text-responsive">Shipping Address(Used for Registered Agent and Mail Forwarding)</h5>
+                                        </div>
+                                    </div>
+                                    <div class="personal-info clearfix">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Primary Shipping Street</label>
+                                                    <div class="col-sm-6">
+                                                        {!acc.ShippingStreet}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Primary Shipping City</label>
+                                                    <div class="col-sm-6">
+                                                        {!acc.ShippingCity}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Primary Shipping State/Province</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-control-static padding-top">
+                                                            {!acc.ShippingState}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Primary Shipping Zip/Postal Code</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-control-static padding-top">
+                                                            {!acc.ShippingPostalCode}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-group-0 clearfix">
+                                                    <label class="col-md-6 col-sm-6 control-label">Primary Shipping Country</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-control-static padding-top">
+                                                            {!acc.ShippingCountry}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>            
+                <apex:include pageName="AndersonFooter"/>           
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                <!-- <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>     
+<apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.marquee.js')}"/>-->
+            </body>
+        </html>
+    </div>
+</apex:page>

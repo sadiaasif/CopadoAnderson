@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_NPS_Email</name>
+        <label>Send NPS Email</label>
+        <locationX>967</locationX>
+        <locationY>357</locationY>
+        <actionName>Entities__c.Documents_Complete_NPS_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Update_NPS_Date</targetReference>
+        </connector>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>X5_Days_Since_Last_NPS</name>
+        <label>5 Days Since Last NPS?</label>
+        <locationX>683</locationX>
+        <locationY>438</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Entity.Primary_Client__r.NPS_Service__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>fmTodayMinus5</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_NPS_Email</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>fmTodayMinus5</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} - 5</expression>
+    </formulas>
+    <formulas>
+        <name>TodayPlusTen</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} + 10</expression>
+    </formulas>
+    <interviewLabel>NPS Docs Complete 10 Day Waiting {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NPS Docs Complete 10 Day Waiting</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Entity</name>
+        <label>Get Entity</label>
+        <locationX>463</locationX>
+        <locationY>348</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>X5_Days_Since_Last_NPS</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Entities__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_NPS_Date</name>
+        <label>Update NPS Date</label>
+        <locationX>1148</locationX>
+        <locationY>357</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Entity.Primary_Client__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NPS_Service__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Wait_10_Days</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <variables>
+        <name>EntityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <waits>
+        <name>Wait_10_Days</name>
+        <label>Wait 10 Days</label>
+        <locationX>173</locationX>
+        <locationY>206</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>X10_Days_After_Creation</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Get_Entity</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>10.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Days</stringValue>
+                </value>
+            </inputParameters>
+            <label>10 Days After Creation</label>
+        </waitEvents>
+    </waits>
+</Flow>

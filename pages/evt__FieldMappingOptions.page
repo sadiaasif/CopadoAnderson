@@ -1,0 +1,29 @@
+<apex:page standardController="evt__Custom_Field_Mapping__c" extensions="evt.FieldMappingOptionsController" sidebar="false" showHeader="false">
+<apex:form >
+<apex:pageblock mode="edit">
+<apex:pageBlockSection title="Field Mapping Options" columns="1" Collapsible="false">
+<apex:outputField value="{!cfm.evt__Maps_To_Object__c}" rendered="{!NOT(editMode)}"/>
+<apex:selectList value="{!cfm.evt__Maps_To_Object__c}" size="1" multiselect="false" rendered="{!editMode}">
+<apex:selectOptions value="{!objectOptions}"/>
+<apex:actionSupport event="onchange" action="{!mapsToObjectChanged}" rerender="fieldOptionsPicklist, objectPicklistStatus" status="objectPicklistStatus"/>
+</apex:selectList>
+
+<apex:outputField value="{!cfm.evt__Maps_To_Field__c}" rendered="{!NOT(editMode)}"/>
+<apex:selectList id="fieldOptionsPicklist" value="{!cfm.evt__Maps_To_Field__c}" size="1" multiselect="false" rendered="{!editMode}">
+<apex:selectOptions value="{!fieldOptions}"/>
+</apex:selectList>
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel layout="none">
+<apex:commandButton value="Edit Field Mapping" action="{!editOptions}" rendered="{!NOT(editMode)}"/>
+<apex:commandButton value="Cancel" action="{!cancelEdit}" rendered="{!editMode}"/>
+<apex:commandButton value="Update Field Mapping" action="{!saveOptions}" rendered="{!editMode}"/>
+&nbsp;<apex:actionStatus startText="Updating maps to fields" stopText="" id="objectPicklistStatus"/>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+</apex:pageblock>
+</apex:form>
+
+</apex:page>

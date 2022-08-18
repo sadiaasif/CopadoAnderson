@@ -1,0 +1,347 @@
+<apex:page doctype="html-5.0" standardController="Contact" extensions="CustomLandingController,PaginationController,PlatinumChangePasswordController" action="{!forwardToCustomAuthPage}" sidebar="false" showHeader="false" lightningStyleSheets="true">    
+    <apex:Slds />   
+    <apex:form >
+        <div class="slds-scope">
+        <style>
+            @media (min-width: 1024px){
+            .sidebar {display: block;
+            }
+            }
+            @media (max-width: 680px){
+            
+            .anderson_tab .nav-tabs>li{
+                        width: 33%;
+                        font-size: 10px;
+                    }
+            .right-side-btn button{
+            color:#fff !important;}
+            }
+            
+            @media (max-width: 194){
+            
+            .anderson_tab .nav-tabs>li{
+                        width: 106%;
+                    }
+            }
+            
+            
+            
+            div {
+            word-wrap: break-word;
+            }
+        .loader {            
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 50%;
+        top:50%;
+        }
+        .marquee{
+        height:110px;
+        overflow: hidden;
+        }    
+        #cmntMsg { text-align: center; }                
+        #quesMsg { text-align: center; }                
+        #successMsg{ color: green; }
+        #errorMsg{ color: red; }
+        #successQuesMsg{ color: green; }
+        #errorQuesMsg{ color: red; }
+        /*demo page css*/
+        #dialog {width: auto;min-height: 77.1667px;height: 500px; ! important} 
+        #dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+        #dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+        ul#icons {margin: 0; padding: 0;}
+        ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+        ul#icons span.ui-icon {float: left; margin: 0 4px;}
+        .navbar {
+            min-height: 0px;
+        }
+            
+             @media (max-width: 767px){
+        .entites-main ,  .entites-main table, .entites-main table tbody, .entites-main table tbody tr, .pbSubsection{
+        width:100%; float:left;
+        }
+        .entites-main table tbody tr td, .entites-main table tbody tr th{
+        width:50%; float:left;}
+            .modal-dialog.entities-section{
+            width:100%;
+            float:left;
+            margin: 10px 0px;
+            }
+            .apexp .bPageBlock .detailList{
+            width:90%;
+           .modal-body{padding:10px;}
+        }
+            
+    </style>
+    <header>
+        <div class="gear">
+            <apex:image styleClass="img-responsive"  url="{!URLFOR($Resource.images, 'images/gear.png')}" alt=""/>
+        </div>
+        
+        <div class="gear-right">
+            <apex:image styleClass="img-responsive"  url="{!URLFOR($Resource.images, 'images/gear.png')}" alt=""/>
+        </div>
+        <div class="container">                    
+            <div class="row">
+                <div class="top-head-sec clearfix">
+                    <div class="col-sm-5">
+                        <apex:image styleClass="img-responsive"  url="{!URLFOR($Resource.images, 'images/Anderson-Platinum-Portal-Logo.png')}" alt=""/>
+                    </div>
+                    <div class="col-sm-3 col-sm-offset-1">
+                        <!--<div id="imaginary_container">
+<div class="input-group stylish-input-group">
+<input type="text" class="form-control"  placeholder="Search" />
+<span class="input-group-addon">
+<button type="submit">
+<i class="fa fa-search" aria-hidden="true"></i>
+</button>  
+</span>
+</div>
+</div>-->
+                    </div>
+                    <div class="col-sm-3 right-side-btn">
+                        <div class="dropdown">                                   
+                            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown" onclick="true">
+                                <!-- <apex:image styleClass="profile-img-sec" value="{!usObj.smallphotourl}" alt=""/>-->
+                                <apex:outputField styleClass="profile-img-sec" value="{!usObj.Client_Image__c}" />
+                                {!acc.First_Name__c} {!acc.Last_Name__c} 
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                <li role="presentation"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.MyProfile)}" id="myprofile"><i class="fa fa-user"></i> My Profile </apex:outputLink></li>
+                                <!--<li role="presentation"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.MySetting)}" id="mysetting"><i class="fa fa-gear"></i> My Setting </apex:outputLink></li>-->
+                                <li role="presentation">   
+                                    <a data-toggle="modal" data-target="#changepassword" class="a-elem" href="#"><i class="fa fa-key"></i> Change Password </a>
+                                </li>
+                                <li role="presentation"> 
+                                    
+                                    <apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}"><i class="fa fa-power-off"></i> {!$Label.site.logout} </apex:outputLink>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="changepassword" class="modal fade" role="dialog">
+                    <div class="modal-dialog entities-section entites-main">                                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" id="clsbtn" class="close" data-dismiss="modal" >&#215;</button>
+                                <h4 class="modal-title">Change Password</h4>
+                            </div>
+                            <div class="modal-body">  
+                                <apex:pageMessages id="messages" />
+                                <div id="passMsg"></div>
+                                <div id="errorpassMsg"></div>
+                                <div class="table-scroll">
+                                    <apex:actionStatus id="changePassLoader" style="align:center;">      
+                                        <apex:facet name="start">                                                        
+                                            <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />
+                                        </apex:facet>
+                                        <apex:facet name="stop"></apex:facet>
+                                    </apex:actionStatus>
+                                    
+                                    <apex:pageBlock id="userpb">
+                                        <!--- <h2>Change Password Information</h2>-->
+                                        <apex:pageBlockSection >
+                                            <apex:pageBlockSectionItem >
+                                                <tr>
+                                                    <td>Old password:</td>
+                                                    <td>
+                                                        <input type="password" id="oldVal" styleClass="form-control" />
+                                                    </td>
+                                                </tr>
+                                            </apex:pageBlockSectionItem>
+                                            <apex:pageBlockSectionItem >
+                                                <tr>
+                                                    <td>New Password :</td>
+                                                    <td><input type="password" id="currentVal" styleClass="form-control" /></td>
+                                                </tr>
+                                                
+                                            </apex:pageBlockSectionItem>
+                                            <apex:pageBlockSectionItem >
+                                                
+                                                <tr>
+                                                    <td>Confirm Password :</td>
+                                                    <td><input type="password" id="confirmVal" styleClass="form-control" /></td>
+                                                </tr>
+                                                
+                                            </apex:pageBlockSectionItem>
+                                        </apex:pageBlockSection>
+                                        <apex:outputPanel >
+                                            <div class="text-right">
+                                                <apex:actionSupport event="onclick" status="changePassLoader" reRender="" ><input type="button" class="btn popup_btn" value="Submit" onClick="saveChangePassword();" /> 
+                                                </apex:actionSupport>
+                                            </div>
+                                        </apex:outputPanel>
+                                        
+                                    </apex:pageBlock>
+                                    
+                                </div>
+                            </div> 
+                        </div>                                        
+                    </div>
+                </div>    
+                <apex:includeLightning />
+
+    <div id="lightning" />
+                <div class="navbar navbar-inverse navi-bg">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>                        
+                            </button>
+                        </div> 
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Dashboard_body','active', '')}" title="HOME" role="presentation"> 
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Message','active', '')}" title="MESSAGE CENTER " role="presentation">  
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Anderson_System','active', '')}" title="ANDERSON SYSTEM" role="presentation">  
+                                </li> 
+                              </ul>
+                            </div>
+                            <div class="slds-tabs_default nav navbar-nav">
+                                <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                    <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Anderson_System','active', '')}" title="MY DOCUMENTS" role="presentation">  
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                            
+                        </div>
+                            <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='MyEntities','active', '')}" title="MY ENTITIES" role="presentation">
+                                </li>
+                              </ul>
+                            </div>
+                    </div>
+                            <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Learning','active', '')}" title="TRAINING CENTER" role="presentation">
+                                </li>
+                              </ul>
+                            </div>
+                             <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Forms','active', '')}" title="FORMS-LIBRARY" role="presentation">
+                                </li>
+                              </ul>
+                       </div>
+                 <div class="slds-tabs_default nav navbar-nav">
+                              <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='SpecialEvent','active', '')}" title="SPECIAL OFFERS &amp; EVENTS" role="presentation">
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="slds-tabs_default nav navbar-nav">
+                                <ul class="slds-tabs_default__nav" role="tablist" style="display: none;">
+                                    <li class="slds-tabs_default__item slds-is-active {!IF($CurrentPage.Name =='Billing','active', '')}" title="PAYMENT &amp; INVOICES" role="presentation"> 
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse navbar-collapse navbar-responsive-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                 <apex:outputpanel rendered="{!acc.Platinum_Client_View__c == 'Tax Team'}">
+                                <li class="{!IF($CurrentPage.Name =='Dashboard_body','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Dashboard_body)}" id="home">HOME</apex:outputLink></li>
+                                </apex:outputpanel>
+                                <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c != 'Tax Team' && acc.Platinum_Client_View__c != 'Infinity Only' && acc.Platinum_Client_View__c != 'Mastermind Only' )}">
+                                 <li class="{!IF($CurrentPage.Name =='Dashboard_body','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Dashboard_body)}" id="home1">HOME</apex:outputLink></li>
+                                <li class="{!IF($CurrentPage.Name =='Message','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Message)}" id="message">INBOX</apex:outputLink></li>
+                                <li class="{!IF($CurrentPage.Name =='Anderson_System','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Anderson_System)}" id="andersonsystem">ANDERSON SYSTEM</apex:outputLink> </li>                                                                        
+                                <li class="{!IF($CurrentPage.Name =='Document','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Document)}" id="document">MY DOCUMENTS</apex:outputLink></li>
+                                <!--<li class="{!IF($CurrentPage.Name =='Document','active', '')}"><apex:outputLink target="_blank" value="https://app.box.com/" id="document">MY DOCUMENTS</apex:outputLink></li>-->
+                                <li class="{!IF($CurrentPage.Name =='MyEntities','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.MyEntities)}" id="myentity">MY ENTITIES</apex:outputLink></li>
+                                <li class="{!IF($CurrentPage.Name =='Learning','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Learning)}" id="learning">TRAINING CENTER</apex:outputLink></li>                                        
+                                <li class="{!IF($CurrentPage.Name =='Forms','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Forms)}" id="forms">FORMS-LIBRARY</apex:outputLink></li>
+                                <li class="{!IF($CurrentPage.Name =='SpecialEvent','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.SpecialEvent)}" id="events">TAX TUESDAY</apex:outputLink></li>  
+                                <li class="{!IF($CurrentPage.Name =='Billing','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Billing)}" id="billing">PAYMENT &amp; INVOICES</apex:outputLink></li>
+                                </apex:outputpanel>
+                                <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c == 'Mastermind Only'||acc.Platinum_Client_View__c == 'Mastermind & Platinum')}">
+                                <li class="{!IF($CurrentPage.Name =='Mastermind','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Mastermind)}" id="mastermind">MASTERMIND</apex:outputLink></li>
+                                </apex:outputpanel>
+                               <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c == 'Infinity Only' || acc.Platinum_Client_View__c == 'Infinity & Platinum' || acc.Platinum_Client_View__c == 'Mastermind Only' || acc.Platinum_Client_View__c == 'Mastermind & Platinum')}">   
+                                <li class="{!IF($CurrentPage.Name =='Dashboard_body','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Infinite_calculator)}" id="infinity">INFINITY</apex:outputLink></li>
+                               </apex:outputpanel>
+                                 <apex:outputpanel rendered="{!(acc.Platinum_Client_View__c != 'NVREA Platinum' && acc.Platinum_Client_View__c != 'Infinity Only')}">
+                                <li class="{!IF($CurrentPage.Name =='Resources','active', '')}"><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.Resources)}" id="resources">RESOURCES</apex:outputLink></li>
+                                </apex:outputpanel>
+                                
+                            </ul>                                    
+                        </div>
+                    </div>  
+                </div>
+        <script type="text/javascript">
+        function saveChangePassword(){
+            var oldPassVal = $("[id$='oldVal']").val(); 
+            var currentPassVal = $("[id$='currentVal']").val(); 
+            var confirmPassVal = $("[id$='confirmVal']").val();
+            if(oldPassVal != ''){
+                if(currentPassVal !=''){
+                    if(confirmPassVal !=''){
+                        if(currentPassVal == confirmPassVal ){
+                            Visualforce.remoting.Manager.invokeAction(
+                                '{!$RemoteAction.PlatinumChangePasswordController.saveChangePassword}',
+                                oldPassVal,currentPassVal,confirmPassVal,
+                                function(result, event){  
+                                    if(event.status){
+                                        var oldPassVal = $("[id$='oldVal']").val(''); 
+                                        var currentPassVal = $("[id$='currentVal']").val(''); 
+                                        var confirmPassVal = $("[id$='confirmVal']").val('');
+                                        jQuery(function(){
+                                            jQuery('#clsbtn').click();
+                                        });
+                                        document.getElementById("passMsg").innerHTML = "<span>Change Password successful</span>";
+                                    } else if (event.type === 'exception'){
+                                        document.getElementById("errorpassMsg").innerHTML = "<span>Error !!!</span>";
+                                    } else {
+                                        document.getElementById("errorpassMsg").innerHTML = "<span>There Is Some Problem</span>";
+                                    }                                                                     
+                                }, 
+                                {escape: true}
+                            );
+                            
+                        }else{
+                            document.getElementById("errorpassMsg").innerHTML = "<span>Please Enter current and confirm passord are same</span>";  
+                        }
+                    }else{
+                        document.getElementById("errorpassMsg").innerHTML = "<span>Please Enter confirm password</span>";
+                    }
+                }else{
+                    document.getElementById("errorpassMsg").innerHTML = "<span>Please Enter current password</span>";   
+                }
+            }else{
+                document.getElementById("errorpassMsg").innerHTML = "<span>Please Enter old password</span>";
+            }
+            
+            setTimeout(function() { $("#passMsg span").fadeOut(1500); }, 5000);
+            setTimeout(function() { $("#errorpassMsg span").fadeOut(1500); }, 5000); 
+        }          
+        function getFormattedDate(timestamp) {
+                    var now = new Date();
+                    var utc = new Date(timestamp + now.getTimezoneOffset() * 60000);
+                    var isoDate = new Date(utc).toISOString();
+                    var srddate=new Date(isoDate).getDate();
+                    var srdmonth=new Date(isoDate).getMonth()+1;
+                    var srdyear=new Date(isoDate).getFullYear();
+                    return srdyear +'-'+ srdmonth +'-'+ srddate;
+                }
+        </script>
+        </header>
+        </div>
+    </apex:form>
+</apex:page>

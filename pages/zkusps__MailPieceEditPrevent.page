@@ -1,0 +1,25 @@
+<apex:page tabStyle="zkusps__MailPiece__c" standardController="zkusps__MailPiece__c" >
+    
+    <apex:sectionHeader title="Mail Piece Edit" subtitle="{!zkusps__MailPiece__c.Name}"/>
+    
+    <!-- Form -->
+    <apex:form >
+    
+        <apex:commandLink action="{!cancel}" value="Back to Previous Page"/>
+        
+        <apex:pageBlock mode="detail">
+        
+            <!-- pageBlockButtons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+            
+            
+            <!--  Info Message -->
+            <apex:pageMessage title="Info:" summary="Mail Piece records cannot be edited due to the complexities involved during creation. If you would like to edit the record, it is recommended you cancel the shipment first, delete the record second, and then start the creation process over again." severity="info" strength="1"/>
+            
+        </apex:pageBlock>
+    
+    </apex:form>
+    
+</apex:page>

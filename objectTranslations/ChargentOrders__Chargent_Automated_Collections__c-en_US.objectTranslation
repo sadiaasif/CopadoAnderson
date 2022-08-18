@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- AC Process Name --></label>
+        <name>ChargentOrders__AC_Process_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Displays the name of the AC Process that’s been triggered. --></help>
+        <label><!-- AC Process --></label>
+        <name>ChargentOrders__AC_Process__c</name>
+        <relationshipLabel><!-- Chargent Automated Collections --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- AC Stage executed / total --></help>
+        <label><!-- AC Stage --></label>
+        <name>ChargentOrders__AC_Stage__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the Account related to the Chargent Order record that this Automated Collections process was triggered on. --></help>
+        <label><!-- Account --></label>
+        <name>ChargentOrders__Account__c</name>
+        <relationshipLabel><!-- Chargent Automated Collections --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This is the Chargent Order record that this Automated Collections process was triggered on. --></help>
+        <label><!-- Chargent Order --></label>
+        <name>ChargentOrders__Chargent_Order__c</name>
+        <relationshipLabel><!-- Chargent Automated Collections --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This is the Contact / email address that this Automated Collections process will send emails to. --></help>
+        <label><!-- Contact Emailed --></label>
+        <name>ChargentOrders__Contact_Emailed__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field displays the date that the next stage in this AC Process is scheduled to execute. --></help>
+        <label><!-- Next Stage Date --></label>
+        <name>ChargentOrders__Next_Stage_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Related Order charge amount. --></help>
+        <label><!-- Order Charge Amount --></label>
+        <name>ChargentOrders__Order_Charge_Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field displays the name of the Payment Request Page used (if any) when this AC Process triggered. This should be pulled from the “Payment Request Page Name” field from the Payment Request Page. --></help>
+        <label><!-- PR Page --></label>
+        <name>ChargentOrders__PR_Page__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates how the payment was collected. --></help>
+        <label><!-- Payment Collected Via --></label>
+        <name>ChargentOrders__Payment_Collected_Via__c</name>
+        <picklistValues>
+            <masterLabel>AC Auto Retry</masterLabel>
+            <translation><!-- AC Auto Retry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AC PR Link</masterLabel>
+            <translation><!-- AC PR Link --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment Not Collected</masterLabel>
+            <translation><!-- Payment Not Collected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This field displays the date / time that the payment was collected during this Automated Collections process. --></help>
+        <label><!-- Payment Received --></label>
+        <name>ChargentOrders__Payment_Received__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field indicates what the value of the &apos;Payment Status&apos; field will be on the related Chargent Order record after this Automated Collections process has collected a payment. --></help>
+        <label><!-- Post-Collection Payment Status --></label>
+        <name>ChargentOrders__Post_Collection_Payment_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Displays the email address that this AC Process will send emails from (if configured to do so). --></help>
+        <label><!-- Sender Email --></label>
+        <name>ChargentOrders__Sender_Email__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field indicates which field was last executed. --></help>
+        <label><!-- Last Stage Executed --></label>
+        <name>ChargentOrders__Stage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stages Total --></label>
+        <name>ChargentOrders__Stages_Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field displays the status of this Automated Collections process for this Chargent Order record. --></help>
+        <label><!-- Status --></label>
+        <name>ChargentOrders__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed (Stopped)</masterLabel>
+            <translation><!-- Completed (Stopped) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paused</masterLabel>
+            <translation><!-- Paused --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

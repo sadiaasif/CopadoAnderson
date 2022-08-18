@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- The email sent during this stage will also be sent to this address. --></help>
+        <label><!-- CC Email Address --></label>
+        <name>ChargentOrders__CC_Email_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chargent AC Configuration --></label>
+        <name>ChargentOrders__Chargent_AC_Configuration__c</name>
+        <relationshipLabel><!-- Chargent AC Stages Configurations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- At this stage, Chargent will automatically attempt to charge the card / bank account on file for this Chargent Order record. --></help>
+        <label><!-- Retry --></label>
+        <name>ChargentOrders__Retry__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Retry - Mark Order as Error</masterLabel>
+            <translation><!-- No Retry - Mark Order as Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If the transaction attempted during this stage fails / is declined, Chargent will send the email template of your choice unless the “No Email” option is selected. --></help>
+        <label><!-- Send Email on Failed Retry --></label>
+        <name>ChargentOrders__Send_Email_on_Failed_Retry__c</name>
+    </fields>
+    <fields>
+        <help><!-- If this stage is configured to send an email, this is the address that email will come from. --></help>
+        <label><!-- Sender Email Address --></label>
+        <name>ChargentOrders__Sender_Email_Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field displays the stage number ​for this AC Process --></help>
+        <label><!-- Stage Number --></label>
+        <name>ChargentOrders__Stage_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field displays the stage # for this AC Process. --></help>
+        <label><!-- Stage --></label>
+        <name>ChargentOrders__Stage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Choose the type of time frame for this stage. --></help>
+        <label><!-- Time frame --></label>
+        <name>ChargentOrders__Time_frame__c</name>
+        <picklistValues>
+            <masterLabel># Days After</masterLabel>
+            <translation><!-- # Days After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel># Months After</masterLabel>
+            <translation><!-- # Months After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel># Weeks After</masterLabel>
+            <translation><!-- # Weeks After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Day of The Month</masterLabel>
+            <translation><!-- Day of The Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Day of The Week</masterLabel>
+            <translation><!-- Day of The Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Immediately</masterLabel>
+            <translation><!-- Immediately --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Specify the details for the Time Frame field. For instance, if “# Days After” is chosen in the Time Frame field, and “5” is entered in this field, this stage will execute 5 days after the last stage. --></help>
+        <label><!-- Time frame detail --></label>
+        <name>ChargentOrders__Time_frame_detail__c</name>
+    </fields>
+</CustomObjectTranslation>

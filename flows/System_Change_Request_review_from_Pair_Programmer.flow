@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Notify_Pair_Programmer</name>
+        <label>Notify Pair Programmer</label>
+        <locationX>510</locationX>
+        <locationY>381</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Post_to_System_Changes_Group</targetReference>
+        </connector>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <stringValue>0ML6f000000XZBKGA4</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>A change review has been requested. Click this message to redirect to the System Change record.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Change Review Requested</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>RecipientId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>SystemChangeRecord.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_to_System_Changes_Group</name>
+        <label>Post to System Changes Group</label>
+        <locationX>724</locationX>
+        <locationY>382</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>ChatterMessageBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <stringValue>Salesforce System Changes</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Group</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>NotificationId</name>
+        <label>NotificationId</label>
+        <locationX>268</locationX>
+        <locationY>307</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientId</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>NotificationRecipient</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Notify_Pair_Programmer</targetReference>
+        </connector>
+    </assignments>
+    <formulas>
+        <name>ChatterRecipient</name>
+        <dataType>String</dataType>
+        <expression>CASE({!SystemChangeRecord.Pair_Programmer__c},
+&quot;Phil&quot;,&quot;@[0050B000008PxLG​]&quot;,
+&quot;Shobi&quot;,&quot;@[0050B000008QJBs]​ &quot;,
+&quot;Nick&quot;,&quot;@[0050B000006okJa]​ &quot;,
+&quot;Sally&quot;,&quot;@[0050B000007ZwgA]​ &quot;,
+&quot;Sami&quot;,&quot;@[005U0000001DC1y]​ &quot;,
+&quot;Caleb&quot;,&quot;@[0050B000007Xas7]​ &quot;,
+&quot;Grady&quot;,&quot;@[0050B000007Xas7]​ &quot;,
+&quot;@[0050B000006okJa]​ &quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>NotificationRecipient</name>
+        <dataType>String</dataType>
+        <expression>CASE({!SystemChangeRecord.Pair_Programmer__c},
+&quot;Phil&quot;,&quot;0050B000008PxLG&quot;,
+&quot;Shobi&quot;,&quot;0050B000008QJBs&quot;,
+&quot;Nick&quot;,&quot;0050B000006okJa&quot;,
+&quot;Sally&quot;,&quot;0050B000007ZwgA&quot;,
+&quot;Sami&quot;,&quot;005U0000001DC1y&quot;,
+&quot;Caleb&quot;,&quot;0050B000007Xas7&quot;,
+&quot;Grady&quot;,&quot;0050B000007Xas7&quot;,
+&quot;0050B000006okJa&quot;)</expression>
+    </formulas>
+    <interviewLabel>System Change - Request review from Pair Programmer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>System Change - Request review from Pair Programmer</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>NotificationId</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <textTemplates>
+        <name>ChatterMessageBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>You have been requested to do a change review on a system change record.
+https://andersonadvisors.lightning.force.com/{!SystemChangeRecord.Id}
+{!ChatterRecipient}</text>
+    </textTemplates>
+    <variables>
+        <name>RecipientId</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SystemChangeRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>System_Changes__c</objectType>
+    </variables>
+</Flow>

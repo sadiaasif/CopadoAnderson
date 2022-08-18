@@ -1,0 +1,43 @@
+<apex:page controller="zkmulti.CustomCarrierLabelController" applyHtmlTag="false" renderAs="pdf"  applyBodyTag="false"  showHeader="false" standardStylesheets="false" docType="html-5.0">
+	<html>
+		<head>
+			<style >
+			body {
+				display: inline;
+				margin-top: 0px;
+				margin-right: 0px;
+				margin-bottom: 0px;
+				margin-left: 0px;
+			}
+
+			@page{
+				size: 9.5in 4.12in;
+				margin-top: 0in; 
+				margin-left: 0in; 
+				margin-right: 0cm; 
+				margin-bottom: 0cm;
+				padding: 0cm;
+			}
+			</style>
+		</head>
+
+		<body>
+			<!-- size: 9.25in 4in; -->			
+			<div style="margin-top: 20px; margin-left: 50px">
+				<div style="font-size: 20px"><b>{!senderCompany}</b></div>
+				<div>{!senderName}</div>
+				<div>{!senderStreet}</div>
+				<div>{!SenderAddress}</div>
+				<div>{!senderCountry}</div>
+			</div>
+
+			<div style="margin-top: 80px; margin-left: 320px">
+				<div style="font-size: 20px"><b>{!recipientCompany}</b></div>
+				<div>{!recipientName}</div>				
+				<div>{!recipientStreet}</div>
+				<div>{!recipientAddress}</div>
+				<div>{!recipientCountry}</div>
+			</div>
+		</body>
+	</html>
+</apex:page>

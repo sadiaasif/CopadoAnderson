@@ -1,0 +1,379 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="PaginationArticleController" sidebar="false" showHeader="false">    
+    <apex:slds />
+    <!-- knowledge search css start -->
+    <style type="text/css">
+        .knowledge-col {
+        text-align:center;
+        padding:15px 0px 0;
+        font-size:14px;
+        }
+        .knowledge-col .col-centered {
+        width: 100%;
+        display:inline-block;
+        float:none;
+        text-align:left;
+        text-align: center;
+        }
+        .knowledge-col .cst-info-col {
+        overflow:hidden;
+        margin-bottom:0px;
+        }
+        .knowledge-col .cst-info-col .info-name {
+        font-size:16px;
+        color:#010001;
+        font-weight:600;
+        padding-bottom:2px;
+        }
+        .knowledge-col .cst-info-col .send-email-btn {
+        background: rgba(84,84,84,1);
+        background: -moz-linear-gradient(left, rgba(84,84,84,1) 0%, rgba(56,56,56,1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(84,84,84,1)), color-stop(100%, rgba(56,56,56,1)));
+        background: -webkit-linear-gradient(left, rgba(84,84,84,1) 0%, rgba(56,56,56,1) 100%);
+        background: -o-linear-gradient(left, rgba(84,84,84,1) 0%, rgba(56,56,56,1) 100%);
+        background: -ms-linear-gradient(left, rgba(84,84,84,1) 0%, rgba(56,56,56,1) 100%);
+        background: linear-gradient(to right, rgba(84,84,84,1) 0%, rgba(56,56,56,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#545454', endColorstr='#383838', GradientType=1 );
+        color:#fff;
+        font-size:15px;
+        font-weight:600;
+        padding: 10px 25px;
+        }
+        #successQuesMsg {
+        font-size: 30px;
+        }
+        body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons{
+        background:transparent !important;
+        }
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody{
+        padding:0;
+        margin:0;
+        }
+        .knowledge-col{
+        padding: 0px 0px 0;
+        }
+        
+        .knowledge-col .col-centered{
+        border: 1px solid #80808021;
+        border-top:none;
+        border-bottom:none;
+        padding: 0px 0px 0;
+        }
+        .knowledge-col .cst-info-col .info-name {
+        font-size: 28px;
+        color: #010001;
+        font-weight: 600;
+        padding-bottom: 2px;
+        font-weight: 700;
+        }
+        /* .knowledge-col .cst-info-col{
+        padding-top:35px;
+        }*/
+        .info-data{
+        border:1px solid;
+        border-color: cadetblue;
+        width: 59%;
+        margin: auto;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 5px;
+        }
+        body .bPageBlock{
+        margin-bottom:0px;
+        }
+        .knowledge-col .cst-info-col{
+        width: 100%;
+        float: left;
+        padding: 10px 0 0 0;
+        }
+        .knowledge-col .cst-info-col .info-name{
+        border: none;
+        font-size: 17px;
+        border-bottom: 2px dotted #010001;
+        width: auto;
+        display: inline-block;
+        line-height: 40px;
+        margin: 0 0 5px 0;
+        }
+        .info-data{
+        border: none;
+        width: 100%;
+        float: left;
+        font-size: 14px;
+        }
+        .iframe{
+        width: 100%;
+        float:left;
+        height: 600px;
+        margin: 10px 0;
+        }
+        .video-link{
+        margin:10px 0;
+        }
+    </style>
+    <div class="slds-scope">  
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <style>
+                	.custom-overlay{
+                        background: rgba(0,0,0,.5);
+                        width: 100%;
+                        height: 100%;
+                        position: fixed;
+                        z-index: 999;
+                        top: 0;
+                        left: 0;
+                        display:none;
+                     }
+                </style>
+                 
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Business Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>    
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/code-jquery-ui.css')}"/>
+                <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"/>
+                <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                <apex:includeScript value="https://apis.google.com/js/platform.js"/>
+                <apex:includeScript value="https://code.jquery.com/ui/1.12.1/jquery-ui.js"/>
+            </head>
+            <body>   
+                
+               
+                    <apex:pageBlock >
+                        <!-- knowledge search code start -->
+                        <div class="container">
+                            <div class="row ">                                
+                                <div class="knowledge-col">
+                                    <div class="col-sm-12 col-xs-12" id="articleContainer">
+                                        <apex:image value="{!URLFOR($Resource.images, 'images/h.jpg')}" alt="Image" style="height:150px" />
+                                        <div id="cmntMsg"></div>
+                                        <div class="cst-info-col">
+                                            <div class="info-name">
+                                                Article Name or Question 
+                                            </div>
+                                            <div class="info-data" id="artName">
+                                                {!articleLists.Title}
+                                            </div>
+                                        </div>
+                                        <div class="cst-info-col">
+                                            <div class="info-name">
+                                                Long Description/Text
+                                            </div>
+                                            <div class="info-data long-data-scroll" id="artDesc">
+                                                 {!articleLists.Long_Description__c}
+                                            </div>
+                                        </div>
+                                        <div class="cst-info-col">
+                                            <div class="info-name">
+                                                Content
+                                            </div>
+                                            <div class="info-data" id="artContent">
+                                                {!articleLists.Content__c}
+                                            </div>
+                                        </div>
+                                        
+                                        <apex:outputlink rendered="{!articleLists.Knowledge_Video_Link__c =='' && articleLists.Upload_File__Name__s !=''}" >
+                                            <input type="hidden" id="ext_video" value="{!URLFOR($Action.Knowledge__kav.FileFieldDownload,articleLists.id, ['field'=$ObjectType.Knowledge__kav.fields.Upload_File__Body__s.name])}"/>
+                                        </apex:outputlink>
+                                        <apex:outputlink rendered="{!articleLists.Knowledge_Video_Link__c !='' && articleLists.Upload_File__Name__s ==''}" >
+                                            <input type="hidden" id="ext_video" value="{!articleLists.Knowledge_Video_Link__c}"/>
+                                        </apex:outputlink>
+                                        <apex:outputlink rendered="{!articleLists.Knowledge_Video_Link__c =='' && articleLists.Upload_File__Name__s ==''}" >
+                                            <input type="hidden" id="ext_video" value=""/>
+                                        </apex:outputlink>
+                                        
+                                        <apex:outputlink rendered="{!articleLists.Knowledge_Video_Link__c !='' && articleLists.Upload_File__Name__s !=''}" >
+                                            <input type="hidden" id="ext_video" value="{!URLFOR($Action.Knowledge__kav.FileFieldDownload,articleLists.id, ['field'=$ObjectType.Knowledge__kav.fields.Upload_File__Body__s.name])}"/>
+                                        </apex:outputlink>
+                                       <div class="cst-info-col">
+                                            <div class="text-right" id="actionBtn"> 
+                                              <!--  <apex:outputpanel rendered="{!articleLists.Knowledge_Video_Link__c =='' && articleLists.Upload_File__Name__s !=''}" >
+                                                    <button type="button" class="btn"><a target="_blank" href="{!URLFOR($Action.Knowledge__kav.FileFieldDownload,articleLists.id, ['field'=$ObjectType.Knowledge__kav.fields.Upload_File__Body__s.name])}" id="dndbtn" docType="html-5.0" download="{!URLFOR($Action.Knowledge__kav.FileFieldDownload,articleLists.id, ['field'=$ObjectType.Knowledge__kav.fields.Upload_File__Body__s.name])}">Download</a> <i class="fa fa-download" aria-hidden="true"></i></button>
+                                                </apex:outputpanel>
+                                              
+                                                <apex:outputpanel rendered="{!articleLists.Upload_File__ContentType__s == 'application/pdf' || articleLists.Upload_File__ContentType__s == 'image/png' || articleLists.Upload_File__ContentType__s == 'image/jpg' || articleLists.Upload_File__ContentType__s == 'image/jpeg' || articleLists.Upload_File__ContentType__s == 'image/gif'}" >
+                                                	<button type="button"  class="btn" onclick="printBlueprint('knowval')">Print <i class="fa fa-print" aria-hidden="true"></i></button> 
+                                                </apex:outputpanel> -->
+                                           </div>  
+                                            <div class="info-name">
+                                                <apex:outputpanel >
+                                                	{!articleLists.Article_category_type__c}
+                                                </apex:outputpanel>
+                                                
+                                                
+                                            </div>
+                                            <div class="info-data" id="vdoCnt">
+                                                <span id="nullTxt"></span>
+                                                <apex:iframe id="knowval" src=""/> 
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <input type="hidden" id="knwId" value=""/>
+                                        <input type="hidden" id="contId" value="{!con.Id}"/>
+                                        <input type="hidden" value="" id="account_id"/>
+                                        <input type="hidden" value="" id="article_id"/>
+                                        <div class="cst-info-col">
+                                           
+                                            <apex:outputPanel rendered="{! IF( (articleLists != null) && (articleLists.Permissions__c =='Client' || articleLists.Permissions__c =='Both'), true, false)}" >
+                                                <div class="form-group"><input type="button" id="btn_send" class="btn send-email-btn" value="Send Email" onClick="SendMailFun();"  /> </div>
+                                             </apex:outputPanel>
+                                        </div>
+                                        
+                                        <apex:image value="{!URLFOR($Resource.images, 'images/f.jpg')}" style="height:150px; !important" alt="Image" />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </apex:pageBlock>
+                    <!-----For Pop mail-------->
+                    <div class="custom-overlay">            
+                     </div>
+                    
+                    <div id="custom-myModal" class="modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- <div class="modal-header">
+                                    <button type="button" class="close" onclick="close();">&times;</button>
+                                 </div> -->
+                                <div class="modal-body">
+                                    <div id="message_class" class="alert ">
+                                      <div id="message_text" class="text-center text-20"></div>
+                                    </div>
+                                    <div class="text-center">  
+                                        <button type="button" class="btn blue-btn close-popup" onclick=""  data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>   
+                    </div>
+                                
+                <div id="test"></div>
+                    <!----For Pop Mail--------->
+                    
+                    <!-- knowledge search code end -->
+                   
+                    
+                    <script>    
+                    $(document).ready(function() {  
+                        var url = window.location.href;
+                       
+                          
+                        function getParameterByName( name,href )
+                        {
+                            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+                            var regexS = "[\\?&]"+name+"=([^&#]*)";
+                            var regex = new RegExp( regexS );
+                            var results = regex.exec( href );
+                            if( results == null )
+                                return "";
+                            else
+                                return decodeURIComponent(results[1].replace(/\+/g, " "));
+                        }
+                        var artId = getParameterByName("articleid",url);
+                        $('#article_id').val(artId);
+                        var accountId = getParameterByName("account_id",url);
+                        $('#account_id').val(accountId);
+                        
+                        var callingentId = document.getElementById("ext_video").value;
+                        if(callingentId != '' && callingentId != null && callingentId.indexOf("https:") >= 0){
+                            console.log('Encoded == ' +callingentId);
+                            document.getElementById("knowval").src = ''; 
+                            var str = callingentId;
+                            var decoded  = str.replace(/amp;/g, '&');
+                            console.log('Decoded == ' +decoded);
+                            document.getElementById("knowval").src = decoded;
+                            document.getElementById("dndbtn").download = decoded;
+                            document.getElementById("dndbtn").href = decoded;
+                            
+                            var frame = document.getElementById('knowval'); 
+
+                           
+                            
+                        }else {
+                            document.getElementById("nullTxt").innerHTML = "No File Found";
+                        }
+                    });
+                    
+                    
+                     function printBlueprint(frmFiles) {
+                        var frms = document.getElementById(frmFiles).contentWindow;
+                        frms.focus();// focus on contentWindow is needed on some ie versions
+                        frms.print();
+                       return false;
+                    }
+                             
+                    function SendMailFun() {
+                        var knwId = $("#article_id").val();
+                        var accountId = $('#account_id').val();
+                      
+                        //return false;
+                        console.log(knwId);
+                        console.log(accountId);
+                        
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.PaginationArticleController.sendMail}', 
+                            knwId,accountId, 
+                            function(result, event){
+                            
+                            $('.bodyDiv').find('.custom-overlay').css({'display' : 'block'});
+                            $('#custom-myModal').addClass('show'); 
+                            $('.custom-overlay').addClass('show');
+                                if(event.status){
+                                    console.log("result===="+result);
+                                    if(result == 1){
+                                      $('#message_class').addClass('alert-success');
+                                      $('#message_text').html('Mail Sent successfully');  
+                                    }else if(result == 0){
+                                       $('#message_class').addClass('alert-danger');
+                                       $('#message_text').html('It doesn not contain Primary Contact'); 
+                                    }else{
+                                        $('#message_class').addClass('alert-danger');
+                                         $('#message_text').html('This Account has no Contact'); 
+                                    }
+                                    //document.getElementById("cmntMsg").innerHTML = "<span id='successQuesMsg'>Mail Sent</span>";
+                                } else if (event.type === 'exception'){
+                                    document.getElementById("cmntMsg").innerHTML = "<span id='errorMsg'>Error !!!</span>";
+                                } else {
+                                    document.getElementById("cmntMsg").innerHTML = "<span id='errorMsg'>There Is Some Problem</span>";
+                                }
+                            });
+                        setTimeout(function() { $("#cmntMsg span").fadeOut(1500); }, 5000);  
+                    }
+                    
+         $(document).ready(function(){ 
+             $('.close-popup').click( function(){
+                $('#custom-myModal').removeClass('show');
+                $('.custom-overlay').removeClass('show');
+             //   $('#custom-myModal').removeClass('scale');
+             //});
+            
+             //$('.modal-footer button').click( function (){                
+             // $('.custom-overlay').css({'display' : 'none'});
+             // $('#custom-myModal').removeClass('scale');
+             });
+             
+           
+        });
+                
+     
+                    </script>
+                    
+            </body>
+        </html>
+    </div>
+</apex:page>

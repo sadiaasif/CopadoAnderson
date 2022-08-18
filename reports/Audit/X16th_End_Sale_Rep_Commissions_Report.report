@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_92160182</developerName>
+        <masterLabel>Client Source</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Client_Source__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Nick Vertucci-Package</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci-Bus Tour</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci Bus Tour</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci - Package</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci - Bus Tour</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci</sourceValue>
+            </sourceValues>
+            <value>Vertucci</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Rich Dad Telesales</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad Poor Dad (Kiasaki)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy -- 01.15.16 -- Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Parent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP -- 04.29.2016 -- Las Vegas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP -- 07.11.2016 -- Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Training</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>elitetrainingap.com</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tackle Trading</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TackleTrading</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>TackleTrading - Report</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>richdadassetprotection.com</sourceValue>
+            </sourceValues>
+            <value>Rich Dad</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Don Pendelton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Don Pendleton</sourceValue>
+            </sourceValues>
+            <value>Don Pendelton</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jerry Royse</sourceValue>
+            </sourceValues>
+            <value>Jerry Royse</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Opportunity.First_Transaction__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Last_Transaction__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Client_Source__c</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>AMOUNT</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <crossFilters>
+        <operation>with</operation>
+        <primaryTableColumn>OPPORTUNITY_ID</primaryTableColumn>
+        <relatedTable>ChargentSFA__Transaction__c</relatedTable>
+        <relatedTableJoinColumn>ChargentSFA__Opportunity__c</relatedTableJoinColumn>
+    </crossFilters>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Opportunity.State_Renewal,Opportunity.Standard_Renewal,Opportunity.Pension_Renewal,Opportunity.Platinum_Subscription,Opportunity.Bookkeeping_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sales_Rep__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>Cannon,Gonzalez,Cortes,perlman,Doug,Shaena,Jones,Bradford,Hackler,Kevin,Brad,Darlene,Rogers,Corey</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>STAGE_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_92160182</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>16th-End, Sale Rep Bonus Report</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CLOSE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

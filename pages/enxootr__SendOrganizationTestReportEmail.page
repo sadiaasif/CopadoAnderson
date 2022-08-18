@@ -1,0 +1,6 @@
+<apex:page showHeader="false" sidebar="false" standardController="enxootr__Organization__c"
+           extensions="enxootr.SendOrganizationTestReportEmail" lightningStylesheets="true">
+    <apex:form >
+        <c:OrganizationTestReport orgId="{!enxootr__Organization__c.Id}"/>
+    </apex:form>
+</apex:page>

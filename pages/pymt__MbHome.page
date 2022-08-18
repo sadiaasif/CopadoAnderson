@@ -1,0 +1,266 @@
+<apex:page docType="html-5.0" controller="pymt.MobileBaseController" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+<link href='https://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'/>    
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+    <apex:dynamicComponent componentValue="{!CordovaJS}"/>
+    <!-- script type="text/javascript" charset="utf-8" src="{!URLFOR($Resource.PaymentConnectMobile,"Cordova/cordova.ios.js")}"></script --> 
+
+    <script>
+
+
+        $( document ).ready( function() {
+            var pbheight = $("#mb_page_banner_content").height();
+            $("#mb_page_banner").height(pbheight);
+
+        });
+        $( window ).resize( function() {
+            var pbheight = $("#mb_page_banner_content").height();
+            $("#mb_page_banner").height(pbheight);
+
+        });
+
+        $( document ).on( "deviceready", function() {          
+            console.log('Testing console logging plug-in');
+        });
+
+
+        $( document ).on( "pagecreate", function() {
+            // Save home page url for this application so 
+            // that pages from other packages can link back
+            window.localStorage.setItem('homePageURL','/apex/pymt__MbHome');
+
+            $( "#check_cordova" ).on( "click", function( event ) {
+                if( typeof cordova === 'object') {
+                    alert('Cordova version:'      + cordova.version          + '\n' +
+                        'channel:'      + cordova.channel          + '\n' +
+                        'platform:'      + cordova.platform          + '\n' +
+                        'cordovaTest:'      + cordova.cordovaTest 
+                    );
+                } else {
+                    alert('Cordova object is not initialized.');
+                }
+
+
+            });    
+
+            $( "#check_statusbar" ).on( "click", function( event ) {
+                if (typeof window.StatusBar === 'object') {
+                    alert('StatusBar isVisible = '+StatusBar.isVisible);
+                } else {
+                    alert('StatusBar object is not initialized.');
+                }
+
+            }); 
+
+            $( "#check_geo" ).on( "click", function( event ) {
+                if (typeof navigator.geolocation === 'object') {
+                   $("#currentGeoPosition").html('Checking position...');
+                    navigator.geolocation.getCurrentPosition(displayGeodata, showGeoError);
+                } else {
+                    alert('Navigator.geolocation object is not initialized.');
+                }
+
+            });   
+
+
+            $( "#check_device" ).on( "click", function( event ) {
+                if (typeof device === 'object') {
+                    alert('cordova:'      + device.cordova          + '\n' +
+                        'model:'          + device.model          + '\n' +
+                        'platform:'       + device.platform          + '\n' +
+                        'uuid:'           + device.uuid          + '\n' +
+                        'version:'        + device.version          + '\n' +
+                        'isVirtual:'      + device.isVirtual          + '\n' +
+                        'serial:'         + device.serial          + '\n');
+                } else {
+                    alert('device object is not initialized.');
+                }
+
+
+            });  
+
+            $( "#check_scanner" ).on( "click", function( event ) {
+                if (typeof cordova.plugins.barcodeScanner === 'object') {
+                    alert('Yay, cordova.plugins.barcodeScanner is defined.');
+                } else {
+                    alert('cordova.plugins.barcodeScanner object is not initialized.');
+                }
+
+
+            });  
+
+            $( "#check_camera" ).on( "click", function( event ) {
+                if (typeof navigator.camera === 'object') {
+                    alert('camera object is defined.');
+                } else {
+                    alert('camera object is not initialized.');
+                }
+
+
+            });  
+
+            $( "#check_imag" ).on( "click", function( event ) {
+                if (typeof UniMag === 'object') {
+                    alert('imag card swipe object is defined.');
+                } else {
+                    alert('imag card swipe object is not initialized.');
+                }
+
+
+            });  
+
+        });
+
+        var displayGeodata = function(position) {
+            alert('Latitude: '          + position.coords.latitude          + '\n' +
+                  'Longitude: '         + position.coords.longitude         + '\n' +
+                  'Altitude: '          + position.coords.altitude          + '\n' +
+                  'Accuracy: '          + position.coords.accuracy          + '\n' +
+                  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                  'Heading: '           + position.coords.heading           + '\n' +
+                  'Speed: '             + position.coords.speed             + '\n' +
+                  'Timestamp: '         + position.timestamp                + '\n');
+        };
+
+        function showGeoError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+
+    </script>
+    <style>
+    /* Page logo */
+    .ui-panel-wrapper {
+        background-image: url('{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/images/linvio_clouds.jpg')}'); 
+
+    }
+  .ui-page-theme-f .ui-link, .ui-page-theme-f .ui-button {
+    opacity: 0.5;
+  }
+@media all and (orientation:portrait) {
+    .ui-panel-wrapper {
+        background-size:auto 100%;        
+        background-position: center;        
+    }
+}
+@media all and (orientation:landscape) {
+    .ui-panel-wrapper {
+        background-size:100% auto;
+        background-position: center;        
+    }
+
+}
+    
+
+    </style>
+</head>
+<body>
+<div data-role="page"  data-theme="a" id="pymt_mobile_home_page">
+
+    <div data-role="header" data-position="fixed">
+        <h1>PaymentConnect</h1>
+        <a href="#sidepanel" class="fawe-icon-hdr-link"><i class="fa fa-bars fa-2x"></i></a>
+
+    </div><!-- /header -->
+
+<div data-role="panel" id="sidepanel" data-theme="c">
+  <!-- panel content goes here -->
+        <ul data-role="listview" id="sidepanel-menu"  data-inset="false">
+
+            <li><a href="{!URLFOR($Page.pymt__MbProductSelect)}" rel="external">
+            <i class="fa fa-shopping-cart fa-lg ui-li-aside"></i>
+            <h2>Product Checkout</h2>
+            <p>Scan/select products and checkout.</p></a>
+            </li>
+            <li><a href="{!URLFOR($Page.pymt__MbPaymentHistory)}"  rel="external">
+            <i class="fa fa-credit-card fa-lg ui-li-aside"></i>
+            <h2>Payment History</h2>
+            <p>View recent payments.</p></a>
+            </li>
+            <li><a href="{!URLFOR($Page.pymt__MbContacts)}"  rel="external">
+            <i class="fa fa-user fa-lg ui-li-aside"></i>
+            <h2>Contacts</h2>
+            <p>Find contacts in Salesforce.</p></a>
+            </li>
+            <li><a href="{!URLFOR($Page.pymt__MbAccounts)}"  rel="external">
+            <i class="fa fa-building-o fa-lg ui-li-aside"></i>
+            <h2>Accounts</h2>
+            <p>Find accounts in Salesforce.</p></a>
+            </li>
+            <li><a href="{!URLFOR($Page.pymt__MbOpportunities)}"  rel="external">
+            <i class="fa fa-crosshairs fa-lg ui-li-aside"></i>
+            <h2>Opportunities</h2>
+            <p>Find opportunities in Salesforce.</p></a>
+            </li>            
+            <li><a href="{!URLFOR($Page.pymt__MbSettings)}"  rel="external">
+            <i class="fa fa-gear fa-lg ui-li-aside"></i>
+            <h2>Settings</h2>
+            <p></p></a>
+            </li>
+
+        </ul>
+</div>        
+
+    <div id="mbhomeUIContent" style="padding-top:0px;" class="ui-content" role="main" >
+
+    <div id="mb_page_banner">
+    <div id="mb_page_banner_content" style="background:transparent;padding-top:2em;">
+    <h1 style="font-family: 'Raleway', sans-serif;">PaymentConnect</h1>
+    <p>Native Payment Management<br/>for Salesforce</p>
+    <br/><br/><br/>
+    </div>    
+    </div>    
+
+<div data-role="controlgroup" data-theme="f" style="max-width:400px;margin-left:auto;margin-right:auto;">
+<a href="#" onclick="javascript: window.location='{!URLFOR($Page.MbProductSelect)}'" data-role="button">Product Checkout</a>
+<a href="#" onclick="javascript: window.location='{!URLFOR($Page.MbOpportunities)}'" data-role="button">Opportunity Checkout</a>
+<a href="#" onclick="javascript: window.location='{!URLFOR($Page.MbPaymentHistory)}'" data-role="button">Recent Payments</a>
+<a href="#" onclick="javascript: window.location='{!URLFOR($Page.MbContacts)}'" data-role="button">Contacts</a>
+</div>
+
+<br/>
+<br/>
+<div data-role="controlgroup" data-theme="f" style="max-width:400px;margin-left:auto;margin-right:auto;">
+<a href="#" id="check_cordova" data-role="button">Check Cordova</a>
+<a href="#" id="check_geo" data-role="button">Check Geo</a>
+<a href="#" id="check_statusbar" data-role="button">Check Status Bar</a>
+<a href="#" id="check_device" data-role="button">Check Device</a>
+<a href="#" id="check_scanner" data-role="button">Check Scanner</a>
+<a href="#" id="check_camera" data-role="button">Check Camera</a>
+<a href="#" id="check_imag" data-role="button">Check Card Swipe</a>
+</div>
+
+<br/>
+      
+    </div><!-- /content -->
+
+
+
+<div data-role="popup" id="error-popup" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+    <div id="error-popup-message">Message goes here.</div> 
+</div><!-- popup -->
+
+</div><!-- /page -->
+  
+</body>
+</html>
+
+</apex:page>

@@ -1,0 +1,2011 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController,InfinityCalculatorController" action="{!forwardToCustomAuthPage}"  sidebar="false" showHeader="false" lightningStylesheets="true">    
+    <apex:form >
+        <input type="hidden" id="sitedomain" value= "{!$Site.CurrentSiteUrl}" />
+    </apex:form>
+    <script>
+    $(document).ready(function() {
+        var PlatinumVal = "{!acc.Platinum_Client_View__c}";
+        var sitedomain = document.getElementById("sitedomain").value; 
+        var redirectDomain = sitedomain+'Dashboard_body';
+        if(PlatinumVal == 'Mastermind & Platinum' || PlatinumVal == 'Mastermind Only' || PlatinumVal == 'Infinity & Platinum'|| PlatinumVal == 'Infinity Only'){
+            
+        }  else {
+            window.location = redirectDomain;
+        }
+    });
+    </script>
+    <!--<apex:outputPanel  rendered="{!(acc.Platinum_Client_View__c == 'Mastermind & Platinum' || acc.Platinum_Client_View__c =='Mastermind Only' || acc.Platinum_Client_View__c =='Infinity & Platinum'|| acc.Platinum_Client_View__c =='Infinity Only')}" >-->
+    <apex:slds />
+    <style>
+        @media (min-width: 1024px){
+        .sidebar {display: block;
+        }
+        }
+        div {
+        word-wrap: break-word;
+        }
+        footer.container-fluid.text-center {
+        padding: 2px;
+        }     
+        .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select, .slds-scope textarea {
+        color: Black;
+        }
+        .right-side-btn button {
+        float: right;
+        background: none;
+        color: #fff;
+        }
+        .infi-loader{
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 50%;
+        top: 90%;
+        }
+        /*today */
+        
+        
+    </style>
+    <div class="slds-scope">   
+        
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>            
+            </head>
+            <body > 
+                <apex:include pageName="AndersonHeader"/>
+                
+                <apex:form >
+                    <div class="container cutom-form infinity-calculator">
+                        <h2>Infinity Calculator Information</h2>
+                        <apex:pageMessages id="showmsg"></apex:pageMessages>
+                        <apex:pageblock >                             
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Information
+                                    </h3>
+                                </div>                                 
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Infinity Calculator</label>	
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputText value="{!nc.Name}" styleClass="form-control" required="true"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12 text-right">
+                                            <label class="labelCol">Client Name</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12 text-right">
+                                            <apex:inputText value="{!acc.Name}" styleClass="form-control" required="true" disabled="true"  />
+                                        </div>
+                                    </div>
+                                </div>                                  
+                            </div>                            
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Customer Information
+                                    </h3>
+                                </div>                                 
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">First Name</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.first_name__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Last Name	</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.last_name__c}" styleClass="form-control" />                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Email</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.email__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Monthly Income
+                                    </h3>
+                                </div>                                 
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Take Home Pay</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_take_home_pay__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Take Home Pay</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_take_home_pay__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Commissions</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_commissions__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Commissions</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_commissions__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Tips</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_tips__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                                                       
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Tips</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_tips__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Bonuses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_bonuses__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Bonuses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_bonuses__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Net Profit From Business</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_net_profit_from_business__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Net Profit From Business</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_net_profit_from_business__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Interest</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_interest__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Interest	</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_interest__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Dividends</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_dividends__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Dividends</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_dividends__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Net Proceeds From Sales Of Assets</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_net_proceeds_from_sales_of_assets__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Net Proceeds From Sales Of Assets</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_net_proceeds_from_sales_of_asse__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Net Profit From Rental Properties</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_net_profit_from_rental_properties__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Net Profit From Rental Properties</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_net_profit_from_rental_properti__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Income From Alimony</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_income_from_alimony__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Income From Alimony</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_income_from_alimony__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Social Security Benefits</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_social_security_benefits__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Social Security Benefits</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_social_security_benefits__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Ira Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_ira_income__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Ira Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_ira_income__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Pension Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_pension_income__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Pension Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_pension_income__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Veterans Benefits</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_veterans_benefits__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Veterans Benefits</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_veterans_benefits__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Unemployment Benefits</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_unemployment_benefits__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Unemployment Benefits</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_unemployment_benefits__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Royalties</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.your_royalties__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Royalties</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.spouse_royalties__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div> 
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Monthly Expenses
+                                    </h3>
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Rent Payment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.rent_payment__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Taxes</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_taxes__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Mortgage Payment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.mortgage_payment__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Personal Maintenance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.personal_maintenance__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Household Repairs</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.household_repairs__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Recreation</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.recreation__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Utilities</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.utilities__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Child Care</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.child_care__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Food</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.food__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                   
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Charity Church</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Charity_Church__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Auto Expense</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Auto_Expense__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Medical Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Medical_Expenses__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">  
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Bus Expense</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Bus_Expense__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Dental Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Dental_Expenses__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Train Expense</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Train_Expense__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">School Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.School_Expenses__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>       
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Credit Card Payments</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Credit_Card_Payments__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Car Gasoline</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Car_Gasoline__c}" styleClass="form-control" />
+                                        </div>
+                                    </div>      
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Installment Contract Payment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Installment_Contract_Payment__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>      
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Cell Phone</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Cell_Phone__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>      
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Alimony</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Alimony__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>      
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Cable Bill</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Cable_Bill__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>      
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Child Support</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Child_Support__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>      
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Internet</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Internet__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Home Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Home_Insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Vacation</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Vacation__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>   
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Life Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Life_Insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Landscaping</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Landscaping__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Auto Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Auto_Insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Dry Cleaning Laundry</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Dry_Cleaning_Laundry__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>                           
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Property Taxes</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Property_Taxes__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Other_Expenses__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>    
+                                    
+                                </div>
+                            </div>                           
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Assets
+                                    </h3>
+                                </div>                                 
+                                <div class="col-sm-5 col-xs-12 form-group ">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Checking Accounts</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.checking_accounts__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Savings Accounts</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.savings_accounts__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Stock Non Ira or 401k</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.stock_non_ira_or_401k__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Bonds</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.bonds__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Cash Value of Life Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.cash_value_of_life_insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Accounts Receivables</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.accounts_receivables__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Tax Refund</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.tax_refund__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Autos</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.autos__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Boats</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.boats__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Recreational Vehicles</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.recreational_vehicles__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Home</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.home__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Vacation Homes</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.vacation_homes__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Rental Real Estate</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.rental_real_estate__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Vested Pension</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.vested_pension__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Ira</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.ira__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">401K</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.X401k__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Home Furnishings</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.home_furnishings__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Antiques</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.antiques__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Collectibles</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.collectibles__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Asset</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_asset__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Asset 1</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_asset_1__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>   
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">  
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Asset 2</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_asset_2__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>                              
+                                </div>                                
+                            </div>
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Liabilities
+                                    </h3>
+                                </div>                                 
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Mortgage Personal Home</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.mortgage_personal_home__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Mortgage Vacation Home</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.mortgage_vacation_home__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Mortgages On Rentals</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.mortgages_on_rentals__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Credit Card Balances</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.credit_card_balances__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Doctor Bills</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.doctor_bills__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Revolving Credit</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_revolving_credit__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Contracts Payable</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.contracts_payable__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Taxes Payable</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.taxes_payable__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Auto Loans</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.auto_loans__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Boat Loans</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.boat_loans__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Rv Loans</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.rv_loans__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Judgement Payable</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.judgement_payable__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Contingent Liabilities</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.contingent_liabilities__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">College Loans</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.college_loans__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 1</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_1__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 2</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_2__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 3</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_3__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 4</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_4__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 5</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_5__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 6	</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_6__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Other Liabilities 7</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.other_liabilities_7__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                            </div>
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        How much FAT?
+                                    </h3>
+                                </div>                                 
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Rent Payment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Rent_Payment__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Mortgage Payment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Mortgage_Payment__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Household Repairs</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Household_Repairs__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Utilities</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Utilities__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Food</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Food__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Auto Expense</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Auto_Expense__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Bus Expense</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Bus_Expense__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Train Expense</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Train_Expense__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Credit Card Payments</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Credit_Card_Payments__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Installment Contract Payment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Installment_Contract_Payment__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                   
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Alimony</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Alimony__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Child Support</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Child_Support__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Home Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Home_Insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Life Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Life_Insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>              
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Auto Insurance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Auto_Insurance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Property Taxes</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Property_Taxes__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Other Taxes</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Other_Taxes__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Personal Maintenance</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Personal_Maintenance__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Recreation</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Recreation__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Child Care</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Child_Care__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                   
+                                <div class="col-sm-5 col-xs-12 form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Charity Church</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Charity_Church__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Medical Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Medical_Expenses__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Dental Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Dental_Expenses__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum School Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_School_Expenses__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Car Gasoline</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Car_Gasoline__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Cell Phone</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Cell_Phone__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Cable Bill</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Cable_Bill__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Internet</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Internet__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Vacation</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Vacation__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Landscaping</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Landscaping__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Dry Cleaning Laundry</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Dry_Cleaning_Laundry__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                               
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Minimum Other Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Minimum_Other_Expenses__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                            </div>
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Monthly Infinity Income
+                                    </h3>
+                                </div>                                 
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Monthly Infinity Income Rents</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Your_Monthly_Infinity_Income_Rents__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Monthly Infinity Income Rents</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Spouse_Monthly_Infinity_Income_Rents__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Monthly Infinity Income Royalties</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Your_Monthly_Infinity_Income_Royalties__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Monthly Infinity Income Royalties</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Spouse_Monthly_Infinity_Income_Royalti__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Monthly Infinity Income Dividends</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Your_Monthly_Infinity_Income_Dividends__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Monthly Infinity Income Dividends</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Spouse_Monthly_Infinity_Income_Dividen__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Monthly Infinity Income Interest</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Your_Monthly_Infinity_Income_Interest__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Monthly Infinity Income Interest</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Spouse_Monthly_Infinity_Income_Interes__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Your Monthly Infinity Income Short Term</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Your_Monthly_Infinity_Income_Short_Ter__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>                                
+                                <div class="col-sm-5 col-xs-12 form-group">   
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Spouse Monthly Infinity Income Short Ter</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <apex:inputField value="{!nc.Spouse_Monthly_Infinity_Income_Short_T__c}" styleClass="form-control " />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Traditional Net Worth and Traditional Income Statement
+                                    </h3>
+                                </div>                                 
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Total Assets</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Total_Calculated_Assets__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Total_Calculated_Assets__c}" styleClass="form-control" html-disabled="true"  />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Total Monthly Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Total_Monthly_Infinity_Income_Calculated__c}" class="form-control" readonly = "readonly" />
+                                         <!--  <apex:inputField value="{!nc.Total_Monthly_Infinity_Income_Calculated__c}" styleClass="form-control" html-disabled="true" /> -->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Total Liabilities</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12"> 
+                                             <input type="text" value="{!nc.Total_Calculated_Liabilities__c}" class="form-control" readonly = "readonly" />
+                                            <!--<apex:inputField value="{!nc.Total_Calculated_Liabilities__c}" styleClass="form-control" html-disabled="true"  />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Total Monthly Expenses</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Total_Calculated_Monthly_Expenses__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Total_Calculated_Monthly_Expenses__c}" styleClass="form-control" html-disabled="true"  />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Traditional Net Worth</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12"> 
+                                             <input type="text" value="{!nc.Traditional_Net_Worth_Calculated__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Traditional_Net_Worth_Calculated__c}" styleClass="form-control" html-disabled="true"  />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Net Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                           <input type="text" value="{!nc.Total_Calculated_Income_for_Both_Spouses__c}" class="form-control" readonly = "readonly" /> 
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Infinity Income and FAT
+                                    </h3>
+                                </div>                                 
+                                
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Daily Infinity Income</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Daily_Infinity_Income__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Daily_Infinity_Income__c}" styleClass="form-control" html-disabled="true" />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Total All FAT</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Total_Calculated_All_Fat__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Total_Calculated_All_Fat__c}" styleClass="form-control" html-disabled="true" />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Daily Infinity Income Needed</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Daily_Infinity_Income_Needed__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Daily_Infinity_Income_Needed__c}" styleClass="form-control" html-disabled="true"  />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Monthly Income Needed to Live</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Total_Calculated_Monthly_Expenses__c}" class="form-control" readonly = "readonly" />
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Monthly Infinity Income Needed</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <input type="text" value="{!nc.Additional_Infinity_Income_Needed__c}" class="form-control" readonly = "readonly" />
+                                          <!--  <apex:inputField value="{!nc.Additional_Infinity_Income_Needed__c}" styleClass="form-control" html-disabled="true" />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                                <div class="col-sm-5 col-xs-12 form-group">                                    
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Monthly Money Available for Investment</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Monthly_Money_Available_For_Investment__c}" class="form-control" readonly = "readonly" />
+                                           <!-- <apex:inputField value="{!nc.Monthly_Money_Available_For_Investment__c}" styleClass="form-control" html-disabled="true" />-->
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                            </div>
+                            <div class="row margin-7">
+                                <div class="heading">
+                                    <h3 class="inner-heading">
+                                        Infinity Net Worth
+                                    </h3>
+                                </div> 
+                                <div class="col-sm-5 col-xs-12 form-group">   
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="labelCol">Infinity Net Worth</label>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                             <input type="text" value="{!nc.Infinity_Net_Worth__c}" class="form-control" readonly = "readonly" />
+                                          <!-- <apex:inputField value="{!nc.Infinity_Net_Worth__c}" styleClass="form-control" html-disabled="true"/>-->
+                                             <!--  <apex:outputPanel rendered="{!IF(nc.Infinity_Net_Worth__c != 'Infinity',true,false)}">
+                                            	<apex:inputField value="{!nc.Infinity_Net_Worth__c}" styleClass="form-control"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(nc.Infinity_Net_Worth__c == 'Infinity',true,false)}">
+                                            	<apex:outputText styleClass="form-control"  value="{!IF(CONTAINS(nc.Infinity_Net_Worth__c, 'Infinity'),'0.00',nc.Infinity_Net_Worth__c)}"/>
+                                            </apex:outputPanel>-->
+                                           
+                                           
+                                        </div>
+                                    </div>  
+                                    
+                                </div>
+                            </div>
+                            <apex:actionStatus id="myInfinityCal" style="align:center;">      
+                                <apex:facet name="start">                                                        
+                                    <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="infi-loader" alt="Loading" />
+                                </apex:facet>
+                                <apex:facet name="stop"></apex:facet>
+                            </apex:actionStatus>
+                            <div class="col-xs-12 text-center margin10">                                
+                                <apex:commandButton action="{!saveInfinity}" value="Save" styleClass="custom-btn" rerender="showmsg" status="myInfinityCal" /> 
+                            </div>
+                        </apex:pageblock>                         
+                    </div>      
+                    
+                    <apex:include pageName="AndersonFooter"/>       
+                    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                    <!-- Include all compiled plugins (below), or include individual files as needed -->
+                    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+                    <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+                </apex:form>
+            </body>
+        </html>
+    </div>
+    <!--</apex:outputPanel>-->
+</apex:page>

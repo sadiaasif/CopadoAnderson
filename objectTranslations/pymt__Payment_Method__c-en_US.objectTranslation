@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Type of ACH payment authorization obtained from the customer. --></help>
+        <label><!-- ACH Transaction Type --></label>
+        <name>pymt__ACH_Trans_Type__c</name>
+        <picklistValues>
+            <masterLabel>ARC</masterLabel>
+            <translation><!-- ARC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BOC</masterLabel>
+            <translation><!-- BOC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCD</masterLabel>
+            <translation><!-- CCD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PPD</masterLabel>
+            <translation><!-- PPD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TEL</masterLabel>
+            <translation><!-- TEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WEB</masterLabel>
+            <translation><!-- WEB --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>pymt__Account_Type__c</name>
+        <picklistValues>
+            <masterLabel>Business Checking</masterLabel>
+            <translation><!-- Business Checking --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Checking</masterLabel>
+            <translation><!-- Checking --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Savings</masterLabel>
+            <translation><!-- Savings --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Typically the account holder&apos;s full name or business name. --></help>
+        <label><!-- Bank Account Name --></label>
+        <name>pymt__Bank_Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Account Number --></label>
+        <name>pymt__Bank_Account_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bank Name --></label>
+        <name>pymt__Bank_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing City --></label>
+        <name>pymt__Billing_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Country --></label>
+        <name>pymt__Billing_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Email --></label>
+        <name>pymt__Billing_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing First Name --></label>
+        <name>pymt__Billing_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Last Name --></label>
+        <name>pymt__Billing_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Phone --></label>
+        <name>pymt__Billing_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Postal Code --></label>
+        <name>pymt__Billing_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Salutation --></label>
+        <name>pymt__Billing_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Dr.</masterLabel>
+            <translation><!-- Dr. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mr.</masterLabel>
+            <translation><!-- Mr. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs.</masterLabel>
+            <translation><!-- Mrs. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms.</masterLabel>
+            <translation><!-- Ms. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prof.</masterLabel>
+            <translation><!-- Prof. --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Billing State --></label>
+        <name>pymt__Billing_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Street --></label>
+        <name>pymt__Billing_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Card Number --></label>
+        <name>pymt__Card_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Credit Card Type --></help>
+        <label><!-- Card Type --></label>
+        <name>pymt__Card_Type__c</name>
+        <picklistValues>
+            <masterLabel>Amex</masterLabel>
+            <translation><!-- Amex --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diners Club</masterLabel>
+            <translation><!-- Diners Club --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Discover</masterLabel>
+            <translation><!-- Discover --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JCB</masterLabel>
+            <translation><!-- JCB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maestro</masterLabel>
+            <translation><!-- Maestro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MasterCard</masterLabel>
+            <translation><!-- MasterCard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Solo</masterLabel>
+            <translation><!-- Solo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visa</masterLabel>
+            <translation><!-- Visa --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Required for ARC or BOC ACH transaction types. --></help>
+        <label><!-- Check Number --></label>
+        <name>pymt__Check_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>pymt__Contact__c</name>
+        <relationshipLabel><!-- Payment Methods --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Customer Profile Id --></label>
+        <name>pymt__Customer_Profile_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates this is the default payment method to use for billing and scheduled payments. --></help>
+        <label><!-- Default --></label>
+        <name>pymt__Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Month --></label>
+        <name>pymt__Expiration_Month__c</name>
+        <picklistValues>
+            <masterLabel>01</masterLabel>
+            <translation><!-- 01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>02</masterLabel>
+            <translation><!-- 02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>03</masterLabel>
+            <translation><!-- 03 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>04</masterLabel>
+            <translation><!-- 04 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>05</masterLabel>
+            <translation><!-- 05 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>06</masterLabel>
+            <translation><!-- 06 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>07</masterLabel>
+            <translation><!-- 07 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>08</masterLabel>
+            <translation><!-- 08 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>09</masterLabel>
+            <translation><!-- 09 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Displays an icon indicating whether or not the payment method has expired. --></help>
+        <label><!-- Expiration Status --></label>
+        <name>pymt__Expiration_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expiration Year --></label>
+        <name>pymt__Expiration_Year__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used with some credit cards (e.g. Switch, Solo) --></help>
+        <label><!-- Issue Number --></label>
+        <name>pymt__Issue_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Last 4 digits of credit card. --></help>
+        <label><!-- Last 4 Digits --></label>
+        <name>pymt__Last_4_Digits__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Type --></label>
+        <name>pymt__Payment_Type__c</name>
+        <picklistValues>
+            <masterLabel>Bank Account</masterLabel>
+            <translation><!-- Bank Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Payment processor this profile is associated with. --></help>
+        <label><!-- Processor Connection --></label>
+        <name>pymt__Processor_Connection__c</name>
+        <relationshipLabel><!-- Payment Methods --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Record identifier used by the payment processor to reference this payment method. --></help>
+        <label><!-- Profile Id --></label>
+        <name>pymt__Profile_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Bank account routing number (9 digits). --></help>
+        <label><!-- Routing Number --></label>
+        <name>pymt__Routing_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used with some cards (e.g. Solo, Switch) --></help>
+        <label><!-- Start Month --></label>
+        <name>pymt__Start_Month__c</name>
+        <picklistValues>
+            <masterLabel>01</masterLabel>
+            <translation><!-- 01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>02</masterLabel>
+            <translation><!-- 02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>03</masterLabel>
+            <translation><!-- 03 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>04</masterLabel>
+            <translation><!-- 04 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>05</masterLabel>
+            <translation><!-- 05 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>06</masterLabel>
+            <translation><!-- 06 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>07</masterLabel>
+            <translation><!-- 07 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>08</masterLabel>
+            <translation><!-- 08 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>09</masterLabel>
+            <translation><!-- 09 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Used with some credit cards (e.g. Switch, Solo) --></help>
+        <label><!-- Start Year --></label>
+        <name>pymt__Start_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>pymt__Type__c</name>
+        <picklistValues>
+            <masterLabel>AuthNet CIM</masterLabel>
+            <translation><!-- AuthNet CIM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bank Account</masterLabel>
+            <translation><!-- Bank Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PayPal Transaction Reference</masterLabel>
+            <translation><!-- PayPal Transaction Reference --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eWay Customer Profile</masterLabel>
+            <translation><!-- eWay Customer Profile --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <description><!-- Authorize.Net CIM Payment Profile --></description>
+        <label><!-- AuthNet CIM Payment Profile --></label>
+        <name>pymt__AuthNet_CIM_Payment_Profile</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Bank account details --></description>
+        <label><!-- Bank Account --></label>
+        <name>pymt__Bank_Account</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Credit card details --></description>
+        <label><!-- Credit Card --></label>
+        <name>pymt__Credit_Card</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- A reference to a prior PayPal DirectPayment transaction for use in posting DoReferenceTransaction requests to PayPal --></description>
+        <label><!-- PayPal Transaction Reference --></label>
+        <name>pymt__PayPal_Transaction_Reference</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- eWay managed customer profile for tokenized card storage and retrieval. --></description>
+        <label><!-- eWay Customer Profile --></label>
+        <name>pymt__eWay_Customer_Profile</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- ManageCIMProfile --></label>
+        <name>pymt__ManageCIMProfile</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Set_Default_Method --></label>
+        <name>pymt__Set_Default_Method</name>
+    </webLinks>
+</CustomObjectTranslation>

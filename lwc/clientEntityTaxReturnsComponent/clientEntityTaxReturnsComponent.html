@@ -1,0 +1,40 @@
+<template>
+    <template if:true={hasTaxReturns}>
+    
+    <lightning-accordion allow-multiple-sections-open  active-section-name="">
+
+        <template for:each={taxReturns} for:item='taxReturnWrap'>
+                <lightning-accordion-section name={taxReturnWrap.taxYear} label={taxReturnWrap.taxYearLabel} key={taxReturnWrap.taxYear}>
+                    <lightning-button-menu slot="actions"
+                                    alternative-text="Show menu"
+                                    icon-size="x-small"
+                                    menu-alignment="right">
+                    <lightning-menu-item value={taxReturnWrap.taxYear} label="Add New Return" onclick={handleClick}>
+                    </lightning-menu-item>
+                </lightning-button-menu>
+                <ul class="slds-has-dividers_top slds-has-block-links_space">
+                    <template for:each={taxReturnWrap.taxReturns} for:item='taxReturn'>
+                        <li class="slds-item" key={taxReturn.Id}>
+                            <a href={taxReturn.link}>{taxReturn.Tax_Return_Name__c}</a>
+                        </li>
+                    </template>
+                  </ul>
+          </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+    </template>
+    <template if:false={hasTaxReturns}>
+        <lightning-accordion allow-multiple-sections-open  active-section-name="tax">
+            <lightning-accordion-section name="tax" label="Tax Returns">
+                <lightning-button-menu slot="actions"
+                                alternative-text="Show menu"
+                                icon-size="x-small"
+                                menu-alignment="right">
+                <lightning-menu-item value="" label="Add New Return" onclick={handleClick}>
+                </lightning-menu-item>
+            </lightning-button-menu>
+            <p>No Tax Return Found</p>
+            </lightning-accordion-section>
+        </lightning-accordion>
+ </template>
+</template>

@@ -1,0 +1,24 @@
+<apex:page standardController="H2S__HarvestProject__c" extensions="H2S.ProjectToggleArchivedController"
+    tabStyle="H2S__HarvestProject__c">
+  <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" />
+  <script type="text/javascript">
+  $j = jQuery.noConflict();
+  $j(function() {
+      console.log("toggling");
+      toggleArchived();
+  }); 
+  </script>
+  <apex:form id="form1">
+
+    <apex:actionFunction name="toggleArchived" action="{!toggleArchived}" rerender="messages" />
+
+    <apex:sectionHeader title="Project" Subtitle="{!H2S__HarvestProject__c.Name}" />
+
+    <apex:pageMessages id="messages" />
+
+    <apex:pageBlock title="Updating Project">
+    Please wait ...
+    </apex:pageBlock>
+
+  </apex:form>
+</apex:page>

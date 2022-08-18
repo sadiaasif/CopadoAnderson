@@ -1,0 +1,75 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes" access="global" controller="Team3StalledProcessingTask2Daysctrl">
+	
+
+    <!-- attributes -->
+     <aura:attribute name="TaskRecordcount" type="integer" />
+   <aura:attribute name="TaskRecords" type="task[]" />
+    <aura:attribute name="Taskcolumns" type="List"/>
+    <aura:attribute name="Starttoday" type="Date" default=""/>
+    <aura:attribute name="Endtoday" type="Date" default=""/>
+     <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+ <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <!-- handlers-->
+   <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    <div class="slds-page-header">
+  <div class="slds-page-header__row">
+    <div class="slds-page-header__col-title">
+      <div class="slds-media">
+        <div class="slds-media__figure">
+          <span class="slds-icon_container " title="Report">
+          <lightning:icon iconName="standard:report" size="small"/>&nbsp;
+            <span class="slds-assistive-text">Report</span>
+          </span>
+        </div>
+        <div class="slds-media__body">
+          <div class="slds-page-header__name">
+            <div class="slds-page-header__name-title">
+              <h1>
+                <span class="slds-page-header__title slds-truncate" title="Team 3 Stalled Processing Tasks">Team 3 Stalled Processing Tasks</span>
+              </h1>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="slds-border_bottom">
+        <br/>
+        <br/>
+    Total Records<br/>
+        <ui:outputText value="{!v.TaskRecordcount}"/></div>	
+    <br/>
+<br/>
+<lightning:layout verticalAlign="end" class="slds-form slds-form_horizontal">
+    
+        <lightning:layoutitem padding="around-small" size="5" flexibility="auto">
+            Date
+            <br/>
+            <ui:inputDate aura:id="Startdate" label="Start Date:" class="field" value="{!v.Starttoday}" displayDatePicker="true" />
+           <ui:inputDate aura:id="Enddate" label="End Date:" class="field" value="{!v.Endtoday}" displayDatePicker="true" />
+             <!--  <lightning:input value="{!v.searchKeyword}"
+                                label="Subject / Tax Stage"
+                                 placeholder="search task.."
+                                 aura:id="searchField"
+                                 />-->
+     </lightning:layoutitem>
+    <lightning:layoutitem padding="around-small" size="2" flexibility="auto"> 
+                <span>   <lightning:button variant="brand" title="Click to retrieve fields" label="Search" type="Submit" iconName="utility:search" iconPosition="left" onclick="{!c.Search}"
+                                
+                                          /> </span>
+     </lightning:layoutitem>
+                </lightning:layout>
+    
+    <!-- the container element determine the height of the datatable -->
+    <br/>
+       <lightning:datatable aura:id="AdvisorTaskTable"  
+                           data="{!v.TaskRecords}"     
+                                     columns="{!v.Taskcolumns}"     
+                                     keyField="Id"    
+                                     hideCheckboxColumn="true"  
+                             onrowaction="{! c.handleRowAction }"
+                                    />
+   
+</aura:component>

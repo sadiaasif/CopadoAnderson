@@ -1,0 +1,536 @@
+<apex:page title="Formstack Admin Settings Panel" controller="VisualAntidote.AdminSettingsPanelController" extensions="VisualAntidote.SandboxManagementController,VisualAntidote.PlatformConnectionController,VisualAntidote.DeployMetadataPackageController,VisualAntidote.MetricController" action="{!checkPermissions}"
+    sidebar="false" standardStylesheets="false"> 
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__Base,'base.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__Base,'style/base.min.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.ffcommon,'styles/fscommon.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/adminSettingsPanel.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/SandboxManagement.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/integrationSettings.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/usageInformation.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__jszip, '/jszip.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__jszip, '/jszip-load.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__jszip, '/jszip-deflate.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__jszip, '/jszip-inflate.js')}"/>
+    <script type="text/javascript">
+        setFSNSVariable('SessionKey', '{!$Api.Session_ID}');
+        /* user management script */
+        var REMOTE_ACTIONS = {
+            addUser: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.addUser)}",
+            getAuthorizationLink: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.getAuthorizationLink)}",
+            getAllUsers: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.getAllUsers)}",
+            getUsersByName: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.getUsersByName)}",
+            removeUser: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.removeUser)}",
+            isUserPrimaryLicenseHolder:"{!URLENCODE($RemoteAction.AdminSettingsPanelController.isUserPrimaryLicenseHolder)}",
+            updateEngineToken: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.updateEngineToken)}",
+            resetAssignedSeatsCount: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.resetAssignedSeatsCount)}",
+            assignPermissionSetToUser: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.assignPermissionSetToUser)}",
+            updateRemoteSitesettingsForCallouts: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.updateRemoteSitesettingsForCallouts)}",
+            addFSPermissionSet: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.addFSPermissionSet)}",
+            checkTokenNotifications: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.checkTokenNotifications)}",
+            removeFSPermissionSet: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.removeFSPermissionSet)}",
+            submitFailedSubmissions: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.submitFailedSubmissions)}",
+            GetListOfOrgs: "{!URLENCODE($RemoteAction.SandboxManagementController.remoteGetListOfOrgs)}",
+            AddOrg: "{!URLENCODE($RemoteAction.SandboxManagementController.remoteAddOrg)}",
+            RemoveOrg: "{!URLENCODE($RemoteAction.SandboxManagementController.remoteRemoveOrg)}",
+            initializeSandboxPage: "{!URLENCODE($RemoteAction.SandboxManagementController.remoteInitializeSandboxPage)}",
+            getAllIntegrations: "{!URLENCODE($RemoteAction.PlatformConnectionController.getAllPlatformConnection)}",
+            updateIntegration: "{!URLENCODE($RemoteAction.PlatformConnectionController.updatePlatformConnectionAndGetPlatformConnectionResponse)}",
+            deleteIntegration: "{!URLENCODE($RemoteAction.PlatformConnectionController.deletePlatformConnection)}",
+            publishIntegration: "{!URLENCODE($RemoteAction.PlatformConnectionController.publishPlatformConnection)}",
+            hasSharingSettingRulesRecordsExist: "{!URLENCODE($RemoteAction.AdminSettingsPanelController.hasSharingSettingRulesRecordsExist)}",
+            remoteDeployZip :"{!URLENCODE($RemoteAction.DeployMetadataPackageController.remoteDeployZip)}",
+            remoteCheckAsyncRequest : "{!URLENCODE($RemoteAction.DeployMetadataPackageController.remoteCheckAsyncRequest)}",
+            getSubmissionMetrics : "{!URLENCODE($RemoteAction.MetricController.getSubmissionMetrics)}",
+        };
+
+
+        var SFCurrentUserId = "{!$User.Id}",
+            packageTier = "{!packageTier}",
+            engineEndpoint = "{!engineEndpoint}",
+            dropboxKey = '{!dropboxKey}',
+            nsPrefix ='{!nsPrefix}',
+            showUsageInformation = {!showUsageInformation},
+            enableSandboxManagement = {!enableSandboxManagement};
+
+    </script>
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets,'pages/adminSettingsPanel.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets,'pages/SandboxManagement.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets,'pages/integrationSettings.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets,'pages/usageInformation.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets,'pages/usageInfoPlanQuery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/sharingSettings/createPackage.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/cspTrustSite/soapCspTrustSite.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/deployMetadata.min.js')}" />
+    <div id="processingDeployment" style="display:none;"> 
+        <div class="overlay"></div>
+        <div class="status">
+            <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'>
+            <div class="primary"></div></div>
+        </div>
+    </div>
+    <apex:form id="fsform" styleClass="fsform">
+        <div class="FastFormsWrapper">
+            <apex:pageMessages />
+            <!-- TODO: Make this header section a component (JS/Apex) as we use this in different pages -->
+            <div class="mainHeader" style="height: 50px;">
+                <div class="mainHeaderInner">
+                    <div id="react-top-tab-menu"></div>
+                    <div class="bread-crumb">
+                        <div class="bread-crumb navbar">
+                            <div class="navbar-inner">
+                                <div class="navcontainer">
+                                    <ul class="nav-wizard">
+                                        <li>
+                                            <a class="vfns-link" href="/apex/{!NameSpace}FormMenu" id="breadcrumb-dashboard">Dashboard</a>
+                                        </li>
+                                        <li class="li-arrow-seperator"></li>
+                                        <li class="active">
+                                            <span id="breadcrumb-formeditor" style="padding: 0px 0px 0px 20px;">
+                                                <span>Admin Settings</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <apex:outputPanel layout="block" style="float: right;line-height:0px;" rendered="{!IF((packageTier=='NativeCloud'),true,false)}">
+                        <div class="fs-style ff-logo-box" style="display:block;">
+                            <div class="fs-ff-logo">
+                                <img alt="Formstack NativeCloud" title="Formstack NativeCloud" src="{!URLFOR($Resource.logos,'native-cloud-fs.png')}" height="51"
+                                />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" style="float: right;line-height:0px;" rendered="{!IF((packageTier=='NativeCloud'),false,true)}">
+                        <div class="fs-style ff-logo-box" style="display:block;">
+                            <div class="ff-logo">
+                                <img class="fs-logo-img" src="{!URLFOR($Resource.logos,'color_logo_only_fs.png')}" />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+
+                </div>
+            </div>
+
+        <div class='react-left-panel'></div>
+ 
+        <div class="rightPanel">
+
+            <apex:outputPanel id="panelControl">
+                <!-- Usage Information -->
+                <apex:outputText rendered="{!showUsageInformation}">
+                    <div id="usage-information" style="display:none" >
+
+                        <apex:outputPanel layout="block" id="usageInfHeaderInfo" styleClass="form-container" >
+                            <apex:outputPanel layout="block" styleClass="announcement-box mt50">
+                                <h1 style='margin-bottom:25px'>Usage Information
+                                    <a class="help-icon blue-tooltip">
+                                        <span class="blue-tooltip-text" style='margin-top:-60px'>Submission information is updated daily, this data won't immediately reflect your submission activity.</span>
+                                        <span class="draft-text"> <img style="margin-left:0px; float:inherit;" class="helpIconCode" height="20px" src="{!URLFOR($Resource.alpha,'blank.png')}"/></span>
+                                    </a>
+                                </h1>
+                                <div class='usageInformationPillMessage'></div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" id="FSGridUsageInfPanel" styleClass="form-container">
+                            <div id="FSGrid-usage-information"></div>
+                        </apex:outputPanel>
+                    
+                    <!-- Begin Lightbox Usage Information -->
+                    <div id="fsLightboxUsageInformation" class="fsLightbox" style="display:none;">
+                        <div align="right" class="header">
+                            <span class="header-text">Contact Us</span>
+                            <a id="fsLightboxCloseUsageInformation" href="#" class="close" title="close">Close</a>
+                        </div>
+                        <div id="fsLightboxContentUsageInformation" style="width:676px; height:641px; padding-top:0px; overflow:auto;">
+                            <iframe style="border: none;" src="https://realdata.formstack.com/forms/sf_app_users_submissions?SF_Org_ID_c={!orgId}" title="Contact Us"
+                                width="676" height="100%"></iframe>
+                        </div>
+                    </div>
+                    <!-- End Lightbox Usage Information -->
+                    </div>
+                </apex:outputText>
+                <!-- End Usage Information-->
+
+                <!-- Start User management -->
+                <div id="user-management" style='display:none'>
+                    <div id="adminNotificationBox" class="notification-box-outer"></div>
+                    <apex:outputPanel layout="block" id="announcementPanel" styleClass="unassigned-primary-license form-container">
+                        <apex:outputPanel layout="block" styleClass="announcement-box mt50" rendered="{!IF(userLicenses.size==0,true,false)}">
+                            <div class="announcement-box__header">
+                                <div class="announcement-box__header--graphic-icon"></div>
+                                <div class="announcement-box__header--short-message">
+                                    <h2 style="font-style:italic;">Welcome to Formstack!</h2>
+                                </div>
+                            </div>
+                            <div class="announcement-box__body">
+                                <p>Before you get started, please assign a license to be the Primary User. This user will be
+                                    the default record owner for new records created through form submissions.
+                                    <br/>If you don't want to assign this license to yourself, please ask another user to assign
+                                    themselves as the Primary User.</p>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" id="licenseHeaderInfo" styleClass="unassigned-primary-license form-container">
+                        <apex:outputPanel layout="block" styleClass="announcement-box mt50" rendered="{!IF(userLicenses.size==0,false,true)}">
+                            <h1>User Management</h1>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <div class="fs_pillmessage_cmp"></div>
+                    <div class="fsheader-wrapper-outer sandbox-management-header">
+                        <div class="fsheader-wrapper">
+                            <div class="fsheader-wrapper-inner ">
+                                <div class="license-header">
+
+                                    <apex:outputText rendered="{!!showUsageInformation}">
+                                        <div class="edition-box">
+                                            <div class="edition-box-inner">
+                                                <h2>{!HTMLENCODE(planName)} Plan</h2>
+                                            </div>
+                                        </div>
+                                    </apex:outputText>
+
+                                    <div class="license-count-status-box" style="width:{!IF(showUsageInformation,100,65)}%">
+                                        <apex:outputPanel layout="block" id="licenseInfoBox" styleClass="license-count-status-box-inner {!IF(!showUsageInformation,'hide-usage-inf','')}">
+                                            <script>
+                                                var availableLicenseCount = parseFloat("{!availableUserLicenseCount}");
+                                                var assignedUserLicensePercent = parseFloat("{!assignedUserLicensePercent}");
+                                            </script>
+                                            <div class="license-count-status-box__summary">
+                                                <div class="license-count-status-box__summary-text">
+                                                    <span>Licenses Purchased</span>
+                                                    <span class="license-count">{!userLicenseLimit}</span>
+                                                </div>
+                                                <div class="license-count-status-box__summary-text">
+                                                    <span>Unassigned Licenses</span>
+                                                    <span class="license-count">
+                                                        <span class="available-license-count">{!availableUserLicenseCount}</span>&nbsp;/&nbsp;{!userLicenseLimit}</span>
+                                                </div>
+                                                <div>
+                                                    <a onclick='fsLightboxUserManagement.show()' class='grid-button-a-link' style="">Contact Us</a>
+                                                </div>
+                                            </div>
+                                            <div id="assignedUserLicenseProgress" />
+                                        </apex:outputPanel>
+                                    </div>
+                                </div>
+                                <apex:outputPanel layout="block" id="unassignedLicensesPanel" styleClass="unassigned-primary-license">
+                                    <apex:outputPanel layout="block" styleClass="fscontent-table sandbox-table" rendered="{!IF(isPrimaryUnassigned,true,false)}">
+                                        <div class="gr-content-row">
+                                            <div class="content-td">
+                                                <b>Unassigned</b>
+                                                <span layout="block" class="primary-license community-badge blue-tooltip">
+                                                    <span class="blue-tooltip-text -mt100 -ml40">This is the default record owner for new records created through form
+                                                        submissions. Only the Primary User can refresh the Formstack authentication
+                                                        token.</span>
+                                                    <span class="draft-text">Primary User</span>
+                                                </span>
+                                            </div>
+                                            <div class="content-td">
+                                                <div class="vabutton2" data-authurl="{!linkToAuthorizeApp}" onclick="confirmAndAssignPermissionSetToMe(this);return false;"
+                                                    style="display: inline-block;">
+                                                    <span class="btnText">Assign to me</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel layout="block" id="assignedLicensesPanel" styleClass="assigned-primary-license form-container">
+                                    <apex:outputPanel layout="block" styleClass="fscontent-table user-management-table" rendered="{!IF(userLicenses.size==0,false,true)}">
+                                        <apex:repeat value="{!userLicenses}" var="userLicense" id="theRepeat">
+                                            <div class="gr-content-row  {!IF(AND(isPrimaryLicenseUserInactive, userLicense.license.Type__c == 'Primary'), 'inactive','')}">
+                                                <div class="content-td user-info-col user-{!userLicense.license.User__c}  {!IF(!userLicense.isActive, 'user-row_standard--inactive','')}">
+                                                    <span class="td-warning-icon" style="{!IF(AND(isPrimaryLicenseUserInactive, userLicense.license.Type__c == 'Primary'), '','display:none;')}"></span>
+                                                    <a class="{!IF(AND(userLicense.license.Type__c == 'Primary', !userLicense.isActive), 'a--white','a--blue')}" href="/{!userLicense.license.User__c}">{!HTMLEncode(userLicense.userDisplayName)}</a>
+                                                    <apex:outputText styleClass="you" rendered="{!userLicense.license.VisualAntidote__User__c == $User.Id}" value="(you)" />
+                                                    <apex:outputText styleClass="you" rendered="{!!userLicense.isActive}" value="(inactive)" />
+
+                                                    <apex:outputPanel html-data-userid="{!IF(userLicense.license.VisualAntidote__User__c == $User.Id,userLicense.license.VisualAntidote__User__c,'')}" rendered="{!userLicense.license.VisualAntidote__Type__c == 'Primary'}"
+                                                        styleClass="primary-license community-badge blue-tooltip">
+                                                        <span class="blue-tooltip-text -mt100 -ml40">This is the default record owner for new records created through
+                                                            form submissions. Only the Primary User can refresh the Formstack
+                                                            authentication token.
+                                                        </span>
+                                                        <span class="draft-text">Primary User</span>
+                                                    </apex:outputPanel>
+                                                </div>
+                                                <div class="content-td removeBtn">
+                                                    <apex:outputPanel styleclass="vabutton2" html-data-authurl="{!linkToAuthorizeApp}" rendered="{!AND(userLicense.license.VisualAntidote__Type__c == 'Primary', userLicense.license.VisualAntidote__User__c != $User.Id)}"
+                                                        onclick="confirmAndAssignPermissionSetToMe(this);return false;">Assign to me</apex:outputPanel>
+                                                    <apex:outputPanel styleclass="user-management-rm" rendered="{!AND(hasManagePackageLicensePermission,userLicense.license.VisualAntidote__Type__c != 'Primary')}"
+                                                        onclick="removeUser('{!userLicense.license.VisualAntidote__User__c}');"></apex:outputPanel>
+                                                </div>
+                                            </div>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+
+
+                                <apex:outputPanel layout="block" id="userSearchPanel" styleClass="user-search">
+                                    <apex:outputPanel layout="block" styleClass="user-search--inner" rendered="{!AND(hasManagePackageLicensePermission,availableUserLicenseCount > 0)}">
+                                        <div class="user-search__row">
+                                            <div class="user-search__row--td add-user-search-container">
+                                                <input id="inputTextUserNames" type="text" class="user-name" placeholder="Select a user to add" />
+                                                <span id="suggestionList" class="user-suggestion-list"></span>
+                                                <br/>
+                                                <div class="license-available">
+                                                    <span class="available-license-count">{!IF(availableUserLicenseCount == 0, 'No', availableUserLicenseCount)}</span>&nbsp;license{!IF(availableUserLicenseCount
+                                                    == 1, '', 's')} available
+                                                </div>
+                                            </div>
+                                            <div class="user-search__row--td add-user-btn">
+                                                <div class="vabutton1 add-user" onclick="addUser(this);" style="display: inline-block;">
+                                                    <span class="btnText">Add User</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <apex:actionFunction name="resetLicenseListJs" action="{!resetLicenseList}" rerender="errorMessages,licenseHeaderInfo,announcementPanel,licenseInfoBox,unassignedLicensesPanel,assignedLicensesPanel,userSearchPanel"
+                                    oncomplete="initializePageComponents();" />
+                                <apex:pageMessages id="errorMessages" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Begin Lightbox User management -->
+                    <div id="fsLightboxUserManagement" class="fsLightbox" style="display:none;">
+                        <div align="right" class="header">
+                            <span class="header-text">Contact Us</span>
+                            <a id="fsLightboxCloseUserManagement" href="#" class="close" title="close">Close</a>
+                        </div>
+                        <div id="fsLightboxContentUserManagement" style="width:676px; height:641px; padding-top:0px; overflow:auto;">
+                            <iframe style="border: none;" src="https://realdata.formstack.com/forms/sf_app_users_submissions?SF_Org_ID_c={!orgId}" title="Contact Us"
+                                width="676" height="100%"></iframe>
+                        </div>
+                    </div>
+                    <!-- End Lightbox User management -->
+
+                </div>
+                <!-- End User management -->
+                <!-- Start Sandbox management -->
+                <div id="sandbox-management" style="display:none" >
+                    <apex:outputPanel layout="block" id="sandboxHeaderInfo" styleClass="form-container" >
+                        <apex:outputPanel layout="block" styleClass="announcement-box mt50">
+                            <h1 class="sandbox-management">Sandbox Management</h1>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" id="FSGridPanel" styleClass="form-container" rendered="{!enableSandboxManagement}">
+                        <div id="FSGrid-sandbox" data-show-contact-us="{!showContactUsBtn}" ></div>
+                    </apex:outputPanel>
+
+                    <!-- Begin Lightbox sandbox -->
+                    <div id="fsLightboxSandbox" class="fsLightbox" style="display:none;">
+                        <div align="right" class="header">
+                            <span class="header-text">Contact Us</span>
+                            <a id="fsLightboxCloseSandbox" href="#" class="close" title="close">Close</a>
+                        </div>
+                        <div id="fsLightboxContentSandbox" style="width:676px; height:641px; padding-top:0px; overflow:auto;">
+                            <iframe style="border: none;" src="https://realdata.formstack.com/forms/callrequest_sfapp_sandbox_request?SF_Org_ID_c={!orgId}" title="Call Request | SF App | Sandbox Request"
+                                width="676" height="100%"></iframe>
+                        </div>
+                    </div>
+                    <!-- End Lightbox sandbox -->
+                </div>
+
+                <!-- Integration Settings -->
+                <div id="integration-settings" style="display:none" >
+
+                    <apex:outputPanel layout="block" id="integrationHeaderInfo" styleClass="form-container" >
+                        <apex:outputPanel layout="block" styleClass="announcement-box mt50">
+                            <h1 style='margin-bottom:24px'>Integration Credentials</h1>
+                            <div class='integrationPillMessage'></div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" id="FSGridIntegrationPanel" styleClass="form-container">
+                        <div id="FSGrid-integration"></div>
+                        <script>
+                            fs.ISP.refreshIntegrations(function(resultElements){
+                                var outputElement = document.getElementById('FSGrid-integration');
+                                resultElements.forEach(function(element){outputElement.appendChild(element)});
+                            },true,false,engineEndpoint);
+                        </script>
+                    </apex:outputPanel>
+ 
+                </div>
+                <!-- End Integration Settings -->
+
+                <!-- Settings and Permissions -->
+                <div id="settings-and-permissions" style="display:none" >
+                    <apex:outputPanel layout="block" styleClass="form-container" rendered="{! IF(AND(OR(packageTier == 'EnterprisePlus',packageTier == 'NativeCloud'), userLicenses.size != 0), true, false) }">
+                        <div class="form-container-inner">
+                            <div class="settings-and-permissions-base-margin">
+                                <h1>Community Prefill Permissions</h1>
+                            </div>
+                            <div class="shadow-box">
+                                <div class="shadow-box__column70">
+                                    <p>To enable prefill on Community forms, your community sites must be registered in the
+                                        Remote Site Settings page. You can add all existing sites now.
+                                    </p>
+                                    <p>
+                                        <strong>Note:</strong> You can manually add individual Community sites or make changes to
+                                        Remote Site Settings as well.
+                                        <a class="a--blue" target="_blank" href="https://sfapphelp.formstack.com/hc/en-us/articles/360018480252-Prefilling-Community-Forms-from-Logged-in-User"
+                                            title="Learn more">Learn more</a>
+                                    </p>
+                                </div>
+                                <div class="shadow-box__column30">
+                                    <a class="vabutton1 mt20 mr15" title="Update Sites" onclick="addRemoteSitesForApexCallouts(this)">Update Sites</a>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" styleClass="form-container">
+                        <div class="form-container-inner critical_Update_container">
+                            <div class="settings-and-permissions-base-margin">
+                                <h1>Community Forms: Content Security Policy (CSP)</h1>
+                            </div>
+                            <div class="shadow-box ">
+                                <div class="shadow-box__column70">
+                                    <p>
+                                        Salesforce Community Sites are configured with strict CSP policy by default.
+                                    </p>
+                                    <p> 
+                                        This will prevent Community Forms that contain images from loading because images are stored on your org URL and treated as external to the Community site. 
+                                        This will also prevent some integrations that rely on JavaScript callouts from functioning properly. 
+                                        To load forms properly, add CSP Trusted sites to whitelist your org’s URL and endpoint URLs.
+                                    </p>
+                                    <p>
+                                        Click "Add CSP Trust Sites" button to automatically whitelist the required endpoints.<br />
+                                        <a class="a--blue" target="_blank" href="https://developer.salesforce.com/docs/atlas.en-us.communities_dev.meta/communities_dev/communities_dev_security_csp.htm"
+                                            title="Learn more">Learn more</a>
+                                    </p>
+                                </div>
+                            
+                                <div class="shadow-box__column30">
+                                    <div class="shadow-box_sub_title">
+                                        <a id='btnCSPTrustSite' class="vabutton1 mt20 mr15 " title="Create CSP Trust Site" style="margin-top: 5px" onclick="addCSPTrustSite(this);">Add CSP Trust Sites</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" styleClass="form-container">
+                        <div class="form-container-inner critical_Update_container">
+                            <div class="settings-and-permissions-base-margin">
+                                <h1>Sharing Rules for Site Guest Users</h1>
+                            </div>
+                            <div class="shadow-box ">
+                                <div class="shadow-box_table critical_Update {! IF(isSharingSettingEnable,'','hide-element')}">
+                                        <div class="shadow-box_sub_title">
+                                            <span class="shadow-box-fail"></span>
+                                            <p class="shadow-box-circle-title">Salesforce Critical Update</p>
+                                        </div>
+                                        <p class="shadow-box_description">Follow the steps below to create sharing rules so that community users can maintain access to Formstack Forms.</p>
+                                </div>
+
+                                <div class="shadow-box__column70">
+                                    <p>Publicly accessible Community Forms and all NativeCloud forms are accessed by the Salesforce Site Guest user which requires Sharing Rules to access form objects. <a class="a--blue" target="_blank" href="https://sfapphelp.formstack.com/hc/en-us/articles/360038062751-Salesforce-Winter-20-and-Sharing-Rules"
+                                        title="Learn more">Learn more</a>
+                                    </p>
+                                </div>
+                               <div class="shadow-box_table">
+                                <div class="shadow-box__column50">
+                                    <div class="shadow-box_sub_title">
+                                        <a id='btnSharingRules' class="vabutton1 mt20 mr15 " listOfGuestUsers = "{!listOfGuestUsers}"  title="Create Sharing Rules" style="margin-top: 5px" onclick="addSharingRules(this);">Create Sharing Rules</a>
+                                    </div>
+                                </div>  
+                                </div>                             
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+
+                    <apex:outputPanel layout="block" styleClass="form-container">
+                        <div class="form-container-inner critical_Update_container">
+                            <div class="settings-and-permissions-base-margin">
+                                <h1>Sharing Rules for Community Portal Users</h1>
+                            </div>
+                            <div class="shadow-box ">
+                                <div class="shadow-box__column70">
+                                    <p>Formstack managed package objects have Org-Wide Defaults set to <a class="a--blue" target="_blank" href="https://help.salesforce.com/articleView?id=security_owd_external_setting.htm"
+                                        title="Salesforce critical update.">Private.</a> This prevents logged-in Community users from accessing Community Forms. Sharing Rules must be created to allow this access. <a class="a--blue" target="_blank" href="https://sfapphelp.formstack.com/hc/en-us/articles/360038062751-Salesforce-Winter-20-and-Sharing-Rules"
+                                        title="Learn more">Learn more</a>
+                                    </p>
+                                </div>
+                               <div class="shadow-box_table">
+                                    <div class="shadow-box__column50">
+                                        <a id='btnCommunitySharingRules' class=" vabutton1 mt20 mr15 " hasCommunityUsers = "{!hasCommunityUsers}" title="Create Sharing Rules" onclick="addCommunitySharingRules(this)" style="
+                                        margin-top: 5px;">Create Sharing Rules</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                <!-- End Settings and Permissions -->
+
+            </apex:outputPanel>
+            <!-- ALERTS -->
+            <div id="dialog-error"></div> 
+            <!-- End Alerts -->
+        </div>
+
+        <!-- Script for Usage Information menu -->
+        <apex:outputText rendered="{!showUsageInformation}">
+            <script>
+                var planDisplayName = "{!JSENCODE(planName)}";
+                document.getElementById("FSGrid-usage-information").appendChild(fs.UINF.makeNewChart(
+                    fs.UINFPQ.getConfigObject(
+                        planDisplayName+" Plan",
+                        undefined,
+                        ['<a onclick="fsLightboxUsageInformation.show()" class="button-a-link">Contact Us</a>'],
+                        '{!subscriptionStartDate}'
+                    )
+                ));
+                fs.UINF.refreshChart(document.getElementById("FSGrid-usage-information").children[0]);
+
+                //UsageInformation Lightbox
+                var fsLightboxUsageInformation = new fs.Utils.FSLightbox({
+                    form: "UsageInformation",
+                    handleText: "Contact Us",
+                    handlePosition: "left",
+                    handleImage: "https://realdata.formstack.com/forms/lightboxHandle.php",
+                    handle: null
+                });
+            </script>
+        </apex:outputText>
+        <!-- End Usage Information Script -->
+
+        <!--Lightbox initialization-->
+        <script type="text/javascript">
+            //UserManagement
+            var fsLightboxUserManagement = new fs.Utils.FSLightbox({
+                form: "UserManagement",
+                handleText: "Contact Us",
+                handlePosition: "left",
+                handleImage: "https://realdata.formstack.com/forms/lightboxHandle.php",
+                handle: null
+            });
+
+            //Sandbox
+            var fsLightboxSandbox = new fs.Utils.FSLightbox({
+                form: "Sandbox",
+                handleText: "Call Request | SF App | Sandbox Request",
+                handlePosition: "left",
+                handleImage: "https://realdata.formstack.com/forms/lightboxHandle.php?str=Call+Request+%7C+SF+App+%7C+Sandbox+Request",
+                handle: null
+            });
+        </script>
+
+    </div> <!-- End FastFormsWrapper -->
+    </apex:form>
+    <c:DeskChatComponent ></c:DeskChatComponent>
+    <c:Pendo ></c:Pendo>
+
+</apex:page>

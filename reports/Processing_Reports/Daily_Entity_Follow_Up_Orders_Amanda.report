@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ORDER_ITEM_NUMBER</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Entity__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Law_Coordinator__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_LAST_UPDATE</field>
+    </columns>
+    <description>A report which displays Order Service Items (OSI) for entities that are waiting for an EIN to be obtained, or a Foreign Filing to be submitted that were modified by another user in the last 3 days.</description>
+    <filter>
+        <booleanFilter>1 AND 2 AND (3 OR 4) AND ((5 AND 6) OR (7 AND 8) OR (9 AND 10) OR 11) AND 12 AND 13</booleanFilter>
+        <criteriaItems>
+            <column>ORDER_ITEM_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>1/1/2021 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>,&quot;All Tax Years Not Filed, Please Call&quot;,&quot;Need Worksheet, Please Call&quot;,&quot;Worksheet Received, Please File&quot;,Completed,N/A,Stalled - Client,Stalled - Internal,Waiting on Confirmation,Need to Kit,Kitted,Attorney Consult Scheduled,KMS Scheduled / Link Sent,BCP Scheduled,Refund Requested,Refunded,Exchanged for Other Services</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processor__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Amanda Phillips</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Amanda Phillips</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Comments__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Obtain EIN on,required to obtain EIN</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Comments__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>EIN Rec&apos;d,EIN Received</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Comments__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Rejection Received,Rejection Rec&apos;d,Name Choices Required</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Comments__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Filed Articles Received,Filed Articles Rec&apos;d</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Comments__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>COGS Received,COGS Rec&apos;d</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Comments__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Foreign Articles submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Not Started,Submitted to Processing,Series LLC Drafting,IRS Form Requested,Conversion Requested,Amendment Requested,Waiting on Client,Name Rejected,Submitted to SOS,&quot;IRS Complete, Waiting on SOS&quot;,&quot;SOS Complete, Waiting on IRS&quot;,Waiting on SOS &amp; IRS,Back to Processor,Binder Shipped- Back to Processor</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_LAST_UPDATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>LAST_N_DAYS:3</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>UPDATEDBY.NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>James Morris</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OrderItem.Processing_Priority__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ORDER_ITEM_CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ORDER_NUMBER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Daily Entity Follow-Up (Orders) - Amanda</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <sortColumn>OrderItem.Processing_Stage__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

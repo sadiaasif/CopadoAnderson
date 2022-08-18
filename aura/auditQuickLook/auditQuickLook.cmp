@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="fieldsList" type="List" default="['Auditor__c','Current_Audit_Status__c','Next_Scheduled_Audit__c']" />
+    <lightning:recordForm
+                          aura:id="auditRecordForm"
+                          recordId="{!v.recordId}"
+                          objectApiName="Account"
+                          columns="1"
+                          fields="{!v.fieldsList}"
+                          mode="view" />
+</aura:component>

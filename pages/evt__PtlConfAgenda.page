@@ -1,0 +1,22 @@
+<apex:page docType="html-5.0" id="ptlConfAgendaPage" controller="evt.ConfAgendaController" title="{!event.Name} Agenda" sidebar="false" cache="false">
+<head><title>{!event.Name} {!$Label.evt__ConfNav_AgendaTab}</title>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_ptl_conference_agenda_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="agenda"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+
+    <apex:outputText value="{!event.evt__Agenda_HTML__c}" escape="false"/>
+
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+
+</apex:page>

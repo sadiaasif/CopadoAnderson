@@ -1,0 +1,117 @@
+<apex:page controller="pymt.MobileBaseController" extensions="pymt.MbPaymentDetailController" docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" cache="false" sidebar="false" showHeader="false" standardStylesheets="false">
+<html>
+<head>
+    <title>Linvio PaymentConnect Mobile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  
+    <!--  JQuery Mobile Includes with custom theme (from Themeroller) --> 
+     
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/Linvio.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.pymt__PaymentConnectMobile,'themes/jquery.mobile.icons.min.css')}" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.3/jquery.mobile.structure-1.4.3.min.css" /> 
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script> 
+
+              
+    <script>
+        $( document ).on( "pagecreate", function() {
+            
+
+
+        });
+
+    
+    </script>
+ 
+
+</head>
+<body>
+<div data-role="page"  data-theme="a" id="paymentdetailpage">
+
+<div data-role="header" data-position="fixed">
+<h1>Success</h1>
+</div>
+
+
+    <div class="ui-content" role="main">
+
+
+
+     <h1>{!payment.Name}</h1>
+     <apex:outputPanel rendered="{!NOT(ISNULL(payment.pymt__Shipping__c))}">
+        <p>Shipping: {!payment.pymt__Shipping__c}</p>
+     </apex:outputPanel>
+
+     <apex:outputPanel rendered="{!NOT(ISNULL(payment.pymt__Tax__c))}">
+        <p>Tax: {!payment.pymt__Tax__c}</p>
+     </apex:outputPanel>
+
+<p>Amount: {!payment.pymt__Amount__c}&nbsp;{!payment.pymt__Currency_ISO_Code__c}</p>
+<p>Date: {!payment.pymt__Date__c}</p>
+<p>Transaction Type: {!payment.pymt__Transaction_Type__c}</p>
+<p>Status: {!payment.pymt__Status__c}</p>
+<p>Transaction Id: {!payment.pymt__Transaction_Id__c}</p>
+<p>Billing Name: {!payment.pymt__Billing_First_Name__c}&nbsp;{!payment.pymt__Billing_Last_Name__c}</p>
+
+<div style="text-align:center;">
+<a data-role="button" href="{!$CurrentPage.parameters.finish_URL}"  data-inline="false" >Finished</a>
+</div>
+
+<apex:outputPanel rendered="{!NOT(signatureId == NULL)}">
+<apex:image width="50%" url="/servlet/servlet.FileDownload?file={!signatureId}"/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!AND(NOT(payment.pymt__Latitude__c == null),NOT(payment.pymt__Latitude__c == 0),NOT(payment.pymt__Longitude__c == null),NOT(payment.pymt__Longitude__c == 0) )}">
+<img style="width:100%;" src="https://maps.google.com/maps/api/staticmap?markers=color:blue|label:S|{!TEXT(payment.pymt__Latitude__c)},{!TEXT(payment.pymt__Longitude__c)}&zoom=13&size=800x200&maptype=roadmap&sensor=false"/>
+</apex:outputPanel>
+
+
+<div data-role="collapsible" data-content-theme="a" data-inset="false">
+        <h2>Cart Items</h2>
+    <table data-role="table" id="cart-item-table" class="ui-responsive" >
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <apex:repeat value="{!payment.R00N40000001tGNtEAM}" var="lineItem">
+      <tbody>
+        <tr>
+          <td>{!lineItem.Name}</td>
+          <td>{!lineItem.pymt__Unit_Price__c}</td>
+          <td>{!lineItem.pymt__Quantity__c}</td>
+          <td>{!lineItem.pymt__Total__c}</td>
+        </tr>
+      </tbody>
+                    
+      </apex:repeat>
+
+
+    </table>
+</div>
+    
+
+        
+    </div><!-- /content -->
+    
+<div data-role="footer" data-position="fixed">
+<a href="#" class="fawe-icon-hdr-link" onclick="javascript: window.location= window.localStorage.getItem('homePageURL');">
+<i class="fa fa-home fa-2x"></i></a>
+</div>
+
+
+
+</div><!-- /page -->
+
+
+  
+</body>
+</html>
+
+</apex:page>

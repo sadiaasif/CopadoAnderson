@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Service_community_History_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Service community History Sharing</label>
+        <sharedTo>
+            <group>Job_Role_Service</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>n2de__Object__c</field>
+            <operation>equals</operation>
+            <value>Account</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

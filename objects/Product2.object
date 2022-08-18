@@ -1,0 +1,1573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Add</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Add</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Add</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>ASID__c</fullName>
+        <description>A unique identifier for each service item.</description>
+        <displayFormat>A{00000}</displayFormat>
+        <externalId>true</externalId>
+        <inlineHelpText>Anderson Service ID</inlineHelpText>
+        <label>ASID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>AVSFQB__COGS__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cost of goods sold</description>
+        <externalId>false</externalId>
+        <label>COGS</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>AVSFQB__OnHand__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>OnHand</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVSFQB__QB_Error__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>QB Error</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>AVSFQB__QuickBooks_ItemType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>QuickBooks Item Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ItemService</fullName>
+                    <default>true</default>
+                    <label>ItemService</label>
+                </value>
+                <value>
+                    <fullName>ItemNonInventory</fullName>
+                    <default>false</default>
+                    <label>ItemNonInventory</label>
+                </value>
+                <value>
+                    <fullName>ItemOtherCharge</fullName>
+                    <default>false</default>
+                    <label>ItemOtherCharge</label>
+                </value>
+                <value>
+                    <fullName>ItemInventory</fullName>
+                    <default>false</default>
+                    <label>ItemInventory</label>
+                </value>
+                <value>
+                    <fullName>ItemInventoryAssembly</fullName>
+                    <default>false</default>
+                    <label>ItemInventoryAssembly</label>
+                </value>
+                <value>
+                    <fullName>ItemDiscount</fullName>
+                    <default>false</default>
+                    <label>ItemDiscount</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AVSFQB__Quickbooks_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>Quickbooks Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Affiliate_Payment_Percent__c</fullName>
+        <externalId>false</externalId>
+        <label>Affiliate Payment Percent</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Bill_s_Shortcut__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Simple Checkbox to sort service items in the list view</description>
+        <externalId>false</externalId>
+        <label>Bill&apos;s Shortcut</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Create_Tax_Project__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to have a Tax Project Created when a Sale is Closed Won with this item.</inlineHelpText>
+        <label>Create Tax Project</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>DisplayUrl</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Entity_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Any</fullName>
+                    <default>false</default>
+                    <label>Any</label>
+                </value>
+                <value>
+                    <fullName>BOSS</fullName>
+                    <default>false</default>
+                    <label>BOSS</label>
+                </value>
+                <value>
+                    <fullName>Business Credit</fullName>
+                    <default>false</default>
+                    <label>Business Credit</label>
+                </value>
+                <value>
+                    <fullName>C-Corp</fullName>
+                    <default>false</default>
+                    <label>C-Corp</label>
+                </value>
+                <value>
+                    <fullName>Corp</fullName>
+                    <default>false</default>
+                    <label>Corp</label>
+                </value>
+                <value>
+                    <fullName>Corp Headquarters</fullName>
+                    <default>false</default>
+                    <label>Corp Headquarters</label>
+                </value>
+                <value>
+                    <fullName>Deed Preparation</fullName>
+                    <default>false</default>
+                    <label>Deed Preparation</label>
+                </value>
+                <value>
+                    <fullName>Document Drafting</fullName>
+                    <default>false</default>
+                    <label>Document Drafting</label>
+                </value>
+                <value>
+                    <fullName>Individual</fullName>
+                    <default>false</default>
+                    <label>Individual</label>
+                </value>
+                <value>
+                    <fullName>Irrevocable Trust</fullName>
+                    <default>false</default>
+                    <label>Irrevocable Trust</label>
+                </value>
+                <value>
+                    <fullName>Joint Venture LLC</fullName>
+                    <default>false</default>
+                    <label>Joint Venture LLC</label>
+                </value>
+                <value>
+                    <fullName>Land Trust</fullName>
+                    <default>false</default>
+                    <label>Land Trust</label>
+                </value>
+                <value>
+                    <fullName>LIST00</fullName>
+                    <default>false</default>
+                    <label>LIST00</label>
+                </value>
+                <value>
+                    <fullName>Living Trust</fullName>
+                    <default>false</default>
+                    <label>Living Trust</label>
+                </value>
+                <value>
+                    <fullName>LLC</fullName>
+                    <default>false</default>
+                    <label>LLC</label>
+                </value>
+                <value>
+                    <fullName>LP</fullName>
+                    <default>false</default>
+                    <label>LP</label>
+                </value>
+                <value>
+                    <fullName>Mail Forwarding</fullName>
+                    <default>false</default>
+                    <label>Mail Forwarding</label>
+                </value>
+                <value>
+                    <fullName>Package</fullName>
+                    <default>false</default>
+                    <label>Package</label>
+                </value>
+                <value>
+                    <fullName>Pension</fullName>
+                    <default>false</default>
+                    <label>Pension</label>
+                </value>
+                <value>
+                    <fullName>Platinum</fullName>
+                    <default>false</default>
+                    <label>Platinum</label>
+                </value>
+                <value>
+                    <fullName>Product</fullName>
+                    <default>false</default>
+                    <label>Product</label>
+                </value>
+                <value>
+                    <fullName>Registered Agent Fee</fullName>
+                    <default>false</default>
+                    <label>Registered Agent Fee</label>
+                </value>
+                <value>
+                    <fullName>Resident Agent</fullName>
+                    <default>false</default>
+                    <label>Resident Agent</label>
+                </value>
+                <value>
+                    <fullName>S-Corp</fullName>
+                    <default>false</default>
+                    <label>S-Corp</label>
+                </value>
+                <value>
+                    <fullName>Series LLC</fullName>
+                    <default>false</default>
+                    <label>Series LLC</label>
+                </value>
+                <value>
+                    <fullName>Titanium</fullName>
+                    <default>false</default>
+                    <label>Titanium</label>
+                </value>
+                <value>
+                    <fullName>Unlimited LLC</fullName>
+                    <default>false</default>
+                    <label>Unlimited LLC</label>
+                </value>
+                <value>
+                    <fullName>Unlimited LLC Fulfillment</fullName>
+                    <default>false</default>
+                    <label>Unlimited LLC Fulfillment</label>
+                </value>
+                <value>
+                    <fullName>Valley</fullName>
+                    <default>false</default>
+                    <label>Valley</label>
+                </value>
+                <value>
+                    <fullName>Vertucci Fulfillment</fullName>
+                    <default>false</default>
+                    <label>Vertucci Fulfillment</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ExternalDataSourceId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ExternalId</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>External_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>External ID</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Family</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Fulfillment_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Fulfillment Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Image__c</fullName>
+        <externalId>false</externalId>
+        <formula>IMAGE(&quot;servlet/servlet.FileDownload?file=&quot;+Images__c, &quot;Product Image&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Images__c</fullName>
+        <description>Product Images</description>
+        <externalId>false</externalId>
+        <label>Images</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsActive</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>New_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( CONTAINS(TEXT(Type__c) , &quot;Formation&quot;) ,&quot;Formation&quot;,
+IF( TEXT(Type__c)=&quot;Informational only&quot;,&quot;Informational Only&quot;,
+IF(TEXT(Type__c)=&quot;Platinum&quot;,&quot;Platinum&quot;,
+IF(TEXT(Type__c)=&quot;Registered Agent Change&quot;, &quot;RA Change&quot;,
+IF(TEXT(Type__c)=&quot;Land Trust&quot;, &quot;Land Trust&quot;,
+IF(TEXT(Type__c)=&quot;Deed&quot;, &quot;Deed&quot;,
+IF(TEXT(Type__c)=&quot;Annual List&quot;, &quot;Annual List&quot;,
+IF(OR(TEXT(Type__c)=&quot;Dissolution&quot;, TEXT(Type__c)=&quot;Restatement&quot;), &quot;Dissolution&quot;,
+IF(OR(TEXT(Type__c)=&quot;DBA Filing&quot;,TEXT(Type__c)=&quot;Conversion&quot;, TEXT(Type__c)=&quot;Amendment&quot;) , &quot;Change Filings&quot;,
+IF(OR( TEXT(Type__c)=&quot;Foreign Filing&quot;, TEXT(Type__c)=&quot;Domestication&quot;), &quot;Foreign Filings&quot;,
+IF(OR(TEXT(Type__c)=&quot;Doc Drafting&quot;, TEXT(Type__c)=&quot;Redraft&quot;, TEXT(Type__c)=&quot;Original Draft&quot;), &quot;Document&quot;,
+IF(TEXT(Type__c) = &quot;Titanium Initial&quot;, &quot;Informational Only&quot;,IF(TEXT(Type__c)=&quot;Certified Copy&quot;,&quot;Certified Copy&quot;,IF(TEXT(Type__c)=&quot;IRS Form&quot;,&quot;IRS Form&quot;,
+IF(Text(Type__c)=&quot;Tax&quot;, &quot;Tax&quot;,
+IF(Text(Type__c)=&quot;Anderson Services&quot;, &quot;Anderson Services&quot;,
+If(Text(Type__c) = &quot;Bookkeeping&quot;, &quot;Bookkeeping&quot;,
+IF(Text(Type__c) = &quot;Bookkeeping - Misc&quot;, &quot;Bookkeeping - Misc&quot;,
+If(Text(Type__c) = &quot;Tax Review&quot;, &quot;Tax Review&quot;,
+If(Text(Type__c) = &quot;Bookkeeping Virtual&quot;, &quot;Bookkeeping Virtual&quot;,
+If(Text(Type__c) = &quot;Bookkeeping Tax Form&quot;, &quot;Bookkeeping Tax Form&quot;,
+If(Name = &quot;Strategy Session&quot;, &quot;Strategy Session&quot;,
+If(Name = &quot;Welcome Phase&quot;, &quot;WPB&quot;, 
+If(Name = &quot;Reinstatement Fulfillment&quot;, &quot;Reinstatement&quot;,
+If(Name = &quot;Bookkeeping Consult&quot;, &quot;BK Consult&quot;,
+If(Text(Type__c) = &quot;Pensions&quot;, &quot;Pensions&quot;,
+If(Text(Type__c) = &quot;Pension Termination&quot;, &quot;Pension Termination&quot;,
+If(Text(Type__c) = &quot;Charitable Registration&quot;, &quot;Charitable Registration&quot; , &quot;All&quot;
+
+
+)))) ))) ) ) ) ) ) ) ) ))))))))))))))</formula>
+        <label>New Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Non_Commissionable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for Affiliate Marketing Reports</description>
+        <externalId>false</externalId>
+        <label>Non-Commissionable</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Plan__c</fullName>
+        <externalId>false</externalId>
+        <label>Plan</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accounting &amp; Tax</fullName>
+                    <default>false</default>
+                    <label>Accounting &amp; Tax</label>
+                </value>
+                <value>
+                    <fullName>Entity Formation</fullName>
+                    <default>false</default>
+                    <label>Entity Formation</label>
+                </value>
+                <value>
+                    <fullName>Entity Maintenance</fullName>
+                    <default>false</default>
+                    <label>Entity Maintenance</label>
+                </value>
+                <value>
+                    <fullName>DIY - Entity Maintenance</fullName>
+                    <default>false</default>
+                    <label>DIY - Entity Maintenance</label>
+                </value>
+                <value>
+                    <fullName>DIY - Products</fullName>
+                    <default>false</default>
+                    <label>DIY - Products</label>
+                </value>
+                <value>
+                    <fullName>Upsell</fullName>
+                    <default>false</default>
+                    <label>Upsell</label>
+                </value>
+                <value>
+                    <fullName>Business Credit</fullName>
+                    <default>false</default>
+                    <label>Business Credit</label>
+                </value>
+                <value>
+                    <fullName>Giveaways</fullName>
+                    <default>false</default>
+                    <label>Giveaways</label>
+                </value>
+                <value>
+                    <fullName>Wholesale</fullName>
+                    <default>false</default>
+                    <label>Wholesale</label>
+                </value>
+                <value>
+                    <fullName>Misc. Fees</fullName>
+                    <default>false</default>
+                    <label>Misc. Fees</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Price_Percentage__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>1 = full price (no reduction)</inlineHelpText>
+        <label>Price %</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ProductCode</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>QB_Account__c</fullName>
+        <externalId>false</externalId>
+        <label>QB Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Fees Income:BOSS Sales:BOSS Fees Paid</fullName>
+                    <default>false</default>
+                    <label>Fees Income:BOSS Sales:BOSS Fees Paid</label>
+                </value>
+                <value>
+                    <fullName>Fees Income:BOSS Sales:BOSS New Sales</fullName>
+                    <default>false</default>
+                    <label>Fees Income:BOSS Sales:BOSS New Sales</label>
+                </value>
+                <value>
+                    <fullName>Fees Income:BOSS Sales:BOSS Renewal Sales</fullName>
+                    <default>false</default>
+                    <label>Fees Income:BOSS Sales:BOSS Renewal Sales</label>
+                </value>
+                <value>
+                    <fullName>Fees Income:BOSS Sales:RA Renewal Sales</fullName>
+                    <default>false</default>
+                    <label>Fees Income:BOSS Sales:RA Renewal Sales</label>
+                </value>
+                <value>
+                    <fullName>Fees Income:BOSS Sales:BOSS Tax Sales</fullName>
+                    <default>false</default>
+                    <label>Fees Income:BOSS Sales:BOSS Tax Sales</label>
+                </value>
+                <value>
+                    <fullName>3225 McLeod Office Income:Tax Prep</fullName>
+                    <default>false</default>
+                    <label>3225 McLeod Office Income:Tax Prep</label>
+                </value>
+                <value>
+                    <fullName>3225 McLeod Office Income:Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>3225 McLeod Office Income:Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>3225 McLeod Office Income:Tax Team</fullName>
+                    <default>false</default>
+                    <label>3225 McLeod Office Income:Tax Team</label>
+                </value>
+                <value>
+                    <fullName>3225 McLeod Office Income:Consulting</fullName>
+                    <default>false</default>
+                    <label>3225 McLeod Office Income:Consulting</label>
+                </value>
+                <value>
+                    <fullName>Anthem Office Income:Tax Prep</fullName>
+                    <default>false</default>
+                    <label>Anthem Office Income:Tax Prep</label>
+                </value>
+                <value>
+                    <fullName>Anthem Office Income:Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>Anthem Office Income:Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>Anthem Office Income:Consulting</fullName>
+                    <default>false</default>
+                    <label>Anthem Office Income:Consulting</label>
+                </value>
+                <value>
+                    <fullName>Chicago Office Income:Tax Prep</fullName>
+                    <default>false</default>
+                    <label>Chicago Office Income:Tax Prep</label>
+                </value>
+                <value>
+                    <fullName>Chicago Office Income:Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>Chicago Office Income:Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>Chicago Office Income:Consulting</fullName>
+                    <default>false</default>
+                    <label>Chicago Office Income:Consulting</label>
+                </value>
+                <value>
+                    <fullName>Eastern Office Income:Tax Prep</fullName>
+                    <default>false</default>
+                    <label>Eastern Office Income:Tax Prep</label>
+                </value>
+                <value>
+                    <fullName>Eastern Office Income:Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>Eastern Office Income:Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>Eastern Office Income:Consulting</fullName>
+                    <default>false</default>
+                    <label>Eastern Office Income:Consulting</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>QB_File__c</fullName>
+        <externalId>false</externalId>
+        <label>QB File</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Anderson</fullName>
+                    <default>false</default>
+                    <label>Anderson</label>
+                </value>
+                <value>
+                    <fullName>DG</fullName>
+                    <default>false</default>
+                    <label>DG</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>QB_LastModified__c</fullName>
+        <externalId>false</externalId>
+        <label>QB LastModified</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QB_Product_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>QB Product Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>QuantityUnitOfMeasure</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Renew_subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Renew subscription</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Products</relationshipLabel>
+        <relationshipName>Products</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box if this service item is to be renewed when &apos;closed won&apos;.</inlineHelpText>
+        <label>Renewal</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Service_Fulfillment_Weight__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Measurement of fulfillment difficulty</inlineHelpText>
+        <label>Service Fulfillment Weight</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>StockKeepingUnit</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Subscription_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Subscription Product</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Amendment</fullName>
+                    <default>false</default>
+                    <label>Amendment</label>
+                </value>
+                <value>
+                    <fullName>Anderson Services</fullName>
+                    <default>false</default>
+                    <label>Anderson Services</label>
+                </value>
+                <value>
+                    <fullName>Annual List</fullName>
+                    <default>false</default>
+                    <label>Annual List</label>
+                </value>
+                <value>
+                    <fullName>BK Consult</fullName>
+                    <default>false</default>
+                    <label>BK Consult</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping - Misc</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping - Misc</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping Tax Form</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping Tax Form</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping Virtual</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping Virtual</label>
+                </value>
+                <value>
+                    <fullName>Certified Copy</fullName>
+                    <default>false</default>
+                    <label>Certified Copy</label>
+                </value>
+                <value>
+                    <fullName>Charitable Registration</fullName>
+                    <default>false</default>
+                    <label>Charitable Registration</label>
+                </value>
+                <value>
+                    <fullName>Conversion</fullName>
+                    <default>false</default>
+                    <label>Conversion</label>
+                </value>
+                <value>
+                    <fullName>Corp Formation</fullName>
+                    <default>false</default>
+                    <label>Corp Formation</label>
+                </value>
+                <value>
+                    <fullName>DBA</fullName>
+                    <default>false</default>
+                    <label>DBA</label>
+                </value>
+                <value>
+                    <fullName>Deed</fullName>
+                    <default>false</default>
+                    <label>Deed</label>
+                </value>
+                <value>
+                    <fullName>Dissolution</fullName>
+                    <default>false</default>
+                    <label>Dissolution</label>
+                </value>
+                <value>
+                    <fullName>Doc Drafting</fullName>
+                    <default>false</default>
+                    <label>Doc Drafting</label>
+                </value>
+                <value>
+                    <fullName>Estate</fullName>
+                    <default>false</default>
+                    <label>Estate</label>
+                </value>
+                <value>
+                    <fullName>Event</fullName>
+                    <default>false</default>
+                    <label>Event</label>
+                </value>
+                <value>
+                    <fullName>Foreign Filing</fullName>
+                    <default>false</default>
+                    <label>Foreign Filing</label>
+                </value>
+                <value>
+                    <fullName>Form</fullName>
+                    <default>false</default>
+                    <label>Form</label>
+                </value>
+                <value>
+                    <fullName>Informational Only</fullName>
+                    <default>false</default>
+                    <label>Informational Only</label>
+                </value>
+                <value>
+                    <fullName>IRS Form</fullName>
+                    <default>false</default>
+                    <label>IRS Form</label>
+                </value>
+                <value>
+                    <fullName>Land Trust</fullName>
+                    <default>false</default>
+                    <label>Land Trust</label>
+                </value>
+                <value>
+                    <fullName>LAW</fullName>
+                    <default>false</default>
+                    <label>LAW</label>
+                </value>
+                <value>
+                    <fullName>LLC Formation</fullName>
+                    <default>false</default>
+                    <label>LLC Formation</label>
+                </value>
+                <value>
+                    <fullName>LP Formation</fullName>
+                    <default>false</default>
+                    <label>LP Formation</label>
+                </value>
+                <value>
+                    <fullName>Meeting Minutes</fullName>
+                    <default>false</default>
+                    <label>Meeting Minutes</label>
+                </value>
+                <value>
+                    <fullName>Non-Profit Formation</fullName>
+                    <default>false</default>
+                    <label>Non-Profit Formation</label>
+                </value>
+                <value>
+                    <fullName>OTHER</fullName>
+                    <default>false</default>
+                    <label>OTHER</label>
+                </value>
+                <value>
+                    <fullName>Pensions</fullName>
+                    <default>false</default>
+                    <label>Pensions</label>
+                </value>
+                <value>
+                    <fullName>Pension Termination</fullName>
+                    <default>false</default>
+                    <label>Pension Termination</label>
+                </value>
+                <value>
+                    <fullName>Platinum</fullName>
+                    <default>false</default>
+                    <label>Platinum</label>
+                </value>
+                <value>
+                    <fullName>PPT</fullName>
+                    <default>false</default>
+                    <label>PPT</label>
+                </value>
+                <value>
+                    <fullName>Product</fullName>
+                    <default>false</default>
+                    <label>Product</label>
+                </value>
+                <value>
+                    <fullName>Registered Agent Change</fullName>
+                    <default>false</default>
+                    <label>Registered Agent Change</label>
+                </value>
+                <value>
+                    <fullName>Reinstatement</fullName>
+                    <default>false</default>
+                    <label>Reinstatement</label>
+                </value>
+                <value>
+                    <fullName>Renewals</fullName>
+                    <default>false</default>
+                    <label>Renewals</label>
+                </value>
+                <value>
+                    <fullName>Series LLC Formation</fullName>
+                    <default>false</default>
+                    <label>Series LLC Formation</label>
+                </value>
+                <value>
+                    <fullName>Strategy Session</fullName>
+                    <default>false</default>
+                    <label>Strategy Session</label>
+                </value>
+                <value>
+                    <fullName>Tax</fullName>
+                    <default>false</default>
+                    <label>Tax</label>
+                </value>
+                <value>
+                    <fullName>TAX &amp; LAW</fullName>
+                    <default>false</default>
+                    <label>TAX &amp; LAW</label>
+                </value>
+                <value>
+                    <fullName>Tax Consulting</fullName>
+                    <default>false</default>
+                    <label>Tax Consulting</label>
+                </value>
+                <value>
+                    <fullName>Tax Review</fullName>
+                    <default>false</default>
+                    <label>Tax Review</label>
+                </value>
+                <value>
+                    <fullName>Titanium Initial</fullName>
+                    <default>false</default>
+                    <label>Titanium Initial</label>
+                </value>
+                <value>
+                    <fullName>WPB</fullName>
+                    <default>false</default>
+                    <label>WPB</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Unit_Cost__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit Cost</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Vendor__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor</label>
+        <length>41</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Weight__c</fullName>
+        <externalId>false</externalId>
+        <label>Weight</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Welcome_Call__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Welcome Call</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>box__FolderId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>FolderId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pymt__Category__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>PaymentConnect Category this product is associated with.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>PaymentConnect Category this product is associated with.</inlineHelpText>
+        <label>Category</label>
+        <referenceTo>pymt__Category__c</referenceTo>
+        <relationshipLabel>Products</relationshipLabel>
+        <relationshipName>Products</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>pymt__Image_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Attach an image file to this record using the image upload widget to populate this field with an attachment Id. If a value has been set for the Image URL field, this value will be ignored.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Attach an image file to this record using the image upload widget to populate this field with an attachment Id. If a value has been set for the Image URL field, this value will be ignored.</inlineHelpText>
+        <label>Image Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pymt__Image_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Add or edit an image attachment to this record to make an image available for display on the website, or override any image attachments by entering the URL of an image on another server here. Clear this field to use image attachments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Add or edit an image attachment to this record to make an image available for display on the website, or override any image attachments by entering the URL of an image on another server here. Clear this field to use image attachments.</inlineHelpText>
+        <label>Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>pymt__Image__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IMAGE(BLANKVALUE(pymt__Image_URL__c,IF(ISBLANK(pymt__Image_Id__c),&apos;/s.gif&apos;,&apos;/servlet/servlet.FileDownload?file=&apos;+pymt__Image_Id__c)), &apos;Image&apos; ,60 ,60)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pymt__Inventory__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Number of items in stock</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of items in stock</inlineHelpText>
+        <label>Inventory</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pymt__On_Payment_Completed__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>PaymentConnect Action to perform after this product has been paid for.</inlineHelpText>
+        <label>On Payment Completed</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>pymt__Tangible__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Check if the product is a physical product (ie requires shipping).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the product is a physical product (ie requires shipping).</inlineHelpText>
+        <label>Tangible</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>pymt__Taxable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Check if the item is taxable.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the item is taxable.</inlineHelpText>
+        <label>Taxable</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>pymt__Weight_Class__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Weight Class</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Grams</fullName>
+                    <default>false</default>
+                    <label>Grams</label>
+                </value>
+                <value>
+                    <fullName>Kilograms</fullName>
+                    <default>false</default>
+                    <label>Kilograms</label>
+                </value>
+                <value>
+                    <fullName>Pounds</fullName>
+                    <default>false</default>
+                    <label>Pounds</label>
+                </value>
+                <value>
+                    <fullName>Ounces</fullName>
+                    <default>false</default>
+                    <label>Ounces</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>pymt__Weight__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Weight</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>AllActiveProducts</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>Create_Tax_Project__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>ASID__c</columns>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>PRODUCT2.CREATED_DATE</columns>
+        <columns>Type__c</columns>
+        <columns>New_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Services</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Services</fullName>
+        <columns>PRODUCT2.ACTIVE</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>Subscription_Product__c</columns>
+        <columns>Create_Tax_Project__c</columns>
+        <columns>Service_Fulfillment_Weight__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>PRODUCT2.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Services</label>
+    </listViews>
+    <listViews>
+        <fullName>BOSS</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>BOSS</value>
+        </filters>
+        <label>BOSS</label>
+    </listViews>
+    <listViews>
+        <fullName>Bizcredit</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Business Credit</value>
+        </filters>
+        <label>Business Credit</label>
+    </listViews>
+    <listViews>
+        <fullName>Bookkeeping</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Bookkeeping</value>
+        </filters>
+        <label>Bookkeeping</label>
+    </listViews>
+    <listViews>
+        <fullName>Consulting</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Consulting</value>
+        </filters>
+        <label>Consulting</label>
+    </listViews>
+    <listViews>
+        <fullName>Deed_Prep</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Deed Preparation</value>
+        </filters>
+        <label>Deed Preparation</label>
+    </listViews>
+    <listViews>
+        <fullName>Document_Drafting</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Document Drafting</value>
+        </filters>
+        <label>Document Drafting</label>
+    </listViews>
+    <listViews>
+        <fullName>Fees</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Entity Filing Fees</value>
+        </filters>
+        <label>Entity Filing Fees</label>
+    </listViews>
+    <listViews>
+        <fullName>Formation</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Entity Formation</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Entity Formation</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Giveaways</fullName>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Giveaways</value>
+        </filters>
+        <label>Giveaways</label>
+    </listViews>
+    <listViews>
+        <fullName>Land_Trust_Items</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.ACTIVE</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>contains</operation>
+            <value>Land Trust</value>
+        </filters>
+        <label>Land Trust Items</label>
+    </listViews>
+    <listViews>
+        <fullName>Maint</fullName>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Entity Maintenance</value>
+        </filters>
+        <label>Entity Maintenance</label>
+    </listViews>
+    <listViews>
+        <fullName>Pension_Admin</fullName>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Pension Admin</value>
+        </filters>
+        <label>Pension Admin</label>
+    </listViews>
+    <listViews>
+        <fullName>RA</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Resident Agent</value>
+        </filters>
+        <label>Resident Agent</label>
+    </listViews>
+    <listViews>
+        <fullName>Valley</fullName>
+        <columns>Entity_Type__c</columns>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Valley</value>
+        </filters>
+        <label>Valley</label>
+    </listViews>
+    <listViews>
+        <fullName>tax</fullName>
+        <columns>PRODUCT2.FAMILY</columns>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>QB_Product_Code__c</columns>
+        <columns>PRODUCT2.ACTIVE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>Tax Preparation,Tax Consulting,Tax Packages</value>
+        </filters>
+        <label>Tax Prep</label>
+    </listViews>
+    <searchLayouts>
+        <customTabListAdditionalFields>PRODUCT2.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</customTabListAdditionalFields>
+        <customTabListAdditionalFields>PRODUCT2.DESCRIPTION</customTabListAdditionalFields>
+        <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Entity_Type__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.FAMILY</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Entity_Type__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.FAMILY</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Entity_Type__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.DESCRIPTION</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Entity_Type__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>AVSFQB__Update_Product_to_QBOE</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update Product to QBOE</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>var URL =&quot;{!$User.AVSFQB__QBOE_DBSync_Server__c}/qboe.m?sessionId={!$Api.Session_ID}&amp;sfUrl={!$Api.Partner_Server_URL_140}&amp;qboeCT={!$User.AVSFQB__QBOE_Connection_Ticket__c}&amp;pdl=processdefinition_SFQB_ItemService.xml&amp;recordId={!Product2.Id}&amp;dbsyncId={!$User.AVSFQB__DBSync_Id__c}&amp;profileName={!$User.AVSFQB__DBSync_Profile__c}&amp;dbsyncPasswd={!$User.AVSFQB__DBSync_Passwd__c}&quot;;
+window.open(URL,&quot;DBSync&quot;,&quot;menubar=0,resizable=0,width=650,height=300&quot;);</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,223 @@
+<apex:page id="printAddressPage" standardController="Account" extensions="PrintAddress2">
+
+    <apex:includeScript value="{!$Resource.DymoFramework}"/>
+    
+    <style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+    </style>
+
+    <div style="padding-bottom: 6px;">
+        <apex:outputLink value="{!URLFOR($Action.Account.View, $CurrentPage.parameters.id)}">
+            Back to {!Contact.First_Name__c} {!Contact.Last_Name__c} detail page
+        </apex:outputLink>
+    </div>
+    
+    <apex:pagemessages />
+
+    <apex:form >
+        
+        <apex:inputhidden id="PreviewImageSrc" value="{!paObject.imageSrc}"/>
+  
+        <apex:pageBlock id="EditorBlock" title="{!contactFullName}">
+            <div>
+                <b><apex:outputText id="selectedString" value="{!strSelected}" /></b><br /><br />
+                <apex:inputTextarea id="AddressEditor" value="{!formattedAddress}"  rows="6" cols="52"/>
+                <apex:commandButton value="Change Address" action="{!showPopup}" rerender="tstpopup" />
+            </div>
+            <div>
+                <apex:inputCheckbox id="BarcodeCheckbox" selected="{!printBarcode}"
+                    style="vertical-align:middle"/> Print Intelligent Mail Barcode
+            </div>
+        
+            <hr/>
+        
+            <apex:commandButton id="ButtonUpdate" value="Update"          
+                onclick="updatePreview('{!paObject.addressLabelXml}'); return false;"/>
+                
+            <apex:actionRegion >
+                <apex:commandButton value="Print Label"
+                    title="Prints label on selected DYMO LabelWriter printer"
+                    onclick="printAddress('{!paObject.addressLabelXml}'); createTask(); return false;" />
+                <apex:actionFunction name="createTask" action="{!createSentMailTask}" rerender="empty2" />
+                <apex:outputPanel id="empty2">
+                    <apex:pageMessages />
+                </apex:outputPanel>
+            </apex:actionRegion>
+        </apex:pageBlock>
+        
+        <apex:outputPanel id="empty">
+            <apex:pageMessages />
+        </apex:outputPanel>
+        
+        <apex:pageBlock id="PrintersBlock" title="Select Printer">
+            <apex:selectList id="Printers" size="1" />
+        </apex:pageBlock>
+
+        <script>
+            var PrintersCtrl = document.getElementById("{!$Component.PrintersBlock.Printers}");
+            var AddressEditor = document.getElementById("{!$Component.EditorBlock.AddressEditor}");
+            var BarcodeCheckbox = document.getElementById("{!$Component.EditorBlock.BarcodeCheckbox}");
+            var PreviewImageSrc = document.getElementById("{!$Component.PreviewImageSrc}");
+            var ButtonUpdate = document.getElementById("{!$Component.EditorBlock.ButtonUpdate}");
+            
+            function getAddress() {
+                return document.getElementById("{!$Component.EditorBlock.AddressEditor}").value;
+            }
+            
+            function setImage(tmp) {
+                document.getElementById("{!$Component.previewImage}").src = tmp;
+            }
+        </script>
+        
+       <apex:outputPanel id="tstpopup">
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                <br/><b>Choose an address:</b>
+                <apex:selectRadio layout="pageDirection" value="{!itemAddress}">
+                    <apex:selectOptions value="{!items}"/>
+                    <apex:actionsupport event="onchange" action="{!actionSave}" rerender="selectedString, AddressEditor" />
+                </apex:selectRadio>
+                <br/><br/>
+                <apex:commandButton oncomplete="updatePreview('{!paObject.addressLabelXml}');" value="Select" action="{!closePopup}"  rerender="tstpopup, PreviewPanel"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        
+        
+    </apex:form>
+    
+    
+    
+    <apex:outputPanel id="PreviewPanel">
+        <div>
+            <apex:image id="previewImage" url="{!paObject.imageSrc}"/>
+        </div>
+    
+            <!--
+            Name: {!paObject.Contact.First_Name__c} {!paObject.Contact.Last_Name__c}<br/>
+            Address: {!paObject.formattedAddress}<br/>
+            Print barcode: {!paObject.printBarcode}<br/>
+            -->
+ 
+    </apex:outputPanel>    
+ 
+    <script type="text/javascript">
+    
+        function enumPrinters()
+        {
+            var plist = new Array();
+            var printers = dymo.label.framework.getPrinters();
+            if (printers.length == 0)
+            {
+                alert("No DYMO printers are installed. Install DYMO printers.");
+            }
+            else
+            {
+                for (var i = 0; i < printers.length; i++)
+                {
+                    if (printers[i].printerType == "LabelWriterPrinter")
+                        plist[i] = printers[i].name;
+                }
+            }
+            return plist;
+        }
+        
+        function updatePreview(template)
+        {
+            try
+            {
+                var address2 = getAddress();
+                var label = dymo.label.framework.openLabelXml(template);
+                
+                label.setAddressText(0, address2);
+                
+                // barcode - show it or not
+                if (!BarcodeCheckbox.checked)
+                    label.setAddressBarcodePosition(0, dymo.label.framework.AddressBarcodePosition.Suppress);
+
+                var pngData = label.render();
+                setImage("data:image/png;base64," + pngData);
+            }
+            catch(e)
+            {
+                alert(e.message);
+            }
+        }
+        
+        function printAddress(template)
+        {
+            try
+            {
+                
+                var address = getAddress();
+                var printer = PrintersCtrl.value;
+                
+                //
+                //alert("printing: " + address + "\r\non:" + template + "\r\nPrinter: " + printer);
+                //
+                console.log("printing: " + address + "\r\non:" + template + "\r\nPrinter: " + printer);
+
+                var label = dymo.label.framework.openLabelXml(template);
+                 
+                label.setAddressText(0, address);
+                
+                // barcode - print it or not
+                if (!BarcodeCheckbox.checked)
+                    label.setAddressBarcodePosition(0, dymo.label.framework.AddressBarcodePosition.Suppress);        
+
+                label.print(printer);
+            }
+            catch(e)
+            {
+                alert(e.message);
+            }
+        }
+     
+        window.onload = new function()
+        {
+            var plist = enumPrinters();
+            
+            if (plist.length > 0)
+            {
+                // populate combo-box control with a list of printers
+
+                for (var i = 0; i < plist.length; i++)
+                {
+                    var option = document.createElement("OPTION");
+                    option.text = plist[i];
+                    option.value = plist[i];
+                    PrintersCtrl.options.add(option);
+                }
+            }
+            
+            ButtonUpdate.click();
+        }
+
+    </script>
+    
+</apex:page>

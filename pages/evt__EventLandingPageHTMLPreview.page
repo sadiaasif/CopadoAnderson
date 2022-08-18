@@ -1,0 +1,31 @@
+<apex:page standardController="evt__Special_Event__c"  sidebar="false" showHeader="false" standardStyleSheets="false">
+<style>
+body {
+    /* font-family: arial; */
+}
+.editLink {
+    font-family: arial; 
+    font-size:12px;
+    text-decoration:none;
+    color:rgb(0,112,210);
+}
+.editLinkBox {
+    margin-top:4px;
+    border:1px solid #e0e0e0;
+    border-radius:5px;
+    background:white;
+    padding:10px;
+   }
+.editLinkBox:hover {
+	background: #f6f6f6;
+	}
+</style>
+<apex:form >
+<div style="padding-top:12px;">
+<apex:outputLink styleClass="editLink" value="{!URLFOR($Page.evt__EventLandingPageHTMLEditor)}?id={!evt__Special_Event__c.Id}" target="_top">
+<span class="editLinkBox">Open in Editor</span>
+</apex:outputLink>
+</div>
+<apex:outputText value="{!evt__Special_Event__c.evt__Landing_Page_HTML__c}" escape="false"/>
+</apex:form>
+</apex:page>

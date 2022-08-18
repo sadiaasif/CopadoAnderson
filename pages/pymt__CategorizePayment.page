@@ -1,0 +1,171 @@
+<apex:page docType="html-5.0" standardController="pymt__PaymentX__c" extensions="pymt.CategorizePaymentController" tabStyle="pymt__PaymentX__c">
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Categorize Payment" help="{!$Page.pymt__Help}"/>
+<style>
+
+.splitsTable td {
+  padding:4px;
+}
+.splitsTable th {
+  padding:4px;
+  text-align:center;
+  background-color:#0099cc;
+  color:white;
+}
+.splitsTable {
+  width:100%;
+  max-width:400px;
+ border-collapse:collapsed;
+  border:1px solid #DBDBDB;
+}
+.suggestedSplitsTable {
+  width:100%;
+  /* background-color:white; */
+  
+}
+.currency_col {
+	text-align:right;
+}
+.min_col {
+    width:1%;
+    white-space:nowrap;
+}
+.leftAlign {
+   text-align:left;
+}
+.rightAlign {
+   text-align:right;
+}
+.centerAlign {
+   text-align:center;
+}
+
+</style>
+<apex:form id="mainform">
+<apex:pageMessages id="messages"/>
+
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Cancel" action="{!returnToPayment}"/>
+<apex:commandButton value="Save" action="{!saveSplits}"/> 
+</apex:pageBlockButtons>
+
+<table style="min-width:800px;max-width:1000px;">
+<tr>
+<td style="padding-right:20px;">
+<!--  left column -->
+<div style="font-size:14px;font-weight:bold;">Payment: {!payment.Name}</div>
+<table>
+<apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(payment.pymt__Discount__c)),NOT(payment.pymt__Discount__c == 0))}">
+<tr><td>Discount:</td>
+<td class="currency_col">(<apex:outputText value="{!payment.pymt__Discount__c}"/>)</td>
+</tr>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(payment.pymt__Tax__c)),NOT(payment.pymt__Tax__c == 0))}">
+<tr><td>Tax:</td>
+<td class="currency_col"><apex:outputText value="{!payment.pymt__Tax__c}"/></td>
+</tr>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(payment.pymt__Shipping__c)),NOT(payment.pymt__Shipping__c == 0))}">
+<tr><td>Shipping:</td>
+<td class="currency_col"><apex:outputText value="{!payment.pymt__Shipping__c}"/></td>
+</tr>
+</apex:outputPanel>
+<tr><td>Total Payment Amount:</td>
+<td class="currency_col"><apex:outputField value="{!payment.pymt__Amount__c}"/></td>
+</tr>
+</table>
+<div style="width:100%;max-width:400px;text-align:right;">
+<apex:selectRadio style="display:inline-block;vertical-align:middle;" layout="lineDirection" value="{!selectedView}">
+<apex:selectOption itemValue="amount" itemLabel="Amount"/>
+<apex:selectOption itemValue="percent" itemLabel="Percent"/>
+<apex:actionSupport event="onchange" action="{!nullAction}" /> 
+</apex:selectRadio>
+</div>
+<apex:dataTable styleClass="splitsTable" value="{!paymentSplit}" var="pSplitItem" >
+<apex:column headerValue="Category" headerClass="leftAlign">
+<apex:selectList size="1" multiselect="false" value="{!pSplitItem.categoryId}"><apex:selectOptions value="{!categoryOptions}"/>
+</apex:selectList>
+</apex:column>
+<apex:column styleClass="min_col" headerValue="Amount">
+   <apex:outputPanel rendered="{!selectedView == 'amount'}">
+        <apex:input type="number" style="width:50px;text-align:right;" html-step=".01" value="{!pSplitItem.amount}" >
+        <apex:actionSupport event="onchange" action="{!nullAction}" /> 
+        </apex:input>&nbsp;{!currencyISOCode}
+   </apex:outputPanel>
+   <apex:outputPanel rendered="{!NOT(selectedView == 'amount')}">
+        <apex:outputText value="{!pSplitItem.amount} {!currencyISOCode}" /> 
+   </apex:outputPanel>
+   
+</apex:column>
+<apex:column styleClass="min_col" headerValue="Percent">
+   <apex:outputPanel rendered="{!selectedView == 'percent'}">
+        <apex:input type="number" html-step="any" style="width:50px;text-align:right;" value="{!pSplitItem.percent}">
+        <apex:actionSupport event="onchange" action="{!nullAction}" />
+        </apex:input>&nbsp;% 
+   </apex:outputPanel>
+   <apex:outputPanel rendered="{!NOT(selectedView == 'percent')}" style="vertical-align:text-bottom;">
+        <apex:outputText value="{!pSplitItem.percent}%" /> 
+   </apex:outputPanel>
+   
+</apex:column>
+
+</apex:dataTable>
+<br/>
+<div class="cat_action_bar">
+<apex:commandButton value="Clear Splits" action="{!clearPaymentSplit}"/>&nbsp;
+<apex:commandButton value="Reset" action="{!resetPaymentSplit}"/>
+&nbsp;&nbsp;&nbsp;
+<apex:outputPanel layout="none" rendered="{!hasSplitNameOptions}">
+<apex:selectList size="1" multiselect="false" value="{!selectedSplitName}"><apex:selectOptions value="{!splitNameOptions}"/></apex:selectList>&nbsp;
+<apex:commandButton value="Apply" action="{!applySplitName}"/>  
+</apex:outputPanel>
+</div>
+
+</td>
+
+<td>
+<!--  right column -->
+<apex:outputPanel rendered="{!OR(hasCartItems, hasOppLines)}">
+<fieldset style="border:1px solid #DBDBDB;padding:10px;background-color:transparent;border-radius:10px;">
+<legend>Suggested Splits</legend>
+
+<div >
+<apex:outputPanel rendered="{!hasCartItems}">
+By Shopping Cart Item:<br/><br/>
+<apex:dataTable styleClass="suggestedSplitsTable" value="{!cartSplit}" var="cSplitItem">
+<apex:column value="{!cSplitItem.name}"/>
+<apex:column >
+<apex:selectList size="1" multiselect="false" value="{!cSplitItem.categoryId}"><apex:selectOptions value="{!categoryOptions}"/></apex:selectList>
+</apex:column>
+<apex:column styleClass="currency_col" value="{!cSplitItem.amount} USD"/> 
+</apex:dataTable>
+<div style="width:100%;text-align:right;">
+<apex:commandButton action="{!useCartSplit}"  value="Use This Split"/>
+</div>
+<br/><br/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasOppLines}">
+By Opportunity Line Item:<br/><br/>
+<apex:dataTable styleClass="suggestedSplitsTable" value="{!oppSplit}" var="oSplitItem">
+<apex:column value="{!oSplitItem.name}"/>
+<apex:column >
+<apex:selectList size="1" multiselect="false" value="{!oSplitItem.categoryId}"><apex:selectOptions value="{!categoryOptions}"/></apex:selectList>
+</apex:column>
+<apex:column styleClass="currency_col" value="{!oSplitItem.amount} USD"/>
+</apex:dataTable>
+<div style="width:100%;text-align:right;">
+<apex:commandButton action="{!useOppSplit}" value="Use This Split"/>
+</div>
+</apex:outputPanel>
+</div>
+</fieldset>
+</apex:outputPanel>
+</td>
+</tr>
+
+</table>
+</apex:pageBlock>
+</apex:form>
+
+</apex:page>

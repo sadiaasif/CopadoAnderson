@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <block>
+        <blockInfo>
+            <blockId>B0</blockId>
+            <joinTable>u2</joinTable>
+        </blockInfo>
+        <columns>
+            <field>STATUS</field>
+        </columns>
+        <columns>
+            <field>Lead.Original_Campaign_Source__c</field>
+        </columns>
+        <columns>
+            <aggregateTypes>Sum</aggregateTypes>
+            <field>Lead.Lead_Distribution_Number__c</field>
+        </columns>
+        <filter>
+            <booleanFilter>((1 AND 5) OR (2 AND 6)) AND (4 AND 7) AND 3</booleanFilter>
+            <criteriaItems>
+                <column>Lead.MQL_Date__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>greaterOrEqual</operator>
+                <value>2/1/2022</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Lead.SQL_Date__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>greaterOrEqual</operator>
+                <value>2/1/2022 12:00 AM</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Lead.Original_Campaign_Source__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>notContain</operator>
+                <value>Tax Wise Workshop 12.06.2021 - Buyers,trading,un-tax,legacy,ARS WA,ARS Webinar,common,calendly,cashflow,infinity,tuesday,client,tax-wise,alpine,cost seg,boots,opz,09.01.2020,list 2,steward,crypto,expert</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>CREATED_DATE</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>greaterOrEqual</operator>
+                <value>2/1/2022 12:00 AM</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Lead.MQL_Date__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>lessOrEqual</operator>
+                <value>2/28/2022</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Lead.SQL_Date__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>lessOrEqual</operator>
+                <value>2/28/2022 11:59 PM</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>CREATED_DATE</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>lessOrEqual</operator>
+                <value>2/28/2022 12:00 AM</value>
+            </criteriaItems>
+        </filter>
+        <format>Tabular</format>
+        <name>Total Leads for the Month and statuses</name>
+        <params>
+            <name>co</name>
+            <value>1</value>
+        </params>
+        <reportType>LeadList</reportType>
+        <scope>org</scope>
+        <showGrandTotal>true</showGrandTotal>
+        <showSubTotals>true</showSubTotals>
+        <sortColumn>STATUS</sortColumn>
+        <sortOrder>Asc</sortOrder>
+        <timeFrameFilter>
+            <dateColumn>Lead.Due_Date__c</dateColumn>
+            <interval>INTERVAL_CUSTOM</interval>
+        </timeFrameFilter>
+    </block>
+    <block>
+        <blockInfo>
+            <blockId>B1</blockId>
+            <joinTable>u</joinTable>
+        </blockInfo>
+        <columns>
+            <field>Opportunity.Lead_Status__c</field>
+        </columns>
+        <columns>
+            <field>Opportunity.Sale_Campaign__c</field>
+        </columns>
+        <columns>
+            <aggregateTypes>Sum</aggregateTypes>
+            <field>Opportunity.ES_Assignment_Number__c</field>
+        </columns>
+        <filter>
+            <criteriaItems>
+                <column>OPPORTUNITY_NAME</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>contains</operator>
+                <value>- oo,-oo,- ff,consult</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>ACCOUNT_NAME</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>notContain</operator>
+                <value>Advisors,Anderson,executive</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Opportunity.ES_Assignment_Number__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>notEqual</operator>
+                <value>0</value>
+            </criteriaItems>
+        </filter>
+        <format>Tabular</format>
+        <name>Total OOs for the Month and statuses</name>
+        <params>
+            <name>open</name>
+            <value>all</value>
+        </params>
+        <params>
+            <name>probability</name>
+            <value>&gt;0</value>
+        </params>
+        <params>
+            <name>co</name>
+            <value>1</value>
+        </params>
+        <reportType>Opportunity@Opportunity.Sales_Rep__c</reportType>
+        <scope>organization</scope>
+        <showGrandTotal>true</showGrandTotal>
+        <showSubTotals>true</showSubTotals>
+        <sortColumn>Opportunity.Lead_Status__c</sortColumn>
+        <sortOrder>Asc</sortOrder>
+        <timeFrameFilter>
+            <dateColumn>CREATED_DATE</dateColumn>
+            <endDate>2022-02-28</endDate>
+            <interval>INTERVAL_CUSTOM</interval>
+            <startDate>2022-02-01</startDate>
+        </timeFrameFilter>
+    </block>
+    <blockInfo>
+        <blockId xsi:nil="true"/>
+        <joinTable>u2</joinTable>
+    </blockInfo>
+    <description>All leads and OOs that were available to work during the Month and their statuses</description>
+    <format>MultiBlock</format>
+    <name>Total Leads for the Month and statuses</name>
+    <params>
+        <name>lsk</name>
+        <value>1</value>
+    </params>
+    <reportType>LeadList</reportType>
+    <showDetails>true</showDetails>
+</Report>

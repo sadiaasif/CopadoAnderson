@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Tariff codes are defined by customs authorities and used to classify products. Customs uses tariff codes to determine what duties will be payable on products. The standard harmonized tariff code is a six-digit code, though some contain more digits. --></help>
+        <label><!-- Tariff Code --></label>
+        <name>zkups__CommodityCode__c</name>
+    </fields>
+    <fields>
+        <help><!-- 2 digit country code --></help>
+        <label><!-- Country Of Manufacture --></label>
+        <name>zkups__CountryOfManufacture__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deactivated --></label>
+        <name>zkups__Deactivated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>zkups__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Export Type --></label>
+        <name>zkups__ExportType__c</name>
+        <picklistValues>
+            <masterLabel>Domestic</masterLabel>
+            <translation><!-- Domestic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Foreign</masterLabel>
+            <translation><!-- Foreign --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Foreign Military</masterLabel>
+            <translation><!-- Foreign Military --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If true, &quot;JNT&quot; will be used as the country of origin code on the NAFTA form. --></help>
+        <label><!-- Joint Production --></label>
+        <name>zkups__JointProduction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number Of Packages Per Commodity --></label>
+        <name>zkups__NumberOfPieces__c</name>
+    </fields>
+    <fields>
+        <label><!-- Part Number --></label>
+        <name>zkups__PartNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preference Criteria --></label>
+        <name>zkups__PreferenceCriteria__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>D</masterLabel>
+            <translation><!-- D --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E</masterLabel>
+            <translation><!-- E --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>F</masterLabel>
+            <translation><!-- F --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Producer Info --></label>
+        <name>zkups__ProducerInfo__c</name>
+        <picklistValues>
+            <masterLabel>A signed Certificate provided to the exporter by the producer</masterLabel>
+            <translation><!-- A signed Certificate provided to the exporter by the producer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Knowledge of whether the good qualifies as an originating good</masterLabel>
+            <translation><!-- Knowledge of whether the good qualifies as an originating good --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reliance on the producers written representation</masterLabel>
+            <translation><!-- Reliance on the producers written representation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>The shipper is the producer of the good</masterLabel>
+            <translation><!-- The shipper is the producer of the good --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- 10 characters long and specific to North America. This is required for the SED form. The first 6 characters will be the harmonized code. --></help>
+        <label><!-- Schedule B Number --></label>
+        <name>zkups__ScheduleBNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule B Unit Of Measurement --></label>
+        <name>zkups__ScheduleBUnitOfMeasurementCode__c</name>
+        <picklistValues>
+            <masterLabel>Barrels</masterLabel>
+            <translation><!-- Barrels --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carat</masterLabel>
+            <translation><!-- Carat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clean Yield Kilogram</masterLabel>
+            <translation><!-- Clean Yield Kilogram --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Content Kilogram</masterLabel>
+            <translation><!-- Content Kilogram --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Content Ton</masterLabel>
+            <translation><!-- Content Ton --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cubic Meters</masterLabel>
+            <translation><!-- Cubic Meters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Curie</masterLabel>
+            <translation><!-- Curie --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dozen</masterLabel>
+            <translation><!-- Dozen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dozen Pairs</masterLabel>
+            <translation><!-- Dozen Pairs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dozen Pieces</masterLabel>
+            <translation><!-- Dozen Pieces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fiber Meter</masterLabel>
+            <translation><!-- Fiber Meter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gram</masterLabel>
+            <translation><!-- Gram --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gross</masterLabel>
+            <translation><!-- Gross --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gross Containers</masterLabel>
+            <translation><!-- Gross Containers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hundred</masterLabel>
+            <translation><!-- Hundred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kilogram</masterLabel>
+            <translation><!-- Kilogram --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kilogram Total Sugars</masterLabel>
+            <translation><!-- Kilogram Total Sugars --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liter</masterLabel>
+            <translation><!-- Liter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Meter</masterLabel>
+            <translation><!-- Meter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Millicurie</masterLabel>
+            <translation><!-- Millicurie --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Quantity required</masterLabel>
+            <translation><!-- No Quantity required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pack</masterLabel>
+            <translation><!-- Pack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pairs</masterLabel>
+            <translation><!-- Pairs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pieces</masterLabel>
+            <translation><!-- Pieces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proof Liter</masterLabel>
+            <translation><!-- Proof Liter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Running Bales</masterLabel>
+            <translation><!-- Running Bales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Square</masterLabel>
+            <translation><!-- Square --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Square Centimeters</masterLabel>
+            <translation><!-- Square Centimeters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Square Meters</masterLabel>
+            <translation><!-- Square Meters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thousand Cubic Meters</masterLabel>
+            <translation><!-- Thousand Cubic Meters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thousands</masterLabel>
+            <translation><!-- Thousands --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ton</masterLabel>
+            <translation><!-- Ton --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If an appropriate unit of measurement is not offered in the Unit of Measurement drop-down menu, Select &quot;Other&quot; for you Unit of Measurement and specify the suitable measurement in this field. --></help>
+        <label><!-- Other Unit Of Measurement --></label>
+        <name>zkups__UnitOfMeasurementOther__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unit Of Measurement --></label>
+        <name>zkups__UnitOfMeasurement__c</name>
+        <picklistValues>
+            <masterLabel>Bag</masterLabel>
+            <translation><!-- Bag --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Barrel</masterLabel>
+            <translation><!-- Barrel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bolt</masterLabel>
+            <translation><!-- Bolt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Box</masterLabel>
+            <translation><!-- Box --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bunch</masterLabel>
+            <translation><!-- Bunch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bundle</masterLabel>
+            <translation><!-- Bundle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Butt</masterLabel>
+            <translation><!-- Butt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canister</masterLabel>
+            <translation><!-- Canister --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carton</masterLabel>
+            <translation><!-- Carton --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case</masterLabel>
+            <translation><!-- Case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Centimeter</masterLabel>
+            <translation><!-- Centimeter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Container</masterLabel>
+            <translation><!-- Container --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crate</masterLabel>
+            <translation><!-- Crate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cylinder</masterLabel>
+            <translation><!-- Cylinder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dozen</masterLabel>
+            <translation><!-- Dozen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Each</masterLabel>
+            <translation><!-- Each --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Envelope</masterLabel>
+            <translation><!-- Envelope --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Feet</masterLabel>
+            <translation><!-- Feet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kilogram</masterLabel>
+            <translation><!-- Kilogram --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kilograms</masterLabel>
+            <translation><!-- Kilograms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liter</masterLabel>
+            <translation><!-- Liter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Meter</masterLabel>
+            <translation><!-- Meter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Package</masterLabel>
+            <translation><!-- Package --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Packet</masterLabel>
+            <translation><!-- Packet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pair</masterLabel>
+            <translation><!-- Pair --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pairs</masterLabel>
+            <translation><!-- Pairs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pallet</masterLabel>
+            <translation><!-- Pallet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Piece</masterLabel>
+            <translation><!-- Piece --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pieces</masterLabel>
+            <translation><!-- Pieces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pound</masterLabel>
+            <translation><!-- Pound --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pounds</masterLabel>
+            <translation><!-- Pounds --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proof Liters</masterLabel>
+            <translation><!-- Proof Liters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roll</masterLabel>
+            <translation><!-- Roll --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Set</masterLabel>
+            <translation><!-- Set --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Square Meters</masterLabel>
+            <translation><!-- Square Meters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Square Yards</masterLabel>
+            <translation><!-- Square Yards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tube</masterLabel>
+            <translation><!-- Tube --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yard</masterLabel>
+            <translation><!-- Yard --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Unit Value of the Commodity.
+
+For Commercial Invoices, please specify the Unit of Measurement
+
+For SED Forms, please specify the Schedule B Unit of Measurement --></help>
+        <label><!-- Price Per Unit --></label>
+        <name>zkups__UnitValue__c</name>
+    </fields>
+    <fields>
+        <help><!-- The unique Vehicle Identification Number (VIN) in the proper format. Or The Product Identification Number (PIN) for those used self propelled vehicles for which there are no VINs. Or no Vehicle Title Number. --></help>
+        <label><!-- Vehicle ID --></label>
+        <name>zkups__VehicleId__c</name>
+    </fields>
+    <fields>
+        <help><!-- Applies to Certificate of Origin and SED forms only. --></help>
+        <label><!-- Weight Units --></label>
+        <name>zkups__WeightUnits__c</name>
+        <picklistValues>
+            <masterLabel>KGS</masterLabel>
+            <translation><!-- KGS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LBS</masterLabel>
+            <translation><!-- LBS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Applies to Certificate of Origin and SED forms only. --></help>
+        <label><!-- Weight --></label>
+        <name>zkups__Weight__c</name>
+    </fields>
+    <webLinks>
+        <label><!-- Deactivate --></label>
+        <name>zkups__Deactivate</name>
+    </webLinks>
+</CustomObjectTranslation>

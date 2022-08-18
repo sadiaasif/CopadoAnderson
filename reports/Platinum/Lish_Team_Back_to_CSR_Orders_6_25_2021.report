@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_CUSTOMER_PROD_ID</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Back to CSR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Assigned_CSR__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Caitlynn Glass,Ethan Hechanova,Gabby Esteban,Jennifer Rogers,Jhunelyn Talaid,Monica Vivanco,Shani McCardell,Alyssa Hoopii,Lisa Starner-Sturz,Phoebe Keliikupakako,Veanna Ganaishlal,Christian DeField,Bekah Willard,Ryann Brown,Lori Taylor,N&apos;kia Gray,Jade Comer,Stephanie Sanchez,Ramona Preston-Tolbert</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Caitlynn Glass,Ethan Hechanova,Gabby Esteban,Jennifer Rogers,Jhunelyn Talaid,Monica Vivanco,Shani McCardell,Alyssa Hoopii,Lisa Starner-Sturz,Phoebe Keliikupakako,Veanna Ganaishlal,Christian DeField,Bekah Willard,Ryann Brown,Lori Taylor,N&apos;kia Gray,Jade Comer,Rebecca Seguin,Stephanie Sanchez,Ramona Preston-Tolbert</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OrderItem.Active_User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Assigned_CSR__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Lish Team Back to CSR Orders 6.25.2021</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ORDER_EFFECTIVE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

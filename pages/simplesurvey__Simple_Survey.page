@@ -1,0 +1,13 @@
+<apex:page controller="simplesurvey.SimpleSurveyCombinedController" showHeader="false" cache="false" standardStylesheets="true" applyBodyTag="false" language="{!IF(ISBLANK($CurrentPage.parameters.lang), 'en-US', $CurrentPage.parameters.lang)}" docType="html-5.0">
+    <html>
+        <!-- Eclipse -->
+        <apex:outputPanel layout="block" rendered="{!surveyType == 'Eclipse'}">
+            <c:SimpleSurveyEclipse />
+        </apex:outputPanel>
+
+        <!-- Classic -->
+        <apex:outputPanel layout="block" rendered="{!surveyType == 'Classic'}">
+            <c:SimpleSurveyClassic />
+        </apex:outputPanel>
+    </html>
+</apex:page>

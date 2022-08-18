@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision9</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>AZ, GA</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision9</name>
+        <label>myDecision9</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_10</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_10</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_10_A1</targetReference>
+            </connector>
+            <label>PA, NE</label>
+        </rules>
+    </decisions>
+    <description>Creates task for case owner, in case, to follow up on resolution letter for Delaware.</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>TODAY() + 60</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_11_myRule_10_A1_5845585560</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 60</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(NOT(ISBLANK([Entities__c].Primary_Client__c)), TEXT([Entities__c].Primary_Client__c.Assigned_CAM__c), null)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_12_myRule_10_A1_9788964731</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.Primary_Client__c})), TEXT({!myVariable_current.Primary_Client__r.Assigned_CAM__c}), null)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(NOT(ISBLANK([Entities__c].Primary_Client__c)), TEXT([Entities__c].Primary_Client__c.Assigned_CSR__c) , null)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_13_myRule_10_A1_1058566365</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.Primary_Client__c})), TEXT({!myVariable_current.Primary_Client__r.Assigned_CSR__c}) , null)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue> IF(
+            ISPICKVAL([Entities__c].Organization_State__c, &quot;Pennsylvania&quot;),
+            &quot;Single publication in 2 newspapers (1 legal journal, 1 general circulation) in county of Known Place of Business.&quot;,
+
+            IF(
+                ISPICKVAL([Entities__c].Organization_State__c, &quot;Nebraska&quot;),
+                &quot;3 consecutive publications in RA County.&quot;,
+
+                NULL))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_14_myRule_10_A1_4970958190</name>
+        <dataType>String</dataType>
+        <expression> IF(
+            ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Pennsylvania&quot;),
+            &quot;Single publication in 2 newspapers (1 legal journal, 1 general circulation) in county of Known Place of Business.&quot;,
+
+            IF(
+                ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Nebraska&quot;),
+                &quot;3 consecutive publications in RA County.&quot;,
+
+                NULL))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(ISBLANK([Entities__c].Incorporator__c)&amp;&amp;NOT(ISBLANK([Entities__c].Organizer__c)), 
+
+[Entities__c].Organizer__c.FirstName + &quot; &quot; +  if( CONTAINS( [Entities__c].Organizer__c.LastName, &quot; (LEX)&quot;),SUBSTITUTE([Entities__c].Organizer__c.LastName, &quot; (LEX)&quot;, &quot;&quot;),[Entities__c].Organizer__c.LastName),
+
+IF(ISBLANK([Entities__c].Organizer__c)&amp;&amp;NOT(ISBLANK([Entities__c].Incorporator__c)),
+
+[Entities__c].Incorporator__c.FirstName + &quot; &quot; +if( CONTAINS( [Entities__c].Incorporator__c.LastName, &quot; (LEX)&quot;),SUBSTITUTE([Entities__c].Incorporator__c.LastName, &quot; (LEX)&quot;, &quot;&quot;),[Entities__c].Incorporator__c.LastName) ,
+
+null))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_15_myRule_10_A1_6838742185</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!myVariable_current.Incorporator__c})&amp;&amp;NOT(ISBLANK({!myVariable_current.Organizer__c})), 
+
+{!myVariable_current.Organizer__r.FirstName} + &quot; &quot; +  if( CONTAINS( {!myVariable_current.Organizer__r.LastName}, &quot; (LEX)&quot;),SUBSTITUTE({!myVariable_current.Organizer__r.LastName}, &quot; (LEX)&quot;, &quot;&quot;),{!myVariable_current.Organizer__r.LastName}),
+
+IF(ISBLANK({!myVariable_current.Organizer__c})&amp;&amp;NOT(ISBLANK({!myVariable_current.Incorporator__c})),
+
+{!myVariable_current.Incorporator__r.FirstName} + &quot; &quot; +if( CONTAINS( {!myVariable_current.Incorporator__r.LastName}, &quot; (LEX)&quot;),SUBSTITUTE({!myVariable_current.Incorporator__r.LastName}, &quot; (LEX)&quot;, &quot;&quot;),{!myVariable_current.Incorporator__r.LastName}) ,
+
+null))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(NOT(ISBLANK([Entities__c].Processor__c)),
+[Entities__c].Processor__c.FirstName + &quot; &quot; + if( CONTAINS( [Entities__c].Processor__c.LastName , &quot; (LEX)&quot;),SUBSTITUTE([Entities__c].Processor__c.LastName, &quot; (LEX)&quot;, &quot;&quot;),[Entities__c].Processor__c.LastName)  ,
+NULL)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_16_myRule_10_A1_3122320339</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.Processor__c})),
+{!myVariable_current.Processor__r.FirstName} + &quot; &quot; + if( CONTAINS( {!myVariable_current.Processor__r.LastName} , &quot; (LEX)&quot;),SUBSTITUTE({!myVariable_current.Processor__r.LastName}, &quot; (LEX)&quot;, &quot;&quot;),{!myVariable_current.Processor__r.LastName})  ,
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>TODAY() + 60</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_A1_7467073172</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 60</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(NOT(ISBLANK([Entities__c].Primary_Client__c)), TEXT([Entities__c].Primary_Client__c.Assigned_CAM__c), null)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_3_myRule_1_A1_6732187860</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.Primary_Client__c})), TEXT({!myVariable_current.Primary_Client__r.Assigned_CAM__c}), null)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(NOT(ISBLANK([Entities__c].Primary_Client__c)), TEXT([Entities__c].Primary_Client__r.Assigned_CSR__c) , null)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_4_myRule_1_A1_9376150696</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.Primary_Client__c})), TEXT({!myVariable_current.Primary_Client__r.Assigned_CSR__c}) , null)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(
+ISPICKVAL([Entities__c].Organization_State__c, &quot;Arizona&quot;),
+&quot;3 Consecutive Publications in county of Known Place of Business&quot;,
+
+IF(
+ISPICKVAL([Entities__c].Organization_State__c, &quot;Georgia&quot;),
+&quot;2 consecutive publications in a newspaper in RA County.&quot;,
+
+
+NULL))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_5_myRule_1_A1_7627886625</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Arizona&quot;),
+&quot;3 Consecutive Publications in county of Known Place of Business&quot;,
+
+IF(
+ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Georgia&quot;),
+&quot;2 consecutive publications in a newspaper in RA County.&quot;,
+
+
+NULL))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(ISBLANK([Entities__c].Incorporator__c)&amp;&amp;NOT(ISBLANK([Entities__c].Organizer__c)), 
+
+[Entities__c].Organizer__c.FirstName + &quot; &quot; +  if( CONTAINS( [Entities__c].Organizer__c.LastName, &quot; (LEX)&quot;),SUBSTITUTE([Entities__c].Organizer__c.LastName, &quot; (LEX)&quot;, &quot;&quot;),[Entities__c].Organizer__c.LastName),
+
+IF(ISBLANK([Entities__c].Organizer__c)&amp;&amp;NOT(ISBLANK([Entities__c].Incorporator__c)),
+
+[Entities__c].Incorporator__c.FirstName + &quot; &quot; +if( CONTAINS( [Entities__c].Incorporator__c.LastName, &quot; (LEX)&quot;),SUBSTITUTE([Entities__c].Incorporator__c.LastName, &quot; (LEX)&quot;, &quot;&quot;),[Entities__c].Incorporator__c.LastName) ,
+
+null))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_6_myRule_1_A1_7968971491</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!myVariable_current.Incorporator__c})&amp;&amp;NOT(ISBLANK({!myVariable_current.Organizer__c})), 
+
+{!myVariable_current.Organizer__r.FirstName} + &quot; &quot; +  if( CONTAINS( {!myVariable_current.Organizer__r.LastName}, &quot; (LEX)&quot;),SUBSTITUTE({!myVariable_current.Organizer__r.LastName}, &quot; (LEX)&quot;, &quot;&quot;),{!myVariable_current.Organizer__r.LastName}),
+
+IF(ISBLANK({!myVariable_current.Organizer__c})&amp;&amp;NOT(ISBLANK({!myVariable_current.Incorporator__c})),
+
+{!myVariable_current.Incorporator__r.FirstName} + &quot; &quot; +if( CONTAINS( {!myVariable_current.Incorporator__r.LastName}, &quot; (LEX)&quot;),SUBSTITUTE({!myVariable_current.Incorporator__r.LastName}, &quot; (LEX)&quot;, &quot;&quot;),{!myVariable_current.Incorporator__r.LastName}) ,
+
+null))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(ISBLANK([Entities__c].Incorporator__c), [Entities__c].Organizer__c, [Entities__c].Incorporator__c)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_7_myRule_1_A1_0912627928</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!myVariable_current.Incorporator__c}), {!myVariable_current.Organizer__c}, {!myVariable_current.Incorporator__c})</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(NOT(ISBLANK([Entities__c].Processor__c)),
+[Entities__c].Processor__c.FirstName + &quot; &quot; + if( CONTAINS( [Entities__c].Processor__c.LastName , &quot; (LEX)&quot;),SUBSTITUTE([Entities__c].Processor__c.LastName, &quot; (LEX)&quot;, &quot;&quot;),[Entities__c].Processor__c.LastName)  ,
+NULL)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_8_myRule_1_A1_2347666683</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.Processor__c})),
+{!myVariable_current.Processor__r.FirstName} + &quot; &quot; + if( CONTAINS( {!myVariable_current.Processor__r.LastName} , &quot; (LEX)&quot;),SUBSTITUTE({!myVariable_current.Processor__r.LastName}, &quot; (LEX)&quot;, &quot;&quot;),{!myVariable_current.Processor__r.LastName})  ,
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>OR
+(
+
+ AND(
+        NOT(ISPICKVAL([Entities__c].Origin__c, &quot;Client Formed&quot;)),
+        NOT(ISBLANK([Entities__c].Organizational_Date__c)),
+        ISBLANK(PRIORVALUE([Entities__c].Organizational_Date__c)),
+        ISCHANGED([Entities__c].Organizational_Date__c),
+        ISPICKVAL([Entities__c].Organization_State__c, &quot;Arizona&quot;),
+        [Entities__c].Business_County__c &lt;&gt; &quot;Pima&quot;,
+        [Entities__c].Business_County__c &lt;&gt; &quot;Maricopa&quot;,
+        OR(
+            [Entities__c].Type__c = &quot;Corporation&quot;,
+            [Entities__c].Type__c = &quot;Non-Profit Entity&quot;,
+            [Entities__c].Type__c = &quot;Limited Liability Company (LLC)&quot;)),
+AND(
+        NOT(ISPICKVAL([Entities__c].Origin__c, &quot;Client Formed&quot;)),
+        NOT(ISBLANK([Entities__c].Organizational_Date__c)),
+        ISBLANK(PRIORVALUE([Entities__c].Organizational_Date__c)),
+        ISCHANGED([Entities__c].Organizational_Date__c),
+        ISPICKVAL([Entities__c].Organization_State__c, &quot;Georgia&quot;),
+        OR(
+            [Entities__c].Type__c = &quot;Corporation&quot;,
+            [Entities__c].Type__c = &quot;Non-Profit Entity&quot;))
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>OR
+(
+
+ AND(
+        NOT(ISPICKVAL({!myVariable_current.Origin__c}, &quot;Client Formed&quot;)),
+        NOT(ISBLANK({!myVariable_current.Organizational_Date__c})),
+        ISBLANK(PRIORVALUE({!myVariable_current.Organizational_Date__c})),
+        ISCHANGED({!myVariable_current.Organizational_Date__c}),
+        ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Arizona&quot;),
+        {!myVariable_current.Business_County__c} &lt;&gt; &quot;Pima&quot;,
+        {!myVariable_current.Business_County__c} &lt;&gt; &quot;Maricopa&quot;,
+        OR(
+            {!myVariable_current.Type__c} = &quot;Corporation&quot;,
+            {!myVariable_current.Type__c} = &quot;Non-Profit Entity&quot;,
+            {!myVariable_current.Type__c} = &quot;Limited Liability Company (LLC)&quot;)),
+AND(
+        NOT(ISPICKVAL({!myVariable_current.Origin__c}, &quot;Client Formed&quot;)),
+        NOT(ISBLANK({!myVariable_current.Organizational_Date__c})),
+        ISBLANK(PRIORVALUE({!myVariable_current.Organizational_Date__c})),
+        ISCHANGED({!myVariable_current.Organizational_Date__c}),
+        ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Georgia&quot;),
+        OR(
+            {!myVariable_current.Type__c} = &quot;Corporation&quot;,
+            {!myVariable_current.Type__c} = &quot;Non-Profit Entity&quot;))
+
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>OR
+(
+
+  AND(
+        NOT(ISPICKVAL([Entities__c].Origin__c, &quot;Client Formed&quot;)),
+        NOT(ISBLANK([Entities__c].Organizational_Date__c)),
+        ISBLANK(PRIORVALUE([Entities__c].Organizational_Date__c)),
+        ISCHANGED([Entities__c].Organizational_Date__c),
+        ISPICKVAL([Entities__c].Organization_State__c, &quot;Pennsylvania&quot;),
+        OR(
+            [Entities__c].Type__c = &quot;Corporation&quot;,
+            [Entities__c].Type__c = &quot;Non-Profit Entity&quot;)),
+
+    AND(
+        NOT(ISPICKVAL([Entities__c].Origin__c, &quot;Client Formed&quot;)),
+        NOT(ISBLANK([Entities__c].Organizational_Date__c)),
+        ISBLANK(PRIORVALUE([Entities__c].Organizational_Date__c)),
+        ISCHANGED([Entities__c].Organizational_Date__c),
+        ISPICKVAL([Entities__c].Organization_State__c, &quot;Nebraska&quot;),
+        OR(
+            [Entities__c].Type__c = &quot;Corporation&quot;,
+            [Entities__c].Type__c = &quot;Non-Profit Entity&quot;,
+            [Entities__c].Type__c = &quot;Limited Liability Company (LLC)&quot;))
+
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_10</name>
+        <dataType>Boolean</dataType>
+        <expression>OR
+(
+
+  AND(
+        NOT(ISPICKVAL({!myVariable_current.Origin__c}, &quot;Client Formed&quot;)),
+        NOT(ISBLANK({!myVariable_current.Organizational_Date__c})),
+        ISBLANK(PRIORVALUE({!myVariable_current.Organizational_Date__c})),
+        ISCHANGED({!myVariable_current.Organizational_Date__c}),
+        ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Pennsylvania&quot;),
+        OR(
+            {!myVariable_current.Type__c} = &quot;Corporation&quot;,
+            {!myVariable_current.Type__c} = &quot;Non-Profit Entity&quot;)),
+
+    AND(
+        NOT(ISPICKVAL({!myVariable_current.Origin__c}, &quot;Client Formed&quot;)),
+        NOT(ISBLANK({!myVariable_current.Organizational_Date__c})),
+        ISBLANK(PRIORVALUE({!myVariable_current.Organizational_Date__c})),
+        ISCHANGED({!myVariable_current.Organizational_Date__c}),
+        ISPICKVAL({!myVariable_current.Organization_State__c}, &quot;Nebraska&quot;),
+        OR(
+            {!myVariable_current.Type__c} = &quot;Corporation&quot;,
+            {!myVariable_current.Type__c} = &quot;Non-Profit Entity&quot;,
+            {!myVariable_current.Type__c} = &quot;Limited Liability Company (LLC)&quot;))
+
+
+)</expression>
+    </formulas>
+    <interviewLabel>Entity_Delaware_Followup_Task-23_InterviewLabel</interviewLabel>
+    <label>Entity - Delaware Tasks &amp; AZ, GA, PA, NE Pub. Notice</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Entities__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <recordCreates>
+        <name>myRule_10_A1</name>
+        <label>New Task for PA and NE</label>
+        <locationX>1000</locationX>
+        <locationY>200</locationY>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Date</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Due Date Only</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>formula_11_myRule_10_A1_5845585560</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>CAM</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>CAM__c</field>
+            <value>
+                <elementReference>formula_12_myRule_10_A1_9788964731</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Client Success Coordinator</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>CSR__c</field>
+            <value>
+                <elementReference>formula_13_myRule_10_A1_1058566365</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Client</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Client__c</field>
+            <value>
+                <elementReference>myVariable_current.Primary_Client__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Description</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Description</field>
+            <value>
+                <elementReference>formula_14_myRule_10_A1_4970958190</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Formation Processor</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Formation_Processor__c</field>
+            <value>
+                <elementReference>formula_15_myRule_10_A1_6838742185</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Assigned To ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>OwnerId</field>
+            <value>
+                <stringValue>0056f00000ALK0dAAH</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Priority</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Priority</field>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Processing Stage</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Processing_Stage__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Processors</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Processors__c</field>
+            <value>
+                <elementReference>formula_16_myRule_10_A1_3122320339</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Task Record Type ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>RecordType</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0120B000000t7ppQAA</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Subject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Subject</field>
+            <value>
+                <stringValue>Publication Required</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Related To ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>AFS_Leads__c;APXTConga4__Composer_QuickMerge__c;APXTConga4__Conga_Email_Staging__c;APXTConga4__Conga_Email_Template__c;APXT_BPM__Conductor__c;APXT_CMQM__QuickMerge_Link__c;ASA__c;Account;Action_Item__c;Amendments__c;Asset;AssetRelationship;Assignment_of_Interest__c;Audit__c;Bookkeeping__c;Box_Listener__c;Campaign;Case;ChannelProgram;ChannelProgramLevel;ChargentSFA__Email_Notification__c;ChargentSFA__Transaction__c;Client_Statement__c;CommSubscriptionConsent;CongaBuddy__c;ContactRequest;Contract;ContractLineItem;DelegatedAccount;Employee__c;Employment__c;Entities__c;Entitlement;Escalation__c;FacebookoBject__c;Feedback__c;FollowUp__c;H2S__HarvestProject__c;H2S__HarvestTimeEntry__c;Image;Infinity_Calculator__c;Key_Result__c;KnowledgeSearchHistory__c;LLC_Cells__c;LLC_Q__c;ListEmail;Living_Will__c;Location;Login_History__c;Meeting_Minutes__c;Net_Worth__c;Note__c;OSI_History__c;Objective__c;Opportunity;Order;PartnerFundAllocation;PartnerFundClaim;PartnerFundRequest;PartnerMarketingBudget;PartyConsent;Pension_Loan_Reminder__c;Plan_Loans__c;ProcessException;Product2;Quote;Recap_s__c;Records_To_be_Deleted__c;Refund__c;Related_Parties__c;Renewal_Processing_Conga_Docs__c;Restatements__c;SLA__c;Sales_Conga_Merge__c;Sales_Rep__c;ServiceContract;Set_of_Books_Entities__c;Set_of_Books__c;Solution;Strategy_Session_Questionnaire__c;Subscription__c;SurveyQuestion;System_Changes__c;Tax_Extension_Request__c;Tax_Returns__c;Tax__c;Texas_Franchise_Worksheet__c;To_Do__c;Trust__c;Trustee__c;VisualAntidote__Form_Rule__c;Web_Form__c;X1099_Request__c;bofc__BOFCErrorLogs__c;dsfs__DocuSign_Recipient_Status__c;dsfs__DocuSign_Status__c;evt__Attendee__c;evt__Session_Assignment__c;evt__Session__c;evt__Special_Event__c;pymt__PaymentX__c;pymt__Payment_Profile__c;pymt__Processor_Connection__c;pymt__Settings__c;pymt__Shopping_Cart_Item__c;simplesurvey__Survey__c;smagicinteract__Action_Object__c;smagicinteract__Action_Parameter__c;smagicinteract__Action__c;smagicinteract__Conversation__c;smagicinteract__Converse_App_Action__c;smagicinteract__Converse_App__c;smagicinteract__Error_Log__c;smagicinteract__Incoming_Alert_Configuration__c;smagicinteract__Incoming_SMS__c;smagicinteract__Message_Action__c;smagicinteract__Message_Object_Config__c;smagicinteract__Object_Field_Config__c;smagicinteract__Object_Metadata_Config__c;smagicinteract__Optout_Settings__c;smagicinteract__SMS_Batch_Execution_Tracker__c;smagicinteract__SMS_Schedule__c;smagicinteract__SMS_Template__c;smagicinteract__SenderId_Profile_Map__c;smagicinteract__forward_config__c;smagicinteract__incoming_lookup_config__c;smagicinteract__lookup_config__c;smagicinteract__smsMagic__c;vidyard__Video_View__c;zkfedex__InternationalCommodity__c;zkfedex__ShipmatePreference__c;zkfedex__ShipmentPackage__c;zkfedex__Shipment__c;zkmulti__EEIForm__c;zkmulti__MCBulk_Shipment__c;zkmulti__MCPickup__c;zkmulti__MCShipment__c;zkups__BulkShipment__c;zkups__UPSCommercialInvoice__c;zkups__UPSHazMatDetails__c;zkups__UPSInternationalCommodity__c;zkups__UPSNAFTACO__c;zkups__UPSPackage__c;zkups__UPSSEDForm__c;zkups__UPSShipmentSpecialServices__c;zkups__UPSShipment__c;zkusps__BulkShipment__c;zkusps__Checkpoint__c;zkusps__CustomsInformation__c;zkusps__CustomsItem__c;zkusps__EndiciaPreference__c;zkusps__MailPiece__c;zkusps__PackageProfile__c;zkusps__Preference__c;zkusps__PrintHistory__c;zkusps__Shipment__c;zkusps__ShippingPreference__c;zkusps__SpecialServices__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>WhatId</field>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordCreates>
+    <recordCreates>
+        <name>myRule_1_A1</name>
+        <label>New Task for AZ and GA</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myDecision9</targetReference>
+        </connector>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Date</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Due Date Only</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>formula_2_myRule_1_A1_7467073172</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>CAM</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>CAM__c</field>
+            <value>
+                <elementReference>formula_3_myRule_1_A1_6732187860</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Client Success Coordinator</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>CSR__c</field>
+            <value>
+                <elementReference>formula_4_myRule_1_A1_9376150696</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Client</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Client__c</field>
+            <value>
+                <elementReference>myVariable_current.Primary_Client__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Description</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Description</field>
+            <value>
+                <elementReference>formula_5_myRule_1_A1_7627886625</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Formation Processor</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Formation_Processor__c</field>
+            <value>
+                <elementReference>formula_6_myRule_1_A1_7968971491</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Assigned To ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>formula_7_myRule_1_A1_0912627928</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Priority</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Priority</field>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Processing Stage</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Processing_Stage__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Processors</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Processors__c</field>
+            <value>
+                <elementReference>formula_8_myRule_1_A1_2347666683</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Task Record Type ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>RecordType</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0120B000000t7ppQAA</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Subject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Subject</field>
+            <value>
+                <stringValue>Publication Required</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Related To ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>AFS_Leads__c;APXTConga4__Composer_QuickMerge__c;APXTConga4__Conga_Email_Staging__c;APXTConga4__Conga_Email_Template__c;APXT_BPM__Conductor__c;APXT_CMQM__QuickMerge_Link__c;Account;Amendments__c;Asset;AssetRelationship;Bookkeeping__c;CRMG_GTM__Answer__c;CRMG_GTM__Meeting__c;CRMG_GTM__Registrant__c;Campaign;Case;ChannelProgram;ChannelProgramLevel;ChargentSFA__Email_Notification__c;ChargentSFA__Transaction__c;Client_Statement__c;Contract;Employee__c;Entities__c;Feedback__c;FollowUp__c;H2S__HarvestProject__c;H2S__HarvestTimeEntry__c;Infinity_Calculator__c;LLC_Q__c;ListEmail;Login_History__c;Meeting_Minutes__c;Net_Worth__c;Opportunity;PartnerFundAllocation;PartnerFundClaim;PartnerFundRequest;PartnerMarketingBudget;Pension_Loan_Reminder__c;Plan_Loans__c;Product2;Quote;Recap_s__c;Restatements__c;SLA__c;Sales_Rep__c;Solution;Strategy_Session_Questionnaire__c;Subscription__c;Tax_Extension_Request__c;Tax_Returns__c;Tax__c;Texas_Franchise_Worksheet__c;To_Do__c;Trust__c;Trustee__c;VisualAntidote__Form_Rule__c;bofc__BOFCErrorLogs__c;dsfs__DocuSign_Recipient_Status__c;dsfs__DocuSign_Status__c;evt__Attendee__c;evt__Session_Assignment__c;evt__Session__c;evt__Special_Event__c;rh2__PS_Export_Rollups__c;rh2__PS_Rollup_Dummy__c;simplesurvey__Survey__c;smagicinteract__Action_Object__c;smagicinteract__Action_Parameter__c;smagicinteract__Action__c;smagicinteract__Conversation__c;smagicinteract__Converse_App_Action__c;smagicinteract__Converse_App__c;smagicinteract__Error_Log__c;smagicinteract__Incoming_Alert_Configuration__c;smagicinteract__Incoming_SMS__c;smagicinteract__Message_Action__c;smagicinteract__Message_Object_Config__c;smagicinteract__Object_Field_Config__c;smagicinteract__Object_Metadata_Config__c;smagicinteract__Optout_Settings__c;smagicinteract__SMS_Batch_Execution_Tracker__c;smagicinteract__SMS_Schedule__c;smagicinteract__SMS_Template__c;smagicinteract__SenderId_Profile_Map__c;smagicinteract__forward_config__c;smagicinteract__incoming_lookup_config__c;smagicinteract__lookup_config__c;smagicinteract__smsMagic__c;vidyard__Video_View__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>WhatId</field>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordCreates>
+    <startElementReference>myDecision</startElementReference>
+    <status>Draft</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Entities__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Entities__c</objectType>
+    </variables>
+</Flow>

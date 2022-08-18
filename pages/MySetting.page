@@ -1,0 +1,37 @@
+<apex:page doctype="html-5.0" standardController="Contact" extensions="CustomLandingController,RssFeedController,PaginationController" action="{!forwardToCustomAuthPage}" sidebar="false" showHeader="false">    
+    <html lang="en">
+        <head>
+            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            <title>Anderson Advisors</title>            
+            <!-- Bootstrap -->
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+            <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+            <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>            
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+<apex:includeScript value="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"/>
+<apex:includeScript value="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"/>
+<![endif]-->
+        </head>
+        <body> 
+            <apex:include pageName="AndersonHeader"/>
+                <div class="container">
+                    
+                </div>
+                
+                <footer class="container-fluid text-center">
+                    <p>Privacy and Security Statement  |  Terms and Conditions Copyright © 2017 by Anderson Advisors - All rights reserved.</p>
+                </footer>            
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,247 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="SyncPlantinumandSfctrl" >
+	  <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="activeSections" type="List" default="[]" />
+      <aura:attribute name="accwrapperList" type="object"/>
+    <aura:attribute name="WordpressplatinumaccwrapperList" type="object"/>
+     <aura:attribute name="digitalproductswrapperList" type="object"/>
+     <aura:attribute name="Checkforsync" type="Boolean" default="false"/>
+    <aura:attribute name="NeedtoSync" type="Boolean" default="true"/>
+     <aura:attribute name="SendEmailtoclient" type="Boolean" default="false"/>
+    <aura:attribute name="SFSaleId" type="string"/>
+    <aura:attribute name="SFConId" type="string"/>
+    <aura:attribute name="PlatinumAccId" type="string"/>
+    <aura:attribute name="PlatinumSaleId" type="string"/>
+  	<aura:attribute name="spin" type="Boolean" default="false"/>
+    <aura:attribute name="PlatinumConId" type="string"/>
+     <aura:attribute name="wordpressId" type="string"/>
+       <aura:attribute name="createuser"  type="Boolean" default="false" />
+      <aura:attribute name="Updateuser"  type="Boolean" default="false" />
+    <aura:attribute name="generatenewpassword"  type="Boolean" default="true" />
+    
+    <aura:attribute name="PlatinumsaleStage" type="string"/>
+     <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    
+     <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"   
+                             activeSectionName="{! v.activeSections }">
+             <aura:if isTrue="{!v.spin}">
+    <div class="loadSpinner">
+        <lightning:spinner aura:id="mySpinner" />
+    </div>
+   </aura:if>
+         <lightning:accordionSection name="CreateNewPlatinumUser" label="Create New Platinum User"> 
+             <br/>
+             <br/>
+                  <aura:if isTrue="{!v.accwrapperList.hasmorethanoneprimarycontact}">
+                       <b>The client has two primary contacts.Please check and update it.</b>
+            <aura:set attribute="else">
+                 <aura:if isTrue="{!v.createuser}">
+              <b>First Name:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.accconFirstName}"/><br/>
+               <b>Last Name:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.accconLastName}"/><br/>
+               <b>Email:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.accconEmail}"/><br/>
+                      <br/>
+                   <div>
+        <lightning:button variant="brand" label="Create New User" title="createbutton" onclick="{!c.createUser}"/>
+        </div>
+                      <aura:set attribute="else">
+           
+               This contact already has a Platinum user account.
+         
+       </aura:set>
+                </aura:if>
+                      </aura:set>
+                
+              </aura:if>
+         </lightning:accordionSection>
+          <lightning:accordionSection name="UpdatePlatinumUser" label="Update Platinum Email"> 
+             <br/>
+             <br/>
+                  <aura:if isTrue="{!v.accwrapperList.hasmorethanoneprimarycontact}">
+                       <b>The client has two primary contacts.Please check and update it.</b>
+            <aura:set attribute="else">
+                 <aura:if isTrue="{!v.Updateuser}">
+              <b>First Name:</b>&nbsp; <ui:inputText  value="{!v.accwrapperList.accconFirstName}"/><br/>
+               <b>Last Name:</b>&nbsp; <ui:inputText  value="{!v.accwrapperList.accconLastName}"/><br/>
+               <b>Platinum Email:</b>&nbsp; <ui:inputText  value="{!v.accwrapperList.accPlatinumEmail}"/><br/>
+                     <br/>
+                   <div>
+     <lightning:button variant="brand" label="Update User" title="updatebutton" onclick="{!c.updateClick}"/>
+        </div>
+                     <aura:set attribute="else">
+           
+               This contact has No Platinum user account.
+         
+       </aura:set>
+                </aura:if>
+                      </aura:set>
+                
+              </aura:if>
+         </lightning:accordionSection>
+            <lightning:accordionSection name="ResetPasswordandEmailClient" label="Reset Password and Email Client"> 
+             <br/>
+             <br/>
+                  <aura:if isTrue="{!v.Updateuser}">
+                      <aura:if isTrue="{!v.generatenewpassword}">
+            <b> Click below to create a new random password for the client.  <br/>
+             <br/>
+  </b> 
+              <lightning:button variant="brand" label="Create new password" title="Reset" onclick="{!c.genrateandsetpassword}"/>
+                      </aura:if>
+               <br/>
+             <br/>
+               <aura:if isTrue="{!v.SendEmailtoclient}">
+            <div class="slds-grid slds-gutters">
+                 <b>Click here to email the newly created password to the client.</b>
+                <br/>
+                <br/>
+               <div class="slds-col slds-size_6-of-12">
+                   
+         <span>   
+                     <b>Email:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.accPlatinumEmail}"/>
+                        <br/> 
+                    <br/>                
+                      
+          
+                               <b>Generated password:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.accPlatinumGeneratedPass}"/>
+                       <br/> 
+                    <br/>  
+               <lightning:button variant="brand" label="Email new password to client" title="email" onclick="{!c.SendEmail}"/>
+                         
+</span>
+                   
+               </div> 
+                 
+         
+                </div>
+              
+                      </aura:if>
+                       <aura:set attribute="else">
+           
+               This contact has No Platinum user account.
+         
+       </aura:set>
+              </aura:if>
+             
+         </lightning:accordionSection>
+            <lightning:accordionSection name="platinumSFSync" label="Fix Declined Payment and Sync Issues">
+                <aura:if isTrue="{!v.Updateuser}">
+     <aura:if isTrue="{!v.NeedtoSync}">
+    <b> Do you want to Sync Saleforce and platinum ?</b> &nbsp; &nbsp;&nbsp;
+    
+      <lightning:button variant="brand" label="Yes" title="Sync" onclick="{!c.SyncUser}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.Checkforsync}">
+         <br/>
+        <br/>
+        <aura:if isTrue="{!v.accwrapperList.hasmorethanoneprimarycontact}">
+            <b>The client has two primary contacts.Please check and update it.</b>
+            <aura:set attribute="else">
+                        <b>Salesforce Wordpress ID:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.acccontactWPId}"/>
+         <br/>
+        <br/>
+    <div class="slds-grid slds-gutters">
+               <div class="slds-col slds-size_6-of-12">
+                   
+         <span>   
+                     <b>Salesforce Account ID:</b>&nbsp; <ui:outputText value="{!v.recordId}"/>
+                        <br/> 
+                    <br/>                
+                      
+          
+                               <b>Salesforce Sale ID:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.accsaleId}"/>
+                       <br/> 
+                    <br/>  
+                            <b>Saleforce Contact Id:</b>&nbsp; <ui:outputText value="{!v.accwrapperList.acccontactId}"/>
+                       <br/> 
+                    <br/>  
+              <b>Saleforce Platinum sale stage :</b>&nbsp; <aura:if isTrue="{!v.accwrapperList.accPlatinumsaleStage>=1}"> Closed won  <aura:set attribute="else">Declined</aura:set></aura:if>
+                       <br/> 
+                    <br/>         
+</span>
+               </div> 
+                 
+               <div class="slds-col slds-size_6-of-12">
+                   <span>
+                       <b>Platinum Account Id:</b>&nbsp; <ui:outputText value="{!v.WordpressplatinumaccwrapperList.WplatinumaccountId}"/>
+                       <br/> 
+                    <br/>
+                      
+          
+                    <b>Platinum Sale Id:</b>&nbsp; <ui:outputText value="{!v.WordpressplatinumaccwrapperList.WplatinumaccsaleId}"/>
+                        <br/>
+                         <br/>
+                       <b>Platinum Contact Id:</b>&nbsp; <ui:outputText value="{!v.WordpressplatinumaccwrapperList.WplatinumcontactId}"/>
+                       <br/>
+                         <br/>
+                       <b>Platinum Platinum sale stage :</b>&nbsp;
+                        <!-- <aura:if isTrue="{!v.WordpressplatinumaccwrapperList.WplatinumsaccPlatinumSaleStage}"> -->
+                           <aura:if isTrue="{!v.WordpressplatinumaccwrapperList.WplatinumsaccPlatinumSaleStage>=1}">Closed won
+                               <aura:set attribute="else">Declined</aura:set>
+                           </aura:if>   
+                      <!--  </aura:if>  -->
+                       <br/>
+                       <br/>
+               
+           
+               
+   </span></div>
+                </div>
+    <br/>
+    <br/>
+     <aura:if isTrue="{!v.WordpressplatinumaccwrapperList.WplatinumsfMatch}">
+           <lightning:button variant="brand" label="Sync SF and platinum" title="Sync" onclick="{!c.SyncSFandwpUser}"/>
+    </aura:if>
+            </aura:set>
+        </aura:if>
+                
+                    </aura:if>
+                     <aura:set attribute="else">
+           
+               This contact has No Platinum user account.
+         
+       </aura:set>
+                </aura:if>
+ 
+         </lightning:accordionSection>
+         <lightning:accordionSection name="DigitalProducts" label="Digital Products"> 
+             <br/>
+             <br/>
+                 <aura:if isTrue="{!v.Updateuser}">
+              <aura:if isTrue="{!v.digitalproductswrapperList.hasmorethanoneprimarycontactDp}">
+            <b>The client has two primary contacts.Please check and update it.</b>
+            <aura:set attribute="else">
+                   <aura:if isTrue="{!v.digitalproductswrapperList.oplhasNooppnoservice}">
+                  
+                       <b>The client has not purchased any digital products!</b>
+                       <aura:set attribute="else">
+                           <b> The client has purchased the following digital products:</b> <br/>
+                           <ui:outputText value="{!v.digitalproductswrapperList.ServicesPurchasedByClientswrapped}"/><!--<br/><ui:outputText value="{!v.digitalproductswrapperList.oplhastaxtoolbox}"/><br/><ui:outputText value="{!v.digitalproductswrapperList.oplhasinfinitysubcription}"/>-->
+             <br/>
+             <br/>
+             
+                
+                    
+                     <aura:if isTrue="{! v.digitalproductswrapperList.conhasserviceitems==true}">
+                     <b>The digital products in platinum are up to date!</b>
+                   
+                      <aura:set attribute="else">
+                            <b> The digital products in platinum are not updated.Please click on this button to update</b>  &nbsp; &nbsp;&nbsp;  <lightning:button variant="brand" label="Update the digital products" title="Sync" onclick="{!c.Digitalproductsupdate}"/>
+                     </aura:set>
+             </aura:if>
+                    </aura:set>
+                </aura:if>
+                
+                  </aura:set>
+             
+                     </aura:if>
+                      <aura:set attribute="else">
+           
+               This contact has No Platinum user account.
+         
+       </aura:set>
+             </aura:if>
+         </lightning:accordionSection>
+       
+          
+    </lightning:accordion>
+</aura:component>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>BadgesDisplayLogic</name>
+        <label>BadgesDisplayLogic</label>
+        <locationX>551</locationX>
+        <locationY>333</locationY>
+        <actionName>BadgesDisplayLogic</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>accId</name>
+            <value>
+                <elementReference>AccID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ServiceItems</name>
+            <value>
+                <elementReference>CheckForBadgeServiceitems</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Service_account_Not_null</name>
+        <label>service account Not null</label>
+        <locationX>151</locationX>
+        <locationY>379</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Service_and_account_not_null</name>
+            <conditionLogic>1 AND( 2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>AccID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CheckForBadgeServiceitems</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CheckForBadgeServiceitems</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>BadgesDisplayLogic</targetReference>
+            </connector>
+            <label>Service and account not null</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>BackInTime55Minutes</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW() - (1/24)</expression>
+    </formulas>
+    <formulas>
+        <name>CheckForBadgeServiceitems</name>
+        <dataType>String</dataType>
+        <expression>IF(
+CONTAINS({!OpportunityServiceItems},&apos;A00396&apos;)||CONTAINS({!OpportunityServiceItems},&apos;A00395&apos;),&apos;hasCAP;&apos;,&apos;&apos;
+)+
+IF(
+CONTAINS({!OpportunityServiceItems},&apos;A00399&apos;)||CONTAINS({!OpportunityServiceItems},&apos;A00398&apos;),&apos;hasUnlimtedNominee;&apos;,&apos;&apos;
+)+
+IF(
+CONTAINS({!OpportunityServiceItems},&apos;A00407&apos;)||CONTAINS({!OpportunityServiceItems},&apos;A00415&apos;),&apos;hasTrustee;&apos;,&apos;&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>X59MinAgo</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime} - (1/24)</expression>
+    </formulas>
+    <interviewLabel>Sale-Update Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sale-Update Account</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>X1_Min_Wait</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AccID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OpportunityServiceItems</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <waits>
+        <name>X1_Min_Wait</name>
+        <label>1 Min Wait</label>
+        <locationX>169</locationX>
+        <locationY>253</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>X1_min</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Service_account_Not_null</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>X59MinAgo</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>1 min</label>
+        </waitEvents>
+    </waits>
+</Flow>

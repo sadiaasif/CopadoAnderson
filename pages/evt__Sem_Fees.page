@@ -1,0 +1,166 @@
+<apex:page docType="html-5.0" id="siteSemFeesPage" controller="evt.SemFeesController" title="{!event.Name} Fees"   showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>
+    {!IF($Label.SemFees_Heading == '-','Event Fees',SUBSTITUTE($Label.SemFees_Heading,'{eventname}',event.Name))}
+</title></head>
+<apex:composition template="{!$Site.Template}">
+
+<apex:define name="body">
+<script language="javascript"> 
+function evt_divtoggle(idname) {
+    var ele = document.getElementById(idname);
+    if(ele.style.display == "block") {
+            ele.style.display = "none";
+    } else {
+        ele.style.display = "block";
+    }
+} 
+</script>
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_sem_fees_page">
+  <div class="evt_page_content_top">
+    <c:SemTemplateNav event="{!event}"  currentTab="fees"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+<apex:form >
+
+<div id="evt_sem_fees_box" class="evt_h1_outer_box">
+    <div class="evt_box_header">
+<apex:outputPanel rendered="{!$Label.evt__SemFees_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__SemFees_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+
+<apex:outputPanel rendered="{!NOT($Label.evt__SemFees_Message == '-')}">
+<p>{!$Label.evt__SemFees_Message}</p>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasAttendeeFees}">
+<div id="evt_SemFees_category_box" class="evt_h2_outer_box">
+    <div class="evt_box_header">
+    <h2>{!$Label.SemFees_AttendeeHeading}</h2>
+    </div>
+    <div class="evt_box_body">
+
+    <apex:repeat value="{!fees}" var="fee">
+        <apex:outputPanel rendered="{!fee.evt__Category__c == 'Attendee'}">
+        <span class="evt_fee_schedule_name"><apex:outputField value="{!fee.Name}"/></span>&nbsp;
+        <span class="evt_fee_schedule_amount"><apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!fee.evt__Amount__c}"/></apex:outputText></span>
+        <div class="evt_fee_schedule_description">
+        <apex:outputField value="{!fee.evt__Description__c}"/> 
+        <apex:outputPanel rendered="{!NOT(ISBLANK(fee.evt__Refund_Policy__c))}">
+                &nbsp;<span class="evt_item_detail_toggle_link"><a href="#" onclick="evt_divtoggle('evt_fee{!fee.id}');">{!$Label.evt__Label_RefundPolicy}</a></span>
+        </apex:outputPanel>
+        </div>
+        <div id="evt_fee{!fee.id}" class="evt_fee_schedule_refund_policy" style="display:none;">
+            <apex:outputField value="{!fee.evt__Refund_Policy__c}"/> 
+        </div>
+        <br/>
+        </apex:outputPanel>
+        
+    </apex:repeat>
+
+    </div>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasVolunteerFees}">
+<div id="evt_SemFees_category_box" class="evt_h2_outer_box">
+    <div class="evt_box_header">
+    <h2>{!$Label.SemFees_VolunteerHeading}</h2>
+    </div>
+    <div class="evt_box_body">
+
+    <apex:repeat value="{!fees}" var="fee">
+        <apex:outputPanel rendered="{!fee.evt__Category__c == 'Volunteer'}">
+
+        <span class="evt_fee_schedule_name"><apex:outputField value="{!fee.Name}"/></span>&nbsp;
+        <span class="evt_fee_schedule_amount"><apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!fee.evt__Amount__c}"/></apex:outputText></span>
+        <div class="evt_fee_schedule_description">
+        <apex:outputField value="{!fee.evt__Description__c}"/> 
+        <apex:outputPanel rendered="{!NOT(ISBLANK(fee.evt__Refund_Policy__c))}">
+                &nbsp;<span class="evt_item_detail_toggle_link"><a href="#" onclick="evt_divtoggle('evt_fee{!fee.id}');">{!$Label.evt__Label_RefundPolicy}</a></span>
+        </apex:outputPanel>
+        </div>
+        <div id="evt_fee{!fee.id}" class="evt_fee_schedule_refund_policy" style="display:none;">
+            <apex:outputField value="{!fee.evt__Refund_Policy__c}"/> 
+        </div>
+        <br/>
+        </apex:outputPanel>
+    </apex:repeat>
+
+    </div>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasSponsorFees}">
+<div id="evt_SemFees_category_box" class="evt_h2_outer_box">
+    <div class="evt_box_header">
+    <h2>{!$Label.SemFees_SponsorHeading}</h2>
+    </div>
+    <div class="evt_box_body">
+
+    <apex:repeat value="{!fees}" var="fee">
+        <apex:outputPanel rendered="{!fee.evt__Category__c == 'Sponsor'}">
+
+        <span class="evt_fee_schedule_name"><apex:outputField value="{!fee.Name}"/></span>&nbsp;
+        <span class="evt_fee_schedule_amount"><apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!fee.evt__Amount__c}"/></apex:outputText></span>
+        <div class="evt_fee_schedule_description">
+        <apex:outputField value="{!fee.evt__Description__c}"/> 
+        <apex:outputPanel rendered="{!NOT(ISBLANK(fee.evt__Refund_Policy__c))}">
+                &nbsp;<span class="evt_item_detail_toggle_link"><a href="#" onclick="evt_divtoggle('evt_fee{!fee.id}');">{!$Label.evt__Label_RefundPolicy}</a></span>
+        </apex:outputPanel>
+        </div>
+        <div id="evt_fee{!fee.id}" class="evt_fee_schedule_refund_policy" style="display:none;">
+            <apex:outputField value="{!fee.evt__Refund_Policy__c}"/> 
+        </div>
+        <br/>
+        </apex:outputPanel>
+    </apex:repeat>
+
+    </div>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!hasExhibitorFees}">
+<div id="evt_SemFees_category_box" class="evt_h2_outer_box">
+    <div class="evt_box_header">
+    <h2>{!$Label.SemFees_ExhibitorHeading}</h2>
+    </div>
+    <div class="evt_box_body">
+
+    <apex:repeat value="{!fees}" var="fee">
+        <apex:outputPanel rendered="{!fee.evt__Category__c == 'Exhibitor'}">
+
+        <span class="evt_fee_schedule_name"><apex:outputField value="{!fee.Name}"/></span>&nbsp;
+        <span class="evt_fee_schedule_amount"><apex:outputText value="{!currencyFormatExpression}"><apex:param value="{!fee.evt__Amount__c}"/></apex:outputText></span>
+        <div class="evt_fee_schedule_description">
+        <apex:outputField value="{!fee.evt__Description__c}"/> 
+        <apex:outputPanel rendered="{!NOT(ISBLANK(fee.evt__Refund_Policy__c))}">
+                &nbsp;<span class="evt_item_detail_toggle_link"><a href="#" onclick="evt_divtoggle('evt_fee{!fee.id}');">{!$Label.evt__Label_RefundPolicy}</a></span>
+        </apex:outputPanel>
+        </div>
+        <div id="evt_fee{!fee.id}" class="evt_fee_schedule_refund_policy" style="display:none;">
+            <apex:outputField value="{!fee.evt__Refund_Policy__c}"/> 
+        </div>
+        <br/>
+        </apex:outputPanel>
+    </apex:repeat>
+
+    </div>
+</div>
+</apex:outputPanel>
+
+
+</div>
+</div>
+
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+</apex:define>
+</apex:composition>
+</apex:page>

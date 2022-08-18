@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>zkups__Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zkups__BulkShipment__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Bulk Shipment</label>
+        <referenceTo>zkups__BulkShipment__c</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>zkups__Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zkups__CostCenter__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>CostCenter</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__Currency__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Currency</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__CustomAddressSourceRecordId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Custom Address Source Record ID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__CustomAddressSource__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Custom Address Source</label>
+        <referenceTo>zkups__CustomAddressSource__c</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zkups__DutiesAccountPostalCode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Duties Account Postal Code</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__DutiesPaymentType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Duties/Taxes/Fees Payment Type</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__DutiesPayorAccountCountry__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Duties Payor Account Country</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__DutiesPayorAccountPostalCode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Duties Payor Account Postal Code</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__DutiesPayorAccount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Duties Payor Account</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailMessage__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Message</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailNotifyOnDeliveryAlso__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Notify on Delivery</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailNotifyOnExceptionAlso__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Notify on Exception</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailRecipient1__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Recipient 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailRecipient2__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Recipient 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailRecipient3__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Recipient 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailRecipient4__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Recipient 4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__EmailRecipient5__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Recipient 5</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__EntryNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Entry Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__FirstReferenceType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>First Reference Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accounts Receivable Customer Account</fullName>
+                    <default>false</default>
+                    <label>Accounts Receivable Customer Account</label>
+                </value>
+                <value>
+                    <fullName>Appropriation Number</fullName>
+                    <default>false</default>
+                    <label>Appropriation Number</label>
+                </value>
+                <value>
+                    <fullName>Bill of Lading Number</fullName>
+                    <default>false</default>
+                    <label>Bill of Lading Number</label>
+                </value>
+                <value>
+                    <fullName>Collect on Delivery (COD) Number</fullName>
+                    <default>false</default>
+                    <label>Collect on Delivery (COD) Number</label>
+                </value>
+                <value>
+                    <fullName>Dealer Order Number</fullName>
+                    <default>false</default>
+                    <label>Dealer Order Number</label>
+                </value>
+                <value>
+                    <fullName>Department Number</fullName>
+                    <default>false</default>
+                    <label>Department Number</label>
+                </value>
+                <value>
+                    <fullName>FDA Product Code</fullName>
+                    <default>false</default>
+                    <label>FDA Product Code</label>
+                </value>
+                <value>
+                    <fullName>Invoice Number</fullName>
+                    <default>false</default>
+                    <label>Invoice Number</label>
+                </value>
+                <value>
+                    <fullName>Manifest Key Number</fullName>
+                    <default>false</default>
+                    <label>Manifest Key Number</label>
+                </value>
+                <value>
+                    <fullName>Model Number</fullName>
+                    <default>false</default>
+                    <label>Model Number</label>
+                </value>
+                <value>
+                    <fullName>Part Number</fullName>
+                    <default>false</default>
+                    <label>Part Number</label>
+                </value>
+                <value>
+                    <fullName>Production Code</fullName>
+                    <default>false</default>
+                    <label>Production Code</label>
+                </value>
+                <value>
+                    <fullName>Purchase Order Number</fullName>
+                    <default>false</default>
+                    <label>Purchase Order Number</label>
+                </value>
+                <value>
+                    <fullName>Purchase Request Number</fullName>
+                    <default>false</default>
+                    <label>Purchase Request Number</label>
+                </value>
+                <value>
+                    <fullName>Return Authorization Number</fullName>
+                    <default>false</default>
+                    <label>Return Authorization Number</label>
+                </value>
+                <value>
+                    <fullName>Salesperson Number</fullName>
+                    <default>false</default>
+                    <label>Salesperson Number</label>
+                </value>
+                <value>
+                    <fullName>Serial Number</fullName>
+                    <default>false</default>
+                    <label>Serial Number</label>
+                </value>
+                <value>
+                    <fullName>Store Number</fullName>
+                    <default>false</default>
+                    <label>Store Number</label>
+                </value>
+                <value>
+                    <fullName>Transaction Reference Number</fullName>
+                    <default>false</default>
+                    <label>Transaction Reference Number</label>
+                </value>
+                <value>
+                    <fullName>Employer&apos;s ID Number</fullName>
+                    <default>false</default>
+                    <label>Employer&apos;s ID Number</label>
+                </value>
+                <value>
+                    <fullName>Federal Taxpayer ID No.</fullName>
+                    <default>false</default>
+                    <label>Federal Taxpayer ID No.</label>
+                </value>
+                <value>
+                    <fullName>Social Security Number</fullName>
+                    <default>false</default>
+                    <label>Social Security Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__FirstReferenceValue__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>First Reference Value</label>
+        <length>35</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__LabelImageType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Label Image Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GIF</fullName>
+                    <default>false</default>
+                    <label>GIF</label>
+                </value>
+                <value>
+                    <fullName>Thermal 4x6 - EPL2</fullName>
+                    <default>false</default>
+                    <label>Thermal 4x6 - EPL2</label>
+                </value>
+                <value>
+                    <fullName>Thermal 4x6 - ZPL</fullName>
+                    <default>false</default>
+                    <label>Thermal 4x6 - ZPL</label>
+                </value>
+                <value>
+                    <fullName>Thermal 4x8 - EPL2</fullName>
+                    <default>false</default>
+                    <label>Thermal 4x8 - EPL2</label>
+                </value>
+                <value>
+                    <fullName>Thermal 4x8 - ZPL</fullName>
+                    <default>false</default>
+                    <label>Thermal 4x8 - ZPL</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Lead</label>
+        <referenceTo>Lead</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zkups__Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zkups__PackageId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PackageId</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__PackagingType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Packaging Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UPS Letter</fullName>
+                    <default>false</default>
+                    <label>UPS Letter</label>
+                </value>
+                <value>
+                    <fullName>UPS Small Express Box</fullName>
+                    <default>false</default>
+                    <label>UPS Small Express Box</label>
+                </value>
+                <value>
+                    <fullName>UPS Medium Express Box</fullName>
+                    <default>false</default>
+                    <label>UPS Medium Express Box</label>
+                </value>
+                <value>
+                    <fullName>UPS Large Express Box</fullName>
+                    <default>false</default>
+                    <label>UPS Large Express Box</label>
+                </value>
+                <value>
+                    <fullName>UPS PAK</fullName>
+                    <default>false</default>
+                    <label>UPS PAK</label>
+                </value>
+                <value>
+                    <fullName>UPS Tube</fullName>
+                    <default>false</default>
+                    <label>UPS Tube</label>
+                </value>
+                <value>
+                    <fullName>Your Packaging</fullName>
+                    <default>false</default>
+                    <label>Your Packaging</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__PaymentType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sender</fullName>
+                    <default>false</default>
+                    <label>Sender</label>
+                </value>
+                <value>
+                    <fullName>Recipient</fullName>
+                    <default>false</default>
+                    <label>Recipient</label>
+                </value>
+                <value>
+                    <fullName>Third Party</fullName>
+                    <default>false</default>
+                    <label>Third Party</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__PayorAccountCountry__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payor Account Country</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__PayorAccountPostalCode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payor Account Postal Code</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__PayorAccount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payor Account</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__QueuedShipmentSpecialServices__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Queued Shipment Special Services</label>
+        <referenceTo>zkups__QueuedShipmentSpecialServices__c</referenceTo>
+        <relationshipLabel>UPS Queued Shipments</relationshipLabel>
+        <relationshipName>UPS_Queued_Shipments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientCity__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient City</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientCompany__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Company</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientCountry__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Country</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientEmail__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientIsResidential__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Address is Residential</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientPhone__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientPostalCode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Zip/Postal Code</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientState__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient State/Province</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__RecipientStreet__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recipient Street</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>zkups__ReturnDescription__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Return Description</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__ReturnShipment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Return Shipment</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkups__ReturnType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Return Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electronic Return Label</fullName>
+                    <default>false</default>
+                    <label>Electronic Return Label</label>
+                </value>
+                <value>
+                    <fullName>Print Return Label</fullName>
+                    <default>false</default>
+                    <label>Print Return Label</label>
+                </value>
+                <value>
+                    <fullName>Print and Mail</fullName>
+                    <default>false</default>
+                    <label>Print and Mail</label>
+                </value>
+                <value>
+                    <fullName>Return Service 1 Attempt</fullName>
+                    <default>false</default>
+                    <label>Return Service 1 Attempt</label>
+                </value>
+                <value>
+                    <fullName>Return Service 3 Attempts</fullName>
+                    <default>false</default>
+                    <label>Return Service 3 Attempts</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__SecondReferenceType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Second Reference Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Accounts Receivable Customer Account</fullName>
+                    <default>false</default>
+                    <label>Accounts Receivable Customer Account</label>
+                </value>
+                <value>
+                    <fullName>Appropriation Number</fullName>
+                    <default>false</default>
+                    <label>Appropriation Number</label>
+                </value>
+                <value>
+                    <fullName>Bill of Lading Number</fullName>
+                    <default>false</default>
+                    <label>Bill of Lading Number</label>
+                </value>
+                <value>
+                    <fullName>Collect on Delivery (COD) Number</fullName>
+                    <default>false</default>
+                    <label>Collect on Delivery (COD) Number</label>
+                </value>
+                <value>
+                    <fullName>Dealer Order Number</fullName>
+                    <default>false</default>
+                    <label>Dealer Order Number</label>
+                </value>
+                <value>
+                    <fullName>Department Number</fullName>
+                    <default>false</default>
+                    <label>Department Number</label>
+                </value>
+                <value>
+                    <fullName>FDA Product Code</fullName>
+                    <default>false</default>
+                    <label>FDA Product Code</label>
+                </value>
+                <value>
+                    <fullName>Invoice Number</fullName>
+                    <default>false</default>
+                    <label>Invoice Number</label>
+                </value>
+                <value>
+                    <fullName>Manifest Key Number</fullName>
+                    <default>false</default>
+                    <label>Manifest Key Number</label>
+                </value>
+                <value>
+                    <fullName>Model Number</fullName>
+                    <default>false</default>
+                    <label>Model Number</label>
+                </value>
+                <value>
+                    <fullName>Part Number</fullName>
+                    <default>false</default>
+                    <label>Part Number</label>
+                </value>
+                <value>
+                    <fullName>Production Code</fullName>
+                    <default>false</default>
+                    <label>Production Code</label>
+                </value>
+                <value>
+                    <fullName>Purchase Order Number</fullName>
+                    <default>false</default>
+                    <label>Purchase Order Number</label>
+                </value>
+                <value>
+                    <fullName>Purchase Request Number</fullName>
+                    <default>false</default>
+                    <label>Purchase Request Number</label>
+                </value>
+                <value>
+                    <fullName>Return Authorization Number</fullName>
+                    <default>false</default>
+                    <label>Return Authorization Number</label>
+                </value>
+                <value>
+                    <fullName>Salesperson Number</fullName>
+                    <default>false</default>
+                    <label>Salesperson Number</label>
+                </value>
+                <value>
+                    <fullName>Serial Number</fullName>
+                    <default>false</default>
+                    <label>Serial Number</label>
+                </value>
+                <value>
+                    <fullName>Store Number</fullName>
+                    <default>false</default>
+                    <label>Store Number</label>
+                </value>
+                <value>
+                    <fullName>Transaction Reference Number</fullName>
+                    <default>false</default>
+                    <label>Transaction Reference Number</label>
+                </value>
+                <value>
+                    <fullName>Employer&apos;s ID Number</fullName>
+                    <default>false</default>
+                    <label>Employer&apos;s ID Number</label>
+                </value>
+                <value>
+                    <fullName>Federal Taxpayer ID No.</fullName>
+                    <default>false</default>
+                    <label>Federal Taxpayer ID No.</label>
+                </value>
+                <value>
+                    <fullName>Social Security Number</fullName>
+                    <default>false</default>
+                    <label>Social Security Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__SecondReferenceValue__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Second Reference Value</label>
+        <length>35</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderCity__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender City</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderCompany__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Company</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderCountry__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Country</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderEmail__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderIsResidential__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Address is Residential</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderPhone__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderPostalCode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Zip/Postal Code</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderState__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender State/Province</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__SenderStreet__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sender Street</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>zkups__ServiceType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Service Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Domestic: UPS Next Day Air Early A.M.</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS Next Day Air Early A.M.</label>
+                </value>
+                <value>
+                    <fullName>Domestic: UPS Next Day Air</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS Next Day Air</label>
+                </value>
+                <value>
+                    <fullName>Domestic: UPS Next Day Air Saver</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS Next Day Air Saver</label>
+                </value>
+                <value>
+                    <fullName>Domestic: UPS 2nd Day Air A.M.</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS 2nd Day Air A.M.</label>
+                </value>
+                <value>
+                    <fullName>Domestic: UPS 2nd Day Air</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS 2nd Day Air</label>
+                </value>
+                <value>
+                    <fullName>Domestic: UPS 3 Day Select</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS 3 Day Select</label>
+                </value>
+                <value>
+                    <fullName>Domestic: UPS Ground</fullName>
+                    <default>false</default>
+                    <label>Domestic: UPS Ground</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>zkups__ShipmentDescription__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Description of Goods</label>
+        <length>35</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__USPSEndorsement__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>USPS Endorsement</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkups__WeightDimensionUnits__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Weight/Dimension Units</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>LB / IN</fullName>
+                    <default>false</default>
+                    <label>LB / IN</label>
+                </value>
+                <value>
+                    <fullName>KG / CM</fullName>
+                    <default>false</default>
+                    <label>KG / CM</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>UPS Queued Shipment</label>
+    <nameField>
+        <displayFormat>Queued-Shipment-{00000000}</displayFormat>
+        <label>Queued Shipment Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>UPS Queued Shipments</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

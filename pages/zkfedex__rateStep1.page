@@ -1,0 +1,355 @@
+<apex:page tabStyle="zkfedex__Shipment__c" standardController="zkfedex__Shipment__c" extensions="zkfedex.ShippingController" sidebar="false">
+  
+  <c:Loading id="LoadingControl"/>
+  
+  <apex:outputPanel id="rateStep1SectionHeader">
+    <apex:sectionHeader title="{!SectionHeaderTitle}" subtitle="Step 1 - Ship From / To" help="{!HelpLinks.HelpLinkRateStep1}"/>
+  </apex:outputPanel>
+  
+    <apex:form >
+      
+      <apex:image url="{!URLFOR($Resource.zkfedex__stepTimelines, 'stepTimelines/timeline1.png')}"/><p/>
+      
+      <apex:pageBlock id="rateStep1PageBlock" mode="detail">
+        
+        <!-- pageBlockButtons -->
+        <apex:pageBlockButtons >
+          <apex:commandButton value="<<" disabled="true" onclick="IsLoading();"/>
+          <apex:commandButton style="border-style:solid; border-color:yellow" value="1" onclick="IsLoading();"/>
+          <apex:commandButton action="{!nextToRateStep2}" value="2" disabled="{!AND(WizardTraverseDisabled, RateStep1.CurrentShipmatePreferenceGoodState)}" onclick="IsLoading();" />
+          <apex:commandButton value="3" disabled="true"/>
+          <apex:commandButton value="4" disabled="true"/>
+          <apex:commandButton value="5" disabled="true"/>
+          <apex:commandButton action="{!nextToRateStep2}" value=">>" disabled="{!AND(WizardTraverseDisabled, RateStep1.CurrentShipmatePreferenceGoodState)}" onclick="IsLoading();" />
+        </apex:pageBlockButtons>
+                 
+        
+        <!-- Error Messages -->
+        <!-- Only rateStep1 displays Shipping Init Error Messages, since it is the first page -->
+        <!-- no id given b/c only displayed when first rendered -->
+        <apex:outputPanel >
+          <apex:pageMessage title="Note:" summary="{!ShippingInitInfoMsg}" rendered="{!AND(ShippingInitInfoMsgRendered,NOT(ShippingInitMsgRendered))}" severity="info" strength="1"/>
+          <apex:pageMessage title="Alert:" summary="{!ShippingInitMsg}" rendered="{!ShippingInitMsgRendered}" severity="error" strength="1">
+            <apex:commandButton action="/apex/zkfedex__newShipmatePreference" value="New Shipmate Preference" rendered="{!NewShipmatePreferenceButtonRendered}"/>
+            <apex:commandButton action="{!goToPersonalInfoSetup}" value="Go To Personal Information" immediate="true" rendered="{!PersonalInfoSetupButtonRendered}"/>
+          </apex:pageMessage>
+        </apex:outputPanel>
+        
+        <!-- Error Messages -->
+        <apex:outputPanel id="rateStep1Msg">
+          <apex:pageMessage title="Note:" summary="{!RateStep1.RateStep1InfoMsg}" rendered="{!RateStep1.RateStep1InfoMsgRendered}" severity="info" strength="1"/>
+          <apex:pageMessage title="Error:" summary="{!RateStep1.RateStep1Msg}" rendered="{!RateStep1.RateStep1MsgRendered}" severity="error" strength="1"/>
+        </apex:outputPanel>
+
+        <!-- Error Messages -->
+        <!-- Custom Component: MessageDisplay -->
+        <apex:outputPanel id="addressValidationMsg">
+          <c:MessageDisplay reply="{!RateStep1.CurrentWebServiceReply}" hideSuccess="true"/>
+        </apex:outputPanel>
+        
+        
+
+        <!-- Shipment Process Select Section -->
+        <apex:pageBlockSection collapsible="false" title="Type of Shipment">
+          
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="What would you like to do?"/>
+            <apex:selectList id="selectShipmentProcess" value="{!RateStep1.SelectedShipmentProcess}" size="1" multiselect="false" >
+              <apex:actionSupport event="onchange" action="{!RateStep1.shipmentProcessSelectRefresh}" rerender="rateStep1SectionHeader,rateStep1PageBlock" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep1.ShipmentProcessOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection><p/>
+        
+        
+        <!-- Account Section -->
+        <apex:outputPanel id="selectPreferenceSection" >
+        <apex:pageBlockSection collapsible="false" title="Shipmate Preference" rendered="{!RateStep1.ShipmatePreferenceInputRendered}">
+        
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Shipmate Preference"/>
+            <apex:selectList value="{!RateStep1.SelectedShipmatePreference}" size="1" multiselect="false" >
+              <apex:actionSupport event="onchange" action="{!RateStep1.shipmatePreferenceSelectRefresh}" rerender="rateStep1Msg,selectPreferenceSection,ShipFromSection" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep1.AlternativePreferenceOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+        
+                
+        <!-- Ship From Section -->
+        <apex:outputPanel id="ShipFromSection" >
+        <apex:pageBlockSection collapsible="false" title="{!RateStep1.SenderSectionTitle} (* Denotes required field)">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Name"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderName__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Email"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderEMail__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Company"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderCompany__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Phone"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderPhone__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem helpText="{!HelpLinks.StreetHelpText}" >
+            <apex:outputLabel value="* Street"/>
+            <apex:inputField style="width:350px" required="false" value="{!Shipment.zkfedex__SenderStreet__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* City"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderCity__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* State/Province"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderState__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Zip/Postal Code"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderPostalCode__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="* Country"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderCountry__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="This is a Residence"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__SenderIsResidential__c}"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+      
+        <!-- Ship To Section -->
+        <apex:outputPanel id="ShipToSection" >
+        <apex:pageBlockSection collapsible="false" title="{!RateStep1.RecipientSectionTitle} (* Denotes required field)">
+        
+          <!-- Address Source -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Address Source" for="SelectSourceSObject"/>
+            <apex:selectList id="SelectSourceSObject" value="{!RateStep1.SelectedAddressedSObject}" size="1" multiselect="false" >
+              <apex:actionSupport event="onchange" action="{!RateStep1.addressedSObjectSelectRefresh}" rerender="ShipToSection,rateStep1Msg" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep1.AddressedSObjectOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem><p/>
+           
+          <!-- Checkbox -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.Checkbox2Rendered}">
+            <apex:outputLabel value="{!RateStep1.Checkbox2Title}" for="Checkbox2"/>
+            <apex:inputCheckbox value="{!RateStep1.Checkbox2IsChecked}" id="Checkbox2">
+              <apex:actionSupport event="onclick" action="{!RateStep1.checkbox2CheckedRefresh}" rerender="ShipToSection,rateStep1Msg" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+            </apex:inputCheckbox>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.Checkbox2Rendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Select Destination Filter -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.DestListRendered}">
+            <apex:outputLabel value="Search"/>
+            <apex:inputText value="{!RateStep1.SelectedDestFilter}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.DestListRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.DestListRendered}">
+            <apex:outputPanel style="float:left; margin-left:36.5%" >
+              <!-- Apply Filter button -->
+              <apex:commandButton action="{!RateStep1.destFilterRefresh}" value="Go!" rerender="ShipToSection,rateStep1Msg"  onclick="IsLoading();" oncomplete="FinishLoading();"/>
+              <!-- Clear Filter button -->
+              <apex:commandButton action="{!RateStep1.destFilterClearRefresh}" value="Clear" rerender="ShipToSection,rateStep1Msg" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+            </apex:outputPanel>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.DestListRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Select Destination selectList -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.DestListRendered}">
+            <apex:outputLabel value="{!RateStep1.DestListTitle}" for="SelectExistingDestination"/>
+            <apex:selectList id="SelectExistingDestination" style="width:350px" value="{!RateStep1.SelectedDest}" size="6" multiselect="false">
+              <apex:actionSupport event="onchange" action="{!RateStep1.destSelectRefresh}" rerender="ShipToSection,rateStep1Msg" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep1.DestOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.DestListRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Select Recipient Name from Client selectList -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.ClientInAccountRendered}">
+            <apex:outputLabel value="Select Contact" for="SelectContactAsRecipientName"/>
+            <apex:selectList id="SelectContactAsRecipientName" value="{!RateStep1.SelectedClientInAccount}" size="1" multiselect="false" disabled="{!RateStep1.ClientInAccountDisabled}">
+              <apex:actionSupport event="onchange" action="{!RateStep1.clientInAccountRefresh}" rerender="ShipToSection,rateStep1Msg" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+              <apex:selectOptions value="{!RateStep1.ClientInAccountOptions}"/>
+            </apex:selectList>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.ClientInAccountRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+
+          <apex:pageBlockSectionItem rendered="{!RateStep1.AllowEditRendered}">
+            <apex:outputLabel value="Allow Edit" for="SelectAllowEdit"/>
+            <apex:inputCheckbox id="AllowEdit" value="{!Shipment.zkfedex__UserAllowedEditOfRecipientInfo__c}" >
+              <apex:actionSupport event="onclick" action="{!RateStep1.allowEditRefresh}" rerender="ShipToSection,rateStep1Msg" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+            </apex:inputCheckbox>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.AllowEditRendered}">
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <!-- blank to align inputText boxes correctly -->
+          </apex:pageBlockSectionItem>
+          
+          <!-- Recipient Name -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientNameInputEnabled}">
+            <apex:outputLabel value="* Name"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientName__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientNameInputDisabled}">
+            <apex:outputLabel value="* Name"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientName__c}"/>
+          </apex:pageBlockSectionItem>
+
+          <!-- Recipient EMail -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientEMailInputEnabled}">
+            <apex:outputLabel value="Email"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientEMail__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientEMailInputDisabled}">
+            <apex:outputLabel value="Email"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientEMail__c}"/>
+          </apex:pageBlockSectionItem>
+                    
+          <!-- Recipient Company -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientCompanyInputEnabled}">
+            <apex:outputLabel value="Company"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientCompany__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientCompanyInputDisabled}">
+            <apex:outputLabel value="Company"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientCompany__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <!-- Recipient Phone -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientPhoneInputEnabled}">
+            <apex:outputLabel value="* Phone"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientPhone__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientPhoneInputDisabled}">
+            <apex:outputLabel value="* Phone"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientPhone__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <!-- Recipient Street1 -->
+          <apex:pageBlockSectionItem helpText="{!HelpLinks.StreetHelpText}" rendered="{!RateStep1.RecipientStreet1InputEnabled}">
+            <apex:outputLabel value="* Street"/>
+            <apex:inputField style="width:350px" required="false" value="{!Shipment.zkfedex__RecipientStreet__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientStreet1InputDisabled}">
+            <apex:outputLabel value="* Street"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientStreet__c}"/>
+          </apex:pageBlockSectionItem>
+                    
+          <!-- Recipient City -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientCityInputEnabled}">
+            <apex:outputLabel value="* City"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientCity__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientCityInputDisabled}">
+            <apex:outputLabel value="* City"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientCity__c}"/>
+          </apex:pageBlockSectionItem>
+
+          <!-- Recipient State/Province -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientStateInputEnabled}">
+            <apex:outputLabel value="{!RateStep1.RecipientStateTitle}"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientState__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientStateInputDisabled}">
+            <apex:outputLabel value="{!RateStep1.RecipientStateTitle}"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientState__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <!-- Recipient Zip/Postal Code -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientPostalCodeInputEnabled}">
+            <apex:outputLabel value="{!RateStep1.RecipientPostalCodeTitle}"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientPostalCode__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientPostalCodeInputDisabled}">
+            <apex:outputLabel value="{!RateStep1.RecipientPostalCodeTitle}"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientPostalCode__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <!-- Recipient Country -->
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientCountryInputEnabled}">
+            <apex:outputLabel value="* Country"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientCountry__c}"/>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientCountryInputDisabled}">
+            <apex:outputLabel value="* Country"/>
+            <apex:outputField value="{!Shipment.zkfedex__RecipientCountry__c}"/>
+          </apex:pageBlockSectionItem>
+ 
+          <!-- Recipient Address is Residential -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="This is a Residence"/>
+            <apex:inputField required="false" value="{!Shipment.zkfedex__RecipientIsResidential__c}"/>
+          </apex:pageBlockSectionItem>
+          
+          <!-- Recipient Address check -->
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value=""/>
+            <apex:commandButton action="{!RateStep1.validateRecipientAddress}" value="Validate Address" rerender="rateStep1Msg,addressValidationMsg,senderAddressValidationDisplay,recipientAddressValidationDisplay,clearSenderAddressValidationDisplayButton,clearRecipientAddressValidationDisplayButton" disabled="{!WizardTraverseDisabled}" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+          
+        </apex:pageBlockSection>
+        </apex:outputPanel>
+
+        
+        <!-- Custom Component: AddressValidationDisplay -->
+        <apex:outputPanel id="recipientAddressValidationDisplay">
+          <c:AddressValidationDisplay residential="{!Shipment.zkfedex__RecipientIsResidential__c}" avdParam="{!RateStep1.RecipientAddressValidationDisplay1Param}" />
+          <c:AddressValidationDisplay residential="{!Shipment.zkfedex__RecipientIsResidential__c}" avdParam="{!RateStep1.RecipientAddressValidationDisplay2Param}" />
+          <c:AddressValidationDisplay residential="{!Shipment.zkfedex__RecipientIsResidential__c}" avdParam="{!RateStep1.RecipientAddressValidationDisplay3Param}" />
+        </apex:outputPanel>
+
+        <!-- Recipient Address Validation Display Clear Button -->
+        <apex:outputPanel id="clearRecipientAddressValidationDisplayButton">
+        <apex:pageBlockSection collapsible="false" showHeader="false">
+        
+          <apex:pageBlockSectionItem rendered="{!RateStep1.RecipientAddressValidationClearButtonRendered}" >
+            <apex:outputLabel value=""/>
+            <apex:commandButton action="{!RateStep1.clearRecipientAddressValidationDisplay}" value="Clear Result" rerender="rateStep1Msg,addressValidationMsg,ShipToSection,recipientAddressValidationDisplay,clearRecipientAddressValidationDisplayButton" onclick="IsLoading();" oncomplete="FinishLoading();"/>
+          </apex:pageBlockSectionItem>
+
+        </apex:pageBlockSection>
+        </apex:outputPanel><p/>
+        
+      </apex:pageBlock>
+      
+      
+      <!-- Shipment Notes -->
+      <apex:pageBlock mode="detail">
+        <apex:pageBlockSection collapsible="false" columns="1" title="Shipment Notes">
+          <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Shipment Notes"/>
+            <apex:inputField required="false" style="width:350px" value="{!Shipment.zkfedex__ShipmentNotes__c}"/>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      
+    </apex:form>
+</apex:page>

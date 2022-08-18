@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CHILD_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestTimeEntry__c.H2S__Person__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestTimeEntry__c.H2S__Task_Type__c</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestTimeEntry__c.H2S__Invoiced__c</field>
+    </columns>
+    <columns>
+        <field>H2S__HarvestTimeEntry__c.H2S__Duration__c</field>
+    </columns>
+    <description>Bookkeeping</description>
+    <filter>
+        <criteriaItems>
+            <column>H2S__HarvestTimeEntry__c.H2S__Person__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Allan Borromeo,Fabian Castro,Ashley Cloutier,Tracey Confair,Trisha Cullinane,Ruby Del Prado,Kiera Dunphy,Mandy Hahn,Tavia Harter,Jessica Hartstein,Troy Howard,Teresa Kaniho,Mashingaidze,Cindy Mejorado,Nancy Naraine,Dawn Popa,Toni Reid,Antoinette Reid,Tametha Tyquiengco,Jacquie Wallace-Small,Gaylend Crawford</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Invoiced VS Non-Invoiced HRS</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$H2S__HarvestProject__c$H2S__HarvestTimeEntry__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>H2S__HarvestProject__c.H2S__DateCompleted__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

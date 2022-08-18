@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_34296503</developerName>
+        <masterLabel>Advisors</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Opportunity.Sales_Rep__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Al Caiazza</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Corey Posgay</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michael Hackler</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Seth Perlman</sourceValue>
+            </sourceValues>
+            <value>Sr. Strategist</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Kelly Allison</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shaena Aguilar</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shane Broyard</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Michelle Merritt</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kendall O&apos;Leary</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ricardo Gonzalez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Brian Bowman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chuck Hall</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Josh Terry</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Justin Cortes</sourceValue>
+            </sourceValues>
+            <value>Sr. Advisor</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Serena Cervantes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sara Winter</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Joey Felix</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Terrence Redmond</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lucas Turman</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alfonso Andino</sourceValue>
+            </sourceValues>
+            <value>Business Advisor</value>
+        </values>
+    </buckets>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Opportunity.Sales_Rep__c</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>false</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Blueprint_Created__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.LucidChart_Created__c</field>
+    </columns>
+    <columns>
+        <field>Account.Blueprint_Created_By__c</field>
+    </columns>
+    <columns>
+        <field>Account.Most_Recent_Upload__c</field>
+    </columns>
+    <columns>
+        <field>Account.LucidChart_Blueprint_Created_By__c</field>
+    </columns>
+    <columns>
+        <field>Account.LucidChart_Blueprint_Last_Modified_Date__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Entity_Formation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>STAGE_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Fulfillment/Partial Payment,Closed Won</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_34296503</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Sr. Strategist,Sr. Advisor,Business Advisor</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>refunded</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.ChargentSFA__Transaction_Total__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.LucidChart_Created__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>LucidChart Missing - QA</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</dateColumn>
+        <endDate>2021-12-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2020-10-01</startDate>
+    </timeFrameFilter>
+</Report>

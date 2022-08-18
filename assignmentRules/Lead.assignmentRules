@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Distribution Engine AR</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>boss@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Main_Lead_Source__c</field>
+                <operation>equals</operation>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>equals</operation>
+                <value>,10 Common AP Mistakes eBook</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.FirstName</field>
+                <operation>contains</operation>
+                <value>test</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.LastName</field>
+                <operation>contains</operation>
+                <value>test</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Attendee</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.rrpu__Alert_Message__c</field>
+                <operation>equals</operation>
+                <value>ABA DOES NOT REACH OUT TO THESE LEADS</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Big_Dog_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Main_Lead_Source__c</field>
+                <operation>equals</operation>
+                <value>Big Dog-Love American Homes</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Big Dog</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Kelton_Todd_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Kelton Todd</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Kelton Todd</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Xsite_Capital_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Xsite,Teghena,Julius Oni,Awasom</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Xsite,Teghena,Julius Oni,Awasom</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>lsolomon@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Real Estate Matters,Brian Bowman</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Real Estate Matters,Brian Bowman</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Grocapitus</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Grocapitus,10 Common AP Mistakes eBook,Grocapitus - Primer Ebook,Grocapitus - Invisible Investor Strategy Ebook</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Neal Bawa,Grocapitus Investments,LLC MultifamilyU,Grocapitus,10 Common AP Mistakes eBook,Grocapitus - Primer Ebook,Grocapitus - Invisible Investor Strategy Ebook</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Lead_Score__c</field>
+                <operation>greaterOrEqual</operation>
+                <value>10</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Portfolio_Builder_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Portfolio Builder</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Portfolio Builder</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ppeery@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Potomac</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Potomac</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Peter_Badger_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Peter Badger,Global Investor</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Peter Badger,Global Investor</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>dmaddox+lex@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Royal Legal Solutions</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Royal Legal Solutions</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>jray@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>2 AND (1 OR 3)</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Perlman</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Echelon Property,Legacy Wealth,Acen Hansen,Mike Wolf,NuVision</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>czoellner@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>equals</operation>
+                <value>Carl Zoellner</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>AVX Tech</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>sherndon@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Schaumburg,Wilkinson</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>aguerra@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Leary,Strativentures,Paper Source</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Strativentures,Paper Source</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>dmaddox@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Dwain Blake,Nouraldin,Rick Glade,Real Wealth Matters,Rainy Day,Olivia Serna,Melvin Young,Modewealth,Alliance Virtual</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Ricardo Gonzalez,Dwain Blake,Nouraldin,Chuck Hall,Shane Broyard,Serna,Melvin Young</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>cguzman@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Josh Terry,Joey Felix</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>mpreseren@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>equals</operation>
+                <value>Corey Posgay</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Xavier,HI REI,Isaac Stegman,Mainstay,Active Duty,Conkey,Tandy</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>jray@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Smart Real Estate Coach</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Tracey,Smart Real Estate Coach</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>swinter@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>equals</operation>
+                <value>Sara Winter</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>rmendoza@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Simple Passive,Fixated,SemiRetired,Apryl</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Michael Hackler,Fixated,SemiRetired,Apryl</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ckightlinger@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>equals</operation>
+                <value>Al Caiazza</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Naya Zhao</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Affiliate_Leads_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Affiliate_Lead__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Main_Lead_Source__c</field>
+                <operation>equals</operation>
+                <value>Affiliate,Big Dog-Love American Homes,Dani Johnson,Dave Lindahl,Don Pendleton,Elite Legacy,Gene Guarino,Jet Lending,Nick Vertucci-NVREA,Pat James,Real Wealth Network</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>HighPrio_Leads_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 OR 3 OR 4) AND 2 AND 5</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Free SS,Consult Form,Strategy</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Description</field>
+                <operation>contains</operation>
+                <value>http://andersonadvisors.com/ss-offer/</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.pi__utm_campaign__c</field>
+                <operation>contains</operation>
+                <value>Free Consult Form</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Lead_Score__c</field>
+                <operation>greaterOrEqual</operation>
+                <value>55</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Hubspot_Lead_DE</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Lead.Phone</field>
+                <operation>equals</operation>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Lead_Score__c</field>
+                <operation>lessThan</operation>
+                <value>55</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>lsolomon@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <booleanFilter>(1 OR 2 ) AND 3</booleanFilter>
+            <criteriaItems>
+                <field>Lead.OCS_Parent_Campaign__c</field>
+                <operation>contains</operation>
+                <value>Passive Income MD</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.Original_Campaign_Source_Name__c</field>
+                <operation>contains</operation>
+                <value>Passive Income MD</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Lead.DoNotCall</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </criteriaItems>
+        </ruleEntry>
+    </assignmentRule>
+    <assignmentRule>
+        <fullName>Round Robin</fullName>
+        <active>false</active>
+        <ruleEntry>
+            <assignedTo>boss@andersonadvisors.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.Round_Robin_ID__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <template>Unfiled_Public/New_Lead</template>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>

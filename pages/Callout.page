@@ -1,0 +1,72 @@
+<apex:page standardController="Entities__c" extensions="TaxReturnController" title="TaxRetunPage" showHeader="false" sidebar="false" lightningStyleSheets="true">
+    <apex:form >
+        <apex:pageBlock id="taxId">
+            <apex:pageBlockSection title="Tax Return Information">
+                <apex:outputlabel ><b>Select Year:</b></apex:outputlabel>&nbsp;
+                <apex:selectList size="1" value="{!dropdownvalue}">
+                    <apex:selectOptions value="{!dynamiclist}"/>
+                    <apex:actionSupport event="onchange" action="{!executeDML}" reRender="taxId" status="actStatusId"/> 
+                </apex:selectList>
+                <apex:actionStatus id="actStatusId" style="align:center">      
+                    <apex:facet name="start">
+                        <img src="/img/loading.gif" title="Processing..."/>
+                        <!--<apex:image style="float:center" url="{!URLFOR($Resource.images, 'images/loading.gif')}" title="Processing..."/>-->                     
+                    </apex:facet>
+                    <apex:facet name="stop"></apex:facet>
+                </apex:actionStatus>
+                <br/>
+                <br/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <!----******** for federal and and E file status-->
+                <apex:variable var="count" value="{!0}"/>
+                <apex:repeat value="{!testMap2}">
+                    <apex:variable var="count" value="{!count + 1}"/>
+                </apex:repeat>
+                <apex:pageBlockSection rendered="{!count > 0}">
+                    <apex:repeat value="{!keys}" var="key">
+                        <apex:repeat value="{!txLstR[key]}" var="map" rows="1">
+                            <Apex:outputText label="{!key}" value="{!map}"/> 
+                        </apex:repeat>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+                <br/>
+                <br/>
+                <apex:pageBlockSection rendered="{!count > 0}">
+                    <h1><b>Federal E-file Status </b></h1>
+                </apex:pageBlockSection>
+                <apex:outputText label="" value=""/>
+                <apex:repeat value="{!testMap2}" var="data" >
+                    <apex:pageBlockSection rendered="{!AND(CONTAINS(data,'Efile'), count > 0)}">
+                        <apex:repeat value="{!testMap2[data]}" var="var">
+                            <apex:repeat value="{!testMap2[data][var]}" var="a"> 
+                                <apex:outputText label="{!var}" value="{!a}"/>
+                            </apex:repeat>        
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+                    <br/>
+                    <br/>
+                </apex:repeat>
+                
+                <apex:pageBlockSection rendered="{!count > 0}">
+                    <h1><b>Federal Extension Status </b></h1>
+                </apex:pageBlockSection>
+                <apex:outputText label="" value=""/>
+                <apex:repeat value="{!testMap2}" var="data">
+                    <apex:pageBlockSection rendered="{!AND(CONTAINS(data,'Extension'),count>0)}">
+                        <apex:repeat value="{!testMap2[data]}" var="var">
+                            <apex:repeat value="{!testMap2[data][var]}" var="a">
+                                <apex:outputText label="{!var}" value="{!a}"/>
+                            </apex:repeat>
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+                    <br/>
+                    <br/>
+                </apex:repeat>
+                <apex:outputPanel rendered="{!count <= 0}">
+                    <h1><b>Data Not Found for This Year</b></h1> 
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

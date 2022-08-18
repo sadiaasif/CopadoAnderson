@@ -1,0 +1,231 @@
+<apex:page doctype="HTML-5.0" id="ptlSubscribeNtvPage" controller="pymt.PtlSubscribeNTVController"   sidebar="false" cache="false" language="{!$CurrentPage.Parameters.lang}" title="{!$Label.pymt__SiteSubscribeNTV_CheckoutHeading}">
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+  <div id="{!HTMLENCODE($CurrentPage.parameters.context)}">
+  <div id="pc_lang_{!$CurrentPage.parameters.lang}">
+  <div class="pc_page" id="pc_ptlsubscribentv_page">
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+
+    <apex:pageMessages id="messages"/>
+    <apex:form id="mainForm">
+    <script>
+    // HTML5 validation fallback code - for Safari, ios and android devices
+    function hasHtml5Validation () {
+      return typeof document.createElement('input').checkValidity === 'function';
+    }
+
+    if (hasHtml5Validation()) {
+      $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+        if (!this.checkValidity()) {
+          e.preventDefault();
+          $j(this).addClass('invalid');
+          $j('#status').html('invalid');
+        } else {
+          $j(this).removeClass('invalid');
+          $j('#status').html('submitted');
+        }
+      });
+    }
+    // end HTML5 validation fallback code
+    </script>
+
+        <apex:outputPanel rendered="{!showPageContents}">
+            <h1>{!$Label.pymt__SiteSubscribeNTV_CheckoutHeading}</h1>
+
+            <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeNTV_SubscriptionSummaryHeading == '-')}">
+            <h2>{!$Label.pymt__SiteSubscribeNTV_SubscriptionSummaryHeading}</h2>
+            </apex:outputPanel>
+                <apex:panelGrid columns="2" columnClasses="labelColumn,term_column" id="subscription_terms">
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionFor}:" />
+                    <apex:outputText value="{!profileName}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_Description}:" rendered="{!NOT(ISNULL(profileDescription))}" />
+                    <apex:outputText value="{!profileDescription}" rendered="{!NOT(ISNULL(profileDescription))}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_StartDate}:" />
+                    <apex:outputText value="{!startDateString}"/>
+
+                    <apex:outputText value="{!$Label.pymt__Label_InitialAmount}:"  rendered="{!(initialAmount>0)}"/>
+                    <apex:outputText rendered="{!(initialAmount>0)}"
+                        value="{!currencyFormatExpression}" >
+                    <apex:param value="{!initialAmount}"/>
+                    </apex:outputText>
+
+                    <apex:outputText value="{!$Label.pymt__Label_TrialAmount}:"  rendered="{!NOT(ISNULL(trialTerms))}"/>
+                    <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(trialTerms))}">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!trialAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!trialTerms}"/>
+
+                    </apex:outputPanel>
+
+                    <apex:outputText value="{!$Label.pymt__Label_SubscriptionAmount}:"/>
+                    <apex:outputPanel layout="inline">
+                      <apex:outputText value="{!currencyFormatExpression}" >
+                      <apex:param value="{!recurringAmount}"/>
+                      </apex:outputText>&nbsp;<apex:outputText value="{!subscriptionTerms}"/>
+                    </apex:outputPanel>
+
+                </apex:panelGrid>
+
+
+
+                <br/>
+
+                <apex:outputPanel id="checkoutPanel" >
+                  <h2>{!$Label.pymt__SiteSubscribeNTV_BillingInfoHeading}</h2>
+
+                    <apex:outputPanel rendered="{!displayProcessingActionOptions}">
+                    <apex:actionRegion >
+
+                    <div class="pc_flex_form">
+
+                      <div class="pc_flex_form_line_container">
+                          <div class="pc_flex_form_label_item">
+
+                          </div>
+                          <div class="pc_flex_form_required_flag_item">
+                              <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                          </div>
+
+                          <div class="pc_flex_form_field_item">
+                            <apex:selectRadio value="{!selectedProcessingAction}" >
+                            <apex:selectOptions value="{!processingActionOptions}"/>
+                            <apex:actionSupport event="onchange" action="{!selectedProcessingActionChanged}" rerender="paymentMethodCheckoutPanel, checkoutPanel, messages, debugInfo, createPmtMethodPanel"/>
+                            </apex:selectRadio>
+                          </div>
+                      </div>
+                    </div><!-- end of flex form -->
+                  </apex:actionRegion>
+                  </apex:outputpanel>
+
+
+
+                  <apex:outputPanel id="paymentMethodCheckoutPanel" rendered="{!paymentMethodCount >0}" >
+                     <apex:actionRegion >
+                      <apex:panelGrid columns="3" styleClass="pc_stored_pmt_method_table" columnClasses="labelColumn,requiredFieldMarkerColumn,fieldColumn">
+
+                          <apex:outputText value="{!$Label.pymt__Label_PaymentMethod}"/>
+                          <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+                          <apex:selectList size="1" id="paymentMethodSelectList"
+                                  multiselect="false" value="{!selectedPaymentMethodId}">
+                                  <apex:selectOptions value="{!paymentMethodOptions}" />
+                                  <apex:actionSupport event="onchange" action="{!null}"  rerender="checkoutPanel, messages, debugInfo, createPmtMethodPanel"/>
+                          </apex:selectList>
+
+                      </apex:panelGrid>
+                      </apex:actionRegion>
+                    </apex:outputPanel>
+
+
+
+                  <apex:outputPanel id="createPmtMethodPanel" rendered="{!selectedPaymentMethodId == ''}" >
+
+                  <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribePRB_BillingInfoInstructions == '-')}">
+                    <p class="pc_billing_info_instructions">{!$Label.pymt__SiteSubscribeNTV_BillingInfoInstructions}</p>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!(newPaymentMethodRecType == 'AuthNet_CIM_Payment_Profile')}">
+                  <c:SiteUpsertPmtMethodAuthNet pageControllerReference="{!this}" submitRerender="messages"/>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!(newPaymentMethodRecType == 'eWay_Customer_Profile')}">
+                  <c:SiteUpsertPmtMethodEWay pageControllerReference="{!this}" submitRerender="messages"/>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!(newPaymentMethodRecType == 'PayPal_Transaction_Reference')}">
+                  <c:SiteUpsertPmtMethodPayPalExpress pageControllerReference="{!this}" submitRerender="messages"/>
+                  </apex:outputPanel>
+
+
+                  <apex:outputPanel layout="none" rendered="{!(newPaymentMethodRecType == 'Credit_Card')}">
+                      <c:SiteUpsertPmtMethodNative pageControllerReference="{!this}" submitRerender="messages"/>
+                  </apex:outputPanel>
+
+                  <apex:outputPanel layout="none" rendered="{!(newPaymentMethodRecType == 'Bank_Account')}">
+                      <c:SiteUpsertPmtMethodBankAccount pageControllerReference="{!this}" submitRerender="messages"/>
+                  </apex:outputPanel>
+
+                  </apex:outputPanel>
+
+
+                    </apex:outputPanel>
+
+                  <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribePRB_BillingInfoInstructions == '-')}">
+                    <p class="pc_billing_info_instructions">{!$Label.pymt__SiteSubscribeNTV_ContinueInstructions}</p>
+                  </apex:outputPanel>
+                    <div class="pc_button_container">
+                      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+                          <apex:commandButton id="createSubscription" value="{!$Label.pymt__SiteSubscribeNTV_ContinueButton}" status="formActionStatus"
+                              action="{!createSubscription}"   rerender="mainForm, formActionStatus,  messages"/>
+                            <apex:commandButton id="cancel" value="{!$Label.pymt__SiteSubscribePRB_CancelButton}" html-formnovalidate="true" immediate="true"
+                                    action="{!cancelTransaction}"  rendered="{!AND(NOT(cancelURL==null), NOT(ISNULL(cancelURL)))}"/>
+                      </apex:outputPanel>
+
+                      <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+                          <input type="submit" style="display:none;" id="hiddenSubmit" name="hiddenSubmitInput"/>
+                          <apex:commandLink styleClass="css-button" onclick="if (!validateForm()) {return false;}" id="createSubscription2" value="{!$Label.pymt__SiteSubscribeNTV_ContinueButton}" status="formActionStatus"
+                              action="{!createSubscription}"   rerender="mainForm, formActionStatus,  messages"/>
+                            <apex:commandLink styleClass="css-button" id="cancel2" value="{!$Label.pymt__SiteSubscribePRB_CancelButton}" html-formnovalidate="true" immediate="true"
+                                    action="{!cancelTransaction}" rendered="{!AND(NOT(cancelURL==null), NOT(ISNULL(cancelURL)))}"/>
+                            <script>
+                             function validateForm() {
+                               // for apex:commandLink which does not invoke HTML5 form validation automatically
+                               var form = document.getElementById('{!$Component.mainForm}');
+                               var submitBtn = document.getElementById('hiddenSubmit');
+                               if (form.checkValidity() == false) {
+                                 submitBtn.click();  // force form to display validation messages.
+                                 return false;
+                               }
+                               return true;
+                             }
+                             </script>
+                      </apex:outputPanel>
+
+                      <apex:actionStatus id="formActionStatus" onstart="disableSubmitButtons(true)" onstop="disableSubmitButtons(false)">
+                            <apex:facet name="start">
+                                <apex:outputPanel styleClass="pc_button_spinner_panel">&nbsp;
+                                    <apex:image value="/s.gif"
+                                        styleClass="pc_button_container_spinner" alt="" />
+                                        &nbsp;Processing...
+                                </apex:outputPanel>
+                            </apex:facet>
+                            <apex:facet name="stop">
+                              <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;"/>
+                            </apex:facet>
+                      </apex:actionStatus>
+                      <script>
+                      function disableSubmitButtons(flag) {
+                         var submitBtn1 = document.getElementById('{!$Component.mainForm.createSubscription}');
+                         var submitBtn2 = document.getElementById('{!$Component.mainForm.createSubscription2}');
+                         if(submitBtn1 !== null) {
+                           submitBtn1.disabled = flag;
+                         }
+                         if(submitBtn2 !== null) {
+                           submitBtn2.disabled = flag;
+                         }
+                       }
+
+                      </script>
+                    </div>
+
+
+              </apex:outputPanel>
+
+
+    </apex:form>
+
+   <apex:outputPanel id="debugInfo" rendered="{!siteSettings.pymt__Debug__c == true}">
+   <br/><br/>
+   Debug Mode: Processor Id = {!processor.Id}, {!processor.pymt__Processor_Id__c}, newPaymentMethodRecType = {!newPaymentMethodRecType}, selectedPaymentMethodId= {!selectedPaymentMethodId},  paymentMethodCount = {!paymentMethodCount}
+   </apex:outputPanel>
+
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page context div -->
+</apex:page>

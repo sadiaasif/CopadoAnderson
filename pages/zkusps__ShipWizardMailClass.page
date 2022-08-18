@@ -1,0 +1,303 @@
+<apex:page id="mailClassPage" tabStyle="zkusps__Shipment__c" standardController="zkusps__Shipment__c" extensions="zkusps.ShippingController" sidebar="false">
+
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+
+    <script >
+        //Override JavaScript that is setting focus on Shipment Notes field
+        function setFocusOnLoad() {}
+    </script>
+
+    <script>
+        function deselectOtherServices(chkBox) {
+            if (chkBox != delConfInput && delConfInput != null) {
+                delConfInput.checked = false;
+            }
+            if (chkBox != sigConfInput && sigConfInput != null) {
+                sigConfInput.checked = false;
+            }
+            if (chkBox != adultSigInput && adultSigInput != null) {
+                adultSigInput.checked = false;
+            }
+            if (chkBox != restrictedDelInput && restrictedDelInput != null) {
+                restrictedDelInput.checked = false;
+            }
+        }
+    </script>
+
+    <apex:sectionHeader title="USPS Shipment Edit"  subtitle="New USPS Shipment"/>
+
+    <apex:form >
+
+        <script>
+            function IsLoading(whichLoading) {
+                $j('.' + whichLoading).toggle();
+            };
+        </script>
+
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+
+                $j(document).ready(function() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                });
+            </script>
+        </apex:outputPanel>
+
+        <apex:pageBlock id="shipWizardMailClassPageBlock" mode="detail">
+
+            <!-- Messages -->
+            <apex:outputPanel id="mailClassPageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+
+
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!backToStart}" value="<< Previous"/>
+                <apex:commandButton action="{!createPostageLabel}" value="Create Postage >>" onclick="IsLoading('loadingCreatePostageButton');"/>
+                <apex:image id="loadingCreatePostageButton" styleClass="loadingCreatePostageButton" value="{!$Resource.zkusps__LoadingImage}"/>
+            </apex:pageBlockButtons>
+
+            <!-- Shipment Details Section -->
+            <apex:pageBlockSection id="shipmentDetailsSection" collapsible="false" columns="1" title="">
+                <!-- Package Summary -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:outputText value="{!MailPieceSummary}"/>
+                </apex:pageBlockSectionItem>
+                <!-- From/To Summary -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:outputText value="{!ToFromSummary}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+
+            <!-- Mail Class Section -->
+            <apex:pageBlockSection id="mailClassSection"  columns="1" collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Select Mail Class "/>
+                        <apex:actionStatus id="mailClassStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Mail Class Table -->
+                <apex:pageBlockTable id="mailClassTable" value="{!SelectableMailClasses}" var="selectableMailClass" cellpadding="4" border="1" >
+                    <apex:column >
+                        <apex:facet name="header">Mail Service</apex:facet>
+                        <apex:selectRadio layout="pageDirection" value="{!SelectedMailClass}">
+                            <apex:selectOptions value="{!selectableMailClass.MailClassOptions}"/>
+                            <apex:actionSupport event="onchange" action="{!mailClassSelectRefresh}" rerender="requiredIndicatorScript,mailClassPageMessages,servicesSection,confServicesSection,labelSection,rateEstimateSection" status="mailClassStatus"/>
+                        </apex:selectRadio>
+                    </apex:column>
+                    <apex:column >
+                        <!-- NOTE: Use total amount, since Fee theoretically should not be there. Also to ensure Fee is not missed, worse case -->
+                        <apex:facet name="header">Postage Amount (USD)</apex:facet>
+                        <apex:dataTable value="{!selectableMailClass.TotalAmounts}" var="totalAmount" frame="none" border="0">
+                            <apex:column value="{!totalAmount}"/>
+                        </apex:dataTable>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+
+
+            <!-- Services Section -->
+            <apex:outputPanel id="servicesSection">
+            <apex:pageBlockSection columns="1"  collapsible="false" rendered="{!IsSpecialServicesSectionRendered}">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Select Service Options "/>
+                        <apex:actionStatus id="servicesStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Signature Waiver -->
+                <apex:inputField value="{!specialServices.zkusps__signatureWaiver__c}" rendered="{!IsSignatureWaiverRendered}"/>
+
+                <!-- No Delivery on Saturdays -->
+                <apex:inputField value="{!specialServices.zkusps__noDeliveryOnSaturdays__c}" rendered="{!IsNoDeliveryOnSaturdaysRendered}"/>
+
+                <!-- Sunday/Holiday Delivery -->
+                <apex:inputField value="{!specialServices.zkusps__sundayHolidayDelivery__c}" rendered="{!IsSundayHolidayDeliveryRendered}"/>
+
+                <!-- Certified Mail -->
+                <apex:inputField value="{!specialServices.zkusps__certifiedMail__c}" rendered="{!IsCertifiedMailRendered}"/>
+
+                <!-- Return Receipt -->
+                <apex:inputField value="{!specialServices.zkusps__returnReceipt__c}" rendered="{!IsReturnReceiptRendered}"/>
+
+                <!-- Insured Mail -->
+                <apex:inputField value="{!specialServices.zkusps__insuredMail__c}" rendered="{!IsInsuredMailRendered}"/>
+                <apex:outputField value="{!mailPiece.zkusps__valueOfContents__c}" rendered="{!IsInsuredMailRendered}"/>
+
+                <!-- COD -->
+                <apex:inputField value="{!specialServices.zkusps__cod__c}" rendered="{!IsCodRendered}">
+                    <apex:actionSupport event="onchange" rerender="requiredIndicatorScript,mailClassPageMessages,servicesSection,rateEstimateSection" action="{!codSelectRefresh}" status="servicesStatus"/>
+                </apex:inputField>
+
+                <!-- COD Amount -->
+                <apex:pageBlockSectionItem rendered="{!specialServices.zkusps__cod__c}">
+                        <apex:outputLabel styleClass="inputFieldRequired" value="COD Amount (USD)"/>
+                        <apex:inputField value="{!specialServices.zkusps__codAmount__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Confirmation Services Section -->
+            <apex:outputPanel id="confServicesSection">
+            <apex:pageBlockSection columns="1"  collapsible="false" rendered="{!IsConfirmationServicesSectionRendered}">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Select Confirmation Service Options "/>
+                        <apex:actionStatus id="confServicesStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Delivery Confirmation -->
+                <apex:inputField id="delConfInput" value="{!specialServices.zkusps__deliveryConfirmation__c}" rendered="{!IsDeliveryConfirmationRendered}" onclick="deselectOtherServices(this)"/>
+
+                <!-- Signature Confirmation -->
+                <apex:inputField id="sigConfInput" value="{!specialServices.zkusps__signatureConfirmation__c}" rendered="{!IsSignatureConfirmationRendered}" onclick="deselectOtherServices(this)"/>
+
+                <!-- Adult Signature -->
+                <apex:inputField id="adultSigInput" value="{!specialServices.zkusps__adultSignature__c}" rendered="{!IsAdultSignatureRendered}" onclick="deselectOtherServices(this)"/>
+
+                <!-- Restricted Delivery-->
+                <apex:inputField id="restrictedDelInput" value="{!specialServices.zkusps__restrictedDelivery__c}" rendered="{!IsRestrictedDeliveryRendered}" onclick="deselectOtherServices(this)"/>
+
+                <script>
+                    var delConfInput = document.getElementById('{!$Component.delConfInput}');
+                    var sigConfInput = document.getElementById('{!$Component.sigConfInput}');
+                    var adultSigInput = document.getElementById('{!$Component.adultSigInput}');
+                    var restrictedDelInput = document.getElementById('{!$Component.restrictedDelInput}');
+                </script>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Reference Fields Section -->
+            <apex:pageBlockSection id="referenceSection" columns="1" collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="References "/>
+                        <apex:actionStatus id="referenceSectionStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="refLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <apex:inputField value="{!shipment.zkusps__yourReference1__c}"/>
+                <apex:inputField value="{!shipment.zkusps__yourReference2__c}"/>
+                <apex:inputField value="{!shipment.zkusps__yourReference3__c}"/>
+            </apex:pageBlockSection>
+
+
+            <!-- Label Section -->
+            <apex:pageBlockSection id="labelSection" columns="1"  collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Select Label Options "/>
+                        <apex:actionStatus id="labelSectionStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Label Image Type -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Label Image Type"/>
+                    <apex:selectList value="{!SelectedLabelImageType}" size="1" multiselect="false" >
+                        <apex:selectOptions value="{!LabelImageTypeOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+
+            <!-- Rate Estimate Section -->
+            <apex:pageBlockSection id="rateEstimateSection" columns="1" collapsible="true">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Get Rate Estimate, Including Service Option Fees (Optional) "/>
+                        <apex:actionStatus id="rateEstimateStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Get Rate -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{!calculateTotalRateEstimate}" rerender="mailClassPageMessages,rateEstimateSection" value="Get Rate" status="rateEstimateStatus"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Rate Results -->
+                <apex:pageBlockTable id="rateResultsTable" value="{!DisplayablePostageRates}" var="displayablePostageRate" cellpadding="4" border="1" rendered="{!TotalRatesTableRendered}">
+                    <apex:column >
+                        <apex:facet name="header">Mail Service</apex:facet>
+                        <apex:outputText value="{!displayablePostageRate.PostageRate.MailService}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Postage + Fee Amount (USD)</apex:facet>
+                        <apex:outputText value="{!displayablePostageRate.PostageRate.RateFormatted}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+
+
+        <!-- Shipment Notes -->
+        <apex:pageBlock mode="detail">
+            <apex:pageBlockSection collapsible="false" columns="1" >
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Shipment Notes "/>
+                        <apex:actionStatus id="shipmentNotesStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Shipment Notes -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Shipment Notes"/>
+                    <apex:inputField required="false" style="width:350px" value="{!Shipment.zkusps__shipmentNotes__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

@@ -1,0 +1,11 @@
+<apex:page sidebar="false" tabStyle="Converse_App__tab">
+    <apex:includeLightning rendered="true"/>
+    <div id="lightning" />
+
+    <script>
+        $Lightning.use("smagicinteract:conversationApp", function() {
+            $Lightning.createComponent("smagicinteract:programs",{},"lightning",function(cmp) {});
+        });
+    </script>
+
+</apex:page>

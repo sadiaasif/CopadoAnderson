@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_53735529</developerName>
+        <masterLabel>Client Source</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Client_Source__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Nick Vertucci</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci - Bus Tour</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci - Package</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci Bus Tour</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci-Bus Tour</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci-Package</sourceValue>
+            </sourceValues>
+            <value>Nick Vertucci</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Rich Dad</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad Poor Dad (Kiasaki)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Rich Dad Telesales</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>richdadassetprotection.com</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy -- 01.15.16 -- Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP -- 04.29.2016 -- Las Vegas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP -- 07.11.2016 -- Los Angeles</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Education</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Parent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>elitetrainingap.com</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Training</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Tax &amp; AP</sourceValue>
+            </sourceValues>
+            <value>Rich Dad</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>NeUventure</sourceValue>
+            </sourceValues>
+            <value>NeuVenture</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Dani Johnson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dani Johnson Webinar</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dynasty-5-28-2016</sourceValue>
+            </sourceValues>
+            <value>Dani Johnson</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Pat James</sourceValue>
+            </sourceValues>
+            <value>Pat James</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Don Pendelton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Don Pendleton</sourceValue>
+            </sourceValues>
+            <value>Don Pendelton</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jerry Royse</sourceValue>
+            </sourceValues>
+            <value>Jerry Royse</value>
+        </values>
+    </buckets>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <columns>
+        <field>STAGE_NAME</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <description>Platinum 5in5</description>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Platinum_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Charge,Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>APPROVED</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_53735529</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Type__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>5in5 Platinum</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</dateColumn>
+        <interval>INTERVAL_CURPREV1</interval>
+    </timeFrameFilter>
+</Report>

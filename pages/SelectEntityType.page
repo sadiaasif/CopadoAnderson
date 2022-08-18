@@ -1,0 +1,21 @@
+<apex:page controller="AddPlans">
+<apex:form id="attendanceForm">
+    <apex:pageBlock id="selectPlans" title="Select Entity Type">
+        <apex:pagemessages ></apex:pagemessages>
+        <apex:pageBlockButtons >
+        	<apex:commandButton value="Previous" action="{!previous}" />
+            <apex:commandButton value="Select And Add Products" action="{!selectAndAddProducts}" />
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockTable var="p" value="{!lstEntityType}" cellpadding="2" border="0" id="mypbtable">
+                <apex:column headerValue="Select" id="isSelect" width="10%">
+                    <apex:inputCheckBox value="{!p.isSelected}"/>
+                </apex:column>
+                <apex:column headerValue="Entity Type">
+                    <apex:outputText value="{!p.entityTypeName}"/>
+                </apex:column>
+        </apex:pageBlockTable>  
+            
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

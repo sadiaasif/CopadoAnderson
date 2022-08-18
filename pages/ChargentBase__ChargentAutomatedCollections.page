@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sideBar="false">
+<apex:includeLightning />
+<apex:slds />
+<div class="slds-scope">
+	<div id="ChargentAutomatedCollections"/>
+</div>
+
+<script>
+	$Lightning.use("ChargentBase:ChargentAutomatedCollectionsApplication", function () {
+		$Lightning.createComponent("ChargentBase:AcContainer", 
+				{ "toastNotAvailable" : true},
+				"ChargentAutomatedCollections",
+				function (component, status, errorMessage) {
+					if (status === "SUCCESS") {
+						console.log("Custom component loaded.");
+					} else if (status === "INCOMPLETE") {
+						console.log("No response from server or client is offline.")
+					} else if (status === "ERROR") {
+						console.log("Error: " + errorMessage);
+					}
+				}
+		);
+	});
+</script>
+</apex:page>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NavigationMenu xmlns="http://soap.sforce.com/2006/04/metadata">
+    <container>Bookkeeping</container>
+    <containerType>Network</containerType>
+    <label>Default Navigation</label>
+    <navigationMenuItem>
+        <label>Clients</label>
+        <position>1</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Account</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Set of Books</label>
+        <position>2</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Set_of_Books__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>RecentlyViewedOpportunities</defaultListViewId>
+        <label>Sales</label>
+        <position>3</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Opportunity</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>All_Bookkeeping_Case</defaultListViewId>
+        <label>Cases</label>
+        <position>4</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Case</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Tasks</label>
+        <position>5</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Task</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <defaultListViewId>AllReports</defaultListViewId>
+        <label>Reports</label>
+        <position>6</position>
+        <publiclyAvailable>false</publiclyAvailable>
+        <target>Report</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>1099 Requests</label>
+        <position>7</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>X1099_Request__c</target>
+        <type>SalesforceObject</type>
+    </navigationMenuItem>
+    <navigationMenuItem>
+        <label>Bookkeeping  Report Folder</label>
+        <position>8</position>
+        <publiclyAvailable>true</publiclyAvailable>
+        <target>https://platinum.force.com/bookkeeping/s/report/Report/Recent/Report/?queryScope=userFolders&amp;recordId=00l0B000000bn4EQAQ</target>
+        <targetPreference>OpenExternalLinkInSameTab</targetPreference>
+        <type>ExternalLink</type>
+    </navigationMenuItem>
+</NavigationMenu>

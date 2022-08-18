@@ -1,0 +1,145 @@
+<apex:page renderAs="PDF" standardController="Entities__c" extensions="ctrEntity" tabStyle="Entities__c" sidebar="false">
+ <HR WIDTH="50%" SIZE="3"/> 
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center"> <img src="{!URLFOR($Resource.AgreementPdfImages2, 'AgreementPDFimg/andersonreg.jpg')}" width="50%" height="50%"/></td>
+              </tr>
+              <tr>
+                <td align="center" style="font-size:14px; padding-top: 10px;">3225 McLeod Drive #110, Las Vegas, NV  89121 <br/>800-266-1296 Office; 702-664-0546 Fax</td>
+              </tr>
+            </table>            
+
+<HR WIDTH="50%" SIZE="3"/> 
+
+
+
+
+<br/>
+                                
+
+<br/>
+<br/>
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td align="center" style="font-size:16px; padding-top: 10px;"><b>Nominee Service Completed Paperwork For</b></td>
+</tr>
+</table>  
+<br/>
+<br/>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td align="center" style="font-size:16px; padding-top: 10px;"><b>{!ent.Name}</b></td>
+</tr>
+</table>
+<br/>
+<br/>
+<b>{!dt}</b>
+<br/>
+<br/>
+<b>Dear {!acc.First_Name__c}<span style="padding-left:1.5px"/> {!acc.Last_Name__c},</b>
+<br/>
+<br/>
+Enclosed, please find your completed <u>Annual Nominee Service Paperwork</u> for your Nevada LLC, including:
+<br/>
+<br/>
+<span style="padding-left:20px">1.  Stamped/Filed copy of your <b>Annual List of Manager/Members </b> for your files.</span>
+<br/>
+<br/>
+<span style="padding-left:20px">2.  Limited Acceptance and Resignation of the <b>Manager/Member</b>.</span>
+<br/>
+<br/>
+<b>Note:</b>  At the bottom of the Limited Acceptance and Resignation will be a sentence that states:  <b>“The successor manager shall be:” If this line is blank, please fill in the name of the person who will act as the successor after A.T. Mathis resigns.</b>  This document is for your records only.  Simply fill in the blank and file the document with your other paperwork.  If your LLC has a corporation as the manager, you will find its name in the space and no action is necessary.
+<br/>
+<br/>
+These documents are to be filed into your LLC binder.  Their purpose is to serve as a record of your LLC’s managers as required when a nominee is used.
+<br/>
+<br/>
+<b>It is important for you to read and understand this and all correspondence from Anderson Registered Agents</b>.  In many cases it can have an affect on the standing of your Entity with the Nevada Secretary of State.
+<br/>
+<br/>
+These documents complete the nominee service of your LLC for another year.  Should you have any questions regarding your nominee service, please contact us.
+<br/>
+<br/>
+
+Thank you for using Anderson Registered Agents as your Registered Agent with nominee service.  We are here to serve you. 
+<br/>
+Cordially,
+ 
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left"> <img src="{!URLFOR($Resource.AgreementPdfImages3, 'AgreementPdfImages/dorthy.jpg')}" width="35%" height="35%"/></td>
+              </tr>             
+            </table>   
+
+
+Dorothy J. Bunker, President
+<br/>
+Anderson Registered Agents
+<br/>
+Staff:  Ana Hodgers
+<br/>
+   <span style="padding-left:40px"> Barbara Helm</span>
+    <br/>
+    <span style="padding-left:40px">Rhonda Smith</span>
+    <br/>
+    <span style="padding-left:40px">Morris Bowers</span>
+    
+ <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <tr>
+<td align="center" style="font-size:16px; padding-top: 10px;"><b>LIMITED ACCEPTANCE AS Manager OF</b></td>
+</tr>
+<tr>
+<td align="center" style="font-size:16px; padding-top: 10px;"><b>{!ent.General_Partner__c}</b></td>
+</tr>
+<tr>
+<td align="center" style="font-size:16px; padding-top: 10px;"><b>AND SUBSEQUENT RESIGNATION</b></td>
+</tr>
+</table>
+
+<br/>
+
+<br/>
+
+   <span style="padding-left:40px"> I, A.T. Mathis, do hereby accept the position of Vice-President of <b>{!ent.General_Partner__c}</b> a Nevada based entity, for the following purposes only:  </span>
+<br/>
+<br/>
+Filing the Annual List of Managers/Members of <b>{!ent.Name}</b>, whose manager is {!ent.General_Partner__c}, a Nevada entity.
+<br/>
+<br/>
+<span style="padding-left:40px">Upon the completion of the aforementioned or the expiration of 45 days from my signing of this Limited Acceptance, whichever comes first, </span>
+  
+    I do hereby resign from all Officer and Director position(s) of <b>{!ent.General_Partner__c}</b> a Nevada based entity.
+<br/>
+<br/>
+The Successor Manager shall be:  {!ent.General_Partner__c}
+<br/>
+<br/>
+<b>Dated {!ent.List_Filed_with_State__c}</b>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left"> <img src="{!URLFOR($Resource.AgreementPdfImages3, 'AgreementPdfImages/toby.JPG')}" width="20%" height="20%"/></td>
+              </tr>             
+            </table>   
+            
+_______________________________
+<br/>
+A. T. Mathis
+
+<br/>
+<br/>
+
+</apex:page>

@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Conga_Non_Profit_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z6f00000SlAzo&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conga Non Profit Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Nominee_Packet_NV_Docusign__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Nominee Packet - NV - Docusign</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Nominee_Packet_NV_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000002EoUP&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corp Nominee Packet - NV Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Nominee_Packet_NV__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Nominee Packet - NV</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Nominee_Packet_WY_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000EkZ6H&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corp Nominee Packet - WY Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Nominee_Packet_WY__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Nominee Packet - WY</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Non_Profit_Annual_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp - Non - Profit Annual Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Non_Profit_Special_Dirctors_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Non-Profit Special Dirctors Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Non_Profit_Special_Director_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z6f00000SkuJvAAJ&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; + 
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corp Non-Profit Special Director Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Resignation_of_Nominee_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005Ovnz&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corp Resignation of Nominee Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Resignation_of_Nominee__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Resignation of Nominee</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Special_Directors_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005PBWh&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corp Special Directors Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Special_Directors_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Special Directors Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corp_Special_Shareholder_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005PBWm&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corp Special Shareholder Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corp_Special_Shareholder_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Special Shareholder Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corporate_Annual_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005Ovnu&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corporate Annual Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corporate_Annual_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corporate Annual Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Corporate_Consent_to_Action_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005OpYx&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Corporate Consent to Action Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Corporate_Consent_to_Action__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corporate Consent to Action</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_Corp_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FFCO9&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Dissolution Meeting -  Corp Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_Corp__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dissolution Meeting -  Corp</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LLC_Man_Man_Trig__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FEzpV&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Dissolution Meeting -LLC - Man Man Trig</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LLC_Man_Managed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dissolution Meeting - LLC - Man Managed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LLC_Mem_Man_Trig__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z4P00000GT8ZJ&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Dissolution Meeting - LLC - Mem Man Trig</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LLC_Member_Man__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dissolution Meeting - LLC - Member Man</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LP_Corp_GP_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z4P00000Gbd6r&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Dissolution Meeting - LP Corp GP Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LP_Corp_General_P__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dissolution Meeting - LP (Corp General P</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LP_No_Corp_Trigg__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FFjrn&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Dissolution Meeting - LP (No Corp) Trigg</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dissolution_Meeting_LP_No_Corp__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dissolution Meeting - LP (No Corp)</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Entity_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Entity</label>
+        <referenceTo>Entities__c</referenceTo>
+        <relationshipName>Renewal_Conga_Docs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Annual_Meeting_Man_Managed_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z4P00000GT8Rt&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Annual Meeting - Man Managed Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Annual_Meeting_Manager_Managed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Annual Meeting - Manager Managed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Annual_Meeting_Mem_Man_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z4P00000GT8Ro&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Annual Meeting -  Mem Man Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Annual_Meeting_Member_Managed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Annual Meeting -  Member Managed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Consent_to_Action_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005PBWw&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Consent to Action Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Consent_to_Action__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Consent to Action</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Initial_Resignation_of_Nominee_Trigg__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005Ovo4&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Initial Resignation of Nominee Trigg</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Initial_Resignation_of_Nominee__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Initial Resignation of Nominee</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Nominee_Packet_Corp_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000002F7G4&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Nominee Packet - Corp Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Nominee_Packet_Corp__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Nominee Packet - Corp</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Nominee_Packet_Individual_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000002F827&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Nominee Packet - Individual Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Nominee_Packet_Individual__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Nominee Packet - Individual</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Special_Managers_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005PBYE&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Special Managers Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Special_Managers_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Special Managers Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LLC_Special_Members_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000005PBY9&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LLC Special Members Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LLC_Special_Members_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LLC Special Members Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LP_Annual_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z4P00000GbeLu&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LP - Annual Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LP_Annual_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LP - Annual Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LP_Emergency_Meeting_Election_GP_Trigg__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FF0Ou&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LP - Emergency Meeting-Election GP Trigg</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LP_Emergency_Meeting_Election_of_new__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LP - Emergency Meeting - Election of new</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LP_Nominee_Packet_Corp_GP_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000002FFOQ&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LP - Nominee Packet - Corp GP Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LP_Nominee_Packet_Corp_Gp__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LP - Nominee Packet - Corp GP</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LP_Nominee_Packet_Individual_GP_Trigge__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0zU0000002FFOV&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LP Nominee Packet - Individual GP Trigge</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LP_Nominee_Packet_Individual_GP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LP Nominee Packet - Individual GP</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LP_Special_Partners_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z4P00000GbeSQ&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LP - Special Partners Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LP_Special_Partners_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LP - Special Partners Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Nominee_Packet_NV_Docusign_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z6f00000Ska3O&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nominee Packet - NV - Docusign Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nominee_Packet_WY_Docusign_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; +
+&quot;&amp;apdf=0&quot; +
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; +
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z6f00000Ska2Q&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nominee Packet - WY - Docusign - Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nominee_Packet_WY_Docusign__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Corp Nominee Packet - WY - Docusign</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RA_Resignation_California_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FWWwe&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RA Resignation - California Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RA_Resignation_California__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>RA Resignation - California</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>RA_Resignation_Inactive_Entity_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; + Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FX0Bw&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RA Resignation Inactive Entity Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RA_Resignation_Inactive_Entity__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>RA Resignation Inactive Entity</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>X1244_Special_Directors_Meeting_Trigger__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;&amp;id=&quot; +  Entity_Name__r.Id +
+&quot;&amp;defaultpdf=0&quot; + 
+&quot;&amp;apdf=0&quot; + 
+&quot;&amp;queryid=[account]a100B00000D4Nx2,[SH1]a100B00000DHkoK,[SH2]a100B00000DHksG,[SH3]a100B00000DHksa,[SH4]a100B00000DHkwh,[Dir1]a100B00000DHkwr,[Dir2]a100B00000DHl1F,[Dir3]a100B00000DHkxW,[Dir4]a100B00000DHkxb,[Dir5]a100B00000DHkxg,[Dir6]a100B00000DHkxl&quot; + 
+&quot;&amp;ofn=&quot; + Name + &quot; - {Template.Label}&quot; +
+&quot;&amp;templateid=a0z0B00000FF06b&quot; + 
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;ContentNetworkID=0DB6f000000TOB3GAO&quot; +
+&quot;&amp;qmode=SalesforceFile&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>1244 Special Directors Meeting Trigger</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1244_Special_Directors_Meeting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>1244 Special Directors Meeting</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Conga Merge - Meeting Minutes</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Renewal Conga Docs Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Conga Merge - Meeting Minutes</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

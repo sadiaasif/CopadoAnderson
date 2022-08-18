@@ -1,0 +1,46 @@
+@IsTest
+public class BoxUploadEmailTests {
+    public static testMethod void testParseAccess() {
+        System.assertEquals(
+            BoxUploadEmail.Access.OPEN,
+            BoxUploadEmail.parseAccess('open')
+        );
+        System.assertEquals(
+            BoxUploadEmail.Access.COLLABORATORS,
+            BoxUploadEmail.parseAccess('collaborators')
+        );
+    }
+
+    public static testMethod void testGetAccessAsString() {
+        System.assertEquals(
+            'open',
+            BoxUploadEmail.getAccessAsString(BoxUploadEmail.Access.OPEN)
+        );
+        System.assertEquals(
+            'collaborators',
+            BoxUploadEmail.getAccessAsString(
+                BoxUploadEmail.Access.COLLABORATORS
+            )
+        );
+    }
+
+    public static testMethod void testParseMember() {
+        BoxApiConnection api = new BoxApiConnection('accesstoken');
+        BoxUploadEmail uploadEmail = new BoxUploadEmail(api, '10543463');
+        BoxUploadEmail.Info uploadEmailInfo = new BoxUploadEmail.Info();
+
+        Test.startTest();
+        uploadEmailInfo.parseMember('access', 'open');
+        uploadEmailInfo.parseMember('email', 'test@box.com');
+        uploadEmailInfo.addValue('test','123');
+         String mockResponseBody ='{"total_count":9,"entries":[{"type":"folder","id":"81273866976","sequence_id":"0","etag":"0","name":"Viewable-ClientDocs"},{"type":"file","id":"484625073666","file_version":{"type":"file_version","id":"513028838466","sha1":"61bc158672feeb8cc27e5f6258539d4b358c06cd"},"sequence_id":"0","etag":"0","sha1":"61bc158672feeb8cc27e5f6258539d4b358c06cd","name":"2019 3:44:31 PM PDT- Receipt-$125.00-Test Entity.pdf"},{"type":"file","id":"484640237864","file_version":{"type":"file_version","id":"513043916264","sha1":"44525bf6e6f3679bf63e321f153b1f354cb4229d"},"sequence_id":"0","etag":"0","sha1":"44525bf6e6f3679bf63e321f153b1f354cb4229d","name":"2019 4:08:22 PM PDT- Receipt-$125.00-Test Entity.pdf"},{"type":"file","id":"484641397127","file_version":{"type":"file_version","id":"513045260327","sha1":"c51c3e8f10f73d74a7920aa952e3e3b6ab29bc42"},"sequence_id":"0","etag":"0","sha1":"c51c3e8f10f73d74a7920aa952e3e3b6ab29bc42","name":"2019 4:20:11 PM PDT- Receipt-$125.00-Test Entity.pdf"},{"type":"file","id":"484642269212","file_version":{"type":"file_version","id":"513046175612","sha1":"ecf850c16713a532e3ad88faddbb74de67450400"},"sequence_id":"0","etag":"0","sha1":"ecf850c16713a532e3ad88faddbb74de67450400","name":"2019 4:22:44 PM PDT- Receipt-$125.00-Test Entity.pdf"},{"type":"file","id":"484647539143","file_version":{"type":"file_version","id":"513052364743","sha1":"95847fc6e49f7d7b8a2070194c20b7fce75e1466"},"sequence_id":"0","etag":"0","sha1":"95847fc6e49f7d7b8a2070194c20b7fce75e1466","name":"2019 4:29:46 PM PDT- Receipt-$125.00-Test Entity.pdf"},{"type":"file","id":"485224761411","file_version":{"type":"file_version","id":"513669701811","sha1":"e4f19ebee6110cb4f48d5f944c1ee75ac05daa33"},"sequence_id":"0","etag":"0","sha1":"e4f19ebee6110cb4f48d5f944c1ee75ac05daa33","name":"2019.7.2 -   Receipt  0261161 -   Grey Test, Meredith  Test.pdf"},{"type":"file","id":"485234018678","file_version":{"type":"file_version","id":"513678960278","sha1":"8e4696d1d65969abc86b34e29e75303d6ecd8890"},"sequence_id":"0","etag":"0","sha1":"8e4696d1d65969abc86b34e29e75303d6ecd8890","name":"2019.7.2 -   Receipt  0261165 -   Grey Test, Meredith  Test.pdf"},{"type":"file","id":"485226499651","file_version":{"type":"file_version","id":"513671783251","sha1":"aa0bdc0820416dc4370db4a2d983d9eedc649feb"},"sequence_id":"0","etag":"0","sha1":"aa0bdc0820416dc4370db4a2d983d9eedc649feb","name":"2019.7.2 -   Receipt  0261166 -   Grey Test, Meredith  Test.pdf"}],"offset":0,"limit":100,"order":[{"by":"type","direction":"ASC"},{"by":"name","direction":"ASC"}]}';
+	BoxFolder.Info responseFromJsonString = new BoxFolder.Info(mockResponseBody);
+        BoxUploadEmail.Info emailAliasInfojson = new BoxUploadEmail.Info(mockResponseBody);
+         uploadEmail.getObjectType();
+        uploadEmail.setInfo(emailAliasInfojson);
+        Test.stopTest();
+
+        System.assertEquals(BoxUploadEmail.Access.OPEN, uploadEmailInfo.access);
+        System.assertEquals('test@box.com', uploadEmailInfo.email);
+    }
+}

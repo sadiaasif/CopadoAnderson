@@ -1,0 +1,124 @@
+<apex:page docType="html-5.0" id="ptlEventListPage" controller="evt.SiteEventListController" title="{!$Label.evt__SiteEventList_EventsHeading}"  sidebar="false" cache="false" >
+<head><title>{!$Label.evt__SiteEventList_EventsHeading}</title></head>
+
+<script src="https://www.google.com/jsapi?key=ABQIAAAAC7Ltv_3xEtJuuoY0LLIU0BQLNlfCSZsNWrNrjOuv5jQjg1XmWxTBmlNjfmUYoQnNBdSSobucYtoG8A" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+
+    <script type='text/javascript'>
+    $j = jQuery.noConflict();
+    $j(document).ready(function() {
+    
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+        
+        
+        
+        $j('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            defaultView: '{!IF(selectedView == "Day","agendaDay",IF(selectedView == "Week","agendaWeek","month"))}',
+            editable: false,
+            events: '{!URLFOR($Page.UpcomingEventsFeed)}',
+            eventClick: function(event) {
+                var recTypeName = event.recTypeDevName;
+                var targetURL = '';
+                if (recTypeName == 'Web_Meeting') {
+                    targetURL = '{!URLFOR($Page.PtlWebMeeting)}?id='+event.id;
+                    }
+                if (recTypeName == 'Conference') {
+                    targetURL = '{!URLFOR($Page.PtlConfDetail)}?id='+event.id;
+                    }
+                if (recTypeName == 'Seminar') {
+                    targetURL = '{!URLFOR($Page.PtlSemDetail)}?id='+event.id;
+                    }
+                if (recTypeName == 'Quick_Event') {
+                    targetURL = '{!URLFOR($Page.PtlQuickEvent)}?id='+event.id;
+                    }
+                if (recTypeName == 'Concert') {
+                    targetURL = event.url;
+                    }
+
+                if (targetURL !== '') {                 
+                   window.location.assign(targetURL);
+                }
+                return false;  // return false to prevent redirecting to url value on event object (if any).
+            }
+                                       
+        });
+        
+    });
+
+    </script>
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page" id="evt_ptl_event_list_page">
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+        <h1>{!$Label.evt__SiteEventList_EventsHeading}</h1>
+        <apex:outputPanel rendered="{!NOT($Label.evt__SiteEventList_EventsMessage == '-')}">
+        <p>{!$Label.evt__SiteEventList_EventsMessage}</p>
+        </apex:outputPanel>
+        <apex:form >
+        <div class="evt_event_list_view_select_bar"><apex:commandLink action="{!changeToListView}">List</apex:commandLink>&nbsp;|&nbsp;<apex:commandLink action="{!changeToCalendarView}" >Calendar</apex:commandLink></div>
+        <apex:outputPanel styleClass="evt_upcoming_events_list" rendered="{!selectedView == 'List'}">
+        <apex:outputPanel rendered="{!pageLayout == 'StartDateList'}" >
+        <apex:dataTable value="{!eventItems}" var="item" styleclass="evt_event_list_table">
+            <apex:column styleClass="evt_event_list_thumb_column">
+                 <apex:outputPanel rendered="{!AND(NOT(ISBLANK(item.imageId)),ISBLANK(item.imageURL))}" >
+                     <img class="evt_list_thumbnail"  src="{!URLFOR($Action.Attachment.Download,item.imageId)}" />
+                 </apex:outputPanel>
+                 <apex:outputPanel rendered="{!NOT(ISBLANK(item.imageURL))}" >
+                     <img class="evt_list_thumbnail"  src="{!item.imageURL}" />
+                 </apex:outputPanel>             
+            </apex:column>
+            <apex:column >
+               <div class="evt_event_list_item_text"> 
+                <span class="evt_event_list_item_name">
+                <apex:outputLink value="{!item.event.evt__Event_Landing_Page__c}" rendered="{!item.eventRecordType=='Concert'}"><apex:outputField value="{!item.event.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__PtlConfDetail)}?id={!item.event.id}" rendered="{!item.eventRecordType=='Conference'}"><apex:outputField value="{!item.event.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__PtlSemDetail)}?id={!item.event.id}" rendered="{!item.eventRecordType=='Seminar'}"><apex:outputField value="{!item.event.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__PtlWebMeeting)}?id={!item.event.id}" rendered="{!item.eventRecordType=='Web_Meeting'}"><apex:outputField value="{!item.event.Name}" /></apex:outputLink>  
+                <apex:outputLink value="{!URLFOR($Page.evt__PtlQuickEvent)}?id={!item.event.id}" rendered="{!item.eventRecordType=='Quick_Event'}"><apex:outputField value="{!item.event.Name}" /></apex:outputLink>  
+                
+                </span><br/>
+                <apex:outputText value="{!item.startDate} {!item.startTime} - {!item.endTime}" rendered="{!NOT(item.multiday)}"/>
+                <apex:outputText value="{!item.startDate} - {!item.endDate}" rendered="{!item.multiday}"/><br/>
+                <apex:outputPanel rendered="{!NOT(ISBLANK(item.event.evt__Short_Description__c))}" styleClass="evt_event_list_item_short_description">
+                <apex:outputText value="{!item.event.evt__Short_Description__c}"  /><br/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!item.event.evt__Show_Available_Seats__c == true && item.limitedSeats && item.availSeats >0}">
+                {!$Label.evt__Label_AvailableSeats}: {!item.availSeats}<br/> 
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!item.limitedSeats && item.availSeats ==0}">
+                FULL<br/>
+                </apex:outputPanel>
+                </div>
+            </apex:column>
+            
+            
+        </apex:dataTable>
+        </apex:outputPanel>
+        
+        </apex:outputPanel>
+
+        <apex:outputPanel styleClass="evt_upcoming_events_calendar" rendered="{!OR(selectedView == 'Month', selectedView == 'Week', selectedView == 'Day')}">
+            <div id='calendar' style='margin:1em 0;font-size:13px'></div>   
+        </apex:outputPanel>
+    
+        </apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->
+
+
+</apex:page>

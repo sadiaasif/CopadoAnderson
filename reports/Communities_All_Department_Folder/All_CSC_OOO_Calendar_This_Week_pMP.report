@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_23755377</developerName>
+        <masterLabel>Teams</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>ASSIGNED</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Agha Abbas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ryann Brown</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jade Comer</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mandie Corbitt</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Veanna Ganaishlal</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Traci Derrington</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Christian DeField</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Roger Cox</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Caitlynn Glass</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ethan Hechanova</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jessica Kim</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kimberly Luberisse</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Claire Seals</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lori Taylor</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jayvie Barlao</sourceValue>
+            </sourceValues>
+            <value>Jay&apos;s Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Alisha Basom</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Gabby Esteban</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chase Foster</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nathaniel Garmon</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alyssa Hoopii</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lisa Starner-Sturz</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jennifer Seibert</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tia Robinson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ramona Preston-Tolbert</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jhunelyn Talaid</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Monica Vivanco</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Bekah Willard</sourceValue>
+            </sourceValues>
+            <value>Alisha&apos;s Team</value>
+        </values>
+        <values>
+            <value>Kip&apos;s Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Shanika Fikes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kim Austin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Chelsea Bojewski</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Bridget Carlvin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mars D&apos;Amico</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Phoebe Keliikupakako</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Colette Grier</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kyla Galvan</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sheila Denos</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kristy McElwain</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Stephanie Sanchez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Becky Seguin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Carrie Watson</sourceValue>
+            </sourceValues>
+            <value>Shanika&apos;s Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Alexa Brown</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Katherine Baez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>N&apos;Kia Gray</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Samantha Kinney</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kaila Martinez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Maryana Postolovska</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ilse Banuelos</sourceValue>
+            </sourceValues>
+            <value>Ilse&apos;s Team</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>START_DATE_TIME</field>
+    </columns>
+    <columns>
+        <field>DUE_TIME</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Block,Out of Office</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>START_DATE_TIME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>TODAY,THIS_WEEK</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_23755377</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Jay&apos;s Team,Alisha&apos;s Team,Kip&apos;s Team,Shanika&apos;s Team,Ilse&apos;s Team</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_23755377</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ASSIGNED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>All CSC OOO Calendar This Week</name>
+    <params>
+        <name>closed</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>te</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>DUE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

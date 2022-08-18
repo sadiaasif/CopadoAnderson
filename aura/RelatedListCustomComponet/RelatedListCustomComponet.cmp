@@ -1,0 +1,1170 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="RelatedListcustomctrl">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <aura:attribute name="externalList" type="Array" ></aura:attribute>
+    <ltng:require scripts="{!$Resource.CustomJquery}"  afterScriptsLoaded="{!c.DemoTest}"></ltng:require>
+    
+    
+    <aura:attribute name="selectedRow" type="Object"/>
+    
+    <aura:attribute name="lstOfRecordType" type="String[]" />
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/> 
+    
+    <aura:attribute name="caselstOfRecordType" type="String[]" />
+    <aura:attribute name="isOpencase" type="boolean" default="false"/>
+    
+    <aura:attribute name="trutlstOfRecordType" type="String[]" />
+    <aura:attribute name="isOpentrust" type="boolean" default="false"/>
+    
+    <aura:attribute name="salelstOfRecordType" type="String[]" />
+    <aura:attribute name="isOpensales" type="boolean" default="false"/>
+    
+    <!-- Feedback Record type -->
+    <aura:attribute name="feedbacklstOfRecordType" type="String[]" />
+    <aura:attribute name="isOpenfeedback" type="boolean" default="false"/>
+    
+    
+    <aura:attribute name="recordTypes" type="String[]" access="public"/>
+    <aura:attribute name="objectType" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="parentFieldName" type="String"/>
+    <aura:attribute name="Contactcolumns" type="List"/>
+    <aura:attribute name="Salescolumns" type="List"/>
+    <aura:attribute name="Entitiescolumns" type="List"/>
+    <aura:attribute name="Casecolumns" type="List"/>
+    
+    <aura:attribute name="Trustcolumns" type="List"/>
+    <aura:attribute name="REfundscolumns" type="List"/>
+    <aura:attribute name="Bookkeepingcolumns" type="List"/>
+    <aura:attribute name="ccDetailcolumns" type="List"/>
+    
+    <aura:attribute name="AssIntrestcolumns" type="List"/>
+    <aura:attribute name="MeetingMincolumns" type="List"/>
+    <aura:attribute name="Ordercolumns" type="List"/>
+    <aura:attribute name="SetofBookscolumns" type="List"/>
+    <aura:attribute name="Projectscolumns" type="List"/>
+    <aura:attribute name="StrategySessionQuestionnairescolumns" type="List"/>
+    
+    <!-- Feedback columns -->
+    <aura:attribute name="Feedbackcolumns" type="List"/>
+     <aura:attribute name="Dissolutioncolumns" type="List"/>
+    
+    
+    <aura:attribute name="tableSize" type="integer"/>
+    <aura:attribute name="Contactdata" type="sObject[]" access="global"/>
+    <aura:attribute name="Salesdata" type="sObject[]" access="global"/>
+    <aura:attribute name="Entitiesdata" type="sObject[]" access="global"/>
+    <aura:attribute name="Casedata" type="sObject[]" access="global"/>
+    
+    
+    
+    <aura:attribute name="Trustdata" type="sObject[]" access="global"/>
+    <aura:attribute name="REfundsdata" type="sObject[]" access="global"/>
+    <aura:attribute name="Bookkeepingdata" type="sObject[]" access="global"/>
+    <aura:attribute name="ccDetaildata" type="sObject[]" access="global"/>
+    
+    <aura:attribute name="AssIntrestdata" type="sObject[]" access="global"/>
+    <aura:attribute name="MeetingMindata" type="sObject[]" access="global"/>
+    <aura:attribute name="Orderdata" type="sObject[]" access="global"/>
+    <aura:attribute name="SetofBooksdata" type="sObject[]" access="global"/>
+    <aura:attribute name="Projectsdata" type="sObject[]" access="global"/>
+    <aura:attribute name="StrategySessionQuestionnairesData" type="sObject[]" access="global"/>
+    
+    <!-- Feedback sobject -->
+    <aura:attribute name="Feedbackdata" type="sObject[]" access="global"/>
+    <aura:attribute name="Dissolutionsdata" type="sObject[]" access="global"/>
+    
+    
+    
+    <aura:attribute name="page" type="integer"/>
+    <aura:attribute name="pages" type="integer"/>
+    <aura:attribute name="total" type="integer"/>
+    <aura:attribute name="SalesTotal" type="integer"/>
+    <aura:attribute name="contactTotal" type="integer"/>
+    <aura:attribute name="EnTotal" type="integer"/>
+    <aura:attribute name="caseTotal" type="integer"/>
+    
+    <aura:attribute name="TrustTotal" type="integer" default="0"/>
+    <aura:attribute name="REfundsTotal" type="integer" default="0"/>
+    <aura:attribute name="BookkeepingrecordsTotal" type="integer" default="0"/>
+    <aura:attribute name="ccDetailTotal" type="integer" default="0"/>
+    
+    <aura:attribute name="AssIntrestTotal" type="integer" default="0"/>
+    <aura:attribute name="MeetingMinTotal" type="integer" default="0"/>
+    <aura:attribute name="OrderTotal" type="integer" default="0"/>
+    <aura:attribute name="SetofBooksTotal" type="integer" default="0"/>
+    <aura:attribute name="ProjectsTotal" type="integer" default="0"/>
+    <aura:attribute name="StrategySessionQuestionnairesTotal" type="integer" default="0"/>
+    
+    <!-- Feedback Total -->
+    <aura:attribute name="FeedbackTotal" type="integer" default="0"/>
+     <aura:attribute name="DissolutionsTotal" type="integer" default="0"/>
+    
+    
+    <aura:attribute name="pageNumbercontact" type="Integer" default="1"/>
+    <aura:attribute name="pageSizecontact" type="Integer" default="10"/>
+    <aura:attribute name="isLastPagecontact" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizecontact" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberSale" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeSale" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageSale" type="Boolean"  default="false"/>
+    <aura:attribute name="dataSizeSale" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberEntity" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeEntity" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageEntity" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeEntity" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumbercase" type="Integer" default="1"/>
+    <aura:attribute name="pageSizecase" type="Integer" default="10"/>
+    <aura:attribute name="isLastPagecase" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizecase" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberTrust" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeTrust" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageTrust" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeTrust" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberREfunds" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeREfunds" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageREfunds" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeREfunds" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberBookkeeping" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeBookkeeping" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageBookkeeping" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeBookkeeping" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberccDetail" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeccDetail" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageccDetail" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeccDetail" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberAssIntrest" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeAssIntrest" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageAssIntrest" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeAssIntrest" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberMeetingMin" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeMeetingMin" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageMeetingMin" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeMeetingMin" type="Integer" default="0"/> 
+    
+    
+    <aura:attribute name="pageNumbertask" type="Integer" default="1"/>
+    <aura:attribute name="pageSizetask" type="Integer" default="10"/>
+    <aura:attribute name="isLastPagetask" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizetask" type="Integer" default="0"/> 
+    
+    <aura:attribute name="pageNumberOrder" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeOrder" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageOrder" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeOrder" type="Integer" default="0"/>
+    
+    <aura:attribute name="pageNumberSetofBooks" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeSetofBooks" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageSetofBooks" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeSetofBooks" type="Integer" default="0"/>
+    
+    <aura:attribute name="pageNumberProjects" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeProjects" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageProjects" type="Boolean" default="false"/>
+    <aura:attribute name="isLastStrategySessionQuestionnaires" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeProjects" type="Integer" default="0"/>
+    
+    <aura:attribute name="pageNumberStrategySessionQuestionnaires" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeStrategySessionQuestionnaires" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageStrategySessionQuestionnaires" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeStrategySessionQuestionnaires" type="Integer" default="0"/>
+    
+    
+    <!-- Feedback Page --> 
+    
+    <aura:attribute name="pageNumberFeedback" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeFeedback" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageFeedback" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeFeedback" type="Integer" default="0"/>
+
+     <!-- Feedback Page --> 
+    
+    <aura:attribute name="pageNumberDissolution" type="Integer" default="1"/>
+    <aura:attribute name="pageSizeDissolution" type="Integer" default="10"/>
+    <aura:attribute name="isLastPageDissolution" type="Boolean" default="false"/>
+    <aura:attribute name="dataSizeDissolution" type="Integer" default="0"/>
+    
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="contacticonName" type="String" />
+    <aura:attribute name="SalesiconName" type="String" />
+    <aura:attribute name="EntitiesiconName" type="String" />
+    <aura:attribute name="caseiconName" type="String" />
+    <aura:attribute name="TrusticonName" type="String" />
+    <aura:attribute name="RefundiconName" type="String" />
+    <aura:attribute name="ActivitiesiconName" type="String" />
+    <aura:attribute name="CCdetailiconName" type="String" />
+    <aura:attribute name="AssIntresticonName" type="String" />
+    <aura:attribute name="MeetingMiniconName" type="String" />
+    <aura:attribute name="OrdericonName" type="String" />
+    <aura:attribute name="SetofBooksiconName" type="String" />
+    <aura:attribute name="ProjectsiconName" type="String" />
+    <aura:attribute name="StrategySessionQuestionnairesiconName" type="String" />
+    
+    <!-- Feedback icon name -->
+     <aura:attribute name="FeedbackiconName" type="String" />
+     <aura:attribute name="DissolutioniconName" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:showToast" action="{!c.handleApplicationEvent}"/>
+    <aura:attribute name="isTooltip" type="Boolean" default="false"/>
+    
+    <lightning:card title="Related List" iconName="standard:solution">
+        <lightning:overlayLibrary aura:id="overlayLib"/> 
+        
+        <div class="slds-grid slds-wrap anchor slds-text-align--left">
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                
+                <lightning:icon iconName="standard:contact" size="small" alternativeText="Indicates approval"/>&nbsp;    <a  href="javascript:void(0)" data-popover="contact-popup" class="Contactmypopover trigger-one" data-attriVal="contact" onclick="{!c.gotoContactRelatedList}">Contacts({!v.contactTotal})</a>
+                
+            </div>
+            
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.SalesiconName}" size="small"  alternativeText="Indicates approval"/>  &nbsp;   <a  href="javascript:void(0)" data-popover="sales-popup" class="Salesmypopover trigger-one" data-attriVal="Opportunities" onclick="{!c.navigateToRelatedList}">Sales({!v.SalesTotal})</a>
+                
+                
+            </div>
+             <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="custom:custom88" size="small" alternativeText="Indicates approval"/>  &nbsp;     <a href="javascript:void(0)" data-popover="orders-popup" class="REfundsmypopover trigger-one"  data-attriVal="Orders" onclick="{!c.navigateToRelatedList}">Orders({!v.OrderTotal})</a> 
+            </div> 
+            
+            <div class="slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.EntitiesiconName}" size="small"  alternativeText="Indicates approval"/>   &nbsp;   <a  href="javascript:void(0)" data-popover="entites-popup" class="Entitesmypopover trigger-one" data-attriVal="Entities__r" onclick="{!c.navigateToRelatedList}" >Entities({!v.EnTotal})</a>
+                
+                
+            </div>
+               
+           
+            <br/>
+            <br/>
+            
+             <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="standard:case" size="small" alternativeText="Indicates approval"/>   &nbsp;  <a href="javascript:void(0)" data-popover="cases-popup" class="Casemypopover trigger-one" data-attriVal="Cases" onclick="{!c.navigateToRelatedList}">Cases({!v.caseTotal})</a>
+                
+                
+            </div>
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                
+                <lightning:icon iconName="{!v.TrusticonName}" size="small" alternativeText="Indicates approval"/>    &nbsp; <a href="javascript:void(0)" data-popover="truts-popup" class="Trustmypopover trigger-one" data-attriVal="Trusts__r" onclick="{!c.navigateToRelatedList}" >Trusts({!v.TrustTotal})</a>
+                
+            </div>
+            
+            
+            
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                 <lightning:icon iconName="{!v.RefundiconName}" size="small" alternativeText="Indicates approval"/>  &nbsp;  <a  href="javascript:void(0)" data-popover="refunds-popup"  class="REfundsmypopover trigger-one" data-attriVal="Refunds__r" onclick="{!c.navigateToRelatedList}" >Refunds({!v.REfundsTotal})</a>
+                
+            </div>
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.ActivitiesiconName}" size="small"  alternativeText="Indicates approval"/>&nbsp;   <a href="javascript:void(0)" data-popover="activities-popup" class="Entitesmypopover trigger-one" data-attriVal="Activities__r" onclick="{!c.navigateToRelatedList}" >Activities({!v.BookkeepingrecordsTotal})</a>
+                
+                
+            </div>
+
+            <br/>
+            <br/>
+                        <div class="slds-text-align--left slds-col slds-size_3-of-12"> 
+                <lightning:icon iconName="{!v.CCdetailiconName}"  size="small" alternativeText="Indicates approval"/>&nbsp; <a href="javascript:void(0)" data-popover="creditDebit-popup"  class="Casemypopover trigger-one" data-attriVal="Credit_Card_Detail__r" onclick="{!c.navigateToRelatedList}" >Credit card Detail({!v.ccDetailTotal})</a>
+                
+                
+            </div>
+            
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+            	 <lightning:icon iconName="{!v.AssIntresticonName}" size="small" alternativeText="Indicates approval"/>  &nbsp;     <a href="javascript:void(0)" data-popover="assignment-popup" class="AssIntrestmypopover trigger-one" data-attriVal="Assignments_of_Interests__r" onclick="{!c.navigateToRelatedList}" >Assignments of Interests({!v.AssIntrestTotal})</a>    
+            </div>
+            
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.MeetingMiniconName}" size="small" alternativeText="Indicates approval"/>  &nbsp;      <a href="javascript:void(0)" data-popover="meetingMinutes-popup" class="MeetingMinmypopover trigger-one" data-attriVal="Meeting_Minutes__r" onclick="{!c.navigateToRelatedList}" >Meeting Minutes({!v.MeetingMinTotal})</a>
+            </div>
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.SetofBooksiconName}" size="small" alternativeText="Indicates approval"/>  &nbsp;        <a href="javascript:void(0)" data-popover="setOfBooks-popup" class="SetofBooksmypopover trigger-one" data-attriVal="Set_of_Books__r" onclick="{!c.navigateToRelatedList}">Set of Books({!v.SetofBooksTotal})</a>
+            </div>
+              
+             <br/>
+           
+                       
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.ProjectsiconName}" size="small" alternativeText="Indicates approval"/>  &nbsp;     <a  href="javascript:void(0)" data-popover="projects-popup" class="Projectsmypopover trigger-one" data-attriVal="H2S__HarvestProjects__r" onclick="{!c.navigateToRelatedList}" >Projects({!v.ProjectsTotal})</a>
+            </div>
+                        
+            
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                <lightning:icon iconName="{!v.StrategySessionQuestionnairesiconName}" size="small" alternativeText="Indicates approval"/>  &nbsp;    <a href="javascript:void(0)" data-popover="strategy-popup" class="Projectsmypopover trigger-one" data-attriVal="Strategy_Session_Questionnaires__r" onclick="{!c.navigateToRelatedList}" >StrategySessionQuestionnaires({!v.StrategySessionQuestionnairesTotal})</a>
+            </div>
+            
+             <!-- Feedback List and icon with total --> 
+             <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                 <br/>
+                <lightning:icon iconName="{!v.FeedbackiconName}" size="small" alternativeText="Indicates approval"/>  &nbsp;     <a  href="javascript:void(0)" data-popover="feedback-popup" class="Projectsmypopover trigger-one" data-attriVal="Feedback__r" onclick="{!c.navigateToRelatedList}" >Feedback({!v.FeedbackTotal})</a>
+            </div>
+            <div class="slds-text-align--left slds-col slds-size_3-of-12">
+                 <br/>
+                <lightning:icon iconName="{!v.DissolutioniconName}" size="small" alternativeText="Indicates dissolutions"/>  &nbsp;     <a  href="javascript:void(0)" data-popover="dissolutions-popup" class="Projectsmypopover trigger-one" data-attriVal="Dissolutions__r" onclick="{!c.navigateToRelatedList}" >Dissolutions({!v.DissolutionsTotal})</a>
+            </div>
+            <div>
+                
+                <!--External JS--> 
+                
+                
+                
+            </div>
+        </div>  
+    </lightning:card>
+    
+    <!--srk-->
+    
+    
+    <div id="contact-popup" class="gpopover contact-hide"  onmouseleave="{!c.hideContact}">
+        <div class=" " aura:id="Contactpop">
+            <div>
+                <p>  <button class="fl-right" title="Close" onclick="{!c.hideContact}">
+                    x
+                    <span class=""></span>
+                    </button> </p> <lightning:card title="Contact" iconName="standard:contact">                  
+                <div class="slds-clearfix">  
+                    <div class="slds-float_right"> 
+                        <p><ui:button label="New" press="{!c.createContactRecord}"/>
+                        </p>
+                    </div>  
+                </div>
+                <div class=""> 	
+                    <lightning:datatable data="{! v.Contactdata }"
+                                         columns="{! v.Contactcolumns }"
+                                         keyField="id"
+                                         hideCheckboxColumn="true"
+                                         onrowaction="{! c.handleRowAction }"
+                                         />
+                </div>
+                <div class="slds-clearfix">
+                    <div class="slds-page-header" role="banner">
+                        <div class="slds-float_right">            
+                            <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                              onclick="{!c.handlePrevcontact}" disabled="{! v.pageNumbercontact == 1}"/>
+                            <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                              disabled="{! v.isLastPagecontact}" onclick="{!c.handleNextcontact}"/>
+                        </div>
+                        <p class="slds-page-header__title">Page {!v.pageNumbercontact} | Showing records from {! ((v.pageNumbercontact-1)*v.pageSizecontact)+' to '+((v.pageNumbercontact-1)*v.pageSizecontact+v.dataSizecontact)}</p>
+                    </div>
+                </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="sales-popup" class="gpopover sales-hide" onmouseleave="{!c.hideSales}">
+        <div class="" aura:id="Salespop"> 
+            <div onmouseleave="">
+                <p> <button class="fl-right" title="Close" onclick="{!c.hideSales}">
+                    X
+                    <span class=" " ></span>
+                    </button></p>   
+                <lightning:card title="Sale" iconName="{!v.SalesiconName}">
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.openSalesModal}"/>
+                                
+                            </p>
+                            <aura:if isTrue="{!v.isOpensales}">
+                                <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <div class="slds-modal__header">
+                                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeSalesModal}">
+                                                X<span class="slds-assistive-text">Cancel</span>
+                                            </button>
+                                            <h2 id="header43" class="slds-text-heading--medium">New Sales</h2>
+                                        </div>
+                                        
+                                        <div class="slds-modal__content slds-p-around--medium">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <div class="slds-align--absolute-center">Select a Record Type</div>                            
+                                                </div>
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <ui:inputSelect aura:id="selectsaleid">
+                                                        <aura:iteration items="{!v.salelstOfRecordType}" var="SalRec">                            
+                                                            <ui:inputSelectOption text="{!SalRec}" label="{!SalRec}"  />
+                                                        </aura:iteration>
+                                                    </ui:inputSelect>
+                                                </div>&nbsp; &nbsp;
+                                            </div>                   
+                                        </div>
+                                        
+                                        <div class="slds-modal__footer">
+                                            <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeSalesModal}">Cancel</lightning:button>
+                                            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createSalesRecord}">Next</lightning:button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-backdrop slds-backdrop--open"></div>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="slds-popover__body">
+                        
+                        <lightning:datatable data="{! v.Salesdata }"
+                                             columns="{! v.Salescolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        
+                        
+                        
+                        <div class="slds-clearfix">
+                            <div class="slds-card__header slds-page-header" role="banner">
+                                <div class="slds-float_right">            
+                                    <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                      onclick="{!c.handlePrevSale}" disabled="{! v.pageNumberSale == 1}"/>
+                                    <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                      disabled="{! v.isLastPageSale}" onclick="{!c.handleNextSale}"/>
+                                </div>
+                                <p class="slds-page-header__title">Page {!v.pageNumberSale} | Showing records from {! ((v.pageNumberSale-1)*v.pageSizeSale)+' to '+((v.pageNumberSale-1)*v.pageSizeSale+v.dataSizeSale)}</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="entites-popup" class="gpopover entities-hide" onmouseleave="{!c.hideEntities}">
+        <div class="widthFixed" aura:id="Entitiespop" >
+            <div onmouseleave="">
+                <p><button class="fl-right" title="Close" onclick="{!c.hideEntities}" >
+                    x
+                    <span class=""></span>
+                    </button></p>
+                <lightning:card title="Entities" iconName="{!v.EntitiesiconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.openModal}"/>
+                                
+                            </p>
+                            <aura:if isTrue="{!v.isOpen}">
+                                <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <div class="slds-modal__header">
+                                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                                                X<span class="slds-assistive-text">Cancel</span>
+                                            </button>
+                                            <h2 id="header43" class="slds-text-heading--medium">New Entity</h2>
+                                        </div>
+                                        
+                                        <div class="slds-modal__content slds-p-around--medium">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <div class="slds-align--absolute-center">Select a Record Type</div>                            
+                                                </div>
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <ui:inputSelect aura:id="selectid">
+                                                        <aura:iteration items="{!v.lstOfRecordType}" var="EntRec">                            
+                                                            <ui:inputSelectOption text="{!EntRec}" label="{!EntRec}"  />
+                                                        </aura:iteration>
+                                                    </ui:inputSelect>
+                                                </div>&nbsp; &nbsp;
+                                            </div>                   
+                                        </div>
+                                        
+                                        <div class="slds-modal__footer">
+                                            <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeModal}">Cancel</lightning:button>
+                                            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createEntRecord}">Next</lightning:button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-backdrop slds-backdrop--open"></div>
+                            </aura:if>
+                            
+                            
+                        </div>      
+                    </div>
+                    <div class="slds-popover__body">
+                        
+                        
+                        <lightning:datatable data="{! v.Entitiesdata }"
+                                             columns="{! v.Entitiescolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        
+                        
+                        
+                        <div class="slds-clearfix">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-float_right">            
+                                    <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                      onclick="{!c.handlePrevEn}" disabled="{! v.pageNumberEntity == 1}"/>
+                                    <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                      disabled="{! v.isLastPageEntity}" onclick="{!c.handleNextEn}"/>
+                                </div>
+                                <p class="slds-page-header__title">Page {!v.pageNumberEntity} | Showing records from {! ((v.pageNumberEntity-1)*v.pageSizeEntity)+' to '+((v.pageNumberEntity-1)*v.pageSizeEntity+v.dataSizeEntity)}</p>
+                            </div>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div></div>
+    </div>
+    <div id="cases-popup" class="gpopover cases-hide" onmouseleave="{!c.hideCases}">
+        <div class="" aura:id="Casepop">
+            <div onmouseleave="" > 
+                <p> <button class="fl-right" title="Close" onclick="{!c.hideCases}">
+                    x
+                    <span class=""></span>
+                    </button></p> 
+                <lightning:card title="Case" iconName="standard:case">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.openCaseModal}"/>
+                                
+                            </p>
+                            <aura:if isTrue="{!v.isOpencase}">
+                                <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <div class="slds-modal__header">
+                                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeCaseModal}">
+                                                X<span class="slds-assistive-text">Cancel</span>
+                                            </button>
+                                            <h2 id="header43" class="slds-text-heading--medium">New Case</h2>
+                                        </div>
+                                        
+                                        <div class="slds-modal__content slds-p-around--medium">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <div class="slds-align--absolute-center">Select a Record Type</div>                            
+                                                </div>
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <ui:inputSelect aura:id="selectcaseid">
+                                                        <aura:iteration items="{!v.caselstOfRecordType}" var="caseRec">                            
+                                                            <ui:inputSelectOption text="{!caseRec}" label="{!caseRec}"  />
+                                                        </aura:iteration>
+                                                    </ui:inputSelect>
+                                                </div>&nbsp; &nbsp;
+                                            </div>                   
+                                        </div>
+                                        
+                                        <div class="slds-modal__footer">
+                                            <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeCaseModal}">Cancel</lightning:button>
+                                            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createCasesRecord}">Next</lightning:button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-backdrop slds-backdrop--open"></div>
+                            </aura:if>
+                        </div>    
+                    </div>
+                    
+                    <div class="slds-popover__body"> 	
+                        
+                        
+                        
+                        <lightning:datatable data="{! v.Casedata }"
+                                             columns="{! v.Casecolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        
+                        
+                    </div>
+                    
+                    
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevcase}" disabled="{! v.pageNumbercase == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPagecase}" onclick="{!c.handleNextCase}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumbercase} | Showing records from {! ((v.pageNumbercase-1)*v.pageSizecase)+' to '+((v.pageNumbercase-1)*v.pageSizecase+v.dataSizecase)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div></div>
+    </div>
+    <div id="truts-popup" class="gpopover trust-hide" onmouseleave="{!c.hideTrusts}">
+        <div class="" aura:id="Trustpop">
+            <div onmouseleave=""> 
+                <button class="fl-right" title="Close" onclick="{!c.hideTrusts}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Trust" iconName="{!v.TrusticonName}">
+                    
+                    
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.openTrustModal}"/>
+                                
+                            </p>
+                            <aura:if isTrue="{!v.isOpentrust}">
+                                <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <div class="slds-modal__header">
+                                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeTrustModal}">
+                                                X<span class="slds-assistive-text">Cancel</span>
+                                            </button>
+                                            <h2 id="header43" class="slds-text-heading--medium">New Trust</h2>
+                                        </div>
+                                        
+                                        <div class="slds-modal__content slds-p-around--medium">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <div class="slds-align--absolute-center">Select a Record Type</div>                            
+                                                </div>
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <ui:inputSelect aura:id="selecttrustid">
+                                                        <aura:iteration items="{!v.trutlstOfRecordType}" var="trustRec">                            
+                                                            <ui:inputSelectOption text="{!trustRec}" label="{!trustRec}"  />
+                                                        </aura:iteration>
+                                                    </ui:inputSelect>
+                                                </div>&nbsp; &nbsp;
+                                            </div>                   
+                                        </div>
+                                        
+                                        <div class="slds-modal__footer">
+                                            <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeTrustModal}">Cancel</lightning:button>
+                                            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createTrustRecord}">Next</lightning:button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-backdrop slds-backdrop--open"></div>
+                            </aura:if>
+                        </div>      
+                    </div>
+                    
+                    <div class="slds-popover__body"> 
+                        
+                        <lightning:datatable data="{! v.Trustdata }"
+                                             columns="{! v.Trustcolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                    </div>
+                    
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevTrust}" disabled="{! v.pageNumberTrust == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageTrust}" onclick="{!c.handleNextTrust}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberTrust} | Showing records from {! ((v.pageNumberTrust-1)*v.pageSizeTrust)+' to '+((v.pageNumberTrust-1)*v.pageSizeTrust+v.dataSizeTrust)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="refunds-popup" class="gpopover refund-hide" onmouseleave="{!c.hideRefunds}">
+        <div class=" "  aura:id="REfundspop" >
+            <div onmouseleave=" "> 
+                <button class="fl-right" title="Close" onclick="{!c.hideRefunds}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Refunds" iconName="{!v.RefundiconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createRefundRecord}"/>
+                                
+                            </p>
+                            
+                        </div>      
+                    </div>
+                    <div class="slds-popover__body">
+                        <lightning:datatable data="{! v.REfundsdata }"
+                                             columns="{! v.REfundscolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        <div class="slds-clearfix">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-float_right">            
+                                    <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                      onclick="{!c.handlePrevREfunds}" disabled="{! v.pageNumberREfunds == 1}"/>
+                                    <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                      disabled="{! v.isLastPageREfunds}" onclick="{!c.handleNextREfunds}"/>
+                                </div>
+                                <p class="slds-page-header__title">Page {!v.pageNumberREfunds} | Showing records from {! ((v.pageNumberREfunds-1)*v.pageSizeREfunds)+' to '+((v.pageNumberREfunds-1)*v.pageSizeREfunds+v.dataSizeREfunds)}</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="activities-popup" class="gpopover activities-hide" onmouseleave="{!c.hideActivities}">
+        <div class="" aura:id="Bookkeepingpop">
+            <div onmouseleave=""> 
+                <button class="fl-right" title="Close" onclick="{!c.hideActivities}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Activity" iconName="standard:task">
+                    
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createActivityRecord}"/>
+                                
+                            </p>
+                            
+                        </div>      
+                    </div>
+                    <div class="slds-popover__body">
+                        
+                        <lightning:datatable data="{! v.Bookkeepingdata }"
+                                             columns="{! v.Bookkeepingcolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        <div class="slds-clearfix">
+                            <div class="slds-page-header" role="banner">
+                                <div class="slds-float_right">            
+                                    <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                      onclick="{!c.handlePrevBookkeeping}" disabled="{! v.pageNumberBookkeeping == 1}"/>
+                                    <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                      disabled="{! v.isLastPageBookkeeping}" onclick="{!c.handleNextBookkeeping}"/>
+                                </div>
+                                <p class="slds-page-header__title">Page {!v.pageNumberBookkeeping} | Showing records from {! ((v.pageNumberBookkeeping-1)*v.pageSizeBookkeeping)+' to '+((v.pageNumberBookkeeping-1)*v.pageSizeBookkeeping+v.dataSizeBookkeeping)}</p>
+                            </div>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    
+    <div id="assignment-popup" class="gpopover assign-hide" onmouseleave="{!c.hideAssign}">
+        <div class=" " aura:id="AssIntrestpop">
+            
+            <div onmouseleave=" "> 
+                <button class="fl-right" title="Close" onclick="{!c.hideAssign}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Assignments of Interests" iconName="{!v.AssIntresticonName}">
+                    
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createAssIntrestRecord}"/>
+                                
+                            </p>
+                            
+                        </div>      
+                    </div>
+                    
+                    <div class="slds-popover__body"> 	
+                        
+                        
+                        
+                        <lightning:datatable data="{! v.AssIntrestdata }"
+                                             columns="{! v.AssIntrestcolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        
+                        
+                    </div>
+                    
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevAssIntrest}" disabled="{! v.pageNumberAssIntrest == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageAssIntrest}" onclick="{!c.handleNextAssIntrest}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberAssIntrest} | Showing records from {! ((v.pageNumberAssIntrest-1)*v.pageSizeAssIntrest)+' to '+((v.pageNumberAssIntrest-1)*v.pageSizeAssIntrest+v.dataSizeAssIntrest)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="meetingMinutes-popup" class="gpopover meetinmin-hide" onmouseleave="{!c.hideMeetingMin}">
+        <div class=" " aura:id="MeetingMinpop">
+            <div onmouseleave=" "> 
+                <button class="fl-right" title="Close" onclick="{!c.hideMeetingMin}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Meeting Minutes" iconName="{!v.MeetingMiniconName}">
+                    
+                    
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createMeetingMinRecord}"/>
+                                
+                            </p>
+                            
+                        </div>      
+                    </div>
+                    
+                    <div class="slds-popover__body"> 	
+                        
+                        
+                        
+                        <lightning:datatable data="{! v.MeetingMindata }"
+                                             columns="{! v.MeetingMincolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        
+                        
+                    </div>
+                    
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevMeetingMin}" disabled="{! v.pageNumberMeetingMin == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageMeetingMin}" onclick="{!c.handleNextMeetingMin}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberMeetingMin} | Showing records from {! ((v.pageNumberMeetingMin-1)*v.pageSizeMeetingMin)+' to '+((v.pageNumberMeetingMin-1)*v.pageSizeMeetingMin+v.dataSizeMeetingMin)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="creditDebit-popup" class="gpopover credit-hide" onmouseleave="{!c.hideCreditCard}">
+        <div class="" aura:id="ccDetailpop">
+            <div> 
+                <button class="fl-right" title="Close" onclick="{!c.hideCreditCard}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Credit card Detail" iconName="{!v.CCdetailiconName}">
+                    
+                    
+                    <div class="slds-clearfix">                
+                        
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createCCRecord}"/>
+                                
+                            </p> 
+                        </div> 
+                        
+                    </div>                        
+                    <div class="slds-popover__body"> 
+                        <lightning:datatable data="{! v.ccDetaildata }"
+                                             columns="{! v.ccDetailcolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevccDetail}" disabled="{! v.pageNumberccDetail == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageccDetail}" onclick="{!c.handleNextccDetail}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberccDetail} | Showing records from {! ((v.pageNumberccDetail-1)*v.pageSizeccDetail)+' to '+((v.pageNumberccDetail-1)*v.pageSizeccDetail+v.dataSizeccDetail)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    
+    <div id="setOfBooks-popup" class="gpopover setOfBook-hide"  onmouseleave="{!c.hideSetOfBooks}" >
+        <div class=" " aura:id="SetofBookspop">
+            <div onmouseleave=" "> 	
+                <button class="fl-right" title="Close" onclick="{!c.hideSetOfBooks}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Set of Books" variant="Narrow" iconName="{!v.SetofBooksiconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createSetofBooksRecord}"/>
+                            </p>
+                        </div>      
+                    </div>
+                    <div class="slds-popover__body">
+                        <lightning:datatable data="{! v.SetofBooksdata }"
+                                             columns="{! v.SetofBookscolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevSetofBooks}" disabled="{! v.pageNumberSetofBooks == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageSetofBooks}" onclick="{!c.handleNextSetofBooks}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberSetofBooks} | Showing records from {! ((v.pageNumberSetofBooks-1)*v.pageSizeSetofBooks)+' to '+((v.pageNumberSetofBooks-1)*v.pageSizeSetofBooks+v.dataSizeSetofBooks)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="orders-popup" class="gpopover order-hide" onmouseleave="{!c.hideOrders}">
+        <div class=" " aura:id="Orderpop">
+            <div onmouseleave=" "> 
+                <button class="fl-right" title="Close" onclick="{!c.hideOrders}">      
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Orders" iconName="custom:custom88">
+                    
+                    
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createOrderRecord}"/>
+                                
+                            </p>
+                            
+                        </div>      
+                    </div>
+                    
+                    <div class="slds-popover__body"> 	
+                        
+                        
+                        
+                        <lightning:datatable data="{! v.Orderdata }"
+                                             columns="{! v.Ordercolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                        
+                        
+                    </div>
+                    
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevOrder}" disabled="{! v.pageNumberOrder == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageOrder}" onclick="{!c.handleNextOrder}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberOrder} | Showing records from {! ((v.pageNumberOrder-1)*v.pageSizeOrder)+' to '+((v.pageNumberOrder-1)*v.pageSizeOrder+v.dataSizeOrder)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="projects-popup" class="gpopover project-hide" >
+        <div class=" " aura:id="Projectspop" onmouseleave="{!c.hideProjects}">
+            <div onmouseleave=" "> 	
+                <button class="fl-right" title="Close" onclick="{!c.hideProjects}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Projects" variant="Narrow" iconName="{!v.ProjectsiconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createProjectsRecord}"/>
+                            </p>
+                        </div>      
+                    </div>
+                    <div class="slds-popover__body">
+                        <lightning:datatable data="{! v.Projectsdata }"
+                                             columns="{! v.Projectscolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevProjects}" disabled="{! v.pageNumberProjects == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageProjects}" onclick="{!c.handleNextProjects}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberProjects} | Showing records from {! ((v.pageNumberProjects-1)*v.pageSizeProjects)+' to '+((v.pageNumberProjects-1)*v.pageSizeProjects+v.dataSizeProjects)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    <div id="strategy-popup" class="gpopover strategy-hide" onmouseleave="{!c.hideStrategySession}">
+        <div class=" " aura:id="StrategySessionQuestionnairespop">
+            <div onmouseleave=" "> 	
+                <button class="fl-right" title="Close" onclick="{!c.hideStrategySession}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="StrategySessionQuestionnaires" variant="Narrow" iconName="{!v.StrategySessionQuestionnairesiconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p><ui:button label="New" press="{!c.createStrategySessionQuestionnairesRecord}"/>
+                            </p>
+                        </div>      
+                    </div>
+                    <div class="slds-popover__body">
+                        <lightning:datatable data="{!v.StrategySessionQuestionnairesData }"
+                                             columns="{! v.StrategySessionQuestionnairescolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevStrategySessionQuestionnaires}" disabled="{! v.pageNumberStrategySessionQuestionnaires == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastStrategySessionQuestionnaires}" onclick="{!c.handlePrevStrategySessionQuestionnaires}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberStrategySessionQuestionnaires} | Showing records from {! ((v.pageNumberStrategySessionQuestionnaires-1)*v.pageSizeStrategySessionQuestionnaires)+' to '+((v.pageNumberStrategySessionQuestionnaires-1)*v.pageSizeStrategySessionQuestionnaires+v.dataSizeStrategySessionQuestionnaires)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+    
+
+<!-- feedback List -->
+
+
+ <div id="feedback-popup" class="gpopover feedback-hide" >
+        <div class=" " aura:id="Feedbackpop" onmouseleave="{!c.hideFeedback}">
+            <div onmouseleave=" "> 	
+                <button class="fl-right" title="Close" onclick="{!c.hideFeedback}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Feedback" variant="Narrow" iconName="{!v.FeedbackiconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            
+                              <p><ui:button label="New" press="{!c.OpenFeedbackModal}"/>
+                                
+                            </p>
+                            <aura:if isTrue="{!v.isOpenfeedback}">
+                                <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <div class="slds-modal__header">
+                                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeFeedbackModal}">
+                                                X<span class="slds-assistive-text">Cancel</span>
+                                            </button>
+                                            <h2 id="header43" class="slds-text-heading--medium">New Feedback</h2>
+                                        </div>
+                                        
+                                        <div class="slds-modal__content slds-p-around--medium">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <div class="slds-align--absolute-center">Select a Record Type</div>                            
+                                                </div>
+                                                <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                                                    <ui:inputSelect aura:id="selecfeedbackid">
+                                                        <aura:iteration items="{!v.feedbacklstOfRecordType}" var="feedbackRec">                            
+                                                            <ui:inputSelectOption text="{!feedbackRec}" label="{!feedbackRec}"  />
+                                                        </aura:iteration>
+                                                    </ui:inputSelect>
+                                                </div>&nbsp; &nbsp;
+                                            </div>                   
+                                        </div>
+                                        
+                                        <div class="slds-modal__footer">
+                                            <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeFeedbackModal}">Cancel</lightning:button>
+                                            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createFeedbackRecord}">Next</lightning:button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-backdrop slds-backdrop--open"></div>
+                            </aura:if>
+                        </div>      
+                    </div>
+
+                    <div class="slds-popover__body">
+                        <lightning:datatable data="{! v.Feedbackdata }"
+                                             columns="{! v.Feedbackcolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevFeedback}" disabled="{! v.pageNumberFeedback == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageFeedback}" onclick="{!c.handleNextFeedback}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberFeedback} | Showing records from {! ((v.pageNumberFeedback-1)*v.pageSizeFeedback)+' to '+((v.pageNumberFeedback-1)*v.pageSizeFeedback+v.dataSizeFeedback)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+ <div id="dissolutions-popup" class="gpopover dissolution-hide" >
+        <div class=" " aura:id="Dissolutionpop" onmouseleave="{!c.hideDissolution}">
+            <div onmouseleave=" "> 	
+                <button class="fl-right" title="Close" onclick="{!c.hideDissolution}">
+                    x
+                    <span class=""></span>
+                </button>
+                <lightning:card title="Dissolutions" variant="Narrow" iconName="{!v.DissolutioniconName}">
+                    <div class="slds-clearfix">  
+                        <div class="slds-float_right"> 
+                            <p>
+                                <ui:button label="New" press="{!c.createDissolutionRecord}"/>
+                            </p>
+                        </div>      
+                    </div>
+
+                    <div class="slds-popover__body">
+                        <lightning:datatable data="{! v.Dissolutionsdata}"
+                                             columns="{!v.Dissolutioncolumns }"
+                                             keyField="id"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                        
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-page-header" role="banner">
+                            <div class="slds-float_right">            
+                                <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.handlePrevDissolution}" disabled="{! v.pageNumberDissolution == 1}"/>
+                                <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                                  disabled="{! v.isLastPageDissolution}" onclick="{!c.handleNextDissolution}"/>
+                            </div>
+                            <p class="slds-page-header__title">Page {!v.pageNumberDissolution} | Showing records from {! ((v.pageNumberDissolution-1)*v.pageSizeDissolution)+' to '+((v.pageNumberDissolution-1)*v.pageSizeDissolution+v.dataSizeDissolution)}</p>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </div>
+
+    
+</aura:component>

@@ -1,0 +1,76 @@
+<apex:page docType="html-5.0" standardController="pymt__PaymentX__c" extensions="pymt.PaymentDetailsController" action="{!getPaymentDetails}" sideBar="{!IF($CurrentPage.parameters.hideSideBar == 'true',false,true)}" showHeader="{!IF($CurrentPage.parameters.hideHeader == 'true',false,true)}" cache="false" tabStyle="pymt__PaymentX__c">
+<style>
+.modalProgressBox {
+    display: block;
+    position: absolute;
+    z-index: 999;
+    text-align: center; 
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    padding-top:250px;
+    top: 0px;
+    left: 0px;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+    color: black;
+    font-size: 14pt;
+   }
+</style>
+<apex:outputPanel id="pagePanel" >
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Retrieve Payment Details" help="{!$Page.pymt__Help}"/>
+
+<apex:pageMessages id="pageMessages" />
+<apex:pageMessage rendered="{!simulationMode}" strength="1" severity="warning" summary="PaymentConnect is currently in gateway simulation mode. In this mode PaymentConnect will simulate responses from your payment processor and by-pass actual credit card charges, refunds, etc. To run live transactions, have your Salesforce administrator turn gateway simulation mode off."/>
+    <apex:form id="terminalForm" onsubmit="return validateForm();">
+        <apex:actionStatus id="modalActionStatus" >
+         <apex:facet name="start" > 
+           <apex:outputPanel styleClass="modalProgressBox">&nbsp; 
+           <br/><br/><br/>
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/spinner_med.gif')}"  style="vertical-align:middle;" alt="busy..." />
+              </apex:outputPanel>
+         </apex:facet> 
+         <apex:facet name="stop"  >
+         </apex:facet>
+    </apex:actionStatus>   
+    
+       <apex:pageBlock id="getDetailsPageBlock" mode="edit">
+        <apex:pageBlockButtons id="pageButtons">
+           <apex:commandButton id="cancel" value="Cancel"
+               action="{!cancelFromPage}" onclick="enableValidation=false;"/> 
+            <!--  apex:commandButton id="updateFeeButton" value="Update Transaction Fee"  onclick="enableValidation=true;"  -->
+        
+               <apex:actionStatus id="formActionStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel >&nbsp;
+              <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                            style="vertical-align:middle;" alt="busy..." />
+              &nbsp;Updating Page</apex:outputPanel>
+                </apex:facet>
+                <apex:facet name="stop">
+                    <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+                </apex:facet>
+            </apex:actionStatus>
+        
+        </apex:pageBlockButtons>
+        <div style="margin:8px;">
+        <apex:outputPanel rendered="{!enableGetDetails}">
+        <br/>
+        Transaction details retrieved from {!processor} for transaction id {!payment.pymt__Transaction_Id__c}:<br/><br/>
+        <apex:repeat value="{!transactionDetails}" var="value">
+            <div style="width:45%;float:left;margin-left:4px;">{!value}</div>
+        </apex:repeat>
+            <p style="clear:left;">&nbsp;</p>
+            </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT(enableGetDetails)}">
+        <br/><br/><br/><br/>
+
+        </apex:outputPanel>            
+            </div>
+            </apex:pageBlock>    
+    
+    </apex:form>
+   </apex:outputPanel>
+</apex:page>

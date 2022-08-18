@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>S_Corp</name>
+        <label>S-Corp?</label>
+        <locationX>349</locationX>
+        <locationY>361</locationY>
+        <defaultConnector>
+            <targetReference>Update_First_Tax_YE</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Entity.Tax_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>S - Corporation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>S_Corp_First_Tax_YE</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Fills in the First Tax Year End date based on the Articles Sent being filled in for the first time.
+SCH-0096</description>
+    <formulas>
+        <name>fmCurrentYearEnd</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!Get_Entity.Articles_Sent__c}),12,31)</expression>
+    </formulas>
+    <formulas>
+        <description>Determines the First Tax year end based on the articles sent date.</description>
+        <name>fmFirstTaxYrEndDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(AND({!Get_Entity.Articles_Sent__c}  &gt;= DATE(YEAR({!Get_Entity.Articles_Sent__c}),01,01),  {!Get_Entity.Articles_Sent__c}  &lt;= DATE(YEAR({!Get_Entity.Articles_Sent__c}),03,31)), DATE(YEAR({!Get_Entity.Articles_Sent__c}),09,30), 
+IF(AND({!Get_Entity.Articles_Sent__c}  &gt;= DATE(YEAR({!Get_Entity.Articles_Sent__c}),04,01),  {!Get_Entity.Articles_Sent__c}  &lt;= DATE(YEAR({!Get_Entity.Articles_Sent__c}),06,30)), DATE(YEAR({!Get_Entity.Articles_Sent__c})+1,03,31), 
+IF(AND({!Get_Entity.Articles_Sent__c}  &gt;= DATE(YEAR({!Get_Entity.Articles_Sent__c}),07,01),  {!Get_Entity.Articles_Sent__c}  &lt;= DATE(YEAR({!Get_Entity.Articles_Sent__c}),09,30)), DATE(YEAR({!Get_Entity.Articles_Sent__c})+1,06,30), 
+DATE(YEAR({!Get_Entity.Articles_Sent__c})+1,09,30))))</expression>
+    </formulas>
+    <interviewLabel>Entity - Articles Sent {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Entity - Articles Sent - Tax Year End</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Entity</name>
+        <label>Get Entity</label>
+        <locationX>227</locationX>
+        <locationY>204</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>S_Corp</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Entities__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Articles_Sent__c</queriedFields>
+        <queriedFields>Tax_Status__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>S_Corp_First_Tax_YE</name>
+        <label>S-Corp First Tax YE</label>
+        <locationX>615</locationX>
+        <locationY>258</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Entity.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Year_End__c</field>
+            <value>
+                <elementReference>fmCurrentYearEnd</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Entities__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the First Tax Year End Field</description>
+        <name>Update_First_Tax_YE</name>
+        <label>Other Corp First Tax YE</label>
+        <locationX>616</locationX>
+        <locationY>469</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EntityId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Year_End__c</field>
+            <value>
+                <elementReference>fmFirstTaxYrEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Entities__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Entity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>EntityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

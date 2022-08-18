@@ -1,0 +1,493 @@
+<template>
+   <!-- Input Form -->
+   <!-- Spinner -->
+   <lightning-card>
+      <div if:true={isLoaded}>
+         <lightning-spinner
+            alternative-text="Loading..." variant="brand">
+         </lightning-spinner>
+      </div>
+      <div >
+         <!-- Starting Div -->
+         <div class="slds-m-around_medium">
+            <!-- Lightning Record View Form -->
+            <div if:false={isEditable}>
+               <lightning-record-view-form
+                  object-api-name="Opportunity"
+                  record-id={recordId}
+                  onload={viewOnlyLoad}>
+                  <div  class="slds-hide">
+                     <lightning-output-field field-name="Follow_Up_1__c"></lightning-output-field  >
+                     <lightning-output-field field-name="Follow_Up_2__c" ></lightning-output-field  >
+                     <lightning-output-field field-name="Follow_Up_3__c" ></lightning-output-field  >
+                     <lightning-output-field field-name="Final_Follow_Up__c"></lightning-output-field  >
+                  </div>
+                  <!-- Grid -->
+                  <div class="slds-grid slds-gutters">
+                     <!-- First Col of grid -->
+                     <div class="slds-col slds-size_5-of-12">
+                        <!-- Next Follow up Date -->
+                        <div class="sdls-box">
+                           <span>Date of Next Follow-Up</span>
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-output-field field-name="Date_of_Next_Follow_Up__c" variant="label-hidden">
+                                    </lightning-output-field  >
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit" onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                        <br>
+                        <!-- Follow Up 1 -->
+                        <div>
+                           <div >
+                              <h1 class="slds-p-bottom_x-small"><b>Follow Up 1</b></h1>
+                           </div>
+                           <span>Date of Follow-Up 1</span>
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-output-field field-name="Date_of_Follow_Up_1__c" variant="label-hidden">
+                                    </lightning-output-field  >
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                           <!-- Check Box -->
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent"  >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-checkbox-group class="slds-m-top_x-small" name="Follow_Up_1__c"
+                                       data-id="followUp1TypeViewOnly"
+                                       options={options}
+                                       value={value}
+                                       disabled="true"
+                                       ></lightning-checkbox-group>
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit" onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                        <br>
+                        <!-- Follow Up 2 -->
+                        <div>
+                           <h2 class="slds-p-bottom_x-small"><b>Follow Up 2</b></h2>
+                           <!-- Date -->
+                           <span>Date of Follow-Up 2</span>
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-output-field field-name="Date_of_Follow_Up_2__c" variant="label-hidden">
+                                    </lightning-output-field  >
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                           <!-- Check Box -->
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent"  >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-checkbox-group class="slds-m-top_x-small" name="Follow_Up_2__c"
+                                       data-id="followUp2TypeViewOnly"
+                                       options={options}
+                                       value={value}
+                                       disabled="true"
+                                       ></lightning-checkbox-group>
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                        <br>
+                        <!-- Follow Up 3 -->
+                        <div>
+                           <h3 class="slds-p-bottom_x-small"><b>Follow Up 3</b></h3>
+                           <!-- Date -->
+                           <span>Date of Follow-Up 3</span>
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-output-field field-name="Date_of_Follow_Up_3__c" variant="label-hidden">
+                                    </lightning-output-field  >
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                           <!-- Check Box -->
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent"  >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-checkbox-group class="slds-m-top_x-small" name="Follow_Up_3__c"
+                                       data-id="followUp3TypeViewOnly"
+                                       options={options}
+                                       value={value}
+                                       disabled="true"
+                                       ></lightning-checkbox-group>
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                        <br>
+                        <!-- Final Follow Up -->
+                        <div>
+                           <h4  class="slds-p-bottom_x-small"><b>Final Follow Up</b></h4>
+                           <!-- Date -->
+                           <span>Date of Final Follow-Up</span>
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-output-field field-name="Date_of_Final_Follow_Up__c" variant="label-hidden">
+                                    </lightning-output-field  >
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                           <!-- Check Box -->
+                           <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent"  >
+                              <div class="slds-form-element__control">
+                                 <div class="slds-form-element__static">
+                                    <lightning-checkbox-group class="slds-m-top_x-small" name="Edit_Final_Follow_Up__c"
+                                       data-id="finalfollowUpTypeViewOnly"
+                                       options={options}
+                                       value={value}
+                                       disabled="true"
+                                       ></lightning-checkbox-group>
+                                 </div>
+                                 <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                       <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Edit</span>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!--Second col of grid  -->
+                     <div class="slds-col slds-size_2-of-12"  >
+                     </div>
+                     <!--third col of grid  -->
+                     <div class="slds-col slds-size_5-of-12" style="margin-top:-8px;" >
+                        <span style="margin-top: 0px;">
+                           <!-- Dropdown Button Stage Name -->
+                           <div>
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+                                 <span class="slds-form-element__label">Account</span>
+                                 <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                       <lightning-output-field field-name="AccountId" variant="label-hidden">
+                                       </lightning-output-field  >
+                                    </div>
+                                    <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                       <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                          <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                       </svg>
+                                       <span class="slds-assistive-text">Edit Account</span>
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                           <div>
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+                                 <span class="slds-form-element__label">Stage</span>
+                                 <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                       <lightning-output-field field-name="StageName" variant="label-hidden">
+                                       </lightning-output-field  >
+                                    </div>
+                                    <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                       <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                          <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                       </svg>
+                                       <span class="slds-assistive-text">Edit Stage</span>
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- </div> -->
+                           <br>
+                           <!-- Update Comment Section -->
+                           <div class="row">
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+                                 <span class="slds-form-element__label">Update Comments</span>
+                                 <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                       <lightning-output-field  field-name="Update_Comments__c" variant="label-hidden"></lightning-output-field>
+                                    </div>
+                                    <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                       <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                          <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                       </svg>
+                                       <span class="slds-assistive-text">Edit Update Comments</span>
+                                    </button>
+                                 </div>
+                              </div>
+                              <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent">
+                                 <span class="slds-form-element__label">Comments</span>
+                                 <div class="slds-form-element__control">
+                                    <div class="slds-form-element__static">
+                                       <lightning-output-field field-name="Comments__c" variant="label-hidden">
+                                       </lightning-output-field  >
+                                    </div>
+                                    <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                       <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                          <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                       </svg>
+                                       <span class="slds-assistive-text">Edit</span>
+                                    </button>
+                                 </div>
+                              </div>
+                              <!-- Comments section-->
+                           </div>
+                           <br>
+                           <!-- EVent -->
+                           <div>
+                              <h4 class="slds-p-bottom_x-small"><b>Events</b></h4>
+                              <!-- Tax & Asset Protection Event -->
+                              <div>
+                                 <span>Tax & Asset Protection Event</span> 
+                                 <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                                    <div class="slds-form-element__control">
+                                       <div class="slds-form-element__static">
+                                          <lightning-output-field field-name="Tax_Asset_Protection_Event__c" variant="label-hidden">
+                                          </lightning-output-field  >
+                                       </div>
+                                       <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                          <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                             <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                          </svg>
+                                          <span class="slds-assistive-text">Edit</span>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                              <br>
+                              <!--Date Invited Event-->
+                              <div>
+                                 <span>Date Invited</span> 
+                                 <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                                    <div class="slds-form-element__control">
+                                       <div class="slds-form-element__static">
+                                          <lightning-output-field field-name="Date_Invited_Event__c" variant="label-hidden">
+                                          </lightning-output-field  >
+                                       </div>
+                                       <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                          <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                             <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                          </svg>
+                                          <span class="slds-assistive-text">Edit</span>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                              <br>
+                              <!--Date Registered Event  -->
+                              <div >
+                                 <span>Date Registered</span> 
+                                 <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-hint-parent slds-float_right"  style="display: inline-block; width: 200px;" >
+                                    <div class="slds-form-element__control">
+                                       <div class="slds-form-element__static">
+                                          <lightning-output-field field-name="Date_Registered__c" variant="label-hidden">
+                                          </lightning-output-field  >
+                                       </div>
+                                       <button class="slds-button slds-button_icon" title="Edit"  onclick={handleEdit}>
+                                          <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                             <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                          </svg>
+                                          <span class="slds-assistive-text">Edit</span>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </span>
+                     </div>
+                  </div>
+               </lightning-record-view-form>
+            </div>
+            <!-- Record Edit Form -->
+            <div if:true={isEditable}>
+               <lightning-record-edit-form
+                  object-api-name="Opportunity"
+                  record-id={recordId} 
+                  onsubmit={handleSubmit}
+                  onsuccess={handleSuccess} 
+                  onerror={handleError}
+                  onload={handleOnLoad}>
+                  <div class="slds-hide">
+                     <lightning-input-field field-name="Follow_Up_1__c" ></lightning-input-field  >
+                     <lightning-input-field field-name="Follow_Up_2__c" ></lightning-input-field  >
+                     <lightning-input-field field-name="Follow_Up_3__c" ></lightning-input-field  >
+                     <lightning-input-field field-name="Final_Follow_Up__c"></lightning-input-field  >
+                  </div>
+                  <!-- Grid -->
+                  <div if:true={errorMessage} class="slds-text-body_regular slds-p-around_x-small slds-m-bottom_medium" 
+                     style="color: red;border: 1px;border-color:red;background:#FFC9C9;border-radius:3px">
+                     {errorMessage}
+                  </div>
+                  <div class="slds-grid slds-gutters">
+                     <!-- First Col of grid -->
+                     <div class="slds-col slds-size_5-of-12">
+                        <!-- Next Follow up Date -->
+                        <div class="sdls-box">
+                           <span>Date of Next Follow-Up</span>
+                           <lightning-input-field   field-name="Date_of_Next_Follow_Up__c"  variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                        </div>
+                        <br>
+                        <!-- Follow Up 1 -->
+                        <div>
+                           <div >
+                              <h1 class="slds-p-bottom_x-small"><b>Follow Up 1</b></h1>
+                           </div>
+                           <span>Date of Follow-Up 1</span>
+                           <lightning-input-field   field-name="Date_of_Follow_Up_1__c"  variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                           <!-- Check Box -->
+                           <lightning-checkbox-group class="slds-m-top_x-small" name="Follow_Up_1__c"
+                              data-id="followUp1Type"
+                              options={options}
+                              value={value}
+                              ></lightning-checkbox-group>
+                        </div>
+                        <br>
+                        <!-- Follow Up 2 -->
+                        <div>
+                           <h2 class="slds-p-bottom_x-small"><b>Follow Up 2</b></h2>
+                           <!-- Date -->
+                           <span>Date of Follow-Up 2</span>
+                           <lightning-input-field  field-name="Date_of_Follow_Up_2__c"   variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                           <!-- Check Box -->
+                           <lightning-checkbox-group class="slds-m-top_x-small" name="Follow_Up_2__c"
+                              data-id="followUp2Type"
+                              options={options}
+                              value={value}
+                              ></lightning-checkbox-group>
+                        </div>
+                        <br>
+                        <!-- Follow Up 3 -->
+                        <div>
+                           <h3 class="slds-p-bottom_x-small"><b>Follow Up 3</b></h3>
+                           <!-- Date -->
+                           <span>Date of Follow-Up 3</span>
+                           <lightning-input-field   field-name="Date_of_Follow_Up_3__c"   variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                           <!-- Check Box -->
+                           <lightning-checkbox-group class="slds-m-top_x-small" name="Follow_Up_3__c"
+                              data-id="followUp3Type"
+                              options={options}
+                              value={value}
+                              ></lightning-checkbox-group>
+                        </div>
+                        <br>
+                        <!-- Final Follow Up -->
+                        <div>
+                           <h4  class="slds-p-bottom_x-small"><b>Final Follow Up</b></h4>
+                           <!-- Date -->
+                           <span>Date of Final Follow-Up</span>
+                           <lightning-input-field   field-name="Date_of_Final_Follow_Up__c"   variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                           <!-- Check Box -->
+                           <lightning-checkbox-group class="slds-m-top_x-small" name="Final_Follow_Up__c"
+                              data-id="finalfollowUpType"
+                              options={options}
+                              value={value}
+                              ></lightning-checkbox-group>
+                        </div>
+                     </div>
+                     <!--Second col of grid  -->
+                     <div class="slds-col slds-size_2-of-12"  >
+                     </div>
+                     <!--third col of grid  -->
+                     <div class="slds-col slds-size_5-of-12" style="margin-top:-8px;" >
+                        <span style="margin-top: 0px;">
+                           <!-- Dropdown Button Stage Name -->
+                           <div>
+                              <lightning-input-field field-name="AccountId"> </lightning-input-field>
+                           </div>
+                           
+                           <div>
+                              <lightning-input-field field-name="StageName"> </lightning-input-field>
+                           </div>
+                           <!-- </div> -->
+                           <br>
+                           <!-- Update Comment Section -->
+                           <div class="row">
+                              <lightning-input-field  field-name="Update_Comments__c" label="Update Comments"></lightning-input-field>
+                              <!-- Comments section-->
+                              <lightning-input-field field-name="Comments__c" label="Comments" ></lightning-input-field>
+                           </div>
+                           <br>
+                           <!-- EVent -->
+                           <div>
+                              <h4 class="slds-p-bottom_x-small"><b>Events</b></h4>
+                              <!-- Tax & Asset Protection Event -->
+                              <div>
+                                 <span>Tax & Asset Protection Event</span> 
+                                 <lightning-input-field   field-name="Tax_Asset_Protection_Event__c"   variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                              </div>
+                              <br>
+                              <!--Date Invited Event-->
+                              <div>
+                                 <span>Date Invited</span> 
+                                 <lightning-input-field  field-name="Date_Invited_Event__c"  variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                              </div>
+                              <br>
+                              <!--Date Registered Event  -->
+                              <div >
+                                 <span>Date Registered</span> 
+                                 <lightning-input-field   field-name="Date_Registered__c"  variant="label-hidden" style="display: inline-block; width: 200px; " class="slds-float_right"></lightning-input-field>
+                              </div>
+                           </div>
+                        </span>
+                     </div>
+                  </div>
+                  <div class="slds-align_absolute-center" >
+                     <lightning-button label="Cancel" onclick={handleCancel} class="slds-m-right_x-small"></lightning-button>
+                     <lightning-button variant="brand" type="submit" label="Save"  > </lightning-button>
+                  </div>
+               </lightning-record-edit-form>
+            </div>
+         </div>
+      </div>
+   </lightning-card>
+</template>

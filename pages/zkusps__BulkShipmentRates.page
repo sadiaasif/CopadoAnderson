@@ -1,0 +1,36 @@
+<apex:page showHeader="true" sidebar="true" controller="zkusps.BulkShipmentRateController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!getRates}" value="Calculate Rates"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Mailing Address" columns="2">
+                <apex:outputLabel value="Street"/>
+                <apex:inputText value="{!street}"/>
+                <apex:outputLabel value="City"/>
+                <apex:inputText value="{!city}"/>
+                <apex:outputLabel value="State"/>
+                <apex:inputText value="{!state}"/>
+                <apex:outputLabel value="Postal Code"/>
+                <apex:inputText value="{!postalCode}"/>
+                <apex:outputLabel value="Country ISO Code"/>
+                <apex:inputText value="{!country}"/>
+                <apex:outputLabel value="Weight"/>
+                <apex:inputText value="{!shipmentWeight}"/>
+                <apex:outputLabel value="Declared value"/>
+                <apex:inputText value="{!shipmentValue}"/>
+                <apex:outputLabel value="Packaging Type "/>
+                <apex:selectList size="1" value="{!selectedPackagingType}">
+                    <apex:selectOptions value="{!packagingTypes}"/>
+                </apex:selectList>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Rates" columns="1">
+                <apex:repeat value="{!rates}" var="rate">
+                    <apex:pageBlockSectionItem >
+                        {!rate.mailService} - {!rate.cost}
+                    </apex:pageBlockSectionItem>
+                </apex:repeat>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

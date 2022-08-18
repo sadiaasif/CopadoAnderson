@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="ApexWireMethodToProperty" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template if:true={returnedValue.data}>
+                
+                <p> This is awesome! </p>
+                
+            </template>
+            <template if:true={returnedValue.error}>
+                <p> {returnedValue.error} </p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

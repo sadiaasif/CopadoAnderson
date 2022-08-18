@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_57296163</developerName>
+        <masterLabel>Lead Source</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Account.Main_Lead_Source__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Affiliate</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Big Dog-Love American Homes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dani Johnson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dave Lindahl</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Don Pendleton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Elite Legacy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Gene Guarino</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jet Lending</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Nick Vertucci-NVREA</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pat James</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Real Wealth Network</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Referral</sourceValue>
+            </sourceValues>
+            <value>Affiliate</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Adduco Media</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Online Marketing</sourceValue>
+            </sourceValues>
+            <value>Online Paid</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Anderson Event</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Calendly</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Online Organic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Royal Media</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Social Media</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Webinar</sourceValue>
+            </sourceValues>
+            <value>Online Organic-Social</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Employee Referral</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Existing Client</sourceValue>
+            </sourceValues>
+            <value>Other</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AMOUNT</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Main_Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>Account.Main_Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Google_Analytics_Source__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Google_Analytics_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Google_Analytics_Medium__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Google_Analytics_Content__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Google_Analytics_Term__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Account.Total_Value_of_All_Sales__c</field>
+    </columns>
+    <columns>
+        <field>Account.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <field>Account.Google_Analytics_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>Account.Google_Analytics_Content__c</field>
+    </columns>
+    <columns>
+        <field>Account.Google_Analytics_Medium__c</field>
+    </columns>
+    <columns>
+        <field>Account.Google_Analytics_Source__c</field>
+    </columns>
+    <columns>
+        <field>Account.Google_Analytics_Term__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Tax and Asset Protection</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>AMOUNT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CLOSE_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_57296163</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax and AP Events by Sources for the Yea</name>
+    <params>
+        <name>open</name>
+        <value>closedwon</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CLOSE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

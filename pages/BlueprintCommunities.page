@@ -1,0 +1,329 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="PaginationController"  sidebar="false" showHeader="false" lightningStylesheets="true">
+     <apex:slds />
+    <style>
+        @media (min-width: 1024px) {
+        .sidebar {
+        display: block;
+        } 
+        }
+        
+        div {
+        word-wrap: break-word;
+        }
+        
+        @media (max-width: 1024px) {
+        .sidebar {
+        display: block;
+        }
+        .main2 {
+        position: relative;
+        padding: 0px 0px 30px 0px;
+        margin-bottom: 10px;
+        }
+        .apexp .bPageBlock.apexDefaultPageBlock .pbBody {
+        margin: 0px;
+        }
+        .panel-body {
+        padding: 10px 5px;
+        }
+        .main2 {
+        padding: 0px;
+        }
+        .apexp,
+        .individualPalette,
+        .userBlock {
+        width: 100%;
+        float: left;
+        }
+        .main1 {
+        padding: 0px 20px 45px 20px;
+        }
+        .table-responsive {
+        margin-bottom: 8px;
+        }
+        .page_row_count {
+        position: absolute;
+        bottom: -37px;
+        right: 17px;
+        }
+        .entities .userBlock .pbHeader {
+        bottom: 0px;
+        left: 17px;
+        }
+        .static-data {
+        overflow: auto;
+        }
+        .static-data table {
+        width: auto;
+        max-width: inherit;
+        }
+        .panel-body,
+        .pbBody {
+        width: 100%;
+        float: left;
+        }
+        }
+        
+        .mid-inner-sec table tr td {
+        //background: white;
+        font-size: 12px;
+        }
+        
+        .modal-body {
+        background: white;
+        }
+        
+        footer.container-fluid.text-center {
+        padding: 0px;
+        }
+        
+        body .bPageBlock .pbBody {
+        overflow: auto;
+        }
+        
+        .container,
+        .container-fluid {
+        padding-right: 17px;
+        }
+        #quesMsg{
+        display:block;
+        }
+        
+        .headingBlock {
+        font-size:18px;
+        }
+        
+        table { page-break-inside:auto; }
+        tr    { page-break-inside:auto; }
+        .loader{
+        position: relative !important;
+        }
+    </style>
+                    <script>
+                $(document).ready(function() {
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PaginationController.getBlueprintAttachment}',                            
+                        function(result, event){   
+                            if(event.status){ 
+                                var blueprintHtml = '';
+                                var quesmsg = '';
+                                var imgDownload = '';
+                                var blueprintWithHeader = '';
+                                var width = '';
+                                var height = '';
+                                var img = '';
+                                var disclaimer = '';
+                                var disclaimerPart1 = '';
+                                var disclaimerPart2 = '';
+                                
+                                for(i=0;i<result.length;i++){ 
+                                    var idd = '';
+                                    var BpName = '';
+                                    var preparedBy = '';
+                                    idd = result[i].attachementId;
+                                    BpName = result[i].attachmentName;
+                                    //console.log('BpName=========')
+                                    console.log(result[i]);
+                                    if(result[i].preparedBy != null){
+                                        preparedBy = result[i].preparedBy;
+                                    }
+                                    else
+                                        preparedBy = '';
+                                    imgs = "<img class='sky' src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img>";                                                                   
+                                    var u = "{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}";
+                                    var img = new Image; 
+                                    //console.log('geqwegqgewqgee')
+                                    img.onload = function() {
+                                        width = img.width;
+                                    };
+                                    img.src = u;
+                                    console.log('after image src')
+                                    //setTimeout(function(){ 
+                                    var VIEW_URL = '{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file=';
+                                    blueprintHtml += " <li><img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img></li>";
+                                    blueprintWithHeader += "<img style='width: 101%;height: 93;' src='{!URLFOR($Resource.images, 'images/header-img.jpg')}' styleClass='Header' /><img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img><div class='col-sm-12' style='height:90px; background-color:#555555'></div>"; 
+                                    //console.log('width ' + width); 
+                                    quesmsg += "<img src='{!$Site.CurrentSiteUrl}servlet/servlet.FileDownload?file={!'"+idd+"'}'/></img>"+ '<br>';
+                                    imgDownload += '<a href="'+ VIEW_URL + idd +'" download="'+BpName+'" class="mulImg" target="_blank">'+BpName+'</a>';                                    
+                                    //}, 100);
+                                    document.getElementById("bpDisclaimerPart1").innerHTML = 'Preparedby: <b>'+preparedBy;
+                                }
+                                
+                                disclaimerPart1 = '<p> Wealth Planning Blueprint<br><br>Customized for:<b>{!$User.FirstName}&nbsp;{!$User.LastName}</b><br>'
+                                disclaimerPart2 = '</b><br><br>Anderson Business Advisors<br>Drafting a Wealth Planning Blueprint is about putting together a plan for your current situation and future goals. The purpose of the Blueprint is to: <br>Minimize your tax liability by using the best available entity structures for your situation<br>Decrease your risk of losing personal or business assets in the event of a negative lawsuit result<br>Build an estate plan that protects your current and future wealth and establishes decision-making power regarding you, your family, and assets <br>Create a plan for running your business<br>The Wealth Planning Blueprint is just one stage of the Anderson System and is your roadmap for running your businesses, investments, and estate. <br>The other stages of the Anderson System will be introduced to you by your Platinum team.<br> Included in this packet are diagrams that explain the various types of entity structures we utilize; these diagrams may include the structure found <br>on your specific Blueprint.<br>Furthermore, we’d like to share one of the important lessons we cover at our Tax and Asset Protection Workshop: the concept of inside and outside liability. <br>Understanding this concept will empower you to understand why your Blueprint is structured the way it is.<br><br><br>Two Types of Liability: Inside & Outside<br>If an asset protection plan is properly implemented, inside and outside liability remain separate.<br>“Inside liability” is liability that originates from within a certain sphere, such as a limited liability entity like an LLC. For example, if you are a real estate investor and have a real estate entity structure in place, inside liability would be considered a trip and fall on one of your properties. The liability originates from and stays within that particular sphere (the entity holding the property in question).<br>“Outside liability” is liability that originates from outside a certain sphere, such as when you are personally liable in a car accident. Outside liability originates from outside of the sphere, but the assets inside the sphere are protected!<br>The general purpose of asset protection is to isolate liabilities to certain spheres and protect assets from the liabilities generated in other spheres. Using the previous example, if a slip and fall occurs at a rental property held in an LLC, the liability will be contained within the LLC. Therefore, the maximum loss will be the value of the property.<br>Asset protection structures generally utilize Limited Liability Companies (LLCs) to create these spheres to limit liability exposure.<br>To further illustrate this, consider the following example: if you have three pieces of real estate that are separated using three LLCs and a slip and fall occurs on property one, properties two and three will remain outside property one’s liability zone. Thus, properties two and three will not be affected by the liability created by property one. <br>If you did not use an LLC for your real estate, all of your assets are contained in the same sphere. There is no shield between your personal assets and your real estate. A single slip and fall at one of your properties could cause a complete loss of all assets. In order to avoid this situation, your real estate should be separated by placing properties into different LLCs.<br><br><br>br>Favorable Jurisdictions for LLCs<br><br>In addition, in the real estate realm, the use of LLCs allows us to shop for the best possible jurisdiction to hold the beneficial interest in the real estate.  In some states, such as Nevada or Wyoming, the SOLE remedy for a creditor of an individual who has a membership interest in an LLC is a charging order. A charging order is a lien against the LLC. The creditor is prohibited from taking away your ownership interest in the LLC. The result of this is that the creditor will have an extremely difficult time collecting from you. Often, this situation will lead to a favorable settlement for the LLC owner. <br>As an example, if John has a charging order placed against his LLC by Abe in the amount of $50K, this means that Abe is entitled to all distributions made to John from the LLC. However, as the manager of the LLC, John does not need to take distributions as long as there are restrictive provisions in the LLC operating agreement.<br>Theoretically, this would result in Abe being more willing to settle his claim against John.  Thus, in real estate structuring, it is wise to have a holding entity (an LLC that owns the interests of the real estate LLCs) in a jurisdiction where the sole remedy is a charging order. Nevada and Wyoming have statutory charging order protection. This is why we generally recommend a holding entity in Nevada or Wyoming. <br>"Pursuant to recently-enacted U.S. Treasury Department Regulations, we are now required to advise you that, unless otherwise expressly indicated, any federal tax advice contained in this communication, including attachments and enclosures, is not intended or written to be used, and may not be used, for the purpose of (i) avoiding tax-related penalties under the Internal Revenue Code or (ii) promoting, marketing or recommending to another party any tax-related matters addressed herein."</p>';
+                                document.getElementById("image-gallery").innerHTML = blueprintHtml; 
+                                document.getElementById("bpIMG").innerHTML = blueprintWithHeader + disclaimerPart1;
+                                document.getElementById("bpDisclaimerPart2").innerHTML = disclaimerPart2;
+                                $(".multiImg").html(imgDownload);
+                            } 
+                            $('.flexslider').flexslider({
+                                animation: "slide",
+                                start: function(slider){
+                                    $('body').removeClass('loading');
+                                }
+                            });  
+                            $(function(){
+                                $('#btn-Convert-Html2Image').click(function(){                                   
+                                    $('.multiImg').find('a').each(function() {
+                                        this.click();
+                                    });
+                                    
+                                });
+                            });
+                        });   
+                    $("#owl-demo").owlCarousel({                    
+                        loop: true,
+                        navigation : true, 
+                        autoPlay: true,
+                        autoplayTimeout: 500,
+                        autoplayHoverPause: true,
+                        touchDrag: true,
+                        dots: true,
+                        slideSpeed : 300,
+                        paginationSpeed : 400,
+                        singleItem: true,
+                        pagination: false         
+                        
+                    });
+                    
+                });            
+                </script>
+    <div class="slds-scope">
+        <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="Mobile compatible" content="ie=edge" />
+                <title>Anderson Business Advisors</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>                
+                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+                <title>Anderson Advisors</title>            
+                <!-- Bootstrap -->
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+                <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+                <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/theme.default.min.css')}"/>  
+                <apex:stylesheet value="{!URLFOR($Resource.css, '/css/flexslider.css')}"/>
+            </head>
+            <body> 
+    
+    <div id="printLoader" style="display:none" >
+                                        <apex:image url="{!URLFOR($Resource.images, 'images/loading.gif')}" styleClass="loader" alt="Loading" />                                                      
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingtwo">
+                                            <h4 class="panel-title">
+                                                <a id="bpsection" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsetwo" aria-expanded="false" aria-controls="collapseThree">
+                                                    Blueprint
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        
+                                        <div id="collapsetwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingtwo">
+                                            <div class="text-right" id="bpBTNS">
+                                                <a class="btn" style="text-decoration: none;" id="btn-Convert-Html2Image" href="">Download<i class="fa fa-download" aria-hidden="true"></i></a>                                                
+                                                <a class="btn" onclick="PrintDiv()">Print <i class="fa fa-print" aria-hidden="true"></i></a>
+                                                
+                                            </div>
+                                            
+                                            <div class="multiImg" style="display:none;">                                                
+                                            </div>
+                                            <div id="container" class="cf">                                                
+                                                <div id="main" role="main">
+                                                    <section class="slider">
+                                                        <div class="flexslider">
+                                                            <ul class="slides" id="image-gallery"> 
+                                                            </ul>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                    <div id="quesMsg" style="display:none;">
+                                        <span id="bpIMG">   
+                                        </span>
+                                        <span id="bpDisclaimerPart1">
+                                        </span>
+                                        <span id="bpDisclaimerPart2">
+                                        </span>
+                                    </div> 
+           <script language="javascript" type="text/javascript">
+                function PrintDiv() {
+                    $("#printLoader").css("display", "block");
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.PaginationController.getSessionId}',
+                        function(result, event){
+                            $("#printLoader").css("display", "none");
+                            if (event.status) {
+                                var divToPrint=document.getElementById('quesMsg');
+                                
+                                var newWin=window.open('','Print-Window');
+                                
+                                newWin.document.open();
+                                
+                                newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+                                
+                                newWin.document.close();
+                                
+                                setTimeout(function(){
+                                    newWin.close();
+                                },0);
+                                
+                            }
+                        else {
+                        $("#Alert").css("display", "block");
+                        window.setTimeout(function() {
+                        window.location.href = 'https://comm-platinum.cs19.force.com/dashboard/Anderson_Login';
+                    }, 5000);
+                }
+                }, 
+                    {escape: true}
+                ); 
+                /*   var content = document.getElementById('quesMsg').innerHTML;
+                    var mywindow = window.open('', 'Print', 'height=600,width=800');
+                    
+                    mywindow.document.write('<html><head></head><body >');
+                    mywindow.document.write(content);
+                    mywindow.document.write('</body></html>');
+                    
+                    mywindow.document.close();
+                    mywindow.focus()
+                    mywindow.print();
+                    mywindow.close();
+                    return true;*/
+                
+                
+                /*  var divToPrint=document.getElementById('quesMsg').innerHTML;
+                     console.log(divToPrint);
+                     var newWin=window.open('','Print-Window');
+                    
+                    newWin.document.open();
+                    
+                    newWin.document.write('<html><body>'+divToPrint+'</body></html>');
+                   
+                    newWin.document.close(); 
+                    newWin.focus();
+                    newWin.print();
+                    newWin.close();
+                    
+
+
+                    return true;   */                 
+                /*   var printContents = document.getElementById('quesMsg').innerHTML;
+                    var originalContents = document.body.innerHTML;
+                    
+                    document.body.innerHTML = printContents;
+                    
+                    window.print();
+                    
+                    document.body.innerHTML = originalContents;*/
+                }
+                
+                </script>
+            </body>
+        </html> 
+    </div>
+</apex:page>

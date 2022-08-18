@@ -1,0 +1,56 @@
+<apex:page docType="html-5.0" id="siteConfAttendeesPage"  controller="evt.ConfAttendeesController" title="{!event.Name} Attendees"   showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>
+    {!IF($Label.ConfAttendees_Heading == '-','Attendees',SUBSTITUTE($Label.ConfAttendees_Heading,'{eventname}',event.Name))}
+</title></head>
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_conf_attendees_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="attendees"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content"  id="evt_conf_attendees_page">
+    <div class="pc_page_content_inner"> 
+<apex:form >
+
+<div id="evt_conf_attendees_box" class="evt_h1_outer_box">
+    <div class="evt_box_header">
+<apex:outputPanel rendered="{!$Label.evt__ConfAttendees_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__ConfAttendees_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+<apex:outputPanel rendered="{!NOT($Label.evt__ConfAttendees_Message == '-')}">
+<p>{!$Label.evt__ConfAttendees_Message}</p>
+</apex:outputPanel> 
+
+<table class="evt_attendee_table">
+<tr>
+<th>Name</th>
+<th>Company</th>
+<th>Title</th> 
+</tr>
+<apex:repeat value="{!listItems}" var="item">
+<tr>
+<td>
+<apex:outputText value="{!item.fn} {!item.ln}"/>
+</td>
+<td>
+<apex:outputText value="{!item.company}"/>
+</td>
+<td>
+<apex:outputText value="{!item.title}"/>
+</td>
+</tr>
+</apex:repeat>
+</table>
+</div>
+</div>
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+  </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+</apex:define>
+</apex:composition>
+</apex:page>

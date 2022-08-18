@@ -1,0 +1,32 @@
+<apex:page docType="html-5.0" id="ptlScheduledPaymentsPage" controller="pymt.SiteScheduledPaymentsController" sidebar="false" title="{!$Label.pymt__SiteScheduledPayments_Heading}"  cache="false" >
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content"  id="pc_ptlscheduledpayments_page">
+    <div class="pc_page_content_inner">
+    <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+        <apex:pageMessage summary="Login required." severity="warning" strength="3" />
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+
+    <apex:pageMessages id="messages"/>
+
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SiteScheduledPayments_Heading == '-')}">
+    <h1>{!$Label.pymt__SiteScheduledPayments_Heading}</h1>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SiteScheduledPayments_Message == '-')}">
+    <p>{!$Label.pymt__SiteScheduledPayments_Message}</p>
+    </apex:outputPanel>
+
+    <c:ScheduledPaymentList contactId="{!contactId}" usePtlCheckout="True" />
+    </apex:outputPanel>
+
+
+    </div>
+  </div>
+
+</apex:page>

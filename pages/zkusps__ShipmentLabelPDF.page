@@ -1,0 +1,29 @@
+<apex:page controller="zkusps.ShipmentLabelPDF" applyHtmlTag="false" renderAs="pdf"  applyBodyTag="false"  showHeader="false" standardStylesheets="false" docType="html-5.0">
+    <html>
+        <head>
+            <style >
+            body {
+                display: inline;
+                margin-top: 0px;
+                margin-right: 0px;
+                margin-bottom: 0px;
+                margin-left: 0px;
+            }
+
+            @page{
+                size: 4in 6in; 
+                margin-top: 0in; 
+                margin-left: 0in; 
+                margin-right: 0cm; 
+                margin-bottom: 0cm;
+                padding: 0cm;
+            }              
+            </style>
+        </head>
+
+        <body>
+            <img src="{! GifLabelURL }" style="height: 576px; width: 384px;position: absolute;top: 0;"></img>
+            <!-- {! GifLabelURL } -->
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,59 @@
+<apex:page standardController="evt__Special_Event__c"  extensions="evt.CheckInSheetSetupController">
+<apex:sectionHeader title="Linvio Events" subtitle="Attendee Check-In Sheet" help="{!URLFOR($Page.evt__EventManagementHelp)}"/>
+<apex:form >
+<apex:pageMessages />
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Return" action="{!returnToEvent}"/>
+<apex:commandButton value="Build Check-In List PDF" action="{!buildCheckInSheet}"/>
+</apex:pageBlockButtons>
+What information would you like to see on your check-in sheet?<br/><br/><br/>
+<apex:pageBlockSection columns="2" >
+<apex:pageBlockSectionItem >
+<apex:outputText value="Display Attendee Email, Phone"/>
+<apex:inputCheckbox value="{!showContactInfo}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="Select the status(es) of attendees you want to include on the check-in sheet.">
+<apex:outputText value="Registration Status(es)"/>
+<apex:selectList size="5" multiselect="true"  value="{!statusValues}">
+<apex:selectOption itemLabel="Invited" itemValue="Invited"/>
+<apex:selectOption itemLabel="Payment Pending" itemValue="Payment Pending"/>
+<apex:selectOption itemLabel="Registered" itemValue="Registered"/>
+<apex:selectOption itemLabel="Cancelled" itemValue="Cancelled"/>
+<apex:selectOption itemLabel="Declined" itemValue="Declined"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="Select the category(ies) of attendees you want to include on the check-in sheet.">
+<apex:outputText value="Attendee Category"/>
+<apex:selectList size="5" multiselect="true" value="{!attendeeCategories}">
+<apex:selectOption itemLabel="--Any--" itemValue="--Any--"/>
+<apex:selectOption itemLabel="Attendee" itemValue="Attendee"/>
+<apex:selectOption itemLabel="Exhibitor" itemValue="Exhibitor"/>
+<apex:selectOption itemLabel="Sponsor" itemValue="Sponsor"/>
+<apex:selectOption itemLabel="Volunteer" itemValue="Volunteer"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem helpText="Check to display QR check-in codes on the check-in list.  These QR codes are mobile device scannable for auto-check-in. If unchecked, a simple box will be displayed instead.">
+<apex:outputText value="Show QR Codes"/>
+<apex:inputCheckbox value="{!showQRCodes}"/> 
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

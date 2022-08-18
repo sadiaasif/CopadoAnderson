@@ -1,0 +1,88 @@
+<apex:page standardController="Account"   extensions="TaxTeamSaleRealtedListPdfCtrl" renderAs="PDF" >
+
+
+   <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        <head>
+         <style>
+
+ </style>  
+
+        </head>
+        <body>
+            
+     <apex:pageBlock >
+<div style="text-align: center">
+    <apex:outputLabel value="Client:"></apex:outputLabel>
+                     <apex:outputText value="{!Account.Name}"></apex:outputText>
+    <br/>
+    <apex:outputLabel value="Total Number of sales:"></apex:outputLabel>
+                     <apex:outputText value="{!oppListSize}"></apex:outputText>
+    </div>
+         <br/>
+         <br/>
+       
+         
+<apex:pageBlockTable value="{!lstoppinwrapper}" var="opp"  style="border:1px solid black;width:100%;font-size: 80%; " >
+
+<apex:column value="{!opp.OppListwrapper.name}"  style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.StageName}"  style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.RecordType.Name}" style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.Amount}" style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.CloseDate}" style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.Owner.name}" style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.Entity__r.Name}" style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    <apex:column value="{!opp.OppListwrapper.Sales_Rep__r.Name}" style="{!if(opp.flag,'background-color:#C0C0C0','background-color:#FFFFFF;')};width:1%;" />
+    
+    
+    </apex:pageBlockTable>
+
+</apex:pageBlock>
+        
+    <apex:form id="frm">
+   
+   <!--   <table border="1" width="100%">
+ <thead>
+                   
+                    <tr>
+                        
+                        <th>Name</th>
+                         <th>Status</th>
+                         <th>Opportunity Record Type</th> 
+                       
+                         <th>Amount</th>
+                         <th>Balance Due</th>
+                         <th>Close Date</th>
+                         <th>Owner Full Name</th>
+                        <th>Entity</th>
+                        <th>Sales Rep</th>
+                        
+                        
+                      
+                    </tr>
+                </thead>
+          <apex:repeat value="{!lstopp}" var="opp">
+                <tbody>
+  
+        <tr>
+            
+            <td> <apex:outputText value="{!opp.Name}"/></td>
+              <td> <apex:outputText value="{!opp.StageName}"/></td>
+              <td> <apex:outputText value="{!opp.RecordType.Name}"/></td>
+              <td> <apex:outputText value="{!opp.Amount}"/></td>
+            <td> <apex:outputText value="{!opp.ChargentSFA__Balance_Due__c}"/></td>
+              <td> <apex:outputText value="{!opp.CloseDate}"/></td>
+              <td> <apex:outputText value="{!opp.Owner.name}"/></td>
+             <td> <apex:outputText value="{!opp.Entity__r.Name}"/></td>
+             <td> <apex:outputText value="{!opp.Sales_Rep__r.Name}"/></td>
+            
+        </tr>
+      
+    
+                  </tbody>
+     
+</apex:repeat>
+          </table> -->
+    </apex:form>
+        </body></html>
+</apex:page>

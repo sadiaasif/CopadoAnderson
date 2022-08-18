@@ -1,0 +1,76 @@
+<apex:page renderAs="PDF" standardController="Entities__c" extensions="ctrEntity" tabStyle="Entities__c" sidebar="false">
+ <HR WIDTH="50%" SIZE="3"/> 
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center"> <img src="{!URLFOR($Resource.AgreementPdfImages2, 'AgreementPDFimg/andersonreg.jpg')}" width="50%" height="50%"/></td>
+              </tr>
+              <tr>
+                <td align="center" style="font-size:14px; padding-top: 10px;">3225 McLeod Drive #110, Las Vegas, NV  89121 <br/>800-266-1296 Office; 702-664-0546 Fax</td>
+              </tr>
+            </table>            
+
+<HR WIDTH="50%" SIZE="3"/> 
+
+
+
+
+<br/>
+<b>{!acc.First_Name__c}<span style="padding-left:1.5px"/> {!acc.Last_Name__c}</b>
+
+<span style="padding-left:220px"><b>{!dt}</b></span>
+<br/>
+{!acc.BillingStreet} 
+<br/>
+{!acc.BillingCity}, {!acc.BillingState} {!acc.BillingPostalCode}
+<br/>
+<br/>
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">            
+              <tr>
+                <td align="center" style="font-size:18px; padding-top: 10px;"><b>STAMPED/FILED RECEIPT</b></td>
+              </tr>
+            </table>   
+<br/>
+<br/>
+Enclosed, please find a copy of the following:
+<br/>
+    <br/>
+<span style="padding-left:20px"><b>Entity Name: {!ent.Name}</b>  </span>
+<br/>
+<span style="padding-left:20px"><b>Filing Period: One Year </b></span>
+<br/>
+<br/>
+
+Next {!eMonth}, you will receive the next you will receive the next renewal of this entity. 
+Instructions are provided, but we encourage questions as this helps in the learning process of running your entities.
+<br/>
+<br/>
+As your Registered Agent, it is important for us to contact you at certain times, because of this we ask that you inform us of any address and/or telephone changes.  This will help in keeping our records up-to-date, as well as you receiving your renewal in a timely manner, so as not to incur late fees.
+<br/>
+<br/>
+Thank you for letting us serve YOU as your registered agent.
+<br/>
+<br/>
+
+Sincerely,
+<br/>
+<br/>
+
+The staff of Anderson Registered Agents
+<br/>
+<br/>
+Dorothy J. Bunker, President
+<br/>
+Ana Hodgers, Assistant
+<br/>
+Barbara Helm, Assistant
+<br/>
+Morris Bowers, Assistant
+<br/>
+<br/>
+<HR WIDTH="50%" SIZE="3"/> 
+<b>
+REGISTERED AGENT SERVICES:  TOLL FREE: 1-800-266-1296  FAX: 702-310-9911 www.AcornCorp.com
+</b>
+
+
+</apex:page>

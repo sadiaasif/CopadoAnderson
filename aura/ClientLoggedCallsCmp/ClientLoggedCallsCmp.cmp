@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"  controller="ClientStrategyPageCtrl">
+     <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="AdvisorscallTaskRecords" type="task[]" />
+    <aura:attribute name="ServicecallTaskRecords" type="task[]" />
+    <aura:attribute name="AdvisorscallTaskcolumns" type="List"/>
+    <aura:attribute name="ServicecallTaskcolumns" type="List"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen="true"  >
+        <lightning:accordionSection name="AdvisorTask" label="Advisor Calls" >
+            <lightning:datatable aura:id="AdvisorTaskTable"  
+                                 data="{!v.AdvisorscallTaskRecords}"     
+                                 columns="{!v.AdvisorscallTaskcolumns}"     
+                                 keyField="Id"    
+                                 hideCheckboxColumn="true"  
+                                 />
+        </lightning:accordionSection>
+        <lightning:accordionSection name="ServiceTask" label="Service Calls" >
+            <lightning:datatable aura:id="ServiceTaskTable"  
+                                 data="{!v.ServicecallTaskRecords}"     
+                                 columns="{!v.ServicecallTaskcolumns}"     
+                                 keyField="Id"    
+                                 hideCheckboxColumn="true"  
+                                 />
+        </lightning:accordionSection>
+    </lightning:accordion>
+</aura:component>

@@ -1,0 +1,644 @@
+<apex:page tabStyle="UspsPreferences__tab" standardController="zkusps__EndiciaPreference__c" extensions="zkusps.EndiciaPreferenceController" sidebar="true" action="{! init }">
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+
+    <apex:sectionHeader title="USPS Endicia Preference Edit"  subtitle="New USPS Endicia Preference" rendered="{! NOT(isEditMode) }"/>
+    <apex:sectionHeader title="USPS Endicia Preference Edit"  subtitle="Edit USPS Endicia Preference" rendered="{! isEditMode }" />
+
+    <style>
+        .inputFieldRequiredBar {
+            height:14px;
+            float:right;
+            display: inline;
+            font-size: 8pt;
+            color: #cc0000;
+            padding: 5px 0 2px 0;
+            margin-left: 16px;
+            margin-right: -19px;
+            margin-top:2px;
+            background-color: #cc0000;
+        }
+
+    </style>
+
+    <apex:form >
+
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+
+                function setRequiredFields() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                }
+
+                $j(document).ready(function() {
+                    setRequiredFields();
+                    $j('.removeElementId').parent().remove();
+                    $j('.extendElementId').parent().attr('colspan', '4');
+                });
+
+                
+            </script>
+        </apex:outputPanel>
+
+        <apex:actionFunction name="movePhysicalInfoToMailingInfo" action="{! movePhysicalInfoToMailingInfo }" oncomplete="setRequiredFields();" reRender="mailingAddressInfoSection"/>
+
+        <apex:pageBlock id="preferencePageBlock" mode="maindetail">
+            
+            <!-- Messages -->
+            <apex:outputPanel id="preferencePageMessages">
+                <c:MessageListDisplay msgList="{! messageList }"/>
+            </apex:outputPanel>
+
+            
+
+            <!-- Page Block Buttons -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{! createPreference }" value="Create Preference" rendered="{! NOT(isEditMode) }"/>
+                <apex:commandButton action="{! savePreference }" value="Update Preference" rendered="{! isEditMode }"/>
+                <apex:commandButton action="{! backToPreviousPage }" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+            <!-- Pricing -->
+            <apex:pageBlockSection title="Pricing" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="" />
+                    <apex:commandLink target="_blank" immediate="true" value="Endicia Pricing" action="https://www.zenkraft.com/endicia-pricing"/>  
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+
+            <apex:pageBlockSection id="billingTypeSection" collapsible="false" title="Endicia Plan" rendered="{! NOT(isEditMode) }" columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Billing Type"/>
+                    <apex:selectList value="{! preference.BillingType__c }" size="1" multiselect="false" >
+                        <apex:selectOptions value="{! billigTypeOptions }"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="" />
+                    <apex:commandLink target="_blank" immediate="true" value="Endicia Plans" action="https://zenkraft.com/endicia-plans"/>  
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="billingTypeEditSection" collapsible="false" title="Endicia Plan" rendered="{! isEditMode }" columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Billing Type"/>
+                    <apex:outputText value="{! CorrectBillingType }" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="" />
+                    <apex:commandLink target="_blank" immediate="true" value="Endicia Plans" action="https://zenkraft.com/endicia-plans"/>  
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <!--User Information Section -->
+            <apex:pageBlockSection id="userInfoSection" collapsible="false" title="User Information" rendered="{! NOT(isEditMode) }">
+
+                <!-- First Name 25 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="First Name"/>
+                    <apex:inputField value="{! preference.UserFirstName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Middle Name 25 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Middle Name"/>
+                    <apex:inputField value="{! preference.UserMiddleName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Last Name 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Last Name"/>
+                    <apex:inputField value="{! preference.UserLastName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Title 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Title"/>
+                    <apex:inputField value="{! preference.UserTitle__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Email 120 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Email"/>
+                    <apex:inputField value="{! preference.UserEmail__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Phone default value is xxx-xxx-xxxx -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Phone"/>
+                    <apex:inputField value="{! preference.UserPhone__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- PhoneExt 10 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Ext"/>
+                    <apex:inputField value="{! preference.UserPhoneExt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Fax -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Fax"/>
+                    <apex:inputField value="{! preference.UserFax__c }"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection id="userInfoSectionEditMode" collapsible="false" title="User Information" rendered="{! isEditMode }">
+
+                <!-- First Name 25 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="First Name"/>
+                    <apex:outputField value="{! preference.UserFirstName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Middle Name 25 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Middle Name"/>
+                    <apex:outputField value="{! preference.UserMiddleName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Last Name 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Last Name"/>
+                    <apex:outputField value="{! preference.UserLastName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Title 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Title"/>
+                    <apex:outputField value="{! preference.UserTitle__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Email 120 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Email"/>
+                    <apex:outputField value="{! preference.UserEmail__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Phone default value is xxx-xxx-xxxx -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Phone"/>
+                    <apex:outputField value="{! preference.UserPhone__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- PhoneExt 10 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Ext"/>
+                    <apex:outputField value="{! preference.UserPhoneExt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Fax -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Fax"/>
+                    <apex:outputField value="{! preference.UserFax__c }"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <!-- Account Credentials Section -->
+            <apex:pageBlockSection id="accountCredInfoSection" collapsible="false" title="Account Credentials" rendered="{! NOT(isEditMode) }">
+                <!-- Credential Messages -->
+                <apex:outputPanel layout="block" styleClass="extendElementId">
+                    <c:MessageListDisplay msgList="{! messageCredList }"/>
+                </apex:outputPanel> 
+                <apex:outputPanel styleClass="removeElementId"></apex:outputPanel>
+                                
+                <!-- Web Password 17 , > 8 -->
+                <apex:pageBlockSectionItem helpText="{! HelpLinks.EndiciaPrefWebPassword }">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Web Password"/>
+                    <apex:inputField value="{! preference.WebPasswordEn__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Temporary PassPhrase, >8 -->
+                <apex:pageBlockSectionItem helpText="{! HelpLinks.EndiciaPrefTempPass }">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Temporary PassPhrase"/>
+                    <apex:inputField value="{! preference.TempPassPhraseEncrypt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Main PassPhrase -->
+                <apex:pageBlockSectionItem helpText="{! HelpLinks.EndiciaPrefNewPass }">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Main PassPhrase"/>
+                    <apex:inputField value="{! preference.PassPhraseEncrypt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Security Question, 50, >5 -->
+                <apex:pageBlockSectionItem helpText="{! HelpLinks.EndiciaPrefQuestion }">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Security Question"/>
+                    <apex:inputField value="{! preference.SecurityQuestion__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel />
+                    <apex:outputPanel />
+                </apex:pageBlockSectionItem>
+
+                <!-- Security Answer, 50, >5 -->
+                <apex:pageBlockSectionItem helpText="{! HelpLinks.EndiciaPrefAnswer }">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Security Answer"/>
+                    <apex:inputField value="{! preference.SecurityAnswerEncrypt__c }"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+
+            <!-- Account Credentials Section is Edit Mode -->
+            <apex:pageBlockSection id="accountCredInfoSectionEditMode" collapsible="false" rendered="{! isEditMode }">
+
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <h3>Account Credentials</h3>
+                        <apex:actionStatus id="toAccountCredSectionStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{! $Resource.LoadingImage }"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Old PassPhrase -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Old PassPhrase"/>
+                    <apex:inputText value="{! oldPassPhrase }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- New PassPhrase -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="New PassPhrase"/>
+                    <apex:inputText value="{! newPassPhrase }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Change Pass button -->
+                <apex:pageBlockSectionItem rendered="{! isEditMode }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! doChangePassword }" value="Change Pass Phrase" reRender="preferencePageBlock" 
+                                    oncomplete="setRequiredFields();" status="toAccountCredSectionStatus" />
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <!-- Credit Card Information Section -->
+            <apex:pageBlockSection id="creditCardInfoSection" collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <h3>Credit Card Information</h3>
+                        <apex:actionStatus id="toSectionStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{! $Resource.LoadingImage }"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+                <!-- PaymentType -->
+                <apex:pageBlockSectionItem id="paymentTypeSelect" rendered="{! isEditMode }">
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Payment Type"/>
+                    <apex:selectList id="selectedPaymentType" value="{! selectedPaymentType }" size="1" multiselect="false" >
+                        <apex:actionSupport event="onchange" action="{! doSelectPaymentType }" reRender="creditCardInfoSection" status="toSectionStatus" oncomplete="setRequiredFields();"/>
+                        <apex:selectOptions value="{! paymentTypeOptions }"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="paymentTypeInfo" rendered="{! isEditMode }">
+                    <apex:outputLabel value=""/>
+                    <apex:outputText value="{! paymentTypeInfo } "/>
+                </apex:pageBlockSectionItem>
+                <!-- CreditCardNumber 0-9 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Card Number"/>
+                    <apex:inputField value="{! preference.CreditCardNumber__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardType -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Card Type"/>
+                    <apex:inputField value="{! preference.CreditCardType__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardMonth, string -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Month"/>
+                    <apex:inputField value="{! preference.CreditCardMonth__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardYear 4 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Year"/>
+                    <apex:inputField value="{! preference.CreditCardYear__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardCVV 5 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="CVV"/>
+                    <apex:inputSecret size="4" value="{! creditCardCVV }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardAddress 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Address"/>
+                    <apex:inputField value="{! preference.CreditCardAddress__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardCity 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="City"/>
+                    <apex:inputField value="{! preference.CreditCardCity__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardState 2 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="State"/>
+                    <apex:inputField value="{! preference.CreditCardState__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardZip5 5 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Zip5"/>
+                    <apex:inputField value="{! preference.CreditCardZip5__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- CreditCardCountryCode 2 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Country Code"/>
+                    <apex:inputField value="{! preference.CreditCardCountryCode__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{! isEditMode }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! doUpdatePaymentInformation }" value="Update Payment Information" reRender="preferencePageBlock" 
+                                    oncomplete="setRequiredFields();" status="toSectionStatus" />
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+
+            <!-- Physical Address Section -->
+            <apex:pageBlockSection id="physicalAddressInfoSection" collapsible="false" title="Physical Address">
+
+                <!-- First Name 25 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="First Name"/>
+                    <apex:inputField value="{! preference.PhysicalFirstName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Last Name 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Last Name"/>
+                    <apex:inputField value="{! preference.PhysicalLastName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Company Name 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Company Name"/>
+                    <apex:inputField value="{! preference.PhysicalCompanyName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- SuiteOrApt 15 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Suite No"/>
+                    <apex:inputField value="{! preference.PhysicalSuiteOrApt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Address 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Address"/>
+                    <apex:inputField value="{! preference.PhysicalAddress__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- City 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="City"/>
+                    <apex:inputField value="{! preference.PhysicalCity__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- State 15 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="State"/>
+                    <apex:inputField value="{! preference.PhysicalState__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Zip5 15 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Zip5"/>
+                    <apex:inputField value="{! preference.PhysicalZip5__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Zip4 4 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Zip4"/>
+                    <apex:inputField value="{! preference.PhysicalZip4__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Phone xxx-xxx-xxxx -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Phone"/>
+                    <apex:inputField value="{! preference.PhysicalPhone__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- PhoneExt 10 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Ext"/>
+                    <apex:inputField value="{! preference.PhysicalPhoneExt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel ></apex:outputPanel>
+                    <apex:outputPanel ></apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:inputCheckbox onclick="movePhysicalInfoToMailingInfo();" label="Mailing address is the same" />
+
+            </apex:pageBlockSection>
+
+            <!-- Mailing Address Section -->
+            <apex:pageBlockSection id="mailingAddressInfoSection" collapsible="false" title="Mailing Address">
+
+                <!-- First Name 25 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="First Name"/>
+                    <apex:inputField value="{! preference.MailingFirstName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Last Name 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Last Name"/>
+                    <apex:inputField value="{! preference.MailingLastName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Company Name 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Company Name"/>
+                    <apex:inputField value="{! preference.MailingCompanyName__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- SuiteOrApt 15 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Suite No"/>
+                    <apex:inputField value="{! preference.MailingSuiteOrApt__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Address 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Address"/>
+                    <apex:inputField value="{! preference.MailingAddress__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- City 50 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="City"/>
+                    <apex:inputField value="{! preference.MailingCity__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- State 15 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="State"/>
+                    <apex:inputField value="{! preference.MailingState__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Zip5 15 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Zip5"/>
+                    <apex:inputField value="{! preference.MailingZip5__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Zip4 4 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Zip4"/>
+                    <apex:inputField value="{! preference.MailingZip4__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Phone xxx-xxx-xxxx -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Phone"/>
+                    <apex:inputField value="{! preference.MailingPhone__c }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- PhoneExt 10 -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Ext"/>
+                    <apex:inputField value="{! preference.MailingPhoneExt__c }"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <!-- Label Image Type Section -->
+            <apex:pageBlockSection id="labelImageTypeDefaultSection" collapsible="false" title="Default Shipment Information" columns="1">
+                <!-- Shipping Sender Name Default -->
+                <apex:inputField value="{! preference.shippingSenderNameDefault__c }"/>
+                <!-- Shipping Sender Email Default -->
+                <apex:inputField value="{! preference.shippingSenderEmailDefault__c }"/>
+                <!-- Shipping Sender Phone Default -->
+                <apex:pageBlockSectionItem helpText="Used to specify a default value for Sender Phone. If not specified, the value for Sender Phone will default to the User's Phone Number. 10 digits required (including area code) with no punctuation." >
+                    <apex:outputLabel value="Shipping Sender Phone Default"/>
+                    <apex:inputText value="{! shippingSenderPhoneDefault }"/>
+                </apex:pageBlockSectionItem>
+                <!-- Label Image Type Default -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Label Image Type Default"/>
+                    <apex:selectList value="{! selectedLabelImageTypeDefault }" size="1" multiselect="false" >
+                        <apex:selectOptions value="{! labelImageTypeDefaultOptions }"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <!-- Shipping Email Defaults -->
+            <apex:pageBlockSection id="emailLabelDefaultsSection" columns="1" collapsible="false" title="Add Email Label Defaults">
+                <!-- Email Label Sender Display Name Default -->
+                <apex:inputField value="{! preference.EmailLabelSenderDisplayNameDefault__c }"/>
+                <!-- Email Label Reply To Email Default -->
+                <apex:inputField value="{! preference.EmailLabelReplyToEmailDefault__c }"/>
+                <!-- Email Label Subject Line Default -->
+                <apex:inputField style="width:350px" value="{! preference.EmailLabelSubjectLineDefault__c }"/>
+                <!-- Email Label Text Body Default -->
+                <apex:inputField style="width:600px" value="{! preference.EmailLabelTextBodyDefault__c }"/>
+
+                <apex:pageBlockSectionItem rendered="{! isOrgWideEmailRendered }">
+                    <apex:outputLabel value="Org Wide Email Address" />
+                    <apex:selectList value="{! selectedOrgWideEmail }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! orgWideEmails }" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <!-- Convert Labels -->
+            <apex:pageBlockSection id="convertLabelSection" columns="1" collapsible="false" title="Convert Labels">
+                <apex:inputField value="{! preference.Convert_4x6_GIF_to_PDF__c }"/>
+                <apex:inputField value="{! preference.Convert_6x4_GIF_to_PDF__c }"/>
+            </apex:pageBlockSection>
+
+            <!-- Other Details -->
+            <apex:pageBlockSection id="otherDefaultsSection" columns="1" collapsible="false" title="Other Defaults">
+                <!-- Detailed View - Shipmate Preference List -->
+                <apex:inputField value="{! preference.DetailedViewShipmatePreferenceList__c }"/>
+                <!-- Include Image Resolution -->
+                <apex:inputField value="{! preference.IncludeImageResolution__c }"/>
+
+                <!-- Include Image Rotation -->
+                <apex:inputField value="{! preference.LabelImageRotationDefault__c }"/>
+
+                <apex:pageBlockSectionItem helpText="Used only for ZPLII and EPL labels. Default value is 203 dpi">
+                    <apex:outputLabel value="Default Image Resolution" />
+                    <apex:selectList value="{! selectedLabelResolution }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! labelResolutionOptions }" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <!-- Enable Scales Package -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Enable Scales"/>
+                    <apex:inputField value="{! preference.EnableScales__c }"/>
+                </apex:pageBlockSectionItem>
+                <!-- AutoWeigh Package -->
+                <apex:pageBlockSectionItem helpText="Auto Weight Package using Scale">
+                    <apex:outputLabel value="Auto Weigh Package"/>
+                    <apex:inputField value="{! preference.AutoWeighPackage__c }"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <!-- Terms Section -->
+            <apex:pageBlockSection id="termsSection" collapsible="false" columns="1" title="Terms">
+
+
+                <div>
+                    I certify that all information provided above is accurate and truthful. <br />
+                    I also certify that I have read and understood the following:   <br />
+                </div>
+
+                <!-- Terms & Conditions link -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandLink target="_blank" immediate="true" value="United States Postal Service Privacy Act Statement" action="http://about.usps.com/who-we-are/privacy-policy/welcome.htm"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandLink target="_blank" immediate="true" value="PC Postage Privacy Principles" action="https://about.usps.com/handbooks/as353/as353apdx_053.htm"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandLink target="_blank" immediate="true" value="Endicia Terms and Conditions" action="http://www.endicia.com/policy/terms-and-conditions"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandLink target="_blank" immediate="true" value="Acknowledgement of Deposit Requirement" action="https://account.endicia.com/Notice/AcknowledgementOfDeposit"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:commandLink target="_blank" immediate="true" value="USPS Policy Regarding Shortpaid and Unpaid Postage" action="https://account.endicia.com/Notice/USPSRegardingShortpaidandUnpaidPostage"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Terms Accepted -->
+                <!-- Required -->
+                <apex:inputField value="{! preference.TermsAccepted__c}" rendered="{! NOT(isEditMode) }"/>
+                <apex:outputField value="{!Preference.zkusps__TermsAccepted__c}" rendered="{! isEditMode }"/>
+                <!-- In edit mode, do not need the ability to un-accept terms. Make read only -->
+
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,392 @@
+<apex:page docType="HTML-5.0" id="ptlStyleTest" showHeader="true" sidebar="false" cache="false" standardStylesheets="true" title="{!$Organization.Name} Style Test Page">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<style>
+.boxModel {
+    margin:0px;
+    padding:10px;
+    border:1px solid red;
+    }
+.boxModelx {
+    margin:0px;
+    padding:10px;
+    border:1px solid #e8e8e8;
+}
+</style>
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitestyletest_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+
+    <apex:pageMessage summary="Confirmation" detail="This is the detail content for the test message" severity="confirm" />
+    <apex:pageMessage summary="Error" detail="This is the detail content for the second test message" severity="error" />
+    <apex:pageMessage summary="Info" detail="This is the detail content for the third message" severity="info" />
+    <apex:pageMessage summary="Warning" detail="This is the detail content for the fourth test message" severity="warning" />
+
+    <h1>H1 tag</h1>
+    <h2>H2 tag</h2>
+    <h3>H3 tag</h3>
+    <h4>H4 tag</h4>
+    <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipisicing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    <p>Unordered List</p>
+    <ul>
+    <li>Lorem</li>
+    <li>Ipsum</li>
+    </ul>
+
+    <p>Ordered List</p>
+    <ol>
+    <li>Lorem</li>
+    <li>Ipsum</li>
+    </ol>
+    <h2>Tables</h2>
+    <br/>
+    <h3>pc_record_listing_table</h3>
+    <table class="pc_record_listing_table">
+    <tr>
+        <th>Heading</th>
+        <th>Heading</th>
+        <th class="currency_column">Currency</th>
+    </tr>
+    <tr>
+        <td>Row 1 Col 1</td>
+        <td>Row 1 Col 2</td>
+        <td class="currency_column">$45.00</td>
+    </tr>
+    <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td class="currency_column">$45.00</td>
+    </tr>
+    </table>
+    <br/>
+    <h3>pc_opp_line_item_table</h3>
+    <table class="pc_opp_line_item_table">
+    <tr>
+        <th>Heading</th>
+        <th>Heading</th>
+        <th class="currency_column">Currency</th>
+    </tr>
+    <tr>
+        <td>Row 1 Col 1</td>
+        <td>Row 1 Col 2</td>
+        <td class="currency_column">$45.00</td>
+    </tr>
+    <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td class="currency_column">$45.00</td>
+    </tr>
+    </table>
+    <br/>
+    <h3>pc_cart_item_table</h3>
+    <table class="pc_cart_item_table">
+    <tr>
+        <th>Heading</th>
+        <th>Heading</th>
+        <th class="currency_column">Currency</th>
+    </tr>
+    <tr>
+        <td>Row 1 Col 1</td>
+        <td>Row 1 Col 2</td>
+        <td class="currency_column">$45.00</td>
+    </tr>
+    <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td class="currency_column">$45.00</td>
+    </tr>
+    </table>
+    <br/>
+
+    <h3>Plain Table</h3>
+    <table>
+    <tr>
+        <th>Heading</th>
+        <th>Heading</th>
+        <th>Currency</th>
+    </tr>
+    <tr>
+        <td>Row 1 Col 1</td>
+        <td>Row 1 Col 2</td>
+        <td>$45.00</td>
+    </tr>
+    <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td>$45.00</td>
+    </tr>
+    </table>
+    <br/>
+    <h3>Panel Grid</h3>
+    <p>...  row classes</p>
+
+    <apex:panelGrid columns="2" rowClasses="evenRow, oddRow">
+        <apex:outputtext value="Row 1 Col 1" />
+        <apex:outputtext value="Row 1 Col 2" />
+
+        <apex:outputtext value="Row 2 Col 1" />
+        <apex:outputtext value="Row 2 Col 2" />
+
+        <apex:outputtext value="Row 3 Col 1" />
+        <apex:outputtext value="Row 3 Col 2" />
+
+    </apex:panelGrid>
+    <h2>Forms</h2>
+    <h3>Panel Grid</h3>
+    <p>... with styleclass (.pc_form_table) and column classes (.labelColumn, .requiredFieldMarkerColumn, .fieldColumn)</p>
+    <apex:form >
+    <apex:panelGrid styleClass="pc_form_table" columns="3" columnClasses="labelColumn,requiredFieldMarkerColumn,fieldColumn">
+        <apex:outputtext value="labelColumn" />
+        <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        <apex:outputtext value="fieldColumn" />
+
+        <apex:outputtext value="Text Field" />
+        <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        <input type="text" class="pc_short_input_field" value="pc_short_input_field"/>
+
+        <apex:outputtext value="Text Field" />
+        <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+        <input type="text" class="pc_medium_input_field" value="pc_medium_input_field"/>
+
+        <apex:outputtext value="Text Field" />
+        <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+        <input type="text" class="pc_long_input_field" value="pc_long_input_field"/>
+
+        <apex:outputtext value="Email Address" />
+        <apex:image url="/s.gif"/>
+        <input type="email" value="someone@somewhere.com"/>
+
+        <apex:outputtext value="Date" />
+        <apex:image url="/s.gif"/>
+        <input type="date" />
+
+        <apex:outputtext value="Text Field" />
+        <apex:image url="/s.gif"/>
+        <input type="text"  value="regular"/>
+
+        <apex:outputText value=""/>
+        <apex:image url="/s.gif"/>
+        <apex:commandButton value="Sample Button"/>
+
+    </apex:panelGrid>
+    </apex:form>
+
+    <h3>Flex Form</h3>
+    <p>Using flex box elements to present a responsive input form.  Outer class = pc_flex_form:</p>
+    <apex:form >
+    <div class="pc_flex_form">
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            Label Text
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <apex:outputtext value="fieldColumn" />
+        </div>
+    </div>
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            Label Text
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <input type="text" class="pc_short_input_field" value="pc_short_input_field"/>
+        </div>
+    </div>
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            Label Text
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <input type="text" class="pc_medium_input_field" value="pc_medium_input_field"/>
+        </div>
+    </div>
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            Label Text
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <input type="text" class="pc_long_input_field" value="pc_long_input_field"/>
+        </div>
+    </div>
+
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            <apex:outputtext value="Email Address" />
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="optionalFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <input type="email" value="someone@somewhere.com"/>
+        </div>
+    </div>
+
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            <apex:outputtext value="Date" />
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <input type="date" />
+        </div>
+    </div>
+
+    <div class="pc_flex_form_line_container">
+        <div class="pc_flex_form_label_item">
+            Label Text
+        </div>
+        <div class="pc_flex_form_required_flag_item">
+            <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+        </div>
+
+        <div class="pc_flex_form_field_item">
+         <input type="text"  value="regular"/>
+        </div>
+    </div>
+
+
+
+    </div>
+
+    <div class="pc_button_container">
+        <apex:commandButton value="Sample Command Button"/>
+        <input type="button" value="Sample HTML Button"/>
+        <input type="submit" value="Sample Submit Button"/>
+        <apex:commandButton value="Sample Command Button"/>
+        <input type="button" value="Sample HTML Button"/>
+        <input type="submit" value="Sample Submit Button"/>
+    </div>
+
+    <div class="pc_button_container">
+        <a class="css-button" href="">Sample CSS Button</a>
+        <a class="css-button-disabled" href="">Disabled CSS Button</a>
+        <apex:commandLink value="Sample CSS Button Command Link" styleClass="css-button" />
+        <apex:commandLink value="Disabled Command Link" styleClass="css-button-disabled" />
+
+    </div>
+    <br/>
+    <a class="css-button btn-xsmall" href="">XSmall Button</a>
+    <a class="css-button btn-small" href="">Small Button</a>
+    <a class="css-button" href="">Regular Button</a>
+    <a class="css-button btn-large" href="">Large Button</a>
+    <a class="css-button btn-xlarge" href="">XLarge Button</a>
+    </apex:form>
+
+
+    <h2>Image Classes and IDs</h2>
+    <h3>#pc_accepted_card_logos</h3>
+    <img src="/s.gif" id="pc_accepted_card_logos"/><br/>
+    <h3>Individual Card Logos</h3>
+    #pc_accepted_card_Visa, #pc_accepted_card_MasterCard, #pc_accepted_card_Discover, #pc_accepted_card_Amex, #pc_accepted_card_DinersClub, #pc_accepted_card_JCB,#pc_accepted_card_Solo, #pc_accepted_card_Maestro<br/>
+    <img src="/s.gif" id="pc_accepted_card_Visa"/>,
+    <img src="/s.gif" id="pc_accepted_card_MasterCard"/>,
+    <img src="/s.gif" id="pc_accepted_card_Discover"/>,
+    <img src="/s.gif" id="pc_accepted_card_Amex"/>,
+    <img src="/s.gif" id="pc_accepted_card_DinersClub"/>,
+    <img src="/s.gif" id="pc_accepted_card_JCB"/>,
+    <img src="/s.gif" id="pc_accepted_card_Solo"/>,
+    <img src="/s.gif" id="pc_accepted_card_Maestro"/>
+    <h3>CVV &amp; eCheck Routing</h3>
+    #pc_cvv_icon<br/>
+    <img src="/s.gif" id="pc_cvv_icon"/><br/>
+    #pc_cvv_number_tip<br/>
+    <img src="/s.gif" id="pc_cvv_number_tip"/><br/>
+    #pc_routing_number_img<br/>
+    <img src="/s.gif" id="pc_routing_number_img"/><br/>
+    #pc_routing_number_tip<br/>
+    <img src="/s.gif" id="pc_routing_number_tip"/><br/>
+
+    <h2>PaymentConnect CSS Box Model</h2>
+    <fieldset class="boxModelx"><legend>body</legend>
+
+        <div style="text-align:center;font-style:italic;">Custom header/navigation bar code in site template</div>
+        <br/>
+
+                <fieldset class="boxModelx" ><legend>apex:define name=body</legend>
+
+                <fieldset class="boxModel" ><legend>id = pc_context_[context parm value]</legend>
+                <fieldset class="boxModel" ><legend>id = pc_lang_[lang parm value]</legend>
+                <fieldset class="boxModel" ><legend>.pc_page id= [unique page id]</legend>
+
+                <fieldset class="boxModel" ><legend>.pc_page_content_top</legend>
+                <div style="text-align:center;">Optional area for displaying an image or adding space above the content area </div>
+                </fieldset>
+                <fieldset class="boxModel" ><legend>.pc_page_content</legend>
+                <fieldset class="boxModel" ><legend>.pc_page_content_inner</legend>
+                <br/><br/><br/>
+                <div style="text-align:center;">The page content </div>
+                <br/><br/><br/><br/>
+                </fieldset>
+
+                </fieldset>
+                </fieldset>
+                </fieldset>
+
+            </fieldset>
+            </fieldset>
+
+        <br/>
+        <div style="text-align:center;font-style:italic;">Custom footer code in site template</div>
+
+    &nbsp;
+    </fieldset>
+    <h2>Processor Trust Images</h2>
+        #pc_trust_logo<br/>
+        <div id="pc_trust_logo">
+        </div>
+        #pc_trust_logo_authorize_net<br/>
+        <div id="pc_trust_authorize_net"></div>
+        #pc_trust_logo_paypal<br/>
+        <div id="pc_trust_paypal"></div>
+        #pc_trust_logo_eway<br/>
+        <div id="pc_trust_eway"></div>
+        #pc_trust_logo_worldpay<br/>
+        <div id="pc_trust_worldpay"></div>
+
+      <apex:outputpanel rendered="false">
+      <!-- custom labels reference in hidden block so that they will be included in the package manifest -->
+        {!$Label.pymt__Label_ShipToFirstName}
+        {!$Label.pymt__Label_ShipToLastName}
+        {!$Label.pymt__Label_ShipToStreet}
+        {!$Label.pymt__Label_ShipToCity}
+        {!$Label.pymt__Label_ShipToState}
+        {!$Label.pymt__Label_ShipToPostalCode}
+        {!$Label.pymt__Label_ShipToCountry}
+      </apex:outputpanel>
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:page>

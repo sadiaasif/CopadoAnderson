@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ChargentOrders__ChargentOrder__c$ChargentOrders__Account__c</field>
+    </columns>
+    <columns>
+        <field>ChargentOrders__ChargentOrder__c$Name</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ChargentOrders__ChargentOrder__c$ChargentOrders__Charge_Amount__c</field>
+    </columns>
+    <columns>
+        <field>ChargentOrders__ChargentOrder__c.ChargentOrders__Chargent_Automated_Collections__r$ChargentOrders__AC_Process_Name__c</field>
+    </columns>
+    <columns>
+        <field>ChargentOrders__ChargentOrder__c.ChargentOrders__Chargent_Automated_Collections__r$ChargentOrders__AC_Stage__c</field>
+    </columns>
+    <description>This table lists all customers with Chargent Order records currently in Automated Collections status</description>
+    <filter>
+        <criteriaItems>
+            <column>ChargentOrders__ChargentOrder__c$ChargentOrders__Payment_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Automated Collection</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Customers in Collections</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ChargentOrders__Orders_With_AC__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>ChargentOrders__ChargentOrder__c$ChargentOrders__Account__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>ChargentOrders__ChargentOrder__c.ChargentOrders__Chargent_Automated_Collections__r$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

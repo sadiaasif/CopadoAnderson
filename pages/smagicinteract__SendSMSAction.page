@@ -1,0 +1,24 @@
+<apex:page showHeader="false" showQuickActionVfHeader="false">
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'jquery_1_5_1.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'cometd.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'json2.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.smagicinteract__SMS_Insight_Reload, 'jquery_cometd.js')}"/>
+	
+	<apex:includeLightning rendered="true"/>
+	<div id="lightning" />
+    <script>
+        var recordId = "{!JSENCODE($CurrentPage.parameters.id)}";
+        $Lightning.use("smagicinteract:conversationApp", function() {
+            if(!recordId || recordId.startsWith('005')) {
+                $Lightning.createComponent("smagicinteract:newMessageComponent", {
+                    embeddedInVF : true
+                }, "lightning", function(cmp) {});
+            }
+            else {
+                $Lightning.createComponent("smagicinteract:composerComponent", {
+                    recordId : recordId
+                }, "lightning", function(cmp) {});
+            }
+        });
+    </script>
+</apex:page>

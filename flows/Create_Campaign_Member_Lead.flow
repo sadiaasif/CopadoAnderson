@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Does_Campaign_Member_Exist_Already</name>
+        <label>Does Campaign Member Exist Already?</label>
+        <locationX>318</locationX>
+        <locationY>244</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>Exist_STOP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CampaignMemberID</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <label>Exist - STOP</label>
+        </rules>
+        <rules>
+            <name>Not_Exist_Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CampaignMemberID</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Update_Campaign_Member</targetReference>
+            </connector>
+            <label>Does Not Exist - Create</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Create Campaign Member - Lead {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Campaign Member - Lead</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Update_Campaign_Member</name>
+        <label>Update Campaign Member</label>
+        <locationX>467</locationX>
+        <locationY>388</locationY>
+        <assignRecordIdToReference>CampaignMemberID</assignRecordIdToReference>
+        <inputAssignments>
+            <field>CampaignId</field>
+            <value>
+                <elementReference>CampaignID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LeadId</field>
+            <value>
+                <elementReference>LeadID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Responded</stringValue>
+            </value>
+        </inputAssignments>
+        <object>CampaignMember</object>
+    </recordCreates>
+    <recordLookups>
+        <name>Campaign_Member_Lookup</name>
+        <label>Campaign Member Lookup</label>
+        <locationX>317</locationX>
+        <locationY>109</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Does_Campaign_Member_Exist_Already</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CampaignId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CampaignID</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LeadID</elementReference>
+            </value>
+        </filters>
+        <object>CampaignMember</object>
+        <outputAssignments>
+            <assignToReference>CampaignMemberID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <startElementReference>Campaign_Member_Lookup</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>CampaignID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CampaignMemberID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LeadID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

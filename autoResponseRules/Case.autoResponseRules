@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <autoResponseRule>
+        <fullName>Anderson Case Rule</fullName>
+        <active>false</active>
+        <ruleEntry>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Community Platinum Case</value>
+            </criteriaItems>
+            <notifyCcRecipients>false</notifyCcRecipients>
+            <senderEmail>info@andersonadvisors.com</senderEmail>
+            <senderName>Anderson Business Advisors</senderName>
+            <template>Communities_Emails/New_Case_Client</template>
+        </ruleEntry>
+    </autoResponseRule>
+</AutoResponseRules>

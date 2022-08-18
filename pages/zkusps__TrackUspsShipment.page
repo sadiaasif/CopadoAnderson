@@ -1,0 +1,230 @@
+<apex:page tabStyle="zkusps__Shipment__c" showHeader="false" sidebar="false" standardController="zkusps__Shipment__c" extensions="zkusps.TrackUspsShipmentButtonController" action="{! init }">
+
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+    
+    <apex:sectionHeader title="Track USPS Shipment" help="http://www.zenkraft.com/support/usps/docs/managing-shipments"/>
+    
+    <apex:form >
+        <apex:pageBlock id="trackPageBlock">
+            
+            <!-- Messages -->
+            <apex:outputPanel id="TrackUspsShipmentMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+            
+            
+            <!-- Track Button Section -->
+            <apex:pageBlockSection collapsible="false" columns="1" >
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Track USPS Shipment "/>
+                        <apex:actionStatus id="trackButtonStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="trackbuttonImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+                
+                <!-- Button -->
+                <apex:pageBlockSectionItem rendered="{! webServiceType =='Express1' }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{!trackShipment}" value="Track" disabled="{!trackShipmentDisabled}" rerender="trackPageBlock" status="trackButtonStatus"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Endicia Button -->
+                <apex:pageBlockSectionItem rendered="{! webServiceType =='Endicia' }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! trackEndiciaShipment }" value="Track" disabled="{!trackShipmentDisabled}" rerender="trackPageBlock" status="trackButtonStatus"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- USPS Button -->
+                <apex:pageBlockSectionItem rendered="{! webServiceType =='USPS' }">
+                    <apex:outputLabel value=""/>
+                    <apex:commandButton action="{! trackUSPSShipment }" value="Track" disabled="{!trackShipmentDisabled}" rerender="trackPageBlock" status="trackButtonStatus"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection><p/>
+             
+            <!-- Package Tracking Details Display (Express1) -->
+            <apex:outputPanel id="packageTrackingDetails" rendered="{! webServiceType =='Express1' }">
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{!ShipmentTrackingDetailsRendered}">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Tracking Details "/>
+                            <apex:actionStatus id="trackDetailsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="trackDetailsImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Delivered -->
+                    <apex:outputField value="{!Shipment.zkusps__isDelivered__c}"/>
+
+                    <apex:outputField value="{!Shipment.zkusps__ReturnedToSender__c}"/>
+                    
+                    <!-- Last Track Update Status -->
+                    <apex:outputField value="{!Shipment.zkusps__lastTrackUpdateStatusCode__c}"/>
+                    
+                    <!-- Status Details -->
+                    <apex:pageBlockTable value="{!TrackingStatusDetails}" var="trackingStatusDetail" cellpadding="10">
+                        <apex:column >
+                            <apex:facet name="header">Details</apex:facet>
+                            <apex:outputText value="{!trackingStatusDetail.status}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>              
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Package Tracking Details Display (Endicia) -->
+            <apex:outputPanel rendered="{! webServiceType =='Endicia' }">
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{! AND(isEndiciaTrackResultRendered,endiciaTrackingAvailable) }">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Tracking Details "/>
+                            <apex:actionStatus id="trackDetailsStatusEnd">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="trackDetailsImageEnd" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Delivered -->
+                    <apex:outputField value="{! shipment.IsDelivered__c }"/>
+
+                    <apex:outputField value="{!Shipment.zkusps__ReturnedToSender__c}"/>
+                    
+                    <!-- Last Track Update Status -->
+                    <apex:outputField value="{! shipment.LastTrackUpdateStatus__c }"/>
+                    
+                    <!-- Status Details -->
+                    <apex:repeat value="{! endiciaStatus.statusDetailList }" var="statusDetailsElement">
+                        <apex:outputText value="Tracking Number: {! statusDetailsElement.picNumber }"/>
+                        <apex:pageBlockTable value="{! statusDetailsElement.statusEventList }" var="statusEventElement" cellpadding="10">
+                            <apex:column >
+                                <apex:facet name="header">Date</apex:facet>
+                                <apex:outputText value="{! statusEventElement.eventDateTime }"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Status Code Definition</apex:facet>
+                                <apex:outputText value="{! statusEventElement.statusCodeDefinition }"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Description</apex:facet>
+                                <apex:outputText value="{! statusEventElement.statusDescription }"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Tracking Summary</apex:facet>
+                                <apex:outputText value="{! statusEventElement.trackingSummary }"/>
+                            </apex:column>
+                            <apex:column width="33%">
+                                <apex:facet name="header">Tracking Result</apex:facet>
+                                <apex:pageBlockTable value="{! statusEventElement.trackingResultList }" var="trackResultElement">
+                                    <apex:column value="{! trackResultElement }" />
+                                </apex:pageBlockTable>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:repeat>
+                            
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{! AND(isEndiciaTrackResultRendered, NOT(endiciaTrackingAvailable)) }">
+                    No Tracking Info. Please try again later.
+                    <!-- Delivered -->
+                    <apex:outputField value="{! shipment.IsDelivered__c }"/>
+                    <!-- Last Track Update Status -->
+                    <apex:outputField value="{! shipment.LastTrackUpdateStatus__c }"/>
+                </apex:pageBlockSection>    
+            </apex:outputPanel>
+
+
+            <!-- Package Tracking Details Display (USPS) -->
+            <apex:outputPanel rendered="{! webServiceType =='USPS' }">
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{! AND(isUSPSTrackResultRendered,uspsTrackingAvailable) }">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Tracking Details "/>
+                            <apex:actionStatus id="trackDetailsStatusUSPS">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="trackDetailsImageUSPS" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    
+                    <!-- Delivered -->
+                    <apex:outputField value="{! shipment.IsDelivered__c }"/>
+                    
+                    <!-- Last Track Update Status -->
+                    <apex:outputField value="{! shipment.LastTrackUpdateStatus__c }"/>
+
+                    <apex:outputField value="{!Shipment.zkusps__ReturnedToSender__c}"/>
+
+                    <!-- Track Details List -->
+                    <apex:outputText value="Tracking Number: {! uspsTrackStatus.trackingNumber }"/>
+                    <apex:pageBlockTable value="{! uspsTrackStatus.trackDetailList }" var="trackDetail" cellpadding="10">
+                        <apex:column >
+                            <apex:facet name="header">EventTime</apex:facet>
+                            <apex:outputText value="{! trackDetail.EventTime }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">EventDate</apex:facet>
+                            <apex:outputText value="{! trackDetail.EventDate }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Event</apex:facet>
+                            <apex:outputText value="{! trackDetail.Event }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">EventCity</apex:facet>
+                            <apex:outputText value="{! trackDetail.EventCity }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">EventState</apex:facet>
+                            <apex:outputText value="{! trackDetail.EventState }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">EventZIPCode</apex:facet>
+                            <apex:outputText value="{! trackDetail.EventZIPCode }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">EventCountry</apex:facet>
+                            <apex:outputText value="{! trackDetail.EventCountry }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">FirmName</apex:facet>
+                            <apex:outputText value="{! trackDetail.FirmName }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Name</apex:facet>
+                            <apex:outputText value="{! trackDetail.Name }"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">DeliveryAttributeCode</apex:facet>
+                            <apex:outputText value="{! trackDetail.DeliveryAttributeCode }"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                            
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{! AND(isEndiciaTrackResultRendered, NOT(uspsTrackingAvailable)) }">
+                    No Tracking Info. Please try again later.
+                    <!-- Delivered -->
+                    <apex:outputField value="{! shipment.IsDelivered__c }"/>                    
+                    <!-- Last Track Update Status -->
+                    <apex:outputField value="{! shipment.LastTrackUpdateStatus__c }"/>                  
+                </apex:pageBlockSection>    
+
+            </apex:outputPanel>
+        
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

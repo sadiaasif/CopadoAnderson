@@ -1,0 +1,80 @@
+<apex:page docType="html-5.0" id="ptlAddPmtMethod" controller="pymt.SiteAddPmtMethodController"  sidebar="false" cache="false" standardStylesheets="false" title="{!$Label.pymt__SiteAddPmtMethod_Heading}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="{!URLFOR($Resource.PaymentConnect, 'includes/tooltip/wz_tooltip.js')}"></script>
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_ptladdpmtmethod_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content" >
+    <div class="pc_page_content_inner">
+    <apex:form id="paymentMethodComponentForm">
+
+        <apex:pageMessages id="messages" />
+        <h1>{!$Label.pymt__SiteAddPmtMethod_Heading}</h1>
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteAddPmtMethod_Instructions == '-')}">
+        <p>{!$Label.pymt__SiteAddPmtMethod_Instructions}</p>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!pmtMethodType == 'AuthNet_CIM_Payment_Profile'}">
+        <c:SiteUpsertPmtMethodAuthNet pageControllerReference="{!this}" submitRerender="messages"/>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!pmtMethodType == 'eWay_Customer_Profile'}">
+        <c:SiteUpsertPmtMethodEWay pageControllerReference="{!this}" submitRerender="messages"/>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!pmtMethodType == 'PayPal_Transaction_Reference'}">
+
+        <c:SiteUpsertPmtMethodPayPalExpress pageControllerReference="{!this}" submitRerender="messages"/>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel layout="none" rendered="{!pmtMethodType == 'Credit_Card'}">
+            <c:SiteUpsertPmtMethodNative pageControllerReference="{!this}" submitRerender="messages"/>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!pmtMethodType == 'Bank_Account'}">
+             <c:SiteUpsertPmtMethodBankAccount pageControllerReference="{!this}" submitRerender="messages, paymentMethodComponentForm"/>
+        </apex:outputPanel>
+
+        <div class="pc_button_container">
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+            <apex:commandButton value="{!$Label.pymt__Label_Cancel}" action="{!pageCancel}" html-formnovalidate="true" immediate="true" rendered="{!NOT(ISBLANK(cancelURL))}"/>
+            <apex:commandButton value="{!$Label.pymt__Label_Submit}" action="{!pageSubmit}"/>
+          </apex:outputPanel>
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+            <input type="submit" style="display:none;" id="hiddenSubmit" name="hiddenSubmitInput"/>
+            <apex:commandLink styleClass="css-button" value="{!$Label.pymt__Label_Cancel}" action="{!pageCancel}" html-formnovalidate="true" immediate="true" rendered="{!NOT(ISBLANK(cancelURL))}"/>
+            <apex:commandLink styleClass="css-button" onclick="return validateForm();" value="{!$Label.pymt__Label_Submit}" action="{!pageSubmit}"/>
+            <script>
+            function validateForm() {
+              // for apex:commandLink which does not invoke HTML5 form validation automatically
+              var form = document.getElementById('{!$Component.paymentMethodComponentForm}');
+              var submitBtn = document.getElementById('hiddenSubmit');
+              if (form.checkValidity() == false) {
+                submitBtn.click();  // force form to display validation messages.
+                return false;
+              }
+              return true;
+            }
+            </script>
+          </apex:outputPanel>
+
+
+        </div>
+    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Debug__c == true}">
+    <br/><br/>
+    Debug: Payment Method Type = {!pmtMethodType}
+
+    </apex:outputPanel>
+
+    </apex:form>
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+
+</apex:page>

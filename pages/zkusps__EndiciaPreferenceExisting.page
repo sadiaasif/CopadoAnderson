@@ -1,0 +1,183 @@
+<apex:page tabStyle="UspsPreferences__tab" standardController="zkusps__EndiciaPreference__c" recordSetVar="properties" sidebar="true" extensions="zkusps.EndiciaPrefExistingController" action="{! init }">
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+
+    <apex:sectionHeader title="Add Existing Endicia Account"  subtitle="Add Existing Endicia Account" />
+
+    <style>
+        .inputFieldRequiredBar {
+            height:14px;
+            float:right;
+            display: inline;
+            font-size: 8pt;
+            color: #cc0000;
+            padding: 5px 0 2px 0;
+            margin-left: 16px;
+            margin-right: -19px;
+            margin-top:2px;
+            background-color: #cc0000;
+        }       
+    </style>
+
+    <apex:form >
+
+        <apex:outputPanel id="requiredIndicatorScript">
+            <script>
+                $j = jQuery.noConflict();
+
+                function setRequiredFields() {
+                    $j('.inputFieldRequired').before('<span class="inputFieldRequiredBar">&nbsp;</span>');
+                }
+
+                $j(document).ready(function() {
+                    setRequiredFields();
+                });
+
+                
+            </script>
+        </apex:outputPanel>
+
+        <apex:pageBlock id="checkAccountPageBlock" mode="maindetail">
+            
+            <!-- Messages -->
+            <apex:outputPanel id="preferencePageMessages">
+                <c:MessageListDisplay msgList="{! messageList }"/>
+            </apex:outputPanel>
+
+            <!-- Pricing -->
+            <apex:pageBlockSection title="Pricing" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="" />
+                    <apex:commandLink target="_blank" immediate="true" value="Endicia Pricing" action="https://www.zenkraft.com/endicia-pricing"/>  
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{! checkAccount }" value="Check Endicia Account" reRender="checkAccountPageBlock" oncomplete="setRequiredFields();" rendered="{! NOT(isShowAccountStatus) }"/>
+                <apex:commandButton action="{! savePreference }" value="Save Preference" rendered="{! isShowAccountStatus }" />
+                <apex:commandButton action="{! doCancel }" value="Cancel" />
+            </apex:pageBlockButtons>
+
+            <!-- Check Account Section -->
+            <apex:pageBlockSection id="endiciaAccountInfo" collapsible="false" title="Endicia Account Information" rendered="{! NOT(isShowAccountStatus) }">
+
+                <!-- AccountId -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Username"/>
+                    <apex:inputText value="{! accountId }"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- PassPhrase -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Pass Phrase"/>
+                    <apex:inputText value="{! passPhrase }"/>
+                </apex:pageBlockSectionItem>
+
+<!--                <apex:pageBlockSectionItem>
+                    <apex:commandButton action="{! checkAccount }" value="Check Endicia Account" reRender="checkAccountPageBlock" oncomplete="setRequiredFields();"/>
+                    <apex:commandButton action="{! doCancel }" value="Cancel" />
+                </apex:pageBlockSectionItem>     -->                
+
+            </apex:pageBlockSection>
+
+            <!-- Account Status Section -->
+            <apex:pageBlockSection id="accountStatusInfo" columns="1" collapsible="false" title="Endicia Account Information" rendered="{! isShowAccountStatus }">
+                <apex:outputText value="{! accountStatusDetails.accountInformation.accountID }" label="Username"/>
+                <apex:outputText value="{! accountStatusDetails.accountType }" label="Account Type"/>
+                <apex:outputText value="{! accountStatusDetails.accountInformation.accountStatus }" label="Account Status"/>
+                <apex:outputText value="{! accountStatusDetails.accountInformation.ascendingBalanceFormatted }" label="Ascending Balance"/>
+                <apex:outputText value="{! accountStatusDetails.accountInformation.postageBalanceFormatted }" label="Postage Balance"/>
+                <apex:outputText value="{! accountStatusDetails.accountInformation.deviceId }" label="Device Id"/>
+                <apex:outputText value="{! accountStatusDetails.accountInformation.serialNumber }" label="Serial Number"/>
+            </apex:pageBlockSection>
+
+            <!-- Account Address Section -->
+            <apex:pageBlockSection id="addressInfo" columns="1" collapsible="false" title="Endicia Account Address" rendered="{! isShowAccountStatus }">
+                <apex:outputText value="{! accountStatusDetails.address.firstName }" label="First Name"/>
+                <apex:outputText value="{! accountStatusDetails.address.lastName }" label="Last Name"/>
+                <apex:outputText value="{! accountStatusDetails.address.phone }" label="Phone"/>
+                <apex:outputText value="{! accountStatusDetails.address.address }" label="Address"/>
+                <apex:outputText value="{! accountStatusDetails.address.city }" label="City"/>
+                <apex:outputText value="{! accountStatusDetails.address.state }" label="State"/>
+                <apex:outputText value="{! accountStatusDetails.address.zip5 }" label="Zip5"/>
+                <apex:outputText value="{! accountStatusDetails.address.zip4 }" label="Zip4"/>
+                <apex:inputCheckbox value="{! isSaveMailingAddress }" label="Mailing address is the same"/>
+            </apex:pageBlockSection>
+
+            <!-- Label Image Type Section -->
+            <apex:pageBlockSection id="labelImageTypeDefaultSection" collapsible="false" title="Default Shipment Information" columns="1" rendered="{! isShowAccountStatus }">
+                <!-- Shipping Sender Name Default -->
+                <apex:inputField value="{! preference.shippingSenderNameDefault__c }"/>
+                <!-- Shipping Sender Email Default -->
+                <apex:inputField value="{! preference.shippingSenderEmailDefault__c }"/>
+                <!-- Shipping Sender Phone Default -->
+                <apex:pageBlockSectionItem helpText="Used to specify a default value for Sender Phone. If not specified, the value for Sender Phone will default to the User's Phone Number. 10 digits required (including area code) with no punctuation." >
+                    <apex:outputLabel value="Shipping Sender Phone Default"/>
+                    <apex:inputText value="{! shippingSenderPhoneDefault }"/>
+                </apex:pageBlockSectionItem>
+                <!-- Label Image Type Default -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Label Image Type Default"/>
+                    <apex:selectList value="{! selectedLabelImageTypeDefault }" size="1" multiselect="false" >
+                        <apex:selectOptions value="{! labelImageTypeDefaultOptions }"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <!-- Include Image Rotation -->
+                <apex:inputField value="{! preference.LabelImageRotationDefault__c }"/>
+            </apex:pageBlockSection>
+
+            <!-- Shipping Email Defaults -->
+            <apex:pageBlockSection id="emailLabelDefaultsSection" columns="1" collapsible="false" title="Add Email Label Defaults" rendered="{! isShowAccountStatus }">
+                <!-- Email Label Sender Display Name Default -->
+                <apex:inputField value="{! preference.EmailLabelSenderDisplayNameDefault__c }"/>
+                <!-- Email Label Reply To Email Default -->
+                <apex:inputField value="{! preference.EmailLabelReplyToEmailDefault__c }"/>
+                <!-- Email Label Subject Line Default -->
+                <apex:inputField style="width:350px" value="{! preference.EmailLabelSubjectLineDefault__c }"/>
+                <!-- Email Label Text Body Default -->
+                <apex:inputField style="width:600px" value="{! preference.EmailLabelTextBodyDefault__c }"/>
+
+                <apex:pageBlockSectionItem rendered="{! isOrgWideEmailRendered }">
+                    <apex:outputLabel value="Org Wide Email Address" />
+                    <apex:selectList value="{! selectedOrgWideEmail }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! orgWideEmails }" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+
+            <!-- Convert Labels -->
+            <apex:pageBlockSection id="convertLabelSection" columns="1" collapsible="false" title="Convert Labels" rendered="{! isShowAccountStatus }">
+                <apex:inputField value="{! preference.Convert_4x6_GIF_to_PDF__c }"/>
+                <apex:inputField value="{! preference.Convert_6x4_GIF_to_PDF__c }"/>
+            </apex:pageBlockSection>
+
+            <!-- Other Details -->
+            <apex:pageBlockSection id="otherDefaultsSection" columns="1" collapsible="false" title="Other Defaults" rendered="{! isShowAccountStatus }">
+                <!-- Detailed View - Shipmate Preference List -->
+                <apex:inputField value="{! preference.DetailedViewShipmatePreferenceList__c }"/>
+                <!-- Include Image Resolution -->
+                <apex:inputField value="{! preference.IncludeImageResolution__c }"/>
+
+                <apex:pageBlockSectionItem helpText="Used only for ZPLII and EPL labels. Default value is 203 dpi">
+                    <apex:outputLabel value="Default Image Resolution" />
+                    <apex:selectList value="{! selectedLabelResolution }" size="1" multiselect="false">
+                        <apex:selectOptions value="{! labelResolutionOptions }" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <!-- Enable Scales Package -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Enable Scales"/>
+                    <apex:inputField value="{! preference.EnableScales__c }"/>
+                </apex:pageBlockSectionItem>
+                <!-- AutoWeigh Package -->
+                <apex:pageBlockSectionItem helpText="Auto Weight Package using Scale">
+                    <apex:outputLabel value="Auto Weigh Package"/>
+                    <apex:inputField value="{! preference.AutoWeighPackage__c }"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+
+        </apex:pageBlock>
+
+    </apex:form>
+    
+</apex:page>

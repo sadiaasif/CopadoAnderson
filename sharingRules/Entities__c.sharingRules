@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Entity_Sharing_Rules_For_Internal_Community_user</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Entity Sharing Rules For Internal Community user</label>
+        <sharedTo>
+            <group>Internal_Community_users</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deed,Limited Partnership (LP),Limited Liability Company (LLC),Living Trust,Charitable Remainder Trust,Pension Plan,Corporation,Nominee Other,GAP Fund LLC,Non-Profit Entity,Irrevocable Life Insurance Trust,Land Trust,Other</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DBA,Foreign Qualification,Joint Venture LLC,NV AP Trust,Personal Property Trust,IRA LLC,Series Limited Liability Company</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Entity_Sharing_Rules_For_Partner_user</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Entity Sharing Rules For Partner user</label>
+        <sharedTo>
+            <group>Partner_Users_Group</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deed,Limited Partnership (LP),Limited Liability Company (LLC),Living Trust,Charitable Remainder Trust,Pension Plan,Corporation,Nominee Other,GAP Fund LLC,Non-Profit Entity,Irrevocable Life Insurance Trust,Land Trust,Other</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DBA,Foreign Qualification,Joint Venture LLC,NV AP Trust,Personal Property Trust,IRA LLC,Series Limited Liability Company</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Entity_Sharing_Rules_For_Renewal_Community</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Entity Sharing Rules For Renewal Community</label>
+        <sharedTo>
+            <group>Job_Role_Renewal_Processing</group>
+        </sharedTo>
+        <booleanFilter>1 or 2</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Deed,Limited Partnership (LP),Limited Liability Company (LLC),Living Trust,Charitable Remainder Trust,Pension Plan,Corporation,Nominee Other,GAP Fund LLC,Non-Profit Entity,Irrevocable Life Insurance Trust,Land Trust,Other</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DBA,Foreign Qualification,Joint Venture LLC,NV AP Trust,Personal Property Trust,IRA LLC,Series Limited Liability Company</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

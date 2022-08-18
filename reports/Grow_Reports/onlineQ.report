@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>LLC_Q__c.Original_Submitted_by__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>FK_CREATED</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Sara Winter,Roberta Hubbell,Whitney Ronnander,Mayra De Arcos,Fallon Williams,Joseph Sacco,Ambria Tibbs,Savannah Wallace,Alexandria Lessard,Kyle Burgess,Auriana Duffy,Christina Brown,Michelle Enriquez,Amanda Dybas,Matthew Smidowicz,Antoinette Abernathy,Erica Terrell,Crystal Smerdel,Kristy McElwain,Sydney Nichols,Greg Coughlan,Heather Villanueva,Mary Borden,Erica Henderson,Shonteanna Gipson,Charles Williams,Caresse Shorty,Ashanti Watkins,Stephanie Rodriguez,Alexander White,Micah Mabion,Brenda Burns,Allison Dale,Troy Lee,Rodney Pena,Joyce Johnson</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>onlineQ</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$LLC_Q__c@LLC_Q__c.Entity__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_LAST30</interval>
+    </timeFrameFilter>
+</Report>

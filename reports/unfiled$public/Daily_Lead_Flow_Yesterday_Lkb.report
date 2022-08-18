@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_35846974</developerName>
+        <masterLabel>Current Status</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>FK_LEAD_STATUS</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>New Lead</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reassigned</sourceValue>
+            </sourceValues>
+            <value>1 - Untouched</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>NC1</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>NC2</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>NC3</sourceValue>
+            </sourceValues>
+            <value>2 - No Contact</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Qualified</sourceValue>
+            </sourceValues>
+            <value>3 - Converted</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Interested in Later Call</sourceValue>
+            </sourceValues>
+            <value>4 - Call Later</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Recycle</sourceValue>
+            </sourceValues>
+            <value>5 - Recycle</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>DUPE</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DELETE</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>No Interest</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Existing Client</sourceValue>
+            </sourceValues>
+            <value>6 - Dead Lead</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>FK_$Lead.pi__utm_campaign__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.Main_Lead_Source__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.Primary_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>FK_LEAD_FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>n2de__Distribution_log__c.n2de__Distribution_number__c</field>
+    </columns>
+    <columns>
+        <field>n2de__Distribution_log__c.n2de__Assignment_date__c</field>
+    </columns>
+    <columns>
+        <field>n2de__Distribution_log__c.n2de__Distribution_team_member__c</field>
+    </columns>
+    <columns>
+        <field>BucketField_35846974</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.Sales_Rep__c</field>
+    </columns>
+    <columns>
+        <field>FK_LEAD_OWNER_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.pi__utm_content__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.pi__utm_medium__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.pi__utm_source__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Lead.pi__utm_term__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>FK_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>YESTERDAY</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_$Lead.Original_Campaign_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Daily Lead Flow - Yesterday</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>CustomEntity$n2de__Distribution_log__c@n2de__Distribution_log__c.n2de__Lead__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>FK_$Lead.pi__utm_campaign__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>n2de__Distribution_log__c.n2de__Assignment_date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

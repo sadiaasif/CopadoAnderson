@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_47955855</developerName>
+        <masterLabel>caseowners</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>OWNER</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Amanda Miller</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ashley Bishop</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ashley Jackson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Bobbie Coughlin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Erica Terrell</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ghassan Jabali</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Holly Malloy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Janey Agustin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jennifer Scott</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Joseph Sacco</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kambria Stephen</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Laura Barlaj</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Maggie Khermandayan</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mary Borden</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Niccole Delmont</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Noelia Aguirre</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sarah Lloyd</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Skye Johnson</sourceValue>
+            </sourceValues>
+            <value>Coordinator</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Amy Kasprzyk</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Deborah Lewis</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Georgia Sexton</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>James Morris</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jamie Sylvester</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kelly Purtle</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Megan Fenn</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Megan Kapellen</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Morris Bowers</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Matthew Albonetti</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Randall Ritchie</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Samantha Wallace</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tanikka Queen</sourceValue>
+            </sourceValues>
+            <value>Processor</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>AGE</field>
+    </columns>
+    <columns>
+        <field>OPEN</field>
+    </columns>
+    <columns>
+        <field>CLOSED</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <description>Who has the most open cases?</description>
+    <filter>
+        <criteriaItems>
+            <column>STATUS</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Closed,On Hold</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notContain</operator>
+            <value>Bookkeeping,Quarterly,A.S. Calls,Tax Organizer,mail</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_47955855</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sample Report: Cases Status by Rep</name>
+    <params>
+        <name>units</name>
+        <value>h</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_PREVCURFY</interval>
+    </timeFrameFilter>
+</Report>

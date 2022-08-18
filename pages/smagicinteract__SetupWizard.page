@@ -1,0 +1,17 @@
+<apex:page title="SMS-Magic : Setup Wizard" sideBar="false" tabStyle="SMS_Magic_Settings__tab">
+    <apex:includeLightning rendered="true"/>
+    <div id="lightning" />
+        <script>
+    		if({!$Permission.smagicinteract__AllowToEditSMSSettings}){
+            	$Lightning.use("smagicinteract:messageConfigApp", function() {
+                	$Lightning.createComponent("smagicinteract:configurations",{}, "lightning", function(cmp) {});
+                	});
+            } else {
+            	$Lightning.use("smagicinteract:messageConfigApp", function() {
+                	$Lightning.createComponent("smagicinteract:accessDenied",{
+                    	"reason" : 'NOT_ALLOWED_TO_SETUP'   
+                	}, "lightning", function(cmp) {});
+            	});
+            }
+        </script>
+</apex:page>

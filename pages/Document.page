@@ -1,0 +1,72 @@
+<apex:page doctype="html-5.0" standardController="User" extensions="CustomLandingController" sidebar="false" showHeader="false">    
+  <apex:slds />
+    <style>
+     @media (min-width: 1024px){
+            .sidebar {display: block;
+            }
+        
+            }
+     div {
+        word-wrap: break-word;
+            }
+        
+     @media (max-width: 1024px){
+     .gray-block, .gray-block iframe{ width:100%; float:left; }
+        footer.container-fluid.text-center{position:relative;}
+        body{padding-bottom:0px;}
+        .container{min-height:100px;}
+            }
+    </style>
+    <div class="slds-scope">  
+    <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <meta charset="utf-8" />
+              <meta http-equiv="Mobile compatible" content="ie=edge" />
+              <title>Anderson Business Advisors</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1"/>
+              
+               <script async='async' src="https://www.googletagmanager.com/gtag/js?id=UA-43972311-23"></script>
+                <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-43972311-23'); </script> 
+            
+            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+            <title>Anderson Advisors</title>            
+            <!-- Bootstrap -->
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/bootstrap.min.css')}"/>
+            <apex:stylesheet value="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"/>
+            <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.carousel.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/owl.theme.default.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/style.css')}"/>   
+            <apex:stylesheet value="{!URLFOR($Resource.css, '/css/jquery.treeview.css')}"/>            
+        </head>
+        <body>   
+             <apex:include pageName="AndersonHeader"/>
+            <apex:form >
+                <div class="container main-container">  
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="gray-block">
+                           <!-- <apex:iframe id="embedVal" src="{!$CurrentPage.parameters.param}"/>
+                            <iframe id ='embedVal' class="full-page" src="https://app.box.com/"></iframe>-->  
+                              <iframe src="https://andersonadvisors.app.box.com/embed_widget/files/0/f/0" width="1080" height="800" frameborder="0" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" msallowfullscreen="msallowfullscreen"></iframe> 
+                        </div>
+                    </div> 
+                </div>
+                <apex:include pageName="AndersonFooter"/>    
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/bootstrap.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/owl.carousel.min.js')}"/>     
+            <apex:includeScript value="{!URLFOR($Resource.community_js, '/community_js/jquery.marquee.js')}"/>
+            <apex:includeScript value="https://apis.google.com/js/platform.js"/>
+                <script>
+                $(document).ready(function() {
+                    document.getElementById('embedVal').height = window.innerHeight; 
+                }); 
+                </script> 
+            </apex:form>        
+        </body>
+    </html>
+  </div>
+</apex:page>

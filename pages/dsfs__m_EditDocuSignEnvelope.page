@@ -1,0 +1,286 @@
+<apex:page controller="dsfs.MobileController"
+           tabStyle="dsfs__DocuSign_Status__c"
+           action="{!loadEnvelope}"
+           showHeader="false"
+           sidebar="false"
+           docType="html-5.0">
+    <html>
+    <head>
+        <title>{!$Label.m_DocuSign}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+        <style type="text/css">
+            :root {
+                --m-grab: url({!$Resource.m_Grab});
+                --m-check1: url({!$Resource.m_Check1});
+            }
+        </style>
+
+        <apex:stylesheet value="{!$Resource.dsfs__m_styles}"/>
+        <apex:includeScript value="{!$Resource.dsfs__jquery}"/>
+        <apex:includeScript value="{!$Resource.dsfs__jquery_ui}"/>
+        <apex:includeScript value="{!$Resource.dsfs__jquery_ui_touch_punch}"/>
+        <apex:includeScript value="{!$Resource.dsfs__fastclick}"/>
+        <c:Configuration isCommunitySite="{!isCommunitySite}" pathPrefix="{!pathPrefix}" isNewWindow="{!isNewWindow}"
+                         isdtp="{!isdtp}"/>
+        <apex:includeScript value="{!$Resource.dsfs__UtilJS}"/>
+        <apex:includeScript value="{!$Resource.dsfs__m_DocuSignJs}"/>
+        <script type="text/javascript">
+
+            var $j = jQuery.noConflict();
+            newDocOrders = [];
+            newSignerOrders = [];
+            Visualforce.remoting.timeout = 120000;
+
+            CurrentUser = {
+                name: '{!$User.FirstName} {!$User.LastName}', email: '{!$User.Email}'
+            };
+            DSConfiguration.device = JSON.parse('{!JSENCODE(currentDeviceJson)}');
+            DSConfiguration.allowInPersonSigning = {!configuration.allowInPersonSigning};
+            DSConfiguration.documentLimit = 20;
+            DSConfiguration.recipientLimit = 28;
+            DSConfiguration.sendNow = {!sendNow == true};
+            Result = {
+                envelope: JSON.parse('{!JSENCODE(envelopeJson)}')
+            };
+            Envelope = {
+                sourceId: '{!source.id}',
+                updateEnvelope: '{!$RemoteAction.MobileController.updateEnvelope}',
+                sendEnvelope: '{!$RemoteAction.MobileController.sendEnvelope}'
+            };
+            Label = {
+                invalidEmailError: "{!$Label.m_InvalidEmailError}",
+                inPersonOptionError: "{!$Label.m_Error_InPerson}",
+                unknownError: "{!$Label.UnknownError}",
+                viaEmail: "{!$Label.m_ViaEmail}",
+                viaInPerson: "{!$Label.m_InPerson}"
+            };
+            Download = {
+                ios: '{!$Label.m_Download_DocuSign_iOS_Url}', android: '{!$Label.m_Download_DocuSign_Android_Url}'
+            };
+            DefaultRoles  = JSON.parse('{!JSENCODE(defaultRoles)}');
+
+            finalResult = Result;
+            numSigners = 0;
+            signersChecked = 0;
+            numDocuments = 0;
+            documentsChecked = 0;
+
+            enableSignerSorting = false;
+            enableDocSorting = false;
+
+            showInPersonOption = DSConfiguration.allowInPersonSigning;
+
+            /**
+             * Changes view of the page to the sorting view
+             */
+            enableSort = function (type) {
+                DSConfiguration.documentLimit = 10;
+                DSConfiguration.recipientLimit = 20;
+                var divStyle;
+                $j('.move').show();
+
+                if (type === 'doc') {
+                    for (var i = 0; i < Result.envelope.documents.length; i++) {
+                        var span = document.getElementById("docLabelSpan-" + i);
+                        span.innerHTML = docNameTrim(Result.envelope.documents[i].name) + "<small class = 'sub-text'>" + sizeTrim(Result.envelope.documents[i].size) +"</small>";
+                    }
+
+                    enableDocSorting = true;
+                    $j('#dsSignerHeader, .signer-container, #dsBtn, #dsFirstTimeUse, #docSortBtn').hide();
+                    document.getElementById("docDoneBtn").style.display = 'block';
+                    $j('#dsDocsList').sortable('enable');
+                    divStyle = document.getElementById("docContainer");
+                } else {
+                    for (var i = 0; i < Result.envelope.recipients.length; i++) {
+                        var span = document.getElementById("signerLabelSpan-" + i);
+                        span.innerHTML = nameTrim(Result.envelope.recipients[i].name) + "<small class = 'sub-text'>" + nameTrim(Result.envelope.recipients[i].email) +"</small>";
+                    }
+
+                    enableSignerSorting = true;
+                    $j('#dsDocHeader, .document-container, #dsBtn, #dsFirstTimeUse, #signerSortBtn').hide();
+                    $j('.radioClass').hide();
+                    document.getElementById("signerDoneBtn").style.display = 'block';
+                    $j('#dsSignersList').sortable('enable');
+                    $j('#addSignerBtn').hide();
+                    divStyle = document.getElementById("signerContainer");
+                }
+                divStyle.style.width = '90%';
+                divStyle.style.float = 'right';
+                $j("#dsAlert").hide();
+            }
+
+            /**
+             * Ran when user is done sorting signers or documents,
+             * returns to the selection of signers and documents view
+             */
+            disableSort = function (type) {
+                DSConfiguration.documentLimit = 20;
+                DSConfiguration.recipientLimit = 28;
+                var divStyle;
+                $j('.move').hide();
+                if (type === 'doc') {
+                    for (var i = 0; i < Result.envelope.documents.length; i++) {
+                        var span = document.getElementById("docLabelSpan-" + i);
+                        span.innerHTML = docNameTrim(Result.envelope.documents[i].name) + "<small class = 'sub-text'>" + sizeTrim(Result.envelope.documents[i].size) +"</small>";
+                    }
+
+                    enableDocSorting = false;
+                    document.getElementById("docDoneBtn").style.display = 'none'
+                    $j('#dsSignerHeader, .signer-container, #dsBtn, #docSortBtn').show();
+                    $j('#dsDocsList').sortable('disable');
+                    divStyle = document.getElementById("docContainer");
+                } else {
+                    for (var i = 0; i < Result.envelope.recipients.length; i++) {
+                        var span = document.getElementById("signerLabelSpan-" + i);
+                        span.innerHTML = nameTrim(Result.envelope.recipients[i].name) + "<small class = 'sub-text'>" + nameTrim(Result.envelope.recipients[i].email) +"</small>";
+                    }
+                    
+                    enableSignerSorting = false;
+                    document.getElementById("signerDoneBtn").style.display = 'none'
+                    $j('#dsDocHeader, .document-container, #dsBtn, #signerSortBtn').show();
+                    $j('.radioClass').show();
+                    $j('#dsSignersList').sortable('disable');
+                    $j('#addSignerBtn').show();
+                    divStyle = document.getElementById("signerContainer");
+                }
+                divStyle.style.width = '100%';
+                divStyle.style.float = 'none';
+            }
+
+            /**
+             * Used to get the images for different doc types from the file extension
+             */
+            getDocURL = function (fileName) {
+                var nameSplit = fileName.split('.');
+                            var type = (nameSplit[nameSplit.length - 1]).toLowerCase();
+                            type = fileName;
+                            if (type === 'pdf' || type === 'csv' || type === 'doc' || type === 'docx' || type === 'gif' || type === 'jpeg' || type === 'jpg' || type === 'png' || type === 'ppt' || type === 'pptx' || type === 'rtf' || type === 'tif' || type === 'tiff' || type === 'xls' || type === 'xlsx') {
+                                return "{!URLFOR($Resource.m_Resources, 'img/document_"+type.toUpperCase()+"@2x.png')}";
+                            } else {
+                                return "{!URLFOR($Resource.m_Resources, 'img/document_TXT@2x.png')}";
+                            }
+            }
+
+            /**
+             * Adjusts name size of signers name or email, adds '...' if needed
+             */
+            nameTrim = function (value) {
+                            if (!value) return '';
+                            var max = (DSConfiguration.device.type === 'Phone') ? DSConfiguration.recipientLimit : 60;
+                            if (value.length <= max) return value;
+                            return value.substr(0, max) + '...';
+                        };
+
+            /**
+             * Adjusts name size of document, adds '...' if needed
+             */                        
+            docNameTrim = function (value) {
+                            if (!value) return '';
+                            var max = DSConfiguration.device.type === 'Phone' ? DSConfiguration.documentLimit : 50;
+                            if (value.length <= max) return value;
+                            return value.substr(0, max) + '...';
+                        };
+
+            /**
+             * Adjusts display of size of document, adds MB, KB, or bytes depending on size
+             */              
+            sizeTrim = function (value) {
+                            if (!value) return '';
+                            if (value >= 1000) {
+                                if (value >= 1000000) {
+                                    return (value / 1000000).toFixed(1) + ' MB';
+                                }
+                                return (value / 1000).toFixed() + ' KB';
+                            }
+                            return value + ' bytes';
+                        };
+        </script>
+    </head>
+
+    <body onload="populateUsers();">
+        <div class = "docusign-container" id = "dsContainer">
+            <div id="dsAlert">
+                <ul role="alert" class="alert-messages"></ul>
+            </div>
+
+            <div id = "dsEditEnvelope">
+                <div>
+                    <div class="ds-section-header" id="dsDocHeader">
+                        <button id = "docSortBtn" type="submit" class="add-signer secondary button" onclick = "enableSort('doc')">
+                            <img src="{!$Resource.m_Reorder}"/>
+                        </button>
+                        <button id="docDoneBtn" type="submit" class="button" onclick = "disableSort('doc')">{!$Label.m_Done}</button>
+                        <span>{!$Label.m_DOCUMENTS}</span>
+                    </div>
+                    <div class="document-container" id = "docContainer">
+                        <form>
+                            <ul class="ds-form-list" id="dsDocsList">
+                                
+                            </ul>
+                        </form>
+                    </div>
+
+                    <div class="ds-section-header" id="dsSignerHeader">
+                        <button id = "signerSortBtn" type="submit" class="add-signer secondary button" onclick = "enableSort('signer')">
+                            <img src="{!$Resource.m_Reorder}"/>
+                        </button>
+                        <button id="signerDoneBtn" type="submit" class="button" onclick = "disableSort('signer')">{!$Label.m_Done}</button>
+                        <button id = "addSignerBtn" type="submit" class="add-signer secondary button" onclick = "newSigner();">
+                            <img src="{!$Resource.m_AddSigner}"/>
+                        </button>
+                        <span>{!$Label.m_SIGNERS}</span>
+                    </div>
+
+
+                    <div class="signer-container" id = "signerContainer">
+                        <form>
+                            <ul class="ds-form-list" id="dsSignersList">
+                                
+                            </ul>
+                        </form>
+                    </div>
+                    
+                </div>
+
+                <div id='dsBtn'>
+                    <img src="{!$Resource.m_Loading}" id="dsMobileLoading"/>
+                    <button type="submit" class="button inactive" onclick = 'submitForm(JSON.stringify(Result));' id="docusignBtn">{!$Label.m_DocuSign}</button>
+                </div>
+            
+            </div>
+            <div id = "dsAddSignerModal">
+                <br/>
+                    <label>{!$Label.m_FullName}</label>
+                    <input maxlength="100" id = "dsSignerName" type = "text"></input>
+                    <label>{!$Label.m_EmailAddress}</label>
+                    <input id="dsSignerEmail" type = "text"></input>
+                    <button type="submit" class="secondary button" onclick= "cancelAdd();">{!$Label.m_Cancel}</button>
+                    <button type="submit" id = "dsAddSignerBtn" class="button inactive" onclick = "addSigners();">{!$Label.m_Add_Signer}</button>
+            </div>
+            <div id = 'dsInstall'>
+                <h1>{!$Label.m_Get_DocuSign_Mobile}</h1>
+                <p>{!$Label.m_Download_the_DocuSign_mobile}</p>
+                <button id="dsInstallInkBtn" type="submit" class="button" onclick = "clickInstall();'">{!$Label.m_Download_DocuSign_Mobile}</button>
+            </div>
+        </div>
+
+        <!-- Error Popup -->
+        <div id="errorDialog" class="ui-corner-all" style="display: none; width: 100%; height: 100%">
+            <div data-theme="d" class="ui-corner-bottom ui-content" id="errorContent">
+                <div class="ui-title error-message" id="errorMessage"></div>
+            </div>
+        </div>
+
+        <!-- iFrame Page -->
+        <div id="ds-dialog" style="display: none; width: 100%; height: 100%">
+            <div data-role="content" id="ds-iframe-container">
+                <iframe id="ds-iframe" scrolling="auto"/>
+            </div>
+        </div>
+
+    </body>
+
+
+    </html>
+</apex:page>

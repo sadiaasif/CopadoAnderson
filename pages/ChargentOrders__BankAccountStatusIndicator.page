@@ -1,0 +1,21 @@
+<apex:page standardController="ChargentOrders__ChargentOrder__c" extensions="ChargentOrders.BankAccountStatusIndicatorController" showHeader="false" standardStylesheets="false" >
+	<apex:slds />
+	<style type="text/css">
+		.green {
+			background-color: #b6d7a8;
+		}
+		.yellow {
+			background-color: #ffe599;
+		}
+		.red {
+			background-color: #FF0000; 
+			color:#FFFFFF;
+		}
+		.remove-padding.slds-form-element__label {
+			padding-right: 0px;
+		}
+	</style>
+	<div>
+		<apex:outputText value="{!indicatorString}" styleClass="{!status} slds-form-element__label remove-padding"/>
+	</div>
+</apex:page>

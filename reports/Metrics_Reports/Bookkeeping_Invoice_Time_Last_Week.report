@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_8506601</developerName>
+        <masterLabel>Team</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>H2S__HarvestTimeEntry__c.H2S__Person__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Marie Galligan</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Donna Hill</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Justin Claus</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sara Winter</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>John Loncar</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Seth Crawley</sourceValue>
+            </sourceValues>
+            <value>Bookkeepers</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Petros Leventis</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mariel Garvin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lindsey Vaughn</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ian Hanuscin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Lulu Mendiola</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Christos Zattas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Emily Dacanay</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Charles Rogler</sourceValue>
+            </sourceValues>
+            <value>Tax Prep</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Ronnie Withaeger</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jennifer Phipps</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Toni Covey</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tracy Cooklin</sourceValue>
+            </sourceValues>
+            <value>Tax Managers</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>H2S__HarvestTimeEntry__c.H2S__Duration__c</field>
+    </columns>
+    <description>last week bookkeeping</description>
+    <filter>
+        <criteriaItems>
+            <column>H2S__HarvestTimeEntry__c.H2S__Person__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>Donna,Claus,Loncar,Winter,Crawley,Galligan</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>H2S__HarvestTimeEntry__c.H2S__Person__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Bookkeeping Invoice Time Last Week</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$H2S__HarvestProject__c$H2S__HarvestTimeEntry__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CHILD_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_LASTWEEK</interval>
+    </timeFrameFilter>
+</Report>

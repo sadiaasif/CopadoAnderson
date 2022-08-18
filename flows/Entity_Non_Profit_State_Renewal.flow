@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>GetMaine</name>
+        <label>GetMaine</label>
+        <locationX>418</locationX>
+        <locationY>398</locationY>
+        <actionName>NonProfitStateRenewalInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>MetaData_Exist</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>organizationDate</name>
+            <value>
+                <elementReference>EntityLoop.Organizational_Date__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>organizationState</name>
+            <value>
+                <elementReference>Mainestate</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>RenewalEffectiveDate</assignToReference>
+            <name>RenewalEffectiveDate</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>RenewalEndDate</assignToReference>
+            <name>RenewalEndDate</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>ServiceRecords</assignToReference>
+            <name>ServiceDetails</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>SaleCloseDate</assignToReference>
+            <name>ThresholdDate</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>GetServices</name>
+        <label>GetServices</label>
+        <locationX>682</locationX>
+        <locationY>398</locationY>
+        <actionName>NonProfitStateRenewalInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>MetaData_Exist</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>organizationDate</name>
+            <value>
+                <elementReference>EntityLoop.Organizational_Date__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>organizationState</name>
+            <value>
+                <elementReference>EntityLoop.Organization_State__c</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>RenewalEffectiveDate</assignToReference>
+            <name>RenewalEffectiveDate</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>RenewalEndDate</assignToReference>
+            <name>RenewalEndDate</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>ServiceRecords</assignToReference>
+            <name>ServiceDetails</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>SaleCloseDate</assignToReference>
+            <name>ThresholdDate</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>AssignService_0</name>
+        <label>AssignService</label>
+        <locationX>484</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>ServiceLineItem.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServiceLineItem.UnitPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Services.UnitPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServiceLineItem.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Services.ServiceIds</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServiceLineItem.OpportunityId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>State_Renewal_Sale_0</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServiceLineItem.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PriceBookEntry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssigToList</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssigToList</name>
+        <label>AssigToList</label>
+        <locationX>484</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>ServicesTobeAdded</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ServiceLineItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Services</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>CountIncrement</name>
+        <label>CountIncrement</label>
+        <locationX>396</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>Count</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>MaineServices</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Maine_state</name>
+        <label>Maine state</label>
+        <locationX>550</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>GetServices</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Count</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EntityLoop.Organization_State__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Maine</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetMaine</targetReference>
+            </connector>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>MaineServices</name>
+        <label>MaineServices</label>
+        <locationX>396</locationX>
+        <locationY>1670</locationY>
+        <defaultConnector>
+            <targetReference>EntityLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>All_Services_Added</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Count</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>EntityLoop.Organization_State__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Maine</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Maine_state</targetReference>
+            </connector>
+            <label>All Services Added?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>MetaData_Exist</name>
+        <label>MetaData Exist</label>
+        <locationX>550</locationX>
+        <locationY>614</locationY>
+        <defaultConnector>
+            <targetReference>EntityLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ServiceRecords</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>State_Renewal_Sale_0</targetReference>
+            </connector>
+            <label>yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>Mainestate</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!EntityLoop.Organization_State__c})+TEXT({!Count})</expression>
+    </formulas>
+    <formulas>
+        <name>PriceBookEntry</name>
+        <dataType>String</dataType>
+        <expression>CASE({!Services.ServiceIds},
+&quot;01t6f00000OTEjRAAX&quot;, &quot;01u8J000000Ss8sQAC&quot;,
+&quot;01t8J0000005yDKQAY&quot;, &quot;01u8J000000QGk3QAG&quot;,
+&quot;01t8J0000005yDPQAY&quot;, &quot;01u8J000000QGkNQAW&quot;,
+&quot;01t8J0000005yDUQAY&quot;, &quot;01u8J000000QGkNQAW&quot;,
+&quot;01t8J0000005yDZQAY&quot;, &quot;01u8J000000QGkSQAW&quot;,
+&quot;01t8J0000005yDaQAI&quot;, &quot;01u8J000000QGk4QAG&quot;,
+&quot;01u8J000000Ss8OQAS&quot;,&quot;01u8J000000Ss8OQAS&quot;,
+&quot;01tU0000000yiLpIAI&quot;,&quot;01uU0000002acUmIAI&quot;,
+&quot;01u8J000000QGjtQAG&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SaleName</name>
+        <dataType>String</dataType>
+        <expression>CASE({!EntityLoop.Organization_State__c},
+&quot;Alabama&quot;, &quot;Non Profit Renewal -  AL&quot;,
+&quot;Alaska&quot;, &quot;Non Profit Renewal -  AK&quot;,
+&quot;Arizona&quot;, &quot;Non Profit Renewal -  AZ&quot;,
+&quot;Arkansas&quot;, &quot;Non Profit Renewal -  AR&quot;,
+&quot;California&quot;, &quot;Non Profit Renewal -  CA&quot;,
+&quot;Colorado&quot;, &quot;Non Profit Renewal -  CO&quot;,
+&quot;Connecticut&quot;, &quot;Non Profit Renewal -  CT&quot;,
+&quot;Delaware&quot;, &quot;Non Profit Renewal -  DE&quot;,
+&quot;District of Columbia&quot;,&quot;Non Profit Renewal -  DC&quot;,
+&quot;Florida&quot;, &quot;Non Profit Renewal -  FL&quot;,
+&quot;Georgia&quot;, &quot;Non Profit Renewal -  GA&quot;,
+&quot;Hawaii&quot;, &quot;Non Profit Renewal -  HI&quot;,
+&quot;Idaho&quot;, &quot;Non Profit Renewal -  ID&quot;,
+&quot;Illinois&quot;, &quot;Non Profit Renewal -  IL&quot;,
+&quot;Indiana&quot;, &quot;Non Profit Renewal -  IN&quot;,
+&quot;Iowa&quot;, &quot;Non Profit Renewal -  IA&quot;,
+&quot;Kansas&quot;, &quot;Non Profit Renewal -  KS&quot;,
+&quot;Kentucky&quot;, &quot;Non Profit Renewal -  KY&quot;,
+&quot;Louisiana&quot;, &quot;Non Profit Renewal -  LA&quot;,
+&quot;Maine&quot;, &quot;Non Profit Renewal -  ME&quot;,
+&quot;Maryland&quot;, &quot;Non Profit Renewal -  MD&quot;,
+&quot;Massachusetts&quot;, &quot;Non Profit Renewal -  MA&quot;,
+&quot;Michigan&quot;, &quot;Non Profit Renewal -  MI&quot;,
+&quot;Minnesota&quot;, &quot;Non Profit Renewal -  MN&quot;,
+&quot;Mississippi&quot;, &quot;Non Profit Renewal -  MS&quot;,
+&quot;Missouri&quot;, &quot;Non Profit Renewal -  MO&quot;,
+&quot;Montana&quot;, &quot;Non Profit Renewal -  MT&quot;,
+&quot;Nebraska&quot;, &quot;Non Profit Renewal -  NE&quot;,
+&quot;Nevada&quot;, &quot;Non Profit Renewal -  NV&quot;,
+&quot;New Hampshire&quot;, &quot;Non Profit Renewal -  NH&quot;,
+&quot;New Jersey&quot;, &quot;Non Profit Renewal -  NJ&quot;,
+&quot;New Mexico&quot;, &quot;Non Profit Renewal -  NM&quot;,
+&quot;New York&quot;, &quot;Non Profit Renewal -  NY&quot;,
+&quot;North Carolina&quot;, &quot;Non Profit Renewal -  NC&quot;,
+&quot;North Dakota&quot;, &quot;Non Profit Renewal -  ND&quot;,
+&quot;Ohio&quot;, &quot;Non Profit Renewal -  OH&quot;,
+&quot;Oklahoma&quot;, &quot;Non Profit Renewal -  OK&quot;,
+&quot;Oregon&quot;, &quot;Non Profit Renewal -  OR&quot;,
+&quot;Pennsylvania&quot;, &quot;Non Profit Renewal -  PA&quot;,
+&quot;Rhode Island&quot;, &quot;Non Profit Renewal -  RI&quot;,
+&quot;South Carolina&quot;, &quot;Non Profit Renewal -  SC&quot;,
+&quot;South Dakota&quot;, &quot;Non Profit Renewal -  SD&quot;,
+&quot;Tennessee&quot;, &quot;Non Profit Renewal -  TN&quot;,
+&quot;Texas&quot;, &quot;Non Profit Renewal -  TX&quot;,
+&quot;Utah&quot;, &quot;Non Profit Renewal -  UT&quot;,
+&quot;Vermont&quot;, &quot;Non Profit Renewal -  VT&quot;,
+&quot;Virginia&quot;, &quot;Non Profit Renewal -  VA&quot;,
+&quot;Washington&quot;, &quot;Non Profit Renewal -  WA&quot;,
+&quot;West Virginia&quot;, &quot;Non Profit Renewal -  WV&quot;,
+&quot;Wisconsin&quot;, &quot;Non Profit Renewal -  WI&quot;,
+&quot;Wyoming&quot;, &quot;Non Profit Renewal -  WY&quot;,
+&quot;Critical Naming Error&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>ServiceStage</name>
+        <dataType>String</dataType>
+        <expression>&quot;Qualification&quot;</expression>
+    </formulas>
+    <interviewLabel>Entity-Non Profit State Renewal {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Entity-Non Profit State Renewal</label>
+    <loops>
+        <name>EntityLoop</name>
+        <label>EntityLoop</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <collectionReference>EntityList</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Maine_state</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
+        <name>Services</name>
+        <label>Services</label>
+        <locationX>396</locationX>
+        <locationY>974</locationY>
+        <collectionReference>ServiceRecords</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AssignService_0</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>CreateServices</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_State_Renewal_Sale_Entity</name>
+        <label>Create State Renewal Sale Entity</label>
+        <locationX>396</locationX>
+        <locationY>854</locationY>
+        <connector>
+            <targetReference>Services</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityLoop.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>EntityLoop.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>State_Renewal_Sale_0</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SaleEntity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>CreateServices</name>
+        <label>CreateServices</label>
+        <locationX>396</locationX>
+        <locationY>1430</locationY>
+        <connector>
+            <targetReference>CountIncrement</targetReference>
+        </connector>
+        <inputReference>ServicesTobeAdded</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>State_Renewal_Sale_0</name>
+        <label>State Renewal Sale</label>
+        <locationX>396</locationX>
+        <locationY>734</locationY>
+        <connector>
+            <targetReference>Create_State_Renewal_Sale_Entity</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>EntityLoop.Account__r.Account_ID__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>SaleCloseDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entity__c</field>
+            <value>
+                <elementReference>EntityLoop.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Made_by_Automation__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>SaleName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0128J000000CgrOQAS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Effective_Date__c</field>
+            <value>
+                <elementReference>RenewalEffectiveDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_End_Date__c</field>
+            <value>
+                <elementReference>RenewalEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Qualification</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>EntityLoop</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Count</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>EntityList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Entities__c</objectType>
+    </variables>
+    <variables>
+        <name>Prices</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>RenewalEffectiveDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>RenewalEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>SaleCloseDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>ServiceLineItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityLineItem</objectType>
+    </variables>
+    <variables>
+        <name>ServiceList</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>ServiceRecords</name>
+        <apexClass>ServiceDetails</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>ServicesTobeAdded</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityLineItem</objectType>
+    </variables>
+</Flow>

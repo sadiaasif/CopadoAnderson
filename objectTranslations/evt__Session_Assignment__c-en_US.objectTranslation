@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Attendee Name --></label>
+        <name>evt__Attendee_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attendee --></label>
+        <name>evt__Attendee__c</name>
+        <relationshipLabel><!-- Session Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Event Session --></label>
+        <name>evt__Event_Session__c</name>
+        <relationshipLabel><!-- Session Assignments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Display order for session assignments.  Copied from event session order field. --></help>
+        <label><!-- Order --></label>
+        <name>evt__Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>evt__Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Confirmed</masterLabel>
+            <translation><!-- Confirmed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Interested</masterLabel>
+            <translation><!-- Interested --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

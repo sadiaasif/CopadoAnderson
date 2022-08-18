@@ -1,0 +1,55 @@
+<apex:page docType="html-5.0" id="siteConfExhibitorsPage" controller="evt.ConfExhibitorsController" title="{!event.Name} Exhibitors"  sidebar="false" cache="false">
+<head><title>
+    {!IF($Label.ConfExhibitors_Heading == '-','Exhibitors',SUBSTITUTE($Label.ConfExhibitors_Heading,'{eventname}',event.Name))}
+</title>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_conf_exhibitors_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="exhibitors"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner"> 
+<apex:form >
+
+<div id="evt_conf_exhibitors_box" class="evt_h1_outer_box">
+    <div class="evt_box_header">
+<apex:outputPanel rendered="{!$Label.evt__ConfExhibitors_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__ConfExhibitors_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+<apex:outputPanel rendered="{!NOT($Label.evt__ConfExhibitors_Message == '-')}">
+<p>{!$Label.evt__ConfExhibitors_Message}</p>
+</apex:outputPanel> 
+<apex:repeat value="{!listItems}" var="item">
+<div class="evt_exhibitor_logo_box">
+    <apex:outputPanel rendered="{!AND(NOT(ISBLANK(item.imageId)),ISBLANK(item.imageURL))}" >
+         <apex:outputLink value="{!item.website}" target="_blank" disabled="{!ISNULL(item.website)}">
+         <img class="evt_exhibitor_logo"  src="{!URLFOR($Action.Attachment.Download,item.imageId)}" />
+         </apex:outputLink>
+         
+    </apex:outputPanel>
+ 
+    <apex:outputPanel rendered="{!NOT(ISBLANK(item.imageURL))}" >
+         <apex:outputLink value="{!item.website}" target="_blank" disabled="{!ISNULL(item.website)}">
+         <img class="evt_exhibitor_logo"  src="{!item.imageURL}" />
+         </apex:outputLink>
+
+    </apex:outputPanel>
+</div>
+</apex:repeat>
+    </div>
+    <div class="evt_box_bottom"/>
+    </div>
+    
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+
+</apex:page>

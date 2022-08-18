@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_23942255</developerName>
+        <masterLabel>Action Alert</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>OrderItem.Action_Alert__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Red</sourceValue>
+            </sourceValues>
+            <value>1) Red - Past Due</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Yellow</sourceValue>
+            </sourceValues>
+            <value>2) Yellow - Due Date &lt; 14 From Today</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Green</sourceValue>
+            </sourceValues>
+            <value>3) Green - Due date &gt; 14 Days From Today</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>OrderItem.Action_Alert__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>Order.Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Entity__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_NUMBER</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CSR__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_CREATED_DATE</field>
+    </columns>
+    <filter>
+        <booleanFilter>((1 AND 2 AND 3 AND 4 AND ((5 AND 6) OR 7)) AND 8) AND 9</booleanFilter>
+        <criteriaItems>
+            <column>ORDER_ITEM_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>2/1/2021 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>N/A,Kitted,BCP Scheduled,Refunded,Exchanged for Other Services,Completed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.New_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Informational Only</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Annual List,Asset Protection Event,Anderson Tax Advantage Program,Virtual Yearly,No Activity First Year Tax Package,Real Estate Pro,360,Anderson Tax Advantage Program - Lite,REI Mastery Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Assigned_CSR__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Caitlynn Glass</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Not Started</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Active_User__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Caitlynn Glass</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Submitted to Processing,Refunded,Exchanged for Other Services</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed,Refunded</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>OrderItem.Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Open Order Services - Caitlynn Glass</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

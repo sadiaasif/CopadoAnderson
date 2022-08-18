@@ -1,0 +1,52 @@
+<apex:page docType="html-5.0" id="siteConfSponsorsPage" controller="evt.ConfSponsorsController" title="{!event.Name} Sponsors" sidebar="false" cache="false">
+<head><title>
+    {!IF($Label.ConfSponsors_Heading == '-','Sponsors',SUBSTITUTE($Label.ConfSponsors_Heading,'{eventname}',event.Name))}
+</title>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" /> 
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.evt__EventManagement,'styles/ptl_basic.css')}" /> 
+</head>
+
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_conf_sponsors_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="sponsors"  lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner"> 
+<apex:form >
+
+<div id="evt_conf_sponsors_box">
+<apex:outputPanel rendered="{!$Label.evt__ConfSponsors_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__ConfSponsors_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!NOT($Label.evt__ConfSponsors_Message == '-')}">
+<p>{!$Label.evt__ConfSponsors_Message}</p>
+</apex:outputPanel> 
+
+    <div id="evt_conf_sponsor_flexbox">
+    <apex:repeat value="{!sponsors}" var="sponsor"> 
+        <div class="evt_sponsor_logo_box">
+            <apex:outputPanel rendered="{!AND(NOT(ISBLANK(sponsor.evt__Image_Id__c)),ISBLANK(sponsor.evt__Image_URL__c))}" >
+              <apex:outputLink value="{!sponsor.evt__Website__c}" target="_blank" disabled="{!ISNULL(sponsor.evt__Website__c)}">
+                 <img class="evt_sponsor_logo"  src="{!URLFOR($Action.Attachment.Download,sponsor.evt__Image_Id__c)}" />
+              </apex:outputLink>
+            </apex:outputPanel>
+ 
+            <apex:outputPanel rendered="{!NOT(ISBLANK(sponsor.evt__Image_URL__c))}" >
+              <apex:outputLink value="{!sponsor.evt__Website__c}" target="_blank" disabled="{!ISNULL(sponsor.evt__Website__c)}">
+                <img class="evt_sponsor_logo"  src="{!sponsor.evt__Image_URL__c}" />
+              </apex:outputLink>
+            </apex:outputPanel>
+        </div>
+    </apex:repeat>
+    </div>
+
+</div>
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+      </div><!--  pc_page -->
+</div><!--  pc_lang -->  
+
+</apex:page>

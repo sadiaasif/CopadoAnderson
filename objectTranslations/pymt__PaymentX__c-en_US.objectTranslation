@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Coupon code used in registering for an event. --></help>
+        <label><!-- Coupon Code --></label>
+        <name>evt__Coupon_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event --></label>
+        <name>evt__Event__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>pymt__Account__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Total transaction amount (including tax, shipping and fees) --></help>
+        <label><!-- Amount --></label>
+        <name>pymt__Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- Amount authorized for this transaction. --></help>
+        <label><!-- Authorization Amount --></label>
+        <name>pymt__Auth_Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization expiration date returned from payment processor. --></help>
+        <label><!-- Auth Expiration --></label>
+        <name>pymt__Auth_Expiration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Authorization ID returned from payment processor. --></help>
+        <label><!-- Authorization Id --></label>
+        <name>pymt__Authorization_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Settlement Id for this payment and other payments in the same batch. --></help>
+        <label><!-- Batch Id --></label>
+        <name>pymt__Batch_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- For Scheduled payments.  Type of action to perform when batch processing the scheduled payment. --></help>
+        <label><!-- Batch Processing Action --></label>
+        <name>pymt__Batch_Processing_Action__c</name>
+        <picklistValues>
+            <masterLabel>Capture</masterLabel>
+            <translation><!-- Capture --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Process using assigned Payment Method</masterLabel>
+            <translation><!-- Process using assigned Payment Method --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Process using default Payment Method on Contact</masterLabel>
+            <translation><!-- Process using default Payment Method on Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Send payment request</masterLabel>
+            <translation><!-- Send payment request --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For Scheduled payments. Displays results after batch processing. --></help>
+        <label><!-- Batch Processing Result --></label>
+        <name>pymt__Batch_Processing_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing City --></label>
+        <name>pymt__Billing_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Company --></label>
+        <name>pymt__Billing_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Country --></label>
+        <name>pymt__Billing_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Email --></label>
+        <name>pymt__Billing_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing First Name --></label>
+        <name>pymt__Billing_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Last Name --></label>
+        <name>pymt__Billing_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Phone --></label>
+        <name>pymt__Billing_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Postal Code --></label>
+        <name>pymt__Billing_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing State --></label>
+        <name>pymt__Billing_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Street --></label>
+        <name>pymt__Billing_Street__c</name>
+    </fields>
+    <fields>
+        <help><!-- Credit card type --></help>
+        <label><!-- Card Type --></label>
+        <name>pymt__Card_Type__c</name>
+        <picklistValues>
+            <masterLabel>Amex</masterLabel>
+            <translation><!-- Amex --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diners Club</masterLabel>
+            <translation><!-- Diners Club --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Discover</masterLabel>
+            <translation><!-- Discover --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JCB</masterLabel>
+            <translation><!-- JCB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maestro</masterLabel>
+            <translation><!-- Maestro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MasterCard</masterLabel>
+            <translation><!-- MasterCard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Solo</masterLabel>
+            <translation><!-- Solo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visa</masterLabel>
+            <translation><!-- Visa --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Optional JSON expression used to determine Category Splits for the payment when it is completed. --></help>
+        <label><!-- Category Split Expression --></label>
+        <name>pymt__Category_Split_Expression__c</name>
+    </fields>
+    <fields>
+        <help><!-- The name of the category split expression to use when auto-splitting this payment.  Overrides split settings at the processor connection or application level. --></help>
+        <label><!-- Category Split Name --></label>
+        <name>pymt__Category_Split_Name__c</name>
+        <picklistValues>
+            <masterLabel>Don&apos;t Auto-Split</masterLabel>
+            <translation><!-- Don&apos;t Auto-Split --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Total amount of category splits for this Payment (excluding uncategorized splits). --></help>
+        <label><!-- Category Split Total --></label>
+        <name>pymt__Category_Split_Total__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of Category Splits for this Payment. --></help>
+        <label><!-- Category Splits --></label>
+        <name>pymt__Category_Splits__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Number --></label>
+        <name>pymt__Check_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set whenever a connection error occurs between Salesforce and the payment processor.  Check the payment log for details when this flag is set. --></help>
+        <label><!-- Connection Error --></label>
+        <name>pymt__Connection_Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>pymt__Contact__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Currency ISO Code --></label>
+        <name>pymt__Currency_ISO_Code__c</name>
+        <picklistValues>
+            <masterLabel>AUD</masterLabel>
+            <translation><!-- AUD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAD</masterLabel>
+            <translation><!-- CAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHF</masterLabel>
+            <translation><!-- CHF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CZK</masterLabel>
+            <translation><!-- CZK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DKK</masterLabel>
+            <translation><!-- DKK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GBP</masterLabel>
+            <translation><!-- GBP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HKD</masterLabel>
+            <translation><!-- HKD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HUF</masterLabel>
+            <translation><!-- HUF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ILS</masterLabel>
+            <translation><!-- ILS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JPY</masterLabel>
+            <translation><!-- JPY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MXN</masterLabel>
+            <translation><!-- MXN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOK</masterLabel>
+            <translation><!-- NOK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NZD</masterLabel>
+            <translation><!-- NZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PLN</masterLabel>
+            <translation><!-- PLN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEK</masterLabel>
+            <translation><!-- SEK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SGD</masterLabel>
+            <translation><!-- SGD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Actual date of payment. --></help>
+        <label><!-- Payment Date --></label>
+        <name>pymt__Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- cart item total - discount + tax + shipping = transaction amount --></help>
+        <label><!-- Discount --></label>
+        <name>pymt__Discount__c</name>
+    </fields>
+    <fields>
+        <help><!-- IP Address from which payment originated. --></help>
+        <label><!-- IP Address --></label>
+        <name>pymt__IP_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Invoice Number --></label>
+        <name>pymt__Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checked when the payment has been scheduled for batch processing or customer payment. --></help>
+        <label><!-- Is Scheduled --></label>
+        <name>pymt__Is_Scheduled__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checked if this is a test transaction. --></help>
+        <label><!-- Test Transaction --></label>
+        <name>pymt__Is_Test_Transaction__c</name>
+    </fields>
+    <fields>
+        <help><!-- Payment access key.  Used to limit public access to payment details in Sites. --></help>
+        <label><!-- Key --></label>
+        <name>pymt__Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Last 4 digits of credit card. --></help>
+        <label><!-- Last 4 Digits --></label>
+        <name>pymt__Last_4_Digits__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date batch script last attempt to process this payment. --></help>
+        <label><!-- Last Batch Processing Attempt --></label>
+        <name>pymt__Last_Batch_Processing_Attempt__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to keep track of last response status value.  Allows PaymentConnect to filter out redundant notifications. --></help>
+        <label><!-- Last Response Status --></label>
+        <name>pymt__Last_Response_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latitude --></label>
+        <name>pymt__Latitude__c</name>
+    </fields>
+    <fields>
+        <help><!-- Transaction results returned from payment processor and other related information. --></help>
+        <label><!-- Log --></label>
+        <name>pymt__Log__c</name>
+    </fields>
+    <fields>
+        <label><!-- Longitude --></label>
+        <name>pymt__Longitude__c</name>
+    </fields>
+    <fields>
+        <label><!-- Map --></label>
+        <name>pymt__Map__c</name>
+    </fields>
+    <fields>
+        <help><!-- Details about the transaction. --></help>
+        <label><!-- Memo --></label>
+        <name>pymt__Memo__c</name>
+    </fields>
+    <fields>
+        <help><!-- Custom fields and values passed in with the new payment notification through the PaymentConnect relay handlers. --></help>
+        <label><!-- Merchant Custom Data --></label>
+        <name>pymt__Merchant_Custom_Data__c</name>
+    </fields>
+    <fields>
+        <help><!-- Custom action(s) to perform when payment is completed.  Tags must be separated with semi-colons.  Recommended format is alphanumeric, with no spaces or special characters.  E.g. InitiateDropShip;NotifyAccounting;EmailReceipt --></help>
+        <label><!-- On Payment Completed --></label>
+        <name>pymt__OnPaymentCompleted_Trigger__c</name>
+        <picklistValues>
+            <masterLabel>EmailReceipt</masterLabel>
+            <translation><!-- EmailReceipt --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <name>pymt__Opportunity__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- PO Number --></label>
+        <name>pymt__PO_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- This look-up field is set for credit card captures and other transactions that have a &apos;parent&apos; transaction or payment record. --></help>
+        <label><!-- Parent Transaction --></label>
+        <name>pymt__Parent_Transaction__c</name>
+        <relationshipLabel><!-- Related Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Stored Payment Method used to process the transaction. --></help>
+        <label><!-- Payment Method --></label>
+        <name>pymt__Payment_Method__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The payment processor or merchant account used to process this payment.  This field is set automatically when external payments are received and recorded, and when payments are processed using the Payment Terminal. --></help>
+        <label><!-- Payment Processor --></label>
+        <name>pymt__Payment_Processor__c</name>
+        <picklistValues>
+            <masterLabel>ACHWorks</masterLabel>
+            <translation><!-- ACHWorks --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Authorize.Net</masterLabel>
+            <translation><!-- Authorize.Net --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PayPal</masterLabel>
+            <translation><!-- PayPal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stripe</masterLabel>
+            <translation><!-- Stripe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WorldPay</masterLabel>
+            <translation><!-- WorldPay --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>eWay</masterLabel>
+            <translation><!-- eWay --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For subscription and recurring payments, this field should reference the subscription payment profile. --></help>
+        <label><!-- Recurring Payment Profile --></label>
+        <name>pymt__Payment_Profile__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The date scheduled payment requests should be sent out.  N days before the Scheduled Payment Date, where  N = Processing Action Lead Time, or the record creation date (whichever is later). --></help>
+        <label><!-- Payment Request Date --></label>
+        <name>pymt__Payment_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Type --></label>
+        <name>pymt__Payment_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Check or Money Order</masterLabel>
+            <translation><!-- Check or Money Order --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ECheck</masterLabel>
+            <translation><!-- ECheck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Funds Transfer</masterLabel>
+            <translation><!-- Electronic Funds Transfer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Number of days before the scheduled payment date that the batch processing action (e.g. Send payment request) is to be processed. --></help>
+        <label><!-- Processing Action Lead Time --></label>
+        <name>pymt__Processing_Action_Lead_Time__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of times the batch processing script has attempted to process this payment. --></help>
+        <label><!-- Processing Attempts --></label>
+        <name>pymt__Processing_Attempts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processor Connection --></label>
+        <name>pymt__Processor_Connection__c</name>
+        <relationshipLabel><!-- Payments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Used to match API responses and notifications with this payment record. --></help>
+        <label><!-- Reference Id --></label>
+        <name>pymt__Reference_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Setup the next scheduled native subscription payment when this payment is completed. --></help>
+        <label><!-- Reschedule --></label>
+        <name>pymt__Reschedule__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scheduled Payment Date is the date on which payment is expected to be paid, and may be used to trigger payment reminders using workflow rules. --></help>
+        <label><!-- Scheduled Payment Date --></label>
+        <name>pymt__Scheduled_Payment_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sequence number assigned to scheduled payment --></help>
+        <label><!-- Scheduled Payment Number --></label>
+        <name>pymt__Scheduled_Payment_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Settlement Id --></label>
+        <name>pymt__Settlement_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To City --></label>
+        <name>pymt__Ship_To_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Company --></label>
+        <name>pymt__Ship_To_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Country --></label>
+        <name>pymt__Ship_To_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To First Name --></label>
+        <name>pymt__Ship_To_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Last Name --></label>
+        <name>pymt__Ship_To_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Name --></label>
+        <name>pymt__Ship_To_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Phone --></label>
+        <name>pymt__Ship_To_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Postal Code --></label>
+        <name>pymt__Ship_To_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To State --></label>
+        <name>pymt__Ship_To_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To Street --></label>
+        <name>pymt__Ship_To_Street__c</name>
+    </fields>
+    <fields>
+        <help><!-- Result of last triggered shipping calculation attempt. [Success|Error]|[Error Code]|[Message] --></help>
+        <label><!-- Shipping Calc Result --></label>
+        <name>pymt__Shipping_Calc_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Method --></label>
+        <name>pymt__Shipping_Method__c</name>
+        <picklistValues>
+            <masterLabel>Canada Post</masterLabel>
+            <translation><!-- Canada Post --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DHL Global</masterLabel>
+            <translation><!-- DHL Global --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DHL US</masterLabel>
+            <translation><!-- DHL US --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FedEx</masterLabel>
+            <translation><!-- FedEx --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICC World</masterLabel>
+            <translation><!-- ICC World --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LaserShip</masterLabel>
+            <translation><!-- LaserShip --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OnTrac</masterLabel>
+            <translation><!-- OnTrac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard Shipping</masterLabel>
+            <translation><!-- Standard Shipping --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UPS</masterLabel>
+            <translation><!-- UPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USPS</masterLabel>
+            <translation><!-- USPS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Shipping total for transaction. --></help>
+        <label><!-- Shipping --></label>
+        <name>pymt__Shipping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>pymt__Status__c</name>
+        <picklistValues>
+            <masterLabel>Authorized</masterLabel>
+            <translation><!-- Authorized --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Declined</masterLabel>
+            <translation><!-- Declined --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Expired</masterLabel>
+            <translation><!-- Expired --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reversed</masterLabel>
+            <translation><!-- Reversed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voided</masterLabel>
+            <translation><!-- Voided --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For recurring or subscription payments, this is the recurring payment profile Id. --></help>
+        <label><!-- Subscription Id --></label>
+        <name>pymt__Subscription_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Result of last triggered tax calculation attempt. [Success|Error]|[Error Code]|[Message] --></help>
+        <label><!-- Tax Calc Result --></label>
+        <name>pymt__Tax_Calc_Result__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used with the Trigger Tax Calc checkbox to determine which custom tax calculations to use. --></help>
+        <label><!-- Tax Method --></label>
+        <name>pymt__Tax_Method__c</name>
+        <picklistValues>
+            <masterLabel>State/Province Lookup</masterLabel>
+            <translation><!-- State/Province Lookup --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Tax amount on transaction. --></help>
+        <label><!-- Tax --></label>
+        <name>pymt__Tax__c</name>
+    </fields>
+    <fields>
+        <help><!-- Payment processor transaction fee. --></help>
+        <label><!-- Transaction Fee --></label>
+        <name>pymt__Transaction_Fee__c</name>
+    </fields>
+    <fields>
+        <help><!-- Transaction Id returned from payment processor. --></help>
+        <label><!-- Transaction Id --></label>
+        <name>pymt__Transaction_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Transaction Type --></label>
+        <name>pymt__Transaction_Type__c</name>
+        <picklistValues>
+            <masterLabel>Authorization</masterLabel>
+            <translation><!-- Authorization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment</masterLabel>
+            <translation><!-- Payment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Refund</masterLabel>
+            <translation><!-- Refund --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Used to trigger workflow rules configured to send a payment request email. --></help>
+        <label><!-- Trigger Payment Request --></label>
+        <name>pymt__Trigger_Payment_Request__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to trigger custom shipping calculations for payments with Shopping Cart Items. --></help>
+        <label><!-- Trigger Shipping Calc --></label>
+        <name>pymt__Trigger_Shipping_Calc__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to trigger custom tax calculations for payments with Shopping Cart Items. --></help>
+        <label><!-- Trigger Tax Calc --></label>
+        <name>pymt__Trigger_Tax_Calc__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- The selected batch processing action is not supported in this version of PaymentConnect. --></errorMessage>
+        <name>pymt__Invalid_Batch_Processing_Action</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Capture --></label>
+        <name>pymt__Capture</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Categorize_Payment --></label>
+        <name>pymt__Categorize_Payment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Delete --></label>
+        <name>pymt__Delete</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Email_Receipt --></label>
+        <name>pymt__Email_Receipt</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_Payment_Details --></label>
+        <name>pymt__Get_Payment_Details</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Payment_Terminal --></label>
+        <name>pymt__Payment_Terminal</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Refund_Void --></label>
+        <name>pymt__Refund_Void</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Retotal_Payment --></label>
+        <name>pymt__Retotal_Payment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Payment_Request --></label>
+        <name>pymt__Send_Payment_Request</name>
+    </webLinks>
+</CustomObjectTranslation>

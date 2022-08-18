@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_30441927</developerName>
+        <masterLabel>Stage</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>OrderItem.Processing_Stage__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Completed</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Completed - Client Unresponsive</sourceValue>
+            </sourceValues>
+            <value>Completed</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Stalled - Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Stalled - Internal</sourceValue>
+            </sourceValues>
+            <value>Stalled</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>N/A</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Not Started</sourceValue>
+            </sourceValues>
+            <value>Not Started</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Back to CSR</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Back to LC</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Need to Kit</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Send to Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sent to County</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Signed Original Received</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Waiting on Confirmation</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Submitted to Processing</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Submitted to Processing - Vegas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ready To Draft</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sent to Client for Signatures</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ready to Ship to County</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ready to Ship</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ready to Ship to Client</sourceValue>
+            </sourceValues>
+            <value>In Process</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Kitted</sourceValue>
+            </sourceValues>
+            <value>Kitted</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ORDER_ITEM_NUMBER</field>
+    </columns>
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Type__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Entity__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Law_Coordinator__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>BucketField_30441927</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>ORDER_ITEM_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>1/1/2021 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Land Trust,Deed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_30441927</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>In Process</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Review,Binder,Drafting,LLC Formation</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>OrderItem.Service_Name__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>ORDER_ITEM_CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Orders - Land Trusts -IN Process</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

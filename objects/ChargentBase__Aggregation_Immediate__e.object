@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This platform event will be published instantly at the time the publish action is called from the package.</description>
+    <eventType>HighVolume</eventType>
+    <fields>
+        <fullName>ChargentBase__Aggregation_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines which of the data aggregation implementations is attempted for the event message</description>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Aggregation Type</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ChargentBase__Date__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date of the event message published</description>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ChargentBase__Payload__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contains the JSON formatted payload for the data to be aggregated. The structure for this data will be defined for each implementation independently.</description>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Payload</label>
+        <length>131072</length>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ChargentBase__Token__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Chargent package generated token for published platform events</description>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Token</label>
+        <length>1000</length>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <label>Chargent Immediate Aggregation</label>
+    <pluralLabel>Chargent Immediate Aggregations</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
+</CustomObject>

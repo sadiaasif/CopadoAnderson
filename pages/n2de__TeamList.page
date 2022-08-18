@@ -1,0 +1,145 @@
+<apex:page id="teamlistpage" sidebar="false" standardController="n2de__Team__c" recordSetVar="Team__c" extensions="n2de.TeamListController" tabstyle="n2de__Team__c" action="{!init}">
+    <c:CommonHeader />
+    <c:CommonMask />
+    <script type="text/javascript" src="{!URLFOR($Resource.DEResources, 'scripts/select2.min.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.DEResources, 'css/select2.css')}" type="text/css"/>
+    <apex:form id="teamlistform">
+        <style>
+.team_table tr{
+    cursor:move;
+}
+.new-help {
+    display: table;
+    margin:0 auto;
+    font-size: 15px;
+}
+.hover-help {
+    cursor: help;
+}
+.new-help a {
+    color: #56aa1c;
+}
+.new-help a:hover {
+    color: #bbdda4;
+}
+.listViewSelect {
+    margin-left: 20px;
+}
+
+.message .messageText a.knowledgeBaseLink {
+    margin: 0;
+    font-size: 100%;
+}
+
+        </style>
+        <script>
+var fixHelper = function(e, ui) {
+    ui.children().each(function() {
+        $(this).width($(this).width());
+    });
+    return ui;
+};
+$(document).ready(function() {
+     $( ".team_table tbody" ).sortable({
+         items: 'tr',
+         update: function( event, ui ) {
+             saveOrder(ui);
+         },
+         helper: fixHelper
+     });
+     $('select.nosearch-select').select2({
+        minimumResultsForSearch: -1,
+        dropdownAutoWidth : true
+    });
+});
+function saveOrder(ui){
+    //var listElementId = ui.item[0].id;
+    showMask();
+    var teamIdArray = new Array();
+    $(".team_table .team_id").each(function(){
+        var teamId = $(this).attr('team_id');
+        if(teamId != undefined){
+            teamIdArray.push(teamId);
+        }
+    });
+    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.TeamListController.saveOrder}', teamIdArray,
+        function(result, event){
+            hideMask();
+            if (event.type === 'exception'){
+                alert(event.message);
+            }
+    });
+}
+
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+        <apex:sectionHeader id="teamlistheader" title="Distribution Teams" subtitle="Home"/>
+        <c:CommonHelp help_page="distribution-teams"/>
+        <apex:outputPanel id="list_filter">
+            <apex:selectList id="list_filter_select" value="{!ListView}" size="1" styleClass="listViewSelect nosearch-select">
+                <apex:selectOptions value="{!ListViewOptions}"/>
+                <apex:actionSupport event="onchange" action="{!changeListView}" reRender="team_list" onSubmit="showMask()" onComplete="hideMask()"/>
+            </apex:selectList>
+        </apex:outputPanel>
+        <br/><br/>
+        <apex:pageBlock id="teams" title="Teams">
+
+            <apex:pageMessages />
+            <apex:pageMessage rendered="{!ShowPermissionSetMsg}" severity="warning" summary="{!NoPermissionSetMsg}" strength="1" escape="false"/>
+            <apex:pageMessage severity="info" strength="1" escape="false" summary="New look coming soon! Find out more information in our {!NewLookKnowledgebaseLink}."/>
+
+            <apex:pageBlockButtons id="teambuttons">
+                <apex:commandButton id="newbutton" value="New" action="{!newTeam}" rendered="{!$ObjectType.n2de__Team__c.Createable}"/>
+                <apex:commandButton id="deletebutton" value="Delete" action="{!deleteTeams}" rendered="{!$ObjectType.n2de__Team__c.Deletable}" onclick="return confirm('Are you sure?');"/>
+                <apex:commandButton id="activatebutton" value="Activate" action="{!activateTeams}" rendered="{!CanActivateTeam}"/>
+                <apex:commandButton id="deactivatebutton" value="Deactivate" action="{!deactivateTeams}" rendered="{!CanActivateTeam}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable id="team_list" value="{!teamList}" var="t" styleClass="team_table" columnsWidth="50px, 450px, 200px, 200px, 150px, 150px, 200px, 200px, 50px">
+                <apex:column >
+                    <apex:inputCheckbox id="team_checkbox" value="{!t.checked}" disabled="{!NOT(t.RecordAccess.HasDeleteAccess)}" title="{!IF(NOT(t.RecordAccess.HasDeleteAccess), 'You do not have permissions to delete this record.', '')}"/>
+                </apex:column>
+                <apex:column headerValue="Team name">
+                    <apex:outputLink id="team_name" value="/apex/{!NameSpacePrefix}TeamSummary?id={!t.teamSObject.id}" styleClass="team_id" html-team_id="{!t.teamSObject.id}">{!t.teamSObject.name}</apex:outputLink>
+                </apex:column>
+                <apex:column id="distributed_object" headerValue="Distributed object">
+                    {!t.objectLabel}
+                </apex:column>
+                <apex:column headerValue="Distributing to" rendered="{!queueTeamExists}">
+                    <apex:image id="distributing_to" url="{!IF(t.teamSObject.n2de__Is_distribute_to_queue__c != true, URLFOR($Resource.n2de__DEResources, 'images/teammember32.png'), URLFOR($Resource.n2de__DEResources, 'images/queue32_3.png'))}" title="{!IF(t.teamSObject.n2de__Is_distribute_to_queue__c != true, 'Distributing to team members', 'Distributing to queues')}" width="16px" height="16px"/>
+                </apex:column>
+                <apex:column id="team_members" headerValue="Team members" styleClass="count-col">
+                    {!t.noTeamMembers}
+                </apex:column>
+                <apex:column headerValue="Active distributors">
+                    <apex:outputText id="active_distributors" value="{!t.noActiveScheduledDistributors}" title="Number of active scheduled distributors"/>
+                </apex:column>
+                <apex:column headerValue="Created date" styleClass="date_col">
+                    <apex:outputPanel styleClass="hover-help">
+                        <apex:outputField id="created_date" value="{!t.teamSObject.CreatedDate}" title="Created by {!JSENCODE(t.teamSObject.CreatedBy.Name)}"/>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="Last modified date" styleClass="date_col">
+                    <apex:outputPanel styleClass="hover-help">
+                        <apex:outputField id="last_modified_date" value="{!t.teamSObject.LastModifiedDate}" title="Last modified by {!JSENCODE(t.teamSObject.LastModifiedBy.Name)}"/>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="Active">
+                    <apex:image id="active" url="{!IF(t.teamSObject.n2de__Is_active__c, URLFOR($Resource.n2de__DEResources, 'images/tick32.png'), URLFOR($Resource.n2de__DEResources, 'images/cross32.png'))}" width="16px" height="16px"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:outputPanel layout="block" rendered="{!teamList.size == 0}">
+                <br/><br/>
+                <div style="width: 100%">
+            <span class="new-help">
+                Looks like you don't have any teams yet!
+            </span>
+                    <span class="new-help">
+                Click <b><a target="_blank" href="https://help.nc-squared.com/team-detail">here</a></b> to learn about creating a team.
+            </span>
+                </div>
+                <br/>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+    <c:StatusPanel />
+</apex:page>

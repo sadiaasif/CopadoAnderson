@@ -1,0 +1,39 @@
+<apex:page docType="html-5.0" id="sitePaymentHistoryPage" controller="pymt.SitePaymentHistoryController" showHeader="false" title="Payment History"  cache="false" standardStylesheets="false">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+
+ <apex:define name="body">
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitepaymenthistory_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+      <div class="pc_page_content_inner">
+
+    <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+        <apex:pageMessage summary="Login required." severity="warning" strength="3" />
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+
+    <apex:pageMessages id="messages"/>
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SitePaymentHistory_Heading == '-')}">
+    <h1>{!$Label.pymt__SitePaymentHistory_Heading}</h1>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!NOT($Label.pymt__SitePaymentHistory_Message == '-')}">
+    <p>{!$Label.pymt__SitePaymentHistory_Message}</p>
+    </apex:outputPanel>
+
+    <c:PaymentHistory contactId="{!contactId}" showHeader="true" additionalFields="pymt__Transaction_Type__c, pymt__Payment_Type__c" cartItems="true" expanded="false"/>
+    </apex:outputPanel>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+  </apex:define>
+  </apex:composition>
+</apex:page>

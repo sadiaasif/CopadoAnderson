@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Stores ZenKraft Shipmate app custom settings for general settings. There should only be one record max per org. If utilized, the record must be created manually and the fields must be set manually.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>zkusps__ConvertNonAscii__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Convert non ascii characters for labels</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__RecordPrintHistories__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Record Print Histories</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__RecordShippingCheckpoints__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Record Shipping Checkpoints</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__RunDemoMode__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Configures ZenKraft Shipmate to communicate to the Express1 test servers.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Configures ZenKraft Shipmate to communicate to the Express1 test servers.</inlineHelpText>
+        <label>Run Demo Mode</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__ScheduledTrackingNumberOfDays__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Scheduled tracking - number of days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkusps__TestShipments__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Configures ZenKraft Shipmate to create test shipments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Configures ZenKraft Shipmate to create test shipments.</inlineHelpText>
+        <label>Test Shipments</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__TruncateRecipientCompanyName__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Truncate Recipient Company Name if longer than 47 characters</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Truncate Recipient Company Name if longer than 47 characters</inlineHelpText>
+        <label>Truncate Recipient Company Name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__USPSTracking__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>All tracking for Express1 and Endicia uses USPS web api. Please check &apos;USPS Web API UserID&apos; field</description>
+        <externalId>false</externalId>
+        <inlineHelpText>All tracking for Express1 and Endicia uses USPS web api. Please check &apos;USPS Web API UserID&apos; field</inlineHelpText>
+        <label>USPS Tracking</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__USPSWebAPIUserID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>USPS Web API UserID</description>
+        <externalId>false</externalId>
+        <inlineHelpText>USPS Web API UserID</inlineHelpText>
+        <label>USPS Web API UserID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>zkusps__UseFiles__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Save labels to Salesforce File</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Save labels to Salesforce File</inlineHelpText>
+        <label>Use Files</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__allowEditOfUsedCustomsInformation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If Checked, user will be allowed to edit Customs Information records that have already been used in a Shipment. Any changes made will no longer reflect the data submitted to USPS with the existing shipments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If Checked, user will be allowed to edit Customs Information records that have already been used in a Shipment. Any changes made will no longer reflect the data submitted to USPS with the existing shipments.</inlineHelpText>
+        <label>Allow Edit of Used Customs Information</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__allowEditOfUsedCustomsItem__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If Checked, user will be allowed to edit Customs Item records that have already been used in a Shipment. Any changes made will no longer reflect the data submitted to USPS with the existing shipments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If Checked, user will be allowed to edit Customs Item records that have already been used in a Shipment. Any changes made will no longer reflect the data submitted to USPS with the existing shipments.</inlineHelpText>
+        <label>Allow Edit of Used Customs Item</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>zkusps__ignoreMaxJobLimitForScheduledTrack__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Ignore Max Job Limit for Scheduled Track</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>USPS Shipmate General Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

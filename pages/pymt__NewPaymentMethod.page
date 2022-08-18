@@ -1,0 +1,578 @@
+<apex:page standardController="pymt__Payment_Method__c" extensions="pymt.NewPaymentMethodController" tabstyle="pymt__Payment_Method__c" sidebar="false">
+<style>
+.commandBtn {
+   margin-bottom: 10px;
+   width:160px;
+}
+.panelGridText {
+   padding-bottom: 20px;
+}
+.labelColumn {
+    width:150px;
+}
+
+    .modalProgressBox {
+        display: block;
+        position: absolute;
+        z-index: 999;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        background-color: #FFF;
+        top: 0px;
+        left: 0px;
+        filter:alpha(opacity=50);
+        -moz-opacity:0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        color: black;
+        font-size: 14pt;
+    }
+
+</style>
+<style>
+#option_table td {padding-right:10px;}
+/* This button CSS generated using CSSButtonGenerator.com */
+#option_table .bigbutton {
+    -moz-box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    box-shadow:inset 0px 0px 0px 0px #dcecfb;
+    background-color:#f0f0f0;
+    -webkit-border-top-left-radius:0px;
+    -moz-border-radius-topleft:0px;
+    border-top-left-radius:0px;
+    -webkit-border-top-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-bottomright:0px;
+    border-bottom-right-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    -moz-border-radius-bottomleft:0px;
+    border-bottom-left-radius:0px;
+    text-indent:0;
+    border:2px solid #c2c2c2;
+    display:inline-block;
+    color:#7a7a7a;
+    font-family:Trebuchet MS;
+    font-size:15px;
+    font-weight:bold;
+    font-style:normal;
+    height:40px;
+    line-height:40px;
+    width:200px;
+    text-decoration:none;
+    text-align:center;
+}
+#option_table  .bigbutton:hover {
+    background-color:#2d86c2;
+    color:white;
+}
+#option_table  .bigbutton:active {
+    position:relative;
+    top:1px;
+}
+</style>
+<apex:form id="addMethodForm">
+<script language="javascript">
+function addLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
+}
+
+// Disable browser autocomplete for fields accepting sensitive data
+function disableAutoComplete() {
+    var el;
+    el = document.getElementById("{!$Component.addMethodPageBlock.creditCardEntryPanel.cardMethodCardNumber}");
+    if (el) el.setAttribute("autocomplete","off");
+    el = document.getElementById("{!$Component.addMethodForm.addMethodPageBlock.cardInfo.cvvSI.cvvNumber}");
+    if (el) el.setAttribute("autocomplete","off");
+    el = document.getElementById("{!$Component.addMethodForm.addMethodPageBlock.echeckInfo.routingNumberSI.routingNumber}");
+    if (el) el.setAttribute("autocomplete","off");
+    el = document.getElementById("{!$Component.addMethodForm.addMethodPageBlock.echeckInfo.bankAcctNumberSI.bankAccountNumber}");
+    if (el) el.setAttribute("autocomplete","off");
+}
+
+addLoadEvent(disableAutoComplete);
+</script>
+<apex:sectionHeader title="Linvio PaymentConnect" subtitle="Add a New Payment Method"  help="{!$Page.pymt__Help}"/>
+<apex:pageMessages id="messages"/>
+<apex:outputPanel rendered="{!selectContactFirst == true}">
+<apex:pageMessage severity="INFO" strength="2" Title="Contact Required" summary="Please select an existing contact to attach the new payment method."/>
+<table>
+<tr>
+<td>Contact</td>
+<td><apex:inputField value="{!tempPaymentMethod.pymt__Contact__c}"/>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+  <apex:commandButton value="Continue" action="{!setContact}"/>
+  </td>
+  </tr>
+  </table>
+</apex:outputPanel>
+
+<apex:pageBlock title="Select a Payment Method Type" id="addMethodPageBlock" tabStyle="pymt__Payment_Method__c" mode="maindetail" rendered="{!AND(showPaymentMethodOptions, NOT(selectContactFirst))}">
+<apex:pageBlockButtons >
+                <apex:commandButton value="Cancel" action="{!cancelFromPage}"  immediate="true"/>
+</apex:pageBlockButtons>
+
+        <apex:actionStatus id="modalActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel styleClass="modalProgressBox">&nbsp;
+           <br/><br/><br/>
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/spinner_med.gif')}"  style="vertical-align:middle;" alt="busy..." />
+             &nbsp;Sending Request </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop"  >
+         </apex:facet>
+    </apex:actionStatus>
+ <div style="height:2px;width:100%;background:#e0e0e0;margin-bottom:4px;"/>
+<br/>
+
+    <table id="option_table" >
+        <apex:outputPanel layout="none" rendered="{!enableStoredCardOptions}" >
+        <tr>
+        <td>
+            <apex:commandLink styleclass="bigbutton" action="{!showCardPanel}" immediate="true">
+            Credit Card
+            </apex:commandLink>
+        </td>
+        <td>
+            Store credit card information securely in Salesforce, leveraging Salesforce's Encrypted Fields feature.
+
+        </td>
+        </tr>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!enableStoredBankAcctOptions}" >
+        <tr>
+        <td>
+            <apex:commandLink styleclass="bigbutton" action="{!showBankAcctPanel}" immediate="true">
+            Bank Account
+            </apex:commandLink>
+        </td>
+        <td>
+            Store bank account details for use with ACH and eCheck payments securely in Salesforce, leveraging Salesforce's Encrypted Fields feature.
+
+        </td>
+        </tr>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!enableCIMOptions}" >
+        <tr>
+        <td>
+            <apex:commandLink styleclass="bigbutton" action="{!showCIMManager}" immediate="true">
+            AuthNet CIM Profile
+            </apex:commandLink>
+        </td>
+        <td>
+            Store customer credit card or bank account details using Authorize.Net's hosted Customer Information Management (CIM) service.  CIM support must be enabled in your merchant account at Authorize.net.
+
+        </td>
+        </tr>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!enableEWayOptions}" >
+        <tr>
+        <td>
+            <apex:commandLink styleclass="bigbutton" action="{!showEWayPanel}" immediate="true">
+            eWay Customer Profile
+            </apex:commandLink>
+        </td>
+        <td>
+            Store customer credit card or bank account details using eWay's tokenized payment or Managed Customer feature.
+
+        </td>
+        </tr>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!enablePayPalOptions}" >
+        <tr>
+        <td>
+            <apex:commandLink styleclass="bigbutton" action="{!showPayPalPanel}" immediate="true">
+            PayPal Transaction Ref
+            </apex:commandLink>
+        </td>
+        <td>
+            Process transactions using credentials from a previous PayPal transaction without having to save sensitive credit card information in Salesforce.  The doReferenceTransaction feature must be enabled in your merchant account at PayPal.  A Transaction Reference Profile stores the transaction Id of the reference transaction so you can use it in place of customer credit card information in the Payment Terminal.
+
+        </td>
+        </tr>
+        </apex:outputPanel>
+
+    </table>
+<br/>
+</apex:pageBlock>
+
+<!--  ========================================================================================================== -->
+<apex:pageBlock title="Add Credit Card" id="cardMethodEntryBlock" rendered="{!showCardPanel}" mode="edit">
+<apex:pageBlockButtons >
+    <apex:commandButton value="Cancel" action="{!cancelFromPage}" immediate="true"/>
+
+    <apex:commandButton value="Submit" action="{!addCreditCard}"/>
+    <apex:actionStatus id="cardFormActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             &nbsp;Updating </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+         </apex:facet>
+    </apex:actionStatus>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection id="cardMethodEntryPanel" title="Cardholder Information" columns="1">
+
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c == null}">
+  <apex:actionSupport event="onchange" action="{!loadContact}" />
+</apex:inputField>
+<apex:outputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c <> null}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_First_Name__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Last_Name__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Street__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_City__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_State__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Postal_Code__c}"/>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="{!$ObjectType.pymt__Payment_Method__c.fields.pymt__Billing_Country__c.Label}"/>
+<apex:selectList value="{!tempPaymentMethod.pymt__Billing_Country__c}" size="1" multiselect="false">
+    <apex:selectOptions value="{!countryPicklistOptions}"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Email__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Phone__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Card_Type__c}"/>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Card Number"/>
+    <apex:inputText value="{!cardNumber}"   id="cardMethodCardNumber"  />
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Card Expiration"/>
+    <apex:outputPanel layout="inline" >
+    <apex:selectList size="1" multiselect="false"  value="{!expMonth}">
+        <apex:selectOptions value="{!expMonthOptions}"/>
+    </apex:selectList>
+    &nbsp;
+    <apex:selectList size="1" multiselect="false" id="cardMethodExpYear" value="{!expYear}">
+        <apex:selectOptions value="{!expYearOptions}"/>
+    </apex:selectList>
+
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!makeDefaultMethod}"/>&nbsp;Make this the contact's default billing payment method.
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+<!--  ========================================================================================================== -->
+<apex:pageBlock title="Add Bank Account" id="bankAcctMethodEntryBlock" rendered="{!showBankAcctPanel}" mode="edit">
+<apex:pageBlockButtons >
+    <apex:commandButton value="Cancel" action="{!cancelFromPage}" immediate="true"/>
+
+    <apex:commandButton value="Submit" action="{!addBankAccount}"/>
+    <apex:actionStatus id="bankAcctFormActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             &nbsp;Updating </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+         </apex:facet>
+    </apex:actionStatus>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection id="bankAcctMethodEntryPanel" title="Account Information" columns="1">
+
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c == null}">
+  <apex:actionSupport event="onchange" action="{!loadContact}" />
+</apex:inputField>
+<apex:outputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c <> null}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_First_Name__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Last_Name__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Street__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_City__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_State__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Postal_Code__c}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="{!$ObjectType.pymt__Payment_Method__c.fields.pymt__Billing_Country__c.Label}"/>
+<apex:selectList value="{!tempPaymentMethod.pymt__Billing_Country__c}" size="1" multiselect="false">
+    <apex:selectOptions value="{!countryPicklistOptions}"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Email__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Phone__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__ACH_Trans_Type__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Account_Type__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Bank_Name__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Bank_Account_Name__c}"/>
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Routing_Number__c}"/>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Bank Account Number"/>
+    <apex:inputText value="{!bankAccountNumber}"   id="bankAcctMethodBankAccountNumber"  />
+</apex:pageBlockSectionItem>
+
+
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!makeDefaultMethod}"/>&nbsp;Make this the contact's default billing payment method.
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+<!--  ========================================================================================================== -->
+<apex:pageBlock title="Add PayPal Transaction Reference Profile" id="payPalEntryBlock" rendered="{!showPayPalPanel}" mode="edit">
+<apex:pageBlockButtons >
+    <apex:commandButton value="Cancel" action="{!cancelFromPage}" immediate="true"/>
+
+    <apex:commandButton value="Submit" action="{!addPayPalProfile}" disabled="{!NOT(recentPayPalTransactionCount >0)}"/>
+    <apex:actionStatus id="payPalFormActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             &nbsp;Updating </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+         </apex:facet>
+    </apex:actionStatus>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection id="payPalEntryPanel" title="Referenced Transaction" columns="1">
+
+
+<apex:inputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c == null}">
+    <apex:actionSupport event="onchange" action="{!loadContact}" id="payPalContactLookupChange" status="payPalProfileConnectionListStatus" rerender="payPalEntryBlock" />
+</apex:inputField>
+<apex:outputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c <> null}"/>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Processor Connection"  />
+    <apex:outputPanel >
+
+        <apex:selectList size="1" multiselect="false" value="{!selectedPayPalConnection}" id="payPalConnectionOptions" >
+            <apex:actionSupport event="onchange" action="{!payPalProcessorSelectionChanged}" id="payPalProcessorIdChange" status="payPalProfileConnectionListStatus" rerender="payPalEntryBlock"/>
+            <apex:selectOptions value="{!payPalConnectionOptions}" />
+        </apex:selectList>
+            <apex:actionStatus id="payPalProfileConnectionListStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+
+         </apex:facet>
+    </apex:actionStatus>
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Recent PayPal Transactions"/>
+    <apex:outputpanel layout="none" >
+    <apex:selectList size="1" multiselect="false" value="{!selectedPayPalTransaction}" rendered="{!(recentPayPalTransactionCount >0)}">
+        <apex:selectOptions value="{!recentPayPalTransactionOptions}"/>
+        <apex:actionSupport event="onchange" action="{!selectedPayPalTransactionChanged}" rerender="payPalEntryBlock" status="payPalFormActionStatus" />
+    </apex:selectList>
+    <apex:outputText value="No recent PayPal transactions found for this contact." rendered="{!NOT(recentPayPalTransactionCount >0)}"/>
+    </apex:outputpanel>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!tempPaymentMethod.Name}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_First_Name__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Last_Name__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Street__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_City__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_State__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Postal_Code__c}"/>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="{!$ObjectType.pymt__Payment_Method__c.fields.pymt__Billing_Country__c.Label}"/>
+<apex:selectList value="{!tempPaymentMethod.pymt__Billing_Country__c}" size="1" multiselect="false">
+    <apex:selectOptions value="{!countryPicklistOptions}"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Email__c}"/>
+<apex:inputField value="{!tempPaymentMethod.pymt__Billing_Phone__c}"/>
+<apex:outputField value="{!tempPaymentMethod.pymt__Card_Type__c}"/>
+<apex:outputField value="{!tempPaymentMethod.pymt__Last_4_Digits__c}"/>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!makeDefaultMethod}"/>&nbsp;Make this the contact's default billing payment method.
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+
+<!--  ========================================================================================================== -->
+<apex:pageBlock title="Add eWay Customer Profile" id="eWayProfileEntryBlock" rendered="{!showEWayPanel}" mode="edit">
+<apex:pageBlockButtons >
+    <apex:commandButton value="Cancel" action="{!cancelFromPage}"  immediate="true"/>
+    <apex:commandButton value="Submit" action="{!addEWayProfile}" status="eWayProfileFormActionStatus"/>
+    <apex:actionStatus id="eWayProfileFormActionStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             &nbsp;Updating </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+         </apex:facet>
+    </apex:actionStatus>
+</apex:pageBlockButtons>
+
+<apex:actionRegion >
+<apex:pageBlockSection id="eWayProfileEntryPanel" title="Customer Profile"  columns="1">
+    <apex:inputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c == null}">
+    <apex:actionSupport event="onchange" action="{!loadContact}" id="eWayContactLookupChange" status="eWayProfileConnectionListStatus" rerender="eWayProfileEntryBlock"  />
+</apex:inputField>
+    <apex:outputField value="{!tempPaymentMethod.pymt__Contact__c}" rendered="{!tempPaymentMethod.pymt__Contact__c <> null}"/>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Processor Connection"  />
+    <apex:outputPanel >
+
+        <apex:selectList size="1" multiselect="false" value="{!selectedEWayConnection}" id="eWayConnectionOptions" >
+            <apex:actionSupport event="onchange" action="{!eWayProcessorSelectionChanged}" id="eWayProcessorIdChange" status="eWayProfileConnectionListStatus" rerender="eWayProfileEntryBlock"/>
+            <apex:selectOptions value="{!eWayConnectionOptions}" />
+        </apex:selectList>
+            <apex:actionStatus id="eWayProfileConnectionListStatus" >
+         <apex:facet name="start" >
+           <apex:outputPanel >&nbsp;
+             <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"  style="vertical-align:top;" alt="busy..." />
+             </apex:outputPanel>
+         </apex:facet>
+         <apex:facet name="stop">
+           <apex:image value="{!URLFOR('/s.gif')}"  alt="" style="height:12px;" />
+
+         </apex:facet>
+    </apex:actionStatus>
+    </apex:outputPanel>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+</apex:actionRegion>
+
+<apex:pageBlockSection columns="1">
+<apex:inputField value="{!contact.Salutation}"/>
+
+<apex:inputField value="{!contact.FirstName}"  />
+
+<apex:inputField value="{!contact.LastName}"  />
+
+<apex:inputField value="{!contact.email}"  />
+
+<apex:inputField value="{!contact.MailingStreet}"  />
+
+<apex:inputField value="{!contact.MailingCity}"  />
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="{!$ObjectType.pymt__Payment_Method__c.fields.pymt__Billing_Country__c.Label}"/>
+<apex:selectList value="{!contact.MailingCountry}" size="1" multiselect="false">
+    <apex:selectOptions value="{!countryPicklistOptions}"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:inputField value="{!contact.MailingState}"  />
+
+<apex:inputField value="{!contact.MailingPostalCode}"  />
+
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Comments"  />
+    <apex:inputTextArea value="{!profileComments}"/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Card Type" />
+<apex:selectList size="1" multiselect="false" value="{!cardType}">
+    <apex:selectOption itemValue="Visa" itemLabel="Visa"/>
+    <apex:selectOption itemValue="Mastercard" itemLabel="Mastercard"/>
+    <apex:selectOption itemValue="Amex" itemLabel="American Express"/>
+    <apex:selectOption itemValue="Discover" itemLabel="Discover"/>
+</apex:selectList>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Card Number" />
+    <apex:inputText value="{!cardNumber}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+    <apex:outputLabel value="Card Code" />
+    <apex:inputText value="{!cardCode}"/>
+</apex:pageBlockSectionItem>
+
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="Card Expiration" />
+<apex:outputPanel layout="inline" >
+<apex:selectList size="1" multiselect="false" value="{!expMonth}">
+    <apex:selectOptions value="{!expMonthOptions}" />
+</apex:selectList>
+&nbsp;
+<apex:selectList size="1" multiselect="false" value="{!expYear}">
+    <apex:selectOptions value="{!expYearOptions}"/>
+</apex:selectList>
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText value=""/>
+<apex:outputPanel >
+<apex:inputCheckbox value="{!makeDefaultMethod}"/>&nbsp;Make this the contact's default billing payment method.
+</apex:outputPanel>
+</apex:pageBlockSectionItem>
+
+
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+</apex:form>
+
+
+</apex:page>

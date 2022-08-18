@@ -1,0 +1,741 @@
+<apex:page sidebar="false" controller="VisualAntidote.SubmissionDetailController" action="{!validateUserLicense}" >
+    <apex:remoteObjects jsNamespace="formSubmissionDetail">
+            <apex:remoteObjectModel name="VisualAntidote__Form_Submission__c" jsShorthand="submittedData" fields="Id,VisualAntidote__Submission__c,VisualAntidote__Submitted_Data_XML__c">  
+            </apex:remoteObjectModel> 
+        </apex:remoteObjects>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge;" />     
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <!-- base.resource includes: JS Files [select2.min.js,jquery-ui.min.js,jquery-migrate.min.js,jquery-ui-timepicker-addon.min.js,bootstrap.min.js,secure-filters.min.js,html-encoder.min.js,common-helper.min.js] CSS files [select2.min.css,select2-custom.min.css,jquery-ui.min.css,jquery-ui-theme-smoothness.min.css,jquery-ui-timepicker-addon.min.css,app_main.min.css] -->
+        <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__Base,'base.min.js')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__Base,'style/base.min.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__fs_assets, 'pages/submission-detail.min.css')}" />
+        <!-- base.resource -->
+        <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__ffcommon,'scripts/bootstrap.min.js')}" />
+        <link rel="stylesheet" href="{!URLFOR($Resource.ffcommon,'styles/fscommon.min.css')}" /> 
+            <script src="{!URLFOR($Resource.FFCKEditor,'ckeditor.js')}"></script>
+        <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__SubmissionDetail, 'submissionDetail.min.js')}" />
+        <!-- Begin Default Content   -->
+        
+        <style>
+            .fastformiframeWrapper{
+            max-width: 100%;
+            }
+            .tab-pane.fsd-view-content{
+            margin-bottom: 20px;
+            }
+            .inline-block{
+            display: inline-block;
+            }
+            .fsheader-wrapper-inner {
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(8,52,80,.15);
+            border: 1px solid #E0E0E0;
+            }
+            span.status-msg, span.e-status-msg {
+            margin-right: 20px;
+            vertical-align: top;
+            }
+            
+            .dv-header-row,.dv-content-row {
+            display: table-row;  
+            
+            }
+            @keyframes highlightWhiteToLightYellow {
+            0%  {background-color: #ffffff;}
+            20% {background-color: #fffcf3;}
+            80% {background-color: #fffcf3;}
+            100%  {background-color: #ffffff;}
+            }
+            
+            .dv-content-row {
+            background-color: #ffffff;
+            
+            }
+            .dv-content-row.added-unmapped ,.dv-content-row.updated-mapped{
+            animation-name:highlightWhiteToLightYellow;   
+            animation-duration: 3s;  
+            }
+            .dv-header-row { 
+            background-color: #f1f6f8;   
+            }
+            .dv-th{
+            text-align: center;
+            }
+            .dv-th, .dv-td {
+            display: table-cell;
+            
+            }
+            .dv-td {
+            border-top: 1px solid #c4d5e0 !important;
+            vertical-align: middle;
+            }
+            .f-status {
+            width: 150px;
+            }
+            .f-obj {
+            padding-left: 30px;
+            padding-left:30px;
+            }
+            
+            .dv-th span.dv-title {
+            color: #052942;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 20px 10px;
+            display: inline-block;
+            }
+            .dv-th{
+            width:30%;
+            }
+            .dv-th.f-icons{
+            width:10%;
+            }
+            .dv-td span.dv-text {
+            color: #616161;
+            font-size: 15px;
+            padding: 20px 10px;
+            display: inline-block;
+            }
+            .dv-td.f-fieldname {
+            padding-left: 20px;
+            }
+            .dv-td.f-icons .dv-text {
+            float: right;
+            }
+            .dv-td.f-values span.dv-text{
+            width:100%;
+            }
+            .dv-td span.field-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            color: #cbcbcb;
+            }
+            .dv-td span.field-icon.ic-picklist,.dv-td span.field-icon.ic-multipicklist,.dv-td span.field-icon.ic-date,
+            .dv-td span.field-icon.ic-boolean,.dv-td span.field-icon.ic-lookup,.dv-td span.field-icon.ic-reference{
+            background-image:  url("{!URLFOR($Resource.ffcommon,'addash/addash_sprites_v1.png')}"); 
+            background-position: -284px -240px;
+            background-repeat: no-repeat;
+            text-indent: -9999px;
+            }
+            .dv-td span.field-icon.ic-boolean{
+            width: 18px;
+            height: 18px;
+            background-position: -212px -165px;
+            border: 1px solid #cbcbcb;
+            background-repeat: no-repeat;
+            border-radius: 3px;
+            }
+            .dv-td span.field-icon.ic-reference {
+            background-position: -382px -204px ;
+            }
+            .dv-td span.field-icon.ic-date {
+            background-position:-347px -270px
+            }
+            
+            .dv-td input.ff-input-text,
+            .dv-td .ff-input-textarea{
+            font-family: 'Poppins';
+            border-width: 1px;
+            border-color: rgb( 176, 184, 189 );
+            border-style: solid;
+            border-radius: 5px; 
+            max-width: 317px;
+            max-height: 34px;
+            padding: 8px;
+            width:80%;
+            font-size: 14px;
+            color: #616161; 
+            }
+            .dv-content-row.fs-failed {
+            background-color: #e59299;
+            }
+            .dv-content-row.fs-failed .dv-td span.dv-text{
+            color: #ffffff; 
+            }
+            .dv-content-row.fs-discarded , .dv-content-row.fs-discarded  .dv-td span.dv-text{
+            color: #bababa;
+            font-style: italic;
+            }
+            .dv-content-row.fs-discarded .dv-td.f-values input,.dv-content-row.fs-discarded .dv-td.f-values textarea {
+            background-color: #f7f8fa; color: #bababa;
+            font-style: italic;
+            pointer-events:none;
+            }
+            .dv-content-row.fs-failed .dv-td span.field-icon.ic-picklist,
+            .dv-content-row.fs-failed .dv-td span.field-icon.ic-multipicklist {
+            background-position: -284px -267px;
+            }
+            
+            .dv-content-row.fs-failed .dv-td span.field-icon.ic-reference {
+            background-position: -438px -204px;
+            }
+            .dv-content-row.fs-failed .dv-td span.field-icon.ic-boolean{
+            
+            background-position: -187px -165px;
+            border: 1px solid #ffffff; 
+            border-radius: 3px;
+            }
+            span.ff-invalid-msg {
+            color: red;clear: both;
+            display:block;
+            }
+            span.ff-required {color:#33aefd;  margin-left:5px;  }
+            .fs-failed span.ff-invalid-msg ,
+            .fs-failed  span.ff-required,
+            .fs-failed   .dv-td span.field-icon {
+            color: #ffffff; 
+            }
+            .pointerevents input,.pointerevents textarea ,.pointerevents  .vabutton1,.pointerevents  .vabutton2{
+            pointer-events:none !important;
+            background-color: #f7f8fa ;
+            color:#bababa;
+            }
+            .pointerevents  .vabutton1,.pointerevents  .vabutton2{
+            border-color:#bababa;
+            }
+            .unmapped-placeholder {
+            margin-bottom: 28px;
+            }
+            .unmapped-table .vabutton2{
+            width:58px;
+            margin-right:10px;
+            }
+            .dvcontent-row span.ff-required {
+            color: #33AEFD;
+            margin-left: 5px;
+            }
+            .dv-action-wrapper{
+            padding:0px 0px 18px 0px;
+            overflow: hidden;    min-height: 40px;
+            }
+            .dv-action-buttons {
+            width:40%;display: inline-block;
+            vertical-align: top;
+            }
+            .dv-action-buttons .vabutton1 ,.dv-action-buttons .vabutton2{
+            margin-right:10px;
+            }
+            .dv-h-title{
+            padding-bottom: 12px;    display: block;    color: #9ea6ad;
+            }
+            
+            .btnSaveAndResubmit span.btnIcon {
+            background-position: -187px -165px;
+            }
+            .btnRevert span.btnIcon {
+            background-position: -392px -240px;
+            
+            }
+            .btnRevert.va-disabled span.btnIcon {
+            background-position:-347px -240px;
+            }
+            .mapping-wrapper select.select-elem,
+            .mapping-wrapper .select2-container.select-elem{
+            width:300px;
+            }
+            /*select2 css starts*/
+            .select2-container .select2-choice{
+            border-color: #a3a3a3 ;
+            background-color: #fff ;
+            background-image: none ;
+            height: 34px ;
+            }
+            .select2-container.select2-dropdown-open .select2-choice{
+            border-color: #33AEFD  ;
+            }
+            .select2-container .select2-choice > .select2-chosen{margin-top: 2px;
+            background-color: #fff !important;
+            color: #052942;
+            font-size: 14px;
+            font-family: 'Poppins';
+            padding: 2px;}
+            .select2-results li.FieldOption,
+            .select2-results li.PageOption {
+            background-color:#ffffff !important;
+            border-top:1px solid #93d4fe;
+            }
+            
+            .select2-results li.SectionOption
+            {
+            border-top:1px solid #93d4fe; ; 
+            background-color:#f1f6f8 !important;
+            }
+            .select2-results li.SectionOption .select2-result-selectable{
+            border-color:#f1f6f8 ;
+            }
+            .select2-results .select2-result-selectable{
+            color:#616161;
+            }
+            
+            .select2-results li.select2-result-with-children > .select2-result-label{
+            color:#b2b5b6;
+            font-size:18px;
+            }
+            .select2-container .select2-choice .select2-arrow {
+            display: block;
+            width: 25px !important;
+            background-image: none !important;
+            border-left-width: 0px !important;
+            background-color: #ffffff !important;
+            }
+            .select2-container .select2-choice .select2-arrow b {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: url("{!URLFOR($Resource.ffcommon,'addash/addash_sprites_v1.png')}");
+            background-repeat:no-repeat;
+            background-position: -67px -229px ;
+            }
+            .select2-container.select2-dropdown-open .select2-choice .select2-arrow b {
+            background-position:  -13px -229px ;
+            }
+            
+            
+            .select2-results li.select2-result-with-children.FieldOption 
+            {
+            border-left:0px !important; 
+            }
+            
+            .select2-results li.select2-result-with-children.FieldOption.A .select2-highlighted{
+            border-left: 10px solid #d9217d !important;
+            }
+            .select2-results li.select2-result-with-children.FieldOption.B .select2-highlighted{
+            border-left: 10px solid #00cc00 !important;
+            }
+            .select2-results li.select2-result-with-children.FieldOption.C .select2-highlighted{
+            border-left: 10px solid #7d21d9 !important;
+            }
+            
+            .select2-results li.select2-result-with-children.FieldOption.D .select2-highlighted{
+            border-left: 10px solid #d39f02 !important;
+            } 
+            .select2-results li.select2-result-with-children.FieldOption.E .select2-highlighted{
+            border-left: 10px solid #f54028 !important;
+            } 
+            .select2-results li.select2-result-with-children.FieldOption.F .select2-highlighted{
+            border-left: 10px solid #2121d9 !important;
+            } 
+            .select2-results li.select2-result-with-children.FieldOption.G .select2-highlighted{
+            border-left: 10px solid #d0601d !important;
+            }
+            .select2-results li.select2-result-with-children.FieldOption.H .select2-highlighted{
+            border-left: 10px solid #d921d9 !important;
+            }
+            .select2-results li.select2-result-with-children.FieldOption.I .select2-highlighted{
+            border-left: 10px solid #159215 !important;
+            }
+            
+            .select2-results li span.is-r {
+            /*for required fileds*/
+            
+            }
+            
+            /*select2 css ends*/
+            .form-view-header {
+            width: 800px;
+            margin: 10px auto 6px auto;
+            
+            min-height:45px;
+            }
+            .form-view-nav-wrapper{
+            width:100%;
+            display: table;
+            }
+            .form-view-note {
+            display: table-cell;
+            vertical-align: middle;
+            font-size: 14px;
+            }
+            .nav-pills.form-view-nav {
+            display: table-cell;
+            text-align: right;
+            }
+            .fsd-view-tabs{
+            float:right;
+            }
+            
+            #formViewLoadingDiv{ max-width: 100%;
+            float:none;}
+            /*Native changes to css*/
+            #fsd-fcurrent input,#fsd-fcurrent select,#fsd-fcurrent textarea,#fsd-fcurrent button,
+            #fsd-fsubmitted input,#fsd-fsubmitted select,#fsd-fsubmitted textarea,#fsd-fsubmitted button{
+            pointer-events: none;
+            } 
+            
+            /*Native changes to css ends*/
+            
+            .mainHeader{
+            overflow: hidden;    
+            }
+            
+            
+            .tab-message-box {
+            display: none;
+            width: 100%;
+            height: 400px;
+            float: left;
+            text-align: center;
+            display: inline-flex;
+            border: 1px solid #c4d5e0;
+            background-color: #f6f9f9;
+            }
+            
+            .tab-message-box-content {
+            width: 100%;
+            margin: auto;
+            font-family: 'Poppins', 'sans-serif';
+            font-size: 20px;
+            color: #616161;
+            }
+            
+        </style>
+        <!--  PAGE HTML STARTS-->
+        <div class="FastFormsWrapper">
+            <c:FFAlertTopMessage ></c:FFAlertTopMessage> 
+            <div class="mainHeader">
+                <div class="mainHeaderInner">
+                    <div id="react-top-tab-menu"></div>
+                    <div style=" ">
+                        
+                        <div style=" ">
+                            
+                            <div class="bread-crumb">
+                                <div class="bread-crumb navbar">
+                                    <div class="navbar-inner">
+                                        <div class="navcontainer">
+                                            <ul class="nav-wizard">
+                                                <li>
+                                                    <a class="vfns-link" href="/apex/SubmissionDashboard" id="breadcrumb-dashboard">Form Submissions</a>
+                                                </li>
+                                                
+                                                <li class="li-arrow-seperator"></li>
+                                                <li class="active">
+                                                    <span   style="padding: 0px 0px 0px 20px;"><span id="submissionName">
+                                                        </span></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div> 
+                        
+                    </div>
+                    <apex:outputPanel layout="block" style="float: right;line-height:0px;" rendered="{!IF((packageTier=='NativeCloud'),true,false)}">
+                        <div class="fs-style ff-logo-box">
+                            <div class="fs-ff-logo">
+                                <img alt="Formstack NativeCloud" title="Formstack NativeCloud" src="{!URLFOR($Resource.logos,'native-cloud-fs.png')}" height="51" />
+                            </div>
+                        </div>                    
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" style="float: right;line-height:0px;" rendered="{!IF((packageTier=='NativeCloud'),false,true)}">
+                        <div class="fs-style ff-logo-box">
+                            <div class="ff-logo">
+                                <img src="{!URLFOR($Resource.logos,'color_logo_only_fs.png')}" class="fs-logo-img" />
+                            </div>    
+                        </div>                    
+                    </apex:outputPanel>        
+                    
+                                
+                </div>
+                
+                
+            </div>
+            <div class="header-messages">
+                <div style="width: 80%;float:left;" class="text-align-center">
+                    <div  style="width: 80%;margin: 0px auto;">
+                        <div class="vff-success " id="successActionBox" style="display: none;">
+                            
+                            <div class="vff-success-msg msg-text-div" onclick="window.closeNotification(this);" > </div>
+                        </div>
+                        <div class="vff-alert" id="errorActionBox" style="display: none;">
+                            
+                            <div class="vff-alert-msg msg-text-div" onclick="window.closeNotification(this);" > </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="delete-submission">
+                    <div class="btnDelete vabutton4" onclick="fs.SBD.deleteSubmission(this);return false;">
+                        <span class="btnText">Delete submission</span>
+                    </div>
+                </div>
+            </div>
+            <div class="fsheader-wrapper-detail-outer"  >
+                <div class="fsheader-wrapper ">
+                    <div id="mainSubmissionDetailBox" class="fsheader-wrapper-inner">
+                        <div class="fsd-detail-row">
+                            <div class="fsd-rcol-1 col-id">
+                                <div class="fsd-col-1"><span class="fsd-title">Id</span></div><div class="fsd-col-2"><span class="fsd-value"></span></div>
+                            </div>
+                            <div class="fsd-rcol-2 col-form">
+                                <div class="fsd-col-1">
+                                    <span class="fsd-title">Form</span>
+                                </div>
+                                <div class="fsd-col-2">
+                                    <span class="fsd-value"></span>
+                                </div>
+                                <div class="fsd-col-2-entire-row community-field community-tag" style="display: none;">
+                                    <span class="community-badge first">Community Form</span>
+                                    <span class="community-badge">{!IF(CM_RecordOwner == 'Admin','Formstack Admin','Logged-In User')}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fsd-detail-row ">
+                            <div class="fsd-rcol-1 col-submitted">
+                                <div class="fsd-col-1"><span class="fsd-title">Submitted</span></div><div class="fsd-col-2"><span class="fsd-value"></span></div>
+                            </div>
+                            <div class="fsd-rcol-2 col-ipaddress">
+                                <div class="fsd-col-1"><span class="fsd-title">IP Address</span></div><div class="fsd-col-2"><span class="fsd-value"></span></div>
+                            </div>
+                        </div>
+                        <div class="fsd-detail-row">
+                            <div class="fsd-rcol-1 col-objects">
+                                <div class="fsd-col-1"><span class="fsd-title">Objects</span></div><div class="fsd-col-2"><span class="fsd-value"></span></div>
+                            </div>
+                            <div class="fsd-rcol-2 col-record">
+                                <div class="fsd-col-1"><span class="fsd-title">Record</span></div><div class="fsd-col-2"><span class="fsd-value"></span></div>
+                            </div>
+                        </div>
+                        <div class="fsd-detail-row">
+                            <div class="fsd-rcol-1 col-esign">
+                                <div class="fsd-col-1"><span class="fsd-title">E-Signature</span></div><div class="fsd-col-2"><span class="fsd-value"></span></div>
+                            </div>
+                            <div class="fsd-rcol-2 col-status">
+                                <div class="fsd-col-1">
+                                    <span class="fsd-title">Status</span>
+                                </div>
+                                <div class="fsd-col-2">
+                                    <span class="fsd-value"></span>
+                                    <div class="pt20">
+                                        <div class="btnResubmit vabutton1 va-disabled" onclick="fs.SBD.resubmitSubmission(this);return false;">
+                                            <span class="btnIcon"></span><span class="btnText">Resubmit</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fsd-col-entire-row community-field community-box-message" style="display: none;">
+                                    <span class="alert-icon"></span>
+                                    <span class="community-alert"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fsheader-wrapper-inner-expanded">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="fscontent-wrapper"  >
+                
+                <div class="nav-pills "><ul class="nav nav-tabs fsd-details-tabs">
+                    <li class="fsd-details-tab fsd-form-view-li active"><a aria-controls="fsd-form-view" data-toggle="tab" href="#fsd-form-view" id="fsdformview"  onclick="fs.SBD.toggleSubmissionTab(this,false)" role="tab"><span class="tab-icon"></span><span class="tab-title">Form Preview</span></a></li>
+                    <li class="fsd-details-tab fsd-data-view-li"><a aria-controls="fsd-data-view" data-toggle="tab" href="#fsd-data-view" id="fsddataview"  onclick="fs.SBD.toggleSubmissionTab(this,false)" role="tab"><span class="tab-icon"></span><span class="tab-title">Submitted Values <i class="submit-change" style="display:none">*</i></span></a></li>
+                    <li class="fsd-details-tab  fsd-objects-records-li"><a aria-controls="fsd-objects-records" data-toggle="tab" href="#fsd-objects-records" id="fsdobjectsrecords"  onclick="fs.SBD.toggleSubmissionTab(this,false)"  role="tab"><span class="tab-icon"></span><span class="tab-title">Objects and Records</span></a></li></ul>
+                </div>
+                
+                <div class="tab-pane fade in fsd-details-content active" id="fsd-form-view">
+                    <div class="fsd-main-content-holder display-table">
+                        <div class="form-view-header">
+                            <div class="form-view-nav-wrapper" style="display:none">
+                                <div class="form-view-note">This form has been changed after this submission. Which form you would like to see.</div>
+                                <div class="nav-pills form-view-nav"><ul class="nav nav-tabs fsd-view-tabs">
+                                    
+                                    <li class="fsd-view-tab fsd-fsubmitted-li "><a aria-controls="fsd-fsubmitted" data-toggle="tab" href="#fsd-fsubmitted"  id="fsdfsubmitted"   onclick="fs.SBD.toggleFormViewTab(this)" role="tab"><span class="tab-title">Original</span></a></li><li class="fsd-view-tab  fsd-fcurrent-li active"><a aria-controls="fsd-fcurrent" data-toggle="tab" href="#fsd-fcurrent"  id="fsdfcurrent"  onclick="fs.SBD.toggleFormViewTab(this)"  role="tab"><span class="tab-title">Current</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="formViewLoadingDiv" style="display:none">
+                                <div class="load-status-small"> <div class="dialogSmall"></div><div class="primary">Loading, please wait...</div></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade in fsd-view-content active" id="fsd-fcurrent">
+                            <div id="currentFormViewDiv">
+                                <div id="currentFormiframeWrapper" class="fastformiframeWrapper">
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="tab-pane fsd-view-content " id="fsd-fsubmitted">
+                            <div id="submittedFormViewDiv">
+                                <div id="originalFormiframeWrapper" class="fastformiframeWrapper">
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tab-pane fsd-details-content" id="fsd-data-view">
+                    <div class="fsd-main-content-holder display-table">
+                        <div class="fscontent-wrapper-inner">
+                            <div class="dv-action-wrapper">
+                                <div class="dv-action-buttons">
+                                    <div class="btnSaveAndResubmit vabutton1 va-disabled" onclick="fs.SBD.saveAndResubmitSubmission(this);return false;"  >
+                                        <span class="btnIcon"></span><span class="btnText">Save and Resubmit</span>
+                                    </div>
+                                    <div class="btnRevert vabutton2 va-disabled" onclick="fs.SBD.revertChanges(this);return false;"  >
+                                        <span class="btnIcon"></span><span class="btnText">Revert</span>
+                                    </div>
+                                </div>
+                                <div id="dataViewLoadingDiv" class="inline-block" style="display: none;">
+                                    <div class="load-status-small"> <div class="dialogSmall"></div><div class="primary">Loading please wait... </div></div>
+                                </div>
+                            </div>
+                            <div class="unmapped-placeholder" style="display:none">
+                                <h3 class="dv-h-title">Missing Form Fields</h3>
+                            </div>
+
+                            <div id="FieldsTableContainer" >
+                                <div class="TableContaine" style="display:none">
+                                    <h3 class="dv-h-title fieldsLabelName" ></h3>
+                                    <div  class="fscontent-table">
+                                        <div class="dv-header-row">
+                                            <div class="dv-th f-fieldname"><span class="dv-title">Field Name</span></div>
+                                            <div class="dv-th f-apiname"><span class="dv-title">API Name</span></div>
+                                            <div class="dv-th f-icons"><span class="dv-title">&nbsp;</span></div>
+                                            <div class="dv-th f-values"><span class="dv-title">Values</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear:both">
+                            <div class="vff-alert vff-w-close" style="display:none" >
+                                <div class="vff-alert-msg msg-text-div"  ></div><span class="vff-close-icon" onclick="window.closeNotification(this)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fsd-details-content" id="fsd-objects-records"><div class="fsd-main-content-holder display-table">
+                    <div class="fscontent-wrapper-inner">
+                        <div  id="oarContentTable" class="fscontent-table">
+                            <div class="oar-header-row">
+                                <div class="oar-th f-obj"><span class="oar-title">Object</span></div>
+                                <div class="oar-th f-status"><span class="oar-title">Status</span></div>
+                                <div class="oar-th f-msg"><span class="oar-title">Message</span></div>
+                                <div class="oar-th f-rec"><span class="oar-title">Record</span></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    </div></div>
+            </div>
+            
+            <div style="display:none">
+                <div id="UnmappedContentTableHTML">
+                    <div class="fscontent-table unmapped-table" id="dvUnmappedContentTable"><div class="dv-header-row"><div class="dv-th f-fieldname"><span class="dv-title">Original Field Name</span></div><div class="dv-th f-apiname"><span class="dv-title">Mapping</span></div><div class="dv-th f-icons"><span class="dv-title">&nbsp;</span></div><div class="dv-th f-values"><span class="dv-title">Value</span></div></div></div></div>
+                
+                <div id="MappingBoxHTML">
+                    <div class="mapBox" style="display:none">
+                        
+                        <div class="vabutton2" onclick="fs.SBD.showMappingOptions(this);"><span class="btnText">Map</span></div><div class="vabutton2" onclick="fs.SBD.deletUnmappedField(this);"><span class="btnText">Delete</span></div></div>
+                    <div class="addBox"  style="display:none">
+                        <div class="clear-both" style="margin-bottom:10px;">
+                            <div class="field-list-display-box tw-w-80"></div>
+                        </div>
+                        <div class="vabutton2" onclick="fs.SBD.addUnmappedField(this);"><span class="btnText">Add</span></div><div class="vabutton2"  onclick="fs.SBD.cancelUnmappedField(this);"><span class="btnText">Cancel</span></div></div>
+                </div>
+                <div id="VAButton2HTML">
+                    <div class="vabutton2"  >
+                        <span class="btnText"></span><span class="btnIcon"></span>
+                    </div>
+                </div>
+                <div id="VAButton1HTML">
+                    <div class="vabutton1"  >
+                        <span class="btnText"></span><span class="btnIcon"></span>
+                    </div>
+                </div>
+                <div id="EmailTemplate">
+                    <div style="width:75%; font-family:'Poppins','Sans Serif';">
+                        <div><img src="{!URLFOR($Resource.ffcommon,'images/Formstack_For_Salesforce_256x29.png')}" alt="Formstack for Salesforce" width="40%" /></div>
+                        <br />
+                        <div>Hello,<br />
+                            <br />
+                            <div>You recently filled out and submitted a form for which you provided a signature.</div>
+                            <div>Please click the link below to verify your email address and complete your submission:</div><br />
+                            
+                            [[verifyLink|Verify Email]]
+                            
+                            <div>If any of this information is incorrect, you may disregard this message or <a href="mailto:sfappsupport@formstack.com">contact support</a> for more information.</div>
+                            <br/>
+                            <br/>
+                            <div>Thank you,<br />
+                                <div>The Formstack team</div></div></div></div></div>
+            </div>
+            
+        </div>
+        <c:DeskChatComponent ></c:DeskChatComponent>
+        <c:Pendo ></c:Pendo>
+
+        <!--  PAGE HTML ENDS-->
+        <script  type="text/javascript">
+        window.formsPackageTier='{!packageTier}';
+        window.isFormNative={!isNative};
+        window.isCurrentFormFlagSet=false;
+        window.currentFlagInterval=null;
+        window.primaryObjectName='';
+        window.submissionObjectXML='{!JSENCODE(RelatedObjectsXML)}';
+        window.referenceFieldsArr=[];
+        window.isSubmittedValuesTabPopulated=false;
+        window.submittedFieldsArr=[];
+        window.submittedGeneralFieldsArr = [];
+        window.repeatedObjectsArr=[];
+        window.formFieldsArr=[];
+        window.availableFieldsArr=[];
+        window.unmappedFieldsArr=[];
+        window.organisationId='{!$Organization.Id}';
+        window.instanceURL='{!SFInstanceURL}';
+        window.fastFormBaseFormEngineURL= window.getQueryStringSafeURL("{!URLFOR(ffEngineLink)}")+"/"; 
+        window.hostedFormEndpoint=window.fastFormBaseFormEngineURL+'HostedForm/';
+        window.FFCKEditorurlroot="{!URLFOR($Resource.FFCKEditor)}";
+        window.submissionRecID = '{!JSENCODE($CurrentPage.parameters.id)}';
+        window.isCallBackResourceReset=false;
+        window.isCurrentRecIdValid=false;
+        window.SFOrgPrefix='';
+        window.salesforceurl='';
+        
+        window.FF_SF_User_Id = '{!JSENCODE(FSL_userID)}';
+        window.FFUserFullName = '{!JSENCODE(FSL_userName)}';
+        
+        window.IsCommunity = {!IsCommunity};
+        window.CM_ContextUserId='{!JSENCODE(CM_ContextUserId)}';
+        window.CM_ContextUserName = '{!JSENCODE(CM_ContextUserName)}';
+        window.CM_RecordOwner = '{!JSENCODE(CM_RecordOwner)}';
+        window.guestRecordDefaultOwnerId = '{!JSENCODE(GuestRecordDefaultOwnerId)}';
+        window.guestRecordDefaultOwnerName = '{!JSENCODE(GuestRecordDefaultOwnerName)}';
+
+        $(document).ready(function(){
+            console.log('[FORM][Loading] Start');
+            
+            window.salesforceurl=window.UserContext.salesforceurl;
+            
+            var ffcommonUrl="{!URLFOR($Resource.ffcommon)}";
+            if(ffcommonUrl.toLowerCase().indexOf('visualantidote__')>0){
+                window.SFOrgPrefix='VisualAntidote__';
+            }
+            fs.SBD.setLookupAndChildRefFields(window.submissionObjectXML);
+            fs.SBD.getSubmissionInfoJS(1,false);
+            window.resetFastFormsHREFLinks('.bread-crumb',window.SFOrgPrefix);
+        });
+   window.REMOTE_ACTIONS = {
+     remoteGetSubmissionInfo: '{!URLENCODE($RemoteAction.SubmissionDetailController.remoteGetSubmissionInfo)}',
+     remoteGetFormSubmissionInfoList:'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteGetFormSubmissionInfoList)}',
+    'remoteGetSubmissionInfoForFormView':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteGetSubmissionInfoForFormView)}',
+    'remoteNativeResubmit':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteNativeResubmit)}',
+    'remoteResubmitCallout':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteResubmitCallout)}',
+    'remoteDeleteSubmission':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteDeleteSubmission)}',
+     'remoteGetSignatureLog':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteGetSignatureLog)}',
+     'remoteResendEmailVerification':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteResendEmailVerification)}',
+     'remoteGetFSInfoForErrorListing':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteGetFSInfoForErrorListing)}',
+     'remoteFastFormsPost':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteFastFormsPost)}',
+     'remoteResubmitNativeModifiedForm':'{!URLENCODE($RemoteAction.SubmissionDetailController.remoteResubmitNativeModifiedForm)}',
+    'getOnlyAvailableFieldsFromForm':'{!URLENCODE($RemoteAction.SubmissionDetailController.getOnlyAvailableFieldsFromForm)}',
+   }
+    
+    </script>
+    <!-- End Default Content  -->
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__fs_assets,'pages/submission-detail.min.js')}" loadOnReady="true" />
+</apex:page>

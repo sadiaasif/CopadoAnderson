@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>OWNER</field>
+    </columns>
+    <columns>
+        <field>CREATED</field>
+    </columns>
+    <columns>
+        <field>Lead.pi__created_date__c</field>
+    </columns>
+    <columns>
+        <field>Lead.Campaign__c</field>
+    </columns>
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>COMPANY</field>
+    </columns>
+    <columns>
+        <field>EMAIL</field>
+    </columns>
+    <description>Web Leads by GP Campaign</description>
+    <filter>
+        <booleanFilter>((1) or 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <column>Lead.Grandparent_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Elite,Alpine,Jet Lending,Love American,Start Fund Grow,Rick Brown,Nu Vision,NoradaRealEstate.com,360,1040,calendly,asset,tax,dave,don,jerry,kana,level,structure,gene,titanium,dani,better,vertucci,elite,trade station,live,outback,pat,wealth,rich dad,steve,referral,bigger,mona,lee,neuventure,REIA,Tackle</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Primary_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Elite,Alpine,Jet Lending,Love American,Start Fund Grow,Rick Brown,Nu Vision,NoradaRealEstate.com,360,1040,calendly,asset,tax,dave,don,jerry,kana,level,structure,gene,titanium,dani,better,vertucci,elite,trade station,live,outback,pat,wealth,rich dad,steve,referral,bigger,mona,lee,neuventure,REIA,Tackle</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Lead.Grandparent_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>adwords,website,webinar,internet,Clint Coons Blog,YouTube,Blog,Website</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Grandparent_Campaign__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Primary_Campaign__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Marketing Web Leads Metrics</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>LeadList</reportType>
+    <scope>org</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_LASTMONTH</interval>
+    </timeFrameFilter>
+</Report>

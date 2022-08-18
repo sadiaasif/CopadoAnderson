@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Non_Restricted_Clients</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Non-Restricted Clients</label>
+        <sharedTo>
+            <group>Anderson_Internal_All_Employees</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Restricted_Access_Client__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Restricted_Clients</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Restricted Clients</label>
+        <sharedTo>
+            <group>Access_to_All_Restricted_Clients</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Restricted_Access_Client__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

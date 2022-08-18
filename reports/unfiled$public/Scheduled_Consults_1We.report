@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_36315780</developerName>
+        <masterLabel>Scheduled By</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>Opportunity.Scheduled_By__c</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Amanda Allen</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Brittany Bower</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Cynthia Jones</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Summer Govea</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shenquia Marshall</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Arlysha Lowe</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Samantha Kimes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Samantha Kimes (LEX)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>David Maddox</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Laura Cassani</sourceValue>
+            </sourceValues>
+            <value>Profiler</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Carlos Solis</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Carlos Gutierrez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>David Ramirez</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Andres De La Garza</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Arik Hernandez</sourceValue>
+            </sourceValues>
+            <value>3rd Party</value>
+        </values>
+    </buckets>
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_31832902</developerName>
+        <masterLabel>stage</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>STAGE_NAME</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Fulfillment/Partial Payment</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Closed Won</sourceValue>
+            </sourceValues>
+            <value>Closed</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Qualification</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pending</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Scheduled</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Agreement Sent</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>DocuSign Completed</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dead Lead</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Closed Lost</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Canceled</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined-</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Converted</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Declined</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Refund Requested</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reassigned</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Event - No Consult</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>New Consult</sourceValue>
+            </sourceValues>
+            <value>Open</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ROLLUP_DESCRIPTION</field>
+    </columns>
+    <columns>
+        <field>FULL_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Original_Campaign_Source__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>FISCAL_QUARTER</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Scheduled_By__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AMOUNT</field>
+    </columns>
+    <columns>
+        <field>PROBABILITY</field>
+    </columns>
+    <columns>
+        <field>AGE</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>NEXT_STEP</field>
+    </columns>
+    <columns>
+        <field>LEAD_SOURCE</field>
+    </columns>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Opportunity.Scheduled_By__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Consult_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Scheduled_By__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Harrison,Hernandez,De La Garza,Guerra,Lowe,Bower,Carlos,Markus,Otoo,Kightlinger,Jones,Ramirez,Calvillo,Ray,Jorge,Moody,Davis,Acedo,Kelsie,Holder,Cassani,Lynette,Preseren,Thompson,Sliger,Lazarus,Rafael,Kimes,Leja,Marshall,Fulton,Rojo</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>Opportunity.Consult_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_31832902</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_36315780</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Main_Lead_Source__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Scheduled Consults</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

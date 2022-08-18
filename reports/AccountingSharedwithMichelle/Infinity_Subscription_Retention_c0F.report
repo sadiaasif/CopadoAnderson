@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_49398603</developerName>
+        <masterLabel>Membership Plan</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>OPPORTUNITY_NAME</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Infinity - Real Estate</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership -RE Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership - RE Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - RE Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - Real Estate Pro</sourceValue>
+            </sourceValues>
+            <value>Real Estate Pro</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Infinity - Stock Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership - Stock</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership - Stock Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership  - Stock Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - Stock</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription  - Stock Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - Stock Pro</sourceValue>
+            </sourceValues>
+            <value>Stock Pro</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Infinity - 360 Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity - 360 Pro Upgrade</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership  - 360</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership - 360</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership  - 360 Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership - 360 Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - 360</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription  - 360 Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - 360 Pro</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Advanced Investor</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Summit Investor</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Yearly Mastermind</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mastermind Subscription</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Advanced Mastermind</sourceValue>
+            </sourceValues>
+            <value>360 Pro</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Infinity -Basic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity - Basic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Membership - Basic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Infinity Subscription - Basic</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Basic Mastermind</sourceValue>
+            </sourceValues>
+            <value>Basic</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>Opportunity.Infinity_Membership_Expiration__c</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.ChargentSFA__Payment_Start_Date__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Last_Transaction__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.ChargentSFA__Payment_Status__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>STAGE_NAME</field>
+    </columns>
+    <columns>
+        <field>CLOSE_DATE</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Infinity_Card_Expiration__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Infinity_Billing_Type__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sales_Rep__c</field>
+    </columns>
+    <columns>
+        <field>Opportunity.ChargentSFA__Gateway__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>((1 AND 3 AND 4 AND 5) OR 6) AND 2 AND 7 AND 8 AND 9</booleanFilter>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR,LAST_YEAR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Opportunity.Infinity_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Response_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Charge,Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Payment_Method__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Client Referral Credit,Credit to be used</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Due_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR,NEXT_YEAR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>0,9.95,7</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Refund,Duplicate</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Infinity Investing Workshop</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_49398603</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Amount__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>Opportunity.First_Transaction__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Infinity Subscription Retention</name>
+    <params>
+        <name>open</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityCustomEntity$ChargentSFA__Transaction__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CLOSE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

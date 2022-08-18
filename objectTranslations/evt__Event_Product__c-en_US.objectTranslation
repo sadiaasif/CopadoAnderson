@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Optional limit on the quantity of items buyer can select. --></help>
+        <label><!-- Buyer Limit --></label>
+        <name>evt__Buyer_Limit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Category of Attendee that will have the option to purchase this item. --></help>
+        <label><!-- Category --></label>
+        <name>evt__Category__c</name>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Attendee</masterLabel>
+            <translation><!-- Attendee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exhibitor</masterLabel>
+            <translation><!-- Exhibitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sponsor</masterLabel>
+            <translation><!-- Sponsor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Volunteer</masterLabel>
+            <translation><!-- Volunteer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- (Optional) Default quantity to display on page load for this product. --></help>
+        <label><!-- Default Quantity --></label>
+        <name>evt__Default_Quantity__c</name>
+    </fields>
+    <fields>
+        <help><!-- Product description. If blank and product lookup has a value, the product description will be pulled from the Product2 record. --></help>
+        <label><!-- Description --></label>
+        <name>evt__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Prevents the customer from being able to edit or change the quantity value for this product. --></help>
+        <label><!-- Freeze Quantity --></label>
+        <name>evt__Freeze_Quantity__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value is copied to the On Payment Completed field for each Event Product Item during checkout. Used to trigger custom workflow after the purchase of cart items has completed. Values should be semi-colon delimited. --></help>
+        <label><!-- On Payment Completed --></label>
+        <name>evt__On_Payment_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Out of Stock --></label>
+        <name>evt__Out_of_Stock__c</name>
+    </fields>
+    <fields>
+        <help><!-- Item price. If left blank, the registration page will attempt to display the standard price book value of the product instead. --></help>
+        <label><!-- Price --></label>
+        <name>evt__Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Code --></label>
+        <name>evt__Product_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>evt__Product__c</name>
+        <relationshipLabel><!-- Event Products --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Determines the order in which product items are displayed on the registration page. --></help>
+        <label><!-- Sequence --></label>
+        <name>evt__Sequence__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if this item is to be shipped to the customer. --></help>
+        <label><!-- Shipment Required --></label>
+        <name>evt__Shipment_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Special Event --></label>
+        <name>evt__Special_Event__c</name>
+        <relationshipLabel><!-- Event Products --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

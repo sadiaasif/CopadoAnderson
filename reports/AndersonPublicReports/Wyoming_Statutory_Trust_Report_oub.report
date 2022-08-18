@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Trust__c.First_Trustee_Name__c</field>
+    </columns>
+    <columns>
+        <field>Trust__c.First_Trustee_Signor_2_Name__c</field>
+    </columns>
+    <columns>
+        <field>Trust__c.First_Beneficiary_Type__c</field>
+    </columns>
+    <columns>
+        <field>Trust__c.First_Beneficiary_Name__c</field>
+    </columns>
+    <columns>
+        <field>Trust__c.Property_Address__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Trust__c.Organization_State__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Wyoming</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Wyoming Statutory Trust Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Trust__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Trust__c.X1st_Amendment_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

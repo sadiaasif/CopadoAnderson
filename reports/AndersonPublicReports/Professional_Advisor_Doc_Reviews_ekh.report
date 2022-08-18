@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_79115005</developerName>
+        <masterLabel>Advisors</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>OWNER</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Carl Zoellner</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Keiara Stevenson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Matthew Smidowicz</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sergey Garanyants</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reginald Russell</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dana Cummings</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Paul Scarnechia</sourceValue>
+            </sourceValues>
+            <value>Carl&apos;s Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Aaron Soffer</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Amanda Wynalda</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alexandria Lessard</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Eliot Thomas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mary Borden</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Scott Levy</sourceValue>
+            </sourceValues>
+            <value>Aaron&apos;s Team</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>AGE</field>
+    </columns>
+    <columns>
+        <field>OPEN</field>
+    </columns>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <columns>
+        <field>RECORDTYPE</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>TYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Service Question,Platinum Questions,Question</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_79115005</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Carl&apos;s Team,Aaron&apos;s Team</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CREATED_DATEONLY</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>11/1/2019 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Review</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>CREATED_DATEONLY</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>CLOSED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_79115005</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Professional Advisor Doc Reviews</name>
+    <params>
+        <name>units</name>
+        <value>h</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

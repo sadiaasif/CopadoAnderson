@@ -1,0 +1,49 @@
+<apex:page standardController="Subscription__c" recordSetVar="opportunities" extensions="ctrlCreateSubscription">
+    <apex:form >  
+        <apex:sectionHeader title="Entity Edit" subtitle="New Entity"/>
+        <apex:pageBlock title="Entity Edit" mode="Edit">            
+            <apex:pageBlockButtons >                
+                <apex:commandButton value="Previous" action="{!PreviousToStep1}"/>
+                <apex:commandButton value="Next" action="{!NextToStep3}"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection collapsible="false" title="Tax Information">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Tax Status"></apex:outputLabel>
+                    <apex:inputField value="{!objEntity.Tax_Status__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Tax Period Type"></apex:outputLabel>
+                    <apex:inputField value="{!objEntity.Tax_Year_Ended__c}"/>
+                </apex:pageBlockSectionItem>
+                
+               
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Tax Return Required"></apex:outputLabel>
+                    <apex:inputField value="{!objEntity.Tax_Return_Required__c}"/>
+                </apex:pageBlockSectionItem>
+                                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Year End"></apex:outputLabel>
+                    <apex:inputField value="{!objEntity.Year_End__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                
+                </apex:pageBlockSectionItem>
+                
+                 
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Tax Form"></apex:outputLabel>
+                    <apex:inputField value="{!objEntity.Tax_Form__c}"/>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

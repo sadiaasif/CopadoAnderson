@@ -1,0 +1,81 @@
+<apex:page standardController="evt__Special_Event__c" extensions="evt.AttendeeBadgesController" applyHTMLTag="false"  standardStylesheets="false" sidebar="false" showheader="false" renderAs="PDF" >
+<head>
+<style>
+@page{
+   size:letter;
+   margin:{!pageMargins};
+   }
+body {
+  margin:0px;
+  padding:0px;
+  }
+  .badgeDiv {
+  {!badgeDivStyle}
+  }
+  .qrDiv {
+  {!qrDivStyle}
+  }
+</style>
+</head>
+<apex:repeat value="{!pages}" var="badgePage">
+<table style="{!tableStyle}">
+<apex:repeat value="{!badgePage.rows}" var="badgeRow">
+<tr> 
+<apex:repeat value="{!badgeRow.row}" var="badge">
+<td style="{!tdStyle}">
+
+<apex:outputPanel rendered="{!NOT(showQRCode)}">
+<div class="badgeDiv">
+<div style="{!nameStyle}"><apex:outputText value="{!badge.attendeeName}" /></div>
+<apex:outputPanel layout="none" rendered="{!showCompany}">
+<div style="{!companyNameStyle}"><apex:outputText value="{!badge.companyName}"/></div>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!showTitle}">
+<div style="{!titleStyle}"><apex:outputText value="{!badge.title}"/></div>
+</apex:outputPanel>
+<apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(badge.idBarcodeURL)), showBarcode)}">
+<div style="{!barcodeStyle}">
+ <img src="{!badge.idBarcodeURL}"/>  
+</div>
+</apex:outputPanel>
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!(showQRCode)}">
+<div class="badgeDiv">
+  <div style="{!nameStyle}"><apex:outputText value="{!badge.attendeeName}" /></div>
+  <table style="width:100%;">
+  <tr>
+  <td style="vertical-align:top;">
+    <apex:outputPanel layout="none" rendered="{!showCompany}">
+    <div style="{!companyNameStyle}"><apex:outputText value="{!badge.companyName}"/></div>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!showTitle}">
+    <div style="{!titleStyle}"><apex:outputText value="{!badge.title}"/></div>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(badge.idBarcodeURL)), showBarcode)}">
+    <div style="{!barcodeStyle}">
+       <img src="{!badge.idBarcodeURL}"/>  
+    </div>
+    </apex:outputPanel>
+  </td>
+  <td style="width:1%;vertical-align:top;">
+  <div class="qrDiv">
+      <apex:outputPanel rendered="{!AND(NOT(ISBLANK(badge.qrURL)),showQRCode)}" >
+          <img style="margin-top:5px;margin-bottom:20px;" 
+          src="{!badge.qrURL}"/>  
+      </apex:outputPanel>
+  </div>
+  </td>
+  </tr>
+  </table>
+</div>
+</apex:outputPanel>
+
+</td>
+</apex:repeat>
+</tr>
+</apex:repeat>
+</table>
+</apex:repeat>
+</apex:page>

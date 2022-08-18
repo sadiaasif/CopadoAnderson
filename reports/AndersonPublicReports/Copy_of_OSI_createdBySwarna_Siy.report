@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>OrderItem$OrderItemNumber</field>
+    </columns>
+    <columns>
+        <field>OrderItem$Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem$Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>OrderItem$Id</field>
+    </columns>
+    <columns>
+        <field>OrderItem$Due_Date__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>OrderItem$CreatedBy</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Swarna Pariti</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem$Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Deed Fulfillment</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Copy of OSI createdBySwarna</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Order_Services__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>OrderItem$Completed_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

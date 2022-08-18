@@ -1,0 +1,55 @@
+<apex:page docType="html-5.0" id="siteManagePmtMethodsPage" controller="pymt.SiteManagePmtMethodsController" showHeader="false" title="Payment Methods"  cache="false" standardStylesheets="false">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+ <apex:define name="body">
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitemanagepmtmethods_page">
+
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content" >
+    <div class="pc_page_content_inner">
+    <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+        <apex:pageMessage summary="Login required." severity="warning" strength="3" />
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+
+    <apex:pageMessages id="messages"/>
+
+     <apex:outputPanel rendered="{!NOT($Label.pymt__SiteManagePmtMethods_Heading == '-')}">
+    <h1>{!$Label.pymt__SiteManagePmtMethods_Heading}</h1>
+    </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteManagePmtMethods_Instructions == '-')}">
+        <p>{!$Label.pymt__SiteManagePmtMethods_Instructions}</p>
+        </apex:outputPanel>
+
+    <c:ManagePmtMethodsAuthNet processorConnectionId="{!connection.Id}" contactId="{!contactId}" rendered="{!AND(connection.pymt__Processor_Id__c == 'Authorize.Net', connection.pymt__Account_Type__c == 'AIM',siteSettings.pymt__Card_Management__c == 'Tokenized')}"/>
+    <c:ManagePmtMethodsPayPal processorConnectionId="{!connection.Id}" contactId="{!contactId}" rendered="{!AND(connection.pymt__Processor_Id__c == 'PayPal', connection.pymt__Account_Type__c == 'Website Payments Pro',siteSettings.pymt__Card_Management__c == 'Tokenized')}"/>
+
+    <c:ManagePmtMethodsNative processorConnectionId="{!connection.Id}" contactId="{!contactId}" rendered="{!(siteSettings.pymt__Card_Management__c == 'Native')}"/>
+
+    <c:ManagePmtMethodsEWay processorConnectionId="{!connection.Id}" contactId="{!contactId}" rendered="{!AND(connection.pymt__Processor_Id__c == 'eWay', connection.pymt__Account_Type__c == 'Direct Connection API', siteSettings.pymt__Card_Management__c == 'Tokenized')}"/>
+
+    <apex:outputPanel rendered="{!(siteSettings.pymt__Bank_Account_Management__c == 'Native')}">
+    <h2>Bank Accounts</h2>
+    <c:ManagePmtMethodsBankAccount contactId="{!contactId}" />
+    </apex:outputPanel>
+
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Debug__c == true}">
+    <br/><br/>
+    Debug: Processor Id = {!connection.pymt__Processor_Id__c}, Account Type = {!connection.pymt__Account_Type__c}, Card Management = {!siteSettings.pymt__Card_Management__c},
+    Bank Account Management = {!siteSettings.pymt__Bank_Account_Management__c}, Contact Id = {!contactId}, Connection Id = {!connection.Id}
+    </apex:outputPanel>
+
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+  </apex:define>
+  </apex:composition>
+</apex:page>

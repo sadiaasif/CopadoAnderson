@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account.Unlimited_LLC__c</field>
+    </columns>
+    <columns>
+        <field>USERS.NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>Account.Platinum__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Account.Assigned_CSR__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Aaron Bernhardt,Adrienne Harper,Agha Abbas,Alexa Brown,Alisha Basom,Alyssa Hoopii,Amanda Zipprich,Ambria Tibbs,Anna Yadao,Becky Seguin,Bekah Willard,Bianca Ayala,Brittany Rains,Caitlynn Glass,Carly Coons,Carrie J. Watson,Chase Foster,Chelsea Bojewski,Christian DeField,Claire Seals,Colette Grier,Deborah Lewis,Duncan Bjerke,Erica Terrell,Franceska Wackmann,Gabby Esteban,Greg Coughlan,Ilanit Moskal,Ilse Banuelos,Jade Comer,Jason Nelson,Jayvie Barlao,Jennie Wilson,Jennifer Seibert,Jessica Thornton,Jhunelyn Talaid,Kaila Martinez,Katherine Baez,Kim Austin,Kimberly Luberisse,Kristy McElwain,Krysta Lacey,Krystal Nixon,Lisa Starner-Sturz,Lori Taylor,Mandie Corbitt,Mars D&apos;Amico,Maryana Postolovska,Matt Rounsley,Monica Vivanco,N&apos;kia Gray,Nathaniel Garmon,Ramona Preston-Tolbert,Roger Cox,Ryann Brown,Sabrina Barkum,Samantha Carrillo,Samantha Kinney,Sara Winter,Savannah Wallace,Shanika Fikes,Sheila Denos,Stephanie Sanchez,Tia Robinson,Traci Derrington,Veanna Ganaishlal,Wendy Balelo</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Assigned_CSR__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Integration: CSC Assigned Clients</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

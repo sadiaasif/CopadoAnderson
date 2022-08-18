@@ -1,0 +1,1330 @@
+<apex:page tabStyle="zkusps__CustomAddressSource__c" standardController="zkusps__CustomAddressSource__c" extensions="zkusps.CustomAddressSourceController" action="{! init }">
+
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__jQuery, '/jquery/jquery-3.4.1.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.zkusps__SimpleModal, 'jquery.simplemodal.1.4.4.min.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.TypeaheadJS, 'handlebars.js') }"/>
+    <apex:includeScript value="{! URLFOR($Resource.TypeaheadJS, 'typeahead.bundle.js') }"/>
+
+    <script>
+        $j = jQuery.noConflict();        
+
+        var objects = {! objectList };
+
+        var selectedObject = null;
+
+        var BloodObjects = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: objects
+        });
+
+        function nflTeamsWithDefaults(q, sync) {
+            if (q === '') {
+                sync( BloodObjects.all() );
+            } else {
+                var resArray = [];
+                for (indexNumber in BloodObjects.all()) {
+                    var obj = objects[indexNumber];
+                    if (obj.value.toUpperCase().indexOf(q.toUpperCase()) > -1) {
+                        resArray.push(obj);
+                    }
+                }
+                sync(resArray);
+            }
+        }
+
+        function loadObjects() {
+            $j('#ainput').typeahead(
+            { 
+              hint: true,
+              highlight: true,
+              minLength: 0
+            },
+            {
+              name: 'BloodObjects',
+              display: 'value',
+              source: nflTeamsWithDefaults,
+              limit: 20,
+              templates: {
+                empty: [
+                  '<div class="empty-message">',
+                    'No result',
+                  '</div>'
+                ].join('\n'),
+                suggestion: Handlebars.compile('<div><strong>{{value}}</strong></div>')
+              }
+            }).on('typeahead:selected', function (obj, datum) {
+                selectedObject = datum;
+                IsLoading();
+                doSelectObjectName(selectedObject.value);
+                
+            });
+        }
+
+        $j(function () {
+            loadObjects();
+        });
+    </script>
+    
+
+    <style>
+        .lightboxWizard {       
+            display: none;
+            background: #FFFFFF;
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: 1000;
+        }  
+    </style>
+
+    <style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: fixed;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;          
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <style>
+        .tt-menu{
+            position: absolute;
+            top: 100%;
+            left: 0px;
+            z-index: 100;
+            display: block;
+            width: 350px;
+            /*margin: 12px 0;*/
+            margin: 0;
+            padding: 8px 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+            -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+            box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        }
+        .typeahead.tt-hint{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            border-color: transparent;
+            box-shadow: none;
+            opacity: 1;
+            background-attachment: scroll;
+            background-clip: border-box;
+            background-color: rgb(255, 255, 255);
+            background-image: none;
+            background-origin: padding-box;
+            background-size: auto;
+            background-position: 0% 0%;
+            background-repeat: repeat repeat;
+
+        }
+
+        .tt-hint{
+            color: #999
+        }
+
+        .tt-suggestion:hover{
+            cursor: pointer;
+            color: #fff;
+            background-color: #0097cf;
+        }
+
+        .tt-suggestion{
+            padding: 3px 20px;
+            font-size: 10px;
+            line-height: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .tt-cursor{
+            cursor: pointer;
+            color: #fff;
+            background-color: #0097cf;
+        }
+        .tt-dropdown-menu {
+          max-height: 150px;
+          overflow-y: auto;
+        }
+    </style>
+
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSSv2}"/>
+    <c:Loading id="LoadingControl"/>
+    <apex:sectionHeader title="Custom Address Source Edit"  subtitle="New Custom Address Source"/>
+
+    <apex:form id="formId">
+
+        <script>
+            loadObjects();
+
+            function IsShowLightbox(whichLoading) {
+                $j('.lightboxWizard').show();
+            };
+
+            function IsOnlyLoading(whichLoading) {
+                $j('.' + whichLoading).toggle();
+            };
+
+            function IsLoadingIcon(whichLoading) {
+                $j('.lightboxWizard').show();
+                $j('.' + whichLoading).toggle();
+            };
+
+            function IsLoadingIconComplete() {
+                $j('.lightboxWizard').hide();
+            };
+
+        </script>
+
+        <apex:actionFunction action="{! closePopup }" name="doClosePopup" reRender="formId" oncomplete="IsLoadingIconComplete();" />
+
+        <apex:actionFunction action="{! doSelectObjectName }" name="doSelectObjectName" reRender="formId" oncomplete="FinishLoading();">
+            <apex:param name="firstParam" assignTo="{! SelectedCustomAddressSourceObject }" value="" />
+        </apex:actionFunction>
+
+        <apex:pageBlock id="custAddrSrcPageBlock" mode="detail">
+
+            <!-- Messages -->
+            <apex:outputPanel id="preferencePageMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+
+
+            <!-- pageBlockButtons -->
+            <!-- Dont specify rerender field. rerender whole page -->
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveNewCustomAddressSource}" value="Save"/>
+                <apex:commandButton action="{!cancelNewCustomAddressSource}" immediate="true" value="Cancel"/>
+            </apex:pageBlockButtons>
+
+
+            <!-- Record Name Section -->
+            <apex:outputPanel id="casNameSection">
+            <apex:pageBlockSection collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Custom Address Source Name "/>
+                        <apex:actionStatus id="casNameStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- CAS Name -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Custom Address Source Name"/>
+                    <apex:inputField required="false" value="{!CustomAddressSource.Name}"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Custom Address Source Object Section -->
+            <apex:outputPanel id="casObjectSection">
+                <apex:pageBlockSection collapsible="false" columns="1" title="Custom Address Source Object (* Denotes required field)">
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Object Quick Search"/>
+                        <apex:outputPanel >
+                            <input id="ainput"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Object *"/>
+                        <apex:selectList value="{!SelectedCustomAddressSourceObject}" size="1" multiselect="false" >
+                            <apex:actionSupport event="onchange" action="{!customAddressSourceObjectSelectRefresh}" onsubmit="IsLoading();" oncomplete="FinishLoading();"/>
+                            <apex:selectOptions value="{!SourceObjectOptions}"/>
+                        </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Shipment Object Lookup Field Section -->
+            <apex:outputPanel id="lookupFieldSection">
+            <apex:pageBlockSection collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Shipment Object Lookup Field "/>
+                        <apex:actionStatus id="casObjectLookupFieldStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- CAS Object Lookup Field -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel styleClass="inputFieldRequired" value="Shipment Object Lookup Field"/>
+                    <apex:selectList value="{!SelectedShipmentObjectLookupField}" size="1" multiselect="false" disabled="{!ShipmentLookupFieldOptionsDisabled}" >
+                        <apex:selectOptions value="{!ShipmentLookupFieldOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+
+             <!-- Shipmate Preference Field Section-->
+            <apex:outputPanel id="shipmatePreferenceFieldSection">
+                <apex:pageBlockSection collapsible="false">
+
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipmate Preference "/>
+                            <apex:actionStatus id="recipientFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem helpText="Shipmate Preference Name">
+                        <apex:outputLabel value="Shipmate Preference"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__ShipmatePreferenceField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__ShipmatePreferenceField__c" />
+                                <apex:param name="field_label" value="Shipmate Preference Name" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem helpText="Allowed values: 4x6, 4x6c, 3.5x5.25, 4x4, 4x5, 4x4.5, DocTab, 6x4, 4x8, 7x3, 6x4, Dymo30384, EnvelopeSize10, Mailer7x5, 7x4, 8x3, Booklet, EnvelopeSize10">
+                        <apex:outputLabel value="Label Image Size"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__LabelImageSizeField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__LabelImageSizeField__c" />
+                                <apex:param name="field_label" value="Label Image Size" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem helpText="Allowed values: EPL2, GIF, JPEG, PDF, PNG, ZPLII">
+                        <apex:outputLabel value="Label Image Type"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__LabelImageTypeField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__LabelImageTypeField__c" />
+                                <apex:param name="field_label" value="Label Image Type" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Sender Fields Section -->
+            <apex:outputPanel id="senderFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Sender Address Fields "/>
+                            <apex:actionStatus id="recipientFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+          
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Name"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderNameField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderNameField__c" />
+                                <apex:param name="field_label" value="Sender Name" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Email"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderEmailField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderEmailField__c" />
+                                <apex:param name="field_label" value="Sender Email" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Company Name"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderCompanyNameField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderCompanyNameField__c" />
+                                <apex:param name="field_label" value="Sender Company Name" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Phone"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderPhoneField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderPhoneField__c" />
+                                <apex:param name="field_label" value="Sender Phone" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Street (TextArea option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderStreetTextAreaField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderStreetTextAreaField__c" />
+                                <apex:param name="field_label" value="Sender Street" />
+                                <apex:param name="field_type" value="TEXTAREA_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender City"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderCityField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderCityField__c" />
+                                <apex:param name="field_label" value="Sender City" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Street Line 1 (TextLine option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderStreet1TextLineField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderStreet1TextLineField__c" />
+                                <apex:param name="field_label" value="Sender Street Line 1" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender State"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderStateField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderStateField__c" />
+                                <apex:param name="field_label" value="Sender State" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Street Line 2 (TextLine option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderStreet2TextLineField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderStreet2TextLineField__c" />
+                                <apex:param name="field_label" value="Sender Street Line 2" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Postal Code"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderPostalCodeField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderPostalCodeField__c" />
+                                <apex:param name="field_label" value="Sender Postal Code" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Sender Street Line 3 (TextLine option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SenderStreet3TextLineField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SenderStreet3TextLineField__c" />
+                                <apex:param name="field_label" value="Sender Street Line 3" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem helpText="Hide Sender Address on the label">
+                        <apex:outputLabel value="Hide Sender Address"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__HideSenderAddressField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__HideSenderAddressField__c" />
+                                <apex:param name="field_label" value="Hide Sender Address" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Recipient Fields Section -->
+            <apex:outputPanel id="fieldsSection">
+            <apex:pageBlockSection collapsible="false">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Recipient Address Fields "/>
+                        <apex:actionStatus id="recipientFieldsStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Name"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__NameField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__NameField__c" />
+                            <apex:param name="field_label" value="Recipient Name" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Email"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__EmailField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__EmailField__c" />
+                            <apex:param name="field_label" value="Recipient Email" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Company Name"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__CompanyNameField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__CompanyNameField__c" />
+                            <apex:param name="field_label" value="Recipient Company Name" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Phone"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__PhoneField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__PhoneField__c" />
+                            <apex:param name="field_label" value="Recipient Phone" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Street (TextArea option)"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__StreetTextAreaField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__StreetTextAreaField__c" />
+                            <apex:param name="field_label" value="Recipient Street" />
+                            <apex:param name="field_type" value="TEXTAREA_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient City"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__CityField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__CityField__c" />
+                            <apex:param name="field_label" value="Recipient City" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Street Line 1 (TextLine option)"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__Street1TextLineField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__Street1TextLineField__c" />
+                            <apex:param name="field_label" value="Recipient Street Line 1" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient State"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__StateField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__StateField__c" />
+                            <apex:param name="field_label" value="Recipient State" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Street Line 2 (TextLine option)"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__Street2TextLineField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__Street2TextLineField__c" />
+                            <apex:param name="field_label" value="Recipient Street Line 2" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Postal Code"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__PostalCodeField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__PostalCodeField__c" />
+                            <apex:param name="field_label" value="Recipient Postal Code" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Street Line 3 (TextLine option)"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__Street3TextLineField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__Street3TextLineField__c" />
+                            <apex:param name="field_label" value="Recipient Street Line 3" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Recipient Country"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{! addressSource.zkusps__CountryField__c }" style="margin-right: 3px;"/>
+                        <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                            <apex:param name="field_name" value="zkusps__CountryField__c" />
+                            <apex:param name="field_label" value="Recipient Country" />
+                            <apex:param name="field_type" value="STRING_TYPE" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Reference Fields Section -->
+            <apex:outputPanel id="refFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+                    <!-- Section Status -->
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Reference Fields "/>
+                            <apex:actionStatus id="referenceFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="referenceFieldLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Your Reference 1"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__YourReference1Field__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__YourReference1Field__c" />
+                                <apex:param name="field_label" value="Your Reference 1" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Your Reference 2"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__YourReference2Field__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__YourReference2Field__c" />
+                                <apex:param name="field_label" value="Your Reference 2" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Your Reference 3"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__YourReference3Field__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__YourReference3Field__c" />
+                                <apex:param name="field_label" value="Your Reference 3" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Mail Class section-->
+            <apex:outputPanel id="mailClassFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Mail Class Fields"/>
+                            <apex:actionStatus id="mailClassFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="mailClassFieldLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Domestic Mail Class"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__DomesticMailClassField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__DomesticMailClassField__c" />
+                                <apex:param name="field_label" value="Domestic Mail Class" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="International Mail Class"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__InternationalMailClassField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__InternationalMailClassField__c" />
+                                <apex:param name="field_label" value="International Mail Class" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Default Mail Piece -->
+            <apex:outputPanel id="mailPieceFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Mail Piece Field"/>
+                            <apex:actionStatus id="mailPieceFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="mailPieceFieldLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Default Mail Piece"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__DefaultMailPieceField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__DefaultMailPieceField__c" />
+                                <apex:param name="field_label" value="Default Mail Piece" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Mail Piece Dimensions and Weight -->
+            <apex:outputPanel id="mailPieceDimWeightFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Mail Piece Dimension and Weight Fields"/>
+                            <apex:actionStatus id="mailPieceDimWeightFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="mailPieceDimWeightFieldLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <!-- Weight fields -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Weight Pounds (Number option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__WeightPoundsField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__WeightPoundsField__c" />
+                                <apex:param name="field_label" value="Weight Pounds" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Weight Ounces (Number option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__WeightOuncesField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__WeightOuncesField__c" />
+                                <apex:param name="field_label" value="Weight Ounces" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <!-- Dimension fields -->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Length (Number option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__LengthField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__LengthField__c" />
+                                <apex:param name="field_label" value="Length" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Width (Number option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__WidthField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__WidthField__c" />
+                                <apex:param name="field_label" value="Width" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Height (Number option)"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__HeightField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__HeightField__c" />
+                                <apex:param name="field_label" value="Height" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Shipment Type -->
+            <apex:outputPanel id="shipmentTypeFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Type Field"/>
+                            <apex:actionStatus id="shipmentTypeFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="shipmentTypeFieldLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Shipment Type"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__ShipmentTypeField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__ShipmentTypeField__c" />
+                                <apex:param name="field_label" value="Shipment Type" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="specialServicesFieldsSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Special Services Fields"/>
+                            <apex:actionStatus id="specialServicesFieldsStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="specialServicesFieldLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="AMDelivery"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__AMDeliveryField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__AMDeliveryField__c" />
+                                <apex:param name="field_label" value="AMDelivery" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Certified Mail"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__CertifiedMailField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__CertifiedMailField__c" />
+                                <apex:param name="field_label" value="Certified Mail" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Delivery Confirmation"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__DeliveryConfirmationField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__DeliveryConfirmationField__c" />
+                                <apex:param name="field_label" value="Delivery Confirmation" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Restricted Delivery"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__RestrictedDeliveryField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__RestrictedDeliveryField__c" />
+                                <apex:param name="field_label" value="Restricted Delivery" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Registered Mail"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__RegisteredMailField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__RegisteredMailField__c" />
+                                <apex:param name="field_label" value="Registered Mail" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Registered Mail Value"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__RegisteredMailValueField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__RegisteredMailValueField__c" />
+                                <apex:param name="field_label" value="Registered Mail" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Insured Mail"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__InsuredMailField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__InsuredMailField__c" />
+                                <apex:param name="field_label" value="Insured Mail" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Allowed values: Endicia, UspsOnline">
+                        <apex:outputLabel value="Insured Type"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__InsuredTypeField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__InsuredTypeField__c" />
+                                <apex:param name="field_label" value="Insured Mail" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Required for Insured Mail">
+                        <apex:outputLabel value="Value of Contents"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__ValueOfContentsField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__ValueOfContentsField__c" />
+                                <apex:param name="field_label" value="Value of Contents" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Return Receipt"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__ReturnReceiptField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__ReturnReceiptField__c" />
+                                <apex:param name="field_label" value="Return Receipt" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Electronic Return Receipt"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__ElectronicReturnReceiptField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__ElectronicReturnReceiptField__c" />
+                                <apex:param name="field_label" value="Electronic Return Receipt" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Used with Electronic Return Receipt">
+                        <apex:outputLabel value="Bpod Client DUNS Number"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__BpodClientDUNSNumberField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__BpodClientDUNSNumberField__c" />
+                                <apex:param name="field_label" value="Bpod Client DUNS Number" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Adult Signature"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__AdultSignatureField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__AdultSignatureField__c" />
+                                <apex:param name="field_label" value="Adult Signature" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Adult Signature Restricted Delivery"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__AdultSignatureRestrictedDeliveryField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__AdultSignatureRestrictedDeliveryField__c" />
+                                <apex:param name="field_label" value="Adult Signature Restricted Delivery" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Allowed values: LiveAnimals, HazMat, CrematedRemains, Perishable, Fragile">
+                        <apex:outputLabel value="Special Contents"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SpecialContentsField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SpecialContentsField__c" />
+                                <apex:param name="field_label" value="Special Contents" />
+                                <apex:param name="field_type" value="STRING_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="if Special Contents is LiveAnimals">
+                        <apex:outputLabel value="Live Animal Surcharge"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__LiveAnimalSurchargeField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__LiveAnimalSurchargeField__c" />
+                                <apex:param name="field_label" value="Special Contents" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Signature Confirmation"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SignatureConfirmationField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SignatureConfirmationField__c" />
+                                <apex:param name="field_label" value="Signature Confirmation" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Used only for Priority Express">
+                        <apex:outputLabel value="Signature Waiver"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SignatureWaiverField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SignatureWaiverField__c" />
+                                <apex:param name="field_label" value="Signature Waiver" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Used only for Priority Express">
+                        <apex:outputLabel value="No Delivery On Saturdays"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__NoDeliveryOnSaturdaysField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__NoDeliveryOnSaturdaysField__c" />
+                                <apex:param name="field_label" value="No Delivery On Saturdays" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem helpText="Used only for Priority Express">
+                        <apex:outputLabel value="Sunday Holiday Delivery"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__SundayHolidayDeliveryField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__SundayHolidayDeliveryField__c" />
+                                <apex:param name="field_label" value="Sunday Holiday Delivery" />
+                                <apex:param name="field_type" value="BOOLEAN_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Auto-Create Shipment -->
+            <apex:outputPanel id="autoCreateSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Shipment Auto-create"/>
+                            <apex:actionStatus id="autoCreateStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="autoCreateLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:inputCheckbox value="{! CustomAddressSource.AutoCreateShipment__c }" />
+                        <apex:outputLabel value="Auto-create shipment if all required fields are set"/>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <!-- Auto-Create Shipment -->
+            <apex:outputPanel id="autoPrintSection">
+                <apex:pageBlockSection collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputPanel >
+                            <apex:outputLabel styleClass="sectionTitle" value="Auto Printing"/>
+                            <apex:actionStatus id="autoPrintStatus">
+                                <apex:facet name="start">
+                                    <apex:image style="width:16px;height:16px" id="autoPrintLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:outputPanel>
+                    </apex:facet>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:inputCheckbox value="{! CustomAddressSource.AutoPrint__c }" />
+                        <apex:outputLabel value="Auto print labels after creating shipment"/>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="outputRatePanelSection">
+                <apex:pageBlockSection collapsible="false" title="Choose Fields to Update on Original Object">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Invocable Rate Method"/>
+                        <apex:outputPanel >
+                            <apex:inputCheckbox value="{! isRenderRateOutput }" >
+                                <apex:actionSupport event="onclick" action="{! doSelectOutputRate }" onsubmit="IsLoadingIcon('loadingOutputRate');" oncomplete="IsLoadingIconComplete();" reRender="outputRatePanelSection"/>
+                            </apex:inputCheckbox>
+                            <apex:image id="loadingOutputRate" styleClass="loadingOutputRate" value="{!$Resource.zkusps__LoadingImage2}" />                            
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem rendered="{! isRenderRateOutput }">
+                        <apex:outputLabel value="Estimate Delivery Date"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__OutputEstimateDeliveryDateField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__OutputEstimateDeliveryDateField__c" />
+                                <apex:param name="field_label" value="Estimate Delivery Date" />
+                                <apex:param name="field_type" value="DATE_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{! isRenderRateOutput }">
+                        <apex:outputLabel value="Total Amount"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__OutputTotalAmountField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__OutputTotalAmountField__c" />
+                                <apex:param name="field_label" value="Total Amount" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{! isRenderRateOutput }">
+                        <apex:outputLabel value="Postage Total Amount"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__OutputPostageTotalAmountField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__OutputPostageTotalAmountField__c" />
+                                <apex:param name="field_label" value="Postage Total Amount" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{! isRenderRateOutput }">
+                        <apex:outputLabel value="Fees"/>
+                        <apex:outputPanel >
+                            <apex:outputText value="{! addressSource.zkusps__OutputFeesField__c }" style="margin-right: 3px;"/>
+                            <apex:commandButton value="Select Field" action="{!showPopup}" onclick="IsLoading();" oncomplete="FinishLoading();" reRender="tstpopup" disabled="{!GlobalFieldOptionsDisabled}">
+                                <apex:param name="field_name" value="zkusps__OutputFeesField__c" />
+                                <apex:param name="field_label" value="Fees" />
+                                <apex:param name="field_type" value="NUMBER_TYPE" />
+                            </apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                <span class="close" onclick="IsLoadingIcon(); doClosePopup();">&times;</span>
+                <apex:outputPanel layout="block" style="border: 1px solid #919191; padding: 10px;">
+                    Select a field for {!currentFieldLabel}{!FieldTypeMessage}, then click Insert. Labels followed by a ">" indicate that there are more fields available.<br/><br/>
+                    <table style="display: table; border-collapse: separate; border-spacing: 2px; border-color: grey;">
+                        <tr>
+                            <td>
+                                <apex:selectList value="{! selectedOneField }" size="9" multiselect="false">
+                                    <apex:actionSupport event="onchange" action="{! doChangeFirstLevel }" onsubmit="IsLoadingIcon();" oncomplete="IsLoadingIconComplete();" reRender="tstpopup"/>
+                                    <apex:selectOptions value="{! FirstLevelFieldOptions }"/>
+                                </apex:selectList>
+                            </td>
+                            <td>
+                                <apex:selectList value="{! selectedTwoField }" size="9" multiselect="false" rendered="{! AND(isShowLevelTwo, insertButtonName != 'Clear') }">
+                                    <apex:actionSupport event="onchange" action="{! doChangeSecondLevel }" onsubmit="IsLoadingIcon();" oncomplete="IsLoadingIconComplete();" reRender="tstpopup"/>
+                                    <apex:selectOptions value="{! SecondLevelFieldOptions }"/>
+                                </apex:selectList>
+                            </td>
+                            <td>
+                                <apex:selectList value="{! selectedThreeField }" size="9" multiselect="false" rendered="{! AND(isShowLevelThree, insertButtonName != 'Clear') }">
+                                    <apex:actionSupport event="onchange" action="{! doChangeThirdLevel }" onsubmit="IsLoadingIcon();" oncomplete="IsLoadingIconComplete();" reRender="tstpopup"/>
+                                    <apex:selectOptions value="{! ThirdLevelFieldOptions }"/>
+                                </apex:selectList>
+                            </td>
+                            <td>
+                                <apex:outputPanel rendered="{! AND(isShowInsertView, insertButtonName == 'Insert') }">
+                                    <apex:outputPanel style="display: block; margin-bottom: 8px;">You have selected:</apex:outputPanel>
+                                    <apex:outputPanel style="display: block; margin-bottom: 8px; font-size: 100%;     font-weight: bold;">{! FinalFieldName }</apex:outputPanel>
+                                    <apex:outputPanel style="display: block; margin-bottom: 8px; text-align: center;">
+                                        <apex:commandButton value="INSERT" action="{! doInsertField }" onclick="IsLoadingIcon();" oncomplete="IsLoadingIconComplete();" rerender="formId"/> 
+                                    </apex:outputPanel>                         
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{! AND(isShowInsertView, insertButtonName == 'Clear') }">
+                                    <apex:outputPanel style="display: block; margin-bottom: 8px; text-align: center;">
+                                        <apex:commandButton value="Clear field" action="{! doInsertField }" onclick="IsLoadingIcon();" oncomplete="IsLoadingIconComplete();" rerender="formId"/>    
+                                    </apex:outputPanel>                         
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" style="text-align: center; padding-top: 12px;">
+                    <apex:commandButton value="Close" action="{!closePopup}" onclick="IsLoading();" oncomplete="FinishLoading();" rerender="tstpopup"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    <div class="lightboxWizard">
+    </div>
+    </apex:form>
+</apex:page>

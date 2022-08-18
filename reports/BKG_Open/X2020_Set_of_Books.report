@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Set_of_Books__c$Name</field>
+    </columns>
+    <columns>
+        <field>Set_of_Books__c.Bookkeeping_Records__r$Bookkeeper__c</field>
+    </columns>
+    <columns>
+        <field>Set_of_Books__c.Bookkeeping_Records__r$Name</field>
+    </columns>
+    <columns>
+        <field>Set_of_Books__c.Bookkeeping_Records__r$Entity__c</field>
+    </columns>
+    <columns>
+        <field>Set_of_Books__c.Bookkeeping_Records__r$Fiscal_Year_End__c</field>
+    </columns>
+    <columns>
+        <field>Set_of_Books__c.Bookkeeping_Records__r$Completing_Books_for_Tax_Year__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Set_of_Books__c.Bookkeeping_Records__r$Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>apples 123,test</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Set_of_Books__c$Owner</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Shobitha Rajagopalan,Nick Frates,Justin Campese</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Set_of_Books__c$Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>2020</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Set_of_Books__c.Bookkeeping_Records__r$Bookkeeper_Reviewer__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>2020 Set of Books</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Set_of_Books_and_Bookkeeping_Records__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Set_of_Books__c.Bookkeeping_Records__r$Name</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Set_of_Books__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

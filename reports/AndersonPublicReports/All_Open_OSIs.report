@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>ORDER_NUMBER</field>
+    </columns>
+    <columns>
+        <field>Order.Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Service_Name__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Processing_Stage__c</field>
+    </columns>
+    <columns>
+        <field>OrderItem.Comments__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_NUMBER</field>
+    </columns>
+    <columns>
+        <field>ORDER_ITEM_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>Account.Assigned_CSR__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>((1 AND 2 AND 3 AND 4 AND (5 AND 6)) AND 7) AND 8</booleanFilter>
+        <criteriaItems>
+            <column>ORDER_ITEM_CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>12/30/2020 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed,N/A,Kitted,BCP Scheduled</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.New_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Informational Only</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Service_Name__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Annual List,Asset Protection Event,Anderson Tax Advantage Program,Virtual Yearly,No Activity First Year Tax Package,Real Estate Pro,360,Anderson Tax Advantage Program - Lite,REI Mastery Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Assigned_CSR__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Alec Dykes,Alexandria Lessard,Alisha Basom,Alyssa Hoopii,Amanda Zipprich,Ambria Tibbs,Ami Meyers,Bekah Willard,Bianca Ayala,Brittany Rains,Caitlynn Glass,Carly Coons,Christian DeField,Christine Czaplinski,Deborah Lewis,Domanick Page-Whitaker,Duncan Bjerke,Erica Terrell,Ethan Hechanova,Gabby Esteban,Greg Coughlan,Hermina Certeza,Ilanit Moskal,Ilse Banuelos,Jade Comer,Jayvie Barlao,Jennie Moore,Jennifer Rogers,Jessica DeGrace,Jhunelyn Talaid,Kelsey Betts,Kip Stump,Kristin Rosevear,Kristy McElwain,LaSandra Johnson,Lauren Roberson,Lisa Starner-Sturz,Lori Taylor,Maritza Villalobos,Mary Borden,Matthew Smidowicz,Monica Vivanco,N&apos;kia Gray,Other or Renewals Team,Perla Galindo,Phoebe Keliikupakako,Ramona Preston-Tolbert,Ryann Brown,Sabrina Barkum,Sam Koehler,Sarah Naji,Sara Winter,Savannah Wallace,Shanika Fikes,Shani McCardell,Stephanie Sanchez,Tanaka Dodds,Therese Liu,Traci Derrington,Veanna Ganaishlal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,Not Started</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OrderItem.Processing_Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Submitted to Processing,Refunded</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.Stage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Completed,Refunded</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>OrderItem.Due_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>All Open OSIs</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OrderItemList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ORDER_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

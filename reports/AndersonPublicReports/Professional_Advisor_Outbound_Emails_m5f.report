@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_59824176</developerName>
+        <masterLabel>Teams</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>ASSIGNED</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Keiara Stevenson</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Sergey Garanyants</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Matthew Smidowicz</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Paul Scarnechia</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Dana Cummings</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reginald Russell</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Carl Zoellner</sourceValue>
+            </sourceValues>
+            <value>Carl&apos;s Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Eliot Thomas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mary Borden</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Bradley Calvert</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Grant Grajek</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Scott Levy</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Amanda Wynalda</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Alexandria Lessard</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Aaron Soffer</sourceValue>
+            </sourceValues>
+            <value>Aaron&apos;s Team</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>FULL_DESCRIPTION</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT</field>
+    </columns>
+    <columns>
+        <field>CONTACT</field>
+    </columns>
+    <columns>
+        <field>LEAD</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY</field>
+    </columns>
+    <columns>
+        <field>CASE</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notContain</operator>
+            <value>unresolved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ASSIGNED</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>eliot,garanyants,Keiara Stevenson,wynalda,reginald russell,levy,borden,soffer,smidowicz,lessard,zoellner,scarnechia,calvert,cummings,grajek</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>TASK_SUBTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Email</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>startsWith</operator>
+            <value>Email: &gt;&gt;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Activity.Completed_Date__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>BucketField_59824176</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Carl&apos;s Team,Aaron&apos;s Team</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>Activity.Completed_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_59824176</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ASSIGNED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Professional Advisor Outbound Emails</name>
+    <params>
+        <name>closed</name>
+        <value>closed</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>te</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Activity.Completed_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,135 @@
+<apex:page docType="html-5.0" id="siteSubscribeNtvVerify" controller="pymt.SiteSubscribeNtvVerifyController" showHeader="false" sidebar="false" cache="false" standardStylesheets="false" title="{!$Label.pymt__SiteSubscribeNTV_VerifyHeading}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+  <apex:define name="body">
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_sitesubscribentvverify_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content" >
+    <div class="pc_page_content_inner">
+    <apex:form id="mainForm">
+    <script>
+    // HTML5 validation fallback code - for Safari, ios and android devices
+    function hasHtml5Validation () {
+      return typeof document.createElement('input').checkValidity === 'function';
+    }
+
+    if (hasHtml5Validation()) {
+      $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+        if (!this.checkValidity()) {
+          e.preventDefault();
+          $j(this).addClass('invalid');
+          $j('#status').html('invalid');
+        } else {
+          $j(this).removeClass('invalid');
+          $j('#status').html('submitted');
+        }
+      });
+    }
+    // end HTML5 validation fallback code
+    </script>
+        
+        <apex:pageMessages id="messages" />
+        <h1>{!$Label.pymt__SiteSubscribeNTV_VerifyHeading}</h1>
+
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeNTV_VerifyInstructions == '-')}">
+        <p>{!$Label.pymt__SiteSubscribeNTV_VerifyInstructions}</p>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!NOT($Label.pymt__SiteSubscribeNTV_SubscriptionSummaryHeading == '-')}">
+        <h2>{!$Label.pymt__SiteSubscribeNTV_SubscriptionSummaryHeading}</h2>
+        </apex:outputPanel>
+            <apex:panelGrid columns="2" columnClasses="labelColumn,term_column" id="subscription_terms">
+                <apex:outputText value="{!$Label.pymt__Label_SubscriptionFor}:" />
+                <apex:outputText value="{!profileName}"/>
+
+                <apex:outputText value="{!$Label.pymt__Label_Description}:" rendered="{!NOT(ISNULL(profileDescription))}" />
+                <apex:outputText value="{!profileDescription}" rendered="{!NOT(ISNULL(profileDescription))}"/>
+
+                <apex:outputText value="{!$Label.pymt__Label_StartDate}:" />
+                <apex:outputText value="{!startDateString}"/>
+
+                <apex:outputText value="{!$Label.pymt__Label_InitialAmount}:"  rendered="{!(initialAmount>0)}"/>
+                <apex:outputText rendered="{!(initialAmount>0)}"
+                    value="{!currencyFormatExpression}" >
+                <apex:param value="{!initialAmount}"/>
+                </apex:outputText>
+
+                <apex:outputText value="{!$Label.pymt__Label_TrialAmount}:"  rendered="{!NOT(ISNULL(trialTerms))}"/>
+                <apex:outputPanel layout="inline" rendered="{!NOT(ISNULL(trialTerms))}">
+                  <apex:outputText value="{!currencyFormatExpression}" >
+                  <apex:param value="{!trialAmount}"/>
+                  </apex:outputText>&nbsp;<apex:outputText value="{!trialTerms}"/>
+
+                </apex:outputPanel>
+
+                <apex:outputText value="{!$Label.pymt__Label_SubscriptionAmount}:"/>
+                <apex:outputPanel layout="inline">
+                  <apex:outputText value="{!currencyFormatExpression}" >
+                  <apex:param value="{!recurringAmount}"/>
+                  </apex:outputText>&nbsp;<apex:outputText value="{!subscriptionTerms}"/>
+                </apex:outputPanel>
+
+            </apex:panelGrid>
+
+
+
+            <br/>
+
+        <div class="pc_button_container">
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+            <apex:commandButton id="createSubscription" value="{!$Label.pymt__SiteSubscribeNTV_ActivateButton}" action="{!activateSubscription}"
+            status="formActionStatus" rerender="mainForm"/>
+          </apex:outputPanel>
+          <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+            <apex:commandLink id="createSubscription2" styleClass="css-button" value="{!$Label.pymt__SiteSubscribeNTV_ActivateButton}"
+            action="{!activateSubscription}" status="formActionStatus" rerender="mainForm"/>
+          </apex:outputPanel>
+        <apex:actionStatus id="formActionStatus" onstart="disableSubmitButtons(true)" onstop="disableSubmitButtons(false)">
+            <apex:facet name="start">
+              <apex:outputPanel >&nbsp;
+                <apex:image value="{!URLFOR($Resource.pymt__PaymentConnect, 'images/icon-spinner.gif')}"
+                          style="vertical-align:middle;" alt="" />
+                &nbsp;Processing... </apex:outputPanel>
+            </apex:facet>
+            <apex:facet name="stop">
+              <apex:image value="{!URLFOR('/s.gif')}" alt="" style="height:17px;" />
+            </apex:facet>
+        </apex:actionStatus>
+        <script>
+        function disableSubmitButtons(flag) {
+           var submitBtn1 = document.getElementById('{!$Component.mainForm.createSubscription}');
+           var submitBtn2 = document.getElementById('{!$Component.mainForm.createSubscription2}');
+           if(submitBtn1 !== null) {
+             submitBtn1.disabled = flag;
+           }
+           if(submitBtn2 !== null) {
+             submitBtn2.disabled = flag;
+             if (flag == true) {
+               submitBtn2.className = 'css-button-disabled';
+             } else {
+               submitBtn2.className = 'css-button'
+             }
+           }
+         }
+
+        </script>
+      </div>
+
+    </apex:form>
+
+   <apex:outputPanel id="debugInfo" rendered="{!siteSettings.pymt__Debug__c == true}">
+   <br/><br/>
+   Debug Mode: finish url = {!finishURL}, Processor Connection = {!connection.name}, Batch Processing Action = {!profile.pymt__Scheduled_Processing_Action__c}
+   </apex:outputPanel>
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+
+    </apex:define>
+</apex:composition>
+</apex:page>

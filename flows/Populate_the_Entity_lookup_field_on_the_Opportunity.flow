@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>Populate the Entity lookup field</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Populate the Entity lookup field</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>Populate_the_Entity_lookup_field</actionName>
+        <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>EntityID_From_SaleEntity</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>EntityID_From_SaleEntity</name>
+            <value>
+                <elementReference>myVariable_current.Entity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>OppID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>OppID</name>
+            <value>
+                <elementReference>myVariable_current.Opportunity__r.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_pmetdec</targetReference>
+            </connector>
+            <label>State Renewal</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_1_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>100</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myRule_1_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_1_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Previously Met - Prev</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND
+(
+        $Setup.BatchRunning__c.Batch_Name__c = &quot;OpportunityBatch&quot;,
+        $Setup.BatchRunning__c.Is_Batch_Running__c  = False,
+
+	OR
+	(
+		[SaleEntity__c].Opportunity__c.RecordTypeId = &quot;012U0000000DhZQIA0&quot;,
+		[SaleEntity__c].Opportunity__c.RecordTypeId = &quot;012U0000000DhZzIAK&quot;,
+		ISCHANGED([SaleEntity__c].Entity__c ) 
+	),
+
+	[SaleEntity__c].Opportunity__c.Name &lt;&gt; &quot;Corporate Headquarters Renewal&quot;,
+	[SaleEntity__c].Opportunity__c.Name &lt;&gt; &quot;Corporate Assistance Program Renewal&quot;,
+
+	ISBLANK([SaleEntity__c].Opportunity_Entity__c),
+	ISBLANK([SaleEntity__c].Opportunity__c.Entity__c ),
+	[SaleEntity__c].Opportunity__c.Populate_the_Entity_lookup_Processed__c =False,
+	$User.Id &lt;&gt; &quot;005U0000001DC1y&quot;,
+	$User.Id &lt;&gt; CASESAFEID(&quot;005U0000001DC1y&quot;),
+	$Profile.Id &lt;&gt; &quot;00e0B000000uLuC&quot;,
+	$Profile.Id &lt;&gt; CASESAFEID(&quot;00e0B000000uLuC&quot;)
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND
+(
+        {!$Setup.BatchRunning__c.Batch_Name__c} = &quot;OpportunityBatch&quot;,
+        {!$Setup.BatchRunning__c.Is_Batch_Running__c}  = False,
+
+	OR
+	(
+		{!myVariable_current.Opportunity__r.RecordTypeId} = &quot;012U0000000DhZQIA0&quot;,
+		{!myVariable_current.Opportunity__r.RecordTypeId} = &quot;012U0000000DhZzIAK&quot;,
+		ISCHANGED({!myVariable_current.Entity__c} ) 
+	),
+
+	{!myVariable_current.Opportunity__r.Name} &lt;&gt; &quot;Corporate Headquarters Renewal&quot;,
+	{!myVariable_current.Opportunity__r.Name} &lt;&gt; &quot;Corporate Assistance Program Renewal&quot;,
+
+	ISBLANK({!myVariable_current.Opportunity_Entity__c}),
+	ISBLANK({!myVariable_current.Opportunity__r.Entity__c} ),
+	{!myVariable_current.Opportunity__r.Populate_the_Entity_lookup_Processed__c} =False,
+	{!$User.Id} &lt;&gt; &quot;005U0000001DC1y&quot;,
+	{!$User.Id} &lt;&gt; CASESAFEID(&quot;005U0000001DC1y&quot;),
+	{!$Profile.Id} &lt;&gt; &quot;00e0B000000uLuC&quot;,
+	{!$Profile.Id} &lt;&gt; CASESAFEID(&quot;00e0B000000uLuC&quot;)
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND
+(
+        $Setup.BatchRunning__c.Batch_Name__c = &quot;OpportunityBatch&quot;,
+        $Setup.BatchRunning__c.Is_Batch_Running__c  = False,
+
+	OR
+	(
+		[SaleEntity__c].Opportunity__c.RecordTypeId = &quot;012U0000000DhZQIA0&quot;,
+		[SaleEntity__c].Opportunity__c.RecordTypeId = &quot;012U0000000DhZzIAK&quot;,
+		ISCHANGED([SaleEntity__c].Entity__c ) 
+	),
+
+	[SaleEntity__c].Opportunity__c.Name &lt;&gt; &quot;Corporate Headquarters Renewal&quot;,
+	[SaleEntity__c].Opportunity__c.Name &lt;&gt; &quot;Corporate Assistance Program Renewal&quot;,
+
+	ISBLANK([SaleEntity__c].Opportunity_Entity__c),
+	ISBLANK([SaleEntity__c].Opportunity__c.Entity__c ),
+	[SaleEntity__c].Opportunity__c.Populate_the_Entity_lookup_Processed__c =False,
+	$User.Id &lt;&gt; &quot;005U0000001DC1y&quot;,
+	$User.Id &lt;&gt; CASESAFEID(&quot;005U0000001DC1y&quot;),
+	$Profile.Id &lt;&gt; &quot;00e0B000000uLuC&quot;,
+	$Profile.Id &lt;&gt; CASESAFEID(&quot;00e0B000000uLuC&quot;)
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>AND
+(
+        {!$Setup.BatchRunning__c.Batch_Name__c} = &quot;OpportunityBatch&quot;,
+        {!$Setup.BatchRunning__c.Is_Batch_Running__c}  = False,
+
+	OR
+	(
+		{!myVariable_old.Opportunity__r.RecordTypeId} = &quot;012U0000000DhZQIA0&quot;,
+		{!myVariable_old.Opportunity__r.RecordTypeId} = &quot;012U0000000DhZzIAK&quot;,
+		ISCHANGED({!myVariable_old.Entity__c} ) 
+	),
+
+	{!myVariable_old.Opportunity__r.Name} &lt;&gt; &quot;Corporate Headquarters Renewal&quot;,
+	{!myVariable_old.Opportunity__r.Name} &lt;&gt; &quot;Corporate Assistance Program Renewal&quot;,
+
+	ISBLANK({!myVariable_old.Opportunity_Entity__c}),
+	ISBLANK({!myVariable_old.Opportunity__r.Entity__c} ),
+	{!myVariable_old.Opportunity__r.Populate_the_Entity_lookup_Processed__c} =False,
+	{!$User.Id} &lt;&gt; &quot;005U0000001DC1y&quot;,
+	{!$User.Id} &lt;&gt; CASESAFEID(&quot;005U0000001DC1y&quot;),
+	{!$Profile.Id} &lt;&gt; &quot;00e0B000000uLuC&quot;,
+	{!$Profile.Id} &lt;&gt; CASESAFEID(&quot;00e0B000000uLuC&quot;)
+)</expression>
+    </formulas>
+    <interviewLabel>Populate_the_Entity_lookup_field_on_the_Opportunity-31_InterviewLabel</interviewLabel>
+    <label>Populate the Entity lookup field</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>SaleEntity__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <startElementReference>myDecision</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>SaleEntity__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SaleEntity__c</objectType>
+    </variables>
+</Flow>

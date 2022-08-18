@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_34212045</developerName>
+        <masterLabel>Teams</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>ASSIGNED</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Maggie Khermandayan</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Kambria Stephen</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Joseph Sacco</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Janey Agustin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mayra De Arcos</sourceValue>
+            </sourceValues>
+            <value>Coordinators</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Toni Covey</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Petros Leventis</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Maria Mendiola</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Eliot Thomas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Shantai Wyatt</sourceValue>
+            </sourceValues>
+            <value>Toni Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Jennifer Phipps</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Christos Zattas</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ian Hanuscin</sourceValue>
+            </sourceValues>
+            <value>Jennifer Team</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Rob McConnell</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Tracy Cooklin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Brad Pues</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Jeff Talbert</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Charles Rogler</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Eric Day</sourceValue>
+            </sourceValues>
+            <value>Misc</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Lindsey Vaughn</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Mariel Garvin</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Emily Dacanay</sourceValue>
+            </sourceValues>
+            <value>Ronnie Team</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ACCOUNT</field>
+    </columns>
+    <columns>
+        <field>CREATED_BY</field>
+    </columns>
+    <columns>
+        <field>CASE</field>
+    </columns>
+    <columns>
+        <field>CASE_SUBJECT</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <columns>
+        <field>PRIORITY</field>
+    </columns>
+    <columns>
+        <field>TASK</field>
+    </columns>
+    <columns>
+        <field>DESCRIPTION</field>
+    </columns>
+    <columns>
+        <field>WHAT_NAME</field>
+    </columns>
+    <description>Tax Prep Task Matrix</description>
+    <filter>
+        <criteriaItems>
+            <column>ASSIGNED</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>Ronnie,Sacco,Joe,Kambria,Janey,Phipps,Day,Jeff,Petros,Covey,Hanuscin,Emily,Mariel,Thomas,Mendiola,Lindsey,Charles,Christos,Cooklin,wyatt,mayra</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>1120,1040,1065</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_34212045</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ASSIGNED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax Prep Task Matrix</name>
+    <params>
+        <name>closed</name>
+        <value>open</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>te</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

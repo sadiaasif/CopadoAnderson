@@ -1,0 +1,37 @@
+<apex:page controller="AddPlans">
+<apex:form id="attendanceForm">
+	<apex:pageBlock id="addTerms" title="Add Services">
+    	<apex:pagemessages ></apex:pagemessages>
+        <apex:pageBlockButtons >
+        	<apex:commandButton value="Save" action="{!save}" />
+        	<apex:commandButton value="Save & Close" action="{!saveClose}" />
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockTable var="OLI" value="{!lstOppyLines}" cellpadding="2" border="0" id="mypbtable">
+                <apex:column headerValue="Product" width="25%">
+                    <apex:outputField value="{!OLI.product.Name}"/>
+                </apex:column>
+                <apex:column headerValue="Family"  width="25%">
+                    <apex:outputField value="{!OLI.product.Family}"/>
+                </apex:column>
+                <apex:column headerValue="Entity Type"  width="25%">
+                    <apex:outputField value="{!OLI.product.Entity_Type__c}"/>
+                </apex:column>
+                <apex:column headerValue="Quantity" width="10%">
+                    <apex:inputField value="{!OLI.OLI.Quantity}" style="width:40px;"/>
+                </apex:column>
+                <apex:column headerValue="Sales Price" width="10%">
+                    <apex:inputField value="{!OLI.OLI.UnitPrice}" style="width:65px;"/>
+                </apex:column>
+                <apex:column headerValue="Date">
+                    <apex:inputField value="{!OLI.OLI.ServiceDate}"/>
+                </apex:column>
+                <apex:column headerValue="Line Description">
+                    <apex:inputField value="{!OLI.OLI.Description}"/> 
+                </apex:column>
+                
+        </apex:pageBlockTable> 
+            
+	</apex:pageBlock>
+</apex:form>
+</apex:page>

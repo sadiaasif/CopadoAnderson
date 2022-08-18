@@ -1,0 +1,87 @@
+<apex:page action="{!getAccountStatus}" tabStyle="zkusps__Preference__c" showHeader="false" sidebar="false" standardController="zkusps__Preference__c" extensions="zkusps.GetAccountStatusButtonController">
+<!-- NOTE: not a Cross-Site Request Forgery (CSRF) risk. No page URL parameters used in action method associated -->
+    <apex:stylesheet value="{!$Resource.zkusps__WizardCSS}"/>
+
+    <apex:sectionHeader title="Account Status"/>
+
+    <apex:form >
+        <apex:pageBlock id="accountStatusPageBlock">
+
+            <!-- Messages -->
+            <apex:outputPanel id="accountStatusMessages">
+                <c:MessageListDisplay msgList="{!MessageList}"/>
+            </apex:outputPanel>
+
+
+            <!-- Account Status Section -->
+            <apex:outputPanel id="accountStatusDetails">
+            <apex:pageBlockSection collapsible="false" columns="1" rendered="{!AccountStatusDetailsRendered}">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Account Status Details "/>
+                        <apex:actionStatus id="acctStatusDetailsStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Account ID -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Account ID"/>
+                    <apex:outputText value="{!WsrGetAccountStatus.accountId}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Account Status -->
+                <!-- NOTE: Dont show Account Status from return. Express1 indicated it is not used and always just say 'A' -->
+
+                <!-- Postage Balance -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Postage Balance (USD)"/>
+                    <apex:outputText value="{!WsrGetAccountStatus.postageBalanceFormatted}"/>
+                </apex:pageBlockSectionItem>
+
+                <!-- Ascending Balance -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Ascending Balance (Total Amount of Postage Printed)"/>
+                    <apex:outputText value="{!WsrGetAccountStatus.ascendingBalanceFormatted}"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+
+
+            <!-- Buy Postage Section -->
+            <apex:pageBlockSection collapsible="false" columns="1">
+                <!-- Section Status -->
+                <apex:facet name="header">
+                    <apex:outputPanel >
+                        <apex:outputLabel styleClass="sectionTitle" value="Buy Postage "/>
+                        <apex:actionStatus id="buyPostageStatus">
+                            <apex:facet name="start">
+                                <apex:image style="width:16px;height:16px" id="prefLoadImage" value="{!$Resource.zkusps__LoadingImage}"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <!-- Buy Postage Amount -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Buy Amount (USD)"/>
+                    <apex:inputField value="{!BillingPreference.zkusps__lastBoughtPostageAmount__c}"/>
+                </apex:pageBlockSectionItem>
+                <!-- Buy Postage Button -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <!-- rerenders whole page -->
+                    <apex:commandButton action="{!buyPostage}" value="Buy Postage" disabled="{!AccountStatusDisabled}" rerender="accountStatusPageBlock" status="buyPostageStatus"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection><p/>
+
+
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

@@ -1,0 +1,15 @@
+<apex:page showHeader="true" sidebar="true" standardcontroller="enxootr__Test_Run__c"
+           extensions="enxootr.AbortTestRunController" lightningStylesheets="true">
+    <apex:pageMessages id="msg"/>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageMessage severity="confirm" summary="{!$Label.enxootr__testrunabortconfirmation}" rendered="{!thisTestRun.enxootr__Status__c == 'In Progress'}">
+                <apex:commandButton action="{!abortTests}" title="{!$Label.enxootr__confirm}" value="{!$Label.enxootr__confirm}"/>
+                <apex:commandButton action="{!returnBack}" title="{!$Label.enxootr__return}" value="{!$Label.enxootr__return}"/>
+            </apex:pageMessage>
+            <apex:pageMessage severity="info" summary="{!$Label.enxootr__testsalreadyfinished}" rendered="{!thisTestRun.enxootr__Status__c != 'In Progress'}">
+                <apex:commandButton action="{!returnBack}" title="{!$Label.enxootr__return}" value="{!$Label.enxootr__return}"/>
+            </apex:pageMessage>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

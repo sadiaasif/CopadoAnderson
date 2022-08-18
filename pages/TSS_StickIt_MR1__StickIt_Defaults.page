@@ -1,0 +1,51 @@
+<apex:page controller="TSS_StickIt_MR1.stickIt_Defaults">
+
+<script type="text/javascript">
+window.onload = function() {
+    window.setTimeout(hideSave, 2500);
+    window.setTimeout(hideDeleted, 2500);
+}
+function hideSave() { document.getElementById('saved').style.display = 'none'; }
+function showSave() { document.getElementById('saved').style.display = ''; }
+function hideDeleted() { document.getElementById('deleted').style.display = 'none'; }
+function showDeleted() { document.getElementById('deleted').style.display = ''; }
+</script>
+<apex:pagemessages />
+<apex:form >
+   
+    <apex:pageBlock title="StickIt Default Settings" rendered="{!canEdit}">
+    <div id="saved"><apex:outputPanel id="saved" style="color: red; font-weight: bold;" rendered="{!$CurrentPage.parameters.saved == '1'}">Save Successful</apex:outputPanel></div>
+    <div id="deleted"><apex:outputPanel id="deleted" style="color: red; font-weight: bold;" rendered="{!$CurrentPage.parameters.deleted == '1'}">Delete Successful</apex:outputPanel></div>
+    <apex:pageBlockButtons location="bottom">
+    <apex:outputPanel id="buttons">
+        <apex:commandButton value="Save" action="{!save}" rendered="{!objectSelection <> '' && templateSelection <> '' && fieldSelection <> ''}" />
+        <apex:commandButton value="Cancel" action="{!cancel}"/>
+        <apex:commandButton value="Delete" action="{!del}" rendered="{!settingId != NULL}" onclick="return confirm('Are you sure you want to delete these settings?');"/>
+    </apex:outputPanel>
+    </apex:pageBlockButtons>
+    
+        <apex:pageBlockSection columns="1" collapsible="false">
+            <apex:selectList value="{!objectSelection}" size="1" label="Object: ">
+                <apex:selectOptions value="{!objects}" />
+                <apex:actionSupport event="onchange" action="{!getSettings}" reRender="settings,buttons" />
+            </apex:selectList>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        
+        <apex:outputPanel id="settings">
+            <apex:pageBlockSection title="Object Defaults" rendered="{!objectSelection <> ''}" columns="2">
+                <apex:selectList value="{!templateSelection}" size="1" label="Default Template: ">
+                    <apex:selectOptions value="{!templates}" />
+                    <apex:actionSupport event="onchange" reRender="buttons"/>
+                </apex:selectList>
+                
+                <apex:selectList value="{!fieldSelection}" size="1" label="Default Field: ">
+                    <apex:selectOptions value="{!fields}" />
+                    <apex:actionSupport event="onchange" reRender="buttons"/>
+                </apex:selectList>
+
+            </apex:pageBlockSection>
+        </apex:outputPanel>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

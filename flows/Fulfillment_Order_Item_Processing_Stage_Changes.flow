@@ -1,0 +1,2848 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <description>Update Active User to Alexandria Lipman</description>
+        <name>Alexandria_Lipman</name>
+        <label>Alexandria Lipman</label>
+        <locationX>5858</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Alexandria Lipman</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Anderson_ServicesX</name>
+        <label>Anderson Services</label>
+        <locationX>1634</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqr</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_Law_Coordinator</name>
+        <label>Assign Law Coordinator</label>
+        <locationX>12194</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Order.Law_Coordinator__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Mail_Clerk</name>
+        <label>Assign Mail Clerk</label>
+        <locationX>5066</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Mail_Clerk__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Processor</name>
+        <label>Assign Processor</label>
+        <locationX>4802</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Processor__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Processor_Reviewer</name>
+        <label>Assign Processor Reviewer</label>
+        <locationX>6650</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Processor_Reviewer</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_BCP_Renewal_Advisor</name>
+        <label>Assign to BCP/Renewal Advisor</label>
+        <locationX>7178</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.BCP_Renewal_Advisor__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_To_Deborah_Lewis</name>
+        <label>Assign_To_Deborah_Lewis</label>
+        <locationX>1370</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0056f00000AH2C0</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_to_Land_Trust_Deed_Admin</name>
+        <label>Assign to Land Trust/Deed Admin</label>
+        <locationX>5594</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Land_Trust_and_Deed_Admin__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_To_Tax_Coordinator</name>
+        <label>Assign To Tax Coordinator</label>
+        <locationX>7442</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Order.Account.Accounting_Coordinators__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignLinvio</name>
+        <label>AssignLinvio</label>
+        <locationX>10610</locationX>
+        <locationY>887</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqrQAA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>AssignLinvioforReviwer</name>
+        <label>AssignLinvioforReviwer</label>
+        <locationX>9818</locationX>
+        <locationY>887</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqrQAA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>BK_Consult_Assignment</name>
+        <label>BK Consult Assignment</label>
+        <locationX>3482</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BK_Consult_Assignment_Formulla</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Book_Active_User</name>
+        <label>Book- Active User</label>
+        <locationX>842</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006ovgeQAA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Bookkeeping_AssignmentX</name>
+        <label>Bookkeeping</label>
+        <locationX>1898</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Bookkeeping_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Bookkeeping_Tax_Form_assignment</name>
+        <label>Bookkeeping - Tax Form</label>
+        <locationX>2162</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BK_TaxForm_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Bookkeeping_Virtual_Assignment</name>
+        <label>Bookkeeping Virtual Assignment</label>
+        <locationX>2426</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BK_Virtual_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Charitable_Registration_Assignment</name>
+        <label>Charitable Registration Assignment</label>
+        <locationX>3746</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CharitableRegistration_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dissolution_Assignment</name>
+        <label>Dissolution</label>
+        <locationX>7970</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dissolution_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Formation_Assignment</name>
+        <label>Formation</label>
+        <locationX>8234</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formation_Assignment_Formulla</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>IRS_Form_Assignment</name>
+        <label>IRS Form Assignment</label>
+        <locationX>3218</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IRS_Form_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>KMS_Assigned_Assignment</name>
+        <label>KMS Assigned Assignment</label>
+        <locationX>8498</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>KMSAdvisor</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>LandtrustActiveUser</name>
+        <label>LandtrustActiveUser</label>
+        <locationX>11138</locationX>
+        <locationY>1007</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Landtrust_for_Ready_to_draft.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>LandtrustReviewer</name>
+        <label>LandtrustReviewer</label>
+        <locationX>11402</locationX>
+        <locationY>1007</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Landtrust_Final_active_user.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Need_Nominee_Active_User</name>
+        <label>Need Nominee-Active User</label>
+        <locationX>9290</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqrQAA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Need_to_kit</name>
+        <label>Need to kit</label>
+        <locationX>314</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>005U0000003MPji</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Needs_Review_Assignment</name>
+        <label>Needs Review</label>
+        <locationX>578</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006kzcIQAQ</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Pension_Assignment</name>
+        <label>Pension Assignment</label>
+        <locationX>4010</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Pension_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Pension_Termination_Assignment</name>
+        <label>Pension Termination Assignment</label>
+        <locationX>4274</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PensionTermination_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Physical_copy_requested_Active_user</name>
+        <label>Physical copy requested - Active user</label>
+        <locationX>10082</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0056f00000AHrCuAAL</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>ProcessorActiveUser</name>
+        <label>ProcessorActiveUser</label>
+        <locationX>10874</locationX>
+        <locationY>1007</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Processor_name.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Put_Completed_Date</name>
+        <label>Put Completed Date</label>
+        <locationX>6782</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Completed_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Today</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StageUpdates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Ready_for_KMS_Assignment</name>
+        <label>Ready for KMS Assignment</label>
+        <locationX>8762</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqrQAA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Renewal_Advisor_CSC_AssignmentX</name>
+        <label>Renewal Advisor/CSC Assignment</label>
+        <locationX>4538</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Renewal_Advisor_CSC__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Sent_to_Signed_Original</name>
+        <label>Sent to / Signed Original</label>
+        <locationX>9554</locationX>
+        <locationY>1007</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Landtrust_Records.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Due_Date</name>
+        <label>Set Due Date</label>
+        <locationX>5726</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Pension_BusinessDays</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StageUpdates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Due_Date_0</name>
+        <label>Set Due Date</label>
+        <locationX>5990</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PenTermination_BusinessDays</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StageUpdates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Strategy</name>
+        <label>Strategy</label>
+        <locationX>2954</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>StrategySession_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>- Priority = High
+- Active User = Linvio Installation
+- Processor = {Blank}</description>
+        <name>Update</name>
+        <label>Update</label>
+        <locationX>6254</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Processing_Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqrQAA</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Processor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Null</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StageUpdates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Active_User</name>
+        <label>Update Active User</label>
+        <locationX>50</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Fulfillment_Coordinator__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Active_User_0</name>
+        <label>Update Active User</label>
+        <locationX>5792</locationX>
+        <locationY>1919</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_User.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Active_User_0_0</name>
+        <label>Update Active User</label>
+        <locationX>6056</locationX>
+        <locationY>1919</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0050B000006naqrQAA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Active_User_0_0_0</name>
+        <label>Update Active User</label>
+        <locationX>5528</locationX>
+        <locationY>1919</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>005U0000001DC1yIAG</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Mail_Clerk</name>
+        <label>Update Mail Clerk</label>
+        <locationX>6518</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Mail_Clerk__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ana Hodgers</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StageUpdates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_OSI_Due_date</name>
+        <label>Update OSI Due date</label>
+        <locationX>5462</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Due_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Deed_Trust_DueDate_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StageUpdates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>updateActiveUserCheckbox</name>
+        <label>updateActiveUserCheckbox</label>
+        <locationX>5924</locationX>
+        <locationY>1559</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_User_Updated__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_User</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>VIP_Processor_Assignment</name>
+        <label>VIP Processor Assignment</label>
+        <locationX>6122</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.VIP_Processor__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>WPB_AssignmentX</name>
+        <label>WPB</label>
+        <locationX>2690</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>WPB_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Assign_To_User_Exists</name>
+        <label>Assign To User Exists?</label>
+        <locationX>6254</locationX>
+        <locationY>1439</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AssignTo</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AssignTo</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>OSI_ActiveUser</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>updateActiveUserCheckbox</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_User</name>
+        <label>Check User</label>
+        <locationX>5924</locationX>
+        <locationY>1799</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>User_Null_Bookkeeping</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bookkeeping</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_User</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Active_User_0_0_0</targetReference>
+            </connector>
+            <label>User Null - Bookkeeping</label>
+        </rules>
+        <rules>
+            <name>User_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Active_User_0</targetReference>
+            </connector>
+            <label>User not null</label>
+        </rules>
+        <rules>
+            <name>User_is_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Active_User_0_0</targetReference>
+            </connector>
+            <label>User is Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsLandTrustReviewer</name>
+        <label>IsLandTrustReviewer</label>
+        <locationX>9686</locationX>
+        <locationY>767</locationY>
+        <defaultConnector>
+            <targetReference>AssignLinvioforReviwer</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Having_Value</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Landtrust_Records</targetReference>
+            </connector>
+            <label>Having Value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Other_Updates</name>
+        <label>Other Updates</label>
+        <locationX>6254</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>StageUpdates</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Land_Trust_Deed_Due_Date</name>
+            <conditionLogic>1 AND 2 AND ( 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted to Processing</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_OSI_Due_date</targetReference>
+            </connector>
+            <label>Land Trust/Deed Due Date</label>
+        </rules>
+        <rules>
+            <name>Pensions_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pensions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Due_Date</targetReference>
+            </connector>
+            <label>Pensions</label>
+        </rules>
+        <rules>
+            <name>Pension_Termination1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pension Termination</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Due_Date_0</targetReference>
+            </connector>
+            <label>Pension Termination</label>
+        </rules>
+        <rules>
+            <name>Land_Trust_Complete_awaiting_deed_prep</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust Complete, awaiting deed prep</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update</targetReference>
+            </connector>
+            <label>Land Trust Complete, awaiting deed prep</label>
+        </rules>
+        <rules>
+            <name>Update_Mail_clerk_to_Ana</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Mail_Clerk__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Mail_Clerk</targetReference>
+            </connector>
+            <label>Update Mail clerk to Ana</label>
+        </rules>
+        <rules>
+            <name>Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CompletedCheck</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Put_Completed_Date</targetReference>
+            </connector>
+            <label>Completed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Ready_To_Draft_Active_user_check</name>
+        <label>Ready To Draft - Active user check</label>
+        <locationX>11138</locationX>
+        <locationY>767</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processor__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignLinvio</targetReference>
+            </connector>
+            <label>Linvio</label>
+        </rules>
+        <rules>
+            <name>Processor</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processor__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Processor_name</targetReference>
+            </connector>
+            <label>Processor</label>
+        </rules>
+        <rules>
+            <name>Landtrust</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processor__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Landtrust_for_Ready_to_draft</targetReference>
+            </connector>
+            <label>Landtrust</label>
+        </rules>
+        <rules>
+            <name>LandtrustFinal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Land_Trust_Reviewer__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processor__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Landtrust_Final_active_user</targetReference>
+            </connector>
+            <label>LandtrustFinal</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>StageUpdates</name>
+        <label>Stage Updates</label>
+        <locationX>6254</locationX>
+        <locationY>647</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Fulfillment_Coordinator</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Fulfillment_Coordinator_Check</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Active_User</targetReference>
+            </connector>
+            <label>Fulfillment Coordinator</label>
+        </rules>
+        <rules>
+            <name>Need_to_Kit_Decision</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Need to Kit</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Active_User__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>005U0000003MPji</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Need_to_kit</targetReference>
+            </connector>
+            <label>Need to Kit</label>
+        </rules>
+        <rules>
+            <name>Needs_Review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Needs Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Active_User__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>0056f00000AZcEgAAL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Needs_Review_Assignment</targetReference>
+            </connector>
+            <label>Needs Review</label>
+        </rules>
+        <rules>
+            <name>Book</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Book</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Book_Active_User</targetReference>
+            </connector>
+            <label>Book</label>
+        </rules>
+        <rules>
+            <name>Unlimited_WY_LC</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product2.ASID__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A11958</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to LC</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>Unlimited WY LC</label>
+        </rules>
+        <rules>
+            <name>Assign_To_Deborah</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product2.ASID__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A11958</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready To Draft</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_To_Deborah_Lewis</targetReference>
+            </connector>
+            <label>Assign To Deborah</label>
+        </rules>
+        <rules>
+            <name>Anderson_Services</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Anderson Services</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Anderson_ServicesX</targetReference>
+            </connector>
+            <label>Anderson Services</label>
+        </rules>
+        <rules>
+            <name>Bookkeeping</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bookkeeping</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bookkeeping_AssignmentX</targetReference>
+            </connector>
+            <label>Bookkeeping</label>
+        </rules>
+        <rules>
+            <name>Bookkeeping_Tax_Form</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bookkeeping Tax Form</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bookkeeping_Tax_Form_assignment</targetReference>
+            </connector>
+            <label>Bookkeeping Tax Form</label>
+        </rules>
+        <rules>
+            <name>Bookkeeping_Virtual</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bookkeeping Virtual</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Started</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bookkeeping_Virtual_Assignment</targetReference>
+            </connector>
+            <label>Bookkeeping Virtual</label>
+        </rules>
+        <rules>
+            <name>WPB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WPB</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>WPB_AssignmentX</targetReference>
+            </connector>
+            <label>WPB</label>
+        </rules>
+        <rules>
+            <name>StrategySession</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Strategy Session</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Strategy</targetReference>
+            </connector>
+            <label>Strategy</label>
+        </rules>
+        <rules>
+            <name>IRS_Form</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IRS Form</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IRS_Form_Assignment</targetReference>
+            </connector>
+            <label>IRS Form</label>
+        </rules>
+        <rules>
+            <name>Bk_Consult</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BK Consult</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BK_Consult_Assignment</targetReference>
+            </connector>
+            <label>Bk Consult</label>
+        </rules>
+        <rules>
+            <name>Charitable_Registration</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Charitable Registration</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Charitable_Registration_Assignment</targetReference>
+            </connector>
+            <label>Charitable Registration</label>
+        </rules>
+        <rules>
+            <name>Pensions</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pensions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Pension_Assignment</targetReference>
+            </connector>
+            <label>Pensions</label>
+        </rules>
+        <rules>
+            <name>Pension_Termination</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pension Termination</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Pension_Termination_Assignment</targetReference>
+            </connector>
+            <label>Pension Termination</label>
+        </rules>
+        <rules>
+            <name>Renewal_Advisor_CSC_Assignment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to Renewal Advisors/CSC</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RA_CSC_Services</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>$Record.Product2.Name</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Renewal_Advisor_CSC_AssignmentX</targetReference>
+            </connector>
+            <label>Renewal Advisor/CSC Assignment</label>
+        </rules>
+        <rules>
+            <name>Land_Trust_Deed_Processor</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4 OR 5 OR 6 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready To Draft</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Signed Original Received</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to Ship to County</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sent to County</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Processor</targetReference>
+            </connector>
+            <label>Land Trust/Deed Processor</label>
+        </rules>
+        <rules>
+            <name>Land_Trust_Deed_MC</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Need to Kit</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Mail_Clerk</targetReference>
+            </connector>
+            <label>Land Trust/Deed MC</label>
+        </rules>
+        <rules>
+            <name>Land_Trust_Deed_LC</name>
+            <conditionLogic>(1 AND (3 OR 4 ) OR  (2 AND 3) )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to LC</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Refunded</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>Land Trust/Deed LC</label>
+        </rules>
+        <rules>
+            <name>Land_Trust_Deed_Admin</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to Ship to Client</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_to_Land_Trust_Deed_Admin</targetReference>
+            </connector>
+            <label>Land Trust/Deed Admin</label>
+        </rules>
+        <rules>
+            <name>LT_Ready_to_Ship_Email_Alexandria</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to Ship - Email</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Alexandria_Lipman</targetReference>
+            </connector>
+            <label>LT - Ready to Ship - Email - Alexandria</label>
+        </rules>
+        <rules>
+            <name>VIP_Processor</name>
+            <conditionLogic>1 OR (2 AND (3 OR 4 OR 5))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to VIP Processor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ASID__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A11958</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted to SOS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Obtain EIN</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Draft Assignments</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>VIP_Processor_Assignment</targetReference>
+            </connector>
+            <label>VIP Processor</label>
+        </rules>
+        <rules>
+            <name>To_Processor</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Processor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted to SOS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FA Complete, awaiting EIN &amp; BD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>EIN Complete, awaiting FA &amp; BD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FA &amp; BD Complete, awaiting EIN</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>EIN &amp; BD Complete, awaiting FA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FA &amp; EIN Complete, awaiting BD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BD Complete, awaiting FA &amp; EIN</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to Processor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Binder Shipped, Back to Processor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OG Docs Ordered</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Drafted, STC, OG Docs Rec&apos;d</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Drafted, STC, Awaiting OG Docs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CS Docs Rec&apos;d, awaiting OG Docs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OG Docs Rec&apos;d, awaiting CS Docs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Drafted, STC</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tax Clearance Letter requested</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting on Tax Clearance</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Processor</targetReference>
+            </connector>
+            <label>To Processor</label>
+        </rules>
+        <rules>
+            <name>Processor_Reviewer</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Supervisor Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Processor_Reviewer</targetReference>
+            </connector>
+            <label>Processor Reviewer</label>
+        </rules>
+        <rules>
+            <name>Mail_Clerk</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 ) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RTS, Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>RTS, awaiting FA and/or EIN</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to Ship</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to Submit to IRS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to File</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Mail_Clerk</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Mail Clerk</label>
+        </rules>
+        <rules>
+            <name>BCP_Renewal_Advisor</name>
+            <conditionLogic>1 OR 2 OR 3 OR 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Admin Dissolved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Needs Annual Report</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to BCP/Renewal Advisor</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_to_BCP_Renewal_Advisor</targetReference>
+            </connector>
+            <label>BCP/Renewal Advisor</label>
+        </rules>
+        <rules>
+            <name>TaxCoordinator</name>
+            <conditionLogic>(1 OR 3) AND (2 OR 4) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tax</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Started</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tax Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dissolution Completed - Final Tax</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>KMS Scheduled / Link Sent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_To_Tax_Coordinator</targetReference>
+            </connector>
+            <label>Tax Coordinator</label>
+        </rules>
+        <rules>
+            <name>To_Law_Coordinator</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 11 ) AND (9 AND 10 AND 12 AND 13)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to CSR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Name Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Need to Kit</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Started</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Attorney Consult Scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back to LC</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Needs Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Refunded</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Tax</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Tax Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Need SS-4&amp;auth/SSN</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Pensions</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Pension Termination</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>To Law Coordinator</label>
+        </rules>
+        <rules>
+            <name>Dissolution</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dissolution</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dissolution_Assignment</targetReference>
+            </connector>
+            <label>Dissolution</label>
+        </rules>
+        <rules>
+            <name>Formation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Formation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Formation_Assignment</targetReference>
+            </connector>
+            <label>Formation</label>
+        </rules>
+        <rules>
+            <name>KMS_Assigned</name>
+            <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KMS Assigned</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ProductCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Platinum Membership</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ProductCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3-Year Tax Return Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>KMS_Assigned_Assignment</targetReference>
+            </connector>
+            <label>KMS Assigned</label>
+        </rules>
+        <rules>
+            <name>Ready_for_KMS</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KMS Scheduled / Link Sent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ProductCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3-Year Tax Return Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ProductCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Platinum Membership</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Ready_for_KMS_Assignment</targetReference>
+            </connector>
+            <label>Ready for KMS</label>
+        </rules>
+        <rules>
+            <name>KMS_Deliverable_Uploaded</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KMS Deliverable Uploaded</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ProductCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Platinum Membership</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product2.ProductCode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>3-Year Tax Return Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>KMS Deliverable Uploaded</label>
+        </rules>
+        <rules>
+            <name>Need_Nominee_Signature</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Need Nominee Signature</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Documents In Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted to Processing</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Need_Nominee_Active_User</targetReference>
+            </connector>
+            <label>Need Nominee Signature</label>
+        </rules>
+        <rules>
+            <name>Signed_Original_Trust_Received</name>
+            <conditionLogic>1 AND ( 2 OR  3 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Signed Original Trust Received</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sent to Client for Signatures</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IsLandTrustReviewer</targetReference>
+            </connector>
+            <label>Signed Original Trust Received</label>
+        </rules>
+        <rules>
+            <name>Physical_Copy_Requested</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Physical Copy Requested</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Physical_copy_requested_Active_user</targetReference>
+            </connector>
+            <label>Physical Copy Requested</label>
+        </rules>
+        <rules>
+            <name>Stalled_Q_Docs</name>
+            <conditionLogic>1 AND ( 2 OR 3 OR 4 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting on Q/Docs</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Stalled - Client</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Stalled - Internal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>Stalled/Q Docs</label>
+        </rules>
+        <rules>
+            <name>Ready_to_Draft_tacomo_vegas</name>
+            <conditionLogic>1 AND  ( 2 OR 3 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Land Trust</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to draft - Tacoma</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready to Draft - Vegas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Ready_To_Draft_Active_user_check</targetReference>
+            </connector>
+            <label>Ready to Draft - tacomo/ vegas</label>
+        </rules>
+        <rules>
+            <name>Bookkeeping_Virtual_with_stage_Not_Started</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bookkeeping Virtual</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Started</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>Bookkeeping Virtual with stage Not Started</label>
+        </rules>
+        <rules>
+            <name>Collect_KMS_Docs</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Collect KMS Docs</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Law_Coordinator</targetReference>
+            </connector>
+            <label>Collect KMS Docs</label>
+        </rules>
+    </decisions>
+    <description>Author: Umar Aziz
+Change Description: Changes for Case#00212267, # 00215445 , #00219386, #00220958 , #00219267, #00220254
+Date: 8/15/2022</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>BK_Consult_Assignment_Formulla</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot; , Text( {!$Record.Bookkeeping_Admin__c} ) ,
+&quot;Schedulling In Progress&quot;, Text( {!$Record.Bookkeeping_Admin__c} )  ,
+&quot;BKG Consult Scheduled&quot; , Text( {!$Record.Bookkeeping_Onboarder__c} ) ,
+&quot;BKG Consult Completed&quot;, Text( {!$Record.Bookkeeping_Admin__c} ),
+&quot;Agreement Sent&quot;, Text({!$Record.Bookkeeping_Admin__c}) ,
+&quot;Agreement Received&quot; , Text( {!$Record.Bookkeeping_Reviewer__c} ) ,
+&quot;Bookkeeper Assigned&quot;, Text({!$Record.Bookkeeping_Reviewer__c} ) ,
+NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>BK_TaxForm_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot; , &quot;Anderson Advisors&quot;,
+&quot;Bookkeeper Assigned&quot;, Text({!$Record.Bookkeeper__c}) ,
+&quot;In Progress&quot; , Text({!$Record.Bookkeeper__c}) ,
+&quot;Review&quot;, Text({!$Record.Bookkeeping_Reviewer__c}),
+&quot;Review Notes&quot;, Text({!$Record.Bookkeeper__c}) ,
+&quot;Waiting on Client&quot; , Text({!$Record.Bookkeeper__c}) ,
+&quot;Send to Client&quot;, Text({!$Record.Bookkeeper__c}) ,
+&quot;Ready to File&quot;, Text({!$Record.Bookkeeping_Reviewer__c}),
+&quot;E-filed&quot; ,  Text({!$Record.Bookkeeper__c}) ,
+&quot;IRS Accepted&quot; , Text({!$Record.Bookkeeper__c}) ,
+&quot;Uploaded to Box&quot; , Text( {!$Record.Bookkeeping_Admin__c} ) , 
+&quot;Completed&quot; , Text({!$Record.Bookkeeper__c}) ,
+NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>BK_Virtual_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, &apos;Anderson Advisors&apos;,
+&quot;Welcome Email&quot;, &apos;Karissa Williams&apos;,
+&quot;Welcome Call Scheduled&quot;, IF( TEXT( {!$Record.Bookkeeping_Onboarder__c} ) = &apos;Roseland Goodman&apos;, &apos;Roseland Goodman&apos;,  &apos;Tavia Harter&apos;),
+&quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Bookkeeping_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, &quot;Anderson Advisors&quot;,
+&quot;Assigned to Supervisor&quot;, Text({!$Record.Bookkeeping_Reviewer__c}) ,
+&quot;Bookkeeper Assigned&quot;, Text({!$Record.Bookkeeper__c}) ,
+&quot;Review Notes&quot;, Text({!$Record.Bookkeeper__c}) ,
+&quot;Review&quot;, Text({!$Record.Bookkeeping_Reviewer__c}) ,
+&quot;Send to Client&quot;, Text({!$Record.Bookkeeper__c}) ,
+&quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>CharitableRegistration_Formula</name>
+        <dataType>String</dataType>
+        <expression>If({!$Record.Product2.Name = &quot;Charitable Solicitation Registration&quot;},
+Case ( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, Text( {!$Record.Non_Profit_Processor__c} ) ,
+&quot;In Progress&quot; , Text( {!$Record.Non_Profit_Processor__c} ) ,
+&quot;Need Information&quot;,  Text( {!$Record.Non_Profit_Processor__c} ) ,
+&quot;In Review&quot; , Text( {!$Record.Non_Profit_Processor__c} ),
+&quot;Sent to Client&quot; , Text( {!$Record.Non_Profit_Processor__c} ) ,
+&quot;Waiting on Client&quot; , Text( {!$Record.Non_Profit_Processor__c} ) ,
+&quot;Completed&quot;, Text( {!$Record.Non_Profit_Processor__c} ),NULL) ,
+Case ( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, Text( {!$Record.Non_Profit_Processor__c} ),
+&quot;In Progress&quot; , Text( {!$Record.Non_Profit_Processor__c} ) ,
+&quot;Completed&quot;, Text( {!$Record.Non_Profit_Processor__c} ),NULL)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>CompletedCheck</name>
+        <dataType>String</dataType>
+        <expression>CASE( {!$Record.Processing_Stage__c} , 
+&quot;Completed&quot; , &quot;TRUE&quot;, 
+&quot;N/A&quot; , &quot;TRUE&quot;, 
+&quot;BCP Scheduled&quot; , &quot;TRUE&quot;, 
+&quot;Exchanged for Other Services&quot; , &quot;TRUE&quot;,
+&quot;Complete, OG Dissolution started&quot; , &quot;TRUE&quot;, 
+&quot;Welcome Call Completed&quot; , &quot;TRUE&quot;, 
+&quot;Client unresponsive&quot; , &quot;TRUE&quot;, 
+&quot;Credit Issued&quot; , &quot;TRUE&quot;, 
+&quot;Future Use&quot; , &quot;TRUE&quot;, 
+&quot;No Response / Unfulfilled &quot; , &quot;TRUE&quot;, 
+NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Deed_Trust_DueDate_Formula</name>
+        <dataType>Date</dataType>
+        <expression>Today() + 14</expression>
+    </formulas>
+    <formulas>
+        <name>Dissolution_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+NOT( ISBLANK( TEXT( {!$Record.Order.Account.Accounting_Coordinators__c} ) )),
+Case( {!$Record.Processing_Stage__c},
+&quot;Dissolution Completed - Final Tax&quot; ,  Text({!$Record.Order.Account.Accounting_Coordinators__c}) ,
+Null
+),
+&quot;Linvio Installation&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Due_Date_update_on_Land_trust_Deed_Formula</name>
+        <dataType>Boolean</dataType>
+        <expression>ISPICKVAL( {!$Record.Type__c} , &apos;Deed&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>Formation_Assignment_Formulla</name>
+        <dataType>String</dataType>
+        <expression>Case ( {!$Record.Processing_Stage__c},
+&quot;Solicitation Registration&quot; , &quot;Savannah Wallace&quot;,
+Null
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Fulfillment_Coordinator_Check</name>
+        <dataType>Boolean</dataType>
+        <expression>AND ( 
+ISPICKVAL ( {!$Record.Processing_Stage__c} , &quot;Back to LC&quot; ) ,
+NOT( ISBLANK ( TEXT ( {!$Record.Fulfillment_Coordinator__c} ) )) ,
+OR(
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Certified Copy&quot; ), 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Change Filings&quot; ),
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Deed&quot; ), 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Dissolution&quot;) ,
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Document&quot;) , 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Foreign Filings&quot;) , 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Formation&quot;) , 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;IRS Form&quot;) , 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Land Trust&quot;) , 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;RA Change&quot;) , 
+ISPICKVAL ( {!$Record.Type__c} ,&quot;Reinstatement&quot;)
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IRS_Form_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case ( {!$Record.Processing_Stage__c},
+&quot;Back to BCP/Renewal Advisor&quot; , TEXT( {!$Record.BCP_Renewal_Advisor__c} ) ,
+&quot;Back to LC&quot; , TEXT( {!$Record.Order.Law_Coordinator__c} ) ,
+&quot;Back to Processor&quot; ,  TEXT( {!$Record.Processor__c} ) ,
+&quot;Back to VIP Processor&quot; , TEXT( {!$Record.VIP_Processor__c} ) ,
+&quot;Completed&quot; ,  TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+&quot;Credit Issued&quot; , &quot;&quot; ,
+&quot;Drafted, STC&quot; , TEXT( {!$Record.Order.Law_Coordinator__c} ) ,
+&quot;Exchanged for Other Services&quot; , &quot;&quot; ,
+&quot;Future Use&quot; , &quot;&quot; ,
+&quot;Kitted&quot; , &quot;&quot; ,
+&quot;Need to Kit&quot; , &quot;Ana Hodgers&quot; ,
+&quot;Need to Ship&quot; , &quot;&quot; ,
+&quot;No Response/Unfulfilled&quot; , &quot;&quot; ,
+&quot;Not Started&quot; , TEXT( {!$Record.Order.Law_Coordinator__c} ) ,
+&quot;Ready to Submit to IRS&quot; , TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+&quot;Refunded&quot; , TEXT( {!$Record.Order.Law_Coordinator__c} ) ,
+&quot;Send to Client&quot; , &quot;&quot; ,
+&quot;Stalled - client&quot; , &quot;&quot; ,
+&quot;Stalled - Internal&quot; , &quot;&quot; ,
+&quot;Submitted to Processing&quot; , TEXT ( {!$Record.Processor__c} ) ,
+&quot;Waiting on Confirmation&quot; , TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+&quot;Need Additional Info.&quot; , TEXT( {!$Record.Order.Law_Coordinator__c} ) ,
+&quot;Ready for Review&quot; , TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+&quot;Review Complete, STC&quot; ,  TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+&quot;Confirmation Received&quot; ,  TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>KMSAdvisor</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+NOT( ISBLANK( TEXT( {!$Record.KMS_Tax_Advisor__c} ) )),
+Case( {!$Record.KMS_Tax_Advisor__c},
+&quot;Barley Bowler&quot; , &quot;0054P00000Ah7jPQAR&quot;,
+&quot;Bradley Calvert&quot;, &quot;0056f00000AGzeQAAT&quot; ,
+&quot;Bryan Freitag&quot; , &quot;0056f00000B1NcPAAV&quot; ,
+&quot;Dana Cummings&quot;, &quot;0056f00000B1MlpAAF&quot;,
+&quot;Eliot Thomas&quot;, &quot;0056f00000AGzepAAD&quot; ,
+&quot;Grant Grajek&quot; , &quot;0056f00000B1MmdAAF&quot; ,
+&quot;Harry Sorensen&quot;, &quot;0056f00000B1IQJAA3&quot; ,
+&quot;Jay Haney&quot;, &quot;0056f00000B1IE8AAN&quot; ,
+&quot;Jeffrey Stulken&quot; ,  &quot;0056f00000B1IEDAA3&quot; ,
+&quot;Kurt Bergfjord&quot; , &quot;0056f00000B1ID0AAN&quot; ,
+&quot;Mark Robbins&quot; , &quot;0056f00000AMDcDAAX&quot; , 
+&quot;Megan Healy&quot; ,&quot;0056f00000B1IC7AAN&quot;  ,
+&quot;Octavious Forson&quot; ,&quot;0056f00000AA52jAAD&quot;  ,
+&quot;Rachel Elder&quot; ,&quot;0056f00000B1IDyAAN&quot;  ,
+NULL ) ,
+&quot;0050B000006naqrQAA&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Null</name>
+        <dataType>String</dataType>
+        <expression>NULL</expression>
+    </formulas>
+    <formulas>
+        <name>OSI_ActiveUser</name>
+        <dataType>String</dataType>
+        <expression>{!$Record__Prior.Active_User__r.FirstName} + &apos; &apos; + {!$Record__Prior.Active_User__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>Pension_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, &apos;Debbie Trentini&apos;,
+&quot;Questionnaire Review&quot; , &apos;Traci Craig&apos;,
+&quot;Initial Pension Call Scheduling&quot; , &apos;Debbie Trentini&apos;,
+&quot;Update WPB - QRP&quot; , &apos;Linvio Installation&apos; ,
+&quot;Pension Drafting&quot; , &apos;Traci Craig&apos; ,
+&quot;Pension Banking Call&quot; , &apos;Debbie Trentini&apos; ,
+&quot;Pension Completion Call&quot; , &apos;Tameka Fulton&apos; ,
+&quot;Stalled - Need More Info&quot; , &apos;Tameka Fulton&apos; ,
+&quot;Stalled - Back to Advisor&quot; , TEXT( {!$Record.Advisor_Admin__c} ) ,
+&quot;Stalled - Back to CSC&quot; , TEXT ( {!$Record.Order.Law_Coordinator__c} ) ,
+&quot;Amendment Call Scheduling&quot; , &apos;Debbie Trentini&apos; ,
+&quot;Pension Amendment Drafting&quot; , &apos;Traci Craig&apos; ,
+&quot;Pension Loan Drafting&quot; , &apos;Traci Craig&apos; ,
+&quot;Waiting on Client&quot; , &apos;Debbie Trentini&apos; ,
+&quot;Sent Back for Info&quot; , &apos;Debbie Trentini&apos; ,
+NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Pension_BusinessDays</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+MOD(  {!PensionDueDate_Formula} - DATE(2022, 05, 01) , 7 ) = 0 , {!PensionDueDate_Formula} + 1,
+IF(
+MOD(  {!PensionDueDate_Formula} - DATE(2022, 05, 01) , 7 ) = 6 , {!PensionDueDate_Formula} + 2,
+{!PensionDueDate_Formula}
+))</expression>
+    </formulas>
+    <formulas>
+        <name>PensionDueDate_Formula</name>
+        <dataType>Date</dataType>
+        <expression>IF( ISPICKVAL( {!$Record.Type__c} , &quot;Pensions&quot; ),
+Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot; ,	 DATEVALUE( {!$Record.CreatedDate} ) +1 , 
+&quot;Questionnaire Review&quot; ,  Today()+1 ,
+&quot;Initial Pension Call Scheduling&quot; , Today()+1 ,
+&quot;Update WPB - QRP&quot; , Today() ,
+&quot;Pension Drafting&quot; ,	 Today()+8 ,
+&quot;Pension Banking Call&quot; ,	Today()+3 ,
+&quot;Pension Completion Call&quot; , Today()+3 ,
+&quot;Stalled - Need More Info&quot; , Today()+1 ,
+&quot;Stalled - Back to Advisor&quot; , Today()+1 ,
+&quot;Stalled - Back to CSC&quot; , 	Today()+1 ,
+&quot;Amendment Call Scheduling&quot; , Today()+1 ,
+&quot;Pension Amendment Drafting&quot; , Today()+8 ,
+&quot;Pension Loan Drafting&quot; , Today()+8 ,
+&quot;Waiting on Client&quot; , Today()+2 ,
+&quot;Sent Back for Info&quot; , Today()+1 ,
+{!$Record.Due_Date__c}
+),
+{!$Record.Due_Date__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>PensionTermination_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, &apos;Traci Craig&apos;,
+&quot;Waiting on Q/Statement&quot; , &apos;Traci Craig&apos;,
+&quot;Term Docs Sent to Client&quot; , &apos;Traci Craig&apos;,
+NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>PensionTermination_DueDate</name>
+        <dataType>Date</dataType>
+        <expression>IF( ISPICKVAL( {!$Record.Type__c} , &quot;Pension Termination&quot; ),
+Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot; ,	 DATEVALUE( {!$Record.CreatedDate} ) +2 , 
+&quot;Waiting on Q/Statement&quot; ,  Today()+7 ,
+&quot;Term Docs Sent to Client&quot; , Today()+21 ,
+{!$Record.Due_Date__c}
+),
+{!$Record.Due_Date__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>PenTermination_BusinessDays</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+MOD(  {!PensionTermination_DueDate} - DATE(2022, 05, 01) , 7 ) = 0 , {!PensionTermination_DueDate} + 1,
+IF(
+MOD(  {!PensionTermination_DueDate} - DATE(2022, 05, 01) , 7 ) = 6 , {!PensionTermination_DueDate} + 2,
+{!PensionTermination_DueDate}
+))</expression>
+    </formulas>
+    <formulas>
+        <name>StrategySession_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Not Started&quot;, &quot;Linvio Installation&quot;,
+Null
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Today</name>
+        <dataType>Date</dataType>
+        <expression>Today()</expression>
+    </formulas>
+    <formulas>
+        <name>WPB_Assignment_Formula</name>
+        <dataType>String</dataType>
+        <expression>Case( {!$Record.Processing_Stage__c},
+&quot;Back to WPB Team&quot;, &quot;Linvio Installation&quot;,
+&quot;Concierge Call&quot;, text({!$Record.Advisor_Admin__c}),
+&quot;LucidChart in Review&quot;, text({!$Record.Integration_Analyst__c}),
+&quot;LucidChart Update Needed&quot;, &quot;Linvio Installation&quot;,
+&quot;Not Started&quot;, &quot;Linvio Installation&quot;,
+&quot;Ready for LucidChart&quot;, &quot;Linvio Installation&quot;,
+&quot;Working to Schedule SS&quot;, text({!$Record.Advisor_Admin__c}),
+&quot;Stalled - Client&quot;, text({!$Record.Advisor_Admin__c}),
+&quot;SS Scheduled&quot;, text({!$Record.Advisor_Admin__c}),
+&quot;Thank You Call&quot;, text({!$Record.Advisor_Admin__c}),
+&quot;Waiting for Temp Structure&quot;, text({!$Record.Advisor_Admin__c}),
+&quot;WPB - Stalled&quot;, text({!$Record.Advisor_Admin__c}),
+Null
+)</expression>
+    </formulas>
+    <interviewLabel>Fulfillment - Order Item - Processing Stage Changes {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Fulfillment - Order Item - Processing Stage Changes</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Landtrust_for_Ready_to_draft</name>
+        <label>Get Landtrust for Ready to draft</label>
+        <locationX>11138</locationX>
+        <locationY>887</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LandtrustActiveUser</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Land_Trust_Reviewer__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Landtrust_Records</name>
+        <label>Get Landtrust Records</label>
+        <locationX>9554</locationX>
+        <locationY>887</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sent_to_Signed_Original</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Land_Trust_Reviewer__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Processor_name</name>
+        <label>Get Processor name</label>
+        <locationX>10874</locationX>
+        <locationY>887</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ProcessorActiveUser</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Processor__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_User</name>
+        <label>Get User</label>
+        <locationX>5924</locationX>
+        <locationY>1679</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_User</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AssignTo</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ProfileId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>00e0B000000uLuC</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Landtrust_Final_active_user</name>
+        <label>Landtrust Final - active user</label>
+        <locationX>11402</locationX>
+        <locationY>887</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LandtrustReviewer</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Land_Trust_Reviewer__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>6128</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Other_Updates</targetReference>
+        </connector>
+        <object>OrderItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AssignTo</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RA_CSC_Services</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Dissolution Fulfillment, Reinstatement Fulfillment, Amendment Fulfillment, Domestication Fulfillment, Registered Agent Change Fulfillment, Binder Redraft, texas franchise tax document preparation fee</stringValue>
+        </value>
+    </variables>
+</Flow>

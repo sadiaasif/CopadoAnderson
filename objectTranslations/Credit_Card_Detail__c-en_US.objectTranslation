@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Credit Card Detail</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Credit Card Detail</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Credit Card Detail --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing Zip / Postal --></label>
+        <name>Billing_Zip_Postal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Card Expiration Month --></label>
+        <name>Card_Month__c</name>
+    </fields>
+    <fields>
+        <help><!-- AMEX: first digit = 3, second digit = 4 or 7.  Valid length: 15 digits.
+
+VISA: first digit = 4.  Valid length: 13 or 16 digits.
+
+MC: first digit: 5, second digit = 1-5.  Valid length: 16 digits. --></help>
+        <label><!-- Card Number --></label>
+        <name>Card_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- AMEX cards have a four-digit code printed on the front side of the card above the number.  All others have a three-digit code located on the back. --></help>
+        <label><!-- Card Security Code --></label>
+        <name>Card_Security__c</name>
+    </fields>
+    <fields>
+        <label><!-- Card Type --></label>
+        <name>Card_Type__c</name>
+        <picklistValues>
+            <masterLabel>AMEX</masterLabel>
+            <translation><!-- AMEX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Discover</masterLabel>
+            <translation><!-- Discover --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electron</masterLabel>
+            <translation><!-- Electron --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JCB Card</masterLabel>
+            <translation><!-- JCB Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MC Eurocard</masterLabel>
+            <translation><!-- MC Eurocard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mastercard</masterLabel>
+            <translation><!-- Mastercard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Solo</masterLabel>
+            <translation><!-- Solo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UK Maestro</masterLabel>
+            <translation><!-- UK Maestro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visa</masterLabel>
+            <translation><!-- Visa --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Card Expiration Year --></label>
+        <name>Card_Year__c</name>
+    </fields>
+    <fields>
+        <help><!-- Notes regarding what this credit card should be used for. --></help>
+        <label><!-- Credit Card Notes --></label>
+        <name>Credit_Card_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Calculated automatically and used to send email notifications to clients that their card will decline soon. Currently emails are only sent for a declined Platinum Subscription Card. --></help>
+        <label><!-- Day After Expiration --></label>
+        <name>Day_After_Expiration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days Until Expiration --></label>
+        <name>Days_Until_Expiration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this box if the client would like this card to be used for their monthly/yearly Infinity subscription. --></help>
+        <label><!-- Infinity Subscription Card --></label>
+        <name>Infinity_Subscription_Card__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link for Communities --></label>
+        <name>Link_for_Communities__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mail Check --></label>
+        <name>Mail_Check__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this if uses for platinum payment. --></help>
+        <label><!-- Platinum Subscription Card --></label>
+        <name>Platinum_Subscription_Card__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- AMEX cards must have a length of 15 digits. --></errorMessage>
+        <name>AMEX_Card_Number_Length</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- AMEX security code must contain four digits. --></errorMessage>
+        <name>AMEX_Security_Code</name>
+    </validationRules>
+</CustomObjectTranslation>

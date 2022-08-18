@@ -1,0 +1,42 @@
+<apex:page showHeader="false"
+    sidebar="false"
+    standardStylesheets="false"
+    controller="box.BoxSignFilePickerController"
+    action="{!onLoad}"
+>
+    <apex:stylesheet value="{!URLFOR($Resource.box__BoxSignUI, '/ContentPicker/picker.css')}"
+    />
+
+    <div class="boxsigncontainer" style="height: 500px;"></div>
+
+    <script src="{!URLFOR($Resource.BoxSignUI, '/ContentPicker/picker.js')}" />
+    <script>
+        var lexOrigin = "{!JSENCODE(lexOrigin)}";
+        var folderId = "{!JSENCODE(folderId)}";
+        var accessToken = "{!JSENCODE(accessToken)}";
+        var logoUrl =
+            '{!JSENCODE(URLFOR($Resource.BoxStyle, "/BoxStyles/images/box-blue-logo.png"))}';
+        var filePicker = new Box.FilePicker();
+
+        filePicker.addListener("cancel", function () {
+            const message = {
+                action: "cancel"
+            };
+            window.parent.postMessage(message, lexOrigin);
+        });
+        filePicker.addListener("choose", function (items) {
+            const message = {
+                action: "choose",
+                id: items[0].id,
+                name: items[0].name
+            };
+            window.parent.postMessage(message, lexOrigin);
+        });
+        filePicker.show("0", accessToken, {
+            currentFolderId: folderId,
+            logoUrl: logoUrl,
+            container: ".boxsigncontainer",
+            maxSelectable: 1
+        });
+    </script>
+</apex:page>

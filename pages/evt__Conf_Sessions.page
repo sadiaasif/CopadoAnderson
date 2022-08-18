@@ -1,0 +1,94 @@
+<apex:page docType="html-5.0" id="siteConfSessionsPage" controller="evt.ConfSessionsController" showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+<head><title>
+    {!IF($Label.ConfSessions_Heading == '-','Sessions',SUBSTITUTE($Label.ConfSessions_Heading,'{eventname}',event.Name))}
+</title></head>
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="evt_conf_sessions_page">
+  <div class="evt_page_content_top">
+    <c:ConfTemplateNav event="{!event}"  currentTab="sessions"   lang="{!lang}"/>
+  </div>
+  <div class="pc_page_content">
+    <div class="pc_page_content_inner">
+<apex:form id="conf_sessions_form">
+<apex:pageMessages />
+<div id="evt_conf_sessions_box" class="evt_h1_outer_box">
+    <div class="evt_box_header">
+<apex:outputPanel rendered="{!$Label.evt__ConfSessions_Heading <> '-'}">
+    <h1>{!SUBSTITUTE($Label.evt__ConfSessions_Heading,'{eventname}',event.Name)}</h1>
+</apex:outputPanel>
+    </div>
+    <div class="evt_box_body">
+
+<apex:outputPanel rendered="{!NOT($Label.evt__ConfSessions_Message == '-')}">
+<p>{!$Label.evt__ConfSessions_Message}</p>
+</apex:outputPanel>
+<apex:outputPanel styleClass="evt_select_track_list" rendered="{!hasTracks}">
+<apex:outputText value="Track: "/>
+<apex:SelectList value="{!selectedTrack}" size="1" multiselect="false">
+  <apex:selectOptions value="{!trackOptions}" />
+  <apex:actionSupport event="onchange" action="{!nullAction}" rerender="sessionItemPanel"/>
+</apex:SelectList>
+</apex:outputPanel>
+<apex:outputPanel id="sessionItemPanel">
+<apex:repeat value="{!sessionItems}" var="sessionItem" >
+<apex:outputPanel rendered="{!OR(hasTracks == false, selectedTrack == '', selectedTrack == sessionItem.session.evt__Track__c)}">
+<h2>{!sessionItem.session.Name}</h2>
+<apex:panelGrid columns="2" columnClasses="label, value" styleClass="session_item_grid">
+<apex:outputText value="Track: " rendered="{!sessionItem.session.evt__Track__c <> null}"/>
+<apex:outputField value="{!sessionItem.session.evt__Track__c}" rendered="{!sessionItem.session.evt__Track__c <> null}"/>
+<apex:outputText value="Start: " rendered="{!sessionItem.session.evt__Start__c <> null && sessionItem.multiday==true}"/>
+<apex:outputText value="{!sessionItem.startDate} {!sessionItem.startTime}" rendered="{!sessionItem.session.evt__Start__c <> null && sessionItem.multiday==true}"/>
+<apex:outputText value="End: " rendered="{!sessionItem.session.evt__End__c <> null && sessionItem.multiday==true}"/>
+<apex:outputText value="{!sessionItem.endDate} {!sessionItem.endTime}" rendered="{!sessionItem.session.evt__End__c <> null && sessionItem.multiday==true}"/>
+<apex:outputText value="Date/Time:" rendered="{!sessionItem.multiday==false}"/>
+<apex:outputPanel rendered="{!sessionItem.multiday==false}">
+   {!sessionItem.startDate}&nbsp;{!sessionItem.startTime}&nbsp;-&nbsp;{!sessionItem.endTime}
+</apex:outputPanel>
+</apex:panelGrid>
+<apex:outputField value="{!sessionItem.session.evt__Short_Description__c}"/>&nbsp;<apex:outputPanel rendered="{!NOT((sessionItem.session.evt__Session_Details__c == null))}">
+<apex:commandLink styleClass="evt_sessions_more_info_link" value="Session Details" action="{!gotoSessionDetail}">
+<apex:param name="sessionDetailLink" assignTo="{!currentSessionId}" value="{!sessionItem.session.Id}" />
+</apex:commandLink><br/>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!(sessionItem.full)}">
+<div class="session_full_box">
+Session Is Full
+</div>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!NOT(sessionItem.full)}">
+<div class="pc_button_container">
+  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}"> 
+    <apex:commandButton value="Add" action="{!addSessionWithConfirmation}" rendered="{!(sessionItem.selected == false)}" rerender="conf_sessions_form" >
+      <apex:param id="addSessionItem" name="addSessionItem" assignTo="{!currentSessionId}" value="{!sessionItem.session.Id}" />
+      </apex:commandButton>
+      <apex:commandButton value="Remove" action="{!removeSessionWithConfirmation}" rendered="{!(sessionItem.selected)}" rerender="conf_sessions_form" >
+      <apex:param id="removeSessionItem" name="removeSessionItem" assignTo="{!currentSessionId}" value="{!sessionItem.session.Id}" />
+    </apex:commandButton>
+  </apex:outputPanel>
+  <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+    <apex:commandLink styleClass="css-button btn-small" value="Add" action="{!addSessionWithConfirmation}" rendered="{!(sessionItem.selected == false)}" rerender="conf_sessions_form" >
+      <apex:param id="addSessionItem2" name="addSessionItem2" assignTo="{!currentSessionId}" value="{!sessionItem.session.Id}" />
+    </apex:commandLink>
+      <apex:commandLink styleClass="css-button btn-small" value="Remove" action="{!removeSessionWithConfirmation}" rendered="{!(sessionItem.selected)}" rerender="conf_sessions_form" >
+      <apex:param id="removeSessionItem2" name="removeSessionItem2" assignTo="{!currentSessionId}" value="{!sessionItem.session.Id}" />
+    </apex:commandLink>
+  </apex:outputPanel>
+
+</div>
+
+</apex:outputPanel>
+</apex:outputPanel>
+</apex:repeat>
+</apex:outputPanel>
+</div>
+</div>
+</apex:form>
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div><!--  pc_lang -->
+</apex:define>
+</apex:composition>
+</apex:page>

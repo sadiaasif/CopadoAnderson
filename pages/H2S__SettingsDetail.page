@@ -1,0 +1,112 @@
+<apex:page controller="H2S.SettingsController" sideBar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="False" docType="html-5.0" lightningStylesheets="true">
+  <html>
+    <head>
+      <apex:slds />
+    </head>
+    <body>
+      <div class="slds-scope">
+        <apex:outputPanel layout="none" id="container">
+          <apex:form >
+            <apex:pageMessages />
+            <apex:sectionHeader title="HarvestSync for Salesforce" subtitle="Setup">
+              <apex:pageBlock title="Step 0: Org Setup">
+                <apex:pageBlockButtons location="bottom">
+                  <apex:commandButton styleClass="slds-button slds-button_neutral" value="Cancel" action="{!loadManagerAndModel}" reRender="container" />
+                  <apex:commandButton styleClass="slds-button slds-button_brand" value="Save" action="{!save}" reRender="container" />
+                </apex:pageBlockButtons>
+                <span style="font-size:125%;">
+                Enter your Harvest App OAuth information in this section.&nbsp;&nbsp; <a href="https://docs.google.com/document/d/18pZ7KnTZaZJtxraIpuuFdmD1yuN1hTRn172RZpfNxac/edit" target="_blank">Setup Guide</a>
+                </span>
+                <br/><br/>
+
+                <apex:pageBlockSection title="Harvest OAuth Information" collapsible="false" columns="1">
+                  <apex:inputText value="{!Model.HARVEST_APP_NAME}" style="width:730px;"><apex:outputLabel >Harvest App Name: </apex:outputLabel></apex:inputText>
+                  <apex:inputText value="{!Model.OAUTH_CLIENT_ID}" style="width:740px;"><apex:outputLabel >Harvest Client ID: </apex:outputLabel></apex:inputText>
+                  <apex:inputText value="{!Model.OAUTH_CLIENT_SECRET}" style="width:720px;"><apex:outputLabel >Harvest Client Secret: </apex:outputLabel></apex:inputText>
+                </apex:pageBlockSection>
+              </apex:pageBlock>
+ 
+              <apex:pageBlock title="Step 1: Link Org To Harvest">
+                <apex:pageBlockButtons location="bottom" rendered="{!IF(LinkStatus != 'Link Successful', true, false)}">
+                  <apex:commandButton value="Link Org to Harvest" styleClass="slds-button slds-button_brand" action="{!goToHarvestUrl}" disabled="{!IF(Model.HARVEST_APP_NAME == '' || Model.OAUTH_CLIENT_SECRET == '' || Model.OAUTH_CLIENT_ID == '',true,false)}"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockButtons location="bottom" rendered="{!IF(LinkStatus == 'Link Successful', true, false)}">
+                  <apex:commandButton value="Relink Org to Harvest" styleClass="slds-button slds-button_brand" action="{!goToHarvestUrl}" disabled="{!IF(Model.HARVEST_APP_NAME == '' || Model.OAUTH_CLIENT_SECRET == '' || Model.OAUTH_CLIENT_ID == '',true,false)}"/>
+                </apex:pageBlockButtons>
+                <span style="font-size:125%;">
+                Click on the <b>Link Org To Harvest</b> button below.  When the org is linked, the status will say "Linked To Harvest".
+                </span>
+                <br/><br/>
+
+                <apex:pageBlockSection title="Link Status: {!LinkStatus}" collapsible="false" rendered="{!IF(LinkStatus == 'Link Successful', true, false)}">
+                    <apex:facet name="header">
+                      <span style="color:green;">Link Status: {!LinkStatus}</span>
+                    </apex:facet>     
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Link Status: {!LinkStatus}" collapsible="false" rendered="{!IF(LinkStatus != 'Link Successful', true, false)}">   
+                </apex:pageBlockSection>
+              </apex:pageBlock>
+
+              <apex:pageBlock title="Step 2: Harvest Settings" id="step2">
+                <apex:pageBlockButtons location="bottom">
+                  <apex:commandButton value="Cancel" action="{!loadManagerAndModel}" styleClass="slds-button slds-button_neutral" reRender="container"/>
+                  <apex:commandButton value="Save" action="{!save}" reRender="container" styleClass="slds-button slds-button_brand" disabled="{!IF(Model.HARVEST_APP_NAME == '' || Model.OAUTH_CLIENT_SECRET == '' || Model.OAUTH_CLIENT_ID == '' || Model.HarvestAccount == '' || Model.hasRefreshToken == false,true,false)}" />
+                  <apex:commandButton value="Manual Sync" action="{!startSync}" styleClass="slds-button slds-button_brand" title="Starts a one-time sync of all projects" disabled="{!IF(Model.HARVEST_APP_NAME == '' || Model.OAUTH_CLIENT_SECRET == '' || Model.OAUTH_CLIENT_ID == '' || Model.HarvestAccount == '' || Model.hasRefreshToken == false,true,false)}"/>
+                </apex:pageBlockButtons>
+
+                <span style="font-size:125%;">
+                  To sync once click <b>Manual Sync</b>.<br/>
+                  Set the auto-sync frequency below.<br/>
+                  <!--Follow the instructions on the following page, click "Save" and then continue below.-->
+                </span>
+
+
+                <div class="slds-m-top_small" style="font-size:125%;">
+                    <br/><b>Auto-sync: </b>Enter the auto-sync frequency in hours or keep it set as disabled (you may still manually sync each project).
+                    <br/>The sync will run at approximately these intervals based on salesforce.com scheduler availability.
+                    <!-- YYYY
+                    <br/><b>Overwrite Existing Harvest Id During Project Code Ext ID to Harvest ID Sync: </b>If this box is checked, any existing Harvest IDs will be overwritten during the Project Code External ID to Harvest ID sync.
+                    -->
+                    <br/>
+                </div>
+                <br/><br/>
+                <apex:pageBlockSection title="Sync Settings" collapsible="false" columns="1">
+                  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Auto-Sync"/>
+                    <apex:selectList size="1" value="{!Model.AutoSyncFrequencyInHours}">
+                      <apex:selectOptions value="{!AutoSyncSelectOptions}"/>
+                    </apex:selectList>
+                  </apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem />
+                  <!-- YYYY
+                  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Overwrite Existing Harvest Id During Project Code Ext ID to Harvest ID Sync"/>
+                    <apex:inputCheckbox value="{!Model.OverwriteHarvestId}"/>
+                  </apex:pageBlockSectionItem>
+                  -->
+                  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Notify user via email when Error occurs during sync."/>
+                    <apex:inputCheckbox value="{!Model.NotifyOnlyOnSyncError}"/>
+                  </apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Notify user via email of all sync statuses (success/error)."/>
+                    <apex:inputCheckbox value="{!Model.NotifyAllSyncStatus}"/>
+                  </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+              </apex:pageBlock>
+              <apex:pageBlock title="Help or Questions?">
+                <span style="font-size:125%;">
+                  If you have support questions, visit our 
+                  <a href="https://www.akacrm.com/powerapps/apps-support" target="_blank">Product Support page</a>.
+                  We also recommend reviewing the 
+                  <a href="https://docs.google.com/document/d/18pZ7KnTZaZJtxraIpuuFdmD1yuN1hTRn172RZpfNxac/edit#" target="_blank">Installation Instructions and Release Notes</a>.
+                  <br/><br/>"HarvestApp" and "Salesforce.com", are trademarks of their respective owners.
+                </span>
+              </apex:pageBlock>
+            </apex:sectionHeader>
+          </apex:form>
+        </apex:outputPanel>
+      </div>
+    </body>
+    </html>
+</apex:page>

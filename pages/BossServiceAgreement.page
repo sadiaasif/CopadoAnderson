@@ -1,0 +1,258 @@
+<apex:page extensions="clsBossAndAlgServiceAgreement" standardController="Opportunity" renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false">
+    <style type="text/css" media="print">
+        
+        body { background-color: #242424;}
+        
+    </style>
+    
+    <apex:form >
+<body>       
+<div id="contanier" style="background:#FFFFFF; width: 600px; margin-left:auto; margin-right:auto; padding:30px;">
+
+  <div id="header" style="height: 100px;">
+        
+    <div id="header_left" style="width: 180px; height:100px; float:left; ">
+      <table cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="font-family:'Myriad Pro'; font-size: 30px; font-weight:bold; font-stretch:extra-condensed;">AGREEMENT</td>
+                </tr>
+                
+                <tr>
+                  <td align="center" style="font-style:italic; font-size:12px;">This is not an Agreement to provide<br/>investment advice or legal services.</td>
+                </tr>
+          </table>
+        </div>
+        
+        <div id="header_right" style="width: 380px; height:100px; float:right;">
+        
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="right"> <img src="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/BossLogo.png')}" width="40%" height="40%"/></td>
+              </tr>
+              <tr>
+                <td align="right" style="font-size:10px; padding-top: 10px;">7BOSS Business Services 3225 McLeod Drive Las Vegas, NV  89121   <br/>     Phone: 888-969-BOSS (2677) Fax: 702-664-0545 www.bossoffice.com</td>
+              </tr>
+            </table>
+      </div>
+  </div> <!--HEADER END-->
+  <br/>
+  <div id="customer_info">
+  
+      <div id="customer_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">customer information
+      </div>
+      
+      <div id="customer_info_form" style="padding-top:6px; padding-bottom: 10px;">
+             <!--<table width="96%" border="0" cellspacing="0" cellpadding="0" align="center">
+                  <tr>
+                    <td width="28%" align="left" style="font-size: 12px;">City: <apex:outputLabel value="_________________" style="width:78%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td width="31%" align="left" style="font-size: 12px;">&bull; &nbsp; Sponsor: <apex:outputLabel value="__________________" style="width:68%; font-size: 12px;"></apex:outputLabel></td>
+                    <td width="37%" align="left" style="font-size: 12px;"> &bull; &nbsp; ABA Rep: <apex:outputLabel value="________________" style="width:74%; font-size: 12px;"></apex:outputLabel></td>
+                  </tr>
+             </table>-->
+             
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" >
+                  <tr>
+                    <td width="60%" style="font-size: 12px;">Customer Name:&nbsp; <apex:outputLabel value="{!objOpp.Account.Name}" style="width:80%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td width="40%" style="font-size: 12px;">Date: &nbsp;<apex:outputField value="{!objOpp.CloseDate}" style="width:84%; font-size: 12px;"></apex:outputField> </td>
+                  </tr>
+                 </table>
+                 
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="60%" align="left" style="font-size: 12px;">Address:
+                    &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Address__c}" style="width:91%; font-size: 12px;"></apex:outputLabel> 
+                    </td>
+                  </tr>
+                 </table>
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td align="left" style="font-size: 12px;">City: &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_City__c}" style="width:82%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td align="left" style="font-size: 12px;">State: &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_State__c}" style="width:82%; font-size: 12px;"></apex:outputLabel> </td>
+                    <td align="left" style="font-size: 12px;"> Zip:  &nbsp;<apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Postcode__c}" style="width:83%; font-size: 12px;"></apex:outputLabel> </td>
+                  </tr>
+             </table>
+             
+                <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="50%" style="font-size: 12px;">Home Phone: &nbsp; <apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Phone__c}" style="width:80%; font-size: 12px;"></apex:outputLabel>  </td>
+                    <td width="50%" style="font-size: 12px;">Email: &nbsp; <apex:outputLabel value="{!objOpp.ChargentSFA__Billing_Email__c}" style="width:86%; font-size: 12px;"></apex:outputLabel> </td>
+                  </tr>
+                 </table>
+      </div>
+      </div>  <!--customer_info END-->
+      
+        <div id="product_info">
+ 
+            <div id="product_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">product information
+            </div>
+            
+      <div id="customer_info_form" style="padding-top:10px; padding-bottom: 10px;">
+      
+        <table align="center" style="font-size: 12px; text-transform:uppercase; text-align:center;">
+            <tr>
+                <td style="font-weight:bold;">SERVICES</td>
+            </tr>
+        </table>
+         
+          <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#333333" style="font-size: 12px; text-transform:uppercase; text-align:left;">
+             <apex:repeat value="{!objopp.OpportunityLineitems}" var="opp">
+                 <tr>
+                    <td width="80%">
+                        <apex:outputLabel style="font-size: 12px;  text-align:left;" rendered="{!if(opp.priceBookEntry.Product2.Name != 'Platinum Membership',true,false)}"> 
+                            {!opp.priceBookEntry.Product2.Name}
+                        </apex:outputLabel>                        
+                                          
+                        <apex:outputLabel style="font-size: 12px;  text-align:left;" rendered="{!if(opp.priceBookEntry.Product2.Name == 'Platinum Membership',true,false)}"> 
+                            Customer support will be automatically be billed at $35 per month.  Includes Platinum Web access.
+                            Unless otherwise indicated all State entity fling fees and Deed recording fees will be charged to the credit card on this 
+                            agreement at the time of fling.
+                        </apex:outputLabel>                    
+                    </td>
+                    <td width="20%" style="text-align:right;">
+                        <apex:outputText value="${0, number, ###,###,###,###.00}">
+                            <apex:param value="{!opp.TotalPrice}"/>
+                        </apex:outputText>
+                    </td>
+                  </tr>
+             </apex:repeat>                 
+                 
+                 <!-- <tr>
+                    <td width="80%" height="60" valign="top" style="font-size: 11px;" align="left">
+                        Customer support will be automatically be billed at $35 per month.<br/>Includes Platinum Web access.
+                        Unless otherwise indicated all State entity filing fees and Deed recording fees will be charged to the credit card on this 
+                        agreement at the time of filing.
+                    </td>
+                    <td width="10%" valign="top" style="font-size: 12px; text-align:right;">$ 35.00</td>
+                  </tr>-->
+                  <tr>
+                    <td height="30" style="font-size: 8px; font-style:italic" align="left">
+                        <!--  * All Agreements are subject to approval by our home office. &nbsp;
+                        Approval by: 
+                        <apex:outputLabel style="" value="__________"></apex:outputLabel>
+                        &nbsp;
+                        On: <apex:outputLabel style="" value="_________"></apex:outputLabel>
+                        -->
+                        <span style="float:right; font-size:12px; font-weight:bold;">TOTAL:</span>                    
+                        </td>
+                        <td style="font-size: 12px; text-align:right;">
+                            <apex:outputText value="${0, number, ###,###,###,###.00}">
+                                <apex:param value="{!AlgTotalPrice }"/>
+                            </apex:outputText>
+                        </td>
+                  </tr>
+        </table>
+      </div>
+        </div><!--product_info END-->
+        
+      <div id="disclosure_info">
+        
+            <div id="disclosure_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">disclosure &nbsp; &amp; &nbsp; acknowledgement
+        </div>
+    
+                <div id="disclosure_info_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;"></div>
+                
+      <div id="disclosure_info_form" style="padding-top:10px; padding-bottom: 10px;">
+                      
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="font-size: 12px;">METHOD OF PAYMENT: 
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/> <apex:inputcheckbox value="{!PaymentMethodCard}"/> </td>
+                    <td style="font-size: 12px;">Check # <apex:outputLabel value="____________________"></apex:outputLabel></td>
+                    <td style="font-size: 12px;">
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!AMEXCard}"/>Amex &nbsp;&nbsp;&nbsp;
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!visaCard}"/>Visa &nbsp;&nbsp;&nbsp;
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!MasterCard}"/>MC &nbsp;&nbsp;&nbsp;
+                        
+                        <apex:image url="{!URLFOR($Resource.AgreementPdfImages, 'AgreementPDFimg/checkbox-uncheck.png')}" width="15px" height="15px"/>
+                        <apex:inputcheckbox value="{!DiscoverCard}"/>Discover &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td style="font-size: 12px;">&nbsp;</td>
+                  </tr>
+            </table>
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="60%" align="left" style="font-size: 12px;">Card#:
+                        <apex:outputLabel value="____________________" style="width:94%;"></apex:outputLabel>
+                    </td>
+                  </tr>
+             </table>
+                 
+             <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
+                  <tr>
+                    <td width="60%" style="font-size: 12px;">Security Code (on back of card):<apex:outputLabel value="____________________" style="width:60%;"></apex:outputLabel></td>
+                    <td width="40%" style="font-size: 12px;">Expiration Date: <apex:outputLabel value="_______________" style="width:35%;"></apex:outputLabel></td>
+                  </tr>
+             </table>
+
+             <table width="100%" border="0" cellspacing="0" cellpadding="5" align="center" style="font-weight:bold;">
+                  <tr>
+                    <td width="50%" style="font-size: 12px;"> &bull; Signature:  <apex:outputLabel value="____________________" style="width:80%"></apex:outputLabel></td>
+                    <td width="50%" style="font-size: 12px;">Date: <apex:outputLabel value="____________________" style="width:89%"></apex:outputLabel></td>
+                  </tr>
+             </table>
+        </div>      
+  </div><!--disclosure_info END-->
+  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <div id="terms">
+      
+          <div id="terms_head" style="background: #242424; font-family:'Myriad Pro'; color:#FFFFFF; text-transform:uppercase; text-align:center; padding: 3px;">Terms &nbsp; &amp; &nbsp; Conditions</div>
+          
+             <div id="terms_form" style="padding-top:10px; padding-bottom: 10px;">
+            
+                <table style="font-size: 10px; text-transform:uppercase; text-align:center;">
+                    <tr>
+                        <td align="center" style="font-size:10px; font-weight:bold;">
+                            The Terms and Conditions are made part of the Agreement between Customer and 
+                            Boss Business  Services, as though set forth fully herein.
+                        </td>
+                    </tr>
+                </table>
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                  <tr>
+                    <td>
+                    <span style="font-size:10px;">
+                    Customer Agrees to be truthful with BOSS Business Services ("Company") as the purpose of this Agreement is carried out and to abide by this Agreement and
+                    keep Company apprised of any changes that could have an impact on this Agreement including address changes or changes in Customer's economic condition.
+                    Company is not in the business of providing legal services.  Any legal services necessary to carry out Customer's objectives shall be provided by licensed legal 
+                    professionals.  Company is not in the business of providing financial services.  Nothing in this Agreement should be construed as an endorsement, 
+                    recommendation or solicitation for any financial product, stock, security, note, private placement, or any other financial product.  
+                    Unless specified above, nothing in this Agreement should be construed as a promise or guarantee above the outcome of any matter. 
+                    THIS IS THE ENTIRE AGREEMENT BETWEEN THE PARTIES.  There are no other Agreement, expressed or implied, between the Customer and Company.  
+                    All Agreements shall be made in writing.  If a portion of this Agreement is held to be invalid, the remaining portions shall remain in effect.  
+                    VENUE:  This Agreement is entered into under the laws of the State of Nevada.  Venue shall rest in Clark County, Nevada.  
+                    MEDIATION:  This Agreement is subject to mediation.  If a dispute should arise, Customer and Company shall confer in good faith to resolve the dispute and 
+                    engage the services of JAMS or similar mediation service prior to resorting to litigation or other dispute process.  Such mediation shall occur within 90 days of 
+                    either Customer or Company asserting this provision. 
+                    </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <span style="font-size:12px; font-weight:bold;">Circular 230 Disclaimer: </span>
+                        <span style="font-size:10px;">
+                                Any US federal tax advice dispensed to Customer in any form is not intended to be considered a  
+                                "covered opinion" and cannot be used to promote, market or otherwise recommend any transaction to a third party and will 
+                                not allow taxpayers to avoid penalties in the event they engage in wrongful behavior. 
+                        </span>
+                    </td>
+                  </tr>
+              </table>
+
+          </div>
+          
+      </div><!--edu_support END-->
+        
+    </div>
+    </body>    
+    </apex:form>
+    
+</apex:page>

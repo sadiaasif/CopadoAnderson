@@ -1,0 +1,19 @@
+<aura:component controller="saleCongaCmpController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="recordId" type="Id"/>
+	<aura:attribute name="congaObject" type="Sales_Conga_Merge__c"/>
+    <aura:attribute name="congaFields" type="String[]" default="Name,Standard_Renewal_Quote__c,State_Renewal_Quote__c,Quote_Texas_Corp__c,Quote_Texas_LLC__c,Quote_Texas_No_franchise_Tax__c,Conga_Receipt__c,Filing_Fee_Invoice__c,RA_Resignation_Notice_Non_Payment__c,Filing_Fee_Receipt__c,Platinum_Receipt__c,Pension_Tax_Mailer_PSP_Merge__c,Pension_Tax_Mailer_401k_Merge__c"/>
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}"/>
+    
+    <lightning:recordForm id="saleCongaForm"
+                         recordId="{!v.congaObject.Id}"
+                         objectApiName="Sales_Conga_Merge__c"
+                         fields="{!v.congaFields}"
+                         columns="1"
+                         mode="view"
+                         >
+
+    </lightning:recordForm>
+    
+    
+</aura:component>

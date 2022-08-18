@@ -1,0 +1,12 @@
+<apex:page standardController="evt__Special_Event__c" extensions="evt.PublishedDatePreviewController">
+<apex:pageMessages />
+<div style="border:1px solid #e0e0e0;margin:0px;padding:10px 10px 10px 10px;text-align:center;border-radius:5px;background-color:#f0f0f0;">
+<strong>Published Event Date(s)/Time(s):</strong>&nbsp;
+    <apex:outputPanel layout="inline" rendered="{!multiday}">
+        <apex:outputText value="{!startDate}"/>&nbsp;<apex:outputText value="{!startTime}"/>&nbsp;-&nbsp;<apex:outputText value="{!endDate}"/>&nbsp;<apex:outputText value="{!endTime}"/>
+    </apex:outputPanel>
+    <apex:outputPanel layout="inline" rendered="{!NOT(multiday)}">
+        <apex:outputText value="{!startDate}"/>&nbsp;<apex:outputText value="{!startTime}"/>&nbsp;-&nbsp;<apex:outputText value="{!endTime}"/>
+    </apex:outputPanel>
+</div>
+</apex:page>

@@ -1,0 +1,18 @@
+<aura:component controller="entProcessCongaCmpController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="congaObject" type="Conga__c"/>
+    <aura:attribute name="congaFields" type="String[]" default="Name,Corporation_Binder_Merge__c,Corporation_Binder_Merge_Digital__c,Corp_Restatement_Nom_Binder__c,Corporation_Restatement_Binder_No_Nom__c,EIN_Cancellation_Ceased_Operations__c,EIN_Cancellation_Never_Operational__c,EIN_Name_Change_Letter__c,Filed_Articles_AL_Corp__c,Filed_Articles_AL_LLC__c,Filed_Articles_AZ_Corp__c,Filed_Articles_CA_Corp__c,Filed_Articles_CA_LLC__c,Filed_Articles_DE_Corp__c,Filed_Articles_DE_LLC__c,Filed_Articles_ID_Corp__c,Filed_Articles_ID_LLC_Manager_Manage__c,Filed_Articles_ID_LLC_Member_Managed__c,Filed_Articles_ND_Corp__c,Filed_Articles_ND_LLC__c,Filed_Articles_NE_Corp__c,Filed_Articles_SC_Corp__c,Filed_Articles_UT_Corp__c,Filed_Articles_UT_LLC_Manager_Managed__c,Filed_Articles_UT_LLC_Member_Managed__c,Form_2553__c,Form_8822_B__c,Form_8832__c,Form_8832_Late_Election__c,Conga_Lease_Agreement__c,LLC_Accountable_Plan__c,LLC_Binder_Docs__c,LLC_Binder_Docs_Digital__c,Management_Agreement__c,Medical_Reimbursement_Agreement__c,Resignation_of_Incorporator__c,Resignation_of_Organizer__c,SS4_Corporation__c,Admin_Service_401k__c,Admin_Service_PSP__c,ROBS_401k_Merge__c,ROBS_PSP_Merge__c,Solo_401K_Binder_Docs__c"/>
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}"/>
+    
+    <lightning:recordForm id="renewalCongaForm"
+                          recordId="{!v.congaObject.Id}"
+                          objectApiName="Conga__c"
+                          fields="{!v.congaFields}"
+                          columns="2"
+                          mode="view"
+                          >
+        
+    </lightning:recordForm>
+    
+</aura:component>

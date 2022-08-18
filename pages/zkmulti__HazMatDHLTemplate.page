@@ -1,0 +1,173 @@
+<apex:page controller="zkmulti.HazMatDHLTemplateController" renderAs="pdf" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" action="{! doInit }" docType="html-5.0">
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<style media="all" type="text/css">
+			@page {
+				size: 8.27in 11.69in;;
+				margin: 0px;
+			}
+			body {
+				font-family: sans-serif;
+				font-size: 14px;
+				margin: 20px;
+			}
+
+			.main-table {
+				width: 100%;
+				border: 1px solid black;
+			}
+
+		</style>
+	</head>
+	<body >
+
+	<apex:outputPanel layout="block">
+		SHIPPER'S DECLARATION FOR DANGEROUS GOODS
+		<table style="border: 1px solid black;border-collapse:collapse; width: 100%;">
+		<tr >
+			<td style="border: 1px solid black; width: 50%; padding-left: 10px;">
+				Shipper<br/>
+				<b>
+				{!shipperInfo.company}<br/>
+				{!shipperInfo.name}<br/>
+				{!shipperInfo.street}<br/>
+				{!shipperInfo.postalCode} {!shipperInfo.city} {!shipperInfo.state}<br/>
+				{!shipperInfo.country}
+				</b>
+			</td>
+			<td style="border: 1px solid black;width: 50%; padding-left: 10px;">
+				Air Waybill {!trackingNumber}<br/>
+				Page 1 of 1 Pages<br/>
+				Shipper's Reference Number<br/>
+			</td>
+		</tr>
+		<tr >
+			<td style="border: 1px solid black; width: 50%; padding-left: 10px;">
+				Consignee<br/>
+				<b>
+				{!consigneeInfo.company}<br/>
+				{!consigneeInfo.name}<br/>
+				{!consigneeInfo.street}<br/>
+				{!consigneeInfo.postalCode} {!consigneeInfo.city} {!consigneeInfo.state}<br/>
+				{!consigneeInfo.country}
+				</b>
+			</td>
+			<td style="border: 1px solid black;width: 50%;">
+			</td>
+		</tr>
+		<tr >
+			<td style="border: 1px solid black; width: 50%;">
+				<div style="padding: 3px;">
+					<i>Two completed and signed copies of this declaration must be handed to the operator.</i>
+				</div>
+				<table style="border: 2px solid black; border-collapse:collapse;">
+					<tr>
+						<td style="border: 2px solid black; padding-left: 15px; padding-top: 20px; padding-bottom: 10px;" colspan="2">TRANSPORT DETAILS</td>
+					</tr>
+					<tr>
+						<td style="border: 2px solid black; width: 50%;">
+							This shipment is within the limitations prescribed for: (Delete non-applicable)
+							<tabel style="width: 100%;">
+								<tr>
+									<td style="border: 2px solid black;">
+										PASSENGER AND CARGO AIRCRAFT
+									</td>
+									<td style="border: 2px solid black; background: black;">
+										CARGO AIRCRAFT ONLY
+									</td>
+								</tr>
+							</tabel>
+						</td>
+						<td style="border: 2px solid black; width: 50%;">
+							Airport of Departure:<br/><br/>
+							Paris CDG
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="border: 1px solid black; text-align: top; vertical-align: text-top; padding: 10px;">
+				<b>WARNING</b><br/>
+				Failure to comply in all aspects with the applicable Dangerous Goods Regulations may be in breach of the applicable law, subject to legal penalties.
+			</td>
+		</tr>
+		<tr >
+			<td style="border: 1px solid black; width: 50%;">
+				Airport of Destination: {!consigneeInfo.city}
+			</td>
+			<td style="border: 1px solid black; width: 50%; vertical-align: middle; text-align: center;">
+				Shipment Type (Delete non-applicable)
+				<div style="margin-left: 30px;">
+					<tabel>
+						<tr>
+							<td style="border: 1px solid black;">
+								NON-RADIOACTIVE
+							</td>
+							<td style="border: 1px solid black; background: black;">
+								RADIOACTIVE
+							</td>
+						</tr>
+					</tabel>
+				</div>
+			</td>
+		</tr>
+		</table>
+
+		<div style="margin-bottom: 10px; margin-top: 10px; margin-left: 10px; ">
+			NATURE AND QUANTITY OF DANGEROUS GOODS
+		</div>
+
+		<table style="border: 1px dashed black;border-collapse:collapse; width: 100%;">
+			<tr>
+				<th style="border: 1px dashed black; padding-bottom: 10px; text-align: center; vertical-align: middle;" colspan="4" >Dangerous Goods Identification</th>
+				<th style="border: 1px dashed black;"></th>
+				<th style="border: 1px dashed black;"></th>
+				<th style="border: 1px dashed black;"></th>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 30px; ">UN or ID No.</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 250px;">Proper Shipping Name</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 30px;">Class or Divisi on (Subs idiary Risk)</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 30px;">Packing Group</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 200px;">Quantity and Type of Packing</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 30px;">Pack Inst.</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; width: 30px;">Authorization</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;">ID8000</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;">CONSUMER COMMODITY</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;">9</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;"></td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;">1 Fibreboard Box <apex:outputText value="{0, number, ##0.##}"> <apex:param value="{!weight}"></apex:param> </apex:outputText> kgG</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;">Y963</td>
+				<td style="text-align: center; vertical-align: middle;border: 1px dashed black; padding: 10px;"></td>
+			</tr>
+		</table>
+
+		<div style="margin-top: 10px;">
+			Additional Handling Information<br/>
+			«I DECLARE THAT ALL OF THE APPLICABLE AIR TRANSPORT REQUIREMENTS HAVE BEEN MET»<br/>
+			EMERGENCY PHONE NUMBER tel. +33(0) 1 48 16 00 79 <br/><br/>
+			<b>24 hr. Emergency Contact Tel. No. : +33(0) 1 48 16 00 79 shipment is made under the provisions of ICAO </b>
+		</div>
+
+		<table style="border: 1px solid black;border-collapse:collapse;">
+			<tr>
+				<td style="border: 1px solid black;width: 60%; padding: 10px;">
+					<b>I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labelled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations. I declare that all of the applicable air transport requirements have been met.</b>
+				</td>
+				<td style="border: 1px solid black;width: 40%; padding: 10px;">
+					<b>Name of Signatory</b><br/>
+					Tyndia M’Pandy<br/>
+					<b>Place and Date:</b><br/>
+					VILLEPINTE {!shipDate}<br/>
+					<b>Signature</b><br/>
+					<b>(see warning above)</b>
+				</td>
+			</tr>
+		</table>
+	</apex:outputPanel>
+	</body>
+</html>
+</apex:page>

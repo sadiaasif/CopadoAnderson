@@ -1,0 +1,640 @@
+<apex:page id="ClsMatchSettings" tabStyle="Distribution_Classifier__tab" sideBar="false" standardStylesheets="false" docType="html-5.0" controller="n2de.ClsMatchSettingsController" action="{!init}">
+    <apex:slds />
+    <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.n2Components, '/css/n2.min.css')}"/>
+        <style>
+            .n2__settings-fields span.slds-form-element__label {
+                width: 200px;
+            }
+
+            tr.n2__type-disabled td {
+                color: #DDDBDA !important;
+            }
+        </style>
+        <script>
+            window.n2__sldsIconsPrefix = '{!JSENCODE(URLFOR($Asset.SLDS, 'assets/icons'))}';
+            window.n2__locale = '{!JSENCODE(Locale)}';
+            window.n2__timeZone = '{!JSENCODE(TimeZone)}';
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.n2Components, 'js/thirdParty.min.js')}"></script>
+        <script onload="initComponents();" defer="defer" src="{!URLFOR($Resource.n2Components, 'js/n2.min.js')}"></script>
+        <script>
+            loadDomainsDictionary = function() {
+                // Initialise the Heroku utilities
+                n2.sf.heroku.initAuth('{!JSENCODE(HerokuBaseUrl)}', function() {
+                    return n2.util.promise().reject('Please refresh the page.');
+                }, {!ServerTime}, JSON.parse('{!AuthHeaders}'));
+
+                // Fetch the domains from Heroku and send to SF if id is different
+                n2.sf.heroku.get('/json/domains.json')
+                    .done(function(domains) {
+                        if (domains.id !== '{!JSENCODE(ImportedDataId)}') {
+                            var domainsJson = JSON.stringify(domains);
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.loadDomainsData}', domainsJson, function(response, event) {
+                                if (event.statusCode !== 200) {
+                                    n2.message.error(n2.sf.util.getMessageFromEvent('Failed to import domains dictionary', event));
+                                }
+                            });
+                        }
+                    })
+                    .fail(function(xhr, status, error) {
+                        n2.message.error('Failed to fetch domains dictionary: ' + (error || xhr.status));
+                    });
+            };
+
+            showHideMessages = function(jobRunning, stopInProgress, isUnderMaintenance) {
+                if (isUnderMaintenance) {
+                    n2j$('div#n2__enable-maintenance-mode-warn').removeClass('slds-hide');
+                } else {
+                    n2j$('div#n2__enable-maintenance-mode-warn').addClass('slds-hide');
+                    // Show the data preparation message if job is running, and if being stopped show some different text
+                    if (jobRunning) {
+                        n2j$('div#n2__enable-info').removeClass('slds-hide');
+                        if (stopInProgress) {
+                            n2j$('span#n2__enable-info-preparing').addClass('slds-hide');
+                            n2j$('span#n2__enable-info-stopping').removeClass('slds-hide');
+                            n2.cm.disable('checkbox-lead-enabled');
+                        } else {
+                            n2j$('span#n2__enable-info-preparing').removeClass('slds-hide');
+                            n2j$('span#n2__enable-info-stopping').addClass('slds-hide');
+                        }
+                    } else {
+                        n2j$('div#n2__enable-info').addClass('slds-hide');
+                    }
+                
+                    // If we're not stopping, and we have some matching enabled, enable the toggle
+                    if ({!SomeMatchingEnabled} && !stopInProgress) {
+                        n2.cm.enable('checkbox-lead-enabled');
+                    } else if (!{!SomeMatchingEnabled}) {
+                        // If there are no matching objects enabled, disable the toggle, unless matching is already enabled in which case we allow it to be turned off
+                        if (n2.cm.getValue('checkbox-lead-enabled')) {
+                            n2.cm.enable('checkbox-lead-enabled');
+                        } else {
+                            n2.cm.disable('checkbox-lead-enabled');
+                        }
+                    }
+                }
+            };
+
+            showHideClassifierFailedMessage = function(hasClassifierFailed) {
+                if (hasClassifierFailed) {
+                    n2j$('div#n2__classifier-failed-needs-restart').removeClass('slds-hide');
+                } else {
+                    n2j$('div#n2__classifier-failed-needs-restart').addClass('slds-hide');
+                }
+            };
+
+            initComponents = function() {
+                initNav('Match Settings');
+
+                n2.cm.addComponent('checkbox-toggle', {
+                    id: 'checkbox-lead-enabled',
+                    selector: '#checkbox-lead-enabled',
+                    label: 'Lead matching',
+                    onLabel: 'Enabled',
+                    offLabel: 'Disabled',
+                    defaultValue: {!LeadMatchingEnabled},
+                    disabled: true,
+                    help: {!SomeMatchingEnabled} ? ({!AccountDomainMatchingEnabled} ? 'Enabling lead matching will initiate a Batch job to prepare your data for matching' : '') : 'You will need to enable one of the object matches before you can turn on Lead matching',
+                    cls: 'slds-m-bottom_medium n2__settings-fields',
+                    handlers: {
+                        'change': function(value) {
+                            n2.spinner.show();
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.toggleLeadMatchingEnabled}', value, function(response, event) {
+                                n2.spinner.hide();
+                                if (event.statusCode === 200) {
+                                    showHideMessages(response.jobRunning, response.stopInProgress, false);
+                                    showHideClassifierFailedMessage(response.hasClassifierFailed);
+
+                                    n2.toast.show({
+                                        text: 'Your changes have been saved'
+                                    });
+                                } else {
+                                    //Reset value if an exception occurs
+                                    n2.cm.setValue('checkbox-lead-enabled', !value);
+                                    n2.message.error('Error updating enabled state: ' + event.message);
+                                }
+                            });
+                        }
+                    }
+                });
+
+                showHideClassifierFailedMessage({!ClassifierFailed});
+                n2.cm.addComponent('button', {
+                    id: 'btn-data-prep-refresh',
+                    selector: '#btn-data-prep-refresh',
+                    text: 'Check again',
+                    handlers: {
+                        'click': function() {
+                            n2j$('div#n2__enable-info_spinner').removeClass('slds-hide');
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.getDataPrepJobStatus}', function(response, event) {
+                                n2j$('div#n2__enable-info_spinner').addClass('slds-hide');
+                                if (event.statusCode === 200 && response) {
+                                    showHideMessages(response.jobRunning, response.stopInProgress, false);
+                                    showHideClassifierFailedMessage(response.hasClassifierFailed);
+                                } else {
+                                    n2.message.error('Error getting status of data preparation job: ' + event.message);
+                                }
+                            });
+                        }
+                    }
+                });
+
+                // Show the maintenance and data preparation messages if needed
+                showHideMessages({!DataPrepJobsRunning}, {!DataPrepJobsStopping}, {!IsUnderMaintenance});
+
+                var statusData = [{
+                    name: 'Lead-to-Account',
+                    status: {!LeadAccountMatchingEnabled},
+                    type: 'account'
+                }, {
+                    name: 'Lead-to-Contact',
+                    status: {!LeadContactMatchingEnabled},
+                    type: 'contact'
+                }, {
+                    name: 'Lead-to-Lead',
+                    status: {!LeadLeadMatchingEnabled},
+                    type: 'lead'
+                }];
+                n2.cm.addComponent('data-table', {
+                    id: 'data-table-enabled',
+                    selector: '#data-table-enabled',
+                    key: 'type',
+                    storeData: true,
+                    paging: false,
+                    columns: [{
+                        name: 'name',
+                        title: 'Name',
+                        sortable: false
+                    }, {
+                        name: 'status',
+                        title: 'Status',
+                        sortable: false,
+                        format: function(value) {
+                            return value ? 'Enabled' : 'Disabled';
+                        }
+                    }, {
+                        name: 'type',
+                        title: '',
+                        sortable: false,
+                        format: function() {
+                            return 'Settings';
+                        },
+                        action: function(value) {
+                            n2.sf.util.navigate('{!Namespace}ClsMatchObject?type=' + value);
+                        }
+                    }],
+                    data: function() {
+                        arguments[4](statusData);
+                    },
+                    rowCls: function(row) {
+                        return row.status ? '' : 'n2__type-disabled';
+                    },
+                    cls: 'slds-m-bottom_medium'
+                });
+
+                // Determine if we should be excluding the not operators in the filter logic builders
+                var excludedOperators = '{!NotOperatorsDisabled}' === 'true' ? n2.const.SF.NOT_OPERATORS : [];
+
+                // Create a promise to get the lead object fields
+                var fieldsDeferred = n2.util.promise();
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.getObjectFields}', 'filters', function(response, event) {
+                    if (event.statusCode === 200 && response) {
+                        fieldsDeferred.resolve(response);
+                    } else {
+                        n2.message.error('Error getting object fields: ' + event.message);
+                        fieldsDeferred.resolve([]);
+                    }
+                }, {
+                    escape: false
+                });
+
+                getDataValuesList = function(fieldName) {
+                    // Return a promise to get the field values for the selected field, if there is no field name just return null
+                    if (!fieldName) {
+                        return null;
+                    }
+                    var fieldValuesDeferred = n2.util.promise();
+                    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.getFieldValues}', fieldName, function(response, event) {
+                        if (event.statusCode === 200 && response) {
+                            fieldValuesDeferred.resolve(response);
+                        } else {
+                            n2.message.error('Error getting field values: ' + event.message);
+                            fieldValuesDeferred.resolve([]);
+                        }
+                    }, {
+                        escape: false
+                    });
+                    return fieldValuesDeferred;
+                };
+
+                showCancelSave = function() {
+                    n2j$('#n2__save-footer').removeClass('slds-hide');
+                    n2.cm.disable('checkbox-lead-enabled');
+                    n2.cm.disable('btn-backfill');
+                };
+
+                hideCancelSave = function() {
+                    n2j$('#n2__save-footer').addClass('slds-hide');
+                    if ({!SomeMatchingEnabled}) {
+                        n2.cm.enable('checkbox-lead-enabled');
+                        n2.cm.enable('btn-backfill');
+                    }
+                };
+
+                n2.cm.addComponent('logic-filters', {
+                    id: 'logic-filters-delay-filter',
+                    selector: '#logic-filters-delay-filter',
+                    label: 'Delay processing filter',
+                    help: 'You can delay processing records until they meet the criteria below (e.g. to wait for an enrichment tool to complete before looking for a match)',
+                    excludedOperators: excludedOperators,
+                    includeFiscalPeriods: false,
+                    maxRows: 1,
+                    required: false,
+                    data: function(callback) {
+                        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.getProcessingFilter}', function(response, event) {
+                            if (event.statusCode === 200 && response) {
+                                callback(response.filters);
+                                if (response.forTerritories) {
+                                    n2j$('#n2__lead-delay-info').removeClass('slds-hide');
+                                }
+                            } else {
+                                n2.message.error('Error getting delay filter: ' + event.message);
+                                callback({filters: []});
+                            }
+                        }, {
+                            escape: false
+                        });
+                    },
+                    dataFieldsList: function() {
+                        return fieldsDeferred;
+                    },
+                    dataValuesList: function(fieldName) {
+                        return getDataValuesList(fieldName);
+                    },
+                    handlers: {
+                        'change': function() {
+                            showCancelSave();
+                        }
+                    }
+                });
+
+                n2.cm.addComponent('button', {
+                    id: 'btn-cancel',
+                    selector: '#btn-cancel',
+                    text: 'Cancel',
+                    handlers: {
+                        'click': function() {
+                            hideCancelSave();
+                            n2.cm.refresh('logic-filters-delay-filter');
+                        }
+                    }
+                });
+                n2.cm.addComponent('button', {
+                    id: 'btn-save',
+                    selector: '#btn-save',
+                    text: 'Save',
+                    style: 'brand',
+                    handlers: {
+                        'click': function() {
+                            var filters = n2.cm.getValue('logic-filters-delay-filter');
+
+                            if (!n2.util.isNullOrUndefined(filters)) {
+                                n2.spinner.show();
+
+                                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.saveProcessingFilter}', filters, function(response, event) {
+                                    n2.spinner.hide();
+                                    if (event.statusCode === 200) {
+                                        hideCancelSave();
+                                        n2.toast.show({
+                                            text: 'Your changes have been saved'
+                                        });
+                                    } else {
+                                        n2.message.error('Error saving delay filter: ' + event.message);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+
+                n2.cm.addComponent('button', {
+                    id: 'btn-backfill',
+                    selector: '#btn-backfill',
+                    text: 'Backfill Records Wizard',
+                    tooltip: 'Wizard to trigger the matching on a selection of leads',
+                    disabled: !{!SomeMatchingEnabled},
+                    cls: 'slds-m-vertical_medium'
+                });
+
+                // Backfill wizard
+                var wizardCriteria = '';
+                var wizardCriteriaDefault = {
+                    filters: [],
+                    logic: ''
+                };
+                var wizardCriteriaData = wizardCriteriaDefault;
+                var wizardCriteriaDefaults = {
+                    'not-processed': {
+                        filters: [{
+                            "name": "{!Namespace}DE_Status__c",
+                            "op": "equals",
+                            "val": "{!NotProcessedStatus}",
+                            "type": "STRING"
+                        }],
+                        logic: '1'
+                    }
+                };
+                n2.cm.addComponent('radio-group', {
+                    id: 'radio-group-wizard-criteria',
+                    selector: '#radio-group-wizard-criteria',
+                    required: true,
+                    sort: false,
+                    data: [{
+                        label: 'All records',
+                        value: 'all'
+                    }, {
+                        label: 'Records not processed',
+                        value: 'not-processed'
+                    }, {
+                        label: 'Custom',
+                        value: 'custom'
+                    }]
+                });
+                n2.cm.addComponent('logic-filters', {
+                    id: 'logic-filters-wizard-criteria',
+                    selector: '#logic-filters-wizard-criteria',
+                    excludedOperators: excludedOperators,
+                    includeFiscalPeriods: false,
+                    maxRows: 5,
+                    data: function(callback) {
+                        callback(wizardCriteriaData);
+                    },
+                    dataFieldsList: function() {
+                        var logicFieldsDeferred = n2.util.promise();
+                        Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.getObjectFields}', 'backfill', function(response, event) {
+                            if (event.statusCode === 200 && response) {
+                                logicFieldsDeferred.resolve(response);
+                            } else {
+                                n2.message.error('Error getting object fields: ' + event.message);
+                                logicFieldsDeferred.resolve([]);
+                            }
+                        }, {
+                            escape: false
+                        });
+                        return logicFieldsDeferred;
+                    },
+                    dataValuesList: function(fieldName) {
+                        return getDataValuesList(fieldName);
+                    }
+                });
+                var wizard = n2.cm.addComponent('modal-wizard', {
+                    id: 'wizard-backfill',
+                    selector: '#n2__btn-backfill',
+                    bodySelector: '#wizard-backfill',
+                    size: 'medium',
+                    heading: 'Backfill Records',
+                    steps: [{
+                        name: 'Select Criteria',
+                        selector: '#n2__wizard-backfill-step-1'
+                    }, {
+                        name: 'Confirm Criteria',
+                        selector: '#n2__wizard-backfill-step-2'
+                    }, {
+                        name: 'Summary',
+                        selector: '#n2__wizard-backfill-step-3'
+                    }],
+                    handlers: {
+                        'show': function() {
+                            // Reset the state
+                            wizardCriteria = '';
+                            wizardCriteriaData = wizardCriteriaDefault;
+                        },
+                        'showStep': function(stepNumber, previousStep) {
+                            switch (stepNumber) {
+                                case 2:
+                                    // Update the logic criteria if the criteria selection has changed
+                                    var currentCriteria = n2.cm.getValue('radio-group-wizard-criteria');
+                                    if (currentCriteria !== wizardCriteria) {
+                                        wizardCriteria = currentCriteria;
+                                        wizardCriteriaData = wizardCriteriaDefaults[wizardCriteria] || wizardCriteriaDefault;
+                                        n2.cm.refresh('logic-filters-wizard-criteria');
+                                    }
+
+                                        // If all skip this step
+                                    if (wizardCriteria === 'all') {
+                                        wizard.goToStep(previousStep === 1 ? 3 : 1);
+                                    }
+                                    break;
+                                case 3:
+                                    // Get a summary of the records to process
+                                    var deferred = n2.util.promise();
+                                    var filters = n2.cm.getValue('logic-filters-wizard-criteria');
+                                    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.getBackfillCount}', filters, function(response, event) {
+                                        deferred.resolve();
+                                        if (event.statusCode === 200) {
+                                            n2j$('span#wizard-number-records').text(response);
+                                        } else {
+                                            n2.message.error('Error getting number of records to backfill: ' + event.message);
+                                        }
+                                    }, {
+                                        escape: false
+                                    });
+                                    return deferred;
+                                    break;
+                            }
+                        },
+                        'finish': function() {
+                            var deferred = n2.util.promise();
+                            var filters = n2.cm.getValue('logic-filters-wizard-criteria');
+                            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ClsMatchSettingsController.performBackfill}', filters, function(response, event) {
+                                deferred.resolve();
+                                if (event.statusCode === 200 && response) {
+                                    n2.message.show({
+                                        text: 'Batch ' + response + ' has been successfully submitted to backfill the selected records',
+                                        heading: 'Backfill Records',
+                                        theme: 'success'
+                                    });
+                                    n2.cm.disable('btn-backfill');
+                                } else {
+                                    n2.message.error('Error submitting backfill batch: ' + event.message);
+                                }
+                            }, {
+                                escape: false
+                            });
+                            return deferred;
+                        }
+                    }
+                });
+
+                // Load the domains dictionary
+                loadDomainsDictionary();
+            };
+        </script>
+        <script defer="defer" src="{!URLFOR($Resource.DEResources, 'scripts/ga.js')}"></script>
+    </head>
+
+    <div class="slds-scope n2__root-container n2__full-height">
+        <div class="n2__root-container-row n2__full-height">
+            <div class="slds-grid n2__full-height">
+                <div>
+                    <c:ClsNavigation pkgNamespace="{!Namespace}"/>
+                </div>
+                <div class="slds-col slds-brand-band slds-brand-band_medium slds-p-around_medium n2__brand-background">
+                    <div class="slds-page-header slds-has-bottom-magnet">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-standard-merge">
+                                            <svg class="slds-icon" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#merge')}"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <nav>
+                                            <ol class="slds-breadcrumb slds-line-height_reset">
+                                                <li class="slds-breadcrumb__item">
+                                                    <span>Distribution Engine Classifier</span>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <h1 title="Lead Matching > Settings" class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate">Lead Matching > Settings</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <article class="slds-card slds-has-top-magnet">
+                        <div class="slds-card__body slds-card__body_inner slds-p-top_small slds-size_1-of-1 slds-x-large-size_4-of-5">
+                            <div class="slds-form">
+                                <div id="n2__enable-info" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-is-relative slds-hide" role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-info" title="Information">
+                                            <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#info')}"/>
+                                            </svg>
+                                            <span class="slds-assistive-text">Information</span>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <span id="n2__enable-info-preparing">
+                                            <p>We're just preparing your data for matching. Depending on the number of contacts in your org, this should be complete soon. Matching can continue whilst this happens, but matching to account by domain will not be accurate.</p>
+                                        </span>
+                                        <span id="n2__enable-info-stopping" class="slds-media__body slds-hide">
+                                            <p>We're just in the processing of stopping the data preparation, until this has been carried out you can't start matching again.</p>
+                                        </span>
+                                        <p><span id="btn-data-prep-refresh"></span></p>
+                                    </div>
+                                    <div class="slds-spinner_container slds-hide" id="n2__enable-info_spinner">
+                                        <div class="slds-spinner slds-spinner_small" role="status">
+                                            <span class="slds-assistive-text">Loading</span>
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="n2__classifier-failed-needs-restart" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-hide" role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-warning" title="Warning">
+                                            <svg class="slds-icon slds-icon_small slds-icon-text-warning" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"/>
+                                            </svg>
+                                            <span class="slds-assistive-text">Warning</span>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p>The classifier has aborted. Please restart.</p>
+                                    </div>
+                                </div>
+                                <div id="n2__enable-maintenance-mode-warn" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-is-relative slds-hide" role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-info" title="Warning">
+                                            <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"/>
+                                            </svg>
+                                            <span class="slds-assistive-text">Warning</span>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <span id="n2__enable-maintenance-mode-warning-message">
+                                            <p>{!MaintenanceModeMessage}</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span id="checkbox-lead-enabled"></span>
+                                <span id="data-table-enabled"></span>
+                                <div id="n2__lead-delay-info" class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_medium slds-hide" role="status">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-utility-info" title="Information">
+                                            <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#info')}"/>
+                                            </svg>
+                                            <span class="slds-assistive-text">Information</span>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p>This delay processing filter impacts both territory and lead match processing for Leads</p>
+                                    </div>
+                                </div>
+                                <span id="logic-filters-delay-filter"></span>
+                                <span id="btn-backfill"></span>
+                            </div>
+                            <div id="n2__save-footer" class="slds-docked-form-footer slds-hide">
+                                <span class="slds-m-right_small slds-align-middle"><b>You have unsaved changes</b></span>
+                                <span id="btn-cancel"></span>
+                                <span id="btn-save"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div id="wizard-backfill" class="slds-form slds-form_compound">
+                <div id="n2__wizard-backfill-step-1">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <span class="slds-text-body_regular">Select one of the predefined criteria to start narrowing down which records to backfill, you can fine-tune your criteria on the next step</span>
+                    </div>
+                    <div class="slds-form slds-form_compound">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row slds-grid_align-center">
+                                    <span id="radio-group-wizard-criteria"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="n2__wizard-backfill-step-2">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <span class="slds-text-body_regular">Update the predefined criteria based on your selection in the previous step to select which records to backfill</span>
+                    </div>
+                    <div class="slds-form slds-form_compound">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <span id="logic-filters-wizard-criteria"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="n2__wizard-backfill-step-3">
+                    <div class="slds-p-around_small slds-text-align_center">
+                        <h3 class="slds-text-heading_large slds-p-bottom_small">Summary</h3>
+                        <p class="slds-text-body_regular">Using the criteria you have specified, <b><span id="wizard-number-records"></span></b> records would be processed for lead matching.</p>
+                        <p>&nbsp;</p>
+                        <p class="slds-text-body_regular">If you are happy click Finish and a batch job will be created to perform the backfill processing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </html>
+</apex:page>

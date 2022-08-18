@@ -1,0 +1,178 @@
+<apex:page docType="html-5.0"  id="ptlRegister" controller="pymt.SiteRegisterController" sidebar="false" title="{!$Label.site.register}" cache="false" standardStylesheets="false">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.pymt__PaymentConnect,'styles/ptl_basic.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+
+    <div id="pc_context_{!HTMLENCODE($CurrentPage.parameters.context)}">
+    <div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+    <div class="pc_page" id="pc_ptlregister_page">
+    <div class="pc_page_content_top"></div>
+    <div class="pc_page_content">
+      <div class="pc_page_content_inner">
+
+        <apex:outputPanel styleclass="pc_siteregister_panel">
+                <div class="pc_siteregister_inner">
+                <apex:pagemessages />
+                <apex:outputPanel rendered="{!NOT($Label.site.user_registration == '-')}">
+                <h1 class="pc_siteregister_title"><apex:outputText value="{!$Label.site.user_registration}"/></h1>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!NOT($Label.pymt__SiteRegister_Instructions=='-')}">
+                <p class="pc_siteregister_instructions">{!$Label.pymt__SiteRegister_Instructions}</p>
+                </apex:outputPanel>
+
+                  <apex:form id="mainForm" styleclass="pc_siteregister_form_fields" forceSSL="true">
+                  <script>
+                  // HTML5 validation fallback code - for Safari, ios and android devices
+                  function hasHtml5Validation () {
+                    return typeof document.createElement('input').checkValidity === 'function';
+                  }
+
+                  if (hasHtml5Validation()) {
+                    $j("#{!SUBSTITUTE($Component.mainForm,':','\\\\:')}").submit(function (e) {
+                      if (!this.checkValidity()) {
+                        e.preventDefault();
+                        $j(this).addClass('invalid');
+                        $j('#status').html('invalid');
+                      } else {
+                        $j(this).removeClass('invalid');
+                        $j('#status').html('submitted');
+                      }
+                    });
+                  }
+                  // end HTML5 validation fallback code
+                  </script>
+                  <div class="pc_flex_form">
+
+
+                  <div class="pc_flex_form_line_container">
+                      <div class="pc_flex_form_label_item">
+                          <apex:outputLabel value="{!$Label.pymt__Label_FirstName}" for="firstname"/>
+                      </div>
+                      <div class="pc_flex_form_required_flag_item">
+                          <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                      </div>
+
+                      <div class="pc_flex_form_field_item">
+                        <apex:input type="text" required="true" id="firstname" value="{!firstname}"/>
+                      </div>
+                  </div>
+
+                     <div class="pc_flex_form_line_container">
+                         <div class="pc_flex_form_label_item">
+                            <apex:outputLabel value="{!$Label.pymt__Label_LastName}" for="lastname"/>
+                         </div>
+                         <div class="pc_flex_form_required_flag_item">
+                             <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                         </div>
+
+                         <div class="pc_flex_form_field_item">
+                            <apex:input type="text" required="true" id="lastname" value="{!lastname}"/>
+                         </div>
+                     </div>
+
+                     <div class="pc_flex_form_line_container">
+                         <div class="pc_flex_form_label_item">
+                            <apex:outputLabel value="{!$Label.site.email}" for="email"/>
+                         </div>
+                         <div class="pc_flex_form_required_flag_item">
+                             <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                         </div>
+
+                         <div class="pc_flex_form_field_item">
+                            <apex:input type="email" required="true" id="email" value="{!email}"/>
+                         </div>
+                     </div>
+
+                     <div class="pc_flex_form_line_container">
+                         <div class="pc_flex_form_label_item">
+                            <apex:outputLabel value="{!$Label.site.username}" for="username"/>
+                         </div>
+                         <div class="pc_flex_form_required_flag_item">
+                             <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                         </div>
+
+                         <div class="pc_flex_form_field_item">
+                            <apex:input type="text" required="true" id="username" value="{!username}"/>
+                         </div>
+                     </div>
+                     <!--
+                     <div class="pc_flex_form_line_container">
+                         <div class="pc_flex_form_label_item">
+                            <apex:outputLabel value="{!$Label.site.community_nickname}" for="communityNickname"/>
+                         </div>
+                         <div class="pc_flex_form_required_flag_item">
+                             <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                         </div>
+
+                         <div class="pc_flex_form_field_item">
+                            <apex:inputText required="true" id="communityNickname" value="{!communityNickname}"/>
+                         </div>
+                     </div>
+                    -->
+
+                     <div class="pc_flex_form_line_container">
+                         <div class="pc_flex_form_label_item">
+                            <apex:outputLabel value="{!$Label.site.password}" for="password"/>
+                         </div>
+                         <div class="pc_flex_form_required_flag_item">
+                             <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                         </div>
+
+                         <div class="pc_flex_form_field_item">
+                            <apex:inputSecret id="password" value="{!password}"/>
+                         </div>
+                     </div>
+
+                     <div class="pc_flex_form_line_container">
+                         <div class="pc_flex_form_label_item">
+                            <apex:outputLabel value="{!$Label.site.confirm_password}" for="confirmPassword"/>
+                         </div>
+                         <div class="pc_flex_form_required_flag_item">
+                             <apex:image url="/s.gif" styleClass="requiredFieldMarker"/>
+                         </div>
+
+                         <div class="pc_flex_form_field_item">
+                            <apex:inputSecret id="confirmPassword" value="{!confirmPassword}"/>
+                         </div>
+                     </div>
+
+
+
+                  </div><!-- end of flex form -->
+
+                  <div class="pc_button_container">
+                    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == false}">
+                        <apex:commandButton action="{!registerUser}" value="{!$Label.site.submit}" id="submit" disabled="{!disableForm}"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!siteSettings.pymt__Display_CSS_Buttons__c == true}">
+                        <input type="submit" style="display:none;" id="hiddenSubmit" name="hiddenSubmitInput"/>
+                        <apex:commandLink styleClass="css-button" onclick="return validateForm();" action="{!registerUser}" value="{!$Label.site.submit}" id="submit2" rendered="{!NOT(disableForm)}"/>
+                        <apex:commandLink styleClass="css-button-disabled"  value="{!$Label.site.submit}"  rendered="{!(disableForm)}"/>
+                        <script>
+                        function validateForm() {
+                          // for apex:commandLink which does not invoke HTML5 form validation automatically
+                          var form = document.getElementById('{!$Component.mainForm}');
+                          var submitBtn = document.getElementById('hiddenSubmit');
+                          if (form.checkValidity() == false) {
+                            submitBtn.click();  // force form to display validation messages.
+                            return false;
+                          }
+                          return true;
+                        }
+                        </script>
+                    </apex:outputPanel>
+                  </div>
+
+                    </apex:form>
+                </div>
+          </apex:outputPanel>
+
+    </div><!--  pc_page_content_inner -->
+    </div><!--  pc_page_content -->
+
+    </div><!--  pc_page -->
+</div> <!--  page pc_lang_xxx div -->
+</div> <!--  page pc_context_xxx div -->
+</apex:page>

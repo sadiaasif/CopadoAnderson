@@ -1,0 +1,176 @@
+<apex:page controller="evt.CheckInController" action="{!doCheckIn}" cache="false"  showheader="false" sidebar="false"  standardStyleSheets="false">
+<header>
+<style>
+@media handheld and (max-width: 600px) {
+    body {
+        font-size:1.2em;
+        padding:0px;
+        margin:0px;
+    }
+    .page_frame {
+        margin:0px;
+        padding:0px;
+    }
+    .page_body {
+        padding:10px;
+    
+    }
+    
+}
+
+@media handheld and (min-width: 600px) {
+    body {
+        font-size:1.5em;
+    }
+
+    .page_body {
+        padding:20px;
+    
+    }
+}
+
+@media screen {
+    body {
+        font-color:blue;
+        font-size:1.1em;
+    }
+
+    .page_body {
+        padding:20px;
+    
+    }
+
+}
+
+body {
+    background:white;
+    font-family: calibri, arial, sans-serif;
+}
+.page_top_bar {
+    margin:0px;
+    padding:5px;
+    background-color: steelblue;
+    color:white;
+
+}
+.page_body {
+    margin:0px;
+    }
+    
+.message {
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 4px;
+    margin: 4px 0px 4px; 0px;
+}
+
+.messageCell h4 {
+    display:inline;
+    margin-right:2px;
+    
+}
+
+.errorM3 .msgIcon, .message img[title="error"] {
+    margin-right:4px;
+    background-image: url(/img/msg_icons/error24.png);
+    background-position: 0px 0px;
+    width: 24px;
+    height: 24px;
+}
+
+.infoM3 .msgIcon, .message img[title="info"] {
+    margin-right:4px;
+    background-image: url(/img/msg_icons/info24.png);
+    background-position: 0px 0px;
+    width: 24px;
+    height: 24px;
+}
+
+.confirmM3 .msgIcon, .message img[title="confirm"] {
+    margin-right:4px;
+    background-image: url(/img/msg_icons/confirm24.png);
+    background-position: 0px 0px;
+    width: 24px;
+    height: 24px;
+}
+
+
+.warningM3 .msgIcon, .message img[title="warning"] {
+    margin-right:4px;
+    background-image: url(/img/msg_icons/warning24.png);
+    background-position: 0px 0px;
+    width: 24px;
+    height: 24px;
+}   
+</style>
+<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=2.0; user-scalable=1;" />
+</header>
+<div class="page_frame">
+<div class="page_top_bar">
+<img src="{!URLFOR($Resource.evt__EventManagement, 'images/calendar-icon-32.png')}" style="vertical-align:middle;" />&nbsp;Linvio Events
+</div>
+<div class="page_body">
+<apex:pageMessages />
+<apex:outputPanel rendered="{!NOT(pageView == 'disabled')}">
+
+<apex:outputPanel id="checkInPanel" rendered="{!pageView == 'checkin'}">
+
+<apex:outputText value="{!$Label.evt__Label_Name}: {!BLANKVALUE(attendee.evt__First_Name__c,'')} {!BLANKVALUE(attendee.evt__Last_Name__c,'')}"/><br/>
+<apex:outputText value="{!$Label.evt__Label_Email}: {!BLANKVALUE(attendee.evt__Email__c,'')}"/><br/>
+<apex:outputText value="{!$Label.evt__Label_Event}: {!attendee.evt__Event__r.Name}"/><br/>
+<apex:outputText value="{!$Label.evt__Label_Status}: {!attendee.evt__Invitation_Status__c}"/><br/>
+<apex:form >
+
+<apex:commandButton value="Update Attendee Info" action="{!editAttendeeInfo}" rerender="checkInPanel" rendered="{!displayEditButton}"/>
+<apex:outputPanel id="dateEntryPanel" >
+<apex:outputPanel id="innerDataEntryPanel" rendered="{!editMode}">
+<apex:panelGrid columns="2" id="dataEntryForm" >
+<apex:outputText value="First Name"/>
+<apex:inputText value="{!firstname}" />
+
+<apex:outputText value="Last Name"/>
+<apex:inputText value="{!lastname}"/>
+
+<apex:outputText value="Email"/>
+<apex:inputText value="{!emailAddress}"/>
+
+<apex:outputText value="Street"/>
+<apex:inputText value="{!mailingStreet}"/>
+
+<apex:outputText value="City"/>
+<apex:inputText value="{!mailingCity}"/>
+
+<apex:outputText value="State"/>
+<apex:inputText value="{!mailingState}"/>
+
+<apex:outputText value="Postal Code"/>
+<apex:inputText value="{!mailingPostalCode}"/>
+
+<apex:outputText value="Country"/>
+<apex:inputText value="{!mailingCountry}"/>
+
+
+</apex:panelGrid>
+<apex:commandButton value="Cancel Edit" action="{!cancelEdit}" rerender="checkInPanel" />&nbsp;
+<apex:commandButton value="Save" action="{!updateAttendeeInfo}" rerender="checkInPanel" />
+</apex:outputPanel>
+</apex:outputPanel>
+
+
+</apex:form>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!pageView == 'enableIP'}">
+<apex:form >
+<apex:outputText value="Enter device access code to register this IP address ({!PtlIPAddress})."/><br/><br/>
+<apex:inputText value="{!accessCode}"/><br/><br/>
+<apex:commandButton value="{!$Label.site.submit}" action="{!AddIPRange}"/><br/>
+</apex:form>
+</apex:outputPanel>
+<br/><br/><br/>
+</apex:outputPanel>
+</div>
+</div>
+</apex:page>

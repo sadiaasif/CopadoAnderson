@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>zkusps__Shipment__c.zkusps__shipDate__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>zkusps__Shipment__c.zkusps__toName__c</field>
+    </columns>
+    <columns>
+        <field>zkusps__Shipment__c.zkusps__toCity__c</field>
+    </columns>
+    <columns>
+        <field>zkusps__Shipment__c.zkusps__toState__c</field>
+    </columns>
+    <columns>
+        <field>zkusps__Shipment__c.zkusps__toPostalCode__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>zkusps__Shipment__c.zkusps__finalTotalAmount__c</field>
+    </columns>
+    <description>List of all Opportunities and related Shipments</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_ACC_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Opportunities and USPS Shipments</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$zkusps__Shipment__c@zkusps__Shipment__c.zkusps__toOpportunity__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>zkusps__Shipment__c.zkusps__lastTrackUpdateTime__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

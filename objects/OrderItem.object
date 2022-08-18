@@ -1,0 +1,3092 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AddProduct</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AddProduct</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditAllProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditAllProduct</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditAllProduct</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
+        <content>Org_Default_Order_Item</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
+        <content>Org_Default_Order_Item</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Edit_Services</fullName>
+        <fields>ServiceDate</fields>
+        <fields>Description</fields>
+        <fields>Status__c</fields>
+        <fields>LastModifiedById</fields>
+        <label>Edit Services</label>
+    </compactLayouts>
+    <enableFeeds>true</enableFeeds>
+    <fields>
+        <fullName>Action_Alert__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR( ISPICKVAL( Processing_Stage__c , &apos;Completed&apos;),ISPICKVAL( Processing_Stage__c , &apos;Refunded&apos;),ISPICKVAL( Processing_Stage__c , &apos;N/A&apos;),ISPICKVAL( Processing_Stage__c , &apos;Kitted&apos;),ISPICKVAL( Processing_Stage__c , &apos;Exchanged for Other Services&apos;) ),IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;,$Api.Partner_Server_URL_260))+&quot;resource/greenIndicator&quot;, &apos;image&apos;, 20,20),IF(Due_Date__c - TODAY() &gt;= 14, IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;,$Api.Partner_Server_URL_260))+&quot;resource/greenIndicator&quot;, &apos;image&apos;, 20,20),  IF(AND(Due_Date__c - TODAY() &lt; 14, Due_Date__c - TODAY() &gt; 0), IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;,$Api.Partner_Server_URL_260))+&quot;resource/yellowIndicator&quot;, &apos;image&apos;, 20,20), 
+IMAGE(LEFT($Api.Partner_Server_URL_260, FIND( &apos;/services&apos;,$Api.Partner_Server_URL_260))+&quot;resource/redIndicator&quot;, &apos;image&apos;, 20,20)
+) ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Action Alert</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Active_User_Updated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox to track whether the email should be sent to LC or Processor</description>
+        <externalId>false</externalId>
+        <label>Active User Updated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Active_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Active User</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>User.Email</field>
+                <operation>contains</operation>
+                <value>andersonadvisors</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Order_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Advisor_Admin__c</fullName>
+        <externalId>false</externalId>
+        <label>Advisor Admin</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Advisor_Admin_Name</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AgeStage__c</fullName>
+        <description>This field is used in flow OrderItem&apos;s - UpdateStage . We need to calculate Age . IF the Age is equal or greater 63 days then OSI stage update throiugh flow. 
+
+Requirement: Update Stage after 63 days</description>
+        <externalId>false</externalId>
+        <formula>today()-  LastModifiySatge__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AgeStage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>Today()- ServiceDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Age in Days</inlineHelpText>
+        <label>Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Audit_Completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Last QA Audit</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AvailableQuantity</fullName>
+    </fields>
+    <fields>
+        <fullName>BCP_Renewal_Advisor__c</fullName>
+        <externalId>false</externalId>
+        <label>BCP/Renewal Advisor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Renewal_Advisors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeper__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeper</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Bookkeeping_Admin</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Admin__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeping Admin</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Karissa Williams</fullName>
+                    <default>false</default>
+                    <label>Karissa Williams</label>
+                </value>
+                <value>
+                    <fullName>Carol Spagnoletta</fullName>
+                    <default>false</default>
+                    <label>Carol Spagnoletta</label>
+                </value>
+                <value>
+                    <fullName>Jennifer Petrunyak</fullName>
+                    <default>false</default>
+                    <label>Jennifer Petrunyak</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Onboarder__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeping Onboarder</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Bookkeeping_Onboarder</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bookkeeping_Reviewer__c</fullName>
+        <externalId>false</externalId>
+        <label>Bookkeeping Reviewer</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Bookkeeping_Reviewer</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Client_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Email</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client_Name__c</fullName>
+        <description>Present on the page layout for users to know which client&apos;s order they are working on.</description>
+        <externalId>false</externalId>
+        <formula>Order.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>For a link to the client page, hover over the Order number and a clickable version of the client name will appear.</inlineHelpText>
+        <label>Client Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>8</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Completed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Completed Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Current_User__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Active_User__c = $User.Id, 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current User</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dataload__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dataload</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Days_Since_Last_Activity__c</fullName>
+        <externalId>false</externalId>
+        <formula>Today() -  DATEVALUE(LastModifiedDate)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Number of days since the Service Item was last modified.</inlineHelpText>
+        <label>Days Since Last Activity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_to_Complete__c</fullName>
+        <externalId>false</externalId>
+        <formula>Completed_Date__c - ServiceDate</formula>
+        <inlineHelpText>Days to complete the OSI</inlineHelpText>
+        <label>Days to Complete</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_to_File_Entity__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE(Entity__r.Organizational_Date__c) - CreatedDate</formula>
+        <label>Days to File Entity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product2.Description</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Due Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Entity_Made_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity Filled Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Entity_Organization_State_F__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Entity__r.Organization_State__c )</formula>
+        <label>Entity Organization State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity_Organization_State__c</fullName>
+        <description>Captures the organization state from entity</description>
+        <externalId>false</externalId>
+        <label>Entity Organization State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Entity</label>
+        <referenceTo>Entities__c</referenceTo>
+        <relationshipLabel>Order Items</relationshipLabel>
+        <relationshipName>Order_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Error_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Error Description</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Error_Tracking__c</fullName>
+        <externalId>false</externalId>
+        <label>Error Tracking</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Anonymity Concern</fullName>
+                    <default>false</default>
+                    <label>Anonymity Concern</label>
+                </value>
+                <value>
+                    <fullName>Assigned incorrectly</fullName>
+                    <default>false</default>
+                    <label>Assigned incorrectly</label>
+                </value>
+                <value>
+                    <fullName>Confirmation needed due to conflicting notes/info</fullName>
+                    <default>false</default>
+                    <label>Confirmation needed due to conflicting notes/info</label>
+                </value>
+                <value>
+                    <fullName>Duplicate OSI</fullName>
+                    <default>false</default>
+                    <label>Duplicate OSI</label>
+                </value>
+                <value>
+                    <fullName>Impossible Configuration</fullName>
+                    <default>false</default>
+                    <label>Impossible Configuration</label>
+                </value>
+                <value>
+                    <fullName>Missing Required Info</fullName>
+                    <default>false</default>
+                    <label>Missing Required Info</label>
+                </value>
+                <value>
+                    <fullName>Misspelling</fullName>
+                    <default>false</default>
+                    <label>Misspelling</label>
+                </value>
+                <value>
+                    <fullName>Name search not fully conducted</fullName>
+                    <default>false</default>
+                    <label>Name search not fully conducted</label>
+                </value>
+                <value>
+                    <fullName>No Entity Attached</fullName>
+                    <default>false</default>
+                    <label>No Entity Attached</label>
+                </value>
+                <value>
+                    <fullName>No Sale Entity</fullName>
+                    <default>false</default>
+                    <label>No Sale Entity</label>
+                </value>
+                <value>
+                    <fullName>OSI not needed</fullName>
+                    <default>false</default>
+                    <label>OSI not needed</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>WPB Mismatch</fullName>
+                    <default>false</default>
+                    <label>WPB Mismatch</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Fulfillment_Coordinator__c</fullName>
+        <externalId>false</externalId>
+        <label>Fulfillment Coordinator</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Alyssa Hoopii</fullName>
+                    <default>false</default>
+                    <label>Alyssa Hoopii</label>
+                </value>
+                <value>
+                    <fullName>Carlye Martinsky</fullName>
+                    <default>false</default>
+                    <label>Carlye Martinsky</label>
+                </value>
+                <value>
+                    <fullName>Dana Heckathorn</fullName>
+                    <default>false</default>
+                    <label>Dana Heckathorn</label>
+                </value>
+                <value>
+                    <fullName>Danielle Creamer</fullName>
+                    <default>false</default>
+                    <label>Danielle Creamer</label>
+                </value>
+                <value>
+                    <fullName>Hayley Karlson</fullName>
+                    <default>false</default>
+                    <label>Hayley Karlson</label>
+                </value>
+                <value>
+                    <fullName>Jacob Summey</fullName>
+                    <default>false</default>
+                    <label>Jacob Summey</label>
+                </value>
+                <value>
+                    <fullName>Jason Lundquist</fullName>
+                    <default>false</default>
+                    <label>Jason Lundquist</label>
+                </value>
+                <value>
+                    <fullName>Jennifer Seibert</fullName>
+                    <default>false</default>
+                    <label>Jennifer Seibert</label>
+                </value>
+                <value>
+                    <fullName>Jeremy Barry</fullName>
+                    <default>false</default>
+                    <label>Jeremy Barry</label>
+                </value>
+                <value>
+                    <fullName>Jessica Kim</fullName>
+                    <default>false</default>
+                    <label>Jessica Kim</label>
+                </value>
+                <value>
+                    <fullName>Nadine Fanaro</fullName>
+                    <default>false</default>
+                    <label>Nadine Fanaro</label>
+                </value>
+                <value>
+                    <fullName>Ryann Brown</fullName>
+                    <default>false</default>
+                    <label>Ryann Brown</label>
+                </value>
+                <value>
+                    <fullName>Samantha Carrillo</fullName>
+                    <default>false</default>
+                    <label>Samantha Carrillo</label>
+                </value>
+                <value>
+                    <fullName>Sonya Johnson</fullName>
+                    <default>false</default>
+                    <label>Sonya Johnson</label>
+                </value>
+                <value>
+                    <fullName>Tiv Taylor</fullName>
+                    <default>false</default>
+                    <label>Tiv Taylor</label>
+                </value>
+                <value>
+                    <fullName>Zachary Graham</fullName>
+                    <default>false</default>
+                    <label>Zachary Graham</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Fulfillment_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product2.Fulfillment_Description__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Fulfillment Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integration_Analyst__c</fullName>
+        <externalId>false</externalId>
+        <label>Integration Specialist</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Integration_Analyst</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Is_Check__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Check</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KMS_Tax_Advisor__c</fullName>
+        <externalId>false</externalId>
+        <label>KMS Tax Advisor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>KMS_Tax_Advisors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Land_Trust_Reviewer__c</fullName>
+        <externalId>false</externalId>
+        <label>Land Trust Reviewer</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Amanda Wynalda</fullName>
+                    <default>false</default>
+                    <label>Amanda Wynalda</label>
+                </value>
+                <value>
+                    <fullName>Carly Coons</fullName>
+                    <default>false</default>
+                    <label>Carly Coons</label>
+                </value>
+                <value>
+                    <fullName>Justin McCord</fullName>
+                    <default>false</default>
+                    <label>Justin McCord</label>
+                </value>
+                <value>
+                    <fullName>Kelli Wise</fullName>
+                    <default>false</default>
+                    <label>Kelli Wise</label>
+                </value>
+                <value>
+                    <fullName>Leah Singh</fullName>
+                    <default>false</default>
+                    <label>Leah Singh</label>
+                </value>
+                <value>
+                    <fullName>Marissa Flannery</fullName>
+                    <default>false</default>
+                    <label>Marissa Flannery</label>
+                </value>
+                <value>
+                    <fullName>Megan Fenn</fullName>
+                    <default>false</default>
+                    <label>Megan Fenn</label>
+                </value>
+                <value>
+                    <fullName>Michelle Frank</fullName>
+                    <default>false</default>
+                    <label>Michelle Frank</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Land_Trust_and_Deed_Admin__c</fullName>
+        <externalId>false</externalId>
+        <label>Land Trust and Deed Admin</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Michelle Frank</fullName>
+                    <default>false</default>
+                    <label>Michelle Frank</label>
+                </value>
+                <value>
+                    <fullName>Leah Singh</fullName>
+                    <default>true</default>
+                    <label>Leah Singh</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>LastModifiySatge__c</fullName>
+        <description>This Field is used for When user update Type=Deed and Stage =Sent to Client for Signatures On OSI. Then this field populated and have value. 
+Requirement : Update Stage after 63 days</description>
+        <externalId>false</externalId>
+        <label>Stage-Last Modify Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Law_Coordinator_Formula__c</fullName>
+        <description>Reflects the LC on order</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Order.Law_Coordinator__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client Success Coordinator</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Law_Coordinator__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Success Coordinator</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>CSR</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Link_for_Communities__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;https://platinum.force.com/aba/s/detail/&quot;+ Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link for Communities</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_for_Lightning__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;https://andersonadvisors.lightning.force.com/lightning/r/OrderItem/&quot; + Id + &quot;/view&quot;</formula>
+        <label>Link for Lightning</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ListPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Mail_Clerk__c</fullName>
+        <externalId>false</externalId>
+        <label>Mail Clerk</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Mail_Clerks</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>New_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product2.New_Type__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>New Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Non_Profit_Processor__c</fullName>
+        <externalId>false</externalId>
+        <label>Non-Profit Processor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Non_Profit_Processor</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>OrderId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OriginalOrderItemId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Paralegal_Tax_Analyst__c</fullName>
+        <externalId>false</externalId>
+        <label>Paralegal / Tax Analyst</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bobbi Williams</fullName>
+                    <default>false</default>
+                    <label>Bobbi Williams</label>
+                </value>
+                <value>
+                    <fullName>Aiden Larsen</fullName>
+                    <default>false</default>
+                    <label>Aiden Larsen</label>
+                </value>
+                <value>
+                    <fullName>Ashley Sevy</fullName>
+                    <default>false</default>
+                    <label>Ashley Sevy</label>
+                </value>
+                <value>
+                    <fullName>Amanda Wallace</fullName>
+                    <default>false</default>
+                    <label>Amanda Wallace</label>
+                </value>
+                <value>
+                    <fullName>Dana Cummings</fullName>
+                    <default>false</default>
+                    <label>Dana Cummings</label>
+                </value>
+                <value>
+                    <fullName>Bradley Calvert</fullName>
+                    <default>false</default>
+                    <label>Bradley Calvert</label>
+                </value>
+                <value>
+                    <fullName>Octavious Forson</fullName>
+                    <default>false</default>
+                    <label>Octavious Forson</label>
+                </value>
+                <value>
+                    <fullName>Bryan Freitag</fullName>
+                    <default>false</default>
+                    <label>Bryan Freitag</label>
+                </value>
+                <value>
+                    <fullName>Grant Grajek</fullName>
+                    <default>false</default>
+                    <label>Grant Grajek</label>
+                </value>
+                <value>
+                    <fullName>Megan Healy</fullName>
+                    <default>false</default>
+                    <label>Megan Healy</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Pension_Processor__c</fullName>
+        <externalId>false</externalId>
+        <label>Pension Processor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Traci Craig</fullName>
+                    <default>false</default>
+                    <label>Traci Craig</label>
+                </value>
+                <value>
+                    <fullName>Debbie Trentini</fullName>
+                    <default>false</default>
+                    <label>Debbie Trentini</label>
+                </value>
+                <value>
+                    <fullName>Jaime Escandon</fullName>
+                    <default>false</default>
+                    <label>Jaime Escandon</label>
+                </value>
+                <value>
+                    <fullName>Tameka Fulton</fullName>
+                    <default>false</default>
+                    <label>Tameka Fulton</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processing_Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Processing Priority</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Normal</fullName>
+                    <default>true</default>
+                    <label>Normal</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Critical</fullName>
+                    <default>false</default>
+                    <label>Critical</label>
+                </value>
+                <value>
+                    <fullName>Critical-Mad Client</fullName>
+                    <default>false</default>
+                    <label>Critical-Mad Client</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processing_Stage__c</fullName>
+        <externalId>false</externalId>
+        <label>Stage</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Type__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetName>Processing_Stages</valueSetName>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Pension Termination</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Completed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping - Misc</controllingFieldValue>
+                <valueName>Credit Issued</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping - Misc</controllingFieldValue>
+                <valueName>Future Use</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>In Progress</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Kitted</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Need to Kit</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Need to Ship</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping - Misc</controllingFieldValue>
+                <valueName>No Response / Unfulfilled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Book</controllingFieldValue>
+                <controllingFieldValue>Pension Termination</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping - Misc</controllingFieldValue>
+                <valueName>Not Started</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping - Misc</controllingFieldValue>
+                <valueName>Send to Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <valueName>SS Scheduled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <valueName>Thank You Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Strategy Session</controllingFieldValue>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>Waiting for Temp Structure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>Back to WPB Team</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>Concierge Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>LucidChart in Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>LucidChart Update Needed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>Ready for LucidChart</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Refunded</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>SS Completed - Need Temp Structure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>SS Scheduled - Need Temp Structure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Stalled - Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>Working to Schedule SS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>WPB</controllingFieldValue>
+                <valueName>WPB - Stalled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Initial Pension Call Scheduling</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Pension Amendment Drafting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Pension Banking Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Pension Completion Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Pension Drafting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Pension Loan Drafting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Questionnaire Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Sent Back for Info</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Stalled - Back to Advisor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Stalled - Back to CSC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Stalled - Need More Info</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <valueName>Update WPB - QRP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pensions</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Waiting on Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <valueName>Assigned</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Bookkeeper Assigned</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <valueName>E-filed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <valueName>IRS Accepted</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <valueName>Ready to File</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Tax Form</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Review Notes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Back to BCP/Renewal Advisor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>BCP Scheduled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <valueName>Collect KMS Docs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Exchanged for Other Services</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <valueName>KMS Assigned</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <valueName>KMS Deliverable Uploaded</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Needs Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Need SS-4&amp;auth/SSN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>KMS Scheduled / Link Sent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Stalled - Internal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Platinum</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Waiting on Confirmation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <valueName>Agreement Received</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <valueName>Agreement Sent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>On Hold</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <valueName>Welcome Call Completed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Welcome Call Scheduled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping Virtual</controllingFieldValue>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Welcome Email</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Anderson Services</controllingFieldValue>
+                <valueName>Audit in Progress</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>BKG Consult Completed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>BKG Consult Scheduled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>Client unresponsive</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>Completed - Duplicate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>Completed - Lost</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>Completed - Won</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BK Consult</controllingFieldValue>
+                <valueName>Schedulling In Progress</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Back to LC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Back to Processor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Back to Renewal Advisors/CSC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <valueName>Rejected</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Submitted to Processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Submitted to SOS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <valueName>Waiting on Client Signature</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Reinstatement</controllingFieldValue>
+                <valueName>Waiting on Tax Clearance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <valueName>In Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Charitable Registration</controllingFieldValue>
+                <valueName>Sent to Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pension Termination</controllingFieldValue>
+                <valueName>Term Docs Sent to Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pension Termination</controllingFieldValue>
+                <valueName>Waiting on Q/Statement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Back to CSR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <valueName>Completed - Client Unresponsive</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <valueName>Ready To Draft</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <valueName>Ready to Ship to Client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <valueName>Ready to Ship to County</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Sent to Client for Signatures</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <valueName>Sent to County</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deed</controllingFieldValue>
+                <valueName>Signed Original Received</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <valueName>Admin Dissolved</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>RA Change</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <controllingFieldValue>Certified Copy</controllingFieldValue>
+                <valueName>Back to VIP Processor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <valueName>Dissolution Completed - Final Tax</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>Annual List</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Drafted, STC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <valueName>Needs Annual Report</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Tax Clearance Letter requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Dissolution</controllingFieldValue>
+                <valueName>Tax Filing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>1023 Consult Scheduled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>1023 Drafting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>1023 In Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>1023 Ready for Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>1023 - Review Comments</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>BD Complete, awaiting FA &amp; EIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Binder Shipped- Back to Processor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>DocuSign BD Sent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>EIN &amp; BD Complete, awaiting FA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>EIN Complete, awaiting FA &amp; BD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>FA &amp; BD Complete, awaiting EIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>FA &amp; EIN Complete, awaiting BD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>FA Complete, awaiting EIN &amp; BD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Change Filings</controllingFieldValue>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Name Rejected</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>Ready for 1023 Consult</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>Ready for EIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>Ready to send to client</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>RTS, awaiting FA and/or EIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <controllingFieldValue>Document</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>RTS, Complete</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Formation</controllingFieldValue>
+                <valueName>Solicitation Registration</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Complete, OG Dissolution started</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>CS Docs Rec&apos;d, awaiting OG Docs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Drafted, STC, Awaiting OG Docs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Drafted, STC, OG Docs Rec&apos;d</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>OG Docs Ordered</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Foreign Filings</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>OG Docs Rec&apos;d, awaiting CS Docs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Informational Only</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>N/A</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <valueName>Confirmation Received</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <valueName>Need Additional Info.</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <valueName>Ready for Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Ready to Submit to IRS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IRS Form</controllingFieldValue>
+                <valueName>Review Complete, STC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Documents In Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Land Trust Complete, awaiting deed prep</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Need Nominee Signature</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Physical Copy Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Ready to draft - Tacoma</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Ready to Draft - Vegas</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Ready to Ship</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Signed Original Trust Received</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Land Trust</controllingFieldValue>
+                <valueName>Waiting on Q/Docs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Assigned to Tax Coordinator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tax</controllingFieldValue>
+                <valueName>Welcome Call Attempted</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Assigned to Supervisor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Missing Info</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>Review Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Bookkeeping</controllingFieldValue>
+                <valueName>WC Completed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>All Tax Years Not Filed, Please Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Amendment Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Attorney Consult Scheduled</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Conversion Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Doc Drafting Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>IRS Complete, Waiting on SOS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>IRS Form Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Meeting Minutes Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Need Worksheet, Please Call</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>RA Change Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Ready to Ship, Bank info Needed</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Ready to Ship, Waiting on SOS/IRS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Refund Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Reinstatement Requested</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Review/Update Structure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Series LLC Drafting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>SOS Complete, Waiting on IRS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Supervisor Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Waiting on SOS &amp; IRS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>Worksheet Received, Please File</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Attempted to Schedule Tax Review</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tax Review</controllingFieldValue>
+                <valueName>Tax Review Scheduled</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processor_Reviewer__c</fullName>
+        <externalId>false</externalId>
+        <label>Processor Reviewer</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Processor_Reviewer</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Processor__c</fullName>
+        <externalId>false</externalId>
+        <label>Processor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Processors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Product2Id</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ProductCode</fullName>
+    </fields>
+    <fields>
+        <fullName>Quantity</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>QuoteLineItemId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Advisor_CSC__c</fullName>
+        <externalId>false</externalId>
+        <label>Renewal Advisor/CSC</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Aaron Bernhardt</fullName>
+                    <default>false</default>
+                    <label>Aaron Bernhardt</label>
+                </value>
+                <value>
+                    <fullName>Adrian Sanchez</fullName>
+                    <default>false</default>
+                    <label>Adrian Sanchez</label>
+                </value>
+                <value>
+                    <fullName>Agha Abbas</fullName>
+                    <default>false</default>
+                    <label>Agha Abbas</label>
+                </value>
+                <value>
+                    <fullName>Alexa Brown</fullName>
+                    <default>false</default>
+                    <label>Alexa Brown</label>
+                </value>
+                <value>
+                    <fullName>Alfonso Andino</fullName>
+                    <default>false</default>
+                    <label>Alfonso Andino</label>
+                </value>
+                <value>
+                    <fullName>Alisha Basom</fullName>
+                    <default>false</default>
+                    <label>Alisha Basom</label>
+                </value>
+                <value>
+                    <fullName>Alyssa Hoopii</fullName>
+                    <default>false</default>
+                    <label>Alyssa Hoopii</label>
+                </value>
+                <value>
+                    <fullName>Amanda Zipprich</fullName>
+                    <default>false</default>
+                    <label>Amanda Zipprich</label>
+                </value>
+                <value>
+                    <fullName>Ambria Tibbs</fullName>
+                    <default>false</default>
+                    <label>Ambria Tibbs</label>
+                </value>
+                <value>
+                    <fullName>Ami Meyers</fullName>
+                    <default>false</default>
+                    <label>Ami Meyers</label>
+                </value>
+                <value>
+                    <fullName>Becky Seguin</fullName>
+                    <default>false</default>
+                    <label>Becky Seguin</label>
+                </value>
+                <value>
+                    <fullName>Bekah Willard</fullName>
+                    <default>false</default>
+                    <label>Bekah Willard</label>
+                </value>
+                <value>
+                    <fullName>Bianca Ayala</fullName>
+                    <default>false</default>
+                    <label>Bianca Ayala</label>
+                </value>
+                <value>
+                    <fullName>Brenna McGowan</fullName>
+                    <default>false</default>
+                    <label>Brenna McGowan</label>
+                </value>
+                <value>
+                    <fullName>Brittany Rains</fullName>
+                    <default>false</default>
+                    <label>Brittany Rains</label>
+                </value>
+                <value>
+                    <fullName>Caitlynn Glass</fullName>
+                    <default>false</default>
+                    <label>Caitlynn Glass</label>
+                </value>
+                <value>
+                    <fullName>Carly Coons</fullName>
+                    <default>false</default>
+                    <label>Carly Coons</label>
+                </value>
+                <value>
+                    <fullName>Chanitra Hill</fullName>
+                    <default>false</default>
+                    <label>Chanitra Hill</label>
+                </value>
+                <value>
+                    <fullName>Chase Foster</fullName>
+                    <default>false</default>
+                    <label>Chase Foster</label>
+                </value>
+                <value>
+                    <fullName>Chelsea Bojewski</fullName>
+                    <default>false</default>
+                    <label>Chelsea Bojewski</label>
+                </value>
+                <value>
+                    <fullName>Christian DeField</fullName>
+                    <default>false</default>
+                    <label>Christian DeField</label>
+                </value>
+                <value>
+                    <fullName>Claire Seals</fullName>
+                    <default>false</default>
+                    <label>Claire Seals</label>
+                </value>
+                <value>
+                    <fullName>Claudia Chasten</fullName>
+                    <default>false</default>
+                    <label>Claudia Chasten</label>
+                </value>
+                <value>
+                    <fullName>Colette Grier</fullName>
+                    <default>false</default>
+                    <label>Colette Grier</label>
+                </value>
+                <value>
+                    <fullName>Courtney Blacknall</fullName>
+                    <default>false</default>
+                    <label>Courtney Blacknall</label>
+                </value>
+                <value>
+                    <fullName>Deborah Lewis</fullName>
+                    <default>false</default>
+                    <label>Deborah Lewis</label>
+                </value>
+                <value>
+                    <fullName>Denise Moon</fullName>
+                    <default>false</default>
+                    <label>Denise Moon</label>
+                </value>
+                <value>
+                    <fullName>Domanick Page-Whitaker</fullName>
+                    <default>false</default>
+                    <label>Domanick Page-Whitaker</label>
+                </value>
+                <value>
+                    <fullName>Duncan Bjerke</fullName>
+                    <default>false</default>
+                    <label>Duncan Bjerke</label>
+                </value>
+                <value>
+                    <fullName>Dustin Hamby</fullName>
+                    <default>false</default>
+                    <label>Dustin Hamby</label>
+                </value>
+                <value>
+                    <fullName>Erica Terrell</fullName>
+                    <default>false</default>
+                    <label>Erica Terrell</label>
+                </value>
+                <value>
+                    <fullName>Ethan Hechanova</fullName>
+                    <default>false</default>
+                    <label>Ethan Hechanova</label>
+                </value>
+                <value>
+                    <fullName>Gabby Esteban</fullName>
+                    <default>false</default>
+                    <label>Gabby Esteban</label>
+                </value>
+                <value>
+                    <fullName>Greg Coughlan</fullName>
+                    <default>false</default>
+                    <label>Greg Coughlan</label>
+                </value>
+                <value>
+                    <fullName>Heather Courtney</fullName>
+                    <default>false</default>
+                    <label>Heather Courtney</label>
+                </value>
+                <value>
+                    <fullName>Hermina Certeza</fullName>
+                    <default>false</default>
+                    <label>Hermina Certeza</label>
+                </value>
+                <value>
+                    <fullName>Ilanit Moskal</fullName>
+                    <default>false</default>
+                    <label>Ilanit Moskal</label>
+                </value>
+                <value>
+                    <fullName>Ilse Banuelos</fullName>
+                    <default>false</default>
+                    <label>Ilse Banuelos</label>
+                </value>
+                <value>
+                    <fullName>Ismail Zehri</fullName>
+                    <default>false</default>
+                    <label>Ismail Zehri</label>
+                </value>
+                <value>
+                    <fullName>Jade Comer</fullName>
+                    <default>false</default>
+                    <label>Jade Comer</label>
+                </value>
+                <value>
+                    <fullName>Jailene Flores</fullName>
+                    <default>false</default>
+                    <label>Jailene Flores</label>
+                </value>
+                <value>
+                    <fullName>Jayvie Barlao</fullName>
+                    <default>false</default>
+                    <label>Jayvie Barlao</label>
+                </value>
+                <value>
+                    <fullName>Jenn Seibert</fullName>
+                    <default>false</default>
+                    <label>Jenn Seibert</label>
+                </value>
+                <value>
+                    <fullName>Jennie Wilson</fullName>
+                    <default>false</default>
+                    <label>Jennie Wilson</label>
+                </value>
+                <value>
+                    <fullName>Jhunelyn Talaid</fullName>
+                    <default>false</default>
+                    <label>Jhunelyn Talaid</label>
+                </value>
+                <value>
+                    <fullName>Joseph Sacco</fullName>
+                    <default>false</default>
+                    <label>Joseph Sacco</label>
+                </value>
+                <value>
+                    <fullName>Kaila Martinez</fullName>
+                    <default>false</default>
+                    <label>Kaila Martinez</label>
+                </value>
+                <value>
+                    <fullName>Kim Austin</fullName>
+                    <default>false</default>
+                    <label>Kim Austin</label>
+                </value>
+                <value>
+                    <fullName>Kip Stump</fullName>
+                    <default>false</default>
+                    <label>Kip Stump</label>
+                </value>
+                <value>
+                    <fullName>Kristy McElwain</fullName>
+                    <default>false</default>
+                    <label>Kristy McElwain</label>
+                </value>
+                <value>
+                    <fullName>LaSandra Johnson</fullName>
+                    <default>false</default>
+                    <label>LaSandra Johnson</label>
+                </value>
+                <value>
+                    <fullName>Lauren Roberson</fullName>
+                    <default>false</default>
+                    <label>Lauren Roberson</label>
+                </value>
+                <value>
+                    <fullName>Lisa Starner-Sturz</fullName>
+                    <default>false</default>
+                    <label>Lisa Starner-Sturz</label>
+                </value>
+                <value>
+                    <fullName>Lori Taylor</fullName>
+                    <default>false</default>
+                    <label>Lori Taylor</label>
+                </value>
+                <value>
+                    <fullName>Lucas Turman</fullName>
+                    <default>false</default>
+                    <label>Lucas Turman</label>
+                </value>
+                <value>
+                    <fullName>Mandie Corbitt</fullName>
+                    <default>false</default>
+                    <label>Mandie Corbitt</label>
+                </value>
+                <value>
+                    <fullName>Mars D&apos;Amico</fullName>
+                    <default>false</default>
+                    <label>Mars D&apos;Amico</label>
+                </value>
+                <value>
+                    <fullName>Marwa Triggiani</fullName>
+                    <default>false</default>
+                    <label>Marwa Triggiani</label>
+                </value>
+                <value>
+                    <fullName>Maryana Postolovska</fullName>
+                    <default>false</default>
+                    <label>Maryana Postolovska</label>
+                </value>
+                <value>
+                    <fullName>Mayra De Arcos</fullName>
+                    <default>false</default>
+                    <label>Mayra De Arcos</label>
+                </value>
+                <value>
+                    <fullName>Michelle Ramirez</fullName>
+                    <default>false</default>
+                    <label>Michelle Ramirez</label>
+                </value>
+                <value>
+                    <fullName>Monica Vivanco</fullName>
+                    <default>false</default>
+                    <label>Monica Vivanco</label>
+                </value>
+                <value>
+                    <fullName>Natasia Serna</fullName>
+                    <default>false</default>
+                    <label>Natasia Serna</label>
+                </value>
+                <value>
+                    <fullName>Nathan Garmon</fullName>
+                    <default>false</default>
+                    <label>Nathan Garmon</label>
+                </value>
+                <value>
+                    <fullName>N&apos;kia Gray</fullName>
+                    <default>false</default>
+                    <label>N&apos;kia Gray</label>
+                </value>
+                <value>
+                    <fullName>Other or Renewals Team</fullName>
+                    <default>false</default>
+                    <label>Other or Renewals Team</label>
+                </value>
+                <value>
+                    <fullName>Perla Galindo</fullName>
+                    <default>false</default>
+                    <label>Perla Galindo</label>
+                </value>
+                <value>
+                    <fullName>Phoebe Keliikupakako</fullName>
+                    <default>false</default>
+                    <label>Phoebe Keliikupakako</label>
+                </value>
+                <value>
+                    <fullName>Ramona Preston-Tolbert</fullName>
+                    <default>false</default>
+                    <label>Ramona Preston-Tolbert</label>
+                </value>
+                <value>
+                    <fullName>Roger Cox</fullName>
+                    <default>false</default>
+                    <label>Roger Cox</label>
+                </value>
+                <value>
+                    <fullName>Ryann Brown</fullName>
+                    <default>false</default>
+                    <label>Ryann Brown</label>
+                </value>
+                <value>
+                    <fullName>Sabrina Barkum</fullName>
+                    <default>false</default>
+                    <label>Sabrina Barkum</label>
+                </value>
+                <value>
+                    <fullName>Samantha Herndon</fullName>
+                    <default>false</default>
+                    <label>Samantha Herndon</label>
+                </value>
+                <value>
+                    <fullName>Samantha Kinney</fullName>
+                    <default>false</default>
+                    <label>Samantha Kinney</label>
+                </value>
+                <value>
+                    <fullName>Sara Winter</fullName>
+                    <default>false</default>
+                    <label>Sara Winter</label>
+                </value>
+                <value>
+                    <fullName>Savannah Wallace</fullName>
+                    <default>false</default>
+                    <label>Savannah Wallace</label>
+                </value>
+                <value>
+                    <fullName>Selene Garduno</fullName>
+                    <default>false</default>
+                    <label>Selene Garduno</label>
+                </value>
+                <value>
+                    <fullName>Shani McCardell</fullName>
+                    <default>false</default>
+                    <label>Shani McCardell</label>
+                </value>
+                <value>
+                    <fullName>Shanika Fikes</fullName>
+                    <default>false</default>
+                    <label>Shanika Fikes</label>
+                </value>
+                <value>
+                    <fullName>Sheila Denos</fullName>
+                    <default>false</default>
+                    <label>Sheila Denos</label>
+                </value>
+                <value>
+                    <fullName>Stacy Davis</fullName>
+                    <default>false</default>
+                    <label>Stacy Davis</label>
+                </value>
+                <value>
+                    <fullName>Stephanie Sanchez</fullName>
+                    <default>false</default>
+                    <label>Stephanie Sanchez</label>
+                </value>
+                <value>
+                    <fullName>Tia Robinson</fullName>
+                    <default>false</default>
+                    <label>Tia Robinson</label>
+                </value>
+                <value>
+                    <fullName>Traci Derrington</fullName>
+                    <default>false</default>
+                    <label>Traci Derrington</label>
+                </value>
+                <value>
+                    <fullName>Veanna Ganaishlal</fullName>
+                    <default>false</default>
+                    <label>Veanna Ganaishlal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Sales_Rep__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order.Opportunity.Sales_Rep__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Rep</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ServiceDate</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Service_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product2.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Status</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>true</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Stalled-Client</fullName>
+                    <default>false</default>
+                    <label>Stalled-Client</label>
+                </value>
+                <value>
+                    <fullName>Stalled-Internal</fullName>
+                    <default>false</default>
+                    <label>Stalled-Internal</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Escalated</fullName>
+                    <default>false</default>
+                    <label>Escalated</label>
+                </value>
+                <value>
+                    <fullName>Need to Kit</fullName>
+                    <default>false</default>
+                    <label>Need to Kit</label>
+                </value>
+                <value>
+                    <fullName>Kitted</fullName>
+                    <default>false</default>
+                    <label>Kitted</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>true</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Stalled-Client</fullName>
+                    <default>false</default>
+                    <label>Stalled-Client</label>
+                </value>
+                <value>
+                    <fullName>Stalled-Internal</fullName>
+                    <default>false</default>
+                    <label>Stalled-Internal</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Escalated</fullName>
+                    <default>false</default>
+                    <label>Escalated</label>
+                </value>
+                <value>
+                    <fullName>Need to Kit</fullName>
+                    <default>false</default>
+                    <label>Need to Kit</label>
+                </value>
+                <value>
+                    <fullName>Kitted</fullName>
+                    <default>false</default>
+                    <label>Kitted</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>TotalPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Trust__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Trust</label>
+        <referenceTo>Trust__c</referenceTo>
+        <relationshipLabel>Order Items</relationshipLabel>
+        <relationshipName>Order_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>All</fullName>
+                    <default>false</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>Anderson Services</fullName>
+                    <default>false</default>
+                    <label>Anderson Services</label>
+                </value>
+                <value>
+                    <fullName>Annual List</fullName>
+                    <default>false</default>
+                    <label>Annual List</label>
+                </value>
+                <value>
+                    <fullName>BK Consult</fullName>
+                    <default>false</default>
+                    <label>BK Consult</label>
+                </value>
+                <value>
+                    <fullName>Book</fullName>
+                    <default>false</default>
+                    <label>Book</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping - Misc</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping - Misc</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping Tax Form</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping Tax Form</label>
+                </value>
+                <value>
+                    <fullName>Bookkeeping Virtual</fullName>
+                    <default>false</default>
+                    <label>Bookkeeping Virtual</label>
+                </value>
+                <value>
+                    <fullName>Certified Copy</fullName>
+                    <default>false</default>
+                    <label>Certified Copy</label>
+                </value>
+                <value>
+                    <fullName>Change Filings</fullName>
+                    <default>false</default>
+                    <label>Change Filings</label>
+                </value>
+                <value>
+                    <fullName>Charitable Registration</fullName>
+                    <default>false</default>
+                    <label>Charitable Registration</label>
+                </value>
+                <value>
+                    <fullName>Deed</fullName>
+                    <default>false</default>
+                    <label>Deed</label>
+                </value>
+                <value>
+                    <fullName>Dissolution</fullName>
+                    <default>false</default>
+                    <label>Dissolution</label>
+                </value>
+                <value>
+                    <fullName>Document</fullName>
+                    <default>false</default>
+                    <label>Document</label>
+                </value>
+                <value>
+                    <fullName>Foreign Filings</fullName>
+                    <default>false</default>
+                    <label>Foreign Filings</label>
+                </value>
+                <value>
+                    <fullName>Formation</fullName>
+                    <default>false</default>
+                    <label>Formation</label>
+                </value>
+                <value>
+                    <fullName>Informational Only</fullName>
+                    <default>false</default>
+                    <label>Informational Only</label>
+                </value>
+                <value>
+                    <fullName>IRS Form</fullName>
+                    <default>false</default>
+                    <label>IRS Form</label>
+                </value>
+                <value>
+                    <fullName>Land Trust</fullName>
+                    <default>false</default>
+                    <label>Land Trust</label>
+                </value>
+                <value>
+                    <fullName>Pensions</fullName>
+                    <default>false</default>
+                    <label>Pensions</label>
+                </value>
+                <value>
+                    <fullName>Pension Termination</fullName>
+                    <default>false</default>
+                    <label>Pension Termination</label>
+                </value>
+                <value>
+                    <fullName>Platinum</fullName>
+                    <default>false</default>
+                    <label>Platinum</label>
+                </value>
+                <value>
+                    <fullName>RA Change</fullName>
+                    <default>false</default>
+                    <label>RA Change</label>
+                </value>
+                <value>
+                    <fullName>Reinstatement</fullName>
+                    <default>false</default>
+                    <label>Reinstatement</label>
+                </value>
+                <value>
+                    <fullName>Strategy Session</fullName>
+                    <default>false</default>
+                    <label>Strategy Session</label>
+                </value>
+                <value>
+                    <fullName>Tax</fullName>
+                    <default>false</default>
+                    <label>Tax</label>
+                </value>
+                <value>
+                    <fullName>Tax Review</fullName>
+                    <default>false</default>
+                    <label>Tax Review</label>
+                </value>
+                <value>
+                    <fullName>WPB</fullName>
+                    <default>false</default>
+                    <label>Welcome Phase</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>UnitPrice</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Unlimited_WY_Statutory_Trust__c</fullName>
+        <externalId>false</externalId>
+        <label>Unlimited WY Statutory Trust</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Deborah Lewis</fullName>
+                    <default>true</default>
+                    <label>Deborah Lewis</label>
+                </value>
+                <value>
+                    <fullName>Carly Coons</fullName>
+                    <default>false</default>
+                    <label>Carly Coons</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Update_Comments_Utility__c</fullName>
+        <externalId>false</externalId>
+        <label>Update Comments Utility</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Update_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Update Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VIP_Processor__c</fullName>
+        <externalId>false</externalId>
+        <label>VIP Processor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Deborah Lewis</fullName>
+                    <default>false</default>
+                    <label>Deborah Lewis</label>
+                </value>
+                <value>
+                    <fullName>Carly Coons</fullName>
+                    <default>false</default>
+                    <label>Carly Coons</label>
+                </value>
+                <value>
+                    <fullName>Megan Fenn</fullName>
+                    <default>false</default>
+                    <label>Megan Fenn</label>
+                </value>
+                <value>
+                    <fullName>James Morris</fullName>
+                    <default>false</default>
+                    <label>James Morris</label>
+                </value>
+                <value>
+                    <fullName>Amanda Wynalda</fullName>
+                    <default>false</default>
+                    <label>Amanda Wynalda</label>
+                </value>
+                <value>
+                    <fullName>Brittany Rains</fullName>
+                    <default>false</default>
+                    <label>Brittany Rains</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Weight0__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Measurement of Fulfillment Difficulty 1-3</inlineHelpText>
+        <label>Weight</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Weight__c</fullName>
+        <externalId>false</externalId>
+        <formula>VALUE(TEXT(PricebookEntry.Product2.Service_Fulfillment_Weight__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Measurement of Fulfillment Difficulty</inlineHelpText>
+        <label>Weight</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X100_Fulfilled_QA_Verified__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>To be filled out by QA when it&apos;s verified that this item was completed.</inlineHelpText>
+        <label>100% Fulfilled - QA Verified</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>X1099_Request__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>1099 Request</label>
+        <referenceTo>X1099_Request__c</referenceTo>
+        <relationshipLabel>Order Items</relationshipLabel>
+        <relationshipName>Order_Items</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <validationRules>
+        <fullName>Prevent_Stage_or_Comments_update_once_NA</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  $Permission.AllowNAStageChange=false,
+ISPICKVAL(Type__c, &quot;Informational Only&quot;),
+OR(AND(NOT(ISNEW()), ISPICKVAL(PRIORVALUE(Processing_Stage__c), &apos;N/A&apos;), ISCHANGED(Processing_Stage__c) ),
+
+AND(NOT(ISNEW()), ISPICKVAL(Processing_Stage__c, &apos;N/A&apos;), OR(ISCHANGED(Update_Comments__c),ISCHANGED(Comments__c)))))</errorConditionFormula>
+        <errorMessage>Can not update stage or comments once stage is set to N/A</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Submitted_to_Processing_VegasStageUpdate</fullName>
+        <active>true</active>
+        <errorConditionFormula>If( ISCHANGED(Processing_Stage__c ) &amp;&amp; ISPICKVAL(Processing_Stage__c , &apos;Submitted to Processing - Vegas&apos;) &amp;&amp; ISPICKVAL(Type__c ,&apos;Land Trust&apos;) &amp;&amp;  $Permission.AllowsubmitedtoprocessingVegasOrderItemstagechange =false ,True,False)</errorConditionFormula>
+        <errorMessage>Sorry you don&apos;t have permission to update the stage to &quot;Submitted to Processing - Vegas&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Stage_when_LC_is_blank</fullName>
+        <active>false</active>
+        <description>Prevents stage from updating to Submitted to Processing if LC is blank.</description>
+        <errorConditionFormula>AND ( ISPICKVAL( Processing_Stage__c , &apos;Submitted to Processing&apos;),  ISBLANK( TEXT( Law_Coordinator__c ) )  )</errorConditionFormula>
+        <errorDisplayField>Law_Coordinator__c</errorDisplayField>
+        <errorMessage>Law Coordinator must be specified to update stage to Submitted to Processing</errorMessage>
+    </validationRules>
+</CustomObject>

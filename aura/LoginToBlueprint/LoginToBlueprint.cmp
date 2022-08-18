@@ -1,0 +1,6 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="GetAccount" >
+	<aura:attribute name="recordId" type="string"/>
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+   <!-- <lightning:button label="Login To Blueprint" variant="brand" onclick="{!c.handleOpenNewWindowWithRecordId}"/>-->
+    <aura:attribute name="AccountInfo" type="Account"/>
+</aura:component>

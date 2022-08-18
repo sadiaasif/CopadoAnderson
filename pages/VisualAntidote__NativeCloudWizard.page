@@ -1,0 +1,804 @@
+<apex:page sidebar="false" showChat="false" tabStyle="FastForms__tab" controller="VisualAntidote.NativeCloudWizardController"  >
+    
+    <apex:remoteObjects jsNamespace="ffOrg">
+        <apex:remoteObjectModel name="Organization" jsShorthand="org" fields="Id,InstanceName,IsSandbox,OrganizationType">  
+        </apex:remoteObjectModel>    
+    </apex:remoteObjects>
+    
+    <apex:remoteObjects jsNamespace="ffCSTokenNs">
+        <apex:remoteObjectModel name="VisualAntidote__FastFormsTokenInfo__c" jsShorthand="ffTokenObj" fields="Id,VisualAntidote__Is_Native_Setup_Done__c">  
+        </apex:remoteObjectModel>    
+    </apex:remoteObjects>
+    
+    
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge;" />     
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        
+    </head>
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__ffcommon,'scripts/clipboard/clipboard.min.js')}" />
+    <!-- base.resource includes: JS Files [select2.min.js,jquery-ui.min.js,jquery-migrate.min.js,jquery-ui-timepicker-addon.min.js,bootstrap.min.js,secure-filters.min.js,html-encoder.min.js,common-helper.min.js] CSS files [select2.min.css,select2-custom.min.css,jquery-ui.min.css,jquery-ui-theme-smoothness.min.css,jquery-ui-timepicker-addon.min.css,app_main.min.css] -->
+    <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__Base,'base.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.VisualAntidote__Base,'style/base.min.css')}" />
+    <!-- base.resource -->
+    <link rel="stylesheet" href="{!URLFOR($Resource.ffcommon,'styles/ffcommon.min.css')}" />
+            <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__ffcommon,'scripts/bootstrap.min.js')}" />
+             <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__ffcommon,'scripts/bootstrap.min.js')}" />
+    
+    <!-- Begin Default Content REMOVE THIS -->
+    <style>
+        .ff-logo-box .ff-logo-title {
+        
+        margin-right: 45px;
+        }
+
+        .mainHeader{
+        overflow: hidden;
+        }
+        span,a,div,p,label{
+        font-family: 'Poppins';
+        }
+        a{color: #33aefd;font-size: 14px; cursor: pointer;}
+        label{
+        color: #052942;
+        font-size: 14px; padding-bottom: 8px;
+        display: inline-block;
+        }
+        .ff-accordion .acc-content{ 
+            padding:0px;
+            background-color: #F6F9F8;
+            margin-top: 0px;
+            box-shadow: inset 0px -1px 0px 0px #ccc;
+            }
+        .ff-accordion .inner-toggle {
+        margin-left: 35px;
+        margin-top: 10px;
+        }
+        .ff-accordion .acc-content-inner {
+        padding: 30px 40px;
+        }
+        .acc-content .acc-content-inner.odd-in {
+        background-color: #EEEEF1;
+        }
+        .vabutton1{
+        min-width: 80px;
+        text-align: center;
+        }
+        .vabutton10{
+        color: #052942;
+        text-align: center;
+        background-color: #C1C8CB;
+        text-decoration: none;
+        padding: 6px  10px;
+        display: inline-block;
+        font-size: 14px;
+        min-width: 80px;
+        border-radius: 6px;
+        border: solid 1px #C1C8CB;
+        cursor: pointer;
+        }
+        input.type-text {
+        border-radius: 5px;
+        background: white;
+        font-family: 'Poppins';
+        border: 1px solid #a3a3a3;
+        color: #052942;
+        padding: 7px;
+        font-size: 13.5px;
+        outline: none;
+        }
+        .va-readonly {
+        pointer-events: none;
+        background: none repeat scroll 0 0 #cecece !important;
+        border-color: #cecece !important;
+        color:  #052942;
+        text-decoration: none;
+        }
+        .vertical-tabs > li{
+        float: left;clear:both;
+        }
+        .ffsup{
+        margin-top: -11px;
+        float: left;
+        font-weight: 900;
+        }
+        .mainHeaderInner { 
+        overflow: visible;
+        height: 60px;
+        }
+        .nch-acc{
+        background-color: #F7F9F8;
+        }
+
+        .nch-acc .accordion-wrapper {
+        padding: 0px;
+        }
+        .nested-acc .accordion-wrapper {
+        background-color: #E6EBEF;
+        }
+        .nch-acc .accordion-header {
+            padding-right: 40px;
+            padding-left: 40px;
+            padding: 15px 40px;
+            box-shadow: inset 0px -1px 0px 0px #ccc;
+            border: none;
+        }
+        .setup-wizard-wrapper{
+        width:540px;
+        margin:20px auto;
+        border-radius:5px;border:1px solid #CFDCEA;min-height: 500px;
+        background: white;
+        overflow: hidden;
+        }
+        .setup-wizard-wrapper .header-sec{
+        padding: 45px;
+        background: #ffffff;
+        text-align: center;width: inherit;
+        box-shadow: -4px 3px 6px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+        }
+        .copy-block-wrapper{
+        width:100%;
+        margin-top:8px;
+        }
+        .copy-block-wrapper .ff-req{
+        float: right;
+        margin-right: -20px;color:red;
+        }
+        .copy-block-wrapper input{
+        width:inherit;
+        }
+        .copy-block-wrapper .copy-code-block{
+        float:none;
+        width:inherit;
+        text-align:right;
+        }
+        .step-footer { 
+        padding: 20px 45px;    overflow: hidden;
+        }
+        .acc-content-inner .step-footer {
+        padding: 20px 0px;
+        }
+        .step-footer label {
+        width: 350px;
+        }
+        .step-footer a.next-step {
+        float: right;
+        } 
+        .acc-inner{padding-top: 20px;}
+        .acc-content ul{list-style-type: none; padding:0px;margin:0px;}
+        .acc-content ul li{padding:6px 0px;font-size: 14px;margin: 0px; overflow: hidden;}
+        .acc-content ul li b:first-child{
+            padding-right:10px;
+            display: inline-block;float:left;
+            text-align: center;
+        }
+        .ff-accordion .step-done span.step-index {
+        border-color: #10C046 !important;
+        text-indent: -9999px;
+        background-image: url("{!URLFOR($Resource.ffcommon,'icon_draft_actions/ff-tick.png')}");
+        background-repeat: no-repeat;background-position: center;
+        }
+        .nch-acc .accordion-header h2 {
+        font-weight: 900 !important;
+        min-height: inherit;
+        }
+        .nch-acc .step-done .accordion-header h2 {
+        text-decoration: line-through;
+        color:rgb(131, 144, 153);
+        }
+        .setup-wizard-splash-screen{
+        overflow: hidden;
+        }.setup-wizard-splash-inner{
+        margin: 100px auto 140px;
+        max-width: 350px;
+        text-align: center;
+        }
+        .pl45r40{
+        padding-left: 45px;
+        padding-right: 40px;
+        }
+        .btnSetupUrl .btnIcon{
+        display: none;
+        background-image:url("{!URLFOR($Resource.ffcommon,'icon_publish_options/publish_option_sprite.png')}");
+        background-repeat: no-repeat;
+        background-position: -12px -236px;
+        width: 13px;
+        height: 16px;
+        }
+        .btnSetupUrl.setup-done .btnIcon{
+        display:inline-block;
+        }
+        .btnSetupUrl.setup-done{
+        pointer-events: none;
+        background: none repeat scroll 0 0 #cecece !important;
+        border-color: #cecece !important;
+        color: #052942;
+        text-decoration: none;
+        }
+        #mainErrorBox{
+        text-align: center;
+        }
+        .vff-alert-inline-box{
+        padding:5px 40px;
+        }
+        div.li-indented { 
+        display: inline-block;
+        float: left;
+        width: 90%;margin-top: -3px;
+        } 
+        div.nested-acc  .copy-block-wrapper{
+        margin-left:0px;
+        width:300px;
+        }
+        input.white-back{
+        background-color: #ffffff;
+        }
+        .acc-inner > div > ul{
+        padding-bottom:20px;
+        }
+        li input[type="text"]{
+        width: 100%;margin-bottom:2px;
+        }
+        .ff-accordion.nested-acc .acc-content {
+        background-color: #D7DBDE;
+        }
+        .nch-acc .acc-inner img{
+        max-width: 250px;
+        padding-top: 8px;
+        }
+        .vff-alert {
+            min-width: 400px;
+        }
+
+        .border-highlight {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+<div class="fs-body" style="min-height: 100vh;">
+    <div class="mainHeader">
+        <div class="mainHeaderInner">
+           <div  class="header-link-panel">
+              <span>
+                 <div class="header-link-help"></div>
+              </span>
+              <span>
+                 <apex:outputLink styleClass="admin-settings-panel vfns-link" value="/apex/AdminSettingsPanel" rendered="{!isAdminSettingsPanelAccessible}">Admin Settings</apex:outputLink>
+              </span>
+           </div>
+           <div style="clear: both;"></div>
+           <div style="line-height: 22px;margin: 8px auto auto 20px;float: left; display: inline-block; ">
+              <div>
+                 <img alt="NativeCloud Setup Wizard" title="NativeCloud Setup Wizard" style="display: inline-block;vertical-align: middle;" src="{!URLFOR($Resource.logos,'setup-wizard.png')}" />
+                 <h1 style="display: inline-block;vertical-align: middle;margin-left: 20px;" class="E-bold">Setup Wizard</h1>
+              </div>
+           </div>
+           <div style="float: right;line-height:0px;">
+              <div class="ff-logo-box">
+                 <div class="ff-logo">
+                    <img alt="Formstack NativeCloud" title="Formstack NativeCloud" src="{!URLFOR($Resource.logos,'color_logo_only_fs.png')}" class="fs-logo-img" />
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="container">
+        <div class="setup-wizard-splash-screen">
+           <div class="setup-wizard-splash-inner">
+              <h1>Welcome to Formstack <br />NativeCloud!</h1>
+              <label style="display:block;clear:both;margin-top:20px;">You're only few clicks away from building <br />your first Salesforce-native form.</label>
+              <div class="mt40"><a class="vabutton5" onclick="switchSetupView();">Get Started</a></div>
+           </div>
+        </div>
+        <div id="mainErrorBox" style="display:none">
+           <div   class="vff-alert"  >
+              <div class="vff-alert-msg msg-text-div"  >Remote site is not added successfully. see <a href="https://help.salesforce.com/apex/HTViewHelpDoc?id=configuring_remoteproxy.htm&language=en" target="_blank">help article </a>. Please contact Formstack Support Team for further help.</div>
+           </div>
+        </div>
+        <div class="setup-wizard-wrapper" style="display:none;">
+           <div class="header-sec">
+              <h2>Follow the steps below to proceed with your setup</h2>
+           </div>
+           <div class="ff-accordion nch-acc pb40">
+              <div class="accordion-wrapper ">
+                 <div class="accordion-header  ">
+                    <h2 data-targetclass="step-1" onclick="toggleAccordionContent(this);return false;" class=""><span class="step-index">1</span>Create a Force.com site<span class="acc-ic"></span></h2>
+                 </div>
+                 <div class="acc-content step-1 f-collapse">
+                    <div class="acc-content-inner">
+                       <label>Do you have any existing Force.com site you would like to use?</label>
+                       <ul class="nav nav-tabs vertical-tabs">
+                          <li class="">
+                             <a href="#forcecomsiteYes" onclick="toggleSiteExists(this)"><span class="ff-radio-css"></span>Yes</a>
+                             <div class="clear-both inner-toggle" style="display: none">
+                                <label>Please select the site you would like to use for Formstack:</label><br />
+                                <select class="sel-341" id="selForceComSites" onchange="onSiteSelectionChange(this)">
+                                   <option value="">-select a site-</option>
+                                </select>
+                             </div>
+                          </li>
+                          <li>
+                             <a href="#forcecomsiteNo" onclick="toggleSiteExists(this)"><span class="ff-radio-css"></span>No</a>
+                             <div class="clear-both inner-toggle" style="display: none"> <label>To create one</label><br /><a onclick="openNewWindow('/0DM/o');">&gt; Click here</a></div>
+                          </li>
+                       </ul>
+                    </div>
+                    <div class="acc-content-inner odd-in" style="display: none;">
+                       <div class="tab-content vertical-tab-content">
+                          <div class="tab-pane" id="forcecomsiteBlock">
+                             <label>Your force.com website</label>
+                             <div class="copy-block-wrapper">
+                                <input type="text" id="txtbxForcecomSite" onblur="resetNextButton(this);" data-isrequired="true" class="type-text"></input>
+                             </div>
+                          </div>
+                          <div class="step-footer"><a class="vabutton1 next-step va-readonly" onclick="setupNativeCloudInitialStep(this);">Next</a></div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="accordion-wrapper ">
+                 <div class="accordion-header">
+                    <h2 data-targetclass="step-2" onclick="toggleAccordionContent(this);return false;" class=""><span class="step-index">2</span> Get keys for Google reCAPTCHA (optional)<span class="acc-ic"></span></h2>
+                 </div>
+                 <div class="acc-content step-2 f-collapse">
+                    <div class="acc-inner">
+                        
+                       <div class="pl45r40">
+                        <label>This step is optional and only applies if you have setup Google reCAPTCHA.</label>
+                          <ul>
+                             <li>
+                                <b>1</b>
+                                <div class="li-indented"><a onclick="openNewWindow('https://www.google.com/recaptcha/admin#list')" title="Google reCaptcha Setup ">Open the Google reCAPTCHA link</a> </div>
+                             </li>
+                             <li>
+                                <b>2</b>
+                                <div class="li-indented">Login to your Google account</div>
+                             </li>
+                             <li>
+                                <b>3</b>
+                                <div class="li-indented">
+                                   In the form on the page, add domain names of the sites, where you are planning to have your forms, as well as the one below:<br />
+                                   <div class="copy-block-wrapper">
+                                      <input type="text" id="txtbx3_2domain" value="force.com" disabled="disabled" class="type-text"></input>
+                                      <div class="copy-code-block">
+                                         <span id="clip_copy_txtbx3_2domain" data-clipboard-target="#txtbx3_2domain" class="copy-code-text">Copy to clipboard</span>
+                                      </div>
+                                   </div>
+                                   <label style="font-size: 12px;">E.g.: force.com,formstack.io</label>
+                                </div>
+                             </li>
+                             <li>
+                                <b>4</b>
+                                <div class="li-indented">Add owners</div>
+                             </li>
+                             <li>
+                                <b>5</b>
+                                <div class="li-indented">Click the <i>'Register'</i> button</div>
+                             </li>
+                             <li>
+                                <b>6</b>
+                                <div class="li-indented">
+                                   Copy the keys from the page into the fields below
+                                   <br />
+                                   <label>Site Key:</label><br />
+                                   <input type="text" id="txtbxSiteKey" class="type-text white-back"></input><br />
+                                   <label>Secret Key:</label><br />
+                                   <input type="text" id="txtbxSecretKey" class="type-text white-back"></input><br />
+                                </div>
+                             </li>
+                          </ul>
+                       </div>
+                    </div>
+                    <div class="step-footer"><a class="vabutton1 next-step" onclick="nextStep(this);">Next</a></div>
+                 </div>
+              </div>
+               
+              
+              <div class="accordion-wrapper ">
+                 <div class="accordion-header">
+                    <h2 data-targetclass="step-3" onclick="toggleAccordionContent(this);return false;" class=""><span class="step-index">3</span>Finalize and go to Formstack!<span class="acc-ic"></span></h2>
+                 </div>
+                 <div class="acc-content step-3 f-collapse">
+                    <div class="step-footer"><label>To complete the setup, click below and start building your forms!</label><br /><a class="vabutton1" onclick="navigateToApp(this);">Get Started</a></div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+</div>
+<script>
+    window.REMOTE_ACTIONS = (typeof REMOTE_ACTIONS !== 'undefined')?REMOTE_ACTIONS:{};
+    function setRemoteActionURL(pController, pMethod, pURL){
+        if(typeof REMOTE_ACTIONS[pController] === 'undefined'){
+            window.REMOTE_ACTIONS[pController] = {};
+        }
+        window.REMOTE_ACTIONS[pController][pMethod] = pURL;
+    }
+
+    function getRemoteActionURL(pController, pMethod){
+        return window.REMOTE_ACTIONS[pController][pMethod];
+    }
+    setRemoteActionURL("NativeCloudWizardController", "getSiteList", '{!URLENCODE($RemoteAction.NativeCloudWizardController.getSiteList)}');
+    setRemoteActionURL("NativeCloudWizardController", "getSiteDetail", '{!URLENCODE($RemoteAction.NativeCloudWizardController.getSiteDetail)}');
+    setRemoteActionURL("NativeCloudWizardController", "setupNativeCloudInitialStep", '{!URLENCODE($RemoteAction.NativeCloudWizardController.setupNativeCloudInitialStep)}');
+    setRemoteActionURL("NativeCloudWizardController", "setupNativeCloudFinalStep", '{!URLENCODE($RemoteAction.NativeCloudWizardController.setupNativeCloudFinalStep)}');
+    
+
+setFSNSVariable('SessionKey','{!$Api.Session_ID}');
+var accordionHeaderScrollToTop=true;
+var SFOrgPrefix='';
+var ffcommonResuorceUrl  = "{!URLFOR($Resource.ffcommon)}";
+if(ffcommonResuorceUrl.toLowerCase().indexOf('visualantidote__')>0){
+    SFOrgPrefix='VisualAntidote__';
+}
+
+$( document ).ready(function() {
+    remoteIsMDAPIAccessibleJS();
+});
+
+
+function openNewWindow(url){
+    window.open(url,'winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=600,height=600');
+    
+}
+function getFinalStepConfiguration (){
+    // TODO: should be a DTO class.
+    var finalStepConfiguration= { secureURL: $('#txtbxForcecomSite').val(),
+    googleSiteKey : $('#txtbxSiteKey').val(),
+    googleSiteSecret : $('#txtbxSecretKey').val()
+    };
+    return finalStepConfiguration;
+}
+
+function getInitialStepConfiguration (){
+    // TODO: should be a DTO class.
+    var stepConfiguration= { 
+        siteName: $('#selForceComSites').val()
+    };
+    return stepConfiguration;
+}
+
+function setupNativeCloudInitialStep(elemSource) {
+    var currentParentElem = $(elemSource).parents('.accordion-wrapper')[0];
+    hideInlineMessage(currentParentElem);
+    var initialStepConfigurationObj = getInitialStepConfiguration();
+    Visualforce.remoting.Manager.invokeAction(
+        getRemoteActionURL(
+            'NativeCloudWizardController',
+            'setupNativeCloudInitialStep'
+        ),
+        initialStepConfigurationObj,
+        function(result, event) {
+            if (event.status) {
+                console.log('[setupNativeCloudInitialStep] response');
+                console.log(result);
+                nextStep(elemSource);
+            } else if (event.type === 'exception') {
+                showInlineMessage(currentParentElem, event.message);
+            } else {
+                showInlineMessage(currentParentElem, 'Something went wrong. Please contact support if the issue persists.');
+            }
+        }, {
+            escape: false
+        });
+}
+
+function setupNativeCloudFinalStep(elemSource) {
+    var currentParentElem = $(elemSource).parents('.accordion-wrapper')[0];
+    hideInlineMessage(currentParentElem);
+    var finalStepConfigurationObj = getFinalStepConfiguration();
+    Visualforce.remoting.Manager.invokeAction(
+        getRemoteActionURL(
+            'NativeCloudWizardController',
+            'setupNativeCloudFinalStep'
+        ),
+        finalStepConfigurationObj,
+        function(result, event) {
+            if (event.status) {
+                console.log('[setupNativeCloudFinalStep] response');
+                console.log(result);
+                if (result != null && result.IsValid) {
+                    updateNativeSetupSettingInfo(true);
+                } else {
+                    showInlineMessage(currentParentElem, 'Something went wrong while finalizing the setup. Please try again or contact support if issue persists.');
+                }
+
+            } else if (event.type === 'exception') {
+                console.log('[setupNativeCloudFinalStep] exception');
+                console.log(event);
+                showInlineMessage(currentParentElem, 'Something went wrong while finalizing the setup. Please try again or contact support if issue persists.');
+            } else {
+                console.log('[setupNativeCloudFinalStep] unknown error');
+                console.log(event);
+                showInlineMessage(currentParentElem, 'Something went wrong while finalizing the setup. Please try again or contact support if issue persists.');
+            }
+        }, {
+            escape: false
+        });
+}
+
+var populateSiteDetail = function(siteName) {
+        console.log('[populateSiteDetail] Starts...');
+        Visualforce.remoting.Manager.invokeAction(
+            getRemoteActionURL(
+                'NativeCloudWizardController',
+                'getSiteDetail'
+            ),
+            siteName,
+            function(result, event) {
+                console.log('[populateSiteDetail] Result...');
+                console.log(result);
+                console.log(event);
+                var sitesResponseDTO = result;
+                // TODO: move it in a DTO provider class in js. result is a type of SiteDTOProvider.SitesResponseDTO
+                if(sitesResponseDTO!=null && sitesResponseDTO.IsValid){
+                    var siteDetail = sitesResponseDTO.Result;
+                    setStepOneForceComSiteUrl(siteDetail.SecureURL); 
+                }
+                else if (event.type === 'exception') {
+                    console.log('[populateSiteDetail] exception');
+                    console.log(event);
+                    showInlineMessage(currentParentElem, event.message);
+                } else {
+                    console.log('[populateSiteDetail] unknown error');
+                    console.log(event);
+                    showInlineMessage(currentParentElem, 'Something went wrong. Please contact support if the issue persists.');
+                }
+            },
+            {
+                escape: true
+            }
+        );
+}
+var populateSiteList = function(elemSource) {
+        console.log('[populateSiteList] Starts...');
+        Visualforce.remoting.Manager.invokeAction(
+            getRemoteActionURL(
+                'NativeCloudWizardController',
+                'getSiteList'
+            ),
+            function(result, event) {
+                console.log('[populateSiteList] Result...');
+                console.log(result);
+                console.log(event);
+                var sitesResponseDTO = result;
+                // TODO: move it in a DTO provider class in js. result is a type of SiteDTOProvider.SitesResponseDTO
+                if(sitesResponseDTO!=null && sitesResponseDTO.IsValid){
+                    $('#selForceComSites').html('<option value="">-select a site-</option>');
+                    var listOfSites = sitesResponseDTO.Result;
+                    $.each(listOfSites,function(id,siteUICompactDTOObj){ 
+                        $('#selForceComSites').append('<option value="'+siteUICompactDTOObj.Name+'">'+siteUICompactDTOObj.MasterLabel+'</option>');
+                    });
+                    $('#selForceComSites').select2();
+                    toggleSiteBlock(elemSource);
+                }
+                else if (event.type === 'exception') {
+                    console.log('[populateSiteList] exception');
+                    console.log(event);
+                    showInlineMessage(currentParentElem, event.message);
+                } else {
+                    console.log('[populateSiteList] unknown error');
+                    console.log(event);
+                    showInlineMessage(currentParentElem, 'Something went wrong. Please contact support if the issue persists.');
+                }
+            },
+            {
+                escape: true
+            }
+        );
+}
+
+function toggleCurrentNextStepBtn(parentElem,disable){
+    if(disable){
+        $(parentElem).find('.next-step').addClass('va-readonly');
+    }else{
+        $(parentElem).find('.next-step').removeClass('va-readonly'); 
+    }
+}
+
+function remoteIsMDAPIAccessibleJS(){    
+    Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.NativeCloudWizardController.remoteIsMDAPIAccessible)}',
+        function(result, event) {
+            if(event.status) {
+                if(result!=null && getSafeBoolean(result,false)){
+                    
+                }else{
+                    // add endpoint to remote site settings
+                    createRemoteSiteForMDAPI();
+                }
+            }
+            else {
+                console.log('[remoteIsMDAPIAccessibleJS] unknown error');
+                console.log(event);
+                showGeneralMessage('Something went wrong. Please contact support if the issue persists.');
+            }
+        },
+        {
+            escape: true
+        }
+    );
+    
+}
+function createRemoteSiteForMDAPI()
+{
+    setupFormRemoteSite(getFSNSVariable('SessionKey', ''), "FormstackMDAPIEndpoint", GetWindowURL(), 'Allow to use Metadata API from APEX', "upsert",'', displayRemoteSiteCreationResponse);
+}
+
+function displayRemoteSiteCreationResponse(positiveObject,remoteSitesInfoResponseObject){
+    if (!remoteSitesInfoResponseObject.isValid) {
+        var remoteSiteMessage = 'Remote site is not added successfully. see <a href="https://help.salesforce.com/apex/HTViewHelpDoc?id=configuring_remoteproxy.htm&language=en" target="_blank">help article </a>. Please contact Formstack Support Team for further help.';
+        showGeneralMessage(remoteSiteMessage);
+    }
+    else{
+        hideGeneralMessage();
+    }
+}
+function toggleSiteExists(elemSource){
+    var tabId= $(elemSource).attr('href');
+    if(tabId=='#forcecomsiteNo')
+    {
+        toggleSiteBlock(elemSource);
+    }
+    else
+    {
+        populateSiteList(elemSource);
+    }
+    
+}
+
+function toggleSiteBlock(elemSource){
+    var tabId= $(elemSource).attr('href');
+    var parentElem=$(elemSource).parents('.acc-content');
+    $(parentElem).find('ul>li').removeClass('active');
+    $(parentElem).find('.odd-in').slideDown();
+    $(parentElem).find('.inner-toggle').slideUp();
+    
+    var aTag=$(parentElem).find('a[href="'+tabId+'"]');
+    if(!$(aTag).parent().hasClass('active')){
+        $(aTag).parent().addClass('active');
+        $(aTag).parent().find('.inner-toggle').slideDown();
+    }
+    if(!$(parentElem).find('.tab-content #forcecomsiteBlock').hasClass('active')){
+        $(parentElem).find('.tab-content #forcecomsiteBlock').addClass('active');
+    }
+}
+function setStepOneForceComSiteUrl(selectedSiteUrl){
+    if(selectedSiteUrl!='undefined' && selectedSiteUrl!='' ){
+        setSiteUrlToTextBox(selectedSiteUrl);       
+    }else{        
+        setSiteUrlToTextBox('');
+    }
+    resetNextButton($('#forcecomsiteBlock').find('input[type="text"]'));
+}
+function resetNextButton(elemSource){
+    var selectedVal=$(elemSource).val();
+    
+    if(selectedVal!='undefined' && selectedVal!=''){
+        $('#forcecomsiteBlock').parent().find('.vabutton1').removeClass('va-readonly');
+        
+    }else{
+        $('#forcecomsiteBlock').parent().find('.vabutton1').addClass('va-readonly');
+        
+    }
+}
+function onSiteSelectionChange(elemSource){
+    var selectedVal=$(elemSource).val();    
+    if(selectedVal!='undefined' && selectedVal!='' && selectedVal!='-select a site-')
+    {
+        populateSiteDetail(selectedVal);
+    }
+    else
+    {        
+        setSiteUrlToTextBox('');
+    }
+    resetNextButton($('#forcecomsiteBlock').find('input[type="text"]'));
+}
+function setSiteUrlToTextBox(selectedSiteUrl){
+    if(selectedSiteUrl){
+        $("#txtbxForcecomSite").val(selectedSiteUrl);
+    }else{
+        $("#txtbxForcecomSite").val('');
+    }
+    $("#txtbxForcecomSite").addClass('border-highlight',2000, function(){
+        var thisElem = $(this);
+        setTimeout(
+            function() { $(thisElem).removeClass('border-highlight'); },
+            2000
+        );
+    });
+}
+function nextStep(elemSource){
+    var currentParentElem=$(elemSource).parents('.accordion-wrapper');
+    $(currentParentElem).find('.vff-alert-inline-box').remove();
+    var isValid=true;
+    $(currentParentElem).find('input[data-isrequired="true"]').each(function(indx,elem){
+        if(isNullOrEmpty($(elem).val())){
+            isValid=false;
+            $(elem).parent().prepend('<span class="ff-req">*</span>');
+        }
+    });
+    if(isValid){
+        var nextParentElem=currentParentElem.next();
+        hideInlineMessage(currentParentElem);        
+        toggleAccordionContent($(currentParentElem).find('>.accordion-header>h2'));
+        $(currentParentElem).addClass('step-done');        
+        hideInlineMessage(nextParentElem);
+        toggleAccordionContent($(nextParentElem).find('>.accordion-header>h2'));
+        if($(currentParentElem).find('>.acc-content').hasClass('step-2')){
+            if(!($(nextParentElem).find('.nested-acc .accordion-header').first().hasClass('acc-expanded'))){
+                toggleAccordionContent($(nextParentElem).find('.nested-acc h2').first());
+            }
+        }        
+    }    
+}
+
+function switchSetupView(){
+    $('.setup-wizard-splash-screen').hide("slide", { direction: "left" }, 200,function(){
+        $('.setup-wizard-wrapper').show("slide", { direction: "right" }, 200);
+    });
+}
+function navigateToApp(elemSource){
+    let isFirstStepDone = $('.accordion-wrapper').first().hasClass('step-done');
+    if(isFirstStepDone){
+        setupNativeCloudFinalStep(elemSource);
+    }
+    else{
+        $('.nch-acc .accordion-wrapper').removeClass('step-done');
+        var firstParentElem=$('.nch-acc .accordion-wrapper').first();
+        toggleAccordionContent($(firstParentElem).find('.accordion-header h2'));
+    }
+}
+function updateNativeSetupSettingInfo(setupDone){
+    
+    var settingId = '{!$Setup.FastFormsTokenInfo__c.Id}';
+    var record ;
+    if(isNullOrEmpty(SFOrgPrefix)){
+        
+        record = new ffCSTokenNs.ffTokenObj({
+            Id: settingId,
+            Is_Native_Setup_Done__c: setupDone 
+        });
+        
+    }
+    else{
+        record = new ffCSTokenNs.ffTokenObj({
+            Id: settingId,
+            VisualAntidote__Is_Native_Setup_Done__c: setupDone 
+        });
+        
+    }
+    record.update(updateNativeSetupSettingInfoCallback);
+}
+function updateNativeSetupSettingInfoCallback(err, results,objevent){
+    if (err) {        
+        console.log('[updateNativeSetupSettingInfoCallback] error');
+        console.log(err);
+        showGeneralMessage('Something went wrong. Please contact support if the issue persists.')
+    } else {
+        ffNavigateToUrl( '/apex/FormMenu',SFOrgPrefix);
+    }
+}
+function hideInlineMessage(parentElem){
+    $(parentElem).find('.vff-alert-inline-box').remove(); 
+}
+function showInlineMessage(parentElem,msg){ 
+    $(parentElem).find('.vff-alert-inline-box').remove();
+    $($(parentElem)[0]).find('.acc-content').append('<div class="vff-alert-inline-box" style="display:none"><div class="vff-alert"  ><div class="vff-alert-msg msg-text-div"  style="display:block">'+msg+'</div></div></div>');
+    $(parentElem).find('.vff-alert-inline-box').show();
+}
+function hideGeneralMessage(){
+    $('#mainErrorBox').fadeOut();
+}
+function showGeneralMessage(msg){
+    var mainErrorBoxElem = $('#mainErrorBox');
+    mainErrorBoxElem.html('');
+    mainErrorBoxElem.append('<div class="vff-alert"  ><div class="vff-alert-msg msg-text-div"  style="display:block">'+msg+'</div></div>');
+    mainErrorBoxElem.fadeIn();
+}
+
+</script>
+
+<c:Pendo ></c:Pendo>
+<!-- End Default Content REMOVE THIS -->
+</apex:page>

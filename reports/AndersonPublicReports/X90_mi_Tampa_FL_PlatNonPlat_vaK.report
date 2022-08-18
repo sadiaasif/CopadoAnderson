@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>ADDRESS1_CITY</field>
+    </columns>
+    <columns>
+        <field>ADDRESS1_STATE</field>
+    </columns>
+    <columns>
+        <field>PHONE1</field>
+    </columns>
+    <columns>
+        <field>Account.Main_Lead_Source__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
+        <criteriaItems>
+            <column>ADDRESS1_STATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>FL,Florida</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ADDRESS1_CITY</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Tampa,Gibsonton,Mango,Brandon,Seffner,Apollo Beach,Clearwater,Lutz,Valrico,Riverview,Dover,Sun City Center,Safety Harbor,Oldsmar,Sydney,Ruskin,Thonotosassa,Balm,Odessa,Pinellas Park,Durant,Sun City,Largo,Wimauma,Dunedin,Tarpon Springs,Plant City,Wesley Chapel,Palm Harbor,Lithia,Bay Pines,Ozona,Seminole,Crystal Beach,Land O Lakes,Clearwater Beach,New Port Richey,Belleair Beach,Indian Rocks Beach,Holiday,Crystal Springs,Elfers,Saint Petersburg,Nichols,Terra Ceia,Zephyrhills,Parrish,San Antonio,Port Richey,Ellenton,Saint Leo,Palmetto,Mulberry,Spring Hill,Kathleen,Dade City,Hudson,Anna Maria,Lakeland,Eaton Park,Bradenton Beach,Oneco,Cortez,Highland City,Holmes Beach</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ADDRESS1_CITY</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Aripeka,Bradley,Bradenton,Tallevast,Brooksville,Homeland,Bowling Green,Longboat Key,Trilby,Auburndale,Bartow,Lacoochee,Myakka City,Eagle Lake,Fort Meade,Webster,Polk City,Alturas,Ona,Lake Alfred,Winter Haven,Nobleton,Sarasota,Wauchula,Lake Wales,Istachatta,Waverly,Lake Hamilton,Dundee,Osprey,Clermont,Nalcrest,Davenport,Groveland,Haines City,Bushnell,Laurel,Zolfo Springs,Floral City,Center Hill,Mascotte,Homosassa,Nokomis,Babson Park,Loughman,Inverness,Homosassa Springs,Lecanto,Sumterville,Minneola,Venice,Intercession City,Winter Garden,Kissimmee,North Port,Arcadia,Lakeshore,Nocatee,Killarney,Crystal River</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ADDRESS1_CITY</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Montverde,Okahumpka,Lake Panasoffkee,Coleman,Fort Ogden,Howey In The Hills,Oakland,Ferndale,Frostproof,Windermere,Murdock,Hernando,Orlando,Leesburg,Wildwood,Holder,El Jobean,Beverly Hills,Yalaha,Indian Lake Estates,Englewood,Sebring,Astatula,Avon Park,Gotha,Port Charlotte,Ocoee,Oxford,Dunnellon,Fruitland Park,The Villages,Tavares,Rotonda West,Mount Dora,Clarcona,Lady Lake</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ADDRESS1_CITY</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Ocala,Plymouth,Zellwood,Apopka,Tangerine,Yankeetown,Placida,River Ranch,Summerfield,Eustis,Grand Island,Weirsdale,Belleview,Goldenrod,Maitland,Eastlake Weir,Winter Park,Mid Florida,Punta Gorda,Kenansville,Altamonte Springs,Lake Placid,Casselberry,Candler,Umatilla,Sorrento,Winter Springs,Longwood,Inglis,Boca Grande,Saint Cloud,Ocklawaha,Venus,Lorida,Lake Mary</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <name>90 mi Tampa, FL Plat/Non-Plat</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>ADDRESS1_CITY</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

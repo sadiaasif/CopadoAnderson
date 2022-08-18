@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Enable/disable this fee on the registration landing pages. --></help>
+        <label><!-- Active --></label>
+        <name>evt__Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>evt__Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>evt__Category__c</name>
+        <picklistValues>
+            <masterLabel>Attendee</masterLabel>
+            <translation><!-- Attendee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exhibitor</masterLabel>
+            <translation><!-- Exhibitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sponsor</masterLabel>
+            <translation><!-- Sponsor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Volunteer</masterLabel>
+            <translation><!-- Volunteer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Number of days to add to the Pay Later Date.  (Use a negative value to set days BEFORE the Pay Later Date) --></help>
+        <label><!-- Days Before or After --></label>
+        <name>evt__Days_Before_or_After__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>evt__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Fee Product --></label>
+        <name>evt__Event_Fee_Product__c</name>
+        <relationshipLabel><!-- Event Fees --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Event --></label>
+        <name>evt__Event__c</name>
+        <relationshipLabel><!-- Event Fees --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Optional limit to the number of registrations that can be completed with this event fee for an individual registrant.  Applies only in scenarios where the registrant is allowed to register multiple attendees. --></help>
+        <label><!-- Limit Per Purchase --></label>
+        <name>evt__Limit_Per_Purchase__c</name>
+    </fields>
+    <fields>
+        <help><!-- Optional limit to the number of registrations that can be completed with this event fee. --></help>
+        <label><!-- Limit --></label>
+        <name>evt__Limit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Flags this event fee as a special fee, visible only to logged-in contacts with pymt__Member_Pricing_Enabled__c set to true. --></help>
+        <label><!-- Members Only --></label>
+        <name>evt__Members_Only__c</name>
+    </fields>
+    <fields>
+        <help><!-- On-payment-completed tag(s) to assign to shopping cart items created when this fee is paid. --></help>
+        <label><!-- On Payment Completed --></label>
+        <name>evt__On_Payment_Completed__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value used to determine the order of event fees when listed on the web. --></help>
+        <label><!-- Order --></label>
+        <name>evt__Order__c</name>
+    </fields>
+    <fields>
+        <help><!-- Invitation Status value to assign new attendee records when the selected fee is a &quot;Pay Later&quot; fee. --></help>
+        <label><!-- Pay Later Attendee Status --></label>
+        <name>evt__Pay_Later_Attendee_Status__c</name>
+        <picklistValues>
+            <masterLabel>Payment Pending</masterLabel>
+            <translation><!-- Payment Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Registered</masterLabel>
+            <translation><!-- Registered --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Explanation of pay later option, displayed on the registration landing page (e.g. &quot;Invoice Me&quot; or &quot;Pay At The Door.&quot; --></help>
+        <label><!-- Pay Later Description --></label>
+        <name>evt__Pay_Later_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date or reference date for scheduled payment. --></help>
+        <label><!-- Pay Later Date --></label>
+        <name>evt__Pay_Later_Options__c</name>
+        <picklistValues>
+            <masterLabel>Day of Event</masterLabel>
+            <translation><!-- Day of Event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Day of Registration</masterLabel>
+            <translation><!-- Day of Registration --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Refund Policy --></label>
+        <name>evt__Refund_Policy__c</name>
+    </fields>
+    <fields>
+        <help><!-- Controls whether or not the registration page prompts for payment online, or sets up a scheduled payment. --></help>
+        <label><!-- Terms --></label>
+        <name>evt__Terms__c</name>
+        <picklistValues>
+            <masterLabel>Pay Later</masterLabel>
+            <translation><!-- Pay Later --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pay Online</masterLabel>
+            <translation><!-- Pay Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pay Online or Pay Later</masterLabel>
+            <translation><!-- Pay Online or Pay Later --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

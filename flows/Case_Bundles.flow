@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>Service_List</name>
+        <label>Service List</label>
+        <locationX>590</locationX>
+        <locationY>67</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReplaceText_IFTF</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Bundle_Applied__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Type_of_Case</name>
+        <label>Type of Case</label>
+        <locationX>269</locationX>
+        <locationY>168</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IFTF</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Description</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Invest For the Future 2020 - LLC</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Description</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Invest For the Future 2020 - Corp</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>A01648</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Service_List</targetReference>
+            </connector>
+            <label>IFTF</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>A01648</name>
+        <dataType>Boolean</dataType>
+        <expression>CONTAINS({!$Record.Note__c}, &quot;A01648;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>ReplaceText_IFTF</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!$Record.Description},&apos;Invest For the Future 2020 - LLC&apos;), SUBSTITUTE({!$Record.Description}, &apos;Invest For the Future 2020 - LLC&apos;,
+&apos;(1) Corporate Assistance Program, 1 Year, Initial
+(1) Platinum Membership
+(1) Registered Agent Fee
+(1) Wealth Planning Blueprint (WPB) / Keep More Solutions (KMS)
+(1) Livestream Access to All Events for the rest of 2020 online
+(4) Free Tickets to the Next Live Tax &amp; AP Event&apos;),
+IF(CONTAINS({!$Record.Description}, &apos;Invest For the Future 2020 - Corp&apos;), SUBSTITUTE({!$Record.Description},&apos;Invest For the Future 2020 - Corp&apos;,
+&apos;(1) Corporate Assistance Program, 1 Year, Initial
+(1) Platinum Membership
+(1) Registered Agent Fee
+(1) Wealth Planning Blueprint (WPB) / Keep More Solutions (KMS)
+(1) Livestream Access to All Events for the rest of 2020 online
+(4) Free Tickets to the Next Live Tax &amp; AP Event&apos;),
+&quot;&quot;),
+&quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>Case - Bundles {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case - Bundles</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>90</locationX>
+        <locationY>155</locationY>
+        <connector>
+            <targetReference>Type_of_Case</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>InvalidDraft</status>
+    <textTemplates>
+        <name>IFTF_Services</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>(1) Corporate Assistance Program, 1 Year, Initial
+(1) Platinum Membership
+(1) Registered Agent Fee
+(1) Wealth Planning Blueprint (WPB) / Keep More Solutions (KMS)
+(1) Livestream Access to All Events for the rest of 2020 online
+(4) Free Tickets to the Next Live Tax &amp; AP Event</text>
+    </textTemplates>
+</Flow>

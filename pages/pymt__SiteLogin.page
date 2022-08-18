@@ -1,0 +1,27 @@
+<apex:page docType="html-5.0" id="loginPage" showHeader="false" sidebar="false" cache="false" title="{!$Label.site.site_login}" standardStylesheets="false">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script> $j = jQuery.noConflict();</script>
+<apex:composition template="{!$Site.Template}">
+ <apex:define name="body">
+<div id="pc_lang_{!HTMLENCODE($CurrentPage.parameters.lang)}">
+<div class="pc_page"  id="pc_login_page">
+  <div class="pc_page_content_top"></div>
+  <div class="pc_page_content"  id="pc_sitelogin_page">
+    <div class="pc_page_content_inner">
+      <apex:outputPanel styleclass="pc_sitelogin_panel">
+            <div class="pc_sitelogin_inner">
+            <apex:pageMessages />
+            <h1 class="pc_sitelogin_title"><apex:outputText value="{!$Label.site.login}"/></h1>
+                  <c:SiteLogin id="siteLogin"/>
+            </div>
+      </apex:outputPanel>
+      <br/>
+
+
+    </div><!--  pc_page_content_inner -->
+  </div><!--  pc_page_content -->
+    </div><!--  pc_page -->
+</div><!--  pc_lang -->
+  </apex:define>
+  </apex:composition>
+</apex:page>
