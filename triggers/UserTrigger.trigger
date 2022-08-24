@@ -88,6 +88,4 @@ trigger UserTrigger on User (before update, after insert) {
          if(!setofuserId2.isEmpty() ){ ID jobID = System.enqueueJob(new RoleAutomationService(setofuserId2,true));
            } */
     }
-    
-    
 }

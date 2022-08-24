@@ -315,6 +315,27 @@
                     <stringValue>LucidChart Update Needed</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Looping_On_OSI_Stages.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Kitted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Looping_On_OSI_Stages.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OB Required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Looping_On_OSI_Stages.Processing_Stage__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No OB Required</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Count_Completed_OSI</targetReference>
             </connector>
@@ -453,8 +474,8 @@
         </rules>
     </decisions>
     <description>Author: Umar Aziz
-Change: Added &quot;LucidChart Update Needed&quot; stage to complete counter as per case #00218432
-Date: 6/7/2022</description>
+Change: Added &quot;Kitted, OB Required, No OB Required&quot; stage to complete counter as per case #00229778 &amp; #
+Date: 08/23/2022</description>
     <environments>Default</environments>
     <formulas>
         <name>Back59Min</name>
@@ -708,7 +729,7 @@ OR(
             <targetReference>GetOrderItems</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>Completed_Local</name>
         <dataType>Number</dataType>

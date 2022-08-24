@@ -66542,6 +66542,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Trust__c.Date_of_trust__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Trust__c.Date_to_Paralegal__c</field>
         <readable>true</readable>
@@ -67642,6 +67647,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Trust__c.Vehicle_Information__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Trust__c.Word_Docs_Prepared__c</field>
         <readable>true</readable>
@@ -67670,6 +67680,11 @@
         <editable>true</editable>
         <field>Trust__c.X3rd_Amendment_Date__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Trust__c.X3rd_Entity_Trust_is_a_Member_of__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

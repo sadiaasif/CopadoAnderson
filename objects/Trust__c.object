@@ -1132,6 +1132,15 @@ NULL)</formula>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Date_of_trust__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Of Trust</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Date_to_Paralegal__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Date sent to Paralegal</inlineHelpText>
@@ -5243,6 +5252,11 @@ IF(ISBLANK(Second_Successor_Trustee_Name__c), 0,1)</formula>
                     <default>false</default>
                     <label>Subject to Trust</label>
                 </value>
+                <value>
+                    <fullName>Vehicle</fullName>
+                    <default>false</default>
+                    <label>Vehicle</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -5388,6 +5402,36 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Vehicle_Information__c</fullName>
+        <externalId>false</externalId>
+        <label>Vehicle Information</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Make</fullName>
+                    <default>false</default>
+                    <label>Make</label>
+                </value>
+                <value>
+                    <fullName>Model</fullName>
+                    <default>false</default>
+                    <label>Model</label>
+                </value>
+                <value>
+                    <fullName>VIN</fullName>
+                    <default>false</default>
+                    <label>VIN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Word_Docs_Prepared__c</fullName>
         <externalId>false</externalId>
         <label>Word Docs Prepared</label>
@@ -5444,6 +5488,17 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X3rd_Entity_Trust_is_a_Member_of__c</fullName>
+        <externalId>false</externalId>
+        <label>3rd Entity Trust is a Member of:</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>X4th_Entity_Trust_is_a_Member_of__c</fullName>
@@ -7376,6 +7431,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>FA_Land_Trust</fullName>
@@ -9135,6 +9205,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10904,6 +10989,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>FA_Nonprofit</fullName>
@@ -12666,6 +12766,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>FA_Solo_401_k</fullName>
@@ -14425,6 +14540,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16195,6 +16325,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17980,6 +18125,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Personal_Property_Trust</fullName>
@@ -19738,6 +19898,10 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
                 <fullName>Member of LLC</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Vehicle</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Using_CAP__c</picklist>
@@ -19747,6 +19911,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21341,6 +21520,21 @@ IF(ISBLANK(Second_Entity_Trustee_Name__c), 0, 1)</formula>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vehicle_Information__c</picklist>
+            <values>
+                <fullName>Make</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Model</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

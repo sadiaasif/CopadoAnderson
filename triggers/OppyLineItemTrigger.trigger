@@ -26,7 +26,10 @@ trigger OppyLineItemTrigger on OpportunityLineItem (before insert,after delete, 
                 
             }
             if(oppItems.size() > 0){
-                OpportunityLineItemInsertHandler.insertTaxToolBoxOSI(oppItems);
+                OpportunityLineItemInsertHandler.checkForTaxToolBoxOSI(oppItems);
+                if(OpportunityLineItemInsertHandler.oppIds.size() > 0){
+                	OpportunityLineItemInsertHandler.insertTaxToolBoxOSI(oppItems);
+                }
             }
         }
         

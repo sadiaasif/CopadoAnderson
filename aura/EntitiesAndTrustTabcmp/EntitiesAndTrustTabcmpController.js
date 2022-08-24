@@ -9,7 +9,7 @@
             {label: 'Entity Name', fieldName: 'linkName', type: 'url', 
              typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
             {label: 'Type', fieldName: 'RecordTypeEn', type: 'text'},
-            
+            {label: 'Organization  State', fieldName: 'Organization_State__c', type: 'text'},
             {label: 'Entity Origin', fieldName: 'Origin__c', type: 'text'}, 
             {label: 'Status', fieldName: 'Status__c', type: 'text', sortable: 'true'},
             {label: 'Organization Date', fieldName: 'Organizational_Date__c', type: 'Date'},
@@ -17,7 +17,7 @@
             {label: 'Tax Status', fieldName: 'Tax_Status__c', type: 'text', sortable: 'true'},
             {label: 'Disregarded To Entity', fieldName: 'Disregarded', type: 'text', sortable: 'true'},
             {label: 'Federal Return Due Date', fieldName: '	Federal_Return__c', type: 'text'},
-            {label: 'Organization  State', fieldName: 'Organization_State__c', type: 'text'},
+            
             
             
             
