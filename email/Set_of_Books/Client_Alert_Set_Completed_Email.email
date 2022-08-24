@@ -1,0 +1,12 @@
+Hello {!IF(NOT(ISBLANK(Set_of_Books__c.Both_Names__c)), Set_of_Books__c.Both_Names__c,
+IF(NOT(ISBLANK(Set_of_Books__c.Contact_Name__c)), Set_of_Books__c.Contact_Name__c,
+IF(NOT(ISBLANK(Set_of_Books__c.Client_Name__c)), Set_of_Books__c.Client_Name__c,
+"valued Anderson bookkeeping client")))},
+
+This automatic email is to alert you that the financials for one or more of your entities are complete.
+
+Feel free to access them at your convenience here: {!Set_of_Books__c.Box_Viewable_Folder__c}
+
+If you have any questions for {!NullValue({!Set_of_Books__c.Bookkeeper__c}, "your bookkeeper")}  please don't hesitate to reach out!
+
+Best,

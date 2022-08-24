@@ -1,0 +1,65 @@
+<messaging:emailTemplate subject="You're Invited" recipientType="Contact" relatedToType="evt__Attendee__c">
+<messaging:htmlEmailBody >
+<html>
+<body>
+<font size="6" face="arial" color="#e0e0e0">{!$Organization.Name}</font>
+<font face="arial" size="3">
+<hr/>
+
+    <h2>Invitation</h2>
+    <strong>You have been invited to the following event:</strong><br/>
+    
+    <apex:panelGrid columns="2">
+        <apex:outputText value="Event:"/>
+        <apex:outputText value="{!relatedTo.evt__Event__r.Name}"/>
+        
+        <apex:outputText value="Description:"/>
+        <apex:outputText value="{!relatedTo.evt__Event__r.evt__Short_Description__c}"/>
+
+        <apex:outputText value="Hosted By:"/>
+        <apex:outputText value="{!$Organization.Name}"/>
+
+        <apex:outputText value="Invitation Code:" rendered="{!relatedTo.evt__Event__r.evt__By_Invitation__c == true}"/>
+        <apex:outputText value="{!relatedTo.evt__Invitation_Code__c}" rendered="{!relatedTo.evt__Event__r.evt__By_Invitation__c == true}"/>
+
+    </apex:panelGrid>
+        
+    <div style="color:red;">
+        <br/>
+        ALERT: The link below must be modified before using this template.  Be sure to change it to reference your Linvio Events Sites landing page domain and remove 
+        this comment. Look for this template <strong>Event Invitation (Attendee)</strong> in your <strong>Linvio Events</strong> email templates folder. 
+    </div>
+    <p>&nbsp;</p>
+    <a href="https://yourcompany.secure.force.com/sitesdir/{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Quick_Event','evt__QuickEvent','')}{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Seminar','evt__Sem_Reg','')}{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Conference','evt__Conf_Reg','')}{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Concert','evt__Concert_Detail','')}?id={!relatedTo.evt__Event__c}&invcode={!relatedTo.evt__Invitation_Code__c}">Click Here to RSVP</a>
+ 
+    
+</font>
+</body>
+</html>
+</messaging:htmlEmailBody>
+<messaging:plainTextEmailBody >
+    Invitation
+    ==========
+    
+    You have been invited to the following event:\n\n
+    
+
+        <apex:outputText value="Event:"/>
+        <apex:outputText value="{!relatedTo.evt__Event__r.Name}"/>\n\n
+        
+        <apex:outputText value="Description:"/>
+        <apex:outputText value="{!relatedTo.evt__Event__r.evt__Short_Description__c}"/>\n\n
+
+        <apex:outputText value="Hosted By:"/>
+        <apex:outputText value="{!$Organization.Name}"/>\n\n
+
+        <apex:outputText value="Invitation Code:" rendered="{!relatedTo.evt__Event__r.evt__By_Invitation__c == true}"/>
+        <apex:outputText value="{!relatedTo.evt__Invitation_Code__c}" rendered="{!relatedTo.evt__Event__r.evt__By_Invitation__c == true}"/>
+
+\n\n    Click here to RSVP:\n\n
+
+        https://yourcompany.secure.force.com/sitesdir/{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Quick_Event','evt__QuickEvent','')}{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Seminar','evt__Sem_Reg','')}{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Conference','evt__Conf_Reg','')}{!if(relatedTo.evt__Event__r.RecordType.DeveloperName == 'Concert','evt__Concert_Detail','')}?id={!relatedTo.evt__Event__c}&amp;invcode={!relatedTo.evt__Invitation_Code__c}
+ 
+
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

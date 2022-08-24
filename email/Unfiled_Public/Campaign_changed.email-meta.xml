@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Email to notify Marketing of an address change</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Campaign changed</name>
+    <style>none</style>
+    <subject>Event Campaign Address Change</subject>
+    <textOnly>The Campaign {!Campaign.Name} has been changed please see the information below.  The address has been changed on the campaign to:  {!Campaign.Event_Location__c}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

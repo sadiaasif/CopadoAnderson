@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_97175283</developerName>
+        <masterLabel>Service Group</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <otherBucketLabel>Other</otherBucketLabel>
+        <sourceColumnName>PRODUCT_NAME</sourceColumnName>
+        <useOther>true</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Pension</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Admin - 3rd Party</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Admin - Comprehensive</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Admin - Doc&apos;s Only</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Drafting</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Plan (1)</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Plan Formation</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Termination</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Pension Trust</sourceValue>
+            </sourceValues>
+            <value>PENSION</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>OPPORTUNITY_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>UNIT_PRICE</field>
+    </columns>
+    <columns>
+        <field>Opportunity.Sale_Campaign__c</field>
+    </columns>
+    <columns>
+        <field>CREATED_DATE</field>
+    </columns>
+    <description>ABA Sales by Service Family</description>
+    <filter>
+        <criteriaItems>
+            <column>ACCOUNT_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>test</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Opportunity.Infinity_Subscription,Opportunity.Platinum_Subscription,Opportunity.Bookkeeping_Subscription</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Credit to be used</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>PRODUCT_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Titanium VIP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>PRODUCT_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Fulfillment,Binder</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sale_Campaign__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Tax and Asset Protection,Structure Implementation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>UNIT_PRICE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>lessThan</operator>
+            <value>10000</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OPPORTUNITY_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>Refund</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Opportunity.Sales_Rep__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>,Hermina Certeza,Jarom Hillery,Jason Zundel,Sergey Garanyants</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Sales_Rep__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Titanium Sales Not at List Price</name>
+    <params>
+        <name>open</name>
+        <value>closedwon</value>
+    </params>
+    <params>
+        <name>probability</name>
+        <value>&gt;0</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>OpportunityProduct</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CLOSE_DATE</dateColumn>
+        <interval>INTERVAL_CURY</interval>
+    </timeFrameFilter>
+</Report>

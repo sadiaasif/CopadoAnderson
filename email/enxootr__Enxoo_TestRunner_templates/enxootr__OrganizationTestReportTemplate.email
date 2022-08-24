@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="{!$Label.enxootr__organizationtestreport} {!relatedTo.Name}" recipientType="User" relatedToType="enxootr__Organization__c">
+<messaging:htmlEmailBody >
+    <c:OrganizationTestReport orgId="{!relatedTo.Id}"/>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

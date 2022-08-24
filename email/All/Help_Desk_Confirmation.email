@@ -1,0 +1,32 @@
+Hello {!Case.CreatedBy},
+
+Thank you for submitting a new Help Desk case! We want to provide you the best solution in the fastest time, and we will get to your request as soon as it is feasible given the existing demand. In the meantime, please double check your case description to make sure you have included all pertinent information:
+
+
+
+{!Case.Description}
+
+
+
+If you need to make changes to this case please do so by clicking one of the following links: Lightning Users: https://andersonadvisors.my.salesforce.com/{!Case.Id}
+Community Users: https://platinum.force.com/aba/s/case/{!Case.Id}
+
+
+If we need more information from you, we will contact you directly. When this happens we will place a Case "On Hold". If we do not receive a reply within 10 days, we will close the case. 
+
+Currently, the total number of Help Desk cases outstanding is {!Case.Queue_Length__c}.
+
+Sorted by priority, they are as follows:
+Level 1 - Critical: {!Case.Critical_Cases__c}
+Level 2 - Urgent: {!Case.Urgent_Cases__c}
+Level 3 - High: {!Case.High_Cases__c}
+Level 4 - Medium: {!Case.Medium_Cases__c}
+Level 5 - New Idea: {!Case.New_Ideas__c}
+
+Your case priority may change given our perception of its urgency. For example, Level 1 - Critical priority is reserved for those issues deemed to be total system failures i.e. no one in the company can log in to Salesforce, every online form is broken simultaneously, all users are unable to process credit card payments, etc. Cases not meeting this standard will most likely be reclassified as Level 2 - Urgent or lower.
+
+You can check on the status of your case any time using the links below: 
+Lightning Users: https://andersonadvisors.my.salesforce.com/{!Case.Id}
+Community Users: https://platinum.force.com/aba/s/case/{!Case.Id}
+
+Thank you again for submitting a case, and have a great day!

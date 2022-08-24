@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="Thank you for registering" recipientType="Contact" relatedToType="evt__Attendee__c">
+<messaging:HTMLEmailBody >
+Thank you for registering!  Please see the PDF attachment for your event pass.
+<br/>
+Event: {!RelatedTo.evt__Event__r.Name}<br/>
+
+<br/><br/>
+</messaging:HTMLEmailBody>
+<messaging:attachment renderAs="PDF" filename="EventPass.pdf">
+<c:EventPass attendeeId="{!relatedTo.id}" passFormat="pdf"/>
+<apex:repeat value="{!relatedTo.attendees__r}" var="att">
+<div style="page-break-after:always;">&nbsp;</div>
+<c:EventPass attendeeId="{!att.id}" passFormat="pdf"/>
+</apex:repeat>
+</messaging:attachment>
+</messaging:emailTemplate>
