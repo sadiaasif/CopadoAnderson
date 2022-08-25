@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sends email when Articles received date is entered.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Articles Received From State</name>
+    <style>none</style>
+    <subject>Articles Received from the Secretary of State</subject>
+    <textOnly>Dear {!Entities__c.AccName__c}, &lt;p&gt;
+
+We have received your approved Articles for {!Entities__c.Name} from the Secretary of State of {!Entities__c.Organization_State__c}. Your official date of incorporation for this entity is {!Entities__c.Organizational_Date__c}. You are now permitted to conduct business under this name. &lt;p&gt;
+
+A copy of your filed documents is available in Viewable Documents in Box or through the Platinum Portal. &lt;p&gt;
+
+Platinum Members:
+Log into your Platinum Portal to see real-time status of your new company via the Entity Tracker.
+
+Thank you,
+Anderson Advisors, LLC</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

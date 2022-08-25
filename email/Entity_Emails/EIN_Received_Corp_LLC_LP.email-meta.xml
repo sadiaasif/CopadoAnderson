@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sends email when EIN Received date is entered.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>EIN Received - Corp, LLC, LP</name>
+    <style>none</style>
+    <subject>EIN Received from the IRS</subject>
+    <textOnly>Dear {!Entities__c.AccName__c},
+
+We have received the Employer Identification Number (EIN) for {!Entities__c.Name}.
+
+EIN: {!Entities__c.EIN__c}
+Tax Year End Date: {!Entities__c.Year_End__c}
+
+The organization will be treated as a {!Entities__c.Tax_Status__c} for federal income tax purposes. As a {!Entities__c.Tax_Status__c}, your organization will file tax form {!Entities__c.Tax_Form__c} every year.
+
+The EIN is the tax reporting number under which you will pay your taxes. It is also very important for opening a bank account* and conducting business in general.
+
+A copy of your EIN application is included with your entity documents in Box or your Platinum Portal.
+
+*Please do not attempt to open your entity bank account now. You will be able to do this once your documents are complete.
+
+Platinum Members:
+Log into your Platinum Portal to see real-time status of your new company via the Entity Tracker.
+
+
+Thank you,
+Anderson Business Advisors, LLC</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

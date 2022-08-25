@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sends email when Funding Task Email shipping date is entered.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Funding Task Email</name>
+    <style>none</style>
+    <subject>Anderson - Important Funding Information</subject>
+    <textOnly>Hi  {!NullValue(Entities__c.client_name__c, &quot;Sir or Madam&quot;)},
+
+We would like to invite you to view the NEW Funding Completion Forum! https://andersonadvisors.com/land-trust-forum/
+
+Our attorney-hosted forum outlines:
+
+
+Properly Signing Your Document(s)
+Funding
+Information You Should/Should Not Provide
+Updating Your Insurance Carrier
+Plus much more!
+
+A list of frequently asked questions is provided as well as an opportunity to request individual assistance if necessary.   Please also review the cover letter that will arrive with your {!Entities__c.RecordType} documents. This letter provides step-by-step instructions on finalizing your {!Entities__c.RecordType}.
+
+Thank you!</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

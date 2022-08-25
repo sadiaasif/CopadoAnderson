@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification of VM Case</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>APXTConga4__Conga_Email_Letterhead</letterhead>
+    <name>Case Notification 2</name>
+    <style>freeForm</style>
+    <subject>NEW VM CASE NOTIFICATION</subject>
+    <textOnly>*** NEW VOICE MAIL MESSAGE NOTIFICATION ***
+
+The following case has been assigned to you.
+Case Type: {!Case.Type}
+Case Origin: {!Case.Origin}
+Click on the link to access the case directly: {!Case.Id}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

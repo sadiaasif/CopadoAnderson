@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sends email when Documents Complete date is entered.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Documents Complete</name>
+    <style>none</style>
+    <subject>Your Entity Documents are Complete</subject>
+    <textOnly>Dear {!Entities__c.AccName__c},
+
+Good news! Your documents for {!Entities__c.Name} are complete and will ship shortly.
+
+The next step in the process is to sign the required forms. Please watch the Binder Review walk-through here:
+
+https://andersonadvisors.com/anderson-quick-start/
+
+A scheduling link will appear at the end of the video. If you have any questions, you may make an appointment with a Professional Advisor then.
+
+As always, if you need any help at all, your Law Coordinator or Client Account Manager is happy to assist.
+
+Platinum Members:
+Log into your Platinum Portal to see real-time status of your new company via the Entity Tracker.
+
+
+Thank you,
+Anderson Business Advisors, LLC</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
