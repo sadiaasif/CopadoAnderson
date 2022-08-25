@@ -1,0 +1,35 @@
+Thank you for your order! 
+
+Order Information 
+Merchant: {!Organization.Name} 
+Description: {!Opportunity.ChargentSFA__Order_Information__c} 
+Invoice Number: {!Opportunity.ChargentSFA__Invoice_Number__c} 
+Total: {!ChargentSFA__Transaction__c.ChargentSFA__Amount__c} 
+Card Type: {!CASE(ChargentSFA__Transaction__c.ChargentSFA__Payment_Method__c, 
+"Check", "Check", 
+"Credit Card", CASE(ChargentSFA__Transaction__c.ChargentSFA__Credit_Card_Type__c, 
+"Visa", "Visa", 
+"Mastercard", "Mastercard", 
+"Discover", "Discover", 
+"American Express", "American Express", 
+"AMEX", "American Express", 
+"MC Eurocard", "MC Eurocard", 
+"UK Maestro", "UK Maestro", 
+"JCB Card", "JCB Card", 
+"Solo", "Solo", 
+"Electron", "Electron", 
+""), 
+"")} 
+Date/Time: {!ChargentSFA__Transaction__c.ChargentSFA__Gateway_Date__c} 
+Transaction ID: {!ChargentSFA__Transaction__c.Id} 
+
+__________________________________________ 
+Billing Information 
+Name: {! IF(ChargentSFA__Transaction__c.ChargentSFA__Credit_Card_Name__c != NULL, ChargentSFA__Transaction__c.ChargentSFA__Credit_Card_Name__c, ChargentSFA__Transaction__c.ChargentSFA__Billing_First__c + ' ' + ChargentSFA__Transaction__c.ChargentSFA__Billing_Last__c)} 
+Company: {!ChargentSFA__Transaction__c.ChargentSFA__Billing_Company__c} 
+Email: {!ChargentSFA__Transaction__c.ChargentSFA__Billing_Email__c} 
+Billing Address: 
+{!ChargentSFA__Transaction__c.ChargentSFA__Billing_Address__c} 
+{!ChargentSFA__Transaction__c.ChargentSFA__Billing_Address_Line_2__c} 
+{!ChargentSFA__Transaction__c.ChargentSFA__Billing_City__c}, {!ChargentSFA__Transaction__c.ChargentSFA__Billing_State__c} 
+{!ChargentSFA__Transaction__c.ChargentSFA__Billing_Postal_Code__c}

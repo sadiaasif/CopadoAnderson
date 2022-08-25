@@ -12,7 +12,6 @@ global class PensionJul31CrtAnnMaintSale implements Database.Batchable<sObject>,
     List<String> exceptionLst = new List<String>();
     List<String> exceptionLstSE = new List<String>();
     List<String> exceptionLstOLI = new List<String>();
-    global boolean ManualOverride = false;
     /*  Exception[] errors = new Exception[0];
 Set<String> setErrorIds = new Set<String>();
 Set<String> setFailedIds = new Set<String>();
@@ -34,9 +33,6 @@ system.debug('Continue');
 }
 
 }*/
-    global PensionJul31CrtAnnMaintSale(boolean manualMode){
-        ManualOverride = manualMode;
-    }
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
         String query;
@@ -92,9 +88,9 @@ system.debug('Success Batch===>>>');
         List<SaleEntity__c> lstSaleEntity = new List<SaleEntity__c>();
         if(scopeLstEntity.size()>0)
         {            
-            if((currentMonth==7 && isCurrentAndLastDateSame==true)|| Test.isRunningTest() || ManualOverride)
+            if((currentMonth==7 && isCurrentAndLastDateSame==true)|| Test.isRunningTest())
             {
-                System.debug('SCOPE========='+scopeLstEntity);
+                System.debug('SCOPE'+scopeLstEntity);
                 for(Entities__c e: scopeLstEntity)
                 {
                     Opportunity oppty = new Opportunity();
@@ -106,7 +102,7 @@ system.debug('Success Batch===>>>');
                     oppty.StageName = 'Qualification';
                     oppty.Entity__c = e.Id;
                     lstOpp.add(oppty);
-                    System.debug('LS==========='+lstOpp);
+                    System.debug('LS'+lstOpp);
                 }
                 try
                 {
@@ -178,7 +174,140 @@ insert Dinfo;
                     for(Opportunity opp:[Select id,name from Opportunity where id IN: lstOpp])
                     {
                         //lstSaleEntity
-                        System.debug('OPPP====>'+opp);
+                        System.debug('OPPP'+opp);
+                        OpportunityLineItem OLI = new OpportunityLineItem();
+                        // SaleEntity__c saleEntity = new SaleEntity__c();
+                        OLI.OpportunityId = opp.Id; //Opportunity Id has to be assigned
+                        //OLI.Service_Name__c = 'Pension - Annual Maintenance';
+                        OLI.Product2Id = (pd.size() > 0) ? pd[0].id : null;
+                        OLI.PricebookEntryId = (pbe.size() > 0) ? pbe[0].id : null;
+                        OLI.Quantity = 1;
+                        OLI.UnitPrice = (pbe.size() > 0) ? pbe[0].UnitPrice : null;
+                        lstOLI.add(OLI);              
+                        // saleEntity.Opportunity__r.id = opp.Id;
+                        //lstSaleEntity.add(saleEntity);
+                    }
+                    try
+                    {
+                        if(lstOLI.size()>0)
+                        {
+                            insert lstOLI;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Debug('OLI Insertion failed ' + ex);
+                        exceptionLstOLI.add(string.valueOf(ex));
+                        // Dinfo.DebugData__c=ex.getMessage();
+                        // upsert Dinfo;
+                        Dinfo.DebugData__c=string.valueOf(exceptionLstOLI);
+                        upsert Dinfo;
+                        //Dinfo.DebugData__c=ex.getMessage();
+                        //upsert Dinfo;
+                    }
+                    
+                    
+                }
+                
+            }
+            
+        }
+    }
+    global void finish(Database.BatchableContext BC)
+    {
+        /*if(!setFailedIds.isEmpty() && cs.Current_Iteration__c <= cs.Maximum_Iteration__c)
+{
+database.executebatch(new BatchableSaleCreationEntity(setFailedIds),10);
+}*/
+        
+    }
+    global void execute(SchedulableContext SC) 
+    {
+='+scopeLstEntity);
+                for(Entities__c e: scopeLstEntity)
+                {
+                    Opportunity oppty = new Opportunity();
+                    oppty.Name ='Annual Plan Maintenance';
+                    oppty.AccountId = e.Primary_Client__c;
+                    oppty.RecordTypeId = tt[0].Id;
+                    oppty.CloseDate = oppCloseDte;
+                    oppty.Sale_Campaign__c = cId[0].id;
+                    oppty.StageName = 'Qualification';
+                    oppty.Entity__c = e.Id;
+                    lstOpp.add(oppty);
+                    System.debug('LS'+lstOpp);
+                }
+                try
+                {
+                    if(lstOpp.size()>0)
+                    {
+                        insert lstOpp;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Debug('Insert failed ' + ex);
+                    
+                    exceptionLst.add(string.valueOf(ex));
+                    // Dinfo.DebugData__c=ex.getMessage();
+                    // upsert Dinfo;
+                    Dinfo.DebugData__c=string.valueOf(exceptionLst);
+                    upsert Dinfo;
+                }
+                
+                
+                /*    if(lstOpp.size()>0)
+{
+Database.SaveResult[] updateResult = Database.insert(lstOpp,false);
+
+for (Integer i = 0; i < updateResult.size(); i++) {
+if (!updateResult.get(i).isSuccess()) {
+setFailedIds.add(lstOpp.get(i).Id);
+// Dinfo.DebugData__c ='Failed Record IDs: '+string.valueOf(setFailedIds);
+Dinfo.DebugData__c ='Failed Record IDs: '+string.valueOf(lstOpp.get(i).Id)+',';
+}
+
+}
+insert Dinfo;
+}*/
+                if(lstOpp.size()>0)
+                {
+                    for(Opportunity op:lstOpp)
+                    {
+                        SaleEntity__c saleEntity = new SaleEntity__c();
+                        saleEntity.Opportunity__c=op.Id;
+                        saleEntity.Entity__c=op.Entity__c;
+                        // saleEntity.Name = op.Entity_Name_2__c;
+                        saleEntity.Name = [Select name from entities__c where id=:op.Entity__c]?.name;
+                        lstSaleEntity.add(saleEntity);
+                    }
+                    try
+                    {
+                        if(lstSaleEntity.size()>0)
+                        {
+                            insert lstSaleEntity;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Debug('Sales Entity Junction Record failed ' + ex);
+                        exceptionLstSE.add(string.valueOf(ex));
+                        // Dinfo.DebugData__c=ex.getMessage();
+                        // upsert Dinfo;
+                        Dinfo.DebugData__c=string.valueOf(exceptionLstSE);
+                        upsert Dinfo;
+                        //  Dinfo.DebugData__c=ex.getMessage();
+                        // upsert Dinfo;
+                    }
+                    // insert Dinfo;
+                    
+                }
+                if(lstOpp.size()>0)
+                {
+                    for(Opportunity opp:[Select id,name from Opportunity where id IN: lstOpp])
+                    {
+                        //lstSaleEntity
+                        System.debug('OPPP'+opp);
                         OpportunityLineItem OLI = new OpportunityLineItem();
                         // SaleEntity__c saleEntity = new SaleEntity__c();
                         OLI.OpportunityId = opp.Id; //Opportunity Id has to be assigned
@@ -230,6 +359,8 @@ database.executebatch(new BatchableSaleCreationEntity(setFailedIds),10);
         Pension_Batch_Setting__mdt batchSetting = [Select MasterLabel,Manual_Override__c,batch_size__c from Pension_Batch_Setting__mdt where MasterLabel = 'PensionJul31CrtAnnMaintSale' limit 1];
         //  database.executebatch(new BatchableSaleCreationEntity(null),10);
         database.executebatch(new PensionJul31CrtAnnMaintSale(batchSetting.Manual_Override__c),Integer.valueOf(batchSetting.Batch_Size__c));
+        //  database.executebatch(new BatchableSaleCreationEntity(null),10);
+        database.executebatch(new PensionJul31CrtAnnMaintSale(),30);
     }
     
 }

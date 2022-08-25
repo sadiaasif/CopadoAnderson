@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send to people we met with at a workshop who did not buy</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>After Workshop - Non Buyer</name>
+    <style>none</style>
+    <subject>Workshop Followup</subject>
+    <textOnly>Dear {!Contact.FirstName}, 
+
+I really enjoyed meeting with you this past weekend. I wanted to let you know that you can sign up for our monthly &quot;Tax and Asset Protection Newsletter&quot; at www.alglaw.com.
+
+Should you need any of the services we offer before we speak again, do not hesitate to contact me.
+
+Kind regards, 
+{!User.FirstName} {!User.LastName} 
+
+Anderson Business Advisors
+732 Broadway Suite #201
+Tacoma, WA 98402
+800.706.4741 (Main)
+253.238.0003 (Fax)
+ 
+Links to Other Information
+Asset Protection Blog: http://clintcoons.wordpress.com/
+Monthly Tax Newsletter: http://www.alglaw.com/
+
+The information contained in this e-mail message is privileged, confidential and protected from disclosure. If you are not the intended recipient, any dissemination, distribution or copying is strictly prohibited. If you think that you have received this e-mail message in error, please e-mail the sender at info@andersonadvisors.com.
+
+&quot;Pursuant to recently-enacted U.S. Treasury Department Regulations, we are now required to advise you that, unless otherwise expressly indicated, any federal tax advice contained in this communication, including attachments and enclosures, is not intended or written to be used, and may not be used, for the purpose of (i) avoiding tax-related penalties under the Internal Revenue Code or (ii) promoting, marketing or recommending to another party any tax-related matters addressed herein.&quot;</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>picklist</bucketType>
+        <developerName>BucketField_50341936</developerName>
+        <masterLabel>Tax Stage</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>Activity.Tax_Stage__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <sourceValue>Not Started</sourceValue>
+            </sourceValues>
+            <value>Not Started</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Confirm Client Paper Filed</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ready to File</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>e-File Transmitted</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>e-File Rejected</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>IRS Accepted</sourceValue>
+            </sourceValues>
+            <value>With CTC</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Assigned</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>In Progress</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Review Notes</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Call Client to Review Return</sourceValue>
+            </sourceValues>
+            <value>With Preparer</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Review</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Review Notes Cleared</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Review Complete</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Review Complete- Paper File</sourceValue>
+            </sourceValues>
+            <value>With Supervisor</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Waiting on Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Review Notes - Waiting on Client</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Ready for Client Review</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Return Ready for Review - Paper Filing</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Waiting on 8879 &amp; Invoice</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Waiting on Invoice Only</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Waiting on 8879 Only</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Waiting on Approval</sourceValue>
+            </sourceValues>
+            <value>With Client</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Waiting on Bookkeeping</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>BKG-Contact</sourceValue>
+            </sourceValues>
+            <value>With Bookkeeping</value>
+        </values>
+        <values>
+            <sourceValues>
+                <sourceValue>Completed</sourceValue>
+            </sourceValues>
+            <value>Completed</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Unique</aggregateTypes>
+        <field>ACCOUNT</field>
+    </columns>
+    <columns>
+        <field>Activity.Tax_Stage__c</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>ASSIGNED</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>Activity.Date_Due__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Date_in_Tax_Prep__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Date_in_Tax_Review__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Date_in_Tax_Review_Complete__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Date_in_Ready_for_Client_Review__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Tax_IC__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Tax_Advisors_Admin__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Tax_Reviewer__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Days_in_Prep__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Days_to_begin_Tax_Prep__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>1040,1065,990,5500,1120,1041</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>email,call,1040x,1120x,1120sx,1065x</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>SUBJECT</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>outbound,inbound,Mail Tax,VOICE MAIL,Receipt,TTC,LVM,In-Person,In-Office</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CREATED_DATE</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>THIS_YEAR,LAST_N_YEARS:2</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ASSIGNED</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Anderson Advisors,Traci Craig</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Activity.Type_of_Tax_Return__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,1040,1120,1120S,1065,5500,1041,990,Other</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Activity.Type_of_Tax_Return__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>BucketField_50341936</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>Activity.Completed_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Tax Returns Report 2022</name>
+    <params>
+        <name>closed</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>t</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>DUE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

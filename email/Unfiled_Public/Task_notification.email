@@ -1,0 +1,7 @@
+<messaging:emailTemplate subject="Task Notification" recipientType="User" relatedToType="Task">
+<messaging:plainTextEmailBody >
+A task in case #{!relatedTo.What.Name} has been updated by {!$User.FirstName} {!$User.LastName}. The task was originally assigned to {!relatedTo.Owner.Name} and the status of the task is now {!relatedTo.Status}.
+The comments in the task are :
+{!relatedTo.Description}
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

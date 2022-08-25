@@ -1,0 +1,94 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="true" applyBodyTag="true" docType="html-5.0" cache="false" controller="eventSuccessExtension" >
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        <head>
+      <apex:outputPanel id="script">
+
+        <script type="text/javascript">
+
+
+            function redirectwebsite(){
+
+                    // alert('{!isSuccess}');
+
+                    if('{!isSuccess}' != null && '{!isSuccess}' == 'true') {
+                             window.top.location('https://andersonadvisors.com/eventsconfirmation','_self', 'toolbar=no, scrollbars=no, resizable=no, top=200, left=250, width=800, height=170');
+                    }
+                    // else{
+                    //   alert('Form does not submitted Successfully');
+                    // }
+
+            }
+
+        </script>
+
+        </apex:outputPanel>
+
+
+
+
+          <title>Event Form</title>
+            <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></apex:stylesheet>
+            <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"></apex:stylesheet>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS100, 'assets/styles/salesforce-lightning-design-system-vf.css')}" ></apex:stylesheet>
+        </head>
+
+        <body onload="setTimeout(redirect, 2000)">
+
+                <apex:actionStatus startText=" (In Progress...)" id="loadevent">
+                    <apex:facet name="start">
+                    <center>
+                        <div class="slds-spinner--large">
+                           <img src="{!URLFOR($Resource.SLDS100, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." />
+                        </div>
+                        </center>
+                    </apex:facet>
+                </apex:actionStatus>
+
+                <div class="slds">
+
+                    <apex:form id="frm">
+                     <apex:actionFunction name="redirect"  action="{!onLoad}" oncomplete="setTimeout(redirectwebsite, 3000);" status="loadevent" reRender="script,error"></apex:actionFunction>
+
+                            <!-- Main div-->
+
+                               <apex:pageBlock id="PB1">
+                                   <div class="slds-page-header" role="banner">
+
+                                        <div class="slds-grid">
+
+                                                    <div class="slds-col">
+
+                                                          <img src="{!URLFOR($Resource.SLDS100, '/assets/icons/utility/contract_120.png')}" style="width:40px; height=:40px; " alt="Add more componenet" align="left"></img>
+                                                          <p class="slds-text-heading--label">Event Ticket Sales</p>
+                                                          <h1 class="slds-text-heading--medium">Ticket Sales for Events</h1>
+
+                                                    </div>
+                                           </div>
+                                </div>
+                            </apex:pageBlock>
+
+                             <legend class="slds-text-heading--large slds-text-align--center"><apex:pageMessages id="error"></apex:pageMessages></legend>
+
+                            <div class="myapp">
+
+                                    <br/>
+                                    <br/>
+
+                                   <center>
+                                       <!-- <apex:commandButton title="Event Details" value="Event Details" styleClass="slds-button slds-button--brand" action="{!none}" oncomplete="redirect();" reRender="script" ></apex:commandButton> -->
+                                       <apex:commandButton action="{!redirectToEventForm}" title="Go Back" value="Go Back" styleClass="slds-button slds-button--brand"></apex:commandButton>
+                                   </center>
+
+                            </div>
+
+                   </apex:form>
+
+                </div>
+
+        </body>
+
+
+   </html>
+</apex:page>

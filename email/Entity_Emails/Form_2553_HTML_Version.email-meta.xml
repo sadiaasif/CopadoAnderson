@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>SCH-0323</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Form 2253 - HTML Version</name>
+    <style>none</style>
+    <subject>Anderson Processing Team: Form 2553 Reminder</subject>
+    <textOnly>Hi {!Entities__c.client_name__c},  
+
+This automated email is to remind you that your Form 8822-B for {!Entities__c.Name} is required to be filed with the IRS. 
+
+Please use this form (https://www.tfaforms.com/4900206?entID={!Entities__c.Id}&amp;tfa_28=2553) to indicate the step you are taking to ensure this form is filed properly.   
+
+Best,
+Anderson Business Advisors</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

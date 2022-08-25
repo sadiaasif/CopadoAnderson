@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to alert David when there are discounts sold at &gt; 20%</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Discount Alert</name>
+    <style>none</style>
+    <subject>Alert: {!Opportunity.Sales_Rep__c} for {!Opportunity.Discount_Percentage__c}% discount to {!Opportunity.Account}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

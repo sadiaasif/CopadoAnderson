@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sends email when Articles Sent date is entered for Corp</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Articles Sent</name>
+    <style>none</style>
+    <subject>Articles Sent to the Secretary of State</subject>
+    <textOnly>Dear {!Entities__c.AccName},
+
+We have sent the Articles of Incorporation for {!Entities__c.Name} to the Secretary of State of {!Entities__c.Organization_State__c}. This is the beginning of the entity formation process.
+
+Many states approve and return documents within one to two weeks, but some states may take longer. We will notify you when our office receives the filed documents.
+
+Platinum members may log into the Platinum Portal to view the Entity Tracker. This is a visual tool that lets you know where we are in the entity creation process.
+
+If you&apos;re not a Platinum member, learn more at: https://andersonadvisors.com/platinum-membership-2/
+
+Or, contact your Law Coordinator for more information.
+
+Thank you, 
+Anderson Business Advisors, LLC</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
