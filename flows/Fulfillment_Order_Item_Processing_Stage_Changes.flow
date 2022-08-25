@@ -2,23 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>49.0</apiVersion>
     <assignments>
-        <description>Update Active User to Alexandria Lipman</description>
-        <name>Alexandria_Lipman</name>
-        <label>Alexandria Lipman</label>
-        <locationX>6122</locationX>
-        <locationY>767</locationY>
-        <assignmentItems>
-            <assignToReference>AssignTo</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Alexandria Lipman</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Assign_To_User_Exists</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Anderson_ServicesX</name>
         <label>Anderson Services</label>
         <locationX>1634</locationX>
@@ -253,6 +236,23 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>BK_Virtual_Assignment_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_User_Exists</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Update Active User to Bridget Carlvin</description>
+        <name>Bridget_Carlvin</name>
+        <label>Bridget Carlvin</label>
+        <locationX>6122</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>AssignTo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bridget Carlvin</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1631,7 +1631,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Alexandria_Lipman</targetReference>
+                <targetReference>Bridget_Carlvin</targetReference>
             </connector>
             <label>LT - Ready to Ship - Email - Alexandria</label>
         </rules>
@@ -2370,7 +2370,7 @@
         </rules>
     </decisions>
     <description>Author: Umar Aziz
-Change Description: Changes for Case#00201102
+Change Description: Changes for SF Case#00221110, Zendesk #1130
 Date: 8/18/2022</description>
     <environments>Default</environments>
     <formulas>
@@ -2544,6 +2544,7 @@ ISPICKVAL ( {!$Record.Type__c} ,&quot;Reinstatement&quot;)
 &quot;Ready for Review&quot; , TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
 &quot;Review Complete, STC&quot; ,  TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
 &quot;Confirmation Received&quot; ,  TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
+&quot;Waiting on IRS Acceptance&quot; , TEXT( {!$Record.Paralegal_Tax_Analyst__c} ) ,
 NULL
 )</expression>
     </formulas>
@@ -2884,7 +2885,7 @@ Null
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AssignTo</name>
         <dataType>String</dataType>

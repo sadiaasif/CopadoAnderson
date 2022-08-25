@@ -42,9 +42,9 @@ public class RoleAutomationService implements Queueable, Database.AllowsCallouts
                     System.enqueueJob(new RoleAutomationRecordType()); 
                     setPermissionSet(setofUser);
                 }
-                 /*else if(deactivate){
+                 else if(deactivate){
                     deletePermissionSet(setofUser);
-                }*/
+                }
             }
         } Catch(Exception ex){
             System.debug('ERROR:' + ex.getmessage());
@@ -67,13 +67,13 @@ try{
     system.debug('exception caught' + e);
 }
     }
-    /*@testVisible
+    @testVisible
     private static void deletePermissionSet(Set<Id> userId){
         List<String> PermissionSetIds = new List<String> { '0PS6f000000Y5qr', '0PS6f0000001MRX', '0PS0B0000005T5a'};
             If(PermissionSetIds != null){
                 delete [Select Id from PermissionSetAssignment WHERE PermissionSetId=:PermissionSetIds AND AssigneeId=:userId];
             }   
-    }*/
+    }
     public static void getGlobalPicklistValues(String username, Boolean deactivate) {
         
         HttpRequest req = Callout.buildHttpRequest(BASEURL+'sobjects/GlobalValueSet/'+globalPicklistVal,'GET');
