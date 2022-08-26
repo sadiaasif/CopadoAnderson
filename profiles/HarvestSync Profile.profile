@@ -40816,6 +40816,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ChargentSFA__Transaction__c.test_Gateway_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>CheckForPlatinumClient__e.Description_Long__c</field>
         <readable>false</readable>
     </fieldPermissions>

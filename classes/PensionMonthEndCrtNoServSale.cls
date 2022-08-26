@@ -13,17 +13,23 @@ global class PensionMonthEndCrtNoServSale implements Database.Batchable<sObject>
     private String query;
 	public PensionMonthEndCrtNoServSale()
     {
+        if(Test.isRunningTest())
+        {
+            this.query = 'SELECT Id,Current_Plan_Year_End__c, Name,Year_End_Month__c, SLA__c,PlanType__c,Primary_Client__c FROM Entities__c WHERE RecordType.DeveloperName = \'Pension_Plan\' AND SLA__c=\'No Service\' AND FU__c!=True LIMIT 200';
+            
+        }
+        else
+        {
+            this.query = 'SELECT Id,Current_Plan_Year_End__c,Year_End_Month__c, Name, SLA__c,PlanType__c,Primary_Client__c FROM Entities__c WHERE RecordType.DeveloperName = \'Pension_Plan\' AND SLA__c=\'No Service\' AND FU__c!=True';
+            
+        }
         
     }
     public PensionMonthEndCrtNoServSale(Date paramDate) {
        d = paramDate;
-    }
-    global Database.QueryLocator start(Database.BatchableContext BC)
-    {
-        String query;
-        if(Test.isRunningTest())
-        {
-            query = 'SELECT Id,Current_Plan_Year_End__c, Name,Year_End_Month__c, SLA__c,PlanType__c,Primary_Client__c FROM Entities__c WHERE RecordType.DeveloperName = \'Pension_Plan\' AND SLA__c=\'No Service\' AND FU__c!=True LIMIT 200';
+       if(Test.isRunningTest())
+       {
+           this.query = 'SELECT Id,Current_Plan_Year_End__c, Name,Year_End_Month__c, SLA__c,PlanType__c,Primary_Client__c FROM Entities__c WHERE RecordType.DeveloperName = \'Pension_Plan\' AND SLA__c=\'No Service\' AND FU__c!=True LIMIT 200';
            
        }
         else
@@ -100,7 +106,231 @@ global class PensionMonthEndCrtNoServSale implements Database.Batchable<sObject>
                         oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 6, 1);
                         oppty.Entity__c = e.Id;
                         lstOpp.add(oppty);
-                        System.debug('LS                if(lstOpp.size()>0)
+                        System.debug('LS==========='+lstOpp);
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='February' && currentPlanYearEndDate.year() == d.year() && currentMonth==4))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 9, 30);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 7, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='March'&& currentPlanYearEndDate.year() == d.year() && currentMonth==5))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 10, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 8, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='April' && currentPlanYearEndDate.year() == d.year() && currentMonth==6))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 11, 30);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 9, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='May' && currentPlanYearEndDate.year() == d.year() && currentMonth==7))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 12, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 10, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='June' && currentPlanYearEndDate.year() == d.year() && currentMonth==8))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear+1, 1, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 11, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='July' && currentPlanYearEndDate.year() == d.year() && currentMonth==9))
+                    {
+                        if(nextYearIsLeapYear==false)
+                        {
+                            Opportunity oppty = new Opportunity();
+                            oppty.Name ='Pension - Annual Maintenance';
+                            oppty.AccountId = e.Primary_Client__c;
+                            oppty.RecordTypeId = tt[0].Id;
+                            oppty.CloseDate = date.newInstance(currentYear+1, 2, 28);
+                            oppty.Sale_Campaign__c = cId[0].id;
+                            oppty.StageName = 'Qualification';
+                            oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 12, 1);
+                            oppty.Entity__c = e.Id;
+                            lstOpp.add(oppty);
+                            System.debug('LS==========='+lstOpp);
+                            
+                        }
+                        else if(nextYearIsLeapYear==true)
+                        {
+                            Opportunity oppty = new Opportunity();
+                            oppty.Name ='Pension - Annual Maintenance';
+                            oppty.AccountId = e.Primary_Client__c;
+                            oppty.RecordTypeId = tt[0].Id;
+                            oppty.CloseDate = date.newInstance(currentYear+1, 2, 29);
+                            oppty.Sale_Campaign__c = cId[0].id;
+                            oppty.StageName = 'Qualification';
+                            oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 12, 1);
+                            oppty.Entity__c = e.Id;
+                            lstOpp.add(oppty);
+                            System.debug('LS==========='+lstOpp);
+                        }
+                        
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='August' && currentPlanYearEndDate.year() == d.year() && currentMonth==10))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear+1, 3, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear+1, 1, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='September' && currentPlanYearEndDate.year() == d.year() && currentMonth==11))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear+1, 4, 30);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear+1, 2, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='October' && currentPlanYearEndDate.year() == d.year() && currentMonth==12))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear+1, 5, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear+1, 3, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='November' && currentPlanYearEndDate.year() < d.year() && currentMonth==1))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 6, 30);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 4, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='December' && currentPlanYearEndDate.year() < d.year() && currentMonth==2 && currentYearIsLeapYear==false))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 7, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 5, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    else if((isCurrentAndLastDateSame==true && yearEndMonth=='December' && currentPlanYearEndDate.year() < d.year() && currentMonth==2 && currentYearIsLeapYear==true))
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 7, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 5, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                        
+                    }
+                    //for testing only will remove this later on
+                 /*  else if(yearEndMonth=='March')
+                    {
+                        Opportunity oppty = new Opportunity();
+                        oppty.Name ='Pension - Annual Maintenance';
+                        oppty.AccountId = e.Primary_Client__c;
+                        oppty.RecordTypeId = tt[0].Id;
+                        oppty.CloseDate = date.newInstance(currentYear, 10, 31);
+                        oppty.Sale_Campaign__c = cId[0].id;
+                        oppty.StageName = 'Qualification';
+                        oppty.Pension_Due_Date_2__c = date.newInstance(currentYear, 8, 1);
+                        oppty.Entity__c = e.Id;
+                        lstOpp.add(oppty);
+                        System.debug('LS==========='+lstOpp);
+                    }*/
+                    
+                    
+                }           
+                
+            }
+            try
+            {
+                System.debug('lstOpp.size: '+lstOpp.size());
+                if(lstOpp.size()>0)
                 {
                     insert lstOpp;
                 }

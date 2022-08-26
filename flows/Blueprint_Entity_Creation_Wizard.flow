@@ -50,14 +50,6 @@
         </value>
     </choices>
     <choices>
-        <name>EntityCreationWizard</name>
-        <choiceText>&lt;strong style=&quot;font-size: 14px; color: rgb(106, 109, 115);&quot;&gt;Entity Creation Wizard&lt;/strong&gt;</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Entity Creation Wizard</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>EntityRadioChoice</name>
         <choiceText>Entity</choiceText>
         <dataType>String</dataType>
@@ -175,22 +167,6 @@
         </value>
     </choices>
     <choices>
-        <name>TrustCreationWizard</name>
-        <choiceText>&lt;strong style=&quot;color: rgb(118, 116, 118); font-size: 14px;&quot;&gt;Trust Creation Wizard&lt;/strong&gt;</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Trust Creation Wizard</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>WizardChoice</name>
-        <choiceText>Wizard Choice</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Entity Creation Wizard</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>YesChoice</name>
         <choiceText>Yes</choiceText>
         <dataType>String</dataType>
@@ -242,57 +218,6 @@
                 <targetReference>Create_LLC_Other_EntityMember</targetReference>
             </connector>
             <label>checkother&apos;s</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Wizard_Choice</name>
-        <label>Check Wizard Choice</label>
-        <locationX>254</locationX>
-        <locationY>304</locationY>
-        <defaultConnectorLabel>Default</defaultConnectorLabel>
-        <rules>
-            <name>Entity_Creation_Wizard_Select</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Entity_Creation_Wizard_Checkbox</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Trust_Creation_Wizard_Checkbox</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen0</targetReference>
-            </connector>
-            <label>Entity Creation Wizard</label>
-        </rules>
-        <rules>
-            <name>Trust_Creation_Wizard_select</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Trust_Creation_Wizard_Checkbox</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Entity_Creation_Wizard_Checkbox</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Trust_Creation_Wizard_Subflow</targetReference>
-            </connector>
-            <label>Trust Creation Wizard</label>
         </rules>
     </decisions>
     <decisions>
@@ -423,8 +348,8 @@
         </rules>
     </decisions>
     <description>Author: Umar Aziz
-Change Description: Added Trust Creation Wizard selection, Case #00206027, #00218074
-Date Modified: 5/12/2022</description>
+Change Description: Excluded &quot;Anderson Services&quot; &amp; &quot;Welcome Phase&quot; OSI&apos;s from the selection screen due to case#00213705
+Date Modified: 4/29/2022</description>
     <dynamicChoiceSets>
         <name>BusinessAddressChoice</name>
         <dataType>Picklist</dataType>
@@ -1886,6 +1811,12 @@ Date Modified: 5/12/2022</description>
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Origin__c</field>
+            <value>
+                <elementReference>Entity_Origin0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Ownership1__c</field>
             <value>
                 <elementReference>Second_Individual_Ownership_Percentage</elementReference>
@@ -2346,6 +2277,12 @@ Date Modified: 5/12/2022</description>
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Origin__c</field>
+            <value>
+                <elementReference>Entity_Origin0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Primary_Client__c</field>
             <value>
                 <elementReference>AccountId</elementReference>
@@ -2677,7 +2614,7 @@ Date Modified: 5/12/2022</description>
         <locationY>138</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Wizard_Selection</targetReference>
+            <targetReference>Screen0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2835,12 +2772,6 @@ Date Modified: 5/12/2022</description>
             <field>Type__c</field>
             <value>
                 <elementReference>TypeFormula</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Update_Comments__c</field>
-            <value>
-                <elementReference>Note_To_Processing_Land_Trust</elementReference>
             </value>
         </inputAssignments>
         <object>OrderItem</object>
@@ -9188,74 +9119,6 @@ Date Modified: 5/12/2022</description>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-    <screens>
-        <name>Wizard_Selection</name>
-        <label>Wizard Selection</label>
-        <locationX>261</locationX>
-        <locationY>178</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Check_Wizard_Choice</targetReference>
-        </connector>
-        <fields>
-            <name>Wiz_select</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Wizard Selection&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>X1st_Screen_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;em&gt;Please select a wizard to start the relevant process.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Wizard_Selection_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Wizard_Selection_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Entity_Creation_Wizard_Checkbox</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>Entity Creation Wizard</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Choose this to start the Entity creation process.&lt;/span&gt;&lt;/p&gt;</helpText>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Wizard_Selection_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Trust_Creation_Wizard_Checkbox</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>Trust Creation Wizard</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Choose this to start the Trust creation process.&lt;/p&gt;</helpText>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>115</locationX>
         <locationY>50</locationY>
@@ -9264,37 +9127,6 @@ Date Modified: 5/12/2022</description>
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Trust_Creation_Wizard_Subflow</name>
-        <label>Trust Creation Wizard</label>
-        <locationX>79</locationX>
-        <locationY>284</locationY>
-        <flowName>Trust_Creation_WIzard</flowName>
-        <inputAssignments>
-            <name>AccEmail</name>
-            <value>
-                <elementReference>AccEmail</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>AccName</name>
-            <value>
-                <elementReference>AccName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Accountid</name>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>AccPhone</name>
-            <value>
-                <elementReference>AccPhone</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <variables>
         <name>AccEmail</name>
         <dataType>String</dataType>

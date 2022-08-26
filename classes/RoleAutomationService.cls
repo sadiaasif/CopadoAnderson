@@ -35,14 +35,16 @@ public class RoleAutomationService implements Queueable, Database.AllowsCallouts
             List<UserPackageLicense> listofUserLicense = new List<UserPackageLicense>();
             List<PackageLicense> lstPackageLicense  = [SELECT Id, NamespacePrefix, AllowedLicenses, UsedLicenses, CreatedDate, ExpirationDate, Status 
                                                        FROM PackageLicense WHERE NamespacePrefix =: license LIMIT 1];
+           
             for (User usr : [Select Id, Name,Job_Role__c FROM User Where Id =: setofUser LIMIT 1]){ 
                 getGlobalPicklistValues(usr.Name,deactivate);
                 getcustomPicklistValues(usr.Name,deactivate);
                 if(!deactivate){
-                    System.enqueueJob(new RoleAutomationRecordType()); 
+                    System.enqueueJob(new RoleAutomationRecordType());
                     setPermissionSet(setofUser);
                 }
-                 else if(deactivate){
+                
+                else if(deactivate){
                     deletePermissionSet(setofUser);
                 }
             }
@@ -50,30 +52,35 @@ public class RoleAutomationService implements Queueable, Database.AllowsCallouts
             System.debug('ERROR:' + ex.getmessage());
         }
     }
-
+ /** my new code **////
     @testVisible
     private static void setPermissionSet(Set<Id> userId){
+        system.debug('::userId'+ userId);
         List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
         List<String> PermissionSetIds = new List<String> { '0PS6f000000Y5qr', '0PS6f0000001MRX', '0PS0B0000005T5a'};
         for(Id userIdFromSet : userId){
             for (String permissionSetId : PermissionSetIds){
             PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = permissionSetId,AssigneeId = userIdFromSet);
             permissionSetList.add(psa);
+                system.debug('::permissionSet'+ permissionSetList);
             }
         }
 try{
     upsert permissionSetList;
+    system.debug('::permissionSetList'+ permissionSetList);
 }catch(exception e){
     system.debug('exception caught' + e);
 }
     }
-    @testVisible
+    
+     @testVisible
     private static void deletePermissionSet(Set<Id> userId){
         List<String> PermissionSetIds = new List<String> { '0PS6f000000Y5qr', '0PS6f0000001MRX', '0PS0B0000005T5a'};
             If(PermissionSetIds != null){
                 delete [Select Id from PermissionSetAssignment WHERE PermissionSetId=:PermissionSetIds AND AssigneeId=:userId];
             }   
     }
+/*******************************************************************************************/
     public static void getGlobalPicklistValues(String username, Boolean deactivate) {
         
         HttpRequest req = Callout.buildHttpRequest(BASEURL+'sobjects/GlobalValueSet/'+globalPicklistVal,'GET');

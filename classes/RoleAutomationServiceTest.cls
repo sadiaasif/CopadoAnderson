@@ -48,6 +48,10 @@ public  with sharing class RoleAutomationServiceTest {
         
         RoleAutomationService.setPermissionSet(userIds);
     }
+      private static testMethod void delPermissionSet(){
+        
+        RoleAutomationService.deletePermissionSet(userIds);
+    }
     private static testmethod void userTrigger(){
         try{
             User usr= new User();
