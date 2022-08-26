@@ -54311,6 +54311,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Role_Automation_Setting__mdt.Global_ValueSet_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Role_Automation_Setting__mdt.Global_ValueSet_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Role_Automation_Setting__mdt.Licences__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Role_Automation_Setting__mdt.Local_Picklist_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SFGA__Ad_Group__c.SFGA__Ad_Group_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -88322,6 +88342,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Restatements__c-Restatements Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Role_Automation_Setting__mdt-Role Automation Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SLA__c-SLA Layout</layout>
